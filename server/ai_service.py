@@ -1,6 +1,7 @@
 # ai_service.py
 import google.generativeai as genai
 from config import config
+from typing import Optional # <<< --- ADD THIS LINE
 from models import NPCProfile, DialogueRequest # For type hinting if needed
 
 # Configure the Generative AI client
@@ -8,9 +9,12 @@ try:
     genai.configure(api_key=config.GOOGLE_API_KEY)
     # For list_models, you need to use a client object (less common for basic generation)
     # For general generation, configuring the default API key is sufficient.
-except AttributeError:
+except AttributeError: # This might be the cause of the warning below.
     print("Warning: google.generativeai.configure failed. Make sure the library is installed and API key is valid.")
     # Potentially handle this more gracefully if genai is critical at import time.
+except Exception as e: # Catching a broader range of potential configuration errors
+    print(f"Warning: An error occurred during google.generativeai.configure: {e}. Make sure the library is installed and API key is valid.")
+
 
 # Choose a model (e.g., 'gemini-1.5-flash' or 'gemini-pro')
 # You can list available models:
@@ -78,40 +82,25 @@ class AIService:
 
         prompt = "\n".join(prompt_parts)
 
-        # print("\n--- AI PROMPT ---") # For debugging
-        # print(prompt)
-        # print("--- END AI PROMPT ---\n")
-
         try:
             response = self.model.generate_content(prompt)
-            # print("\n--- AI RESPONSE ---") # For debugging
-            # print(response)
-            # print("--- END AI RESPONSE ---\n")
             if response.parts:
-                 # Check for safety ratings if needed, and handle potential blocks
                 if response.prompt_feedback and response.prompt_feedback.block_reason:
                     return f"AI generation blocked. Reason: {response.prompt_feedback.block_reason_message or response.prompt_feedback.block_reason}"
                 
-                # Check for finish reason if the model provides it (e.g. for Gemini-Pro vision this is important)
-                # For text models, this check might be less critical if content is present
                 candidate = response.candidates[0]
-                if candidate.finish_reason not in [1, 'STOP', 'stop']: # 1 is OK for some models
+                if candidate.finish_reason not in [1, 'STOP', 'stop']: 
                     print(f"Warning: AI generation finished with reason: {candidate.finish_reason}")
                     if candidate.content and candidate.content.parts:
                          return candidate.content.parts[0].text.strip()
                     return "AI generation finished unexpectedly. No content."
-
-
                 return response.text.strip() if hasattr(response, 'text') and response.text else response.candidates[0].content.parts[0].text.strip()
             else:
-                # Handle cases where the response might be blocked due to safety settings or other reasons
-                # print(f"AI Response (raw): {response}") # for debugging
                 if response.prompt_feedback and response.prompt_feedback.block_reason:
                      return f"AI generation blocked. Reason: {response.prompt_feedback.block_reason_message or response.prompt_feedback.block_reason}"
                 return "AI did not generate a response. The prompt might have been blocked or an issue occurred."
         except Exception as e:
             print(f"Error generating dialogue with AI: {e}")
-            # print(f"Prompt that caused error: {prompt}") # For debugging
             return f"Error: Could not get dialogue from AI. {e}"
 
 # Initialize AI Service
@@ -120,19 +109,22 @@ ai_service_instance = AIService()
 # Example Usage (optional, for testing directly)
 if __name__ == '__main__':
     if ai_service_instance.model:
+        # (Your example usage code from before is fine here)
         sample_npc_data = {
             "name": "Elder Elara",
             "description": "A wise old herbalist living at the edge of the Whispering Woods.",
             "personality_traits": ["calm", "observant", "slightly mysterious", "knowledgeable about herbs"],
             "knowledge": ["Healing properties of moonpetal flowers", "Legends of the Whispering Woods"],
-            "memories": [
-                MemoryItem(content="A young adventurer asked about the Shadowfen last week.", type="observation").model_dump(mode='json')
+            "memories": [ # Assuming MemoryItem structure from models.py
+                {"timestamp": "2024-05-29T12:00:00Z", "content": "A young adventurer asked about the Shadowfen last week.", "type": "observation", "source": "dialogue"}
             ]
         }
+        # Need to import MemoryItem if you construct it here, or pass dicts if NPCProfile expects them.
+        # from models import MemoryItem # if you were to construct MemoryItem objects directly here
         sample_npc = NPCProfile(**sample_npc_data)
         
         sample_dialogue_req_data = {
-             "npc_id": "elara001", # Placeholder
+             "npc_id": "elara001", 
              "scene_context": "The adventurers approach Elara's hut as dusk settles. The air is chilly.",
              "player_utterance": "Greetings, Elder Elara. We seek your wisdom about a rare herb.",
              "active_pcs": ["Valerius the Knight", "Lyra the Rogue"],
@@ -142,5 +134,6 @@ if __name__ == '__main__':
 
         dialogue = ai_service_instance.generate_npc_dialogue(sample_npc, sample_dialogue_req, "The Whispering Woods are known to be ancient and hold many secrets.")
         print(f"\nGenerated Dialogue for {sample_npc.name}: {dialogue}")
+
     else:
         print("AI Service model not loaded, skipping direct test.")

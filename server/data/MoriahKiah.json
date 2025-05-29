@@ -1,0 +1,25 @@
+{
+    "character_type": "PC",
+    "name": "Moriah Kiah",
+    "race": "Dwarf",
+    "class": "Forge Cleric of Moradin",
+    "alignment": "Lawful Good",
+    "age": "Unknown",
+    "personality_traits": "Studious in the teachings of the forge fathers, dedicated to hard work in forges, honing craft and prayer[cite: 110]. Passionate about the artistry of smithing, particularly Fliorgry and inlay work, more than just utilitarian weapons[cite: 111]. Enjoys studying history, especially concerning battles against Dark Elves[cite: 113, 114].",
+    "ideals": "Fulfilling his sacred duty to recover lost dwarven halls, sanctify buried forges, and strike down the defilers of dwarven legacy[cite: 107]. Honoring Moradin, the Forge Father, through his craft and actions[cite: 123]. Service to Moradin: 'By hammer and anvil, I serve. By stone and steel, I endure. By your will, I prevail. Moradin, forge my spirit anew.' [cite: 126]",
+    "bonds": "His primary kinship is his tie to the Forge Father, Moradin[cite: 112]. The Sonnlinor priests and the forge-temple in Undermountain where he was raised[cite: 106, 109]. His employers, Duth and Brigit Crommer of the Crommer house, for whom he crafts ritual bells[cite: 108, 121]. His membership and roles in Waterdeep's smithing guilds[cite: 124, 125].",
+    "flaws": "Previously felt that his destined purpose, despite being 'Moradin's Chosen,' was unclear, leading to a longing for more knowledge[cite: 116, 117].",
+    "backstory": "Born under an ancient dwarven prophecy, his name meaning 'Chosen by the Flame-Father'[cite: 105]. Raised in a forge-temple built on a dwarven ruin within Undermountain, trained in smithing and the sacred duties of Moradin's clerics[cite: 106, 107, 109]. He developed a passion for intricate and beautiful metalwork over simple weaponry[cite: 111]. He studied dwarven history, particularly the conflicts with Dark Elves, noting their treachery[cite: 113, 114]. Though his path seemed laid out as Moradin's Chosen, the specifics of his destiny were vague, and he yearned for greater understanding[cite: 116, 117]. The Sonnlinor priests assigned him missionary work in Waterdeep: to spread Moradin's blessings through craftsmanship and trade, aid those in need, and defend against threats[cite: 107, 120]. In Waterdeep, his skills led him to be employed by the Crommer house to lead the crafting of ornate ritual bells from precious metals, a task he undertook to honor Moradin and to begin his Masterworks as a journeyman smith[cite: 108, 121, 122, 123]. He is a Journeyman Member of The Splendid Order of Armorers, Locksmiths, and Finesmiths, and a Supervisor and Consultant for The Most Careful Order of Skilled Smiths & Metalforgers[cite: 124, 125].",
+    "motivations": "To fulfill his sacred duty to Moradin by recovering lost dwarven legacies and sanctifying forges[cite: 107]. To spread the blessings of the Forge Father through exceptional craftwork and trade, demonstrating Moradin's benevolence and strength[cite: 120]. To fully understand the nature of his prophetic choosing by Moradin[cite: 116, 117]. To achieve the rank of Master Smith by completing his Masterworks[cite: 123].",
+    "speech_patterns": "Unknown, but his prayer suggests formal and devout speech when appropriate[cite: 126].",
+    "mannerisms": "Unknown, likely involves actions related to smithing, prayer, or dwarven customs.",
+    "past_situation": "Raised and trained as a Forge Cleric in a temple within Undermountain, driven by a prophecy that he was 'Chosen by the Flame-Father'[cite: 105, 106, 107]. He undertook missionary work in Waterdeep to practice his faith through his craft[cite: 120].",
+    "current_situation": "Residing in Waterdeep, employed by the Crommer house to oversee the creation of high-quality ritual bells[cite: 108, 121, 122]. He is an active member of local smithing guilds and continues his devotion to Moradin, seeking to fulfill his destiny and complete his Masterworks[cite: 123, 124, 125].",
+    "relationships": [
+        {"name": "Moradin", "relationship": "Deity/Forge Father", "status": "Divine"},
+        {"name": "Duth Crommer", "relationship": "Employer", "status": "Alive [cite: 108]"},
+        {"name": "Brigit Crommer", "relationship": "Employer", "status": "Alive [cite: 108]"},
+        {"name": "Sonnlinor Priests", "relationship": "Mentors/Religious Superiors", "status": "Alive"},
+        {"name": "Sir Kalen Solarath", "relationship": "Friend (PC)", "status": "Alive [cite: 34]"}
+    ]
+}

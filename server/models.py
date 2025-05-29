@@ -1,10 +1,12 @@
 # models.py
-from pydantic import BaseModel, Field, HttpUrl
+from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any
 from datetime import datetime
+import uuid # Import uuid
 
 class MemoryItem(BaseModel):
     """Represents a single memory item for an NPC."""
+    memory_id: str = Field(default_factory=lambda: str(uuid.uuid4()), description="Unique ID for the memory item.")
     timestamp: datetime = Field(default_factory=datetime.utcnow)
     content: str
     type: str = "generic" # e.g., fact, event, sentiment, observation
@@ -20,8 +22,9 @@ class NPCProfile(BaseModel):
     knowledge: List[str] = Field(default_factory=list, description="Specific pieces of knowledge the NPC has.")
     memories: List[MemoryItem] = Field(default_factory=list, description="NPC's persistent memories.")
     linked_lore_ids: List[str] = Field(default_factory=list, description="IDs of linked world information items.")
-    # We can add more fields as per PRD, e.g., relationships, appearance, voice_description
+    gm_notes: Optional[str] = Field(default=None, description="Private GM notes for this NPC.") # NEW FIELD
 
+    #Config and example remain the same
     class Config:
         json_schema_extra = {
             "example": {
@@ -32,17 +35,19 @@ class NPCProfile(BaseModel):
                 "motivations": ["Create the finest weapons", "Protect his new village"],
                 "knowledge": ["Ancient smithing techniques", "Weaknesses of various armors"],
                 "memories": [],
-                "linked_lore_ids": []
+                "linked_lore_ids": [],
+                "gm_notes": "Remind Grunk about his lost family heirloom if players mention jewelry."
             }
         }
 
+# WorldItem, DialogueRequest, DialogueResponse models remain the same for now
 class WorldItem(BaseModel):
     """Represents a piece of world information (lore, location, event, etc.)."""
     item_id: str = Field(..., description="Unique ID for the world item, can be auto-generated or user-defined.")
     name: str
     type: str # e.g., "location", "religion", "event", "faction", "object"
     description: str
-    details: Dict[str, Any] = Field(default_factory=dict) # For flexible additional data
+    details: Dict[str, Any] = Field(default_factory=dict)
     linked_npc_ids: List[str] = Field(default_factory=list)
 
     class Config:
@@ -58,16 +63,13 @@ class WorldItem(BaseModel):
         }
 
 class DialogueRequest(BaseModel):
-    """Request model for generating dialogue."""
     npc_id: str
     scene_context: str
-    player_utterance: Optional[str] = None # What the player character said to the NPC
+    player_utterance: Optional[str] = None
     active_pcs: List[str] = Field(default_factory=list, description="Names or IDs of player characters present in the scene.")
     recent_dialogue_history: List[str] = Field(default_factory=list, description="Last few lines of conversation.")
-    # Add other NPCs in scene for NPC-to-NPC awareness later
 
 class DialogueResponse(BaseModel):
-    """Response model for generated dialogue."""
     npc_id: str
     npc_dialogue: str
     new_memory_suggestions: List[str] = Field(default_factory=list, description="AI suggestions for what to add to memory.")

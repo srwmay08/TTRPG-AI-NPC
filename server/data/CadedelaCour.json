@@ -1,0 +1,32 @@
+{
+    "character_type": "PC",
+    "name": "Cade De la Cour",
+    "race": "Human (Giant's Blood heritage)",
+    "class": "Sorcerer (Untrained)",
+    "alignment": "Chaotic Good",
+    "age": "22 years old [cite: 141]",
+    "personality_traits": "Kind at heart and eager to help those in need, though his naïveté often places him in danger[cite: 142]. Insists on being taken seriously as an adult and dislikes being talked down to[cite: 173]. Possesses a notable amount of spite to compensate for perceived shortcomings[cite: 174]. Can exhibit a sly grin[cite: 82].",
+    "ideals": "Determination: Once undertaking a challenge, he will not stop until he is either broken or the challenge is complete[cite: 175]. Competency: Strives to become an expert in new information to help others who might struggle with it[cite: 176]. Believes 'The stars above grant us strength and wisdom for all who open their eyes to see them' (Célarunic quote)[cite: 140, 141].",
+    "bonds": "His mentor, Havik the Stitch, who took him in when no one else would; Cade would sacrifice himself to keep Havik safe[cite: 177]. A sense of self-reliance stemming from being abandoned by his parents and cast aside by giants[cite: 178]. Lingering memories of his parents, Adrem and Lyra De la Cour[cite: 150, 151].",
+    "flaws": "His naïveté often leads him into dangerous situations[cite: 142]. Often acts before thinking about the impact on others around him[cite: 179]. Believes he understands most things more than others[cite: 179]. Suffers from lapses in memory regarding his own life and past[cite: 148, 153].",
+    "backstory": "Cade De la Cour has faint, gnawing memories of a place called Veridian Point and the Valtimeri Bank from long ago[cite: 143, 144, 146]. He has giant's blood and once inhaled Niktogauss, which might contribute to his memory issues[cite: 147]. He remembers his parents, Adrem and Lyra, and the grand stories they told, including tales of his father's time with the Harpers[cite: 150, 151, 152]. However, details about how he lost his family or their whereabouts are clouded, with persistent images of fire and smoke from that traumatic night when he believes he 'joined the giants'[cite: 153, 154]. His parents had promised to meet him in Waterdeep, but they never did, forcing him to survive on his own[cite: 155, 156]. He found work as a 'runner' for a Niktogauss delivery service in the city[cite: 157]. Cade discovered he possessed an odd, untrained affinity for the arcane arts, which manifests with a mysterious black smoke when he casts spells[cite: 158, 159, 160]. During one delivery, he was ambushed, but was unexpectedly saved by Havik the Stitch, a goblin sorcerer[cite: 83, 84, 87, 89, 90, 91, 92]. Havik took Cade in and became his eccentric mentor[cite: 142, 98].",
+    "motivations": [
+        "Discover the nature of the mysterious black smoke that accompanies his magic and why it feels attached to him[cite: 169].",
+        "Locate his parents or find out what happened to them and why they never met him in Waterdeep[cite: 170].",
+        "Regain the portions of his memory that have been lost[cite: 171].",
+        "Hunt down those responsible for raiding his village[cite: 171].",
+        "Become a competent spellcaster[cite: 172].",
+        "Keep his mentor, Havik the Stitch, safe from all threats[cite: 172]."
+    ],
+    "speech_patterns": "Speaks Common[cite: 141]. His native tongue is Célarunic[cite: 140].",
+    "mannerisms": "Often wears a sly grin[cite: 82]. Attempts to conceal his disfigured left eye (flayed skin, glowing blue arcane eye) with a brown leather eyepatch whenever possible[cite: 163, 164, 165].",
+    "past_situation": "He lost his family under mysterious circumstances involving fire and smoke, after which he believes he spent time with giants. His parents failed to meet him in Waterdeep as they had arranged. He survived by working as a Niktogauss runner until he was rescued from an ambush by Havik the Stitch, who subsequently became his mentor[cite: 154, 155, 156, 157, 84, 87, 92, 142].",
+    "current_situation": "Lives in Waterdeep, scraping by alongside his mentor Havik. He is trying to understand his raw, untapped magical potential and cope with significant memory loss, while Havik endeavors to protect Cade's inherent hopefulness from the city's cynicism[cite: 142, 148, 159].",
+    "relationships": [
+        {"name": "Adrem De la Cour", "relationship": "Father", "status": "Missing [cite: 168]"},
+        {"name": "Lyra De la Cour", "relationship": "Mother", "status": "Missing [cite: 168]"},
+        {"name": "Havik the Stitch", "relationship": "Mentor (PC)", "status": "Alive [cite: 168]"},
+        {"name": "Roland Dubois", "relationship": "Childhood Friend", "status": "Unknown [cite: 168]"},
+        {"name": "Barren Dolf", "relationship": "Employer (Niktogauss delivery)", "status": "Alive [cite: 168]"}
+    ]
+}

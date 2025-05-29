@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bugbear Banter GM Interface</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; height: 100vh; background-color: #f4f4f4; }
+        .column { padding: 15px; overflow-y: auto; box-sizing: border-box; }
+        #left-column { width: 25%; background-color: #e9e9e9; border-right: 1px solid #ccc; }
+        #center-column { width: 50%; background-color: #fff; border-right: 1px solid #ccc; display: flex; flex-direction: column; }
+        #right-column { width: 25%; background-color: #f0f0f0; }
+        
+        h2, h3 { margin-top: 0; color: #333; }
+        button { padding: 8px 12px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 5px; }
+        button:hover { background-color: #0056b3; }
+        textarea, input[type="text"], input[type="number"] { width: calc(100% - 16px); padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;}
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+
+        #npc-list ul { list-style-type: none; padding: 0; }
+        #npc-list li { padding: 8px; cursor: pointer; border-bottom: 1px solid #ddd; }
+        #npc-list li:hover, #npc-list li.selected { background-color: #d1e7ff; }
+
+        #dialogue-transcript { flex-grow: 1; border: 1px solid #eee; padding: 10px; margin-bottom:10px; overflow-y: auto; background-color: #f9f9f9; min-height: 200px; }
+        .dialogue-entry { margin-bottom: 8px; padding: 5px; border-radius: 3px; }
+        .player-utterance { background-color: #e1f7d5; text-align: right; }
+        .npc-response { background-color: #ddebf7; }
+        .scene-event { font-style: italic; color: #777; text-align: center; margin:10px 0; }
+
+        .memory-item, .suggested-item { background-color: #fff; border: 1px solid #eee; padding: 5px; margin-bottom: 5px; border-radius: 3px; font-size:0.9em; display: flex; justify-content: space-between; align-items: center; }
+        .memory-item button, .suggested-item button { font-size: 0.8em; padding: 3px 6px; margin-left: 5px; }
+        .clickable-suggestion { cursor: pointer; text-decoration: underline; color: blue; }
+    </style>
+</head>
+<body>
+
+    <div id="left-column" class="column">
+        <h2>NPCs</h2>
+        <div id="create-npc-form">
+            <h3>Create New NPC</h3>
+            <label for="new-npc-name">Name:</label>
+            <input type="text" id="new-npc-name" required>
+            <label for="new-npc-description">Description:</label>
+            <textarea id="new-npc-description" rows="3" required></textarea>
+            <label for="new-npc-personality">Personality (comma-separated):</label>
+            <input type="text" id="new-npc-personality">
+            <button onclick="createNPC()">Create NPC</button>
+        </div>
+        <hr>
+        <h3>NPC List</h3>
+        <div id="npc-list"><ul></ul></div>
+    </div>
+
+    <div id="center-column" class="column">
+        <h2>Scene Interaction</h2>
+        <div id="scene-setup">
+            <label for="player-characters">Player Characters (comma-separated):</label>
+            <input type="text" id="player-characters" placeholder="e.g., Valerius, Lyra">
+            <label for="scene-context">Dynamic Scene Context:</label>
+            <textarea id="scene-context" rows="4" placeholder="Describe the current environment, mood, ongoing events..."></textarea>
+        </div>
+        <hr>
+        <h3>Dialogue with <span id="active-npc-name">No One Selected</span></h3>
+        <div id="dialogue-transcript">
+            <p class="scene-event">Select an NPC to begin interaction.</p>
+        </div>
+        <div id="dialogue-input-area">
+            <label for="player-utterance">Player Says:</label>
+            <textarea id="player-utterance" rows="2" placeholder="Enter player dialogue here..."></textarea>
+            <button onclick="generateDialogue()" id="generate-dialogue-btn" disabled>Send to NPC</button>
+        </div>
+        <div id="ai-suggestions">
+            <h4>AI Suggestions:</h4>
+            <div id="suggested-memories-list"></div>
+            <div id="suggested-topics-list"></div>
+        </div>
+    </div>
+
+    <div id="right-column" class="column">
+        <h2>NPC Details: <span id="details-npc-name">None</span></h2>
+        <div id="npc-profile-display">
+            <p><strong>Description:</strong> <span id="profile-description"></span></p>
+            <p><strong>Personality:</strong> <span id="profile-personality"></span></p>
+            </div>
+        <hr>
+        <h3>GM Notes</h3>
+        <textarea id="gm-notes" rows="5" placeholder="Private notes for this NPC..."></textarea>
+        <button onclick="saveGMNotes()" id="save-gm-notes-btn" disabled>Save Notes</button>
+        <hr>
+        <h3>NPC Memories</h3>
+        <div id="add-memory-form">
+            <label for="new-memory-content">Add Custom Memory:</label>
+            <input type="text" id="new-memory-content" placeholder="Fact, event, observation...">
+            <input type="text" id="new-memory-type" placeholder="Type (e.g., fact, seen)">
+            <button onclick="addMemoryToNPC()" id="add-memory-btn" disabled>Add Memory</button>
+        </div>
+        <div id="npc-memories-list">
+            </div>
+        <hr>
+        <h3>World Lore (Placeholder)</h3>
+        <p><em>Lore linking and management UI to be implemented.</em></p>
+    </div>
+
+<script>
+    let selectedNPCId = null;
+    let allNPCs = []; // To store fetched NPCs
+
+    const API_BASE_URL = ''; // Assuming served from same origin
+
+    // --- Utility Functions ---
+    function getElem(id) { return document.getElementById(id); }
+    function updateText(id, text) { getElem(id).textContent = text; }
+    function disableBtn(id, disabled) { getElem(id).disabled = disabled; }
+
+    // --- NPC Management ---
+    async function fetchNPCs() {
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/npcs`);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            allNPCs = await response.json();
+            renderNPCList();
+        } catch (error) {
+            console.error('Error fetching NPCs:', error);
+            alert('Failed to load NPCs.');
+        }
+    }
+
+    function renderNPCList() {
+        const ul = getElem('npc-list').querySelector('ul');
+        ul.innerHTML = ''; // Clear existing list
+        allNPCs.forEach(npc => {
+            const li = document.createElement('li');
+            li.textContent = npc.name;
+            li.dataset.npcId = npc._id; // Use _id from backend
+            li.onclick = () => selectNPC(npc._id);
+            if (npc._id === selectedNPCId) {
+                li.classList.add('selected');
+            }
+            ul.appendChild(li);
+        });
+    }
+
+    async function createNPC() {
+        const name = getElem('new-npc-name').value;
+        const description = getElem('new-npc-description').value;
+        const personality = getElem('new-npc-personality').value.split(',').map(s => s.trim()).filter(s => s);
+
+        if (!name || !description) {
+            alert('NPC Name and Description are required.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/npcs`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, description, personality_traits: personality, memories: [], gm_notes: "" })
+            });
+            if (!response.ok) {
+                 const errorData = await response.json();
+                 throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+            }
+            const result = await response.json();
+            alert(result.message);
+            fetchNPCs(); // Refresh list
+            // Clear form
+            getElem('new-npc-name').value = '';
+            getElem('new-npc-description').value = '';
+            getElem('new-npc-personality').value = '';
+        } catch (error) {
+            console.error('Error creating NPC:', error);
+            alert(`Failed to create NPC: ${error.message}`);
+        }
+    }
+
+    function selectNPC(npcId) {
+        selectedNPCId = npcId;
+        const selectedNPC = allNPCs.find(npc => npc._id === npcId);
+        renderNPCList(); // Re-render to show selection
+
+        if (selectedNPC) {
+            updateText('active-npc-name', selectedNPC.name);
+            updateText('details-npc-name', selectedNPC.name);
+            updateText('profile-description', selectedNPC.description);
+            updateText('profile-personality', selectedNPC.personality_traits.join(', '));
+            getElem('gm-notes').value = selectedNPC.gm_notes || '';
+            renderMemories(selectedNPC.memories || []);
+            
+            disableBtn('generate-dialogue-btn', false);
+            disableBtn('save-gm-notes-btn', false);
+            disableBtn('add-memory-btn', false);
+            getElem('dialogue-transcript').innerHTML = `<p class="scene-event">Interacting with ${selectedNPC.name}.</p>`;
+
+        } else {
+            updateText('active-npc-name', 'No One Selected');
+            updateText('details-npc-name', 'None');
+            disableBtn('generate-dialogue-btn', true);
+            disableBtn('save-gm-notes-btn', true);
+            disableBtn('add-memory-btn', true);
+        }
+    }
+
+    // --- GM Notes ---
+    async function saveGMNotes() {
+        if (!selectedNPCId) return;
+        const notes = getElem('gm-notes').value;
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/npcs/${selectedNPCId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ gm_notes: notes })
+            });
+            if (!response.ok) throw new Error('Failed to save notes');
+            const result = await response.json();
+            alert(result.message);
+            // Update local NPC data
+            const npcIndex = allNPCs.findIndex(npc => npc._id === selectedNPCId);
+            if (npcIndex > -1) allNPCs[npcIndex].gm_notes = notes;
+
+        } catch (error) {
+            console.error('Error saving GM notes:', error);
+            alert('Failed to save GM notes.');
+        }
+    }
+    
+    // --- Memories ---
+    function renderMemories(memories) {
+        const listDiv = getElem('npc-memories-list');
+        listDiv.innerHTML = '<h4>Current Memories:</h4>';
+        if (!memories || memories.length === 0) {
+            listDiv.innerHTML += '<p>No memories yet.</p>';
+            return;
+        }
+        memories.forEach(mem => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'memory-item';
+            itemDiv.innerHTML = `
+                <span>(${new Date(mem.timestamp).toLocaleTimeString()}) [${mem.type}] ${mem.content}</span>
+                <button onclick="deleteMemory('${mem.memory_id}')">Undo</button>
+            `;
+            listDiv.appendChild(itemDiv);
+        });
+    }
+
+    async function addMemoryToNPC(content = null, type = null) {
+        if (!selectedNPCId) return;
+        
+        const memoryContent = content || getElem('new-memory-content').value;
+        const memoryType = type || getElem('new-memory-type').value || 'manual_fact';
+
+        if (!memoryContent) {
+            alert('Memory content cannot be empty.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/npcs/${selectedNPCId}/memory`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ content: memoryContent, type: memoryType, source: 'gm_interface_manual' })
+            });
+            const result = await response.json();
+            if (!response.ok) {
+                 throw new Error(result.error || `Failed to add memory. Status: ${response.status}`);
+            }
+            alert(result.message || 'Memory added!');
+            renderMemories(result.updated_memories || []); // Use updated memories from response
+             // Update local NPC data
+            const npcIndex = allNPCs.findIndex(npc => npc._id === selectedNPCId);
+            if (npcIndex > -1) allNPCs[npcIndex].memories = result.updated_memories;
+
+            if (!content) getElem('new-memory-content').value = ''; // Clear only if not pre-filled
+            if (!type) getElem('new-memory-type').value = '';
+
+        } catch (error) {
+            console.error('Error adding memory:', error);
+            alert(`Failed to add memory: ${error.message}`);
+        }
+    }
+    
+    async function deleteMemory(memoryId) {
+        if (!selectedNPCId || !memoryId) return;
+        if (!confirm('Are you sure you want to delete this memory?')) return;
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/npcs/${selectedNPCId}/memory/${memoryId}`, {
+                method: 'DELETE'
+            });
+            const result = await response.json();
+            if (!response.ok) {
+                 throw new Error(result.error || `Failed to delete memory. Status: ${response.status}`);
+            }
+            alert(result.message || 'Memory deleted!');
+            renderMemories(result.updated_memories || []);
+            // Update local NPC data
+            const npcIndex = allNPCs.findIndex(npc => npc._id === selectedNPCId);
+            if (npcIndex > -1) allNPCs[npcIndex].memories = result.updated_memories;
+
+        } catch (error) {
+            console.error('Error deleting memory:', error);
+            alert(`Failed to delete memory: ${error.message}`);
+        }
+    }
+
+    // --- Dialogue Interaction ---
+    let dialogueHistory = []; // Simple array of strings for now
+
+    async function generateDialogue() {
+        if (!selectedNPCId) {
+            alert('Please select an NPC first.');
+            return;
+        }
+
+        const sceneContext = getElem('scene-context').value;
+        const playerUtterance = getElem('player-utterance').value;
+        const activePCs = getElem('player-characters').value.split(',').map(s => s.trim()).filter(s => s);
+
+        if (!sceneContext) {
+            alert('Scene context is required.');
+            return;
+        }
+        
+        addDialogueToTranscript(playerUtterance, 'player');
+        dialogueHistory.push(`Player: ${playerUtterance}`);
+
+
+        const payload = {
+            npc_id: selectedNPCId, // Though not used by AI service directly, good for logging/context
+            scene_context: sceneContext,
+            player_utterance: playerUtterance,
+            active_pcs: activePCs,
+            recent_dialogue_history: dialogueHistory.slice(-5) // Send last 5 lines
+        };
+
+        try {
+            disableBtn('generate-dialogue-btn', true);
+            const response = await fetch(`${API_BASE_URL}/api/npcs/${selectedNPCId}/dialogue`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const result = await response.json();
+            if (!response.ok) {
+                 throw new Error(result.error || `Failed to generate dialogue. Status: ${response.status}`);
+            }
+
+            addDialogueToTranscript(result.npc_dialogue, 'npc');
+            dialogueHistory.push(`NPC (${getElem('active-npc-name').textContent}): ${result.npc_dialogue}`);
+            getElem('player-utterance').value = ''; // Clear player input
+
+            renderAISuggestions(result.new_memory_suggestions, result.generated_topics);
+
+        } catch (error) {
+            console.error('Error generating dialogue:', error);
+            alert(`Dialogue generation failed: ${error.message}`);
+            addDialogueToTranscript(`Error: ${error.message}`, 'system-error');
+        } finally {
+            disableBtn('generate-dialogue-btn', false);
+        }
+    }
+
+    function addDialogueToTranscript(text, type) { // type: 'player', 'npc', 'scene-event', 'system-error'
+        const transcriptDiv = getElem('dialogue-transcript');
+        const entry = document.createElement('div');
+        entry.classList.add('dialogue-entry');
+        let speaker = "";
+
+        if (type === 'player') {
+            entry.classList.add('player-utterance');
+            speaker = "You (Player): ";
+        } else if (type === 'npc') {
+            entry.classList.add('npc-response');
+            speaker = `${getElem('active-npc-name').textContent || 'NPC'}: `;
+        } else if (type === 'scene-event' || type === 'system-error') {
+            entry.classList.add('scene-event');
+            if (type === 'system-error') entry.style.color = 'red';
+        }
+        entry.innerHTML = `<strong>${speaker}</strong>${text}`; // Using innerHTML for bold, ensure text is sanitized if from untrusted source
+        
+        // If it's the initial message, replace it, otherwise append
+        if (transcriptDiv.childElementCount === 1 && transcriptDiv.firstChild.classList.contains('scene-event')) {
+            transcriptDiv.innerHTML = '';
+        }
+        transcriptDiv.appendChild(entry);
+        transcriptDiv.scrollTop = transcriptDiv.scrollHeight; // Auto-scroll
+    }
+
+    function renderAISuggestions(memorySuggestions, topicSuggestions) {
+        const memList = getElem('suggested-memories-list');
+        memList.innerHTML = '<strong>Suggested Memories:</strong>';
+        if (memorySuggestions && memorySuggestions.length > 0) {
+            memorySuggestions.forEach(sugg => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'suggested-item';
+                itemDiv.innerHTML = `
+                    <span>${sugg}</span>
+                    <button onclick="populateAddMemoryForm('${sugg}', 'ai_suggestion')">To Memory</button>
+                `;
+                memList.appendChild(itemDiv);
+            });
+        } else {
+            memList.innerHTML += '<p>None.</p>';
+        }
+
+        const topicList = getElem('suggested-topics-list');
+        topicList.innerHTML = '<strong>Suggested Topics:</strong>';
+         if (topicSuggestions && topicSuggestions.length > 0) {
+            topicSuggestions.forEach(sugg => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'suggested-item clickable-suggestion'; // Make it look clickable
+                itemDiv.textContent = sugg;
+                itemDiv.onclick = () => { // Clicking a topic could populate player utterance
+                    getElem('player-utterance').value = `Tell me more about ${sugg}.`;
+                };
+                topicList.appendChild(itemDiv);
+            });
+        } else {
+            topicList.innerHTML += '<p>None.</p>';
+        }
+    }
+    
+    function populateAddMemoryForm(content, type) {
+        getElem('new-memory-content').value = content;
+        getElem('new-memory-type').value = type;
+        getElem('new-memory-content').focus();
+    }
+
+
+    // --- Initial Load ---
+    window.onload = () => {
+        fetchNPCs();
+    };
+</script>
+
+</body>
+</html>
