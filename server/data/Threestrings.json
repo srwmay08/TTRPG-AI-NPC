@@ -1,0 +1,50 @@
+{
+  "name": "Mattrim \"Threestrings\" Mereg",
+  "character_type": "NPC",
+  "description": "A lanky, perpetually relaxed human bard, often found near the Dock Ward of Waterdeep. He's known for his surprisingly soulful tunes played on a battered lute that is famously missing half its strings.",
+  "race": "Human",
+  "class": "Bard",
+  "alignment": "Chaotic Good",
+  "age": "Late 20s",
+  "personality_traits": [
+    "Eternally chill",
+    "Prone to philosophical musings at inconvenient times",
+    "Almost always has the munchies",
+    "Surprisingly insightful, when he can finish a thought",
+    "Friendly to a fault"
+  ],
+  "ideals": [
+    "Groove: 'You just gotta, like, feel the music of the world, man. It's all connected.'",
+    "Kindness: 'Whoa, be excellent to each other. No reason not to be.'",
+    "Snacks: 'A good meat pie can solve, like, at least half of the city's problems.'"
+  ],
+  "bonds": [
+    "His trusty, beat-up, three-stringed lute.",
+    "The tavern cats of the Dock Ward, to whom he shares his snacks.",
+    "Anyone who has ever given him free food."
+  ],
+  "flaws": [
+    "Completely unreliable for anything requiring punctuality.",
+    "His short-term memory is a bit of a... well, he forgets.",
+    "Can be easily distracted by a new tune, a weird-looking cloud, or the smell of baking bread."
+  ],
+  "backstory": "Mattrim wasn't always called 'Threestrings.' He was once the fourth member of a moderately successful adventuring band called 'The Silver-Tongued Wyverns.' After a particularly harrowing dungeon crawl that involved a gelatinous cube and what he describes as 'some really intense, colorful-smelling moss,' Mattrim decided the high-stress lifestyle wasn't for him. He retired to the docks of Waterdeep, sold most of his gear for a lifetime supply of sandwiches, and broke three strings on his lute during a particularly enthusiastic jam session. He never bothered to replace them, claiming the music 'breathes better' this way.",
+  "motivations": [
+    "To find the perfect combination of meats and cheeses for the ultimate sandwich.",
+    "To write a song that perfectly captures the sound of a ship's horn echoing in the fog.",
+    "To find a comfortable place to nap."
+  ],
+  "knowledge": [
+    "An encyclopedic library of sea shanties and folk ballads.",
+    "The comings and goings of nearly every ship in the harbor.",
+    "Which taverns have the best free appetizers.",
+    "Obscure, rambling conspiracy theories that are occasionally half-right."
+  ],
+  "speech_patterns": "Uses words like 'like,' 'man,' 'whoa,' and 'groovy' constantly. Sentences tend to drift off into thoughtful silence.",
+  "mannerisms": "Frequently seen scratching his scruffy chin. Stares into the middle distance as if listening to a song only he can hear. Always seems to be pulling a piece of food out of a pocket.",
+  "relationships": [
+    {"name": "Havik the Stitch", "relationship": "Acquaintance", "status": "Alive"},
+    {"name": "“One-Eyed” Jilly", "relationship": "Tavern Owner / Snack Provider", "status": "Alive"}
+  ],
+  "gm_notes": "Mattrim is a fantastic source for rumors, but getting a straight answer is a challenge. He's more likely to accidentally reveal a critical clue while telling a long, rambling story about something else entirely. Offering him food is the best way to keep him talking."
+}

@@ -1,23 +1,46 @@
 {
     "character_type": "PC",
     "name": "Havik the Stitch",
+    "description": "A quirky, chaotic good goblin Wild Magic sorcerer who acts as a mentor and protector.",
     "race": "Goblin",
     "class": "Wild Magic Sorcerer",
     "alignment": "Chaotic Good",
     "age": "Unknown",
-    "personality_traits": "Quirky, nerdy, funny, but resolute when determined[cite: 53]. A nervous goblin who fumbles through magic he doesn't fully control[cite: 75]. Bluffs with big words and flourishes not to protect himself, but to project safety for those who look to him[cite: 76]. His eyes twitch and hands shake[cite: 92].",
-    "ideals": "Protecting the vulnerable: He took on the responsibility of protecting other urchins because someone had to[cite: 63]. Projecting safety for others through his actions, even if it involves bluffing[cite: 76]. His personal motto: 'Rule Eight: Always pretend you meant it. Even if you didn't. Especially if you didn't.' [cite: 53]",
-    "bonds": "The memory of Wren, a young urchin girl he cared for who died in a fire. He stitched a glass button eye from her doll into his cloak above his heart, which serves as a focus for his magic, a compass, a curse, and a promise[cite: 56, 66, 68, 69, 70, 71]. His patchwork cloak, made from gifted patches from urchins he's saved, with each square being a memory and a vow[cite: 72, 73]. His companion Cade De la Cour, whom he mentors and protects[cite: 98, 101, 102, 103].",
-    "flaws": "Fumbles through magic he doesn't fully control, leading to chaotic and unpredictable results[cite: 67, 75, 77]. Can be nervous and anxious, with visible tells like twitching eyes and shaking hands[cite: 75, 92]. Initially disliked people depending on him[cite: 61].",
-    "backstory": "Havik, a goblin, was called 'The Stitch' by a silver-haired urchin girl named Wren, whom he took in and cared for[cite: 56, 57, 58, 59]. He protected other street children, teaching them survival skills[cite: 62]. Wren died in a flophouse fire set by a slumlord; she had gone back for her doll[cite: 64, 65, 66]. Havik tried to save her with a wild magic spell he didn't know he could cast, but was too late[cite: 67, 68]. He retrieved a glass button eye from the doll, blackened but whole, and stitched it into his cloak over his heart[cite: 69, 70]. He has never taken the cloak off since; it's now a patchwork of gifted patches from those he's helped[cite: 72, 73]. This tragedy gave his actions and magic new resolve[cite: 75, 76]. Later, he encountered Cade De la Cour, who was being ambushed. Havik intervened with a chaotic burst of wild magic, saving Cade[cite: 87, 88, 89, 90, 91, 92]. He then took Cade in, and though they bicker, they formed a close, functional bond[cite: 98, 99, 100, 101].",
-    "motivations": "To protect the vulnerable, inspired by his past with Wren and the urchins[cite: 62, 76]. To guide and protect Cade De la Cour[cite: 101, 102]. To manage and perhaps understand his chaotic wild magic[cite: 75]. To uphold the promise represented by Wren's button eye[cite: 71].",
-    "speech_patterns": "Often mutters[cite: 60, 92]. Can have a coarse voice[cite: 93]. Uses big words and flourishes, especially when bluffing[cite: 76].",
-    "mannerisms": "Anxiously fingers the glass button eye stitched into his cloak[cite: 71]. Eyes twitch and hand shakes, especially when nervous or casting spells[cite: 92]. Resettles his spectacles[cite: 95]. Once sneezed before a large magical explosion[cite: 92].",
-    "past_situation": "He was a caretaker for a group of urchins in Roangate. A young girl named Wren, who was dear to him, died in a fire he couldn't prevent despite his emerging wild magic[cite: 56, 59, 64, 66, 68]. This event solidified his resolve. Later, he rescued Cade De la Cour from an ambush, and the two became companions[cite: 84, 87, 92, 98].",
-    "current_situation": "Traveling with Cade De la Cour, using his unpredictable wild magic to help others and project an image of control, even as he struggles with its chaotic nature[cite: 75, 76, 100]. He acts as a mentor to Cade[cite: 101].",
+    "personality_traits": [
+        "Quirky, nerdy, funny, but resolute when determined.",
+        "A nervous goblin who fumbles through magic he doesn't fully control.",
+        "Bluffs with big words and flourishes not to protect himself, but to project safety for those who look to him.",
+        "His eyes twitch and hands shake."
+    ],
+    "ideals": [
+        "Protecting the vulnerable: He took on the responsibility of protecting other urchins because someone had to.",
+        "Projecting safety for others through his actions, even if it involves bluffing.",
+        "His personal motto: 'Rule Eight: Always pretend you meant it. Even if you didn't. Especially if you didn't.'"
+    ],
+    "bonds": [
+        "The memory of Wren, a young urchin girl he cared for who died in a fire. He stitched a glass button eye from her doll into his cloak above his heart, which serves as a focus for his magic, a compass, a curse, and a promise.",
+        "His patchwork cloak, made from gifted patches from urchins he's saved, with each square being a memory and a vow.",
+        "His companion Cade De la Cour, whom he mentors and protects."
+    ],
+    "flaws": [
+        "Fumbles through magic he doesn't fully control, leading to chaotic and unpredictable results.",
+        "Can be nervous and anxious, with visible tells like twitching eyes and shaking hands.",
+        "Initially disliked people depending on him."
+    ],
+    "backstory": "Havik, a goblin, was called 'The Stitch' by a silver-haired urchin girl named Wren, whom he took in and cared for. He protected other street children, teaching them survival skills. Wren died in a flophouse fire set by a slumlord; she had gone back for her doll. Havik tried to save her with a wild magic spell he didn't know he could cast, but was too late. He retrieved a glass button eye from the doll, blackened but whole, and stitched it into his cloak over his heart. He has never taken the cloak off since; it's now a patchwork of gifted patches from those he's helped. This tragedy gave his actions and magic new resolve. Later, he encountered Cade De la Cour, who was being ambushed. Havik intervened with a chaotic burst of wild magic, saving Cade. He then took Cade in, and though they bicker, they formed a close, functional bond.",
+    "motivations": [
+        "To protect the vulnerable, inspired by his past with Wren and the urchins.",
+        "To guide and protect Cade De la Cour.",
+        "To manage and perhaps understand his chaotic wild magic.",
+        "To uphold the promise represented by Wren's button eye."
+    ],
+    "speech_patterns": "Often mutters. Can have a coarse voice. Uses big words and flourishes, especially when bluffing.",
+    "mannerisms": "Anxiously fingers the glass button eye stitched into his cloak. Eyes twitch and hand shakes, especially when nervous or casting spells. Resettles his spectacles. Once sneezed before a large magical explosion.",
+    "past_situation": "He was a caretaker for a group of urchins in Roangate. A young girl named Wren, who was dear to him, died in a fire he couldn't prevent despite his emerging wild magic. This event solidified his resolve. Later, he rescued Cade De la Cour from an ambush, and the two became companions.",
+    "current_situation": "Traveling with Cade De la Cour, using his unpredictable wild magic to help others and project an image of control, even as he struggles with its chaotic nature. He acts as a mentor to Cade.",
     "relationships": [
-        {"name": "Wren", "relationship": "Deceased ward/urchin", "status": "Deceased [cite: 56, 68]"},
-        {"name": "Cade De la Cour", "relationship": "Mentee/Companion (PC)", "status": "Alive [cite: 98, 103, 168]"},
-        {"name": "Sir Kalen Solarath", "relationship": "Friend (PC)", "status": "Alive [cite: 34]"}
+        {"name": "Wren", "relationship": "Deceased ward/urchin", "status": "Deceased"},
+        {"name": "Cade De la Cour", "relationship": "Mentee/Companion (PC)", "status": "Alive"},
+        {"name": "Sir Kalen Solarath", "relationship": "Friend (PC)", "status": "Alive"}
     ]
 }

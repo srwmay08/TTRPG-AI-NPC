@@ -2,67 +2,71 @@
 from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any
 from datetime import datetime
-import uuid # Import uuid
+import uuid
 
 class MemoryItem(BaseModel):
     """Represents a single memory item for an NPC."""
     memory_id: str = Field(default_factory=lambda: str(uuid.uuid4()), description="Unique ID for the memory item.")
     timestamp: datetime = Field(default_factory=datetime.utcnow)
     content: str
-    type: str = "generic" # e.g., fact, event, sentiment, observation
-    source: str = "dialogue" # e.g., dialogue, gm_input, linked_lore
+    type: str = "generic"
+    source: str = "dialogue"
 
 class NPCProfile(BaseModel):
-    """Defines the structure for an NPC's profile."""
-    name: str = Field(..., min_length=1, description="The name of the NPC.")
-    description: str = Field(..., description="A general description of the NPC.")
+    """Defines the structure for a character's profile."""
+    name: str = Field(..., min_length=1, description="The name of the character.")
+    description: str = Field(..., description="A general description of the character.")
+    character_type: str = Field(default="NPC", description="Type of character: NPC or PC.")
+    
+    # --- ADDED OPTIONAL FIELDS TO MATCH YOUR DETAILED JSONs ---
+    race: Optional[str] = None
+    class_str: Optional[str] = Field(default=None, alias="class") # Use alias because 'class' is a reserved keyword in Python
+    alignment: Optional[str] = None
+    age: Optional[str] = None
+    ideals: List[str] = Field(default_factory=list)
+    bonds: List[str] = Field(default_factory=list)
+    flaws: List[str] = Field(default_factory=list)
+    speech_patterns: Optional[str] = None
+    mannerisms: Optional[str] = None
+    relationships: List[Dict[str, Any]] = Field(default_factory=list)
+    past_situation: Optional[str] = None
+    current_situation: Optional[str] = None
+    
+    # --- EXISTING FIELDS ---
     personality_traits: List[str] = Field(default_factory=list, description="Key personality traits.")
     background_story: Optional[str] = None
     motivations: List[str] = Field(default_factory=list)
-    knowledge: List[str] = Field(default_factory=list, description="Specific pieces of knowledge the NPC has.")
-    memories: List[MemoryItem] = Field(default_factory=list, description="NPC's persistent memories.")
+    knowledge: List[str] = Field(default_factory=list, description="Specific pieces of knowledge the character has.")
+    memories: List[MemoryItem] = Field(default_factory=list, description="Character's persistent memories.")
     linked_lore_ids: List[str] = Field(default_factory=list, description="IDs of linked world information items.")
-    gm_notes: Optional[str] = Field(default=None, description="Private GM notes for this NPC.") # NEW FIELD
+    gm_notes: Optional[str] = Field(default=None, description="Private GM notes for this character.")
 
-    #Config and example remain the same
     class Config:
+        # This allows Pydantic to populate fields from data using either the field name OR its alias
+        populate_by_name = True
         json_schema_extra = {
             "example": {
-                "name": "Grunk the Orc Blacksmith",
-                "description": "A burly orc with a surprisingly gentle demeanor, skilled in smithing.",
-                "personality_traits": ["gruff exterior", "kind-hearted", "proud of his work"],
-                "background_story": "Exiled from his tribe for refusing to participate in a raid, Grunk found solace in the forge.",
-                "motivations": ["Create the finest weapons", "Protect his new village"],
-                "knowledge": ["Ancient smithing techniques", "Weaknesses of various armors"],
-                "memories": [],
-                "linked_lore_ids": [],
-                "gm_notes": "Remind Grunk about his lost family heirloom if players mention jewelry."
+                "name": "Mattrim 'Threestrings' Mereg",
+                "character_type": "NPC",
+                "description": "A laid-back human bard from Waterdeep.",
+                "race": "Human",
+                "class": "Bard",
+                "personality_traits": ["Eternally chill", "Has the munchies"]
             }
         }
 
-# WorldItem, DialogueRequest, DialogueResponse models remain the same for now
+# --- OTHER MODELS REMAIN THE SAME ---
 class WorldItem(BaseModel):
-    """Represents a piece of world information (lore, location, event, etc.)."""
+    # ... (no changes needed)
     item_id: str = Field(..., description="Unique ID for the world item, can be auto-generated or user-defined.")
     name: str
-    type: str # e.g., "location", "religion", "event", "faction", "object"
+    type: str
     description: str
     details: Dict[str, Any] = Field(default_factory=dict)
     linked_npc_ids: List[str] = Field(default_factory=list)
 
-    class Config:
-        json_schema_extra = {
-            "example": {
-                "item_id": "daggerford_murders_event_001",
-                "name": "The Daggerford Murders",
-                "type": "event",
-                "description": "A series of unsolved murders that have recently plagued the town of Daggerford.",
-                "details": {"victims": ["Merchant Aldo", "Guard Captain Anya"], "suspects": ["Mysterious cloaked figure", "Rival merchant guild"]},
-                "linked_npc_ids": ["grunk_orc_blacksmith_id"]
-            }
-        }
-
 class DialogueRequest(BaseModel):
+    # ... (no changes needed)
     npc_id: str
     scene_context: str
     player_utterance: Optional[str] = None
@@ -70,6 +74,7 @@ class DialogueRequest(BaseModel):
     recent_dialogue_history: List[str] = Field(default_factory=list, description="Last few lines of conversation.")
 
 class DialogueResponse(BaseModel):
+    # ... (no changes needed)
     npc_id: str
     npc_dialogue: str
     new_memory_suggestions: List[str] = Field(default_factory=list, description="AI suggestions for what to add to memory.")

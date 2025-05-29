@@ -1,35 +1,50 @@
 {
     "character_type": "PC",
     "name": "Sir Kalen Solarath",
+    "description": "A devoted, lawful good human paladin of the Order of the Aster, carrying a quiet resolve and celestial heritage.",
     "race": "Human (Celestial Heritage)",
     "class": "Paladin (Order of the Aster)",
     "alignment": "Lawful Good",
     "age": "Unknown (Recently knighted)",
-    "personality_traits": "Devoted, steady, and unshaken in his purpose[cite: 4]. Possesses a quiet resolve[cite: 1]. Believes even in the darkest moments, the dawn will come, and strives to be its herald[cite: 44]. Speaks plainly and acts decisively, believing hesitation can cost lives[cite: 45].",
-    "ideals": "Justice: Evil must be confronted, not tolerated; the innocent deserve defenders who do not flinch[cite: 46]. Renewal: Believes even vengeance must serve a greater hope; his goal is to restore peace, not feed wrath[cite: 47].",
-    "bonds": "Carries the memory of Ser Brenlin Vos with him in all things and will not let his sacrifice be forgotten[cite: 48]. The Order of the Aster gave him purpose, and he would lay down his life for his brothers and sisters[cite: 49, 50].",
-    "flaws": "Struggles to forgive himself for things he could not prevent[cite: 51]. Sometimes pushes too hard, believing it's his duty alone to bear the burden of justice[cite: 52].",
-    "backstory": "Sir Kalen Solarath was born during a spectacular aurora[cite: 5]. His parents, humble woodcutters, died from a mysterious plague when he was a boy[cite: 6]. He was taken in by Ser Brenlin Vos, a knight of the Order of the Aster, who believed Kalen was a child of destiny[cite: 7]. Raised in Dawnwatch Hold among devout Lathanderites[cite: 8], he was taught that light dispels darkness. He often had dreams of radiant realms, unaware they were echoes of his celestial origin[cite: 10, 11]. Even as a youth, he sometimes glowed faintly or manifested bursts of healing light or a radiant shield under stress[cite: 12, 13]. Kalen served as a squire under Ser Brenlin Vos[cite: 15]. On a mission to an old crypt near the Ardeep Forest, undead were unleashed[cite: 16]. Brenlin held the line to allow villagers to evacuate and was lost; no body was recovered[cite: 17, 18, 19]. This experience led Kalen to swear the Oath of Vengeance, not from hatred, but from a sense of responsibility to prevent similar suffering[cite: 20, 21]. He was recently knighted[cite: 25].",
-    "motivations": [
-        "Destroy the schemes of those who profane the dawn, particularly cults and heretics who use undeath to defy the natural cycle[cite: 36].",
-        "Recover lost relics, scriptures, or rites tied to Lathander's faith and return them to the Order of the Aster for restoration[cite: 37].",
-        "Protect the innocent and guide those in despair, offering light and healing where darkness has taken root[cite: 38].",
-        "Uncover the truth behind his celestial heritage and its meaning in the context of Lathander's will[cite: 39].",
-        "Earn promotion to Knight-Officer within the Order of the Aster, proving his discipline and divine purpose[cite: 40].",
-        "Destroy a high-ranking undead servant (e.g., death knight, wight lord, necromancer of Myrkul) as a personal act of justice[cite: 41].",
-        "Obtain and restore a lost holy weapon of Lathander[cite: 42]."
+    "personality_traits": [
+        "Devoted, steady, and unshaken in his purpose.",
+        "Possesses a quiet resolve.",
+        "Believes even in the darkest moments, the dawn will come, and strives to be its herald.",
+        "Speaks plainly and acts decisively, believing hesitation can cost lives."
     ],
-    "speech_patterns": "Speaks plainly[cite: 45].",
-    "mannerisms": "Carries himself with a broad, upright posture and a composed presence[cite: 27].",
-    "past_situation": "Served as a squire under Ser Brenlin Vos. He witnessed his mentor's sacrifice while fighting undead unleashed from a disturbed crypt, an event that led him to swear the Oath of Vengeance[cite: 15, 16, 17, 18, 19, 21].",
-    "current_situation": "Recently knighted and stationed in Waterdeep, serving in the Spires of the Morning. He helps protect the Spires and occasionally ventures beyond the city for missions of mercy and protection[cite: 25, 26].",
+    "ideals": [
+        "Justice: Evil must be confronted, not tolerated; the innocent deserve defenders who do not flinch.",
+        "Renewal: Believes even vengeance must serve a greater hope; his goal is to restore peace, not feed wrath."
+    ],
+    "bonds": [
+        "Carries the memory of Ser Brenlin Vos with him in all things and will not let his sacrifice be forgotten.",
+        "The Order of the Aster gave him purpose, and he would lay down his life for his brothers and sisters."
+    ],
+    "flaws": [
+        "Struggles to forgive himself for things he could not prevent.",
+        "Sometimes pushes too hard, believing it's his duty alone to bear the burden of justice."
+    ],
+    "backstory": "Sir Kalen Solarath was born during a spectacular aurora. His parents, humble woodcutters, died from a mysterious plague when he was a boy. He was taken in by Ser Brenlin Vos, a knight of the Order of the Aster, who believed Kalen was a child of destiny. Raised in Dawnwatch Hold among devout Lathanderites, he was taught that light dispels darkness. He often had dreams of radiant realms, unaware they were echoes of his celestial origin. Even as a youth, he sometimes glowed faintly or manifested bursts of healing light or a radiant shield under stress. Kalen served as a squire under Ser Brenlin Vos. On a mission to an old crypt near the Ardeep Forest, undead were unleashed. Brenlin held the line to allow villagers to evacuate and was lost; no body was recovered. This experience led Kalen to swear the Oath of Vengeance, not from hatred, but from a sense of responsibility to prevent similar suffering. He was recently knighted.",
+    "motivations": [
+        "Destroy the schemes of those who profane the dawn, particularly cults and heretics who use undeath to defy the natural cycle.",
+        "Recover lost relics, scriptures, or rites tied to Lathander's faith and return them to the Order of the Aster for restoration.",
+        "Protect the innocent and guide those in despair, offering light and healing where darkness has taken root.",
+        "Uncover the truth behind his celestial heritage and its meaning in the context of Lathander's will.",
+        "Earn promotion to Knight-Officer within the Order of the Aster, proving his discipline and divine purpose.",
+        "Destroy a high-ranking undead servant (e.g., death knight, wight lord, necromancer of Myrkul) as a personal act of justice.",
+        "Obtain and restore a lost holy weapon of Lathander."
+    ],
+    "speech_patterns": "Speaks plainly.",
+    "mannerisms": "Carries himself with a broad, upright posture and a composed presence.",
+    "past_situation": "Served as a squire under Ser Brenlin Vos. He witnessed his mentor's sacrifice while fighting undead unleashed from a disturbed crypt, an event that led him to swear the Oath of Vengeance.",
+    "current_situation": "Recently knighted and stationed in Waterdeep, serving in the Spires of the Morning. He helps protect the Spires and occasionally ventures beyond the city for missions of mercy and protection.",
     "relationships": [
-        {"name": "Jareth Thevren", "relationship": "Father", "status": "Deceased [cite: 34]"},
-        {"name": "Lysa Thevren", "relationship": "Mother", "status": "Deceased [cite: 34]"},
-        {"name": "Ghentilara", "relationship": "High Radiance of the Spires of the Morning", "status": "Alive [cite: 34]"},
-        {"name": "Ser Tlinthar Regheriad", "relationship": "High Dawnknight, The Order of the Aster", "status": "Alive [cite: 34]"},
-        {"name": "Ser Brenlin Vos", "relationship": "Mentor-Knight", "status": "Missing in action [cite: 34]"},
-        {"name": "Moriah Kiah", "relationship": "Friend (PC)", "status": "Alive [cite: 34]"},
-        {"name": "Havik the Stitch", "relationship": "Friend (PC)", "status": "Alive [cite: 34]"}
+        {"name": "Jareth Thevren", "relationship": "Father", "status": "Deceased"},
+        {"name": "Lysa Thevren", "relationship": "Mother", "status": "Deceased"},
+        {"name": "Ghentilara", "relationship": "High Radiance of the Spires of the Morning", "status": "Alive"},
+        {"name": "Ser Tlinthar Regheriad", "relationship": "High Dawnknight, The Order of the Aster", "status": "Alive"},
+        {"name": "Ser Brenlin Vos", "relationship": "Mentor-Knight", "status": "Missing in action"},
+        {"name": "Moriah Kiah", "relationship": "Friend (PC)", "status": "Alive"},
+        {"name": "Havik the Stitch", "relationship": "Friend (PC)", "status": "Alive"}
     ]
 }

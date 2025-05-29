@@ -1,23 +1,39 @@
 {
     "character_type": "PC",
     "name": "Sudara",
+    "description": "A determined and studious half-elf Monk following the Way of Shadow, raised in a monastery in Waterdeep.",
     "race": "Half-Elf",
     "class": "Monk (Way of Shadow)",
     "alignment": "Unknown",
     "age": "Unknown",
-    "personality_traits": "Determined, as shown by his persistence in joining the monastery[cite: 131]. Studious, spending fleeting moments of free time in the library[cite: 133].",
-    "ideals": "To understand the connection between the material plane and Shadowfell, and the interconnectedness of concepts like light and dark, good and evil[cite: 137, 138]. Following the Way of Shadow[cite: 138].",
-    "bonds": "His parents, an elven father and human mother, who have since gone to Evermeet[cite: 128, 135]. The Abbot of his monastery, who holds a small pouch in care for him[cite: 136]. His chosen path, the Way of Shadow[cite: 138].",
-    "flaws": "Unknown.",
-    "backstory": "Sudara was born in Waterdeep to an elven father and a human mother[cite: 128]. Growing up in the Trade Ward, he was inspired by the sight of monks and decided at an early age to become one[cite: 129, 130]. After several attempts, he was finally admitted to a monastery[cite: 131]. His early training consisted more of chores than direct lessons, but his training intensified as he got older[cite: 132, 133]. He spent his limited free time in the monastery's library[cite: 133]. His contact with the outside world was minimal and always supervised[cite: 134]. After several years, his parents came to say goodbye as they were departing for Evermeet, leaving a small pouch with the Abbot for Sudara should he ever need it[cite: 135, 136]. As his training progressed, Sudara learned about the connection between the material plane and Shadowfell[cite: 137]. Through studying how light and dark, good and evil are all connected, Sudara decided to follow the Way of Shadow[cite: 138].",
-    "motivations": "To delve deeper into the teachings of the Way of Shadow[cite: 138]. To understand the interconnectedness of contrasting forces such as light and darkness, good and evil, and the relationship between the material plane and the Shadowfell[cite: 137, 138].",
+    "personality_traits": [
+        "Determined, as shown by his persistence in joining the monastery.",
+        "Studious, spending fleeting moments of free time in the library."
+    ],
+    "ideals": [
+        "To understand the connection between the material plane and Shadowfell, and the interconnectedness of concepts like light and dark, good and evil.",
+        "Following the Way of Shadow."
+    ],
+    "bonds": [
+        "His parents, an elven father and human mother, who have since gone to Evermeet.",
+        "The Abbot of his monastery, who holds a small pouch in care for him.",
+        "His chosen path, the Way of Shadow."
+    ],
+    "flaws": [
+        "Unknown."
+    ],
+    "backstory": "Sudara was born in Waterdeep to an elven father and a human mother. Growing up in the Trade Ward, he was inspired by the sight of monks and decided at an early age to become one. After several attempts, he was finally admitted to a monastery. His early training consisted more of chores than direct lessons, but his training intensified as he got older. He spent his limited free time in the monastery's library. His contact with the outside world was minimal and always supervised. After several years, his parents came to say goodbye as they were departing for Evermeet, leaving a small pouch with the Abbot for Sudara should he ever need it. As his training progressed, Sudara learned about the connection between the material plane and Shadowfell. Through studying how light and dark, good and evil are all connected, Sudara decided to follow the Way of Shadow.",
+    "motivations": [
+        "To delve deeper into the teachings of the Way of Shadow.",
+        "To understand the interconnectedness of contrasting forces such as light and darkness, good and evil, and the relationship between the material plane and the Shadowfell."
+    ],
     "speech_patterns": "Unknown, but likely measured and thoughtful given his monastic training.",
     "mannerisms": "Unknown.",
-    "past_situation": "He was raised and trained in a monastery in Waterdeep from a young age, having limited interaction with the outside world[cite: 131, 132, 134]. His parents eventually left for Evermeet[cite: 135]. His studies led him to choose the Way of Shadow as his monastic path[cite: 137, 138].",
-    "current_situation": "A Monk following the Way of Shadow, likely still based in Waterdeep or operating from his monastery, continuing his specialized training and philosophical exploration of shadow and its connection to the world[cite: 138].",
+    "past_situation": "He was raised and trained in a monastery in Waterdeep from a young age, having limited interaction with the outside world. His parents eventually left for Evermeet. His studies led him to choose the Way of Shadow as his monastic path.",
+    "current_situation": "A Monk following the Way of Shadow, likely still based in Waterdeep or operating from his monastery, continuing his specialized training and philosophical exploration of shadow and its connection to the world.",
     "relationships": [
-        {"name": "Unnamed", "relationship": "Elven Father", "status": "Alive (in Evermeet) [cite: 128, 135]"},
-        {"name": "Unnamed", "relationship": "Human Mother", "status": "Alive (in Evermeet) [cite: 128, 135]"},
-        {"name": "Abbot of the Monastery", "relationship": "Guardian of his emergency funds/Superior", "status": "Alive [cite: 136]"}
+        {"name": "Unnamed", "relationship": "Elven Father", "status": "Alive (in Evermeet)"},
+        {"name": "Unnamed", "relationship": "Human Mother", "status": "Alive (in Evermeet)"},
+        {"name": "Abbot of the Monastery", "relationship": "Guardian of his emergency funds/Superior", "status": "Alive"}
     ]
 }
