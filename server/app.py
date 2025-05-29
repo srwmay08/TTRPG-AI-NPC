@@ -289,7 +289,7 @@ if __name__ == '__main__':
         print("CRITICAL: AI Service or its model not initialized. Dialogue generation will fail.")
     
     print(f"Flask Secret Key: {'Set' if app.secret_key and app.secret_key != 'a_default_secret_key' else 'NOT SET or Default - Please set FLASK_SECRET_KEY in .env'}")
-    print(f"Google API Key: {'Set' if app_config.GOOGLE_API_KEY else 'NOT SET - Please set GOOGLE_API_KEY in .env'}")
+    print(f"Google API Key: {'Set' if app_config.GEMINI_API_KEY else 'NOT SET - Please set GOOGLE_API_KEY in .env'}")
     print(f"Mongo URI: {app_config.MONGO_URI}")
     print(f"Target DB Name: {app_config.DB_NAME}")
 
