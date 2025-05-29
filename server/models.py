@@ -66,8 +66,9 @@ class WorldItem(BaseModel):
     linked_npc_ids: List[str] = Field(default_factory=list)
 
 class DialogueRequest(BaseModel):
-    # ... (no changes needed)
-    npc_id: str
+    # --- THIS IS THE FIX ---
+    # The npc_id is taken from the URL, so it's not needed in the request body.
+    # npc_id: str 
     scene_context: str
     player_utterance: Optional[str] = None
     active_pcs: List[str] = Field(default_factory=list, description="Names or IDs of player characters present in the scene.")

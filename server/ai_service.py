@@ -8,14 +8,16 @@ GENERATIVE_MODEL_NAME = "gemini-1.5-flash"
 genai_configured_successfully = False # Flag to track configuration
 
 try:
-    if config.GOOGLE_API_KEY: # Only attempt if key exists
-        genai.configure(api_key=config.GOOGLE_API_KEY)
+    # --- FIX: Use config.GEMINI_API_KEY instead of config.GOOGLE_API_KEY ---
+    if config.GEMINI_API_KEY: # Only attempt if key exists
+        genai.configure(api_key=config.GEMINI_API_KEY)
         # Add a check here if possible, e.g., try listing models
         # For now, we'll assume if no exception, it's superficially okay
         print("Google AI SDK configured (or attempted).")
         genai_configured_successfully = True 
     else:
-        print("Warning: GOOGLE_API_KEY not found in config. Skipping genai.configure.")
+        # --- FIX: Updated warning message for clarity ---
+        print("Warning: GEMINI_API_KEY not found in config. Skipping genai.configure.")
 except AttributeError:
     print("Warning: google.generativeai.configure failed (AttributeError). Library might be improperly installed or API key structure issue.")
 except Exception as e:
@@ -37,7 +39,8 @@ class AIService:
     def generate_npc_dialogue(self, npc: NPCProfile, dialogue_request: DialogueRequest, world_lore_summary: Optional[str] = None) -> str:
         if self.model is None: # Check changed to 'is None'
             print("AI Service Error: Model is not available for dialogue generation.")
-            return "Error: AI model not available. Please check configuration and API key."
+            # --- FIX: Updated error message for clarity ---
+            return "Error: AI model not available. Please check configuration and GEMINI_API_KEY."
         
         # ... (rest of your generate_npc_dialogue method)
         # Ensure this part is robust if self.model is somehow not what's expected
