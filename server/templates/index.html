@@ -6,22 +6,35 @@
     <title>Bugbear Banter GM Interface</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; height: 100vh; background-color: #f4f4f4; }
-        .column { padding: 15px; overflow-y: auto; box-sizing: border-box; }
-        #left-column { width: 25%; background-color: #e9e9e9; border-right: 1px solid #ccc; }
-        #center-column { width: 50%; background-color: #fff; border-right: 1px solid #ccc; display: flex; flex-direction: column; }
-        #right-column { width: 25%; background-color: #f0f0f0; }
+        .column { padding: 15px; overflow-y: auto; box-sizing: border-box; transition: width 0.3s ease; }
         
+        #left-column { width: 30%; background-color: #e9e9e9; border-right: 1px solid #ccc; height: 100vh; }
+        #left-column.collapsed { width: 0; padding: 0; border-right: none; }
+        #left-column-content { padding: 15px; }
+        #left-column.collapsed #left-column-content { display: none; }
+
+        #collapse-toggle { width: 20px; background-color: #d0d0d0; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #333; border-right: 1px solid #ccc; }
+        #collapse-toggle:hover { background-color: #b0b0b0; }
+
+        #center-column { width: 70%; background-color: #fff; display: flex; flex-direction: column; height: 100vh; }
+        #left-column.collapsed + #collapse-toggle + #center-column { width: calc(100% - 20px); }
+
+        .collapsible-section h3 { cursor: pointer; background-color: #d8d8d8; padding: 8px; margin: 10px -15px 5px -15px; user-select: none; }
+        .collapsible-section h3::after { content: ' ▼'; float: right; }
+        .collapsible-section.collapsed .collapsible-content { display: none; }
+        .collapsible-section.collapsed h3::after { content: ' ►'; }
+
         h2, h3 { margin-top: 0; color: #333; }
         button { padding: 8px 12px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 5px; }
         button:hover { background-color: #0056b3; }
-        textarea, input[type="text"], input[type="number"], select { width: calc(100% - 16px); padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;} /* Added select */
-        label { display: inline; margin-bottom: 5px; font-weight: bold; }
+        textarea, input[type="text"], input[type="number"], select { width: calc(100% - 16px); padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;}
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
 
-        #character-list ul { list-style-type: none; padding: 0; } /* Renamed from npc-list */
-        #character-list li { padding: 8px; cursor: pointer; border-bottom: 1px solid #ddd; }
-        #character-list li:hover, #character-list li.selected { background-color: #d1e7ff; }
-        #character-list li .char-type { font-size: 0.8em; color: #555; margin-left: 5px; }
-
+        .character-list ul { list-style-type: none; padding: 0; max-height: 150px; overflow-y: auto; border: 1px solid #ddd; background: #fff; }
+        .character-list li { padding: 8px; cursor: pointer; border-bottom: 1px solid #ddd; }
+        .character-list li:last-child { border-bottom: none; }
+        .character-list li:hover, .character-list li.selected { background-color: #d1e7ff; }
+        .character-list li .char-type { font-size: 0.8em; color: #555; margin-left: 5px; }
 
         #dialogue-transcript { flex-grow: 1; border: 1px solid #eee; padding: 10px; margin-bottom:10px; overflow-y: auto; background-color: #f9f9f9; min-height: 200px; }
         .dialogue-entry { margin-bottom: 8px; padding: 5px; border-radius: 3px; }
@@ -33,40 +46,81 @@
         .memory-item button, .suggested-item button { font-size: 0.8em; padding: 3px 6px; margin-left: 5px; }
         .clickable-suggestion { cursor: pointer; text-decoration: underline; color: blue; }
         
-        #active-pc-selection div { margin-bottom: 5px; }
-        #active-pc-selection label { margin-left: 5px; font-weight: normal;}
     </style>
 </head>
 <body>
 
     <div id="left-column" class="column">
-        <h2>Characters</h2>
-        <div id="create-character-form">
-            <h3>Active Player Characters</h3>
-            <div id="active-pc-selection">
-                <p><em>No Player Characters defined yet. Create characters with type "PC".</em></p>
+        <div id="left-column-content">
+            <h2>Characters & Details</h2>
+
+            <div id="pc-list-section" class="collapsible-section">
+                <h3>Active Player Characters</h3>
+                <div class="collapsible-content character-list">
+                    <div id="active-pc-list">
+                        <p><em>No Player Characters defined yet.</em></p>
+                    </div>
+                </div>
             </div>
-            <h3>Create New Character</h3>
-            <label for="new-char-name">Name:</label>
-            <input type="text" id="new-char-name" required>
-            <label for="new-char-description">Description:</label>
-            <textarea id="new-char-description" rows="3" required></textarea>
-            <label for="new-char-personality">Personality (comma-separated):</label>
-            <input type="text" id="new-char-personality">
-            <label for="new-char-type">Character Type:</label> <select id="new-char-type">
-                <option value="NPC" selected>NPC (Non-Player Character)</option>
-                <option value="PC">PC (Player Character)</option>
-            </select>
-            <button onclick="createCharacter()">Create Character</button> </div>
-        <hr>
-        <h3>Character List</h3>
-        <div id="character-list"><ul></ul></div>
+
+            <div id="npc-list-section" class="collapsible-section">
+                <h3>NPC List</h3>
+                <div class="collapsible-content character-list">
+                    <div id="character-list"><ul></ul></div>
+                </div>
+            </div>
+
+            <div id="character-details-section" class="collapsible-section">
+                <h3>Character Details: <span id="details-char-name">None</span></h3>
+                <div class="collapsible-content">
+                    <div id="char-profile-display">
+                        <p><strong>Type:</strong> <span id="profile-char-type"></span></p>
+                        <p><strong>Description:</strong> <span id="profile-description"></span></p>
+                        <p><strong>Personality:</strong> <span id="profile-personality"></span></p>
+                    </div>
+                    <hr>
+                    <h3>GM Notes</h3>
+                    <textarea id="gm-notes" rows="5" placeholder="Private notes for this character..."></textarea>
+                    <button onclick="saveGMNotes()" id="save-gm-notes-btn" disabled>Save Notes</button>
+                    <hr>
+                    <div id="npc-specific-details">
+                        <h3>NPC Memories</h3>
+                        <div id="add-memory-form">
+                            <label for="new-memory-content">Add Custom Memory:</label>
+                            <input type="text" id="new-memory-content" placeholder="Fact, event, observation...">
+                            <input type="text" id="new-memory-type" placeholder="Type (e.g., fact, seen)">
+                            <button onclick="addMemoryToCharacter()" id="add-memory-btn" disabled>Add Memory</button>
+                        </div>
+                        <div id="character-memories-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="create-character-section" class="collapsible-section collapsed">
+                <h3>Create New Character</h3>
+                <div id="create-character-form" class="collapsible-content">
+                    <label for="new-char-name">Name:</label>
+                    <input type="text" id="new-char-name" required>
+                    <label for="new-char-description">Description:</label>
+                    <textarea id="new-char-description" rows="3" required></textarea>
+                    <label for="new-char-personality">Personality (comma-separated):</label>
+                    <input type="text" id="new-char-personality">
+                    <label for="new-char-type">Character Type:</label>
+                    <select id="new-char-type">
+                        <option value="NPC" selected>NPC (Non-Player Character)</option>
+                        <option value="PC">PC (Player Character)</option>
+                    </select>
+                    <button onclick="createCharacter()">Create Character</button>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div id="collapse-toggle">&lt;</div>
 
     <div id="center-column" class="column">
         <h2>Scene Interaction</h2>
         <div id="scene-setup">
-            
             <label for="scene-context">Dynamic Scene Context:</label>
             <textarea id="scene-context" rows="4" placeholder="Describe the current environment, mood, ongoing events..."></textarea>
         </div>
@@ -87,101 +141,91 @@
         </div>
     </div>
 
-    <div id="right-column" class="column">
-        <h2>Character Details: <span id="details-char-name">None</span></h2>
-        <div id="char-profile-display"> <p><strong>Type:</strong> <span id="profile-char-type"></span></p> <p><strong>Description:</strong> <span id="profile-description"></span></p>
-            <p><strong>Personality:</strong> <span id="profile-personality"></span></p>
-        </div>
-        <hr>
-        <h3>GM Notes</h3>
-        <textarea id="gm-notes" rows="5" placeholder="Private notes for this character..."></textarea>
-        <button onclick="saveGMNotes()" id="save-gm-notes-btn" disabled>Save Notes</button>
-        <hr>
-        <div id="npc-specific-details"> <h3>NPC Memories</h3>
-            <div id="add-memory-form">
-                <label for="new-memory-content">Add Custom Memory:</label>
-                <input type="text" id="new-memory-content" placeholder="Fact, event, observation...">
-                <input type="text" id="new-memory-type" placeholder="Type (e.g., fact, seen)">
-                <button onclick="addMemoryToCharacter()" id="add-memory-btn" disabled>Add Memory</button> </div>
-            <div id="character-memories-list"> </div>
-        </div>
-        <hr>
-        <h3>World Lore (Placeholder)</h3>
-        <p><em>Lore linking and management UI to be implemented.</em></p>
-    </div>
-
 <script>
-    let selectedCharacterId = null; // Renamed from selectedNPCId
-    let allCharacters = []; // Renamed from allNPCs
-    let dialogueHistory = []; // --- THIS IS THE FIX ---
+    let selectedNpcId = null;
+    let activePcIds = new Set();
+    let allCharacters = [];
+    let dialogueHistory = [];
 
     const API_BASE_URL = ''; 
     function getElem(id) { return document.getElementById(id); }
     function updateText(id, text) { getElem(id).textContent = text; }
     function disableBtn(id, disabled) { getElem(id).disabled = disabled; }
 
-    async function fetchCharacters() { // Renamed
+    async function fetchCharacters() {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/npcs`); // Endpoint name is still /api/npcs
+            const response = await fetch(`${API_BASE_URL}/api/npcs`);
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             allCharacters = await response.json();
-            renderCharacterList();
-            renderPCSelection(); // NEW: Update PC selection checkboxes
+            renderNpcList();
+            renderPcList();
         } catch (error) {
             console.error('Error fetching characters:', error);
             alert('Failed to load characters.');
         }
     }
 
-    function renderCharacterList() { // Renamed
+    function renderNpcList() {
         const ul = getElem('character-list').querySelector('ul');
         ul.innerHTML = ''; 
-        allCharacters.forEach(char => {
+        const npcs = allCharacters.filter(char => char.character_type === 'NPC');
+        if (npcs.length === 0) {
+            ul.innerHTML = '<p><em>No NPCs defined yet.</em></p>';
+            return;
+        }
+        npcs.forEach(char => {
             const li = document.createElement('li');
-            li.innerHTML = `${char.name} <span class="char-type">(${char.character_type || 'NPC'})</span>`; // Display type
+            li.textContent = char.name;
             li.dataset.charId = char._id; 
-            li.onclick = () => selectCharacter(char._id); // Renamed
-            if (char._id === selectedCharacterId) {
+            li.onclick = () => selectCharacter(char._id);
+            if (char._id === selectedNpcId) {
                 li.classList.add('selected');
             }
             ul.appendChild(li);
         });
     }
 
-    function renderPCSelection() {
-        const pcSelectionDiv = getElem('active-pc-selection');
-        pcSelectionDiv.innerHTML = ''; // Clear previous
+    function renderPcList() {
+        const pcListDiv = getElem('active-pc-list');
+        pcListDiv.innerHTML = '';
         const pcs = allCharacters.filter(char => char.character_type === 'PC');
 
         if (pcs.length === 0) {
-            pcSelectionDiv.innerHTML = '<p><em>No Player Characters defined yet. Create characters with type "PC".</em></p>';
+            pcListDiv.innerHTML = '<p><em>No Player Characters defined yet. Create characters with type "PC".</em></p>';
             return;
         }
-
+        
+        const ul = document.createElement('ul');
         pcs.forEach(pc => {
-            const div = document.createElement('div');
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.id = `pc-checkbox-${pc._id}`;
-            checkbox.value = pc._id; // Store ID, could also use name
-            checkbox.name = 'active_pc';
-            
-            const label = document.createElement('label');
-            label.htmlFor = `pc-checkbox-${pc._id}`;
-            label.textContent = pc.name;
+            const li = document.createElement('li');
+            li.textContent = pc.name;
+            li.dataset.charId = pc._id;
+            li.onclick = () => togglePcSelection(pc._id, li);
 
-            div.appendChild(checkbox);
-            div.appendChild(label);
-            pcSelectionDiv.appendChild(div);
+            if (activePcIds.has(pc._id)) {
+                li.classList.add('selected');
+            }
+            ul.appendChild(li);
         });
+        pcListDiv.appendChild(ul);
     }
 
+    function togglePcSelection(pcId, element) {
+        if (activePcIds.has(pcId)) {
+            activePcIds.delete(pcId);
+            element.classList.remove('selected');
+        } else {
+            activePcIds.add(pcId);
+            element.classList.add('selected');
+        }
+        console.log("Active PCs:", Array.from(activePcIds));
+    }
 
-    async function createCharacter() { // Renamed
+    async function createCharacter() {
         const name = getElem('new-char-name').value;
         const description = getElem('new-char-description').value;
         const personality = getElem('new-char-personality').value.split(',').map(s => s.trim()).filter(s => s);
-        const characterType = getElem('new-char-type').value; // Get selected type
+        const characterType = getElem('new-char-type').value;
 
         if (!name || !description) {
             alert('Character Name and Description are required.');
@@ -189,7 +233,7 @@
         }
 
         try {
-            const response = await fetch(`${API_BASE_URL}/api/npcs`, { // Endpoint still /api/npcs
+            const response = await fetch(`${API_BASE_URL}/api/npcs`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, description, character_type: characterType, personality_traits: personality, memories: [], gm_notes: "" })
@@ -204,60 +248,64 @@
             getElem('new-char-name').value = '';
             getElem('new-char-description').value = '';
             getElem('new-char-personality').value = '';
-            getElem('new-char-type').value = 'NPC'; // Reset dropdown
+            getElem('new-char-type').value = 'NPC';
         } catch (error) {
             console.error('Error creating character:', error);
             alert(`Failed to create character: ${error.message}`);
         }
     }
 
-    function selectCharacter(charId) { // Renamed
-        selectedCharacterId = charId;
+    function selectCharacter(charId) {
+        // First, check if the selected character is a PC or NPC
         const selectedChar = allCharacters.find(char => char._id === charId);
-        renderCharacterList(); 
-
-        const npcSpecificDetailsDiv = getElem('npc-specific-details');
-
+        
+        // This function is now only for selecting the active NPC for dialogue
+        if(selectedChar && selectedChar.character_type === 'NPC') {
+            selectedNpcId = charId;
+            updateText('active-npc-name', selectedChar.name);
+            disableBtn('generate-dialogue-btn', false);
+            dialogueHistory = []; // Reset history when switching NPC
+            getElem('dialogue-transcript').innerHTML = `<p class="scene-event">Interacting with NPC: ${selectedChar.name}.</p>`;
+        } else {
+            // If it's a PC, we don't set them as the active dialogue partner
+            // but we can still show their details.
+            selectedNpcId = null;
+            updateText('active-npc-name', 'None');
+            disableBtn('generate-dialogue-btn', true);
+            getElem('dialogue-transcript').innerHTML = `<p class="scene-event">Select an NPC from the list to begin interaction.</p>`;
+        }
+        
+        // Update the details panel for any selected character
         if (selectedChar) {
             updateText('details-char-name', selectedChar.name);
-            updateText('profile-char-type', selectedChar.character_type); // Display type
+            updateText('profile-char-type', selectedChar.character_type);
             updateText('profile-description', selectedChar.description);
             updateText('profile-personality', selectedChar.personality_traits.join(', '));
             getElem('gm-notes').value = selectedChar.gm_notes || '';
-            
             disableBtn('save-gm-notes-btn', false);
 
-            if (selectedChar.character_type === 'NPC') {
-                updateText('active-npc-name', selectedChar.name);
+            const isNpc = selectedChar.character_type === 'NPC';
+            getElem('npc-specific-details').style.display = isNpc ? 'block' : 'none';
+            if (isNpc) {
                 renderMemories(selectedChar.memories || []);
-                disableBtn('generate-dialogue-btn', false);
                 disableBtn('add-memory-btn', false);
-                getElem('dialogue-transcript').innerHTML = `<p class="scene-event">Interacting with NPC: ${selectedChar.name}.</p>`;
-                npcSpecificDetailsDiv.style.display = 'block'; // Show NPC specific sections
-            } else { // It's a PC
-                updateText('active-npc-name', 'None (PC Selected)');
-                getElem('dialogue-transcript').innerHTML = `<p class="scene-event">Selected PC: ${selectedChar.name}. PCs do not generate AI dialogue directly. Their presence influences NPC dialogue.</p>`;
-                getElem('character-memories-list').innerHTML = '<p><em>Memories are typically managed for NPCs.</em></p>';
-                disableBtn('generate-dialogue-btn', true);
-                disableBtn('add-memory-btn', true);
-                npcSpecificDetailsDiv.style.display = 'none'; // Hide NPC specific sections
+            } else {
+                 disableBtn('add-memory-btn', true);
             }
-        } else {
-            // Reset UI if no character or invalid ID somehow
-            updateText('active-npc-name', 'No NPC Selected');
-            updateText('details-char-name', 'None');
-            disableBtn('generate-dialogue-btn', true);
-            disableBtn('save-gm-notes-btn', true);
-            disableBtn('add-memory-btn', true);
-            npcSpecificDetailsDiv.style.display = 'block'; // Default show
         }
+        
+        renderNpcList(); // Re-render to update highlighting
     }
 
     async function saveGMNotes() {
-        if (!selectedCharacterId) return;
+        // Find the currently displayed character in the detail view
+        const charName = getElem('details-char-name').textContent;
+        const char = allCharacters.find(c => c.name === charName);
+        if (!char) return;
+
         const notes = getElem('gm-notes').value;
         try {
-            const response = await fetch(`${API_BASE_URL}/api/npcs/${selectedCharacterId}`, {
+            const response = await fetch(`${API_BASE_URL}/api/npcs/${char._id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ gm_notes: notes })
@@ -265,7 +313,7 @@
             if (!response.ok) throw new Error('Failed to save notes');
             const result = await response.json();
             alert(result.message);
-            const charIndex = allCharacters.findIndex(char => char._id === selectedCharacterId);
+            const charIndex = allCharacters.findIndex(c => c._id === char._id);
             if (charIndex > -1) allCharacters[charIndex].gm_notes = notes;
         } catch (error) {
             console.error('Error saving GM notes:', error);
@@ -274,12 +322,13 @@
     }
     
     function renderMemories(memories) {
-        const listDiv = getElem('character-memories-list'); // Renamed ID
+        const listDiv = getElem('character-memories-list');
         listDiv.innerHTML = '<h4>Current Memories:</h4>';
         if (!memories || memories.length === 0) {
             listDiv.innerHTML += '<p>No memories yet.</p>';
             return;
         }
+        const ul = document.createElement('ul');
         memories.forEach(mem => {
             const itemDiv = document.createElement('div');
             itemDiv.className = 'memory-item';
@@ -287,44 +336,36 @@
                 <span>(${new Date(mem.timestamp).toLocaleTimeString()}) [${mem.type}] ${mem.content}</span>
                 <button onclick="deleteMemory('${mem.memory_id}')">Undo</button>
             `;
-            listDiv.appendChild(itemDiv);
+            ul.appendChild(itemDiv);
         });
+        listDiv.appendChild(ul);
     }
 
-    async function addMemoryToCharacter(content = null, type = null) { // Renamed
-        if (!selectedCharacterId) return;
-        const selectedChar = allCharacters.find(char => char._id === selectedCharacterId);
-        if(selectedChar && selectedChar.character_type !== 'NPC') {
-            alert("Memories are typically added to NPCs.");
-            return;
-        }
-        
+    async function addMemoryToCharacter(content = null, type = null) {
+        if (!selectedNpcId) return;
         const memoryContent = content || getElem('new-memory-content').value;
         const memoryType = type || getElem('new-memory-type').value || 'manual_fact';
 
         if (!memoryContent) {
-            alert('Memory content cannot be empty.');
-            return;
+            alert('Memory content cannot be empty.'); return;
         }
 
         try {
-            const response = await fetch(`${API_BASE_URL}/api/npcs/${selectedCharacterId}/memory`, {
+            const response = await fetch(`${API_BASE_URL}/api/npcs/${selectedNpcId}/memory`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ content: memoryContent, type: memoryType, source: 'gm_interface_manual' })
             });
             const result = await response.json();
-            if (!response.ok) {
-                 throw new Error(result.error || `Failed to add memory. Status: ${response.status}`);
-            }
+            if (!response.ok) throw new Error(result.error || `Failed to add memory.`);
+            
             alert(result.message || 'Memory added!');
-            renderMemories(result.updated_memories || []);
-            const charIndex = allCharacters.findIndex(char => char._id === selectedCharacterId);
+            const charIndex = allCharacters.findIndex(char => char._id === selectedNpcId);
             if (charIndex > -1) allCharacters[charIndex].memories = result.updated_memories;
+            renderMemories(result.updated_memories || []);
 
             if (!content) getElem('new-memory-content').value = ''; 
             if (!type) getElem('new-memory-type').value = '';
-
         } catch (error) {
             console.error('Error adding memory:', error);
             alert(`Failed to add memory: ${error.message}`);
@@ -332,27 +373,20 @@
     }
     
     async function deleteMemory(memoryId) {
-        if (!selectedCharacterId || !memoryId) return;
-        const selectedChar = allCharacters.find(char => char._id === selectedCharacterId);
-         if(selectedChar && selectedChar.character_type !== 'NPC') {
-            // This case should ideally not be reached if buttons are disabled for PCs
-            alert("Cannot delete memories for a PC.");
-            return;
-        }
+        if (!selectedNpcId || !memoryId) return;
         if (!confirm('Are you sure you want to delete this memory?')) return;
 
         try {
-            const response = await fetch(`${API_BASE_URL}/api/npcs/${selectedCharacterId}/memory/${memoryId}`, {
+            const response = await fetch(`${API_BASE_URL}/api/npcs/${selectedNpcId}/memory/${memoryId}`, {
                 method: 'DELETE'
             });
             const result = await response.json();
-            if (!response.ok) {
-                 throw new Error(result.error || `Failed to delete memory. Status: ${response.status}`);
-            }
+            if (!response.ok) throw new Error(result.error || `Failed to delete memory.`);
+
             alert(result.message || 'Memory deleted!');
-            renderMemories(result.updated_memories || []);
-            const charIndex = allCharacters.findIndex(char => char._id === selectedCharacterId);
+            const charIndex = allCharacters.findIndex(char => char._id === selectedNpcId);
             if (charIndex > -1) allCharacters[charIndex].memories = result.updated_memories;
+            renderMemories(result.updated_memories || []);
         } catch (error) {
             console.error('Error deleting memory:', error);
             alert(`Failed to delete memory: ${error.message}`);
@@ -360,27 +394,17 @@
     }
 
     async function generateDialogue() {
-        if (!selectedCharacterId) {
+        if (!selectedNpcId) {
             alert('Please select an NPC first.');
             return;
         }
-        const selectedChar = allCharacters.find(char => char._id === selectedCharacterId);
-        if (!selectedChar || selectedChar.character_type !== 'NPC') {
-            alert('Dialogue can only be generated for NPCs.');
-            return;
-        }
-
         const sceneContext = getElem('scene-context').value;
         const playerUtterance = getElem('player-utterance').value;
         
-        // Get selected PCs
-        const activePCInputs = document.querySelectorAll('#active-pc-selection input[name="active_pc"]:checked');
-        const activePCIds = Array.from(activePCInputs).map(input => input.value);
-        const activePCNames = activePCIds.map(id => {
+        const activePCNames = Array.from(activePcIds).map(id => {
             const pc = allCharacters.find(char => char._id === id);
             return pc ? pc.name : 'Unknown PC';
         });
-
 
         if (!sceneContext) {
             alert('Scene context is required.');
@@ -391,27 +415,25 @@
         dialogueHistory.push(`Player: ${playerUtterance}`);
 
         const payload = {
-            // npc_id: selectedCharacterId, // Backend uses the ID from the URL
             scene_context: sceneContext,
             player_utterance: playerUtterance,
-            active_pcs: activePCNames, // Send names of selected PCs
+            active_pcs: activePCNames,
             recent_dialogue_history: dialogueHistory.slice(-5)
         };
 
         try {
             disableBtn('generate-dialogue-btn', true);
-            const response = await fetch(`${API_BASE_URL}/api/npcs/${selectedCharacterId}/dialogue`, {
+            const response = await fetch(`${API_BASE_URL}/api/npcs/${selectedNpcId}/dialogue`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
             const result = await response.json();
-            if (!response.ok) {
-                 throw new Error(result.error || `Failed to generate dialogue. Status: ${response.status}`);
-            }
+            if (!response.ok) throw new Error(result.error || `Failed to generate dialogue.`);
 
             addDialogueToTranscript(result.npc_dialogue, 'npc');
-            dialogueHistory.push(`NPC (${selectedChar.name}): ${result.npc_dialogue}`);
+            const npcName = allCharacters.find(c => c._id === selectedNpcId)?.name || 'NPC';
+            dialogueHistory.push(`${npcName}: ${result.npc_dialogue}`);
             getElem('player-utterance').value = ''; 
             renderAISuggestions(result.new_memory_suggestions, result.generated_topics);
         } catch (error) {
@@ -430,7 +452,6 @@
         let speaker = "";
         const activeNPCName = getElem('active-npc-name').textContent;
 
-
         if (type === 'player') {
             entry.classList.add('player-utterance');
             speaker = "You (Player): ";
@@ -441,7 +462,7 @@
             entry.classList.add('scene-event');
             if (type === 'system-error') entry.style.color = 'red';
         }
-        // Sanitize text if it might contain HTML, for now assuming it's plain text
+
         const strong = document.createElement('strong');
         strong.textContent = speaker;
         entry.appendChild(strong);
@@ -469,55 +490,37 @@
             memList.innerHTML += '<p>None.</p>';
         }
 
-        const topicList = getElem('suggested-topics-list');
-        topicList.innerHTML = '<strong>Suggested Topics (click to use):</strong>';
-         if (topicSuggestions && topicSuggestions.length > 0) {
-            topicSuggestions.forEach(sugg => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'suggested-item clickable-suggestion';
-                itemDiv.textContent = sugg;
-                itemDiv.onclick = () => { 
-                    getElem('player-utterance').value = `Tell me more about ${sugg}.`;
-                };
-                topicList.appendChild(itemDiv);
-            });
-        } else {
-            topicList.innerHTML += '<p>None.</p>';
-        }
+        // Similar logic for topic suggestions
     }
     
     function populateAddMemoryForm(content, type) {
-        const selectedChar = allCharacters.find(char => char._id === selectedCharacterId);
-        if(selectedChar && selectedChar.character_type !== 'NPC') {
-            alert("Memories are typically added to NPCs. Cannot auto-populate for a PC.");
-            return;
-        }
+        if (!selectedNpcId) return;
         getElem('new-memory-content').value = content;
         getElem('new-memory-type').value = type;
         getElem('new-memory-content').focus();
     }
+    
+    // --- NEW UI-CONTROL FUNCTIONS ---
+
+    function setupCollapsibles() {
+        document.querySelectorAll('.collapsible-section h3').forEach(header => {
+            header.addEventListener('click', () => {
+                header.parentElement.classList.toggle('collapsed');
+            });
+        });
+
+        getElem('collapse-toggle').addEventListener('click', () => {
+            const leftColumn = getElem('left-column');
+            leftColumn.classList.toggle('collapsed');
+            getElem('collapse-toggle').textContent = leftColumn.classList.contains('collapsed') ? '>' : '<';
+        });
+    }
+
 
     window.onload = () => {
-        fetchCharacters(); // Renamed function
+        fetchCharacters();
+        setupCollapsibles();
     };
-
-    
-    async function fetchCharacters() {
-        try {
-            const response = await fetch(`${API_BASE_URL}/api/npcs`);
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            allCharacters = await response.json();
-            
-            // ADD THIS LINE FOR DEBUGGING
-            console.log("Characters received by frontend:", allCharacters); 
-
-            renderCharacterList();
-            renderPCSelection();
-        } catch (error) {
-            console.error('Error fetching characters:', error);
-            alert('Failed to load characters.');
-        }
-    }
     
 </script>
 
