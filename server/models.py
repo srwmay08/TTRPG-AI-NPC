@@ -66,9 +66,6 @@ class WorldItem(BaseModel):
     linked_npc_ids: List[str] = Field(default_factory=list)
 
 class DialogueRequest(BaseModel):
-    # --- THIS IS THE FIX ---
-    # The npc_id is taken from the URL, so it's not needed in the request body.
-    # npc_id: str 
     scene_context: str
     player_utterance: Optional[str] = None
     active_pcs: List[str] = Field(default_factory=list, description="Names or IDs of player characters present in the scene.")
@@ -78,5 +75,6 @@ class DialogueResponse(BaseModel):
     # ... (no changes needed)
     npc_id: str
     npc_dialogue: str
-    new_memory_suggestions: List[str] = Field(default_factory=list, description="AI suggestions for what to add to memory.")
+    # IMPROVEMENT: Changed from a generic list to a single, more potent suggestion.
+    new_memory_suggestions: List[str] = Field(default_factory=list, description="AI suggestions for what to add to memory, including a summarized version of the interaction.")
     generated_topics: List[str] = Field(default_factory=list, description="AI suggested topics for further conversation.")

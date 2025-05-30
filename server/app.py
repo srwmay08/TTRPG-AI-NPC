@@ -289,18 +289,27 @@ def generate_dialogue_for_npc(npc_id_str: str):
         dialogue_request_data = DialogueRequest(**request.get_json())
     except ValidationError as e:
         return jsonify({"error": "Validation Error in dialogue request", "details": e.errors()}), 400
+    
     world_lore_summary = None 
     if npc_profile.linked_lore_ids:
         world_lore_summary = f"This NPC is linked to lore items: {', '.join(npc_profile.linked_lore_ids)}."
+    
+    # Generate the NPC's dialogue response
     generated_text = ai_service_instance.generate_npc_dialogue(npc_profile, dialogue_request_data, world_lore_summary)
-    ai_suggested_memories_content = []
-    if dialogue_request_data.player_utterance:
-        ai_suggested_memories_content.append(f"Player's interaction: {dialogue_request_data.player_utterance}")
-    ai_suggested_memories_content.append(f"NPC's response: {generated_text}")
+    
+    # --- ENHANCEMENT: Generate a summarized memory from the interaction ---
+    memory_suggestions = []
+    if dialogue_request_data.player_utterance and generated_text:
+        summarized_memory = ai_service_instance.summarize_interaction_for_memory(
+            dialogue_request_data.player_utterance,
+            generated_text
+        )
+        memory_suggestions.append(summarized_memory)
+
     response_data = DialogueResponse(
         npc_id=npc_id_str,
         npc_dialogue=generated_text,
-        new_memory_suggestions=ai_suggested_memories_content,
+        new_memory_suggestions=memory_suggestions,
         generated_topics=[] 
     )
     return jsonify(response_data.model_dump(mode='json')), 200

@@ -15,7 +15,7 @@
         button { padding: 8px 12px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 5px; }
         button:hover { background-color: #0056b3; }
         textarea, input[type="text"], input[type="number"], select { width: calc(100% - 16px); padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;} /* Added select */
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        label { display: inline; margin-bottom: 5px; font-weight: bold; }
 
         #character-list ul { list-style-type: none; padding: 0; } /* Renamed from npc-list */
         #character-list li { padding: 8px; cursor: pointer; border-bottom: 1px solid #ddd; }
@@ -41,7 +41,12 @@
 
     <div id="left-column" class="column">
         <h2>Characters</h2>
-        <div id="create-character-form"> <h3>Create New Character</h3>
+        <div id="create-character-form">
+            <h3>Active Player Characters</h3>
+            <div id="active-pc-selection">
+                <p><em>No Player Characters defined yet. Create characters with type "PC".</em></p>
+            </div>
+            <h3>Create New Character</h3>
             <label for="new-char-name">Name:</label>
             <input type="text" id="new-char-name" required>
             <label for="new-char-description">Description:</label>
@@ -61,10 +66,7 @@
     <div id="center-column" class="column">
         <h2>Scene Interaction</h2>
         <div id="scene-setup">
-            <h3>Active Player Characters</h3>
-            <div id="active-pc-selection">
-                <p><em>No Player Characters defined yet. Create characters with type "PC".</em></p>
-            </div>
+            
             <label for="scene-context">Dynamic Scene Context:</label>
             <textarea id="scene-context" rows="4" placeholder="Describe the current environment, mood, ongoing events..."></textarea>
         </div>
