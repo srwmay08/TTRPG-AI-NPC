@@ -44,6 +44,7 @@
         .collapsible-section.collapsed h3::after { content: ' ►'; }
 
         h2, h3, h4 { margin-top: 0; color: #333; }
+        h5 { margin-top: 0; margin-bottom: 10px; color: #333; }
         button { padding: 8px 12px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 5px; }
         button:hover { background-color: #0056b3; }
         textarea, input[type="text"], input[type="number"], select { width: calc(100% - 16px); padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;}
@@ -67,96 +68,44 @@
         
         /* PC Dashboard Styles */
         #pc-dashboard-view { display: block; flex-grow: 1; overflow-y: auto; }
-        .pc-dashboard-grid { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
+        .pc-dashboard-grid { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px; }
         .pc-stat-card { border: 1px solid #ddd; border-radius: 4px; padding: 15px; background-color: #f9f9f9; flex: 1 1 300px; min-width: 280px; }
         .pc-stat-card h4 { margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px; }
         .pc-stat-card p { margin: 5px 0; }
         .pc-stat-card ul { list-style-type: none; padding-left: 0; }
         .pc-stat-card li { padding: 3px 0; }
-
-        .comparison-section { margin-bottom: 20px; }
-        .comparison-section h4 { border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        .stat-comparison-bar-container { display: flex; align-items: center; margin-bottom: 5px; font-size: 0.9em; flex-wrap: wrap; }
-        .stat-comparison-label { width: 120px; font-weight: bold; white-space: nowrap; }
-        .stat-comparison-pc-name { width: 100px; text-align: right; margin-right: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .stat-bar-wrapper { flex-grow: 1; background-color: #e0e0e0; border-radius: 3px; height: 20px; min-width: 100px; }
-        .stat-bar { height: 100%; background-color: #007bff; border-radius: 3px; text-align: right; padding-right: 5px; color: white; line-height: 20px; font-size: 0.8em; white-space: nowrap; overflow: hidden;}
         .pc-dashboard-no-selection { text-align: center; color: #777; margin-top: 50px; font-size: 1.2em;}
 
-        /* Styles for clickable headers and expandable details */
-        .clickable-header {
-            cursor: pointer;
-            text-decoration: underline;
-            color: #0056b3; 
-            user-select: none;
-        }
-        .clickable-header::after {
-            content: ' ►'; /* Collapsed by default */
-            font-size: 0.8em;
-            margin-left: 5px;
-        }
-        .clickable-header.expanded::after {
-            content: ' ▼'; /* Expanded state */
-        }
-        .ability-details {
-            width: 100%; 
-            padding: 10px 0px 10px 20px; 
-            margin-top: 8px;
-            background-color: #f8f9fa; /* Lighter background for details section */
-            border-top: 1px solid #dee2e6;
-            border-bottom: 1px solid #dee2e6; /* Add bottom border for visual separation */
-            margin-bottom: 10px; /* Space before next ability bar container */
-        }
-        .ability-details-pc {
-            margin-bottom: 15px; /* More space between PCs */
-            padding-bottom: 10px;
-            border-bottom: 1px dashed #e0e0e0; /* Lighter dashed border */
-        }
-        .ability-details-pc:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        .ability-details-pc h5 {
-            margin-top: 0;
-            margin-bottom: 8px;
-            font-size: 1em; /* Slightly larger for PC name header */
-            color: #212529;
-        }
-        .ability-details-pc table {
-            width: 100%;
-            font-size: 0.9em;
-            border-collapse: collapse;
-        }
-        .ability-details-pc th, .ability-details-pc td {
-            text-align: left;
-            padding: 4px 2px; /* Reduced padding */
-            border-bottom: 1px solid #f1f1f1;
-        }
-        .ability-details-pc th {
-            font-weight: bold;
-            width: 40%; /* Give more space for metric name */
-            color: #495057;
-        }
-        .ability-details-pc td {
-             color: #343a40;
-        }
-        .ability-details-pc tr:last-child th,
-        .ability-details-pc tr:last-child td {
-            border-bottom: none;
-        }
+        /* Main Stats Table */
+        #main-stats-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 0.9em; }
+        #main-stats-table th, #main-stats-table td { border: 1px solid #ddd; padding: 6px; text-align: center; }
+        #main-stats-table th { background-color: #e9ecef; font-weight: bold; }
+        #main-stats-table td:first-child { text-align: left; font-weight: bold; }
+        .clickable-ability-header { cursor: pointer; color: #0056b3; text-decoration: underline;}
+        .clickable-ability-header span.arrow-indicator { font-size: 0.8em; margin-left: 3px;}
 
-        .pc-bars-for-ability { 
-            display: flex;
-            flex-direction: column; 
-            flex-grow: 1;
+        /* Expanded Ability Details Section */
+        .expanded-ability-content {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-top: 0px; 
+            margin-bottom: 10px;
+            background-color: #f8f9fa;
+            border-top: none; 
         }
-        .pc-bar-row { 
-            display: flex;
-            align-items: center;
-            margin-bottom: 2px; 
-        }
-
+        .expanded-ability-content h5 { margin-top:0; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px;}
+        
+        .ability-bar-chart-container { margin-bottom: 15px; padding: 10px; background-color: #fff; border: 1px solid #eee; border-radius: 4px;}
+        .pc-bar-row { display: flex; align-items: center; margin-bottom: 3px; font-size: 0.9em; }
+        .stat-comparison-pc-name { width: 120px; text-align: right; margin-right: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .stat-bar-wrapper { flex-grow: 1; background-color: #e0e0e0; border-radius: 3px; height: 18px; min-width: 80px; }
+        .stat-bar { height: 100%; background-color: #007bff; border-radius: 3px; text-align: right; padding-right: 5px; color: white; line-height: 18px; font-size: 0.8em; white-space: nowrap; overflow: hidden;}
+        
+        .derived-stats-table { width: 100%; border-collapse: collapse; font-size: 0.9em; margin-top:10px;}
+        .derived-stats-table th, .derived-stats-table td { border: 1px solid #ddd; padding: 5px; text-align: left; }
+        .derived-stats-table th { background-color: #f1f1f1; font-weight: normal; }
+        .derived-stats-table td { text-align: center; }
+        .derived-stats-table th:first-child { font-weight: bold; text-align: left; width: 180px;}
     </style>
 </head>
 <body>
@@ -164,7 +113,6 @@
     <div id="left-column" class="column">
         <div id="left-column-content">
             <h2>Characters & Details</h2>
-
             <div id="character-details-section" class="collapsible-section">
                 <h3>Details: <span id="details-char-name">None</span></h3>
                 <div class="collapsible-content">
@@ -190,23 +138,18 @@
                     </div>
                 </div>
             </div>
-
             <div id="pc-list-section" class="collapsible-section">
                 <h3>Active Player Characters</h3>
                 <div class="collapsible-content character-list">
-                    <div id="active-pc-list">
-                        <p><em>No Player Characters defined yet.</em></p>
-                    </div>
+                    <div id="active-pc-list"><p><em>Loading PCs...</em></p></div>
                 </div>
             </div>
-
             <div id="npc-list-section" class="collapsible-section">
                 <h3>NPC List (for Dialogue)</h3>
                 <div class="collapsible-content character-list">
-                    <div id="character-list"><ul></ul></div>
+                    <div id="character-list"><ul><li><em>Loading NPCs...</em></li></ul></div>
                 </div>
             </div>
-
             <div id="create-character-section" class="collapsible-section collapsed">
                 <h3>Create New Character</h3>
                 <div id="create-character-form" class="collapsible-content">
@@ -262,10 +205,13 @@
     </div>
 
 <script>
+    console.log("Script execution started."); 
+
     let selectedNpcId = null;
     let activePcIds = new Set();
     let allCharacters = [];
     let dialogueHistory = [];
+    let currentlyExpandedAbility = null; 
 
     const API_BASE_URL = ''; 
     function getElem(id) { return document.getElementById(id); }
@@ -273,21 +219,15 @@
     function disableBtn(id, disabled) { getElem(id).disabled = disabled; }
 
     // --- D&D 5e Calculation Functions ---
-    function getAbilityModifier(score) { // This is our universal modifier function
-        return Math.floor((score - 10) / 2);
-    }
+    function getAbilityModifier(score) { return Math.floor((score - 10) / 2); }
     function carryingCapacity(score) { return score * 15; }
     function pushDragLift(score) { return score * 30; }
     function longJump(score, running = true) { return running ? score : Math.floor(score / 2); }
     function highJump(score, running = true) { const mod = getAbilityModifier(score); return running ? (3 + mod) : Math.floor((3 + mod) / 2); }
     function initiative(dexScore) { return getAbilityModifier(dexScore); }
-    // acLight and acMedium might be too complex without knowing equipped armor; not used in this iteration of details.
-    // function acLight(baseArmorClass, dexScore) { return baseArmorClass + getAbilityModifier(dexScore); }
-    // function acMedium(baseArmorClass, dexScore) { return baseArmorClass + Math.min(getAbilityModifier(dexScore), 2); }
     function holdBreath(conScore) { return Math.max(1 + getAbilityModifier(conScore), 0.5) + " minutes"; } 
     function spellSaveDC(castingStatScore, proficiencyBonus) { return 8 + getAbilityModifier(castingStatScore) + proficiencyBonus; }
     function spellAttackBonus(castingStatScore, proficiencyBonus) { return getAbilityModifier(castingStatScore) + proficiencyBonus; }
-    
     function savingThrowBonus(abilityScore, proficientInSave = false, proficiencyBonus = 0) {
         const mod = getAbilityModifier(abilityScore);
         return mod + (proficientInSave ? proficiencyBonus : 0);
@@ -295,16 +235,14 @@
     function calculatePassiveSkill(baseStatScore, skillProficiencyValue, proficiencyBonus) {
         const modifier = getAbilityModifier(baseStatScore);
         let skillBonus = 10 + modifier;
-        if (skillProficiencyValue === 1 || skillProficiencyValue === 2) { // Proficient or Expertise
+        if (skillProficiencyValue === 1 || skillProficiencyValue === 2) { 
             skillBonus += proficiencyBonus;
-        } else if (skillProficiencyValue === 0.5) { // Half proficiency
+        } else if (skillProficiencyValue === 0.5) { 
             skillBonus += Math.floor(proficiencyBonus / 2);
         }
         return skillBonus;
     }
 
-
-    // --- Utility Functions ---
     function getProficiencyBonus(level) {
         if (level < 1) return 2; 
         if (level <= 4) return 2;
@@ -316,17 +254,23 @@
 
     // --- Character Data & Rendering ---
     async function fetchCharacters() {
+        console.log("fetchCharacters: Function entered.");
         try {
+            console.log("fetchCharacters: Attempting fetch from " + `${API_BASE_URL}/api/npcs`);
             const response = await fetch(`${API_BASE_URL}/api/npcs`);
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            console.log("fetchCharacters: Fetch response status - " + response.status);
+            if (!response.ok) {
+                console.error("fetchCharacters: Response not OK. Status: " + response.status);
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             allCharacters = await response.json();
-            console.log('All characters fetched (parsed):', allCharacters);
+            console.log('fetchCharacters: All characters data received and parsed:', JSON.parse(JSON.stringify(allCharacters)));
             renderNpcList();
             renderPcList();
             updateView(); 
-        } catch (error) {
-            console.error('Error fetching characters:', error);
-            alert('Failed to load characters.');
+        } catch (error) { 
+            console.error('Error in fetchCharacters:', error); 
+            alert('Failed to load characters. Check console for details: ' + error.message); 
         }
     }
 
@@ -335,18 +279,13 @@
         ul.innerHTML = ''; 
         const npcs = allCharacters.filter(char => char.character_type === 'NPC');
         console.log('Filtered NPCs for list:', npcs);
-        if (npcs.length === 0) {
-            ul.innerHTML = '<p><em>No NPCs defined yet.</em></p>';
-            return;
-        }
+        if (npcs.length === 0) { ul.innerHTML = '<li><p><em>No NPCs defined yet.</em></p></li>'; return; }
         npcs.forEach(char => {
             const li = document.createElement('li');
             li.textContent = char.name;
             li.dataset.charId = char._id; 
             li.onclick = () => selectNpcForDialogue(char._id);
-            if (char._id === selectedNpcId) {
-                li.classList.add('selected');
-            }
+            if (char._id === selectedNpcId) li.classList.add('selected');
             ul.appendChild(li);
         });
     }
@@ -357,25 +296,35 @@
         const pcs = allCharacters.filter(char => char.character_type === 'PC');
         console.log('Filtered PCs for list:', pcs);
 
-        if (pcs.length === 0) {
-            pcListDiv.innerHTML = '<p><em>No Player Characters defined yet. Create characters with type "PC".</em></p>';
-            return;
+        if (pcs.length === 0) { 
+            pcListDiv.innerHTML = '<p><em>No Player Characters defined yet. Create characters with type "PC".</em></p>'; 
+            return; 
         }
-        
         const ul = document.createElement('ul');
         pcs.forEach(pc => {
             const li = document.createElement('li');
             li.textContent = pc.name;
             li.dataset.charId = pc._id;
+            // MODIFIED onClick for PC list items:
             li.onclick = () => {
-                togglePcSelection(pc._id, li);
-                if (!selectedNpcId) updatePcDashboard(); 
+                if (selectedNpcId) { // If an NPC dialogue is active
+                    selectedNpcId = null; // Clear selected NPC
+                    // De-select any NPC in the NPC list visually
+                    const currentlySelectedNpcLi = document.querySelector('#character-list li.selected');
+                    if (currentlySelectedNpcLi) {
+                        currentlySelectedNpcLi.classList.remove('selected');
+                    }
+                    updateText('active-npc-name', 'No NPC Selected'); 
+                    disableBtn('generate-dialogue-btn', true);
+                    // No need to call renderNpcList() here, selection handled by class removal
+                }
+                
+                togglePcSelection(pc._id, li); 
                 selectCharacterForDetails(pc._id); 
+                
+                updateView(); // This will switch to PC dashboard if selectedNpcId is now null
             };
-
-            if (activePcIds.has(pc._id)) {
-                li.classList.add('selected');
-            }
+            if (activePcIds.has(pc._id)) li.classList.add('selected');
             ul.appendChild(li);
         });
         pcListDiv.appendChild(ul);
@@ -390,7 +339,6 @@
             updateText('profile-personality', (selectedChar.personality_traits || []).join(', '));
             getElem('gm-notes').value = selectedChar.gm_notes || '';
             disableBtn('save-gm-notes-btn', false);
-
             const isNpc = selectedChar.character_type === 'NPC';
             getElem('npc-specific-details').style.display = isNpc ? 'block' : 'none';
             if (isNpc) {
@@ -412,18 +360,40 @@
             element.classList.add('selected');
         }
         if(getElem('pc-dashboard-view').style.display !== 'none') {
-            updatePcDashboard();
+            if (currentlyExpandedAbility) {
+                const expansionDiv = document.getElementById(`expanded-${currentlyExpandedAbility}`);
+                const selectedPcsForExpansion = allCharacters.filter(char => activePcIds.has(char._id) && char.character_type === 'PC' && char.vtt_data);
+                if (expansionDiv && expansionDiv.style.display === 'block') { // Only populate if visible
+                    if (selectedPcsForExpansion.length > 0) {
+                        populateExpandedAbilityDetails(currentlyExpandedAbility, expansionDiv, selectedPcsForExpansion);
+                    } else { // If no PCs are selected anymore for the open detail, clear it or hide it
+                        expansionDiv.innerHTML = '<p>Select PCs to see details for this ability.</p>'; 
+                        // Or hide it:
+                        // expansionDiv.style.display = 'none';
+                        // const headerTH = document.querySelector(`#main-stats-table th[data-ability="${currentlyExpandedAbility}"]`);
+                        // if (headerTH) headerTH.querySelector('span.arrow-indicator').textContent = ' ►';
+                        // currentlyExpandedAbility = null; 
+                    }
+                }
+            }
+            updatePcDashboard(); 
         }
     }
-
+    
     // --- View Management ---
     function updateView() {
         const dialogueInterface = getElem('dialogue-interface');
         const pcDashboardView = getElem('pc-dashboard-view');
-
         if (selectedNpcId) {
             dialogueInterface.style.display = 'flex'; 
             pcDashboardView.style.display = 'none';
+            if(currentlyExpandedAbility){ 
+                const expansionDiv = document.getElementById(`expanded-${currentlyExpandedAbility}`);
+                if(expansionDiv) expansionDiv.style.display = 'none';
+                const headerTH = document.querySelector(`#main-stats-table th[data-ability="${currentlyExpandedAbility}"]`);
+                if (headerTH) headerTH.querySelector('span.arrow-indicator').textContent = ' ►';
+                currentlyExpandedAbility = null;
+            }
         } else {
             dialogueInterface.style.display = 'none';
             pcDashboardView.style.display = 'block';
@@ -432,34 +402,22 @@
     }
     
     function selectNpcForDialogue(npcId) {
-        selectedNpcId = npcId;
+        selectedNpcId = npcId; 
         const selectedChar = allCharacters.find(char => char._id === npcId);
-        
         if (selectedChar) {
             updateText('active-npc-name', selectedChar.name);
             disableBtn('generate-dialogue-btn', false);
             dialogueHistory = []; 
-            getElem('dialogue-transcript').innerHTML = `<p class="scene-event">Interacting with NPC: ${selectedChar.name}.</p>`;
+            getElem('dialogue-transcript').innerHTML = `<p class="scene-event">Interacting with NPC: ${selectedChar.name}.</p>`; // Corrected
             selectCharacterForDetails(npcId); 
         }
         renderNpcList(); 
-        updateView();
-    }
-
-    // --- Function to toggle ability details visibility ---
-    function toggleAbilityDetails(ablKey) {
-        const detailsDiv = document.getElementById(`details-${ablKey}`);
-        const headerSpan = document.querySelector(`.stat-comparison-label[onclick="toggleAbilityDetails('${ablKey}')"]`);
-        if (detailsDiv) {
-            const isCurrentlyHidden = detailsDiv.style.display === 'none' || detailsDiv.style.display === '';
-            detailsDiv.style.display = isCurrentlyHidden ? 'block' : 'none';
-            if (headerSpan) {
-                headerSpan.classList.toggle('expanded', isCurrentlyHidden);
-            }
-        }
+        updateView(); 
     }
 
     // --- PC Dashboard Logic ---
+    // updatePcDashboard, toggleAbilityExpansion, populateExpandedAbilityDetails functions remain as in the previous full response.
+    // ... (Paste the full updatePcDashboard, toggleAbilityExpansion, and populateExpandedAbilityDetails from the previous good response here)
     function updatePcDashboard() {
         const dashboardContent = getElem('pc-dashboard-content');
         dashboardContent.innerHTML = ''; 
@@ -468,403 +426,370 @@
 
         if (selectedPcs.length === 0) {
             const anyPcsExist = allCharacters.some(char => char.character_type === 'PC' && char.vtt_data);
-            if (!anyPcsExist) {
-                 dashboardContent.innerHTML = '<p class="pc-dashboard-no-selection">No Player Characters with VTT data available. Create PCs and ensure VTT data is synced.</p>';
-            } else {
-                 dashboardContent.innerHTML = '<p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>';
+            dashboardContent.innerHTML = `<p class="pc-dashboard-no-selection">${anyPcsExist ? 'Select Player Characters from the left panel to view their details.' : 'No Player Characters with VTT data available. Create PCs and ensure VTT data is synced.'}</p>`;
+            if (currentlyExpandedAbility) {
+                const expansionDiv = document.getElementById(`expanded-${currentlyExpandedAbility}`);
+                if (expansionDiv) expansionDiv.style.display = 'none';
+                const headerTH = document.querySelector(`#main-stats-table th[data-ability="${currentlyExpandedAbility}"]`);
+                if (headerTH) headerTH.querySelector('span.arrow-indicator').textContent = ' ►';
+                currentlyExpandedAbility = null;
             }
             return;
         }
 
         const abilities = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
-        const comparisonSection = document.createElement('div');
-        comparisonSection.className = 'comparison-section';
-        
-        let comparisonHTML = '<h4>Ability Score Comparison</h4>';
+
+        let mainStatsTableHTML = `<h4>Player Stats Overview</h4>
+                                  <table id="main-stats-table"><thead><tr><th>Character</th>`;
         abilities.forEach(ablKey => {
-            comparisonHTML += `<div class="stat-comparison-bar-container">
-                                 <span class="stat-comparison-label clickable-header" onclick="toggleAbilityDetails('${ablKey}')">${ablKey}:</span>
-                                 <div class="pc-bars-for-ability">`; 
-            selectedPcs.forEach(pc => {
-                const score = pc.vtt_data.abilities[ablKey.toLowerCase()]?.value || 0;
-                const barWidth = (score / 20) * 100;
-                comparisonHTML += `<div class="pc-bar-row">
-                                     <div class="stat-comparison-pc-name" title="${pc.name}">${pc.name.substring(0,10)+(pc.name.length > 10 ? '...' : '')}</div>
-                                     <div class="stat-bar-wrapper"><div class="stat-bar" style="width: ${barWidth}%;">${score}</div></div>
-                                   </div>`;
-            });
-            comparisonHTML += `</div></div>`; 
-            comparisonHTML += `<div class="ability-details" id="details-${ablKey}" style="display:none;"></div>`;
+            const arrow = (currentlyExpandedAbility === ablKey && document.getElementById(`expanded-${ablKey}`)?.style.display !== 'none') ? '▼' : '►';
+            mainStatsTableHTML += `<th class="clickable-ability-header" data-ability="${ablKey}" onclick="toggleAbilityExpansion('${ablKey}')">${ablKey} <span class="arrow-indicator">${arrow}</span></th>`;
         });
+        mainStatsTableHTML += `</tr></thead><tbody>`;
         
-        comparisonHTML += '<h4>AC Comparison</h4>';
-        selectedPcs.forEach(pc => {
-            const ac = pc.vtt_data.attributes?.ac?.value || pc.vtt_data.attributes?.ac?.flat || 10;
-            const barWidth = (ac / 25) * 100; 
-            comparisonHTML += `<div class="stat-comparison-bar-container">
-                               <span class="stat-comparison-pc-name" title="${pc.name}" style="width:120px;">${pc.name.substring(0,10)+(pc.name.length > 10 ? '...' : '')} (AC)</span>
-                               <div class="stat-bar-wrapper"><div class="stat-bar" style="width: ${barWidth}%;">${ac}</div></div>
-                               </div>`;
-        });
-        
-        comparisonSection.innerHTML = comparisonHTML;
-        dashboardContent.appendChild(comparisonSection);
+        const sortedSelectedPcsByName = [...selectedPcs].sort((a,b) => a.name.localeCompare(b.name));
 
-        // Populate the details sections
-        abilities.forEach(ablKey => {
-            const detailsDiv = document.getElementById(`details-${ablKey}`);
-            if (!detailsDiv) return;
-
-            let detailsContentHTML = '';
-            selectedPcs.forEach(pc => {
-                const score = pc.vtt_data.abilities[ablKey.toLowerCase()]?.value || 0;
-                const pcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || 1;
-                const profBonus = getProficiencyBonus(pcLevel);
-                const modifier = getAbilityModifier(score);
-                const isSaveProficient = pc.vtt_data.abilities[ablKey.toLowerCase()]?.proficient === 1;
-                const saveBonusDisplay = savingThrowBonus(score, isSaveProficient, profBonus);
-
-                detailsContentHTML += `<div class="ability-details-pc">
-                                         <h5>${pc.name} (${ablKey}: ${score} [${modifier >= 0 ? '+' : ''}${modifier}])</h5>
-                                         <table>`;
-                
-                detailsContentHTML += `<tr><th>Modifier</th><td>${modifier >= 0 ? '+' : ''}${modifier}</td></tr>`;
-
-                switch (ablKey) {
-                    case 'STR':
-                        detailsContentHTML += `<tr><th>Carrying Capacity</th><td>${carryingCapacity(score)} lbs</td></tr>`;
-                        detailsContentHTML += `<tr><th>Push/Drag/Lift</th><td>${pushDragLift(score)} lbs</td></tr>`;
-                        detailsContentHTML += `<tr><th>Long Jump (Run/Stand)</th><td>${longJump(score, true)} ft / ${longJump(score, false)} ft</td></tr>`;
-                        detailsContentHTML += `<tr><th>High Jump (Run/Stand)</th><td>${highJump(score, true)} ft / ${highJump(score, false)} ft</td></tr>`;
-                        detailsContentHTML += `<tr><th>Strength Save</th><td>${saveBonusDisplay >= 0 ? '+' : ''}${saveBonusDisplay} ${isSaveProficient ? '(Proficient)' : ''}</td></tr>`;
-                        break;
-                    case 'DEX':
-                        detailsContentHTML += `<tr><th>Initiative</th><td>${initiative(score) >= 0 ? '+' : ''}${initiative(score)}</td></tr>`;
-                        detailsContentHTML += `<tr><th>Dexterity Save</th><td>${saveBonusDisplay >= 0 ? '+' : ''}${saveBonusDisplay} ${isSaveProficient ? '(Proficient)' : ''}</td></tr>`;
-                        break;
-                    case 'CON':
-                        detailsContentHTML += `<tr><th>Hold Breath</th><td>${holdBreath(score)}</td></tr>`;
-                        detailsContentHTML += `<tr><th>Constitution Save</th><td>${saveBonusDisplay >= 0 ? '+' : ''}${saveBonusDisplay} ${isSaveProficient ? '(Proficient)' : ''}</td></tr>`;
-                        break;
-                    case 'INT':
-                        detailsContentHTML += `<tr><th>Intelligence Save</th><td>${saveBonusDisplay >= 0 ? '+' : ''}${saveBonusDisplay} ${isSaveProficient ? '(Proficient)' : ''}</td></tr>`;
-                        // Passive Investigation will be in main card.
-                        break;
-                    case 'WIS':
-                        const percProfValue = pc.vtt_data.skills?.prc?.value;
-                        const isPercProficient = percProfValue === 1 || percProfValue === 2;
-                        const passivePercCalc = 10 + modifier + (isPercProficient ? profBonus : 0);
-                        detailsContentHTML += `<tr><th>Passive Perception (Calc)</th><td>${passivePercCalc}</td></tr>`;
-                        detailsContentHTML += `<tr><th>Wisdom Save</th><td>${saveBonusDisplay >= 0 ? '+' : ''}${saveBonusDisplay} ${isSaveProficient ? '(Proficient)' : ''}</td></tr>`;
-                        break;
-                    case 'CHA':
-                        detailsContentHTML += `<tr><th>Charisma Save</th><td>${saveBonusDisplay >= 0 ? '+' : ''}${saveBonusDisplay} ${isSaveProficient ? '(Proficient)' : ''}</td></tr>`;
-                        if (pc.vtt_data.attributes?.spellcasting === 'cha') {
-                             detailsContentHTML += `<tr><th>Spell Save DC (CHA)</th><td>${spellSaveDC(score, profBonus)}</td></tr>`;
-                             detailsContentHTML += `<tr><th>Spell Attack (CHA)</th><td>+${spellAttackBonus(score, profBonus)}</td></tr>`;
-                        }
-                        break;
-                }
-                detailsContentHTML += `</table></div>`; 
-            });
-            detailsDiv.innerHTML = detailsContentHTML;
-        });
-
-        // Detailed Stat Blocks Grid
-        const grid = document.createElement('div');
-        grid.className = 'pc-dashboard-grid';
-        dashboardContent.appendChild(grid);
-
-        selectedPcs.forEach(pc => {
-            const card = document.createElement('div');
-            card.className = 'pc-stat-card';
-            
-            const pcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || 1;
-            const profBonus = getProficiencyBonus(pcLevel);
-
-            let cardHTML = `<h4>${pc.name} (Level ${pcLevel})</h4>`;
-            
-            const hpCurrent = pc.vtt_data.attributes.hp?.value !== undefined ? pc.vtt_data.attributes.hp.value : 'N/A';
-            const hpMax = pc.vtt_data.attributes.hp?.max !== undefined && pc.vtt_data.attributes.hp.max !== null ? pc.vtt_data.attributes.hp.max : 'N/A';
-            cardHTML += `<p><strong>HP:</strong> ${hpCurrent} / ${hpMax}</p>`;
-            
-            let acDisplay = pc.vtt_data.attributes.ac?.value;
-            if (acDisplay === undefined || acDisplay === null) {
-                acDisplay = pc.vtt_data.attributes.ac?.flat;
-            }
-            if (acDisplay === undefined || acDisplay === null) {
-                // Fallback to a basic calculation if possible, or default
-                // This is complex without knowing equipped armor from `pc.vtt_data.items`
-                // For now, if not directly available, show N/A or 10.
-                // The user mentioned `flags.ddbimporter.overrideAC.flat` which is not in `pc.vtt_data` (system obj)
-                // So we stick to what's available in `pc.vtt_data.attributes.ac`
-                acDisplay = 'N/A (check VTT)';
-            }
-            cardHTML += `<p><strong>AC:</strong> ${acDisplay}</p>`;
-            
-            let passivePercFormatted = 'N/A';
-            if (pc.vtt_data.skills?.prc?.bonuses?.passive !== undefined && pc.vtt_data.skills?.prc?.bonuses?.passive !== "") {
-                passivePercFormatted = pc.vtt_data.skills.prc.bonuses.passive;
-            } else if (pc.vtt_data.abilities?.wis?.value !== undefined && pc.vtt_data.skills?.prc !== undefined) {
-                passivePercFormatted = calculatePassiveSkill(pc.vtt_data.abilities.wis.value, pc.vtt_data.skills.prc.value, profBonus);
-            }
-            cardHTML += `<p><strong>Passive Perception:</strong> ${passivePercFormatted}</p>`;
-
-            let passiveInvFormatted = 'N/A';
-            if (pc.vtt_data.skills?.inv?.bonuses?.passive !== undefined && pc.vtt_data.skills?.inv?.bonuses?.passive !== "") {
-                passiveInvFormatted = pc.vtt_data.skills.inv.bonuses.passive;
-            } else if (pc.vtt_data.abilities?.int?.value !== undefined && pc.vtt_data.skills?.inv !== undefined) {
-                 passiveInvFormatted = calculatePassiveSkill(pc.vtt_data.abilities.int.value, pc.vtt_data.skills.inv.value, profBonus);
-            }
-            cardHTML += `<p><strong>Passive Investigation:</strong> ${passiveInvFormatted}</p>`;
-            
-            cardHTML += '<h5>Abilities:</h5><ul>';
+        sortedSelectedPcsByName.forEach(pc => {
+            mainStatsTableHTML += `<tr><td>${pc.name}</td>`;
             abilities.forEach(ablKey => {
                 const score = pc.vtt_data.abilities[ablKey.toLowerCase()]?.value || 0;
                 const mod = getAbilityModifier(score);
-                cardHTML += `<li>${ablKey}: ${score} (${mod >= 0 ? '+' : ''}${mod})</li>`;
+                mainStatsTableHTML += `<td>${score} (${mod >= 0 ? '+' : ''}${mod})</td>`;
             });
-            cardHTML += '</ul>';
+            mainStatsTableHTML += `</tr>`;
+        });
+        mainStatsTableHTML += `</tbody></table>`;
+        
+        const expansionContainer = document.createElement('div');
+        expansionContainer.id = 'expanded-ability-details-sections';
+        
+        dashboardContent.innerHTML = mainStatsTableHTML;
+        dashboardContent.appendChild(expansionContainer);
 
-            cardHTML += '<h5>Skills:</h5><ul>';
+        abilities.forEach(ablKey => {
+            const expansionDiv = document.createElement('div');
+            expansionDiv.id = `expanded-${ablKey}`;
+            expansionDiv.className = 'expanded-ability-content';
+            expansionDiv.style.display = (currentlyExpandedAbility === ablKey) ? 'block' : 'none';
+            if (currentlyExpandedAbility === ablKey && selectedPcs.length > 0) {
+                populateExpandedAbilityDetails(ablKey, expansionDiv, selectedPcs);
+            }
+            expansionContainer.appendChild(expansionDiv);
+        });
+        
+        let statCardsHTML = `<h4 style="margin-top: 20px;">Individual Stat Blocks</h4><div class="pc-dashboard-grid">`;
+        sortedSelectedPcsByName.forEach(pc => {
+            const pcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || 1;
+            const profBonus = getProficiencyBonus(pcLevel);
+            statCardsHTML += `<div class="pc-stat-card"><h4>${pc.name} (Level ${pcLevel})</h4>`;
+            const hpCurrent = pc.vtt_data.attributes.hp?.value !== undefined ? pc.vtt_data.attributes.hp.value : 'N/A';
+            const hpMax = pc.vtt_data.attributes.hp?.max !== undefined && pc.vtt_data.attributes.hp.max !== null ? pc.vtt_data.attributes.hp.max : 'N/A';
+            statCardsHTML += `<p><strong>HP:</strong> ${hpCurrent} / ${hpMax}</p>`;
+            let acDisplay = pc.vtt_data.attributes.ac?.value;
+            if (acDisplay === undefined || acDisplay === null) acDisplay = pc.vtt_data.attributes.ac?.flat;
+            if (acDisplay === undefined || acDisplay === null) acDisplay = 'N/A (check VTT)';
+            statCardsHTML += `<p><strong>AC:</strong> ${acDisplay}</p>`;
+            let passivePercFormatted = 'N/A';
+            const wisScore = pc.vtt_data.abilities?.wis?.value;
+            const percSkillInfo = pc.vtt_data.skills?.prc;
+            if (percSkillInfo?.bonuses?.passive !== undefined && percSkillInfo?.bonuses?.passive !== "") {
+                passivePercFormatted = percSkillInfo.bonuses.passive;
+            } else if (wisScore !== undefined && percSkillInfo?.value !== undefined) {
+                passivePercFormatted = calculatePassiveSkill(wisScore, percSkillInfo.value, profBonus);
+            }
+            statCardsHTML += `<p><strong>Passive Perception:</strong> ${passivePercFormatted}</p>`;
+            let passiveInvFormatted = 'N/A';
+            const intScore = pc.vtt_data.abilities?.int?.value;
+            const invSkillInfo = pc.vtt_data.skills?.inv;
+             if (invSkillInfo?.bonuses?.passive !== undefined && invSkillInfo?.bonuses?.passive !== "") {
+                passiveInvFormatted = invSkillInfo.bonuses.passive;
+            } else if (intScore !== undefined && invSkillInfo?.value !== undefined) {
+                 passiveInvFormatted = calculatePassiveSkill(intScore, invSkillInfo.value, profBonus);
+            }
+            statCardsHTML += `<p><strong>Passive Investigation:</strong> ${passiveInvFormatted}</p>`;
+            statCardsHTML += '<h5>Abilities:</h5><ul>';
+            abilities.forEach(ablKeyIter => {
+                const score = pc.vtt_data.abilities[ablKeyIter.toLowerCase()]?.value || 0;
+                const mod = getAbilityModifier(score);
+                statCardsHTML += `<li>${ablKeyIter}: ${score} (${mod >= 0 ? '+' : ''}${mod})</li>`;
+            });
+            statCardsHTML += '</ul><h5>Skills:</h5><ul>';
             if (pc.vtt_data.skills) {
                 for (const skillAbbr in pc.vtt_data.skills) {
                     const skill = pc.vtt_data.skills[skillAbbr];
-                    if (!skill.ability) continue; 
-                    const abilityMod = getAbilityModifier(pc.vtt_data.abilities[skill.ability]?.value || 10);
+                    if (!skill.ability || !pc.vtt_data.abilities[skill.ability]) continue; 
+                    const abilityScoreForSkill = pc.vtt_data.abilities[skill.ability]?.value || 10;
+                    const abilityMod = getAbilityModifier(abilityScoreForSkill);
                     let skillMod = abilityMod;
                     const profValue = skill.value; 
-
                     if (profValue === 1) skillMod += profBonus; 
                     else if (profValue === 2) skillMod += (profBonus * 2); 
                     else if (profValue === 0.5) skillMod += Math.floor(profBonus / 2); 
-                    
                     let skillName = skillAbbr.charAt(0).toUpperCase() + skillAbbr.slice(1);
                     skillName = skillName.replace(/([A-Z])/g, ' $1').replace(/(\d+)/g, ' $1').trim();
-                    const skillNameMap = {
-                        "acr": "Acrobatics", "ani": "Animal Handling", "arc": "Arcana", "ath": "Athletics",
-                        "dec": "Deception", "his": "History", "ins": "Insight", "itm": "Intimidation",
-                        "inv": "Investigation", "med": "Medicine", "nat": "Nature", "prc": "Perception",
-                        "prf": "Performance", "per": "Persuasion", "rel": "Religion", "slt": "Sleight of Hand",
-                        "ste": "Stealth", "sur": "Survival"
-                    };
+                    const skillNameMap = {"acr": "Acrobatics", "ani": "Animal Handling", "arc": "Arcana", "ath": "Athletics", "dec": "Deception", "his": "History", "ins": "Insight", "itm": "Intimidation", "inv": "Investigation", "med": "Medicine", "nat": "Nature", "prc": "Perception", "prf": "Performance", "per": "Persuasion", "rel": "Religion", "slt": "Sleight of Hand", "ste": "Stealth", "sur": "Survival"};
                     skillName = skillNameMap[skillAbbr] || skillName;
-                    cardHTML += `<li>${skillName}: ${skillMod >= 0 ? '+' : ''}${skillMod}</li>`;
+                    statCardsHTML += `<li>${skillName}: ${skillMod >= 0 ? '+' : ''}${skillMod}</li>`;
                 }
             }
-            cardHTML += '</ul>';
-            
-            card.innerHTML = cardHTML;
-            grid.appendChild(card);
+            statCardsHTML += '</ul></div>';
         });
+        statCardsHTML += `</div>`; 
+        dashboardContent.innerHTML += statCardsHTML;
+    }
+
+    function toggleAbilityExpansion(ablKey) {
+        const selectedPcs = allCharacters.filter(char => activePcIds.has(char._id) && char.character_type === 'PC' && char.vtt_data);
+        const expansionDiv = document.getElementById(`expanded-${ablKey}`);
+        const headerTH = document.querySelector(`#main-stats-table th[data-ability="${ablKey}"]`);
+        const arrowSpan = headerTH ? headerTH.querySelector('span.arrow-indicator') : null;
+
+        if (!expansionDiv || !headerTH || !arrowSpan) return;
+
+        const isCurrentlyHidden = expansionDiv.style.display === 'none';
+
+        if (isCurrentlyHidden) { // If hidden, try to open this one
+            if (selectedPcs.length === 0) { // No PCs selected, don't open, ensure arrow is correct
+                 arrowSpan.textContent = ' ►';
+                 return;
+            }
+            // Hide any other expanded section
+            if (currentlyExpandedAbility && currentlyExpandedAbility !== ablKey) {
+                const otherDiv = document.getElementById(`expanded-${currentlyExpandedAbility}`);
+                const otherHeaderTH = document.querySelector(`#main-stats-table th[data-ability="${currentlyExpandedAbility}"]`);
+                if (otherDiv) otherDiv.style.display = 'none';
+                if (otherHeaderTH) otherHeaderTH.querySelector('span.arrow-indicator').textContent = ' ►';
+            }
+            populateExpandedAbilityDetails(ablKey, expansionDiv, selectedPcs);
+            expansionDiv.style.display = 'block';
+            arrowSpan.textContent = ' ▼';
+            currentlyExpandedAbility = ablKey;
+        } else { // If currently shown (it's this ablKey), hide it
+            expansionDiv.style.display = 'none';
+            arrowSpan.textContent = ' ►';
+            currentlyExpandedAbility = null;
+        }
+    }
+
+    function populateExpandedAbilityDetails(ablKey, expansionDiv, selectedPcsInput) {
+        const sortedPcs = [...selectedPcsInput].sort((a, b) => {
+            const scoreA = a.vtt_data.abilities[ablKey.toLowerCase()]?.value || 0;
+            const scoreB = b.vtt_data.abilities[ablKey.toLowerCase()]?.value || 0;
+            return scoreB - scoreA;
+        });
+
+        let contentHTML = `<h5>${ablKey} Details & Comparison</h5>`;
+        contentHTML += `<div class="ability-bar-chart-container">`;
+        sortedPcs.forEach(pc => {
+            const score = pc.vtt_data.abilities[ablKey.toLowerCase()]?.value || 0;
+            const barWidth = (score / 20) * 100;
+            contentHTML += `<div class="pc-bar-row"> 
+                                <div class="stat-comparison-pc-name" title="${pc.name}">${pc.name.substring(0,15)+(pc.name.length > 15 ? '...' : '')}</div>
+                                <div class="stat-bar-wrapper"><div class="stat-bar" style="width: ${barWidth}%;">${score}</div></div>
+                           </div>`;
+        });
+        contentHTML += `</div>`;
+
+        contentHTML += `<table class="derived-stats-table"><thead><tr><th>Derived Stat</th>`;
+        sortedPcs.forEach(pc => {
+            contentHTML += `<th>${pc.name.substring(0,10)+(pc.name.length > 10 ? '...' : '')}</th>`;
+        });
+        contentHTML += `</tr></thead><tbody>`;
+        
+        const derivedStatsMetrics = [];
+        // Get level and profBonus from the first PC in the sorted list for consistency in this section
+        const pcLevel = sortedPcs[0] ? (sortedPcs[0].flags?.ddbimporter?.dndbeyond?.totalLevels || 1) : 1;
+        const profBonus = getProficiencyBonus(pcLevel);
+        
+        derivedStatsMetrics.push("Modifier");
+        derivedStatsMetrics.push(`${ablKey} Save`);
+
+        if (ablKey === 'STR') {
+            derivedStatsMetrics.push("Carrying Capacity", "Push/Drag/Lift", "Long Jump (Run/Stand)", "High Jump (Run/Stand)");
+        } else if (ablKey === 'DEX') {
+            derivedStatsMetrics.push("Initiative");
+        } else if (ablKey === 'CON') {
+            derivedStatsMetrics.push("Hold Breath");
+        } else if (ablKey === 'WIS') {
+            derivedStatsMetrics.push("Passive Perception (Calc)");
+        } else if (ablKey === 'CHA') {
+            if (sortedPcs.some(pc => pc.vtt_data.attributes?.spellcasting === 'cha')) {
+                derivedStatsMetrics.push("Spell Save DC (CHA)", "Spell Attack Bonus (CHA)");
+            }
+        }
+        
+        derivedStatsMetrics.forEach(metricName => {
+            contentHTML += `<tr><th>${metricName}</th>`;
+            sortedPcs.forEach(pc => {
+                const score = pc.vtt_data.abilities[ablKey.toLowerCase()]?.value || 0;
+                const modifier = getAbilityModifier(score);
+                // Recalculate level and profBonus per PC in case they differ, though generally they'd be same for this display
+                const currentPcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || 1;
+                const currentProfBonus = getProficiencyBonus(currentPcLevel);
+                const isSaveProficient = pc.vtt_data.abilities[ablKey.toLowerCase()]?.proficient === 1;
+                let value = 'N/A';
+
+                if (metricName === "Modifier") value = `${modifier >= 0 ? '+' : ''}${modifier}`;
+                else if (metricName === `${ablKey} Save`) {
+                    const saveBonus = savingThrowBonus(score, isSaveProficient, currentProfBonus);
+                    value = `${saveBonus >= 0 ? '+' : ''}${saveBonus} ${isSaveProficient ? '(P)' : ''}`;
+                }
+                else if (metricName === "Carrying Capacity") value = `${carryingCapacity(score)} lbs`;
+                else if (metricName === "Push/Drag/Lift") value = `${pushDragLift(score)} lbs`;
+                else if (metricName === "Long Jump (Run/Stand)") value = `${longJump(score, true)}ft / ${longJump(score, false)}ft`;
+                else if (metricName === "High Jump (Run/Stand)") value = `${highJump(score, true)}ft / ${highJump(score, false)}ft`;
+                else if (metricName === "Initiative") value = `${initiative(score) >= 0 ? '+' : ''}${initiative(score)}`;
+                else if (metricName === "Hold Breath") value = `${holdBreath(score)}`;
+                else if (metricName === "Passive Perception (Calc)") {
+                    const wisScoreVal = pc.vtt_data.abilities.wis?.value || 0;
+                    const wisMod = getAbilityModifier(wisScoreVal); // Use specific WisMod for this PC
+                    const percSkillInfo = pc.vtt_data.skills?.prc;
+                    const isPercProf = percSkillInfo?.value === 1 || percSkillInfo?.value === 2;
+                    value = 10 + wisMod + (isPercProf ? currentProfBonus : 0);
+                } else if (metricName === "Spell Save DC (CHA)" && pc.vtt_data.attributes?.spellcasting === 'cha') {
+                    value = spellSaveDC(score, currentProfBonus);
+                } else if (metricName === "Spell Attack Bonus (CHA)" && pc.vtt_data.attributes?.spellcasting === 'cha') {
+                    value = `+${spellAttackBonus(score, currentProfBonus)}`;
+                }
+                contentHTML += `<td>${value}</td>`;
+            });
+            contentHTML += `</tr>`;
+        });
+
+        contentHTML += `</tbody></table>`;
+        expansionDiv.innerHTML = contentHTML;
     }
 
     // --- UI Control Functions ---
     function setupInterfaceControls() {
         const resizer = getElem('resizer');
         const leftColumn = getElem('left-column');
-        
         resizer.addEventListener('mousedown', (e) => {
             e.preventDefault();
             const startX = e.clientX;
             const startWidth = leftColumn.offsetWidth;
-
             const handleMouseMove = (moveEvent) => {
                 const newWidth = startWidth + (moveEvent.clientX - startX);
                 leftColumn.style.width = `${newWidth}px`;
             };
-
             const handleMouseUp = () => {
                 window.removeEventListener('mousemove', handleMouseMove);
                 window.removeEventListener('mouseup', handleMouseUp);
             };
-
             window.addEventListener('mousemove', handleMouseMove);
             window.addEventListener('mouseup', handleMouseUp);
         });
-
         document.querySelectorAll('.collapsible-section h3').forEach(header => {
             header.addEventListener('click', () => {
                 header.parentElement.classList.toggle('collapsed');
             });
         });
     }
-
+    
+    // --- Window Onload ---
     window.onload = () => {
+        console.log("window.onload triggered. Calling fetchCharacters...");
         fetchCharacters();
         setupInterfaceControls();
         if (!selectedNpcId) {
             updateView();
         }
     };
-    
+
+    // --- Full Functions for CRUD and Dialogue ---
     async function createCharacter() {
         const name = getElem('new-char-name').value;
         const description = getElem('new-char-description').value;
         const personality = getElem('new-char-personality').value.split(',').map(s => s.trim()).filter(s => s);
         const characterType = getElem('new-char-type').value;
-
-        if (!name || !description) {
-            alert('Character Name and Description are required.');
-            return;
-        }
+        if (!name || !description) { alert('Character Name and Description are required.'); return; }
         try {
             const response = await fetch(`${API_BASE_URL}/api/npcs`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, description, character_type: characterType, personality_traits: personality, memories: [], gm_notes: "" })
             });
-            if (!response.ok) {
-                 const errorData = await response.json();
-                 throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
-            }
+            if (!response.ok) { const errorData = await response.json(); throw new Error(errorData.error || `HTTP error! status: ${response.status}`);}
             const result = await response.json();
             alert(result.message);
             fetchCharacters(); 
-            getElem('new-char-name').value = '';
-            getElem('new-char-description').value = '';
-            getElem('new-char-personality').value = '';
-            getElem('new-char-type').value = 'NPC';
-        } catch (error) {
-            console.error('Error creating character:', error);
-            alert(`Failed to create character: ${error.message}`);
-        }
+            getElem('new-char-name').value = ''; getElem('new-char-description').value = ''; getElem('new-char-personality').value = ''; getElem('new-char-type').value = 'NPC';
+        } catch (error) { console.error('Error creating character:', error); alert(`Failed to create character: ${error.message}`);}
     }
-
     async function saveGMNotes() {
         const charNameInDetails = getElem('details-char-name').textContent;
-        if (!charNameInDetails || charNameInDetails === 'None') {
-            alert('No character selected in the details panel.');
-            return;
-        }
+        if (!charNameInDetails || charNameInDetails === 'None') { alert('No character selected.'); return; }
         const characterToSaveNotesFor = allCharacters.find(c => c.name === charNameInDetails);
-        if (!characterToSaveNotesFor) {
-            alert('Could not find character: ' + charNameInDetails);
-            return;
-        }
+        if (!characterToSaveNotesFor) { alert('Could not find character: ' + charNameInDetails); return; }
         const notes = getElem('gm-notes').value;
         try {
             const response = await fetch(`${API_BASE_URL}/api/npcs/${characterToSaveNotesFor._id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ gm_notes: notes })
+                method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ gm_notes: notes })
             });
             if (!response.ok) throw new Error('Failed to save notes');
-            const result = await response.json();
-            alert(result.message);
+            const result = await response.json(); alert(result.message);
             const charIndex = allCharacters.findIndex(char => char._id === characterToSaveNotesFor._id);
             if (charIndex > -1) allCharacters[charIndex].gm_notes = notes;
-        } catch (error) {
-            console.error('Error saving GM notes:', error);
-            alert('Failed to save GM notes.');
-        }
+        } catch (error) { console.error('Error saving GM notes:', error); alert('Failed to save GM notes.');}
     }
-    
     function renderMemories(memories) {
         const listDiv = getElem('character-memories-list');
         listDiv.innerHTML = '<h4>Current Memories:</h4>';
-        if (!memories || memories.length === 0) {
-            listDiv.innerHTML += '<p>No memories yet.</p>';
-            return;
-        }
+        if (!memories || memories.length === 0) { listDiv.innerHTML += '<p>No memories yet.</p>'; return; }
         const ul = document.createElement('ul');
         memories.forEach(mem => {
-            const itemDiv = document.createElement('li'); 
-            itemDiv.className = 'memory-item';
-            itemDiv.innerHTML = `
-                <span>(${new Date(mem.timestamp).toLocaleTimeString()}) [${mem.type}] ${mem.content}</span>
-                <button onclick="deleteMemory('${mem.memory_id}')">Undo</button>
-            `;
+            const itemDiv = document.createElement('li'); itemDiv.className = 'memory-item';
+            itemDiv.innerHTML = `<span>(${new Date(mem.timestamp).toLocaleTimeString()}) [${mem.type}] ${mem.content}</span><button onclick="deleteMemory('${mem.memory_id}')">Undo</button>`;
             ul.appendChild(itemDiv);
         });
         listDiv.appendChild(ul);
     }
-
     async function addMemoryToCharacter(content = null, type = null) {
-        if (!selectedNpcId) {
-            alert("Please select an NPC to add memories to.");
-            return;
-        }
+        if (!selectedNpcId) { alert("Please select an NPC."); return; }
         const memoryContent = content || getElem('new-memory-content').value;
         const memoryType = type || getElem('new-memory-type').value || 'manual_fact';
-
-        if (!memoryContent) {
-            alert('Memory content cannot be empty.'); return;
-        }
+        if (!memoryContent) { alert('Memory content cannot be empty.'); return; }
         try {
             const response = await fetch(`${API_BASE_URL}/api/npcs/${selectedNpcId}/memory`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ content: memoryContent, type: memoryType, source: 'gm_interface_manual' })
+                method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ content: memoryContent, type: memoryType, source: 'gm_interface_manual' })
             });
             const result = await response.json();
             if (!response.ok) throw new Error(result.error || `Failed to add memory.`);
-            
             alert(result.message || 'Memory added!');
             const charIndex = allCharacters.findIndex(char => char._id === selectedNpcId);
             if (charIndex > -1) {
                 if (!allCharacters[charIndex].memories) allCharacters[charIndex].memories = [];
-                 allCharacters[charIndex].memories = result.updated_memories; 
-                 renderMemories(allCharacters[charIndex].memories);
+                allCharacters[charIndex].memories = result.updated_memories; 
+                renderMemories(allCharacters[charIndex].memories);
             }
-            if (!content) getElem('new-memory-content').value = ''; 
-            if (!type) getElem('new-memory-type').value = '';
-        } catch (error) {
-            console.error('Error adding memory:', error);
-            alert(`Failed to add memory: ${error.message}`);
-        }
+            if (!content) getElem('new-memory-content').value = ''; if (!type) getElem('new-memory-type').value = '';
+        } catch (error) { console.error('Error adding memory:', error); alert(`Failed to add memory: ${error.message}`);}
     }
-    
     async function deleteMemory(memoryId) {
         if (!selectedNpcId || !memoryId) return;
         if (!confirm('Are you sure you want to delete this memory?')) return;
         try {
-            const response = await fetch(`${API_BASE_URL}/api/npcs/${selectedNpcId}/memory/${memoryId}`, {
-                method: 'DELETE'
-            });
+            const response = await fetch(`${API_BASE_URL}/api/npcs/${selectedNpcId}/memory/${memoryId}`, { method: 'DELETE' });
             const result = await response.json();
             if (!response.ok) throw new Error(result.error || `Failed to delete memory.`);
             alert(result.message || 'Memory deleted!');
             const charIndex = allCharacters.findIndex(char => char._id === selectedNpcId);
-             if (charIndex > -1) {
-                allCharacters[charIndex].memories = result.updated_memories;
-                renderMemories(allCharacters[charIndex].memories);
-            }
-        } catch (error) {
-            console.error('Error deleting memory:', error);
-            alert(`Failed to delete memory: ${error.message}`);
-        }
+            if (charIndex > -1) { allCharacters[charIndex].memories = result.updated_memories; renderMemories(allCharacters[charIndex].memories); }
+        } catch (error) { console.error('Error deleting memory:', error); alert(`Failed to delete memory: ${error.message}`);}
     }
-
     async function generateDialogue() {
-        if (!selectedNpcId) {
-            alert('Please select an NPC first.');
-            return;
-        }
+        if (!selectedNpcId) { alert('Please select an NPC first.'); return; }
         const sceneContext = getElem('scene-context').value;
         const playerUtterance = getElem('player-utterance').value;
-        const activePCNames = Array.from(activePcIds).map(id => {
-            const pc = allCharacters.find(char => char._id === id);
-            return pc ? pc.name : 'Unknown PC';
-        });
-        if (!sceneContext) {
-            alert('Scene context is required.');
-            return;
-        }
+        const activePCNames = Array.from(activePcIds).map(id => { const pc = allCharacters.find(char => char._id === id); return pc ? pc.name : 'Unknown PC';});
+        if (!sceneContext) { alert('Scene context is required.'); return; }
         addDialogueToTranscript(playerUtterance, 'player');
         dialogueHistory.push(`Player: ${playerUtterance}`);
-        const payload = {
-            scene_context: sceneContext,
-            player_utterance: playerUtterance,
-            active_pcs: activePCNames,
-            recent_dialogue_history: dialogueHistory.slice(-5)
-        };
+        const payload = { scene_context: sceneContext, player_utterance: playerUtterance, active_pcs: activePCNames, recent_dialogue_history: dialogueHistory.slice(-5)};
         try {
             disableBtn('generate-dialogue-btn', true);
             const response = await fetch(`${API_BASE_URL}/api/npcs/${selectedNpcId}/dialogue`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+                method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
             });
             const result = await response.json();
             if (!response.ok) throw new Error(result.error || `Failed to generate dialogue.`);
@@ -873,79 +798,33 @@
             dialogueHistory.push(`${npcName}: ${result.npc_dialogue}`);
             getElem('player-utterance').value = ''; 
             renderAISuggestions(result.new_memory_suggestions, result.generated_topics);
-        } catch (error) {
-            console.error('Error generating dialogue:', error);
-            alert(`Dialogue generation failed: ${error.message}`);
-            addDialogueToTranscript(`Error: ${error.message}`, 'system-error');
-        } finally {
-            disableBtn('generate-dialogue-btn', false);
-        }
+        } catch (error) { console.error('Error generating dialogue:', error); alert(`Dialogue generation failed: ${error.message}`); addDialogueToTranscript(`Error: ${error.message}`, 'system-error');
+        } finally { disableBtn('generate-dialogue-btn', false); }
     }
-
     function addDialogueToTranscript(text, type) {
         const transcriptDiv = getElem('dialogue-transcript');
-        const entry = document.createElement('div');
-        entry.classList.add('dialogue-entry');
-        let speaker = "";
-        const activeNPCName = getElem('active-npc-name').textContent;
-
-        if (type === 'player') {
-            entry.classList.add('player-utterance');
-            speaker = "You (Player): ";
-        } else if (type === 'npc') {
-            entry.classList.add('npc-response');
-            speaker = `${activeNPCName || 'NPC'}: `;
-        } else if (type === 'scene-event' || type === 'system-error') {
-            entry.classList.add('scene-event');
-            if (type === 'system-error') entry.style.color = 'red';
-        }
-        const strong = document.createElement('strong');
-        strong.textContent = speaker;
-        entry.appendChild(strong);
-        entry.appendChild(document.createTextNode(text));
-        if (transcriptDiv.childElementCount === 1 && transcriptDiv.firstChild.classList.contains('scene-event')) {
-            transcriptDiv.innerHTML = ''; 
-        }
-        transcriptDiv.appendChild(entry);
-        transcriptDiv.scrollTop = transcriptDiv.scrollHeight;
+        const entry = document.createElement('div'); entry.classList.add('dialogue-entry');
+        let speaker = ""; const activeNPCName = getElem('active-npc-name').textContent;
+        if (type === 'player') { entry.classList.add('player-utterance'); speaker = "You (Player): ";
+        } else if (type === 'npc') { entry.classList.add('npc-response'); speaker = `${activeNPCName || 'NPC'}: `;
+        } else if (type === 'scene-event' || type === 'system-error') { entry.classList.add('scene-event'); if (type === 'system-error') entry.style.color = 'red';}
+        const strong = document.createElement('strong'); strong.textContent = speaker; entry.appendChild(strong); entry.appendChild(document.createTextNode(text));
+        if (transcriptDiv.childElementCount === 1 && transcriptDiv.firstChild.classList.contains('scene-event')) { transcriptDiv.innerHTML = ''; }
+        transcriptDiv.appendChild(entry); transcriptDiv.scrollTop = transcriptDiv.scrollHeight;
     }
-
-    function renderAISuggestions(memorySuggestions, topicSuggestions) {
-        const memList = getElem('suggested-memories-list');
-        memList.innerHTML = '<strong>Suggested Memories (click to use):</strong>';
+   function renderAISuggestions(memorySuggestions, topicSuggestions) {
+        const memList = getElem('suggested-memories-list'); memList.innerHTML = '<strong>Suggested Memories (click to use):</strong>';
         if (memorySuggestions && memorySuggestions.length > 0) {
-            memorySuggestions.forEach(sugg => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'suggested-item clickable-suggestion';
-                itemDiv.textContent = sugg;
-                itemDiv.onclick = () => populateAddMemoryForm(sugg, 'ai_suggestion');
-                memList.appendChild(itemDiv);
-            });
-        } else {
-            memList.innerHTML += '<p>None.</p>';
-        }
-        const topicList = getElem('suggested-topics-list');
-        topicList.innerHTML = '<strong>Suggested Topics (click to use):</strong>';
-         if (topicSuggestions && topicSuggestions.length > 0) {
-            topicSuggestions.forEach(sugg => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'suggested-item clickable-suggestion';
-                itemDiv.textContent = sugg;
-                itemDiv.onclick = () => { 
-                    getElem('player-utterance').value = `Tell me more about ${sugg}.`;
-                };
-                topicList.appendChild(itemDiv);
-            });
-        } else {
-            topicList.innerHTML += '<p>None.</p>';
-        }
+            memorySuggestions.forEach(sugg => { const itemDiv = document.createElement('div'); itemDiv.className = 'suggested-item clickable-suggestion'; itemDiv.textContent = sugg; itemDiv.onclick = () => populateAddMemoryForm(sugg, 'ai_suggestion'); memList.appendChild(itemDiv);});
+        } else { memList.innerHTML += '<p>None.</p>';}
+        const topicList = getElem('suggested-topics-list'); topicList.innerHTML = '<strong>Suggested Topics (click to use):</strong>';
+        if (topicSuggestions && topicSuggestions.length > 0) {
+            topicSuggestions.forEach(sugg => { const itemDiv = document.createElement('div'); itemDiv.className = 'suggested-item clickable-suggestion'; itemDiv.textContent = sugg; itemDiv.onclick = () => { getElem('player-utterance').value = `Tell me more about ${sugg}.`; }; topicList.appendChild(itemDiv);});
+        } else { topicList.innerHTML += '<p>None.</p>';}
     }
-    
     function populateAddMemoryForm(content, type) {
         if (!selectedNpcId) return; 
-        getElem('new-memory-content').value = content;
-        getElem('new-memory-type').value = type;
-        getElem('new-memory-content').focus();
+        getElem('new-memory-content').value = content; getElem('new-memory-type').value = type; getElem('new-memory-content').focus();
     }
 </script>
 
