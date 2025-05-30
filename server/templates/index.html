@@ -9,15 +9,14 @@
         .column { overflow-y: auto; box-sizing: border-box; }
         
         #left-column {
-            width: 30%; /* Initial width */
-            min-width: 250px; /* User cannot drag smaller than this */
-            max-width: 60%;  /* User cannot drag larger than this */
+            width: 30%; 
+            min-width: 250px; 
+            max-width: 60%;  
             background-color: #e9e9e9;
             border-right: 1px solid #ccc;
             height: 100vh;
-            padding: 0; /* Remove padding here, add to content */
+            padding: 0; 
         }
-
         #left-column-content { padding: 15px; height: 100%; overflow-y: auto; }
 
         #resizer {
@@ -43,7 +42,7 @@
         .collapsible-section.collapsed .collapsible-content { display: none; }
         .collapsible-section.collapsed h3::after { content: ' ►'; }
 
-        h2, h3, h4 { margin-top: 0; color: #333; }
+        h2, h3, h4, h5 { margin-top: 0; color: #333; }
         button { padding: 8px 12px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 5px; }
         button:hover { background-color: #0056b3; }
         textarea, input[type="text"], input[type="number"], select { width: calc(100% - 16px); padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;}
@@ -54,7 +53,7 @@
         .character-list li:last-child { border-bottom: none; }
         .character-list li:hover, .character-list li.selected { background-color: #d1e7ff; }
 
-        #dialogue-interface { display: none; /* Hidden by default */ flex-grow: 1; display: flex; flex-direction: column; }
+        #dialogue-interface { display: none; flex-grow: 1; display: flex; flex-direction: column; }
         #dialogue-transcript { flex-grow: 1; border: 1px solid #eee; padding: 10px; margin-bottom:10px; overflow-y: auto; background-color: #f9f9f9; min-height: 200px; }
         .dialogue-entry { margin-bottom: 8px; padding: 5px; border-radius: 3px; }
         .player-utterance { background-color: #e1f7d5; text-align: right; }
@@ -66,21 +65,12 @@
         .clickable-suggestion { cursor: pointer; text-decoration: underline; color: blue; }
         
         /* PC Dashboard Styles */
-        #pc-dashboard-view { display: block; /* Shown by default if no NPC selected */ flex-grow: 1; overflow-y: auto; }
-        .pc-dashboard-grid { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
-        .pc-stat-card { border: 1px solid #ddd; border-radius: 4px; padding: 15px; background-color: #f9f9f9; flex: 1 1 300px; min-width: 280px; }
-        .pc-stat-card h4 { margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px; }
-        .pc-stat-card p { margin: 5px 0; }
-        .pc-stat-card ul { list-style-type: none; padding-left: 0; }
-        .pc-stat-card li { padding: 3px 0; }
-
-        .comparison-section { margin-bottom: 20px; }
-        .comparison-section h4 { border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        .stat-comparison-bar-container { display: flex; align-items: center; margin-bottom: 5px; font-size: 0.9em; }
-        .stat-comparison-label { width: 120px; font-weight: bold; white-space: nowrap; }
-        .stat-comparison-pc-name { width: 100px; text-align: right; margin-right: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .stat-bar-wrapper { flex-grow: 1; background-color: #e0e0e0; border-radius: 3px; height: 20px; }
-        .stat-bar { height: 100%; background-color: #007bff; border-radius: 3px; text-align: right; padding-right: 5px; color: white; line-height: 20px; font-size: 0.8em; white-space: nowrap; overflow: hidden;}
+        #pc-dashboard-view { display: block; flex-grow: 1; overflow-y: auto; }
+        #pc-dashboard-content h4 { margin-top: 15px; margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 5px;}
+        #pc-dashboard-content table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.9em; }
+        #pc-dashboard-content th, #pc-dashboard-content td { border: 1px solid #ddd; padding: 6px; text-align: left; }
+        #pc-dashboard-content th { background-color: #f2f2f2; }
+        #pc-dashboard-content td.stat-value { text-align: center; }
         .pc-dashboard-no-selection { text-align: center; color: #777; margin-top: 50px; font-size: 1.2em;}
 
     </style>
@@ -182,7 +172,7 @@
         <div id="pc-dashboard-view">
             <h2>Player Character Dashboard</h2>
             <div id="pc-dashboard-content">
-                <p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>
+                 <p class="pc-dashboard-no-selection">Loading PC data or select PCs to view details...</p>
             </div>
         </div>
     </div>
@@ -193,6 +183,16 @@
     let allCharacters = [];
     let dialogueHistory = [];
 
+    const SKILL_LIST = {
+        acr: "Acrobatics", ani: "Animal Handling", arc: "Arcana", ath: "Athletics",
+        dec: "Deception", his: "History", ins: "Insight", itm: "Intimidation",
+        inv: "Investigation", med: "Medicine", nat: "Nature", prc: "Perception",
+        prf: "Performance", per: "Persuasion", rel: "Religion", slt: "Sleight of Hand",
+        ste: "Stealth", sur: "Survival"
+    };
+    const ABILITY_KEYS = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+
+
     const API_BASE_URL = ''; 
     function getElem(id) { return document.getElementById(id); }
     function updateText(id, text) { getElem(id).textContent = text; }
@@ -200,7 +200,7 @@
 
     // --- Utility Functions ---
     function getProficiencyBonus(level) {
-        if (level < 1) return 2; // Default for safety
+        if (level < 1) return 2;
         if (level <= 4) return 2;
         if (level <= 8) return 3;
         if (level <= 12) return 4;
@@ -209,7 +209,7 @@
     }
 
     function getAbilityModifier(score) {
-        return Math.floor((score - 10) / 2);
+        return Math.floor(((score || 10) - 10) / 2);
     }
 
     // --- Character Data & Rendering ---
@@ -219,85 +219,22 @@
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             allCharacters = await response.json();
             renderNpcList();
-            renderPcList();
-            updateView(); // Initial view update
+            
+            const pcs = allCharacters.filter(char => char.character_type === 'PC');
+            if (activePcIds.size === 0 && pcs.length > 0) { // If no PCs actively selected, default to all
+                pcs.forEach(pc => activePcIds.add(pc._id));
+            }
+            renderPcList(); 
+            updateView(); 
         } catch (error) {
             console.error('Error fetching characters:', error);
             alert('Failed to load characters.');
         }
     }
 
-    function renderNpcList() {
-        const ul = getElem('character-list').querySelector('ul');
-        ul.innerHTML = ''; 
-        const npcs = allCharacters.filter(char => char.character_type === 'NPC');
-        if (npcs.length === 0) {
-            ul.innerHTML = '<p><em>No NPCs defined yet.</em></p>';
-            return;
-        }
-        npcs.forEach(char => {
-            const li = document.createElement('li');
-            li.textContent = char.name;
-            li.dataset.charId = char._id; 
-            li.onclick = () => selectNpcForDialogue(char._id); // Changed to specific function
-            if (char._id === selectedNpcId) {
-                li.classList.add('selected');
-            }
-            ul.appendChild(li);
-        });
-    }
-
-    function renderPcList() {
-        const pcListDiv = getElem('active-pc-list');
-        pcListDiv.innerHTML = '';
-        const pcs = allCharacters.filter(char => char.character_type === 'PC');
-
-        if (pcs.length === 0) {
-            pcListDiv.innerHTML = '<p><em>No Player Characters defined yet. Create characters with type "PC".</em></p>';
-            return;
-        }
-        
-        const ul = document.createElement('ul');
-        pcs.forEach(pc => {
-            const li = document.createElement('li');
-            li.textContent = pc.name;
-            li.dataset.charId = pc._id;
-            li.onclick = () => {
-                togglePcSelection(pc._id, li);
-                if (!selectedNpcId) updatePcDashboard(); // Update dashboard if it's visible
-                selectCharacterForDetails(pc._id); // Also show details for a clicked PC
-            };
-
-            if (activePcIds.has(pc._id)) {
-                li.classList.add('selected');
-            }
-            ul.appendChild(li);
-        });
-        pcListDiv.appendChild(ul);
-    }
-    
-    function selectCharacterForDetails(charId) {
-        const selectedChar = allCharacters.find(char => char._id === charId);
-        if (selectedChar) {
-            updateText('details-char-name', selectedChar.name);
-            updateText('profile-char-type', selectedChar.character_type);
-            updateText('profile-description', selectedChar.description);
-            updateText('profile-personality', (selectedChar.personality_traits || []).join(', '));
-            getElem('gm-notes').value = selectedChar.gm_notes || '';
-            disableBtn('save-gm-notes-btn', false);
-
-            const isNpc = selectedChar.character_type === 'NPC';
-            getElem('npc-specific-details').style.display = isNpc ? 'block' : 'none';
-            if (isNpc) {
-                renderMemories(selectedChar.memories || []);
-                disableBtn('add-memory-btn', false);
-            } else {
-                 disableBtn('add-memory-btn', true);
-                 getElem('character-memories-list').innerHTML = '<p><em>Memories are typically managed for NPCs.</em></p>';
-            }
-        }
-    }
-
+    function renderNpcList() { /* ... same as before ... */ }
+    function renderPcList() { /* ... same as before ... */ }
+    function selectCharacterForDetails(charId) { /* ... same as before ... */ }
 
     function togglePcSelection(pcId, element) {
         if (activePcIds.has(pcId)) {
@@ -307,191 +244,149 @@
             activePcIds.add(pcId);
             element.classList.add('selected');
         }
-        // If dashboard is visible, update it
-        if(getElem('pc-dashboard-view').style.display !== 'none') {
+        if (!selectedNpcId) { 
             updatePcDashboard();
         }
     }
-
-    async function createCharacter() { /* ... (same as before) ... */ }
-    async function saveGMNotes() { /* ... (same as before, ensures char is found by name from details panel) ... */ }
-    function renderMemories(memories) { /* ... (same as before) ... */ }
-    async function addMemoryToCharacter(content, type) { /* ... (same as before, uses selectedNpcId) ... */ }
-    async function deleteMemory(memoryId) { /* ... (same as before, uses selectedNpcId) ... */ }
-    async function generateDialogue() { /* ... (same as before, uses selectedNpcId and activePcIds) ... */ }
-    function addDialogueToTranscript(text, type) { /* ... (same as before) ... */ }
-    function renderAISuggestions(memorySuggestions, topicSuggestions) { /* ... (same as before) ... */ }
-    function populateAddMemoryForm(content, type) { /* ... (same as before, uses selectedNpcId) ... */ }
-
-
+    
     // --- View Management ---
     function updateView() {
         const dialogueInterface = getElem('dialogue-interface');
         const pcDashboardView = getElem('pc-dashboard-view');
 
         if (selectedNpcId) {
-            dialogueInterface.style.display = 'flex'; // Use flex for proper layout
+            dialogueInterface.style.display = 'flex'; 
             pcDashboardView.style.display = 'none';
         } else {
             dialogueInterface.style.display = 'none';
             pcDashboardView.style.display = 'block';
-            updatePcDashboard(); // Refresh PC dashboard when it becomes visible
+            updatePcDashboard();
         }
     }
     
     function selectNpcForDialogue(npcId) {
-        selectedNpcId = npcId;
-        const selectedChar = allCharacters.find(char => char._id === npcId);
-        
-        if (selectedChar) {
-            updateText('active-npc-name', selectedChar.name);
-            disableBtn('generate-dialogue-btn', false);
-            dialogueHistory = []; 
-            getElem('dialogue-transcript').innerHTML = `<p class="scene-event">Interacting with NPC: ${selectedChar.name}.</p>`;
-            selectCharacterForDetails(npcId); // Show details for the selected NPC
+        if (selectedNpcId === npcId) { 
+            selectedNpcId = null;
+            updateText('active-npc-name', 'No NPC Selected');
+            disableBtn('generate-dialogue-btn', true);
+            getElem('dialogue-transcript').innerHTML = `<p class="scene-event">Select an NPC from the list to begin interaction.</p>`;
+            updateText('details-char-name', 'None');
+            updateText('profile-char-type', '');
+            updateText('profile-description', '');
+            updateText('profile-personality', '');
+            getElem('gm-notes').value = '';
+            disableBtn('save-gm-notes-btn', true);
+            getElem('npc-specific-details').style.display = 'none';
+        } else {
+            selectedNpcId = npcId;
+            const selectedChar = allCharacters.find(char => char._id === npcId);
+            if (selectedChar) {
+                updateText('active-npc-name', selectedChar.name);
+                disableBtn('generate-dialogue-btn', false);
+                dialogueHistory = []; 
+                getElem('dialogue-transcript').innerHTML = `<p class="scene-event">Interacting with NPC: ${selectedChar.name}.</p>`;
+                selectCharacterForDetails(npcId);
+            }
         }
-        renderNpcList(); // To update selection highlight
+        renderNpcList(); 
         updateView();
     }
 
     // --- PC Dashboard Logic ---
     function updatePcDashboard() {
         const dashboardContent = getElem('pc-dashboard-content');
-        dashboardContent.innerHTML = ''; // Clear previous content
+        dashboardContent.innerHTML = ''; 
 
-        const selectedPcs = allCharacters.filter(char => activePcIds.has(char._id) && char.vtt_data);
+        let pcsToDisplay;
+        if (activePcIds.size > 0) {
+            pcsToDisplay = allCharacters.filter(char => char.character_type === 'PC' && char.vtt_data && activePcIds.has(char._id));
+        } else {
+            // If no specific PCs are selected via activePcIds, default to all PCs
+            pcsToDisplay = allCharacters.filter(char => char.character_type === 'PC' && char.vtt_data);
+        }
 
-        if (selectedPcs.length === 0) {
-            dashboardContent.innerHTML = '<p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>';
+
+        if (pcsToDisplay.length === 0) {
+            dashboardContent.innerHTML = '<p class="pc-dashboard-no-selection">Select Player Characters or ensure they have VTT data.</p>';
             return;
         }
 
-        // 1. Comparative Graphs (Simple HTML Bars)
-        const abilities = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
-        const comparisonSection = document.createElement('div');
-        comparisonSection.className = 'comparison-section';
-        
-        let comparisonHTML = '<h4>Ability Score Comparison</h4>';
-        abilities.forEach(abl => {
-            comparisonHTML += `<div class="stat-comparison-bar-container"><span class="stat-comparison-label">${abl}:</span><div>`;
-            selectedPcs.forEach(pc => {
-                const score = pc.vtt_data.abilities[abl.toLowerCase()]?.value || 0;
-                const barWidth = (score / 20) * 100; // Assuming max score of 20 for scaling
-                comparisonHTML += `<div class="stat-comparison-pc-name" title="${pc.name}">${pc.name.substring(0,10)+(pc.name.length > 10 ? '...' : '')}</div>
-                                   <div class="stat-bar-wrapper"><div class="stat-bar" style="width: ${barWidth}%;">${score}</div></div>`;
+        // 1. Ability Scores Table
+        let abilityTableHTML = '<h4>Ability Scores</h4><table><thead><tr><th>Character</th>';
+        ABILITY_KEYS.forEach(abl => abilityTableHTML += `<th>${abl.toUpperCase()}</th>`);
+        abilityTableHTML += '</tr></thead><tbody>';
+        pcsToDisplay.forEach(pc => {
+            abilityTableHTML += `<tr><td>${pc.name}</td>`;
+            ABILITY_KEYS.forEach(ablKey => {
+                const score = pc.vtt_data.abilities[ablKey]?.value || 0;
+                const mod = getAbilityModifier(score);
+                abilityTableHTML += `<td class="stat-value">${score} (${mod >= 0 ? '+' : ''}${mod})</td>`;
             });
-            comparisonHTML += `</div></div>`;
+            abilityTableHTML += '</tr>';
         });
-        // Add more comparisons (HP, AC, Passive Skills) similarly if desired
-        // For example, AC:
-        comparisonHTML += '<h4>AC Comparison</h4>';
-        selectedPcs.forEach(pc => {
-            const ac = pc.vtt_data.attributes?.ac?.value || pc.vtt_data.attributes?.ac?.flat || 10;
-            const barWidth = (ac / 25) * 100; // Assuming max AC of 25
-            comparisonHTML += `<div class="stat-comparison-bar-container">
-                               <span class="stat-comparison-pc-name" title="${pc.name}">${pc.name.substring(0,10)+(pc.name.length > 10 ? '...' : '')}</span>
-                               <div class="stat-bar-wrapper"><div class="stat-bar" style="width: ${barWidth}%;">${ac}</div></div>
-                               </div>`;
+        abilityTableHTML += '</tbody></table>';
+        dashboardContent.innerHTML += abilityTableHTML;
+
+        // 2. Key Combat/Exploration Stats Table
+        let keyStatsTableHTML = '<h4>Key Stats</h4><table><thead><tr><th>Character</th><th>HP</th><th>AC</th><th>Passive Perception</th><th>Passive Investigation</th></tr></thead><tbody>';
+        pcsToDisplay.forEach(pc => {
+            const hpMax = pc.vtt_data.attributes?.hp?.max || 'N/A';
+            const hpValue = pc.vtt_data.attributes?.hp?.value !== undefined ? pc.vtt_data.attributes.hp.value : 'N/A';
+            const ac = pc.vtt_data.attributes?.ac?.value || pc.vtt_data.attributes?.ac?.flat || 'N/A';
+            const passivePerc = pc.vtt_data.skills?.prc?.bonuses?.passive || 'N/A';
+            const passiveInv = pc.vtt_data.skills?.inv?.bonuses?.passive || 'N/A';
+            keyStatsTableHTML += `<tr><td>${pc.name}</td><td class="stat-value">${hpValue}/${hpMax}</td><td class="stat-value">${ac}</td><td class="stat-value">${passivePerc}</td><td class="stat-value">${passiveInv}</td></tr>`;
         });
-        
-        comparisonSection.innerHTML = comparisonHTML;
-        dashboardContent.appendChild(comparisonSection);
+        keyStatsTableHTML += '</tbody></table>';
+        dashboardContent.innerHTML += keyStatsTableHTML;
 
+        // 3. Skills Table
+        let skillsTableHTML = '<h4>Skills</h4><table><thead><tr><th>Character</th>';
+        for (const skillAbbr in SKILL_LIST) {
+            skillsTableHTML += `<th>${SKILL_LIST[skillAbbr].replace("Animal Handling", "Ani Hand").substring(0,7)}..</th>`; // Abbreviate for table header
+        }
+        skillsTableHTML += '</tr></thead><tbody>';
 
-        // 2. Detailed Stat Blocks
-        const grid = document.createElement('div');
-        grid.className = 'pc-dashboard-grid';
-        dashboardContent.appendChild(grid);
-
-        selectedPcs.forEach(pc => {
-            const card = document.createElement('div');
-            card.className = 'pc-stat-card';
-            
-            const pcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || 1;
+        pcsToDisplay.forEach(pc => {
+            skillsTableHTML += `<tr><td>${pc.name}</td>`;
+            const pcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || pc.vtt_data.details?.level || 1;
             const profBonus = getProficiencyBonus(pcLevel);
 
-            let cardHTML = `<h4>${pc.name} (Level ${pcLevel})</h4>`;
-            cardHTML += `<p><strong>HP:</strong> ${pc.vtt_data.attributes.hp?.value || 'N/A'} / ${pc.vtt_data.attributes.hp?.max || 'N/A'}</p>`;
-            cardHTML += `<p><strong>AC:</strong> ${pc.vtt_data.attributes.ac?.value || pc.vtt_data.attributes.ac?.flat || 'N/A'}</p>`;
-            
-            cardHTML += `<p><strong>Passive Perception:</strong> ${pc.vtt_data.skills.prc?.bonuses?.passive || 'N/A'}</p>`;
-            cardHTML += `<p><strong>Passive Investigation:</strong> ${pc.vtt_data.skills.inv?.bonuses?.passive || 'N/A'}</p>`;
-            
-            cardHTML += '<h5>Abilities:</h5><ul>';
-            abilities.forEach(ablKey => {
-                const score = pc.vtt_data.abilities[ablKey.toLowerCase()]?.value || 0;
-                const mod = getAbilityModifier(score);
-                cardHTML += `<li>${ablKey}: ${score} (${mod >= 0 ? '+' : ''}${mod})</li>`;
-            });
-            cardHTML += '</ul>';
-
-            cardHTML += '<h5>Skills:</h5><ul>';
-            if (pc.vtt_data.skills) {
-                for (const skillAbbr in pc.vtt_data.skills) {
-                    const skill = pc.vtt_data.skills[skillAbbr];
-                    const abilityMod = getAbilityModifier(pc.vtt_data.abilities[skill.ability]?.value || 10);
-                    let skillMod = abilityMod;
-                    if (skill.value === 1) skillMod += profBonus; // Proficient
-                    else if (skill.value === 2) skillMod += (profBonus * 2); // Expertise
-                    else if (skill.value === 0.5) skillMod += Math.floor(profBonus / 2); // Half-prof (Jack of all trades)
-                    
-                    // Ensure skill names are user-friendly
-                    const skillName = skillAbbr.charAt(0).toUpperCase() + skillAbbr.slice(1)
-                                      .replace(/([A-Z])/g, ' $1').trim(); // Basic camelCase to Title Case
-
-                    cardHTML += `<li>${skillName}: ${skillMod >= 0 ? '+' : ''}${skillMod}</li>`;
+            for (const skillAbbr in SKILL_LIST) {
+                const skillData = pc.vtt_data.skills?.[skillAbbr];
+                let skillModDisplay = "N/A";
+                if (skillData && pc.vtt_data.abilities[skillData.ability]) {
+                    const abilityMod = getAbilityModifier(pc.vtt_data.abilities[skillData.ability]?.value);
+                    let finalSkillMod = abilityMod;
+                    if (skillData.value === 1) finalSkillMod += profBonus;      // Proficient
+                    else if (skillData.value === 2) finalSkillMod += (profBonus * 2); // Expertise
+                    else if (skillData.value === 0.5) finalSkillMod += Math.floor(profBonus/2); // Half-prof (JoaT)
+                    skillModDisplay = `${finalSkillMod >= 0 ? '+' : ''}${finalSkillMod}`;
                 }
+                skillsTableHTML += `<td class="stat-value">${skillModDisplay}</td>`;
             }
-            cardHTML += '</ul>';
-            
-            card.innerHTML = cardHTML;
-            grid.appendChild(card);
+            skillsTableHTML += '</tr>';
         });
+        skillsTableHTML += '</tbody></table>';
+        dashboardContent.innerHTML += skillsTableHTML;
     }
 
-
-    // --- UI Control Functions ---
-    function setupInterfaceControls() {
-        const resizer = getElem('resizer');
-        const leftColumn = getElem('left-column');
-        
-        resizer.addEventListener('mousedown', (e) => {
-            e.preventDefault();
-            const startX = e.clientX;
-            const startWidth = leftColumn.offsetWidth;
-
-            const handleMouseMove = (moveEvent) => {
-                const newWidth = startWidth + (moveEvent.clientX - startX);
-                leftColumn.style.width = `${newWidth}px`;
-            };
-
-            const handleMouseUp = () => {
-                window.removeEventListener('mousemove', handleMouseMove);
-                window.removeEventListener('mouseup', handleMouseUp);
-            };
-
-            window.addEventListener('mousemove', handleMouseMove);
-            window.addEventListener('mouseup', handleMouseUp);
-        });
-
-        document.querySelectorAll('.collapsible-section h3').forEach(header => {
-            header.addEventListener('click', () => {
-                header.parentElement.classList.toggle('collapsed');
-            });
-        });
-    }
-
-    window.onload = () => {
-        fetchCharacters();
-        setupInterfaceControls();
-        // Initial view: if no NPC is selected, show dashboard
-        if (!selectedNpcId) {
-            updateView();
-        }
-    };
+    // --- UI Control Functions (Resizer, Collapsibles within left panel) ---
+    function setupInterfaceControls() { /* ... same as before ... */ }
+    window.onload = () => { /* ... same as before, calls fetchCharacters then setupInterfaceControls ... */ };
     
-    // --- Functions that need to be complete for the snippet to run without error ---
-    // (These are simplified if their full logic isn't central to this specific update)
+    // --- Placeholder for other functions to avoid errors if they were changed in your actual file ---
+    async function createCharacter() { /* ... */ }
+    async function saveGMNotes() { /* ... */ }
+    function renderMemories(memories) { /* ... */ }
+    async function addMemoryToCharacter(content, type) { /* ... */ }
+    async function deleteMemory(memoryId) { /* ... */ }
+    async function generateDialogue() { /* ... */ }
+    function addDialogueToTranscript(text, type) { /* ... */ }
+    function renderAISuggestions(memorySuggestions, topicSuggestions) { /* ... */ }
+    function populateAddMemoryForm(content, type) { /* ... */ }
+
+    // --- Full versions of functions for completeness ---
     async function createCharacter() {
         const name = getElem('new-char-name').value;
         const description = getElem('new-char-description').value;
@@ -532,7 +427,6 @@
             alert('No character selected in the details panel.');
             return;
         }
-        // Find character by name, as details panel is generic
         const characterToSaveNotesFor = allCharacters.find(c => c.name === charNameInDetails);
         if (!characterToSaveNotesFor) {
             alert('Could not find character: ' + charNameInDetails);
@@ -566,7 +460,7 @@
         }
         const ul = document.createElement('ul');
         memories.forEach(mem => {
-            const itemDiv = document.createElement('li'); // Changed to li for consistency
+            const itemDiv = document.createElement('li'); 
             itemDiv.className = 'memory-item';
             itemDiv.innerHTML = `
                 <span>(${new Date(mem.timestamp).toLocaleTimeString()}) [${mem.type}] ${mem.content}</span>
@@ -602,11 +496,9 @@
             const charIndex = allCharacters.findIndex(char => char._id === selectedNpcId);
             if (charIndex > -1) {
                 if (!allCharacters[charIndex].memories) allCharacters[charIndex].memories = [];
-                 allCharacters[charIndex].memories = result.updated_memories; // Assuming backend sends full list
+                 allCharacters[charIndex].memories = result.updated_memories; 
                  renderMemories(allCharacters[charIndex].memories);
             }
-
-
             if (!content) getElem('new-memory-content').value = ''; 
             if (!type) getElem('new-memory-type').value = '';
         } catch (error) {
@@ -714,7 +606,7 @@
         entry.appendChild(document.createTextNode(text));
         
         if (transcriptDiv.childElementCount === 1 && transcriptDiv.firstChild.classList.contains('scene-event')) {
-            transcriptDiv.innerHTML = ''; // Clear initial message
+            transcriptDiv.innerHTML = ''; 
         }
         transcriptDiv.appendChild(entry);
         transcriptDiv.scrollTop = transcriptDiv.scrollHeight;
@@ -753,12 +645,46 @@
     }
     
     function populateAddMemoryForm(content, type) {
-        if (!selectedNpcId) return; // Should only be enabled for NPCs anyway
+        if (!selectedNpcId) return; 
         getElem('new-memory-content').value = content;
         getElem('new-memory-type').value = type;
         getElem('new-memory-content').focus();
     }
+    
+    function setupInterfaceControls() {
+        const resizer = getElem('resizer');
+        const leftColumn = getElem('left-column');
+        
+        resizer.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            const startX = e.clientX;
+            const startWidth = leftColumn.offsetWidth;
 
+            const handleMouseMove = (moveEvent) => {
+                const newWidth = startWidth + (moveEvent.clientX - startX);
+                leftColumn.style.width = `${newWidth}px`;
+            };
+
+            const handleMouseUp = () => {
+                window.removeEventListener('mousemove', handleMouseMove);
+                window.removeEventListener('mouseup', handleMouseUp);
+            };
+
+            window.addEventListener('mousemove', handleMouseMove);
+            window.addEventListener('mouseup', handleMouseUp);
+        });
+
+        document.querySelectorAll('.collapsible-section h3').forEach(header => {
+            header.addEventListener('click', () => {
+                header.parentElement.classList.toggle('collapsed');
+            });
+        });
+    }
+
+    window.onload = () => {
+        fetchCharacters();
+        setupInterfaceControls();
+    };
 </script>
 
 </body>
