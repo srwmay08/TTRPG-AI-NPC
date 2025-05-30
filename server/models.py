@@ -18,9 +18,8 @@ class NPCProfile(BaseModel):
     description: str = Field(..., description="A general description of the character.")
     character_type: str = Field(default="NPC", description="Type of character: NPC or PC.")
     
-    # --- ADDED OPTIONAL FIELDS TO MATCH YOUR DETAILED JSONs ---
     race: Optional[str] = None
-    class_str: Optional[str] = Field(default=None, alias="class") # Use alias because 'class' is a reserved keyword in Python
+    class_str: Optional[str] = Field(default=None, alias="class")
     alignment: Optional[str] = None
     age: Optional[str] = None
     ideals: List[str] = Field(default_factory=list)
@@ -32,7 +31,6 @@ class NPCProfile(BaseModel):
     past_situation: Optional[str] = None
     current_situation: Optional[str] = None
     
-    # --- EXISTING FIELDS ---
     personality_traits: List[str] = Field(default_factory=list, description="Key personality traits.")
     background_story: Optional[str] = None
     motivations: List[str] = Field(default_factory=list)
@@ -40,9 +38,12 @@ class NPCProfile(BaseModel):
     memories: List[MemoryItem] = Field(default_factory=list, description="Character's persistent memories.")
     linked_lore_ids: List[str] = Field(default_factory=list, description="IDs of linked world information items.")
     gm_notes: Optional[str] = Field(default=None, description="Private GM notes for this character.")
+    
+    # ***** ADD THIS LINE *****
+    vtt_data: Optional[Dict[str, Any]] = Field(default=None, description="Data imported from VTT character sheets.")
+    # *************************
 
     class Config:
-        # This allows Pydantic to populate fields from data using either the field name OR its alias
         populate_by_name = True
         json_schema_extra = {
             "example": {
@@ -51,13 +52,12 @@ class NPCProfile(BaseModel):
                 "description": "A laid-back human bard from Waterdeep.",
                 "race": "Human",
                 "class": "Bard",
-                "personality_traits": ["Eternally chill", "Has the munchies"]
+                "personality_traits": ["Eternally chill", "Has the munchies"],
+                "vtt_data": {"attributes": {"hp": {"value": 10, "max": 10}}}
             }
         }
 
-# --- OTHER MODELS REMAIN THE SAME ---
 class WorldItem(BaseModel):
-    # ... (no changes needed)
     item_id: str = Field(..., description="Unique ID for the world item, can be auto-generated or user-defined.")
     name: str
     type: str
@@ -72,9 +72,7 @@ class DialogueRequest(BaseModel):
     recent_dialogue_history: List[str] = Field(default_factory=list, description="Last few lines of conversation.")
 
 class DialogueResponse(BaseModel):
-    # ... (no changes needed)
     npc_id: str
     npc_dialogue: str
-    # IMPROVEMENT: Changed from a generic list to a single, more potent suggestion.
     new_memory_suggestions: List[str] = Field(default_factory=list, description="AI suggestions for what to add to memory, including a summarized version of the interaction.")
     generated_topics: List[str] = Field(default_factory=list, description="AI suggested topics for further conversation.")
