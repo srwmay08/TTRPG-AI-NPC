@@ -1,0 +1,3153 @@
+{
+  "name": "Mattrim \"Threestrings\" Mereg",
+  "type": "npc",
+  "flags": {
+    "plutonium": {
+      "page": "bestiary.html",
+      "source": "WDH",
+      "hash": "mattrim%20%22threestrings%22%20mereg_wdh"
+    },
+    "scene-packer": {
+      "hash": "14532ea76f8bb04a676dec6547a1cc7177f3235b",
+      "sourceId": "Actor.ajNNukmWd8SRRbDn"
+    },
+    "exportSource": {
+      "world": "waterdeep-a-grand-game",
+      "system": "dnd5e",
+      "coreVersion": "12.331",
+      "systemVersion": "4.3.9"
+    }
+  },
+  "_stats": {
+    "coreVersion": "12.331",
+    "systemId": "dnd5e",
+    "systemVersion": "4.3.9",
+    "createdTime": 1748053127573,
+    "modifiedTime": 1748053160579,
+    "lastModifiedBy": "rghJZLG3THgT7m0a"
+  },
+  "img": "https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/bestiary/WDH/Threestrings.webp",
+  "system": {
+    "currency": {
+      "pp": 0,
+      "gp": 0,
+      "ep": 0,
+      "sp": 0,
+      "cp": 0
+    },
+    "abilities": {
+      "str": {
+        "value": 11,
+        "proficient": 0,
+        "max": null,
+        "bonuses": {
+          "check": "",
+          "save": "0"
+        },
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
+      },
+      "dex": {
+        "value": 14,
+        "proficient": 1,
+        "max": null,
+        "bonuses": {
+          "check": "",
+          "save": "0"
+        },
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
+      },
+      "con": {
+        "value": 12,
+        "proficient": 0,
+        "max": null,
+        "bonuses": {
+          "check": "",
+          "save": "0"
+        },
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
+      },
+      "int": {
+        "value": 10,
+        "proficient": 0,
+        "max": null,
+        "bonuses": {
+          "check": "",
+          "save": "0"
+        },
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
+      },
+      "wis": {
+        "value": 13,
+        "proficient": 1,
+        "max": null,
+        "bonuses": {
+          "check": "",
+          "save": "0"
+        },
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
+      },
+      "cha": {
+        "value": 14,
+        "proficient": 0,
+        "max": null,
+        "bonuses": {
+          "check": "",
+          "save": "0"
+        },
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
+      }
+    },
+    "bonuses": {
+      "mwak": {
+        "attack": "",
+        "damage": ""
+      },
+      "rwak": {
+        "attack": "",
+        "damage": ""
+      },
+      "msak": {
+        "attack": "",
+        "damage": ""
+      },
+      "rsak": {
+        "attack": "",
+        "damage": ""
+      },
+      "abilities": {
+        "check": "",
+        "save": "",
+        "skill": ""
+      },
+      "spell": {
+        "dc": ""
+      }
+    },
+    "skills": {
+      "acr": {
+        "ability": "dex",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 1,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "ani": {
+        "ability": "wis",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "arc": {
+        "ability": "int",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "ath": {
+        "ability": "str",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "dec": {
+        "ability": "cha",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "his": {
+        "ability": "int",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "ins": {
+        "ability": "wis",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "itm": {
+        "ability": "cha",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "inv": {
+        "ability": "int",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "med": {
+        "ability": "wis",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "nat": {
+        "ability": "int",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "prc": {
+        "ability": "wis",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 2,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "prf": {
+        "ability": "cha",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 2,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "per": {
+        "ability": "cha",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "rel": {
+        "ability": "int",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "slt": {
+        "ability": "dex",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "ste": {
+        "ability": "dex",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "sur": {
+        "ability": "wis",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      }
+    },
+    "tools": {},
+    "spells": {
+      "spell1": {
+        "value": 4,
+        "override": null
+      },
+      "spell2": {
+        "value": 3,
+        "override": null
+      },
+      "spell3": {
+        "value": 0,
+        "override": null
+      },
+      "spell4": {
+        "value": 0,
+        "override": null
+      },
+      "spell5": {
+        "value": 0,
+        "override": null
+      },
+      "spell6": {
+        "value": 0,
+        "override": null
+      },
+      "spell7": {
+        "value": 0,
+        "override": null
+      },
+      "spell8": {
+        "value": 0,
+        "override": null
+      },
+      "spell9": {
+        "value": 0,
+        "override": null
+      },
+      "pact": {
+        "value": 0,
+        "override": null
+      },
+      "spell0": {
+        "value": 0,
+        "override": null
+      }
+    },
+    "attributes": {
+      "ac": {
+        "calc": "default",
+        "flat": null
+      },
+      "init": {
+        "ability": "dex",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "bonus": ""
+      },
+      "movement": {
+        "burrow": null,
+        "climb": null,
+        "fly": null,
+        "swim": null,
+        "walk": 30,
+        "units": "ft",
+        "hover": false
+      },
+      "attunement": {
+        "max": 3
+      },
+      "senses": {
+        "darkvision": 0,
+        "blindsight": 0,
+        "tremorsense": 0,
+        "truesight": 0,
+        "units": "ft",
+        "special": ""
+      },
+      "spellcasting": "cha",
+      "exhaustion": 0,
+      "concentration": {
+        "ability": "",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "bonuses": {
+          "save": ""
+        },
+        "limit": 1
+      },
+      "loyalty": {
+        "value": null
+      },
+      "hd": {
+        "spent": 0
+      },
+      "hp": {
+        "value": 44,
+        "max": 44,
+        "temp": null,
+        "tempmax": null,
+        "formula": "8d8 + 8"
+      },
+      "death": {
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "success": 0,
+        "failure": 0,
+        "bonuses": {
+          "save": ""
+        }
+      },
+      "spell": {
+        "level": 4
+      }
+    },
+    "details": {
+      "biography": {
+        "value": "<p><i>Human bard</i></p><div class=\"rd__quote\"><p class=\"rd__quote-line \">“<i>Anyone can play <i>The Three Flambinis</i> on a lute, but try playing it with just three strings!</i>”</p></div>",
+        "public": ""
+      },
+      "alignment": "Lawful Good",
+      "ideal": "",
+      "bond": "",
+      "flaw": "",
+      "race": null,
+      "type": {
+        "value": "humanoid",
+        "subtype": "Human"
+      },
+      "habitat": {
+        "value": [],
+        "custom": ""
+      },
+      "cr": 2,
+      "treasure": {
+        "value": []
+      }
+    },
+    "resources": {
+      "legact": {
+        "value": 0,
+        "max": 0
+      },
+      "legres": {
+        "value": 0,
+        "max": 0
+      },
+      "lair": {
+        "value": false,
+        "initiative": null,
+        "inside": false
+      }
+    },
+    "source": {
+      "revision": 1,
+      "rules": "2014",
+      "custom": "",
+      "book": "WDH",
+      "page": "20",
+      "license": ""
+    },
+    "traits": {
+      "size": "med",
+      "di": {
+        "value": [],
+        "custom": "",
+        "bypasses": []
+      },
+      "dr": {
+        "value": [],
+        "custom": "",
+        "bypasses": []
+      },
+      "dv": {
+        "value": [],
+        "custom": "",
+        "bypasses": []
+      },
+      "dm": {
+        "amount": {},
+        "bypasses": []
+      },
+      "ci": {
+        "value": [],
+        "custom": ""
+      },
+      "languages": {
+        "value": [],
+        "custom": "any two languages",
+        "communication": {}
+      },
+      "important": false
+    }
+  },
+  "prototypeToken": {
+    "name": "Mattrim \"Threestrings\" Mereg",
+    "displayName": 30,
+    "actorLink": true,
+    "appendNumber": false,
+    "prependAdjective": false,
+    "width": 1,
+    "height": 1,
+    "texture": {
+      "src": "assets/srd5e/img/bestiary/tokens/WDH/Mattrim Threestrings Mereg.webp",
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "offsetX": 0,
+      "offsetY": 0,
+      "fit": "contain",
+      "scaleX": 1,
+      "scaleY": 1,
+      "rotation": 0,
+      "tint": "#ffffff",
+      "alphaThreshold": 0.75
+    },
+    "hexagonalShape": 0,
+    "lockRotation": false,
+    "rotation": 0,
+    "alpha": 1,
+    "disposition": 1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "attributes.hp"
+    },
+    "bar2": {
+      "attribute": null
+    },
+    "light": {
+      "negative": false,
+      "priority": 0,
+      "alpha": 0.5,
+      "angle": 360,
+      "bright": 0,
+      "color": null,
+      "coloration": 1,
+      "dim": 0,
+      "attenuation": 0.5,
+      "luminosity": 0.5,
+      "saturation": 0,
+      "contrast": 0,
+      "shadows": 0,
+      "animation": {
+        "type": null,
+        "speed": 5,
+        "intensity": 5,
+        "reverse": false
+      },
+      "darkness": {
+        "min": 0,
+        "max": 1
+      }
+    },
+    "sight": {
+      "enabled": true,
+      "range": 0,
+      "angle": 360,
+      "visionMode": "basic",
+      "color": null,
+      "attenuation": 0.1,
+      "brightness": 0,
+      "saturation": 0,
+      "contrast": 0
+    },
+    "detectionModes": [],
+    "occludable": {
+      "radius": 0
+    },
+    "ring": {
+      "enabled": false,
+      "colors": {
+        "ring": null,
+        "background": null
+      },
+      "effects": 0,
+      "subject": {
+        "scale": 1,
+        "texture": null
+      }
+    },
+    "flags": {
+      "tagger": {},
+      "monks-enhanced-journal": {
+        "chatbubble": ""
+      },
+      "monks-tokenbar": {
+        "include": "default"
+      }
+    },
+    "randomImg": false
+  },
+  "items": [
+    {
+      "_id": "wk9zyE6mkB72KbH9",
+      "name": "Shortsword",
+      "type": "weapon",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "215",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--3\"><p><i>Melee Weapon Attack:</i> [[/r 1d20+4]]{+4} to hit, reach 5 ft., one target. <i>Hit:</i> 5 ([[/damage 1d6 + 2 type=piercing]]) damage.</p></div>",
+          "chat": ""
+        },
+        "range": {
+          "value": null,
+          "long": 0,
+          "units": "ft",
+          "reach": null
+        },
+        "proficient": 1,
+        "uses": {
+          "max": "",
+          "spent": 0,
+          "recovery": []
+        },
+        "type": {
+          "value": "martialM",
+          "baseItem": "shortsword"
+        },
+        "properties": [
+          "fin",
+          "lgt"
+        ],
+        "damage": {
+          "base": {
+            "types": [
+              "piercing"
+            ],
+            "number": 1,
+            "denomination": 6,
+            "bonus": "",
+            "scaling": {
+              "mode": "",
+              "number": 1
+            },
+            "custom": {
+              "enabled": false
+            }
+          },
+          "versatile": {
+            "number": null,
+            "denomination": null,
+            "types": [],
+            "custom": {
+              "enabled": false
+            },
+            "scaling": {
+              "number": 1
+            }
+          }
+        },
+        "activities": {
+          "13ggAxIyxm1jzC51": {
+            "_id": "13ggAxIyxm1jzC51",
+            "type": "attack",
+            "activation": {
+              "type": "action",
+              "value": 1,
+              "override": false
+            },
+            "target": {
+              "prompt": true,
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false
+            },
+            "attack": {
+              "flat": false,
+              "type": {
+                "value": "melee",
+                "classification": ""
+              },
+              "ability": "dex",
+              "bonus": "",
+              "critical": {
+                "threshold": null
+              }
+            },
+            "sort": 0,
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "damage": {
+              "critical": {},
+              "includeBase": true,
+              "parts": []
+            }
+          }
+        },
+        "rarity": "",
+        "identified": true,
+        "equipped": true,
+        "attunement": "",
+        "price": {
+          "value": 10,
+          "denomination": "gp"
+        },
+        "quantity": 1,
+        "weight": {
+          "value": 2,
+          "units": "lb"
+        },
+        "ammunition": {
+          "type": ""
+        },
+        "mastery": "vex",
+        "armor": {
+          "value": null
+        },
+        "identifier": "shortsword",
+        "unidentified": {
+          "description": ""
+        },
+        "container": null,
+        "attuned": false,
+        "cover": null,
+        "crewed": false,
+        "magicalBonus": null
+      },
+      "ownership": {
+        "default": 0,
+        "rghJZLG3THgT7m0a": 3
+      },
+      "img": "https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/items/XPHB/Shortsword.webp",
+      "flags": {
+        "plutonium": {
+          "page": "monsterAction",
+          "source": "WDH",
+          "hash": "shortsword_mattrim%20%22threestrings%22%20mereg_wdh_wdh"
+        },
+        "scene-packer": {
+          "hash": "add361537a988b755a68ec70ee120654bf1e72d5"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748053132283,
+        "modifiedTime": 1748053132283,
+        "lastModifiedBy": "rghJZLG3THgT7m0a"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "K6e5gDIyv3Kxa4dc",
+      "name": "Shortbow",
+      "type": "weapon",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "215",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--3\"><p><i>Ranged Weapon Attack:</i> [[/r 1d20+4]]{+4} to hit, range 80/320 ft., one target. <i>Hit:</i> 5 ([[/damage 1d6 + 2 type=piercing]]) damage.</p></div>",
+          "chat": ""
+        },
+        "range": {
+          "value": 80,
+          "long": 320,
+          "units": "ft",
+          "reach": null
+        },
+        "proficient": 1,
+        "uses": {
+          "max": "",
+          "spent": 0,
+          "recovery": []
+        },
+        "type": {
+          "value": "simpleR",
+          "baseItem": "shortbow"
+        },
+        "properties": [
+          "amm",
+          "two"
+        ],
+        "damage": {
+          "base": {
+            "types": [
+              "piercing"
+            ],
+            "number": 1,
+            "denomination": 6,
+            "bonus": "",
+            "scaling": {
+              "mode": "",
+              "number": 1
+            },
+            "custom": {
+              "enabled": false
+            }
+          },
+          "versatile": {
+            "number": null,
+            "denomination": null,
+            "types": [],
+            "custom": {
+              "enabled": false
+            },
+            "scaling": {
+              "number": 1
+            }
+          }
+        },
+        "activities": {
+          "SYLF7aCW7hx5YH84": {
+            "_id": "SYLF7aCW7hx5YH84",
+            "type": "attack",
+            "activation": {
+              "type": "action",
+              "value": 1,
+              "override": false
+            },
+            "target": {
+              "prompt": true,
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false
+            },
+            "attack": {
+              "flat": false,
+              "type": {
+                "value": "ranged",
+                "classification": ""
+              },
+              "ability": "dex",
+              "bonus": "",
+              "critical": {
+                "threshold": null
+              }
+            },
+            "sort": 0,
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "damage": {
+              "critical": {},
+              "includeBase": true,
+              "parts": []
+            }
+          }
+        },
+        "rarity": "",
+        "identified": true,
+        "equipped": true,
+        "attunement": "",
+        "price": {
+          "value": 25,
+          "denomination": "gp"
+        },
+        "quantity": 1,
+        "weight": {
+          "value": 2,
+          "units": "lb"
+        },
+        "ammunition": {
+          "type": "arrow"
+        },
+        "mastery": "vex",
+        "armor": {
+          "value": null
+        },
+        "identifier": "shortbow",
+        "unidentified": {
+          "description": ""
+        },
+        "container": null,
+        "attuned": false,
+        "cover": null,
+        "crewed": false,
+        "magicalBonus": null
+      },
+      "ownership": {
+        "default": 0,
+        "rghJZLG3THgT7m0a": 3
+      },
+      "img": "https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/items/XPHB/Shortbow.webp",
+      "flags": {
+        "plutonium": {
+          "page": "monsterAction",
+          "source": "WDH",
+          "hash": "shortbow_mattrim%20%22threestrings%22%20mereg_wdh_wdh"
+        },
+        "scene-packer": {
+          "hash": "7ea668c8e782d428ba689b01decd7d3cba913de0"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748053132322,
+        "modifiedTime": 1748053132322,
+        "lastModifiedBy": "rghJZLG3THgT7m0a"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "rsMnJfZMRL3wBUUg",
+      "name": "Song of Rest",
+      "type": "feat",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "WDH",
+          "page": "20",
+          "license": "",
+          "rules": "2014",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--3\"><p>Mattrim can perform a song while taking a short rest. Any ally who hears the song regains an extra [[/r 1d6]] hit points if it spends any Hit Dice to regain hit points at the end of that rest. Mattrim can confer this benefit on itself as well.</p></div>",
+          "chat": ""
+        },
+        "requirements": "",
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "type": {
+          "value": "monster",
+          "subtype": ""
+        },
+        "properties": [],
+        "advancement": [],
+        "activities": {},
+        "identifier": "song-of-rest",
+        "cover": null,
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "rghJZLG3THgT7m0a": 3
+      },
+      "img": "icons/tools/instruments/lute-gold-brown.webp",
+      "flags": {
+        "plutonium": {
+          "page": "monsterTrait",
+          "source": "WDH",
+          "hash": "song%20of%20rest_mattrim%20%22threestrings%22%20mereg_wdh_wdh"
+        },
+        "scene-packer": {
+          "hash": "a0891838034cf4255f2beb127504fcb95e58c94b"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748053132340,
+        "modifiedTime": 1748053132340,
+        "lastModifiedBy": "rghJZLG3THgT7m0a"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "gAFdP1369lfvTJxi",
+      "name": "Taunt",
+      "type": "feat",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "WDH",
+          "page": "20",
+          "license": "",
+          "rules": "2014",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--3\"><p>Mattrim can use a bonus action on its turn to target one creature within 30 feet of it. If the target can hear Mattrim, the target must succeed on a [[/save ability=cha dc=12]] saving throw or have disadvantage on ability checks, attack rolls, and saving throws until the start of Mattrim's next turn.</p></div>",
+          "chat": ""
+        },
+        "requirements": "",
+        "uses": {
+          "max": "2",
+          "recovery": [
+            {
+              "period": "day",
+              "type": "recoverAll"
+            }
+          ],
+          "spent": 0
+        },
+        "type": {
+          "value": "monster",
+          "subtype": ""
+        },
+        "properties": [],
+        "advancement": [],
+        "activities": {
+          "kKrvWYRY1E8fIfPS": {
+            "_id": "kKrvWYRY1E8fIfPS",
+            "type": "save",
+            "activation": {
+              "type": "bonus",
+              "value": 1,
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": [
+                {
+                  "target": "",
+                  "value": "1",
+                  "type": "itemUses",
+                  "scaling": {}
+                }
+              ]
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "target": {
+              "template": {
+                "count": "",
+                "contiguous": false,
+                "type": "",
+                "size": "",
+                "width": "",
+                "height": "",
+                "units": ""
+              },
+              "affects": {
+                "count": "1",
+                "type": "creature",
+                "choice": false,
+                "special": ""
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "save": {
+              "ability": [
+                "cha"
+              ],
+              "dc": {
+                "calculation": "",
+                "formula": "12"
+              }
+            },
+            "damage": {
+              "onSave": "none",
+              "parts": []
+            },
+            "sort": 0
+          }
+        },
+        "identifier": "taunt",
+        "cover": null,
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "rghJZLG3THgT7m0a": 3
+      },
+      "img": "icons/magic/air/wind-vortex-swirl-purple.webp",
+      "flags": {
+        "plutonium": {
+          "page": "monsterTrait",
+          "source": "WDH",
+          "hash": "taunt%20(2%2fday)_mattrim%20%22threestrings%22%20mereg_wdh_wdh"
+        },
+        "scene-packer": {
+          "hash": "5d44bfbe885cf0bec5d9eaa6bfb662697905595e"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748053132359,
+        "modifiedTime": 1748053132359,
+        "lastModifiedBy": "rghJZLG3THgT7m0a"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "ZOfv1VOWQDuv2Nni",
+      "name": "Chain Shirt",
+      "type": "equipment",
+      "system": {
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--2\"><p>Made of interlocking metal rings, a chain shirt is worn between layers of clothing or leather. This armor offers modest protection to the wearer's upper body and allows the sound of the rings rubbing against one another to be muffled by outer layers.</p></div>",
+          "chat": ""
+        },
+        "source": {
+          "custom": "",
+          "book": "PHB'14",
+          "page": "144",
+          "license": "",
+          "rules": "2014",
+          "revision": 1
+        },
+        "quantity": 1,
+        "weight": {
+          "value": 20,
+          "units": "lb"
+        },
+        "price": {
+          "value": 50,
+          "denomination": "gp"
+        },
+        "attunement": "",
+        "equipped": true,
+        "rarity": "",
+        "identified": true,
+        "cover": null,
+        "crewed": false,
+        "uses": {
+          "max": "",
+          "spent": 0,
+          "recovery": []
+        },
+        "armor": {
+          "value": 13,
+          "dex": 2,
+          "magicalBonus": null
+        },
+        "hp": {
+          "value": 0,
+          "max": 0,
+          "dt": null,
+          "conditions": ""
+        },
+        "speed": {
+          "value": null,
+          "conditions": ""
+        },
+        "strength": null,
+        "proficient": 1,
+        "type": {
+          "value": "medium",
+          "baseItem": "chainshirt"
+        },
+        "unidentified": {
+          "description": ""
+        },
+        "container": null,
+        "properties": [],
+        "activities": {},
+        "attuned": false,
+        "identifier": "chain-shirt"
+      },
+      "img": "icons/commodities/metal/mail-chain-steel.webp",
+      "ownership": {
+        "default": 0,
+        "rghJZLG3THgT7m0a": 3
+      },
+      "flags": {
+        "plutonium": {
+          "page": "items.html",
+          "source": "PHB",
+          "hash": "chain%20shirt_phb"
+        },
+        "scene-packer": {
+          "hash": "c7ec9c479a7d5b7cfe213a0b8cbf2c9378c22e05"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748053132397,
+        "modifiedTime": 1748053132397,
+        "lastModifiedBy": "rghJZLG3THgT7m0a"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "qyO5mMWSylIkfwEf",
+      "name": "Friends",
+      "type": "spell",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "277",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--3\"><p>You magically emanate a sense of friendship toward one creature you can see within range. The target must succeed on a Wisdom saving throw or have the &amp;Reference[condition=Charmed] condition for the duration. The target succeeds automatically if it isn't a Humanoid, if you're fighting it, or if you have cast this spell on it within the past 24 hours.</p><p>The spell ends early if the target takes damage or if you make an attack roll, deal damage, or force anyone to make a saving throw. When the spell ends, the target knows it was &amp;Reference[condition=Charmed] by you.</p></div>",
+          "chat": ""
+        },
+        "level": 0,
+        "school": "enc",
+        "properties": [
+          "somatic",
+          "material",
+          "concentration"
+        ],
+        "ability": "cha",
+        "materials": {
+          "value": "some makeup",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "target": {
+          "template": {
+            "count": "",
+            "contiguous": false,
+            "type": "",
+            "size": "",
+            "width": "",
+            "height": "",
+            "units": ""
+          },
+          "affects": {
+            "count": "1",
+            "type": "creature",
+            "choice": false,
+            "special": ""
+          }
+        },
+        "range": {
+          "value": "10",
+          "units": "ft"
+        },
+        "activation": {
+          "type": "action",
+          "value": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "preparation": {
+          "mode": "always",
+          "prepared": true
+        },
+        "activities": {
+          "lSuwEMq1UcPmmkJk": {
+            "_id": "lSuwEMq1UcPmmkJk",
+            "type": "save",
+            "activation": {
+              "type": "action",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "save": {
+              "ability": [
+                "wis"
+              ],
+              "dc": {
+                "calculation": "spellcasting"
+              }
+            },
+            "damage": {
+              "onSave": "none",
+              "parts": []
+            },
+            "sort": 0
+          }
+        },
+        "identifier": "friends"
+      },
+      "ownership": {
+        "default": 0,
+        "rghJZLG3THgT7m0a": 3
+      },
+      "img": "icons/magic/air/wind-vortex-swirl-purple.webp",
+      "flags": {
+        "plutonium": {
+          "page": "spells.html",
+          "source": "XPHB",
+          "hash": "friends_xphb",
+          "propDroppable": "spell",
+          "spellClassNames": [
+            "Bard",
+            "Sorcerer",
+            "Warlock",
+            "Wizard"
+          ]
+        },
+        "scene-packer": {
+          "hash": "9e62394d4d2f49b1001a2cabfa21dfb4c955dddc"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748053132508,
+        "modifiedTime": 1748053132508,
+        "lastModifiedBy": "rghJZLG3THgT7m0a"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "GnbmS5CFoBGXB9K7",
+      "name": "Mage Hand",
+      "type": "spell",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "293",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--3\"><p>A spectral, floating hand appears at a point you choose within range. The hand lasts for the duration. The hand vanishes if it is ever more than 30 feet away from you or if you cast this spell again.</p><p>When you cast the spell, you can use the hand to manipulate an object, open an unlocked door or container, stow or retrieve an item from an open container, or pour the contents out of a vial.</p><p>As a @action[Magic|XPHB] action on your later turns, you can control the hand thus again. As part of that action, you can move the hand up to 30 feet.</p><p>The hand can't attack, activate magic items, or carry more than 10 pounds.</p></div>",
+          "chat": ""
+        },
+        "level": 0,
+        "school": "con",
+        "properties": [
+          "vocal",
+          "somatic"
+        ],
+        "ability": "cha",
+        "materials": {
+          "value": "",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "target": {
+          "template": {
+            "count": "",
+            "contiguous": false,
+            "type": "",
+            "size": "",
+            "width": "",
+            "height": "",
+            "units": ""
+          },
+          "affects": {
+            "count": "",
+            "type": "",
+            "choice": false,
+            "special": ""
+          }
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "activation": {
+          "type": "action",
+          "value": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "preparation": {
+          "mode": "always",
+          "prepared": true
+        },
+        "activities": {
+          "EZH3LI2LiZpbS6sW": {
+            "_id": "EZH3LI2LiZpbS6sW",
+            "type": "utility",
+            "name": "Cast",
+            "activation": {
+              "type": "action",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "roll": {
+              "prompt": false,
+              "visible": false
+            },
+            "sort": 0
+          }
+        },
+        "identifier": "mage-hand"
+      },
+      "ownership": {
+        "default": 0,
+        "rghJZLG3THgT7m0a": 3
+      },
+      "img": "icons/magic/unholy/strike-hand-glow-pink.webp",
+      "flags": {
+        "plutonium": {
+          "page": "spells.html",
+          "source": "XPHB",
+          "hash": "mage%20hand_xphb",
+          "propDroppable": "spell",
+          "spellClassNames": [
+            "Bard",
+            "Sorcerer",
+            "Warlock",
+            "Wizard",
+            "Artificer"
+          ]
+        },
+        "scene-packer": {
+          "hash": "a1ea4361e3218f2632af06731d35c99f4322b056"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748053132531,
+        "modifiedTime": 1748053132531,
+        "lastModifiedBy": "rghJZLG3THgT7m0a"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "xnWreoPMxxNzMDa3",
+      "name": "Vicious Mockery",
+      "type": "spell",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "337",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--3\"><p>You unleash a string of insults laced with subtle enchantments at one creature you can see or hear within range. The target must succeed on a Wisdom saving throw or take [[/damage 1d6 type=psychic]] damage and have @variantrule[Disadvantage|XPHB] on the next attack roll it makes before the end of its next turn.</p></div><div class=\"rd__b  rd__b--3\"><p></p><div data-roll-name-ancestor=\"Cantrip Upgrade\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"1\"> <span class=\"entry-title-inner\">Cantrip Upgrade.</span></span> The damage increases by [[/damage 1d6]] when you reach levels 5 ([[/damage 2d6]]), 11 ([[/damage 3d6]]), and 17 ([[/damage 4d6]]).</p></div></div>",
+          "chat": ""
+        },
+        "level": 0,
+        "school": "enc",
+        "properties": [
+          "vocal"
+        ],
+        "ability": "cha",
+        "materials": {
+          "value": "",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "target": {
+          "template": {
+            "count": "",
+            "contiguous": false,
+            "type": "",
+            "size": "",
+            "width": "",
+            "height": "",
+            "units": ""
+          },
+          "affects": {
+            "count": "1",
+            "type": "creature",
+            "choice": false,
+            "special": ""
+          }
+        },
+        "range": {
+          "value": "60",
+          "units": "ft"
+        },
+        "activation": {
+          "type": "action",
+          "value": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": "0",
+          "units": "inst"
+        },
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "preparation": {
+          "mode": "always",
+          "prepared": true
+        },
+        "activities": {
+          "V7ITZ3nGdohOkdyg": {
+            "_id": "V7ITZ3nGdohOkdyg",
+            "type": "save",
+            "name": "",
+            "activation": {
+              "type": "action",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "save": {
+              "ability": [
+                "wis"
+              ],
+              "dc": {
+                "calculation": "spellcasting"
+              }
+            },
+            "damage": {
+              "onSave": "none",
+              "parts": [
+                {
+                  "types": [
+                    "psychic"
+                  ],
+                  "number": 1,
+                  "denomination": 6,
+                  "bonus": "",
+                  "scaling": {
+                    "mode": "whole",
+                    "number": 1
+                  },
+                  "custom": {
+                    "enabled": false
+                  }
+                }
+              ]
+            },
+            "sort": 0
+          }
+        },
+        "identifier": "vicious-mockery"
+      },
+      "ownership": {
+        "default": 0,
+        "rghJZLG3THgT7m0a": 3
+      },
+      "img": "icons/magic/control/fear-fright-white.webp",
+      "flags": {
+        "plutonium": {
+          "page": "spells.html",
+          "source": "XPHB",
+          "hash": "vicious%20mockery_xphb",
+          "propDroppable": "spell",
+          "spellClassNames": [
+            "Bard"
+          ]
+        },
+        "scene-packer": {
+          "hash": "32008bf3691a9167b3800bcc1c6e02b73be84692"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748053132567,
+        "modifiedTime": 1748053132567,
+        "lastModifiedBy": "rghJZLG3THgT7m0a"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "bjeG1A84UvFuw9ks",
+      "name": "Charm Person",
+      "type": "spell",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "249",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--3\"><p>One Humanoid you can see within range makes a Wisdom saving throw. It does so with @variantrule[Advantage|XPHB] if you or your allies are fighting it. On a failed save, the target has the &amp;Reference[condition=Charmed] condition until the spell ends or until you or your allies damage it. The &amp;Reference[condition=Charmed] creature is Friendly to you. When the spell ends, the target knows it was &amp;Reference[condition=Charmed] by you.</p></div><div class=\"rd__b  rd__b--3\"><p></p><div data-roll-name-ancestor=\"Using a Higher-Level Spell Slot\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"1\"> <span class=\"entry-title-inner\">Using a Higher-Level Spell Slot.</span></span> You can target one additional creature for each spell slot level above 1.</p></div></div>",
+          "chat": ""
+        },
+        "level": 1,
+        "school": "enc",
+        "properties": [
+          "vocal",
+          "somatic"
+        ],
+        "ability": "cha",
+        "materials": {
+          "value": "",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "target": {
+          "template": {
+            "count": "",
+            "contiguous": false,
+            "type": "",
+            "size": "",
+            "width": "",
+            "height": "",
+            "units": ""
+          },
+          "affects": {
+            "count": "1",
+            "type": "creature",
+            "choice": false,
+            "special": ""
+          }
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "activation": {
+          "type": "action",
+          "value": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": "1",
+          "units": "hour"
+        },
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "preparation": {
+          "mode": "prepared",
+          "prepared": true
+        },
+        "activities": {
+          "KBPciaMjyThvcnPS": {
+            "_id": "KBPciaMjyThvcnPS",
+            "type": "save",
+            "activation": {
+              "type": "action",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "save": {
+              "ability": [
+                "wis"
+              ],
+              "dc": {
+                "calculation": "spellcasting"
+              }
+            },
+            "damage": {
+              "onSave": "none",
+              "parts": []
+            },
+            "sort": 0
+          }
+        },
+        "identifier": "charm-person"
+      },
+      "ownership": {
+        "default": 0,
+        "rghJZLG3THgT7m0a": 3
+      },
+      "img": "icons/magic/life/heart-shadow-red.webp",
+      "flags": {
+        "plutonium": {
+          "page": "spells.html",
+          "source": "XPHB",
+          "hash": "charm%20person_xphb",
+          "propDroppable": "spell",
+          "spellClassNames": [
+            "Bard",
+            "Druid",
+            "Sorcerer",
+            "Warlock",
+            "Wizard"
+          ]
+        },
+        "scene-packer": {
+          "hash": "9fc1b5c41c4924b39bb0e0b6d566c5d6ce689fd7"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748053132604,
+        "modifiedTime": 1748053132604,
+        "lastModifiedBy": "rghJZLG3THgT7m0a"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "QTa7rCDqIm2eJBwd",
+      "name": "Healing Word",
+      "type": "spell",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "284",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--3\"><p>A creature of your choice that you can see within range regains @variantrule[Hit Points|XPHB] equal to [[/r 2d4]] plus your spellcasting ability modifier.</p></div><div class=\"rd__b  rd__b--3\"><p></p><div data-roll-name-ancestor=\"Using a Higher-Level Spell Slot\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"1\"> <span class=\"entry-title-inner\">Using a Higher-Level Spell Slot.</span></span> The healing increases by [[/r 2d4]] for each spell slot level above 1.</p></div></div>",
+          "chat": ""
+        },
+        "level": 1,
+        "school": "abj",
+        "properties": [
+          "vocal"
+        ],
+        "ability": "cha",
+        "materials": {
+          "value": "",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "target": {
+          "template": {
+            "count": "",
+            "contiguous": false,
+            "type": "",
+            "size": "",
+            "width": "",
+            "height": "",
+            "units": ""
+          },
+          "affects": {
+            "count": "",
+            "type": "creature",
+            "choice": true,
+            "special": ""
+          }
+        },
+        "range": {
+          "value": "60",
+          "units": "ft"
+        },
+        "activation": {
+          "type": "bonus",
+          "value": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": "0",
+          "units": "inst"
+        },
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "preparation": {
+          "mode": "prepared",
+          "prepared": true
+        },
+        "activities": {
+          "h93EeRI8QlPx6E01": {
+            "_id": "h93EeRI8QlPx6E01",
+            "type": "heal",
+            "name": "",
+            "activation": {
+              "type": "action",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "healing": {
+              "types": [
+                "healing"
+              ],
+              "number": 2,
+              "denomination": 4,
+              "bonus": "@mod",
+              "scaling": {
+                "mode": "whole",
+                "number": 2
+              },
+              "custom": {
+                "enabled": false
+              }
+            },
+            "sort": 0
+          }
+        },
+        "identifier": "healing-word"
+      },
+      "ownership": {
+        "default": 0,
+        "rghJZLG3THgT7m0a": 3
+      },
+      "img": "icons/magic/life/heart-cross-green.webp",
+      "flags": {
+        "plutonium": {
+          "page": "spells.html",
+          "source": "XPHB",
+          "hash": "healing%20word_xphb",
+          "propDroppable": "spell",
+          "spellClassNames": [
+            "Bard",
+            "Cleric",
+            "Druid"
+          ]
+        },
+        "scene-packer": {
+          "hash": "b2780346525f91091428a71c8cfe747f67627e8b"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748053132642,
+        "modifiedTime": 1748053132642,
+        "lastModifiedBy": "rghJZLG3THgT7m0a"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "ZYRf0oxTFi3zZNAk",
+      "name": "Heroism",
+      "type": "spell",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "285",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--3\"><p>A willing creature you touch is imbued with bravery. Until the spell ends, the creature is immune to the &amp;Reference[condition=Frightened] condition and gains @variantrule[Temporary Hit Points|XPHB] equal to your spellcasting ability modifier at the start of each of its turns.</p></div><div class=\"rd__b  rd__b--3\"><p></p><div data-roll-name-ancestor=\"Using a Higher-Level Spell Slot\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"1\"> <span class=\"entry-title-inner\">Using a Higher-Level Spell Slot.</span></span> You can target one additional creature for each spell slot level above 1.</p></div></div>",
+          "chat": ""
+        },
+        "level": 1,
+        "school": "enc",
+        "properties": [
+          "vocal",
+          "somatic",
+          "concentration"
+        ],
+        "ability": "cha",
+        "materials": {
+          "value": "",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "target": {
+          "template": {
+            "count": "",
+            "contiguous": false,
+            "type": "",
+            "size": "",
+            "width": "",
+            "height": "",
+            "units": ""
+          },
+          "affects": {
+            "count": "",
+            "type": "willing",
+            "choice": false,
+            "special": ""
+          }
+        },
+        "range": {
+          "value": "0",
+          "units": "touch"
+        },
+        "activation": {
+          "type": "action",
+          "value": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "preparation": {
+          "mode": "prepared",
+          "prepared": true
+        },
+        "activities": {
+          "jtzW7yuhVeYJPVSi": {
+            "_id": "jtzW7yuhVeYJPVSi",
+            "type": "utility",
+            "name": "Cast",
+            "activation": {
+              "type": "action",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "roll": {
+              "prompt": false,
+              "visible": false
+            },
+            "sort": 0
+          }
+        },
+        "identifier": "heroism"
+      },
+      "ownership": {
+        "default": 0,
+        "rghJZLG3THgT7m0a": 3
+      },
+      "img": "icons/magic/control/control-influence-crown-gold.webp",
+      "flags": {
+        "plutonium": {
+          "page": "spells.html",
+          "source": "XPHB",
+          "hash": "heroism_xphb",
+          "propDroppable": "spell",
+          "spellClassNames": [
+            "Bard",
+            "Paladin"
+          ]
+        },
+        "scene-packer": {
+          "hash": "d7710ab385faa537f015959c48116d68902f5894"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748053132682,
+        "modifiedTime": 1748053132682,
+        "lastModifiedBy": "rghJZLG3THgT7m0a"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "1UXEaywUgUZQKn0M",
+      "name": "Sleep",
+      "type": "spell",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "317",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--3\"><p>Each creature of your choice in a 5-foot-radius Sphere centered on a point within range must succeed on a Wisdom saving throw or have the &amp;Reference[condition=Incapacitated] condition until the end of its next turn, at which point it must repeat the save. If the target fails the second save, the target has the &amp;Reference[condition=Unconscious] condition for the duration. The spell ends on a target if it takes damage or someone within 5 feet of it takes an action to shake it out of the spell's effect.</p><p>Creatures that don't sleep, such as elves, or that have @variantrule[Immunity|XPHB] to the &amp;Reference[condition=Exhaustion] condition automatically succeed on saves against this spell.</p></div>",
+          "chat": ""
+        },
+        "level": 1,
+        "school": "enc",
+        "properties": [
+          "vocal",
+          "somatic",
+          "material",
+          "concentration"
+        ],
+        "ability": "cha",
+        "materials": {
+          "value": "a pinch of sand or rose petals",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "target": {
+          "template": {
+            "count": "",
+            "contiguous": false,
+            "type": "sphere",
+            "size": "5",
+            "width": "",
+            "height": "",
+            "units": "ft"
+          },
+          "affects": {
+            "count": "1",
+            "type": "creature",
+            "choice": true,
+            "special": ""
+          }
+        },
+        "range": {
+          "value": "60",
+          "units": "ft"
+        },
+        "activation": {
+          "type": "action",
+          "value": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "preparation": {
+          "mode": "prepared",
+          "prepared": true
+        },
+        "activities": {
+          "cxPA8xfPoxJeQnRs": {
+            "_id": "cxPA8xfPoxJeQnRs",
+            "type": "save",
+            "activation": {
+              "type": "action",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "save": {
+              "ability": [
+                "wis"
+              ],
+              "dc": {
+                "calculation": "spellcasting"
+              }
+            },
+            "damage": {
+              "onSave": "none",
+              "parts": []
+            },
+            "sort": 0
+          }
+        },
+        "identifier": "sleep"
+      },
+      "ownership": {
+        "default": 0,
+        "rghJZLG3THgT7m0a": 3
+      },
+      "img": "icons/magic/control/sleep-bubble-purple.webp",
+      "flags": {
+        "plutonium": {
+          "page": "spells.html",
+          "source": "XPHB",
+          "hash": "sleep_xphb",
+          "propDroppable": "spell",
+          "spellClassNames": [
+            "Bard",
+            "Sorcerer",
+            "Wizard"
+          ]
+        },
+        "scene-packer": {
+          "hash": "56efdfcf825905f8c08307948c9ee72b480249b7"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748053132726,
+        "modifiedTime": 1748053132726,
+        "lastModifiedBy": "rghJZLG3THgT7m0a"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "aZiliK7f14XhvB9Y",
+      "name": "Thunderwave",
+      "type": "spell",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "334",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--3\"><p>You unleash a wave of thunderous energy. Each creature in a 15-foot Cube originating from you makes a Constitution saving throw. On a failed save, a creature takes [[/damage 2d8 type=thunder]] damage and is pushed 10 feet away from you. On a successful save, a creature takes half as much damage only.</p><p>In addition, unsecured objects that are entirely within the Cube are pushed 10 feet away from you, and a thunderous boom is audible within 300 feet.</p></div><div class=\"rd__b  rd__b--3\"><p></p><div data-roll-name-ancestor=\"Using a Higher-Level Spell Slot\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"1\"> <span class=\"entry-title-inner\">Using a Higher-Level Spell Slot.</span></span> The damage increases by [[/damage 1d8]] for each spell slot level above 1.</p></div></div>",
+          "chat": ""
+        },
+        "level": 1,
+        "school": "evo",
+        "properties": [
+          "vocal",
+          "somatic"
+        ],
+        "ability": "cha",
+        "materials": {
+          "value": "",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "target": {
+          "template": {
+            "count": "",
+            "contiguous": false,
+            "type": "cube",
+            "size": "15",
+            "width": "",
+            "height": "",
+            "units": "ft"
+          },
+          "affects": {
+            "count": "",
+            "type": "creature",
+            "choice": false,
+            "special": ""
+          }
+        },
+        "range": {
+          "value": "0",
+          "units": ""
+        },
+        "activation": {
+          "type": "action",
+          "value": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": "0",
+          "units": "inst"
+        },
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "preparation": {
+          "mode": "prepared",
+          "prepared": true
+        },
+        "activities": {
+          "iMxjyRpvmbaogvms": {
+            "_id": "iMxjyRpvmbaogvms",
+            "type": "save",
+            "name": "",
+            "activation": {
+              "type": "action",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "save": {
+              "ability": [
+                "con"
+              ],
+              "dc": {
+                "calculation": "spellcasting"
+              }
+            },
+            "damage": {
+              "onSave": "half",
+              "parts": [
+                {
+                  "types": [
+                    "thunder"
+                  ],
+                  "number": 2,
+                  "denomination": 8,
+                  "bonus": "",
+                  "scaling": {
+                    "mode": "whole",
+                    "number": 1
+                  },
+                  "custom": {
+                    "enabled": false
+                  }
+                }
+              ]
+            },
+            "sort": 0
+          }
+        },
+        "identifier": "thunderwave"
+      },
+      "ownership": {
+        "default": 0,
+        "rghJZLG3THgT7m0a": 3
+      },
+      "img": "icons/magic/air/wind-tornado-spiral-brown.webp",
+      "flags": {
+        "plutonium": {
+          "page": "spells.html",
+          "source": "XPHB",
+          "hash": "thunderwave_xphb",
+          "propDroppable": "spell",
+          "spellClassNames": [
+            "Bard",
+            "Druid",
+            "Sorcerer",
+            "Wizard"
+          ]
+        },
+        "scene-packer": {
+          "hash": "5e9011887b1f66c2c7570db7f9587043c981ca6d"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748053132773,
+        "modifiedTime": 1748053132773,
+        "lastModifiedBy": "rghJZLG3THgT7m0a"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "UUXIiPp6MDWaRjT2",
+      "name": "Invisibility",
+      "type": "spell",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "289",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--3\"><p>A creature you touch has the &amp;Reference[condition=Invisible] condition until the spell ends. The spell ends early immediately after the target makes an attack roll, deals damage, or casts a spell.</p></div><div class=\"rd__b  rd__b--3\"><p></p><div data-roll-name-ancestor=\"Using a Higher-Level Spell Slot\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"1\"> <span class=\"entry-title-inner\">Using a Higher-Level Spell Slot.</span></span> You can target one additional creature for each spell slot level above 2.</p></div></div>",
+          "chat": ""
+        },
+        "level": 2,
+        "school": "ill",
+        "properties": [
+          "vocal",
+          "somatic",
+          "material",
+          "concentration"
+        ],
+        "ability": "cha",
+        "materials": {
+          "value": "an eyelash in gum arabic",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "target": {
+          "template": {
+            "count": "",
+            "contiguous": false,
+            "type": "",
+            "size": "",
+            "width": "",
+            "height": "",
+            "units": ""
+          },
+          "affects": {
+            "count": "1",
+            "type": "creature",
+            "choice": false,
+            "special": ""
+          }
+        },
+        "range": {
+          "value": "0",
+          "units": "touch"
+        },
+        "activation": {
+          "type": "action",
+          "value": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": "1",
+          "units": "hour"
+        },
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "preparation": {
+          "mode": "prepared",
+          "prepared": true
+        },
+        "activities": {
+          "sGJSt7tb1hBXqQkE": {
+            "_id": "sGJSt7tb1hBXqQkE",
+            "type": "utility",
+            "name": "Cast",
+            "activation": {
+              "type": "action",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "roll": {
+              "prompt": false,
+              "visible": false
+            },
+            "sort": 0
+          }
+        },
+        "identifier": "invisibility"
+      },
+      "ownership": {
+        "default": 0,
+        "rghJZLG3THgT7m0a": 3
+      },
+      "img": "icons/magic/air/fog-gas-smoke-blue-gray.webp",
+      "flags": {
+        "plutonium": {
+          "page": "spells.html",
+          "source": "XPHB",
+          "hash": "invisibility_xphb",
+          "propDroppable": "spell",
+          "spellClassNames": [
+            "Bard",
+            "Sorcerer",
+            "Warlock",
+            "Wizard",
+            "Artificer"
+          ]
+        },
+        "scene-packer": {
+          "hash": "54196c7e1b01c07b89199542af59a25db8c781b5"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748053132813,
+        "modifiedTime": 1748053132813,
+        "lastModifiedBy": "rghJZLG3THgT7m0a"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "UcX4LnJTNAoE963U",
+      "name": "Shatter",
+      "type": "spell",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "316",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--3\"><p>A loud noise erupts from a point of your choice within range. Each creature in a 10-foot-radius Sphere centered there makes a Constitution saving throw, taking [[/damage 3d8 type=thunder]] damage on a failed save or half as much damage on a successful one. A Construct has @variantrule[Disadvantage|XPHB] on the save.</p><p>A nonmagical object that isn't being worn or carried also takes the damage if it's in the spell's area.</p></div><div class=\"rd__b  rd__b--3\"><p></p><div data-roll-name-ancestor=\"Using a Higher-Level Spell Slot\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"1\"> <span class=\"entry-title-inner\">Using a Higher-Level Spell Slot.</span></span> The damage increases by [[/damage 1d8]] for each spell slot level above 2.</p></div></div>",
+          "chat": ""
+        },
+        "level": 2,
+        "school": "evo",
+        "properties": [
+          "vocal",
+          "somatic",
+          "material"
+        ],
+        "ability": "cha",
+        "materials": {
+          "value": "a chip of mica",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "target": {
+          "template": {
+            "count": "",
+            "contiguous": false,
+            "type": "sphere",
+            "size": "10",
+            "width": "",
+            "height": "",
+            "units": "ft"
+          },
+          "affects": {
+            "count": "",
+            "type": "creature",
+            "choice": false,
+            "special": ""
+          }
+        },
+        "range": {
+          "value": "60",
+          "units": "ft"
+        },
+        "activation": {
+          "type": "action",
+          "value": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": "0",
+          "units": "inst"
+        },
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "preparation": {
+          "mode": "prepared",
+          "prepared": true
+        },
+        "activities": {
+          "tQJv511MmQjqwSYT": {
+            "_id": "tQJv511MmQjqwSYT",
+            "type": "save",
+            "name": "",
+            "activation": {
+              "type": "action",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "save": {
+              "ability": [
+                "con"
+              ],
+              "dc": {
+                "calculation": "spellcasting"
+              }
+            },
+            "damage": {
+              "onSave": "half",
+              "parts": [
+                {
+                  "types": [
+                    "thunder"
+                  ],
+                  "number": 3,
+                  "denomination": 8,
+                  "bonus": "",
+                  "scaling": {
+                    "mode": "whole",
+                    "number": 1
+                  },
+                  "custom": {
+                    "enabled": false
+                  }
+                }
+              ]
+            },
+            "sort": 0
+          }
+        },
+        "identifier": "shatter"
+      },
+      "ownership": {
+        "default": 0,
+        "rghJZLG3THgT7m0a": 3
+      },
+      "img": "icons/magic/sonic/explosion-shock-wave-teal.webp",
+      "flags": {
+        "plutonium": {
+          "page": "spells.html",
+          "source": "XPHB",
+          "hash": "shatter_xphb",
+          "propDroppable": "spell",
+          "spellClassNames": [
+            "Bard",
+            "Sorcerer",
+            "Wizard"
+          ]
+        },
+        "scene-packer": {
+          "hash": "3015e7d7319aa30bb579e1e0e4306471628a732a"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748053132857,
+        "modifiedTime": 1748053132857,
+        "lastModifiedBy": "rghJZLG3THgT7m0a"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "EEgurpwOyj9wEwr4",
+      "name": "Spellcasting",
+      "type": "feat",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "WDH",
+          "page": "20",
+          "license": "",
+          "rules": "2014",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--3\"><p></p><div data-roll-name-ancestor=\"Spellcasting\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"1\"> <span class=\"entry-title-inner\">Spellcasting.</span></span> Mattrim is a 4th-level spellcaster. Its spellcasting ability is Charisma (spell save DC <span class=\"rd__dc\">12</span>, [[/r 1d20+4]]{+4} to hit with spell attacks). It has the following bard spells prepared:</p><ul class=\"rd__list rd__list-hang-notitle\"><li class=\"rd__li  rd__li-spell\"><p>Cantrips (at will): @UUID[.qyO5mMWSylIkfwEf], @UUID[.GnbmS5CFoBGXB9K7], @UUID[.xnWreoPMxxNzMDa3]</p></li><li class=\"rd__li  rd__li-spell\"><p>1st level (4 slots): @UUID[.bjeG1A84UvFuw9ks], @UUID[.QTa7rCDqIm2eJBwd], @UUID[.ZYRf0oxTFi3zZNAk], @UUID[.1UXEaywUgUZQKn0M], @UUID[.aZiliK7f14XhvB9Y]</p></li><li class=\"rd__li  rd__li-spell\"><p>2nd level (3 slots): @UUID[.UUXIiPp6MDWaRjT2], @UUID[.UcX4LnJTNAoE963U]</p></li></ul></div></div>",
+          "chat": ""
+        },
+        "requirements": "",
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "type": {
+          "value": "monster",
+          "subtype": ""
+        },
+        "properties": [],
+        "advancement": [],
+        "activities": {},
+        "identifier": "spellcasting",
+        "cover": null,
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "rghJZLG3THgT7m0a": 3
+      },
+      "img": "icons/magic/light/beam-rays-magenta-large.webp",
+      "flags": {
+        "plutonium": {
+          "page": "monsterSpellcasting",
+          "source": "WDH",
+          "hash": "spellcasting_mattrim%20%22threestrings%22%20mereg_wdh_wdh"
+        },
+        "scene-packer": {
+          "hash": "47bf739d2c32cfb267c9c7ddf203c5090de11c5f"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748053132891,
+        "modifiedTime": 1748053132891,
+        "lastModifiedBy": "rghJZLG3THgT7m0a"
+      },
+      "folder": null,
+      "sort": 0
+    }
+  ],
+  "effects": [],
+  "folder": "fJqQx9W9ejJsuoS5"
+}

@@ -1,0 +1,4500 @@
+{
+  "folder": "nPKOdyfP5iikslCi",
+  "name": "Cade De la Cour",
+  "type": "character",
+  "img": "ddb-images/characters/109381819-cade-de-la-cour.jpeg",
+  "system": {
+    "currency": {
+      "pp": 0,
+      "gp": 0,
+      "ep": 0,
+      "sp": 2,
+      "cp": 0
+    },
+    "abilities": {
+      "str": {
+        "value": 12,
+        "proficient": 0,
+        "max": 20,
+        "bonuses": {
+          "check": "",
+          "save": ""
+        },
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
+      },
+      "dex": {
+        "value": 18,
+        "proficient": 1,
+        "max": 20,
+        "bonuses": {
+          "check": "",
+          "save": ""
+        },
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
+      },
+      "con": {
+        "value": 16,
+        "proficient": 0,
+        "max": 20,
+        "bonuses": {
+          "check": "",
+          "save": ""
+        },
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
+      },
+      "int": {
+        "value": 18,
+        "proficient": 1,
+        "max": 20,
+        "bonuses": {
+          "check": "",
+          "save": ""
+        },
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
+      },
+      "wis": {
+        "value": 13,
+        "proficient": 0,
+        "max": 20,
+        "bonuses": {
+          "check": "",
+          "save": ""
+        },
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
+      },
+      "cha": {
+        "value": 10,
+        "proficient": 0,
+        "max": 20,
+        "bonuses": {
+          "check": "",
+          "save": ""
+        },
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
+      }
+    },
+    "bonuses": {
+      "mwak": {
+        "attack": "",
+        "damage": ""
+      },
+      "rwak": {
+        "attack": "",
+        "damage": ""
+      },
+      "msak": {
+        "attack": "",
+        "damage": ""
+      },
+      "rsak": {
+        "attack": "",
+        "damage": ""
+      },
+      "abilities": {
+        "check": "",
+        "save": "",
+        "skill": ""
+      },
+      "spell": {
+        "dc": ""
+      }
+    },
+    "skills": {
+      "acr": {
+        "ability": "dex",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 2,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "ani": {
+        "ability": "wis",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "arc": {
+        "ability": "int",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 2,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "ath": {
+        "ability": "str",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "dec": {
+        "ability": "cha",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 1,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "his": {
+        "ability": "int",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "ins": {
+        "ability": "wis",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "itm": {
+        "ability": "cha",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 1,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "inv": {
+        "ability": "int",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 1,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "med": {
+        "ability": "wis",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "nat": {
+        "ability": "int",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "prc": {
+        "ability": "wis",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "prf": {
+        "ability": "cha",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "per": {
+        "ability": "cha",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "rel": {
+        "ability": "int",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "slt": {
+        "ability": "dex",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "ste": {
+        "ability": "dex",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 1,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "sur": {
+        "ability": "wis",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 1,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      }
+    },
+    "tools": {
+      "thief": {
+        "value": 1,
+        "ability": "dex",
+        "bonuses": {
+          "check": ""
+        },
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        }
+      }
+    },
+    "spells": {
+      "spell1": {
+        "value": 0,
+        "override": null
+      },
+      "spell2": {
+        "value": 0,
+        "override": null
+      },
+      "spell3": {
+        "value": 0,
+        "override": null
+      },
+      "spell4": {
+        "value": 0,
+        "override": null
+      },
+      "spell5": {
+        "value": 0,
+        "override": null
+      },
+      "spell6": {
+        "value": 0,
+        "override": null
+      },
+      "spell7": {
+        "value": 0,
+        "override": null
+      },
+      "spell8": {
+        "value": 0,
+        "override": null
+      },
+      "spell9": {
+        "value": 0,
+        "override": null
+      },
+      "pact": {
+        "value": 0,
+        "override": null
+      }
+    },
+    "attributes": {
+      "ac": {
+        "calc": "default",
+        "flat": null
+      },
+      "init": {
+        "ability": "dex",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "bonus": ""
+      },
+      "movement": {
+        "burrow": 0,
+        "climb": 0,
+        "fly": 0,
+        "swim": 0,
+        "walk": 30,
+        "units": "ft",
+        "hover": false
+      },
+      "attunement": {
+        "max": 3
+      },
+      "senses": {
+        "darkvision": 0,
+        "blindsight": 0,
+        "tremorsense": 0,
+        "truesight": 0,
+        "units": "ft",
+        "special": ""
+      },
+      "spellcasting": "",
+      "exhaustion": 0,
+      "concentration": {
+        "ability": "",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "bonuses": {
+          "save": ""
+        },
+        "limit": 1
+      },
+      "loyalty": {
+        "value": null
+      },
+      "hp": {
+        "value": 13,
+        "max": null,
+        "temp": null,
+        "tempmax": null,
+        "bonuses": {
+          "level": "2",
+          "overall": ""
+        }
+      },
+      "death": {
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "success": 0,
+        "failure": 0,
+        "bonuses": {
+          "save": ""
+        }
+      },
+      "inspiration": false
+    },
+    "bastion": {
+      "name": "",
+      "description": ""
+    },
+    "details": {
+      "biography": {
+        "value": "",
+        "public": ""
+      },
+      "alignment": "Chaotic Neutral",
+      "ideal": "Determination: When given a challenge I will not stop until I am either broken or the challenge is complete.\nCompetency: When given new information I will strive to become an expert in said topic to help others who may struggle with it.",
+      "bond": "Havik took me in under his wing when no one else would. I will sacrifice myself to keep him safe.\nBeing abandoned by my parents and cast aside by the Giants, one of the only people I can count on to not leave me is myself.",
+      "flaw": "",
+      "race": "YHsJT0ySwK897Nzx",
+      "background": "xApAcfJ8KUnB2MMj",
+      "originalClass": "SwzWJ4vbAsv3UzMf",
+      "xp": {
+        "value": 0
+      },
+      "appearance": "Gender: Male\nEyes: Right (Hazel/Green) Left (Glowing Blue)\nHeight: 5'10\"\nHair: Brown\nSkin: Fair\nAge: 22\nWeight: 160",
+      "trait": "I insist on being taken seriously as a full-grown adult. Nobody talks down to me!\nWhat I lack in stature compared to giants, I make up for with sheer spite.",
+      "eyes": "Right (Hazel/Green) Left (Glowing Blue)",
+      "height": "5'10\"",
+      "faith": "",
+      "hair": "Brown",
+      "weight": "160",
+      "gender": "Male",
+      "skin": "Fair",
+      "age": "22"
+    },
+    "traits": {
+      "size": "med",
+      "di": {
+        "value": [],
+        "custom": "",
+        "bypasses": []
+      },
+      "dr": {
+        "value": [],
+        "custom": "",
+        "bypasses": []
+      },
+      "dv": {
+        "value": [],
+        "custom": "",
+        "bypasses": []
+      },
+      "dm": {
+        "amount": {},
+        "bypasses": []
+      },
+      "ci": {
+        "value": [],
+        "custom": ""
+      },
+      "languages": {
+        "value": [
+          "cant",
+          "common",
+          "draconic",
+          "elvish",
+          "giant",
+          "orc",
+          "sign"
+        ],
+        "custom": "",
+        "communication": {}
+      },
+      "weaponProf": {
+        "value": [
+          "handcrossbow",
+          "rapier",
+          "scimitar",
+          "shortsword",
+          "sim",
+          "whip"
+        ],
+        "custom": "",
+        "mastery": {
+          "value": [
+            "rapier",
+            "dagger"
+          ],
+          "bonus": []
+        }
+      },
+      "armorProf": {
+        "value": [
+          "lgt"
+        ],
+        "custom": ""
+      }
+    },
+    "resources": {
+      "primary": {
+        "value": 2,
+        "max": 2,
+        "sr": false,
+        "lr": false,
+        "label": "Strike of the Stoprm"
+      },
+      "secondary": {
+        "value": null,
+        "max": null,
+        "sr": false,
+        "lr": false,
+        "label": ""
+      },
+      "tertiary": {
+        "value": null,
+        "max": null,
+        "sr": false,
+        "lr": false,
+        "label": ""
+      }
+    },
+    "favorites": []
+  },
+  "prototypeToken": {
+    "name": "Cade De la Cour",
+    "displayName": 0,
+    "actorLink": true,
+    "appendNumber": false,
+    "prependAdjective": false,
+    "width": 1,
+    "height": 1,
+    "texture": {
+      "src": "ddb-images/characters/token_3.png",
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "offsetX": 0,
+      "offsetY": 0,
+      "fit": "contain",
+      "scaleX": 1,
+      "scaleY": 1,
+      "rotation": 0,
+      "tint": "#ffffff",
+      "alphaThreshold": 0.75
+    },
+    "hexagonalShape": 0,
+    "lockRotation": false,
+    "rotation": 0,
+    "alpha": 1,
+    "disposition": 1,
+    "displayBars": 0,
+    "bar1": {
+      "attribute": "attributes.hp"
+    },
+    "bar2": {
+      "attribute": null
+    },
+    "light": {
+      "negative": false,
+      "priority": 0,
+      "alpha": 0.5,
+      "angle": 360,
+      "bright": 0,
+      "color": null,
+      "coloration": 1,
+      "dim": 0,
+      "attenuation": 0.5,
+      "luminosity": 0.5,
+      "saturation": 0,
+      "contrast": 0,
+      "shadows": 0,
+      "animation": {
+        "type": null,
+        "speed": 5,
+        "intensity": 5,
+        "reverse": false
+      },
+      "darkness": {
+        "min": 0,
+        "max": 1
+      }
+    },
+    "sight": {
+      "enabled": true,
+      "range": 0,
+      "angle": 360,
+      "visionMode": "basic",
+      "color": null,
+      "attenuation": 0.1,
+      "brightness": 0,
+      "saturation": 0,
+      "contrast": 0
+    },
+    "detectionModes": [],
+    "occludable": {
+      "radius": 0
+    },
+    "ring": {
+      "enabled": false,
+      "colors": {
+        "ring": null,
+        "background": null
+      },
+      "effects": 0,
+      "subject": {
+        "scale": 1,
+        "texture": null
+      }
+    },
+    "flags": {
+      "tagger": {},
+      "monks-enhanced-journal": {
+        "chatbubble": ""
+      },
+      "monks-tokenbar": {
+        "include": "default"
+      }
+    },
+    "randomImg": false
+  },
+  "items": [
+    {
+      "_id": "SwzWJ4vbAsv3UzMf",
+      "name": "Rogue",
+      "type": "class",
+      "system": {
+        "identifier": "rogue",
+        "description": {
+          "value": "<div class=\"mb-2 ve-flex-col\"><div><div class=\"rd__b  rd__b--1\"><div><div class=\"rd__wrp-image relative\">\n\t\t\t<a href=\"https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/classes/XPHB/Rogue.webp\" target=\"_blank\" rel=\"noopener noreferrer\" title=\"Art credit: Aurore Folny\">\n\t\t\t\t<img class=\"rd__image\" src=\"https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/classes/XPHB/Rogue.webp\" />\n\t\t\t</a>\n\t\t</div><div class=\"rd__image-title\"><div class=\"rd__image-credit ve-muted\"><span class=\"glyphicon glyphicon-pencil\" title=\"Art Credit\"></span> Aurore Folny</div></div></div></div><div data-source=\"XPHB\" class=\"rd__b  rd__b--0\"><p>Rogues rely on cunning, stealth, and their foes' vulnerabilities to get the upper hand in any situation. They have a knack for finding the solution to just about any problem. A few even learn magical tricks to supplement their other abilities. Many Rogues focus on stealth and deception, while others refine skills that help them in a dungeon environment, such as climbing, finding and disarming traps, and opening locks.</p><p>In combat, Rogues prioritize subtle strikes over brute strength. They would rather make one precise strike than wear an opponent down with a barrage of blows.</p><p>Some Rogues began their careers as criminals, while others used their cunning to fight crime. Whatever a Rogue's relation to the law, no common criminal or officer of the law can match the subtle brilliance of the greatest Rogues.</p></div><div class=\"rd__b  rd__b--1\"><div><div class=\"rd__wrp-image relative\">\n\t\t\t<a href=\"https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/classes/XPHB/099-04-014.cunning-rogue.webp\" target=\"_blank\" rel=\"noopener noreferrer\" title=\"Art credit: Bryan Sola\">\n\t\t\t\t<img class=\"rd__image\" src=\"https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/classes/XPHB/099-04-014.cunning-rogue.webp\" />\n\t\t\t</a>\n\t\t</div><div class=\"rd__image-title\"><div class=\"rd__image-credit ve-muted\"><span class=\"glyphicon glyphicon-pencil\" title=\"Art Credit\"></span> Bryan Sola</div></div></div><div><div class=\"rd__wrp-image relative\">\n\t\t\t<a href=\"https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/classes/XPHB/101-04-016.rogue-v-dragon.webp\" target=\"_blank\" rel=\"noopener noreferrer\" title=\"Art credit: Billy Christian\">\n\t\t\t\t<img class=\"rd__image\" src=\"https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/classes/XPHB/101-04-016.rogue-v-dragon.webp\" />\n\t\t\t</a>\n\t\t</div><div class=\"rd__image-title\"><div class=\"rd__image-credit ve-muted\"><span class=\"glyphicon glyphicon-pencil\" title=\"Art Credit\"></span> Billy Christian</div></div></div><div><div class=\"rd__wrp-image relative\">\n\t\t\t<a href=\"https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/classes/XPHB/104-04-019.sneak-attack.webp\" target=\"_blank\" rel=\"noopener noreferrer\" title=\"Art credit: Evyn Fong\">\n\t\t\t\t<img class=\"rd__image\" src=\"https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/classes/XPHB/104-04-019.sneak-attack.webp\" />\n\t\t\t</a>\n\t\t</div><div class=\"rd__image-title\"><div class=\"rd__image-credit ve-muted\"><span class=\"glyphicon glyphicon-pencil\" title=\"Art Credit\"></span> Evyn Fong</div></div></div></div></div><table class=\"cls-tbl shadow-big w-100 mb-3\">\n\t\t\t<tbody>\n\t\t\t<tr><th class=\"ve-tbl-border\" colspan=\"15\"></th></tr>\n\t\t\t\n\t\t\t<tr>\n\t\t\t\t<th colspan=\"3\"></th>\n\t\t\t\t<th colspan=\"1\"></th>\n\t\t\t</tr>\n\t\t\t<tr>\n\t\t\t\t<th class=\"cls-tbl__col-level\">Level</th>\n\t\t\t\t<th class=\"cls-tbl__col-prof-bonus\">Proficiency Bonus</th>\n\t\t\t\t<th>Features</th>\n\t\t\t\t<th class=\"cls-tbl__col-generic-center\"><div class=\"cls__squash_header\">Sneak Attack</div></th>\n\t\t\t</tr>\n\t\t\t<tr class=\"cls-tbl__stripe-odd\">\n\t\t\t\t<td class=\"cls-tbl__col-level\">1st</td>\n\t\t\t\t<td class=\"cls-tbl__col-prof-bonus\">+2</td>\n\t\t\t\t<td><div class=\"inline-block\">Expertise<span class=\"mr-1\">,</span></div><div class=\"inline-block\">Sneak Attack<span class=\"mr-1\">,</span></div><div class=\"inline-block\">Thieves' Cant<span class=\"mr-1\">,</span></div><div class=\"inline-block\">Weapon Mastery</div></td>\n\t\t\t\t<td class=\"cls-tbl__col-generic-center\">[[/r 1d6]]</td>\n\t\t\t</tr><tr class=\"cls-tbl__stripe-odd\">\n\t\t\t\t<td class=\"cls-tbl__col-level\">2nd</td>\n\t\t\t\t<td class=\"cls-tbl__col-prof-bonus\">+2</td>\n\t\t\t\t<td><div class=\"inline-block\">Cunning Action</div></td>\n\t\t\t\t<td class=\"cls-tbl__col-generic-center\">[[/r 1d6]]</td>\n\t\t\t</tr><tr class=\"cls-tbl__stripe-odd\">\n\t\t\t\t<td class=\"cls-tbl__col-level\">3rd</td>\n\t\t\t\t<td class=\"cls-tbl__col-prof-bonus\">+2</td>\n\t\t\t\t<td><div class=\"inline-block\">Rogue Subclass<span class=\"mr-1\">,</span></div><div class=\"inline-block\">Steady Aim</div></td>\n\t\t\t\t<td class=\"cls-tbl__col-generic-center\">[[/r 2d6]]</td>\n\t\t\t</tr><tr class=\"cls-tbl__stripe-odd\">\n\t\t\t\t<td class=\"cls-tbl__col-level\">4th</td>\n\t\t\t\t<td class=\"cls-tbl__col-prof-bonus\">+2</td>\n\t\t\t\t<td><div class=\"inline-block\">Ability Score Improvement</div></td>\n\t\t\t\t<td class=\"cls-tbl__col-generic-center\">[[/r 2d6]]</td>\n\t\t\t</tr><tr class=\"cls-tbl__stripe-odd\">\n\t\t\t\t<td class=\"cls-tbl__col-level\">5th</td>\n\t\t\t\t<td class=\"cls-tbl__col-prof-bonus\">+3</td>\n\t\t\t\t<td><div class=\"inline-block\">Cunning Strike<span class=\"mr-1\">,</span></div><div class=\"inline-block\">Uncanny Dodge</div></td>\n\t\t\t\t<td class=\"cls-tbl__col-generic-center\">[[/r 3d6]]</td>\n\t\t\t</tr><tr class=\"cls-tbl__stripe-odd\">\n\t\t\t\t<td class=\"cls-tbl__col-level\">6th</td>\n\t\t\t\t<td class=\"cls-tbl__col-prof-bonus\">+3</td>\n\t\t\t\t<td><div class=\"inline-block\">Expertise</div></td>\n\t\t\t\t<td class=\"cls-tbl__col-generic-center\">[[/r 3d6]]</td>\n\t\t\t</tr><tr class=\"cls-tbl__stripe-odd\">\n\t\t\t\t<td class=\"cls-tbl__col-level\">7th</td>\n\t\t\t\t<td class=\"cls-tbl__col-prof-bonus\">+3</td>\n\t\t\t\t<td><div class=\"inline-block\">Evasion<span class=\"mr-1\">,</span></div><div class=\"inline-block\">Reliable Talent</div></td>\n\t\t\t\t<td class=\"cls-tbl__col-generic-center\">[[/r 4d6]]</td>\n\t\t\t</tr><tr class=\"cls-tbl__stripe-odd\">\n\t\t\t\t<td class=\"cls-tbl__col-level\">8th</td>\n\t\t\t\t<td class=\"cls-tbl__col-prof-bonus\">+3</td>\n\t\t\t\t<td><div class=\"inline-block\">Ability Score Improvement</div></td>\n\t\t\t\t<td class=\"cls-tbl__col-generic-center\">[[/r 4d6]]</td>\n\t\t\t</tr><tr class=\"cls-tbl__stripe-odd\">\n\t\t\t\t<td class=\"cls-tbl__col-level\">9th</td>\n\t\t\t\t<td class=\"cls-tbl__col-prof-bonus\">+4</td>\n\t\t\t\t<td><div class=\"inline-block\">Subclass Feature</div></td>\n\t\t\t\t<td class=\"cls-tbl__col-generic-center\">[[/r 5d6]]</td>\n\t\t\t</tr><tr class=\"cls-tbl__stripe-odd\">\n\t\t\t\t<td class=\"cls-tbl__col-level\">10th</td>\n\t\t\t\t<td class=\"cls-tbl__col-prof-bonus\">+4</td>\n\t\t\t\t<td><div class=\"inline-block\">Ability Score Improvement</div></td>\n\t\t\t\t<td class=\"cls-tbl__col-generic-center\">[[/r 5d6]]</td>\n\t\t\t</tr><tr class=\"cls-tbl__stripe-odd\">\n\t\t\t\t<td class=\"cls-tbl__col-level\">11th</td>\n\t\t\t\t<td class=\"cls-tbl__col-prof-bonus\">+4</td>\n\t\t\t\t<td><div class=\"inline-block\">Improved Cunning Strike</div></td>\n\t\t\t\t<td class=\"cls-tbl__col-generic-center\">[[/r 6d6]]</td>\n\t\t\t</tr><tr class=\"cls-tbl__stripe-odd\">\n\t\t\t\t<td class=\"cls-tbl__col-level\">12th</td>\n\t\t\t\t<td class=\"cls-tbl__col-prof-bonus\">+4</td>\n\t\t\t\t<td><div class=\"inline-block\">Ability Score Improvement</div></td>\n\t\t\t\t<td class=\"cls-tbl__col-generic-center\">[[/r 6d6]]</td>\n\t\t\t</tr><tr class=\"cls-tbl__stripe-odd\">\n\t\t\t\t<td class=\"cls-tbl__col-level\">13th</td>\n\t\t\t\t<td class=\"cls-tbl__col-prof-bonus\">+5</td>\n\t\t\t\t<td><div class=\"inline-block\">Subclass Feature</div></td>\n\t\t\t\t<td class=\"cls-tbl__col-generic-center\">[[/r 7d6]]</td>\n\t\t\t</tr><tr class=\"cls-tbl__stripe-odd\">\n\t\t\t\t<td class=\"cls-tbl__col-level\">14th</td>\n\t\t\t\t<td class=\"cls-tbl__col-prof-bonus\">+5</td>\n\t\t\t\t<td><div class=\"inline-block\">Devious Strikes</div></td>\n\t\t\t\t<td class=\"cls-tbl__col-generic-center\">[[/r 7d6]]</td>\n\t\t\t</tr><tr class=\"cls-tbl__stripe-odd\">\n\t\t\t\t<td class=\"cls-tbl__col-level\">15th</td>\n\t\t\t\t<td class=\"cls-tbl__col-prof-bonus\">+5</td>\n\t\t\t\t<td><div class=\"inline-block\">Slippery Mind</div></td>\n\t\t\t\t<td class=\"cls-tbl__col-generic-center\">[[/r 8d6]]</td>\n\t\t\t</tr><tr class=\"cls-tbl__stripe-odd\">\n\t\t\t\t<td class=\"cls-tbl__col-level\">16th</td>\n\t\t\t\t<td class=\"cls-tbl__col-prof-bonus\">+5</td>\n\t\t\t\t<td><div class=\"inline-block\">Ability Score Improvement</div></td>\n\t\t\t\t<td class=\"cls-tbl__col-generic-center\">[[/r 8d6]]</td>\n\t\t\t</tr><tr class=\"cls-tbl__stripe-odd\">\n\t\t\t\t<td class=\"cls-tbl__col-level\">17th</td>\n\t\t\t\t<td class=\"cls-tbl__col-prof-bonus\">+6</td>\n\t\t\t\t<td><div class=\"inline-block\">Subclass Feature</div></td>\n\t\t\t\t<td class=\"cls-tbl__col-generic-center\">[[/r 9d6]]</td>\n\t\t\t</tr><tr class=\"cls-tbl__stripe-odd\">\n\t\t\t\t<td class=\"cls-tbl__col-level\">18th</td>\n\t\t\t\t<td class=\"cls-tbl__col-prof-bonus\">+6</td>\n\t\t\t\t<td><div class=\"inline-block\">Elusive</div></td>\n\t\t\t\t<td class=\"cls-tbl__col-generic-center\">[[/r 9d6]]</td>\n\t\t\t</tr><tr class=\"cls-tbl__stripe-odd\">\n\t\t\t\t<td class=\"cls-tbl__col-level\">19th</td>\n\t\t\t\t<td class=\"cls-tbl__col-prof-bonus\">+6</td>\n\t\t\t\t<td><div class=\"inline-block\">Epic Boon</div></td>\n\t\t\t\t<td class=\"cls-tbl__col-generic-center\">[[/r 10d6]]</td>\n\t\t\t</tr><tr class=\"cls-tbl__stripe-odd\">\n\t\t\t\t<td class=\"cls-tbl__col-level\">20th</td>\n\t\t\t\t<td class=\"cls-tbl__col-prof-bonus\">+6</td>\n\t\t\t\t<td><div class=\"inline-block\">Stroke of Luck</div></td>\n\t\t\t\t<td class=\"cls-tbl__col-generic-center\">[[/r 10d6]]</td>\n\t\t\t</tr>\n\t\t\t<tr><th class=\"ve-tbl-border\" colspan=\"15\"></th></tr>\n\t\t\t</tbody>\n\t\t</table><div class=\"rd__b  rd__b--0\"><div data-roll-name-ancestor=\"Level 1: Expertise\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"1\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p128\">Level 1: Expertise</span></h2> <p>You gain @variantrule[Expertise|XPHB] in two of your skill proficiencies of your choice. &amp;Reference[skill=SleightofHand]{Sleight of Hand} and &amp;Reference[skill=Stealth] are recommended if you have proficiency in them.</p><p>At Rogue level 6, you gain @variantrule[Expertise|XPHB] in two more of your skill proficiencies of your choice.</p></div><div data-roll-name-ancestor=\"Level 1: Sneak Attack\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"2\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p128\">Level 1: Sneak Attack</span></h2> <p>You know how to strike subtly and exploit a foe's distraction. Once per turn, you can deal an extra [[/damage 1d6]] damage to one creature you hit with an attack roll if you have @variantrule[Advantage|XPHB] on the roll and the attack uses a Finesse or a Ranged weapon. The extra damage's type is the same as the weapon's type.</p><p>You don't need @variantrule[Advantage|XPHB] on the attack roll if at least one of your allies is within 5 feet of the target, the ally doesn't have the &amp;Reference[condition=Incapacitated] condition, and you don't have @variantrule[Disadvantage|XPHB] on the attack roll.</p><p>The extra damage increases as you gain Rogue levels, as shown in the Sneak Attack column of the Rogue Features table.</p></div><div data-roll-name-ancestor=\"Level 1: Thieves' Cant\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"3\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p128\">Level 1: Thieves' Cant</span></h2> <p>You picked up various languages in the communities where you plied your roguish talents. You know Thieves' Cant and one other language of your choice, which you choose from the language tables in <a href=\"https://5e.tools/book.html#XPHB,2,choose%20languages,0\">chapter 2</a>.</p></div><div data-roll-name-ancestor=\"Level 1: Weapon Mastery\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"4\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p128\">Level 1: Weapon Mastery</span></h2> <p>Your training with weapons allows you to use the @variantrule[weapon mastery properties|XPHB|mastery properties] of two kinds of <a href=\"https://5e.tools/items.html#blankhash,flsttype:simple%20weapon=1~martial%20weapon=1\">weapons</a> of your choice with which you have proficiency, such as @item[Dagger|XPHB|Daggers] and @item[Shortbow|XPHB|Shortbows].</p><p>Whenever you finish a @variantrule[Long Rest|XPHB], you can change the kinds of weapons you chose. For example, you could switch to using the @variantrule[weapon mastery properties|XPHB|mastery properties] of @item[Scimitar|XPHB|Scimitars] and @item[Shortsword|XPHB|Shortswords].</p></div><div data-roll-name-ancestor=\"Level 2: Cunning Action\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"5\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p129\">Level 2: Cunning Action</span></h2> <p>Your quick thinking and agility allow you to move and act quickly. On your turn, you can take one of the following actions as a @variantrule[Bonus Action|XPHB]: @action[Dash|XPHB], @action[Disengage|XPHB], or @action[Hide|XPHB].</p></div><div data-roll-name-ancestor=\"Level 3: Rogue Subclass\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"6\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p129\">Level 3: Rogue Subclass</span></h2> <p>You gain a Rogue subclass of your choice. A subclass is a specialization that grants you features at certain Rogue levels. For the rest of your career, you gain each of your subclass's features that are of your Rogue level or lower.</p></div><div data-roll-name-ancestor=\"Level 3: Steady Aim\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"7\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p129\">Level 3: Steady Aim</span></h2> <p>As a @variantrule[Bonus Action|XPHB], you give yourself @variantrule[Advantage|XPHB] on your next attack roll on the current turn. You can use this feature only if you haven't moved during this turn, and after you use it, your @variantrule[Speed|XPHB] is 0 until the end of the current turn.</p></div><div data-roll-name-ancestor=\"Level 4: Ability Score Improvement\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"8\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p129\">Level 4: Ability Score Improvement</span></h2> <p>You gain the @feat[Ability Score Improvement|XPHB] feat or another <a href=\"https://5e.tools/feats.html\">feat</a> of your choice for which you qualify. You gain this feature again at Rogue levels 8, 10, 12, and 16.</p></div><div data-roll-name-ancestor=\"Level 5: Cunning Strike\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"9\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p129\">Level 5: Cunning Strike</span></h2> <p>You've developed cunning ways to use your Sneak Attack. When you deal Sneak Attack damage, you can add one of the following Cunning Strike effects. Each effect has a die cost, which is the number of Sneak Attack damage dice you must forgo to add the effect. You remove the die before rolling, and the effect occurs immediately after the attack's damage is dealt. For example, if you add the Poison effect, remove [[/r 1d6]] from the Sneak Attack's damage before rolling.</p><p>If a Cunning Strike effect requires a saving throw, the DC equals 8 plus your Dexterity modifier and @variantrule[Proficiency|XPHB|Proficiency Bonus].</p><div class=\"rd__b  rd__b--2\"><div data-roll-name-ancestor=\"Poison (Cost: 1d6)\" data-source=\"XPHB\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"10\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p129\">Poison (Cost: 1d6).</span></span> You add a toxin to your strike, forcing the target to make a Constitution saving throw. On a failed save, the target has the &amp;Reference[condition=Poisoned] condition for 1 minute. At the end of each of its turns, the &amp;Reference[condition=Poisoned] target repeats the save, ending the effect on itself on a success.</p><p>To use this effect, you must have a @item[Poisoner's Kit|XPHB] on your person.</p></div><div data-roll-name-ancestor=\"Trip (Cost: 1d6)\" data-source=\"XPHB\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"11\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p129\">Trip (Cost: 1d6).</span></span> If the target is Large or smaller, it must succeed on a Dexterity saving throw or have the &amp;Reference[condition=Prone] condition.</p></div><div data-roll-name-ancestor=\"Withdraw (Cost: 1d6)\" data-source=\"XPHB\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"12\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p129\">Withdraw (Cost: 1d6).</span></span> Immediately after the attack, you move up to half your @variantrule[Speed|XPHB] without provoking @action[Opportunity Attack|XPHB|Opportunity Attacks].</p></div></div></div><div data-roll-name-ancestor=\"Level 5: Uncanny Dodge\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"13\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p129\">Level 5: Uncanny Dodge</span></h2> <p>When an attacker that you can see hits you with an attack roll, you can take a @variantrule[Reaction|XPHB] to halve the attack's damage against you (round down).</p></div><div data-roll-name-ancestor=\"Level 6: Expertise\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"14\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p129\">Level 6: Expertise</span></h2> <p>You gain @variantrule[Expertise|XPHB] in two of your Skill Proficiencies of your choice.</p></div><div data-roll-name-ancestor=\"Level 7: Evasion\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"15\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p129\">Level 7: Evasion</span></h2> <p>You can nimbly dodge out of the way of certain dangers. When you're subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw and only half damage if you fail. You can't use this feature if you have the &amp;Reference[condition=Incapacitated] condition.</p></div><div data-roll-name-ancestor=\"Level 7: Reliable Talent\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"16\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p130\">Level 7: Reliable Talent</span></h2> <p>Whenever you make an ability check that uses one of your skill or tool proficiencies, you can treat a [[/r d20]] roll of 9 or lower as a 10.</p></div><div data-roll-name-ancestor=\"Level 8: Ability Score Improvement\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"17\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p130\">Level 8: Ability Score Improvement</span></h2> <p>You gain the @feat[Ability Score Improvement|XPHB] feat or another <a href=\"https://5e.tools/feats.html\">feat</a> of your choice for which you qualify.</p></div><div data-roll-name-ancestor=\"Level 9: Subclass Feature\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"18\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p130\">Level 9: Subclass Feature</span></h2> <p>You gain a feature from your Rogue Subclass.</p></div><div data-roll-name-ancestor=\"Level 10: Ability Score Improvement\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"19\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p130\">Level 10: Ability Score Improvement</span></h2> <p>You gain the @feat[Ability Score Improvement|XPHB] feat or another <a href=\"https://5e.tools/feats.html\">feat</a> of your choice for which you qualify.</p></div><div data-roll-name-ancestor=\"Level 11: Improved Cunning Strike\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"20\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p130\">Level 11: Improved Cunning Strike</span></h2> <p>You can use up to two Cunning Strike effects when you deal Sneak Attack damage, paying the die cost for each effect.</p></div><div data-roll-name-ancestor=\"Level 12: Ability Score Improvement\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"21\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p131\">Level 12: Ability Score Improvement</span></h2> <p>You gain the @feat[Ability Score Improvement|XPHB] feat or another <a href=\"https://5e.tools/feats.html\">feat</a> of your choice for which you qualify.</p></div><div data-roll-name-ancestor=\"Level 13: Subclass Feature\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"22\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p131\">Level 13: Subclass Feature</span></h2> <p>You gain a feature from your Rogue Subclass.</p></div><div data-roll-name-ancestor=\"Level 14: Devious Strikes\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"23\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p131\">Level 14: Devious Strikes</span></h2> <p>You've practiced new ways to use your Sneak Attack deviously. The following effects are now among your Cunning Strike options.</p><div class=\"rd__b  rd__b--2\"><div data-roll-name-ancestor=\"Daze (Cost: 2d6)\" data-source=\"XPHB\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"24\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p131\">Daze (Cost: 2d6).</span></span> The target must succeed on a Constitution saving throw, or on its next turn, it can do only one of the following: move or take an action or a @variantrule[Bonus Action|XPHB].</p></div><div data-roll-name-ancestor=\"Knock Out (Cost: 6d6)\" data-source=\"XPHB\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"25\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p131\">Knock Out (Cost: 6d6).</span></span> The target must succeed on a Constitution saving throw, or it has the &amp;Reference[condition=Unconscious] condition for 1 minute or until it takes any damage. The &amp;Reference[condition=Unconscious] target repeats the save at the end of each of its turns, ending the effect on itself on a success.</p></div><div data-roll-name-ancestor=\"Obscure (Cost: 3d6)\" data-source=\"XPHB\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"26\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p131\">Obscure (Cost: 3d6).</span></span> The target must succeed on a Dexterity saving throw, or it has the &amp;Reference[condition=Blinded] condition until the end of its next turn.</p></div></div></div><div data-roll-name-ancestor=\"Level 15: Slippery Mind\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"27\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p131\">Level 15: Slippery Mind</span></h2> <p>Your cunning mind is exceptionally difficult to control. You gain proficiency in Wisdom and Charisma saving throws.</p></div><div data-roll-name-ancestor=\"Level 16: Ability Score Improvement\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"28\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p131\">Level 16: Ability Score Improvement</span></h2> <p>You gain the @feat[Ability Score Improvement|XPHB] feat or another <a href=\"https://5e.tools/feats.html\">feat</a> of your choice for which you qualify.</p></div><div data-roll-name-ancestor=\"Level 17: Subclass Feature\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"29\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p131\">Level 17: Subclass Feature</span></h2> <p>You gain a feature from your Rogue Subclass.</p></div><div data-roll-name-ancestor=\"Level 18: Elusive\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"30\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p131\">Level 18: Elusive</span></h2> <p>You're so evasive that attackers rarely gain the upper hand against you. No attack roll can have @variantrule[Advantage|XPHB] against you unless you have the &amp;Reference[condition=Incapacitated] condition.</p></div><div data-roll-name-ancestor=\"Level 19: Epic Boon\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"31\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p131\">Level 19: Epic Boon</span></h2> <p>You gain an <a href=\"https://5e.tools/feats.html#blankhash,flstcategory:eb=1\">Epic Boon feat</a> or another <a href=\"https://5e.tools/feats.html\">feat</a> of your choice for which you qualify. @feat[Boon of the Night Spirit|XPHB] is recommended.</p></div><div data-roll-name-ancestor=\"Level 20: Stroke of Luck\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"32\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p131\">Level 20: Stroke of Luck</span></h2> <p>You have a marvelous knack for succeeding when you need to. If you fail a @variantrule[D20 Test|XPHB], you can turn the roll into a 20.</p><p>Once you use this feature, you can't use it again until you finish a @variantrule[Short Rest|XPHB|Short] or @variantrule[Long Rest|XPHB].</p></div></div></div>",
+          "chat": ""
+        },
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "128",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "levels": 1,
+        "hd": {
+          "denomination": "d8",
+          "spent": 0,
+          "additional": ""
+        },
+        "spellcasting": {
+          "progression": "none",
+          "preparation": {}
+        },
+        "primaryAbility": {
+          "value": [
+            "dex"
+          ],
+          "all": false
+        },
+        "wealth": "100",
+        "advancement": [
+          {
+            "type": "HitPoints",
+            "value": {
+              "1": "max"
+            },
+            "_id": "GIAbmFTx2TCmgujk",
+            "configuration": {}
+          },
+          {
+            "_id": "mwreWkvZevOMsk5a",
+            "type": "Trait",
+            "configuration": {
+              "mode": "default",
+              "allowReplacements": false,
+              "grants": [
+                "saves:dex",
+                "saves:int"
+              ],
+              "choices": []
+            },
+            "level": 1,
+            "title": "Saving Throws",
+            "classRestriction": "primary",
+            "value": {
+              "chosen": [
+                "saves:dex",
+                "saves:int"
+              ]
+            }
+          },
+          {
+            "_id": "TcI1NrjSaNFrt149",
+            "type": "Trait",
+            "configuration": {
+              "mode": "default",
+              "allowReplacements": false,
+              "grants": [],
+              "choices": [
+                {
+                  "count": 4,
+                  "pool": [
+                    "skills:acr",
+                    "skills:ath",
+                    "skills:dec",
+                    "skills:ins",
+                    "skills:itm",
+                    "skills:inv",
+                    "skills:prc",
+                    "skills:per",
+                    "skills:slt",
+                    "skills:ste"
+                  ]
+                }
+              ]
+            },
+            "level": 1,
+            "title": "Skills",
+            "classRestriction": "primary",
+            "value": {
+              "chosen": []
+            }
+          },
+          {
+            "_id": "MbbF0tWE6SinoSQg",
+            "type": "Trait",
+            "configuration": {
+              "mode": "default",
+              "allowReplacements": false,
+              "grants": [],
+              "choices": [
+                {
+                  "count": 1,
+                  "pool": [
+                    "skills:acr",
+                    "skills:ath",
+                    "skills:dec",
+                    "skills:ins",
+                    "skills:itm",
+                    "skills:inv",
+                    "skills:prc",
+                    "skills:per",
+                    "skills:slt",
+                    "skills:ste"
+                  ]
+                }
+              ]
+            },
+            "level": 1,
+            "title": "Skills",
+            "classRestriction": "secondary",
+            "value": {
+              "chosen": []
+            }
+          },
+          {
+            "_id": "xqddzYHdq9trZGhB",
+            "type": "Trait",
+            "configuration": {
+              "mode": "default",
+              "allowReplacements": false,
+              "grants": [
+                "armor:lgt"
+              ],
+              "choices": []
+            },
+            "level": 1,
+            "title": "Armor Training",
+            "value": {
+              "chosen": []
+            }
+          },
+          {
+            "_id": "YrQHg0NbmXrqRjZh",
+            "type": "Trait",
+            "configuration": {
+              "mode": "default",
+              "allowReplacements": false,
+              "grants": [
+                "weapon:sim"
+              ],
+              "choices": []
+            },
+            "level": 1,
+            "title": "Weapon Proficiencies",
+            "value": {
+              "chosen": []
+            }
+          },
+          {
+            "_id": "mJ68JrjWh2jKmyRe",
+            "type": "Trait",
+            "configuration": {
+              "mode": "default",
+              "allowReplacements": false,
+              "grants": [
+                "tool:thief"
+              ],
+              "choices": []
+            },
+            "level": 1,
+            "title": "Tool Proficiencies",
+            "value": {
+              "chosen": [
+                "tool:thief"
+              ]
+            }
+          },
+          {
+            "type": "ScaleValue",
+            "configuration": {
+              "type": "dice",
+              "scale": {
+                "1": {
+                  "number": 1,
+                  "faces": 6,
+                  "modifiers": []
+                },
+                "3": {
+                  "number": 2,
+                  "faces": 6,
+                  "modifiers": []
+                },
+                "5": {
+                  "number": 3,
+                  "faces": 6,
+                  "modifiers": []
+                },
+                "7": {
+                  "number": 4,
+                  "faces": 6,
+                  "modifiers": []
+                },
+                "9": {
+                  "number": 5,
+                  "faces": 6,
+                  "modifiers": []
+                },
+                "11": {
+                  "number": 6,
+                  "faces": 6,
+                  "modifiers": []
+                },
+                "13": {
+                  "number": 7,
+                  "faces": 6,
+                  "modifiers": []
+                },
+                "15": {
+                  "number": 8,
+                  "faces": 6,
+                  "modifiers": []
+                },
+                "17": {
+                  "number": 9,
+                  "faces": 6,
+                  "modifiers": []
+                },
+                "19": {
+                  "number": 10,
+                  "faces": 6,
+                  "modifiers": []
+                }
+              },
+              "identifier": "",
+              "distance": {
+                "units": ""
+              }
+            },
+            "title": "Sneak Attack",
+            "_id": "7bPksSK76Lj0ogXN",
+            "value": {}
+          },
+          {
+            "_id": "BdP04T3t8tyWXxsB",
+            "type": "ItemGrant",
+            "level": 1,
+            "title": "Features",
+            "icon": "modules/plutonium/media/icon/class/phb-rogue.webp",
+            "configuration": {
+              "items": [
+                {
+                  "uuid": ".wg08xxqiOGlyIpsg",
+                  "optional": false
+                },
+                {
+                  "uuid": ".PGfIwdXg5EcDUWua",
+                  "optional": false
+                },
+                {
+                  "uuid": ".oIJ5xvzEHmsmXI9j",
+                  "optional": false
+                }
+              ],
+              "optional": false,
+              "spell": {
+                "ability": [
+                  ""
+                ],
+                "preparation": "",
+                "uses": {
+                  "max": "",
+                  "per": "",
+                  "requireSlot": false
+                }
+              }
+            },
+            "value": {
+              "added": {
+                "wg08xxqiOGlyIpsg": ".wg08xxqiOGlyIpsg",
+                "PGfIwdXg5EcDUWua": ".PGfIwdXg5EcDUWua",
+                "oIJ5xvzEHmsmXI9j": ".oIJ5xvzEHmsmXI9j"
+              }
+            }
+          }
+        ],
+        "startingEquipment": []
+      },
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "flags": {
+        "plutonium": {
+          "page": "classes.html",
+          "source": "XPHB",
+          "hash": "rogue_xphb",
+          "propDroppable": "class",
+          "filterValues": {
+            "Source": {
+              "TCE": 1,
+              "PHB": 1,
+              "XGE": 1,
+              "SCAG": 1,
+              "BGG": 1,
+              "TDCSR": 0,
+              "XPHB": 1,
+              "VRGR": 1,
+              "PSA": 0,
+              "DMG": 1,
+              "EGW": 0,
+              "FTD": 1,
+              "UATheMysticClass": 0,
+              "DSotDQ": 1,
+              "PSK": 0,
+              "_isActive": true,
+              "_totals": {
+                "ignore": 5,
+                "yes": 10,
+                "no": 0
+              },
+              "_combineBlue": "or",
+              "_combineRed": "or"
+            },
+            "Primary Ability": {
+              "str": 0,
+              "dex": 0,
+              "con": 0,
+              "int": 0,
+              "wis": 0,
+              "cha": 0,
+              "_isActive": false,
+              "_totals": {
+                "ignore": 6,
+                "yes": 0,
+                "no": 0
+              },
+              "_combineBlue": "or",
+              "_combineRed": "or"
+            },
+            "Miscellaneous": {
+              "Reprinted": 2,
+              "Sidekick": 2,
+              "Legacy": 0,
+              "Has Info": 0,
+              "Has Images": 0,
+              "SRD 5": {
+                "1": 0,
+                "2": 0
+              },
+              "Basic Rules (2024)": 0,
+              "Basic Rules (2014)": 0,
+              "_isActive": true,
+              "_totals": {
+                "ignore": 7,
+                "yes": 0,
+                "no": 2
+              },
+              "_combineBlue": "or",
+              "_combineRed": "or"
+            },
+            "Other/Text Options": {
+              "isDisplayClassIfSubclassActive": false,
+              "isClassFeatureVariant": true,
+              "_isActive": false
+            }
+          },
+          "isPrimaryClass": true,
+          "isDirectImport": true
+        },
+        "scene-packer": {
+          "hash": "8a97452e9064ec9953a2b62c230423fcf216d9e8"
+        }
+      },
+      "effects": [],
+      "img": "modules/plutonium/media/icon/class/phb-rogue.webp",
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748283868031,
+        "modifiedTime": 1748283870810,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "HmjMN1CLy10fnWJ0",
+      "name": "Soulknife",
+      "type": "subclass",
+      "system": {
+        "identifier": "soulknife",
+        "classIdentifier": "rogue",
+        "description": {
+          "value": "<div class=\"mb-2 ve-flex-col\"><div><div class=\"rd__b  rd__b--1\"><div><div class=\"rd__wrp-image relative\">\n\t\t\t<a href=\"https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/classes/XPHB/Soulknife Rogue.webp\" target=\"_blank\" rel=\"noopener noreferrer\" title=\"Art credit: Yuhong Ding\">\n\t\t\t\t<img class=\"rd__image\" src=\"https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/classes/XPHB/Soulknife Rogue.webp\" />\n\t\t\t</a>\n\t\t</div><div class=\"rd__image-title\"><div class=\"rd__image-credit ve-muted\"><span class=\"glyphicon glyphicon-pencil\" title=\"Art Credit\"></span> Yuhong Ding</div></div></div></div></div><div class=\"rd__b  rd__b--0\"><div data-roll-name-ancestor=\"Soulknife\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"5\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p135\">Soulknife</span></h2> <p><i>Strike Foes with Psionic Blades</i></p><p>A Soulknife strikes with the mind, cutting through barriers both physical and psychic. These Rogues discover psionic power within themselves and channel it to do their roguish work. As a Soulknife, your psionic abilities might have haunted you since childhood, revealing their full potential only as you experienced the stress of adventure. Or you might have sought out an order of psychic adepts and spent years learning how to manifest your power.</p><div data-roll-name-ancestor=\"Level 3: Psionic Power\" data-source=\"XPHB\" class=\"rd__b  rd__b--2\"><h3 class=\"rd__h rd__h--2\" data-title-index=\"6\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p135\">Level 3: Psionic Power</span></h3> <p>You harbor a wellspring of psionic energy within yourself. It is represented by your Psionic Energy Dice, which fuel certain powers you have from this subclass. The Soulknife Energy Dice table shows the number of these dice you have when you reach certain Rogue levels, and the table shows the die size.</p><table class=\"w-100 rd__table  stripe-odd-table\" data-roll-name-ancestor=\"Soulknife Energy Dice\"><caption>Soulknife Energy Dice</caption><thead><tr><th class=\"rd__th ve-col-4 ve-text-center \" data-rd-isroller=\"false\">Rogue Level</th><th class=\"rd__th ve-col-4 ve-text-center \" data-rd-isroller=\"false\">Die Size</th><th class=\"rd__th ve-col-4 ve-text-center \" data-rd-isroller=\"false\">Number</th></tr></thead><tbody><tr><td class=\"rd__th ve-col-4 ve-text-center \">3</td><td class=\"rd__th ve-col-4 ve-text-center \">[[/r D6]]</td><td class=\"rd__th ve-col-4 ve-text-center \">4</td></tr><tr><td class=\"rd__th ve-col-4 ve-text-center \">5</td><td class=\"rd__th ve-col-4 ve-text-center \">[[/r D8]]</td><td class=\"rd__th ve-col-4 ve-text-center \">6</td></tr><tr><td class=\"rd__th ve-col-4 ve-text-center \">9</td><td class=\"rd__th ve-col-4 ve-text-center \">[[/r D8]]</td><td class=\"rd__th ve-col-4 ve-text-center \">8</td></tr><tr><td class=\"rd__th ve-col-4 ve-text-center \">11</td><td class=\"rd__th ve-col-4 ve-text-center \">[[/r D10]]</td><td class=\"rd__th ve-col-4 ve-text-center \">8</td></tr><tr><td class=\"rd__th ve-col-4 ve-text-center \">13</td><td class=\"rd__th ve-col-4 ve-text-center \">[[/r D10]]</td><td class=\"rd__th ve-col-4 ve-text-center \">10</td></tr><tr><td class=\"rd__th ve-col-4 ve-text-center \">17</td><td class=\"rd__th ve-col-4 ve-text-center \">[[/r D12]]</td><td class=\"rd__th ve-col-4 ve-text-center \">12</td></tr></tbody></table><p>Any features in this subclass that use a Psionic Energy Die use only the dice from this subclass. Some of your powers expend a Psionic Energy Die, as specified in a power's description, and you can't use a power if it requires you to use a die when your Psionic Energy Dice are all expended.</p><p>You regain one of your expended Psionic Energy Dice when you finish a @variantrule[Short Rest|XPHB], and you regain all of them when you finish a @variantrule[Long Rest|XPHB].</p><div data-roll-name-ancestor=\"Psi-Bolstered Knack\" data-source=\"XPHB\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"7\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p135\">Psi-Bolstered Knack.</span></span> If you fail an ability check using a skill or tool with which you have proficiency, you can roll one Psionic Energy Die and add the number rolled to the check, potentially turning failure into success. The die is expended only if the roll then succeeds.</p></div><div data-roll-name-ancestor=\"Psychic Whispers\" data-source=\"XPHB\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"8\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p135\">Psychic Whispers.</span></span> You can establish telepathic communication between yourself and others. As a @action[Magic|XPHB] action, choose one or more creatures you can see, up to a number of creatures equal to your @variantrule[Proficiency|XPHB|Proficiency Bonus], and then roll one Psionic Energy Die. For a number of hours equal to the number rolled, the chosen creatures can speak telepathically with you, and you can speak telepathically with them. To send or receive a message (no action required), you and the other creature must be within 1 mile of each other. A creature can end the telepathic connection at any time (no action required).</p></div><p>The first time you use this power after each @variantrule[Long Rest|XPHB], you don't expend the Psionic Energy Die. All other times you use the power, you expend the die.</p></div><div data-roll-name-ancestor=\"Level 3: Psychic Blades\" data-source=\"XPHB\" class=\"rd__b  rd__b--2\"><h3 class=\"rd__h rd__h--2\" data-title-index=\"9\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p136\">Level 3: Psychic Blades</span></h3> <p>You can manifest shimmering blades of psychic energy. Whenever you take the @action[Attack|XPHB] action or make an @action[Opportunity Attack|XPHB], you can manifest a @item[Psychic Blade|XPHB] in your free hand and make the attack with that blade. The magic blade has the following traits:</p><table class=\"rd__b-special rd__b-data  rd__b-data--stats\">\n\t\t<thead>\n\t\t\t<tr>\n\t\t\t\t<th class=\"rd__data-embed-header ve-text-left\" colspan=\"6\" data-rd-data-embed-header=\"true\">\n\t\t\t\t\t<div class=\"w-100 split-v-center\">\n\t\t\t\t\t\t<div class=\"ve-flex-v-center w-100 min-w-0\">\n\t\t\t\t\t\t\t<span class=\"rd__data-embed-name ve-hidden\">Psychic Blade</span>\n\t\t\t\t\t\t\t<span class=\"rd__data-embed-name-expanded ve-text-right pr-2 w-100 \"></span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<span class=\"rd__data-embed-toggle\">[–]</span>\n\t\t\t\t\t</div>\n\t\t\t\t</th>\n\t\t\t</tr>\n\t\t</thead><tbody data-rd-embedded-data-render-target=\"true\"><tr>\n\t\t\t<td colspan=\"6\" data-rd-tag=\"item\" data-rd-uid=\"Psychic Blade|XPHB\" data-rd-page=\"items.html\" data-rd-source=\"XPHB\" data-rd-hash=\"psychic%20blade_xphb\" data-rd-name=\"Psychic Blade\" data-rd-display-name=\"Psychic Blade\" data-rd-style data-rd-entry-data=\"{}\">\n\t\t\t\t<i>Loading @item[Psychic Blade|XPHB]...</i>\n\t\t\t\t\n\t\t\t</td>\n\t\t</tr></tbody></table><p>The blade vanishes immediately after it hits or misses its target, and it leaves no mark if it deals damage.</p><p>After you attack with the blade on your turn, you can make a melee or ranged attack with a second psychic blade as a @variantrule[Bonus Action|XPHB] on the same turn if your other hand is free to create it. The damage die of this bonus attack is [[/damage 1d4]] instead of [[/damage 1d6]].</p></div></div><div class=\"rd__b  rd__b--1\"><div data-roll-name-ancestor=\"Level 9: Soul Blades\" data-source=\"XPHB\" class=\"rd__b  rd__b--2\"><h3 class=\"rd__h rd__h--2\" data-title-index=\"10\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p136\">Level 9: Soul Blades</span></h3> <p>You can now use the following powers with your Psychic Blades.</p><div data-roll-name-ancestor=\"Homing Strikes\" data-source=\"XPHB\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"11\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p136\">Homing Strikes.</span></span> If you make an attack roll with your @item[Psychic Blade|XPHB] and miss the target, you can roll one Psionic Energy Die and add the number rolled to the attack roll. If this causes the attack to hit, the die is expended.</p></div><div data-roll-name-ancestor=\"Psychic Teleportation\" data-source=\"XPHB\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"12\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p136\">Psychic Teleportation.</span></span> As a @variantrule[Bonus Action|XPHB], you manifest a @item[Psychic Blade|XPHB], expend one Psionic Energy Die and roll it, and throw the blade at an unoccupied space you can see up to a number of feet away equal to 10 times the number rolled. You then teleport to that space, and the blade vanishes.</p></div></div></div><div class=\"rd__b  rd__b--1\"><div data-roll-name-ancestor=\"Level 13: Psychic Veil\" data-source=\"XPHB\" class=\"rd__b  rd__b--2\"><h3 class=\"rd__h rd__h--2\" data-title-index=\"13\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p136\">Level 13: Psychic Veil</span></h3> <p>You can weave a veil of psychic static to mask yourself. As a @action[Magic|XPHB] action, you gain the &amp;Reference[condition=Invisible] condition for 1 hour or until you dismiss this effect (no action required). This invisibility ends early immediately after you deal damage to a creature or you force a creature to make a saving throw.</p><p>Once you use this feature, you can't do so again until you finish a @variantrule[Long Rest|XPHB] unless you expend a Psionic Energy Die (no action required) to restore your use of it.</p></div></div><div class=\"rd__b  rd__b--1\"><div data-roll-name-ancestor=\"Level 17: Rend Mind\" data-source=\"XPHB\" class=\"rd__b  rd__b--2\"><h3 class=\"rd__h rd__h--2\" data-title-index=\"14\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p136\">Level 17: Rend Mind</span></h3> <p>You can sweep your Psychic Blades through a creature's mind. When you use your Psychic Blades to deal Sneak Attack damage to a creature, you can force that target to make a Wisdom saving throw (DC <span class=\"rd__dc\">8</span> plus your Dexterity modifier and @variantrule[Proficiency|XPHB|Proficiency Bonus]). If the save fails, the target has the &amp;Reference[condition=Stunned] condition for 1 minute. The &amp;Reference[condition=Stunned] target repeats the save at the end of each of its turns, ending the effect on itself on a success.</p><p>Once you use this feature, you can't do so again until you finish a @variantrule[Long Rest|XPHB] unless you expend three Psionic Energy Dice (no action required) to restore your use of it.</p></div></div></div></div>",
+          "chat": ""
+        },
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "135",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "spellcasting": {
+          "progression": "none",
+          "preparation": {}
+        },
+        "advancement": [
+          {
+            "type": "ScaleValue",
+            "configuration": {
+              "identifier": "die",
+              "type": "dice",
+              "scale": {
+                "3": {
+                  "number": 4,
+                  "faces": 6,
+                  "modifiers": []
+                },
+                "5": {
+                  "number": 6,
+                  "faces": 8,
+                  "modifiers": []
+                },
+                "9": {
+                  "number": 8,
+                  "faces": 8,
+                  "modifiers": []
+                },
+                "11": {
+                  "number": 8,
+                  "faces": 10,
+                  "modifiers": []
+                },
+                "13": {
+                  "number": 10,
+                  "faces": 10,
+                  "modifiers": []
+                },
+                "17": {
+                  "number": 12,
+                  "faces": 12,
+                  "modifiers": []
+                }
+              },
+              "distance": {
+                "units": ""
+              }
+            },
+            "title": "Psionic Power",
+            "_id": "Fa9g1Ptm0xz9YnBp",
+            "value": {}
+          }
+        ]
+      },
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "flags": {
+        "plutonium": {
+          "page": "classes.html",
+          "source": "XPHB",
+          "hash": "rogue_xphb,state:sub_soulknife_xphb=b1",
+          "propDroppable": "subclass",
+          "filterValues": {
+            "Source": {
+              "TCE": 1,
+              "PHB": 1,
+              "XGE": 1,
+              "SCAG": 1,
+              "BGG": 1,
+              "TDCSR": 0,
+              "XPHB": 1,
+              "VRGR": 1,
+              "PSA": 0,
+              "DMG": 1,
+              "EGW": 0,
+              "FTD": 1,
+              "UATheMysticClass": 0,
+              "DSotDQ": 1,
+              "PSK": 0,
+              "_isActive": true,
+              "_totals": {
+                "ignore": 5,
+                "yes": 10,
+                "no": 0
+              },
+              "_combineBlue": "or",
+              "_combineRed": "or"
+            },
+            "Primary Ability": {
+              "str": 0,
+              "dex": 0,
+              "con": 0,
+              "int": 0,
+              "wis": 0,
+              "cha": 0,
+              "_isActive": false,
+              "_totals": {
+                "ignore": 6,
+                "yes": 0,
+                "no": 0
+              },
+              "_combineBlue": "or",
+              "_combineRed": "or"
+            },
+            "Miscellaneous": {
+              "Reprinted": 2,
+              "Sidekick": 2,
+              "Legacy": 0,
+              "Has Info": 0,
+              "Has Images": 0,
+              "SRD 5": {
+                "1": 0,
+                "2": 0
+              },
+              "Basic Rules (2024)": 0,
+              "Basic Rules (2014)": 0,
+              "_isActive": true,
+              "_totals": {
+                "ignore": 7,
+                "yes": 0,
+                "no": 2
+              },
+              "_combineBlue": "or",
+              "_combineRed": "or"
+            },
+            "Other/Text Options": {
+              "isDisplayClassIfSubclassActive": false,
+              "isClassFeatureVariant": true,
+              "_isActive": false
+            }
+          },
+          "isPrimaryClass": true,
+          "isDirectImport": true
+        },
+        "scene-packer": {
+          "hash": "b2e2f3669c78b13abbdc37a1295170c97172cdd7"
+        }
+      },
+      "effects": [],
+      "img": "https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/classes/XPHB/Soulknife%20Rogue.webp",
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748283868157,
+        "modifiedTime": 1748283868157,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "wg08xxqiOGlyIpsg",
+      "name": "Sneak Attack",
+      "type": "feat",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "128",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--1\"><p>You know how to strike subtly and exploit a foe's distraction. Once per turn, you can deal an extra [[/damage 1d6]] damage to one creature you hit with an attack roll if you have @variantrule[Advantage|XPHB] on the roll and the attack uses a Finesse or a Ranged weapon. The extra damage's type is the same as the weapon's type.</p><p>You don't need @variantrule[Advantage|XPHB] on the attack roll if at least one of your allies is within 5 feet of the target, the ally doesn't have the &amp;Reference[condition=Incapacitated] condition, and you don't have @variantrule[Disadvantage|XPHB] on the attack roll.</p><p>The extra damage increases as you gain Rogue levels, as shown in the Sneak Attack column of the Rogue Features table.</p></div>",
+          "chat": ""
+        },
+        "requirements": "Rogue 1",
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "type": {
+          "value": "class",
+          "subtype": ""
+        },
+        "properties": [],
+        "advancement": [],
+        "activities": {
+          "dnd5eactivity000": {
+            "type": "damage",
+            "activation": {
+              "type": "",
+              "value": null,
+              "override": false
+            },
+            "uses": {
+              "max": "1",
+              "spent": 0,
+              "recovery": []
+            },
+            "target": {
+              "affects": {
+                "count": "1",
+                "type": "creature",
+                "choice": false
+              },
+              "prompt": true,
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "override": false
+            },
+            "damage": {
+              "critical": {
+                "allow": true
+              },
+              "parts": [
+                {
+                  "custom": {
+                    "enabled": true,
+                    "formula": "@scale.rogue.sneak-attack"
+                  },
+                  "types": [
+                    "acid",
+                    "bludgeoning",
+                    "cold",
+                    "fire",
+                    "force",
+                    "lightning",
+                    "necrotic",
+                    "piercing",
+                    "poison",
+                    "psychic",
+                    "radiant",
+                    "slashing",
+                    "thunder"
+                  ],
+                  "number": null,
+                  "denomination": null,
+                  "scaling": {
+                    "number": 1
+                  }
+                }
+              ]
+            },
+            "_id": "dnd5eactivity000",
+            "sort": 0,
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            }
+          }
+        },
+        "identifier": "sneak-attack",
+        "cover": null,
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "img": "icons/skills/melee/strike-dagger-arcane-pink.webp",
+      "flags": {
+        "plutonium": {
+          "page": "classFeature",
+          "source": "XPHB",
+          "hash": "sneak%20attack_rogue_xphb_1_xphb"
+        },
+        "scene-packer": {
+          "hash": "80971eceeb5e22425ad2d274541ac59fbf721ca8"
+        },
+        "dnd5e": {
+          "sourceId": ".wg08xxqiOGlyIpsg",
+          "advancementOrigin": "SwzWJ4vbAsv3UzMf.BdP04T3t8tyWXxsB",
+          "riders": {
+            "activity": [],
+            "effect": []
+          },
+          "last": {
+            "dnd5eactivity000": {
+              "damageType": {
+                "0": "acid"
+              }
+            }
+          }
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748283870201,
+        "modifiedTime": 1748453724273,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "PGfIwdXg5EcDUWua",
+      "name": "Thieves' Cant",
+      "type": "feat",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "128",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--1\"><p>You picked up various languages in the communities where you plied your roguish talents. You know Thieves' Cant and one other language of your choice, which you choose from the language tables in <a href=\"https://5e.tools/book.html#XPHB,2,choose%20languages,0\">chapter 2</a>.</p></div>",
+          "chat": ""
+        },
+        "requirements": "Rogue 1",
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "type": {
+          "value": "class",
+          "subtype": ""
+        },
+        "properties": [],
+        "advancement": [],
+        "activities": {},
+        "identifier": "thieves-cant",
+        "cover": null,
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "img": "icons/commodities/treasure/token-runed-sigel-brown.webp",
+      "flags": {
+        "plutonium": {
+          "page": "classFeature",
+          "source": "XPHB",
+          "hash": "thieves'%20cant_rogue_xphb_1_xphb"
+        },
+        "scene-packer": {
+          "hash": "f17c724e81e19311ddaaca64676dae8cb2c7d5f9"
+        },
+        "dnd5e": {
+          "sourceId": ".PGfIwdXg5EcDUWua",
+          "advancementOrigin": "SwzWJ4vbAsv3UzMf.BdP04T3t8tyWXxsB",
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748283870300,
+        "modifiedTime": 1748284628202,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "oIJ5xvzEHmsmXI9j",
+      "name": "Weapon Mastery",
+      "type": "feat",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "128",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--1\"><p>Your training with weapons allows you to use the @variantrule[weapon mastery properties|XPHB|mastery properties] of two kinds of <a href=\"https://5e.tools/items.html#blankhash,flsttype:simple%20weapon=1~martial%20weapon=1\">weapons</a> of your choice with which you have proficiency, such as @item[Dagger|XPHB|Daggers] and @item[Shortbow|XPHB|Shortbows].</p><p>Whenever you finish a @variantrule[Long Rest|XPHB], you can change the kinds of weapons you chose. For example, you could switch to using the @variantrule[weapon mastery properties|XPHB|mastery properties] of @item[Scimitar|XPHB|Scimitars] and @item[Shortsword|XPHB|Shortswords].</p></div>",
+          "chat": ""
+        },
+        "requirements": "Rogue 1",
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "type": {
+          "value": "class",
+          "subtype": ""
+        },
+        "properties": [],
+        "advancement": [],
+        "activities": {},
+        "identifier": "weapon-mastery",
+        "cover": null,
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "img": "modules/plutonium/media/icon/class/phb-rogue.webp",
+      "flags": {
+        "plutonium": {
+          "page": "classFeature",
+          "source": "XPHB",
+          "hash": "weapon%20mastery_rogue_xphb_1_xphb"
+        },
+        "scene-packer": {
+          "hash": "765c7ad2cabe571fb5a7240deeb9b9c8fa896287"
+        },
+        "dnd5e": {
+          "sourceId": ".oIJ5xvzEHmsmXI9j",
+          "advancementOrigin": "SwzWJ4vbAsv3UzMf.BdP04T3t8tyWXxsB",
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748283870729,
+        "modifiedTime": 1748284628202,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "dp63epmXiIUf3Bco",
+      "name": "Rapier",
+      "type": "weapon",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "215",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--2\"><div data-roll-name-ancestor=\"Mastery: Vex\" data-source=\"XPHB\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"1\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p214\">Mastery: Vex.</span></span> If you hit a creature with this weapon and deal damage to the creature, you have @variantrule[Advantage|XPHB] on your next attack roll against that creature before the end of your next turn.</p></div></div>",
+          "chat": ""
+        },
+        "proficient": null,
+        "quantity": 1,
+        "weight": {
+          "value": 2,
+          "units": "lb"
+        },
+        "price": {
+          "value": 25,
+          "denomination": "gp"
+        },
+        "attuned": false,
+        "identified": true,
+        "equipped": true,
+        "rarity": "",
+        "type": {
+          "value": "martialM",
+          "baseItem": "rapier"
+        },
+        "range": {
+          "value": null,
+          "long": 0,
+          "units": "ft",
+          "reach": null
+        },
+        "properties": [
+          "fin"
+        ],
+        "attunement": "",
+        "uses": {
+          "max": "",
+          "spent": 0,
+          "recovery": []
+        },
+        "magicalBonus": 0,
+        "damage": {
+          "base": {
+            "types": [
+              "piercing"
+            ],
+            "number": 1,
+            "denomination": 8,
+            "bonus": "",
+            "scaling": {
+              "mode": "",
+              "number": 1
+            },
+            "custom": {
+              "enabled": false
+            }
+          },
+          "versatile": {
+            "number": null,
+            "denomination": null,
+            "types": [],
+            "custom": {
+              "enabled": false
+            },
+            "scaling": {
+              "number": 1
+            }
+          }
+        },
+        "ammunition": {
+          "type": ""
+        },
+        "mastery": "vex",
+        "activities": {
+          "wbRBt5jwzbmrVS23": {
+            "_id": "wbRBt5jwzbmrVS23",
+            "type": "attack",
+            "activation": {
+              "type": "action",
+              "value": 1,
+              "condition": "",
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "attack": {
+              "critical": {
+                "threshold": null
+              },
+              "flat": false,
+              "type": {
+                "value": "melee",
+                "classification": "weapon"
+              },
+              "bonus": ""
+            },
+            "damage": {
+              "critical": {
+                "bonus": ""
+              },
+              "includeBase": true,
+              "parts": []
+            },
+            "sort": 0
+          }
+        },
+        "identifier": "rapier",
+        "unidentified": {
+          "description": ""
+        },
+        "container": null,
+        "cover": null,
+        "crewed": false,
+        "armor": {
+          "value": null
+        }
+      },
+      "img": "https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/items/XPHB/Rapier.webp",
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "flags": {
+        "plutonium": {
+          "page": "items.html",
+          "source": "XPHB",
+          "hash": "rapier_xphb"
+        },
+        "scene-packer": {
+          "hash": "f5c28d56a65a758732b7ff0b99578ed3402fa9c7"
+        },
+        "dnd5e": {
+          "last": {
+            "wbRBt5jwzbmrVS23": {
+              "attackMode": "oneHanded",
+              "mastery": "vex",
+              "damageType": {
+                "0": "piercing"
+              }
+            }
+          },
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748284353882,
+        "modifiedTime": 1748284628202,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "uV24OYs9DWe7nIyp",
+      "name": "Dagger",
+      "type": "weapon",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "215",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--2\"><div data-roll-name-ancestor=\"Mastery: Nick\" data-source=\"XPHB\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"1\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p214\">Mastery: Nick.</span></span> When you make the extra attack of the Light property, you can make it as part of the @action[Attack|XPHB] action instead of as a @variantrule[Bonus Action|XPHB]. You can make this extra attack only once per turn.</p></div></div>",
+          "chat": ""
+        },
+        "proficient": null,
+        "quantity": 1,
+        "weight": {
+          "value": 1,
+          "units": "lb"
+        },
+        "price": {
+          "value": 2,
+          "denomination": "gp"
+        },
+        "attuned": false,
+        "identified": true,
+        "equipped": true,
+        "rarity": "",
+        "type": {
+          "value": "simpleM",
+          "baseItem": "dagger"
+        },
+        "range": {
+          "value": 20,
+          "long": 60,
+          "units": "ft",
+          "reach": null
+        },
+        "properties": [
+          "fin",
+          "lgt",
+          "thr"
+        ],
+        "attunement": "",
+        "uses": {
+          "max": "",
+          "spent": 0,
+          "recovery": []
+        },
+        "magicalBonus": 0,
+        "damage": {
+          "base": {
+            "types": [
+              "piercing"
+            ],
+            "number": 1,
+            "denomination": 4,
+            "bonus": "",
+            "scaling": {
+              "mode": "",
+              "number": 1
+            },
+            "custom": {
+              "enabled": false
+            }
+          },
+          "versatile": {
+            "number": null,
+            "denomination": null,
+            "types": [],
+            "custom": {
+              "enabled": false
+            },
+            "scaling": {
+              "number": 1
+            }
+          }
+        },
+        "ammunition": {
+          "type": ""
+        },
+        "mastery": "nick",
+        "activities": {
+          "EahfXRqYhhV4Yhk8": {
+            "_id": "EahfXRqYhhV4Yhk8",
+            "type": "attack",
+            "activation": {
+              "type": "action",
+              "value": 1,
+              "condition": "",
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "attack": {
+              "critical": {
+                "threshold": null
+              },
+              "flat": false,
+              "type": {
+                "value": "melee",
+                "classification": "weapon"
+              },
+              "bonus": ""
+            },
+            "damage": {
+              "critical": {
+                "bonus": ""
+              },
+              "includeBase": true,
+              "parts": []
+            },
+            "sort": 0
+          }
+        },
+        "identifier": "dagger",
+        "unidentified": {
+          "description": ""
+        },
+        "container": null,
+        "cover": null,
+        "crewed": false,
+        "armor": {
+          "value": null
+        }
+      },
+      "img": "https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/items/XPHB/Dagger.webp",
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "flags": {
+        "plutonium": {
+          "page": "items.html",
+          "source": "XPHB",
+          "hash": "dagger_xphb"
+        },
+        "scene-packer": {
+          "hash": "79753bcaf91192a60e93359fa0507a8d90b32843"
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748284366672,
+        "modifiedTime": 1748284628202,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "sIY0ZRFD3JAMdAhx",
+      "name": "Studded Leather Armor",
+      "type": "equipment",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "219",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "",
+          "chat": ""
+        },
+        "proficient": null,
+        "quantity": 1,
+        "weight": {
+          "value": 13,
+          "units": "lb"
+        },
+        "price": {
+          "value": 45,
+          "denomination": "gp"
+        },
+        "attuned": false,
+        "identified": true,
+        "equipped": true,
+        "rarity": "",
+        "type": {
+          "value": "light",
+          "baseItem": "studded"
+        },
+        "properties": [],
+        "attunement": "",
+        "uses": {
+          "max": "",
+          "spent": 0,
+          "recovery": []
+        },
+        "armor": {
+          "value": 12,
+          "dex": null,
+          "magicalBonus": null
+        },
+        "strength": null,
+        "activities": {},
+        "identifier": "studded-leather-armor",
+        "unidentified": {
+          "description": ""
+        },
+        "container": null,
+        "cover": null,
+        "crewed": false
+      },
+      "img": "https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/items/XPHB/Studded%20Leather%20Armor.webp",
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "flags": {
+        "plutonium": {
+          "page": "items.html",
+          "source": "XPHB",
+          "hash": "studded%20leather%20armor_xphb"
+        },
+        "scene-packer": {
+          "hash": "d575dbd49fead1f2aa66e0bd600efee2373107ca"
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748284382036,
+        "modifiedTime": 1748284628202,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "zHKkUsFuEUIwbudx",
+      "name": "Traveler's Clothes",
+      "type": "equipment",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "225",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--2\"><p>Traveler's Clothes are resilient garments designed for travel in various environments.</p></div>",
+          "chat": ""
+        },
+        "proficient": null,
+        "quantity": 1,
+        "weight": {
+          "value": 4,
+          "units": "lb"
+        },
+        "price": {
+          "value": 2,
+          "denomination": "gp"
+        },
+        "attuned": false,
+        "identified": true,
+        "equipped": true,
+        "rarity": "",
+        "type": {
+          "value": "trinket",
+          "baseItem": ""
+        },
+        "properties": [],
+        "attunement": "",
+        "uses": {
+          "max": "",
+          "spent": 0,
+          "recovery": []
+        },
+        "armor": {
+          "value": null,
+          "dex": null,
+          "magicalBonus": null
+        },
+        "strength": null,
+        "activities": {},
+        "identifier": "travelers-clothes",
+        "unidentified": {
+          "description": ""
+        },
+        "container": null,
+        "cover": null,
+        "crewed": false
+      },
+      "img": "icons/equipment/head/hood-cloth-brown.webp",
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "flags": {
+        "plutonium": {
+          "page": "items.html",
+          "source": "XPHB",
+          "hash": "traveler's%20clothes_xphb"
+        },
+        "scene-packer": {
+          "hash": "c023d73f7ae9bc4328731e37199d26d80539518d"
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748284395150,
+        "modifiedTime": 1748284628202,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "i6KqdsNCWF0BilzT",
+      "name": "Book",
+      "type": "loot",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "224",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--2\"><p>A Book contains fiction or nonfiction. If you consult an accurate nonfiction Book about its topic, you gain a +5 bonus to Intelligence (&amp;Reference[skill=Arcana], &amp;Reference[skill=History], &amp;Reference[skill=Nature], or &amp;Reference[skill=Religion]) checks you make about that topic.</p></div>",
+          "chat": ""
+        },
+        "quantity": 1,
+        "weight": {
+          "value": 5,
+          "units": "lb"
+        },
+        "price": {
+          "value": 25,
+          "denomination": "gp"
+        },
+        "identified": true,
+        "rarity": "",
+        "type": {
+          "value": "gear",
+          "subtype": ""
+        },
+        "properties": [],
+        "identifier": "book",
+        "unidentified": {
+          "description": ""
+        },
+        "container": null
+      },
+      "img": "icons/sundries/books/book-worn-brown.webp",
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "flags": {
+        "plutonium": {
+          "page": "items.html",
+          "source": "XPHB",
+          "hash": "book_xphb"
+        },
+        "scene-packer": {
+          "hash": "45b682f3283caab852c229adc00b932c79a59e2e"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748284402958,
+        "modifiedTime": 1748284402958,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "wRBQ74N8aqdp8XWl",
+      "name": "Rope",
+      "type": "loot",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "228",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--2\"><p>As a @action[Utilize|XPHB] action, you can tie a knot with Rope if you succeed on a [[/save ability=dex dc=10]] (&amp;Reference[skill=SleightofHand]{Sleight of Hand}) check. The Rope can be burst with a successful [[/save ability=str dc=20]] (&amp;Reference[skill=Athletics]) check.</p><p>You can bind an unwilling creature with the Rope only if the creature has the &amp;Reference[condition=Grappled], &amp;Reference[condition=Incapacitated], or &amp;Reference[condition=Restrained] condition. If the creature's legs are bound, the creature has the &amp;Reference[condition=Restrained] condition until it escapes. Escaping the Rope requires the creature to make a successful [[/save ability=dex dc=15]] (&amp;Reference[skill=Acrobatics]) check as an action.</p></div>",
+          "chat": ""
+        },
+        "quantity": 1,
+        "weight": {
+          "value": 5,
+          "units": "lb"
+        },
+        "price": {
+          "value": 1,
+          "denomination": "gp"
+        },
+        "identified": true,
+        "rarity": "",
+        "type": {
+          "value": "gear",
+          "subtype": ""
+        },
+        "properties": [],
+        "identifier": "rope",
+        "unidentified": {
+          "description": ""
+        },
+        "container": null
+      },
+      "img": "systems/dnd5e/icons/svg/items/loot.svg",
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "flags": {
+        "plutonium": {
+          "page": "items.html",
+          "source": "XPHB",
+          "hash": "rope_xphb"
+        },
+        "scene-packer": {
+          "hash": "9e560a7cb460c978805078ff171d6e279b64b0ff"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748284436935,
+        "modifiedTime": 1748284436935,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "C1uIemO8d1ceOcHW",
+      "name": "Bedroll",
+      "type": "loot",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "224",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--2\"><p>A Bedroll sleeps one Small or Medium creature. While in a Bedroll, you automatically succeed on saving throws against @hazard[extreme cold|XDMG] (see the <a href=\"https://5e.tools/book.html#XDMG\">Dungeon Master's Guide</a>).</p></div>",
+          "chat": ""
+        },
+        "quantity": 1,
+        "weight": {
+          "value": 7,
+          "units": "lb"
+        },
+        "price": {
+          "value": 1,
+          "denomination": "gp"
+        },
+        "identified": true,
+        "rarity": "",
+        "type": {
+          "value": "gear",
+          "subtype": ""
+        },
+        "properties": [],
+        "identifier": "bedroll",
+        "unidentified": {
+          "description": ""
+        },
+        "container": null
+      },
+      "img": "icons/sundries/survival/bedroll-pink.webp",
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "flags": {
+        "plutonium": {
+          "page": "items.html",
+          "source": "XPHB",
+          "hash": "bedroll_xphb"
+        },
+        "scene-packer": {
+          "hash": "18dd9d118178608c0beb8d814011abe0a46a73fd"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748284500433,
+        "modifiedTime": 1748284500433,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "j6AUOkzHPHDs8jod",
+      "name": "Mess Kit",
+      "type": "loot",
+      "system": {
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--2\"><p>This tin box contains a cup and simple cutlery. The box clamps together, and one side can be used as a cooking pan and the other as a plate or shallow bowl.</p></div>",
+          "chat": ""
+        },
+        "source": {
+          "custom": "",
+          "book": "PHB'14",
+          "page": "152",
+          "license": "",
+          "rules": "2014",
+          "revision": 1
+        },
+        "quantity": 1,
+        "weight": {
+          "value": 1,
+          "units": "lb"
+        },
+        "price": {
+          "value": 2,
+          "denomination": "sp"
+        },
+        "rarity": "",
+        "identified": true,
+        "type": {
+          "value": "",
+          "subtype": ""
+        },
+        "unidentified": {
+          "description": ""
+        },
+        "container": null,
+        "properties": [],
+        "identifier": "mess-kit"
+      },
+      "img": "icons/containers/kitchenware/bowl-clay-brown.webp",
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "flags": {
+        "plutonium": {
+          "page": "items.html",
+          "source": "PHB",
+          "hash": "mess%20kit_phb"
+        },
+        "scene-packer": {
+          "hash": "dce287852cfb062938a7ec773a6db35ddcfdf6e6"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748284508612,
+        "modifiedTime": 1748284508612,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "gKqRU7r611wKmkT6",
+      "name": "Rations",
+      "type": "consumable",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "228",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--2\"><p>Rations consist of travel-ready food, including jerky, dried fruit, hardtack, and nuts. See \"@hazard[Malnutrition|XPHB]\" for the risks of not eating.</p></div>",
+          "chat": ""
+        },
+        "quantity": 10,
+        "weight": {
+          "value": 2,
+          "units": "lb"
+        },
+        "price": {
+          "value": 5,
+          "denomination": "sp"
+        },
+        "attuned": false,
+        "equipped": false,
+        "identified": true,
+        "rarity": "",
+        "type": {
+          "value": "",
+          "subtype": ""
+        },
+        "properties": [],
+        "attunement": "",
+        "uses": {
+          "max": "",
+          "spent": 0,
+          "recovery": [],
+          "autoDestroy": true
+        },
+        "magicalBonus": 0,
+        "damage": {
+          "base": {
+            "number": null,
+            "denomination": null,
+            "types": [],
+            "custom": {
+              "enabled": false
+            },
+            "scaling": {
+              "number": 1
+            }
+          },
+          "replace": false
+        },
+        "activities": {},
+        "identifier": "rations",
+        "unidentified": {
+          "description": ""
+        },
+        "container": null
+      },
+      "img": "icons/consumables/grains/bread-loaf-boule-rustic-brown.webp",
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "flags": {
+        "plutonium": {
+          "page": "items.html",
+          "source": "XPHB",
+          "hash": "rations_xphb"
+        },
+        "scene-packer": {
+          "hash": "c44f0d92055acb78adfc18515b8984cf27e15654"
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748284516035,
+        "modifiedTime": 1748284628202,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "BQ6XA1uPMgyOQu8D",
+      "name": "Tinderbox",
+      "type": "loot",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "229",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--2\"><p>A Tinderbox is a small container holding flint, fire steel, and tinder (usually dry cloth soaked in light oil) used to kindle a fire. Using it to light a @item[Candle|XPHB], @item[Lamp|XPHB], @item[Hooded Lantern|XPHB|Lantern], or @item[Torch|XPHB]—or anything else with exposed fuel—takes a @variantrule[Bonus Action|XPHB]. Lighting any other fire takes 1 minute.</p></div>",
+          "chat": ""
+        },
+        "quantity": 1,
+        "weight": {
+          "value": 1,
+          "units": "lb"
+        },
+        "price": {
+          "value": 5,
+          "denomination": "sp"
+        },
+        "identified": true,
+        "rarity": "",
+        "type": {
+          "value": "gear",
+          "subtype": ""
+        },
+        "properties": [],
+        "identifier": "tinderbox",
+        "unidentified": {
+          "description": ""
+        },
+        "container": null
+      },
+      "img": "icons/containers/boxes/crate-worn-brown.webp",
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "flags": {
+        "plutonium": {
+          "page": "items.html",
+          "source": "XPHB",
+          "hash": "tinderbox_xphb"
+        },
+        "scene-packer": {
+          "hash": "5b757542c509eebfb9761f8ac3bd50f03fd7df52"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748284533070,
+        "modifiedTime": 1748284533070,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "AHL8tWofmqdJh1Je",
+      "name": "Torch",
+      "type": "consumable",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "229",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--2\"><p>A Torch burns for 1 hour, casting @variantrule[Bright Light|XPHB] in a 20-foot radius and @variantrule[Dim Light|XPHB] for an additional 20 feet. When you take the @action[Attack|XPHB] action, you can attack with the Torch, using it as a Simple Melee weapon. On a hit, the target takes 1 Fire damage.</p></div>",
+          "chat": ""
+        },
+        "quantity": 1,
+        "weight": {
+          "value": 1,
+          "units": "lb"
+        },
+        "price": {
+          "value": 1,
+          "denomination": "cp"
+        },
+        "attuned": false,
+        "equipped": false,
+        "identified": true,
+        "rarity": "",
+        "type": {
+          "value": "",
+          "subtype": ""
+        },
+        "properties": [],
+        "attunement": "",
+        "uses": {
+          "max": "",
+          "spent": 0,
+          "recovery": [],
+          "autoDestroy": true
+        },
+        "magicalBonus": 0,
+        "damage": {
+          "base": {
+            "number": null,
+            "denomination": null,
+            "types": [],
+            "custom": {
+              "enabled": false
+            },
+            "scaling": {
+              "number": 1
+            }
+          },
+          "replace": false
+        },
+        "activities": {},
+        "identifier": "torch",
+        "unidentified": {
+          "description": ""
+        },
+        "container": null
+      },
+      "img": "icons/sundries/lights/torch-white.webp",
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "flags": {
+        "plutonium": {
+          "page": "items.html",
+          "source": "XPHB",
+          "hash": "torch_xphb"
+        },
+        "scene-packer": {
+          "hash": "1c1102a650637940db973ca706dd7e0f99e9db84"
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748284544254,
+        "modifiedTime": 1748284628202,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "MwTEkHMG1hSKncNr",
+      "name": "Waterskin",
+      "type": "container",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "229",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--2\"><p>A Waterskin holds up to 4 pints. If you don't drink sufficient water, you risk dehydration.</p></div>",
+          "chat": ""
+        },
+        "quantity": 1,
+        "weight": {
+          "value": 5,
+          "units": "lb"
+        },
+        "price": {
+          "value": 2,
+          "denomination": "sp"
+        },
+        "attuned": false,
+        "equipped": true,
+        "identified": true,
+        "rarity": "",
+        "capacity": {
+          "volume": {
+            "value": 0.08,
+            "units": "cubicFoot"
+          },
+          "count": null,
+          "weight": {
+            "value": null,
+            "units": "lb"
+          }
+        },
+        "properties": [],
+        "attunement": "",
+        "identifier": "waterskin",
+        "unidentified": {
+          "description": ""
+        },
+        "container": null,
+        "currency": {
+          "pp": 0,
+          "gp": 0,
+          "ep": 0,
+          "sp": 0,
+          "cp": 0
+        }
+      },
+      "img": "icons/sundries/survival/wetskin-leather-purple.webp",
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "flags": {
+        "plutonium": {
+          "page": "items.html",
+          "source": "XPHB",
+          "hash": "waterskin_xphb"
+        },
+        "scene-packer": {
+          "hash": "cea313e0554073d27cfedc35e56b54e68f75bf85"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748284552276,
+        "modifiedTime": 1748284552276,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "YHsJT0ySwK897Nzx",
+      "name": "Human",
+      "type": "race",
+      "system": {
+        "description": {
+          "value": "<div>\n\t\t\t\t<table class=\"w-100 summary stripe-even\">\n\t\t\t\t<tbody><tr>\n\t\t\t\t\t<th class=\"ve-col-4 ve-text-center\">Ability Scores</th>\n\t\t\t\t\t<th class=\"ve-col-4 ve-text-center\">Size</th>\n\t\t\t\t\t<th class=\"ve-col-4 ve-text-center\">Speed</th>\n\t\t\t\t</tr>\n\t\t\t\t<tr>\n\t\t\t\t\t<td class=\"ve-text-center\"></td>\n\t\t\t\t\t<td class=\"ve-text-center\">Small/Medium</td>\n\t\t\t\t\t<td class=\"ve-text-center\">30 ft. </td>\n\t\t\t\t</tr>\n\t\t\t</tbody></table>\n\t\t\t\t<div class=\"mt-2\"><p>@UUID[Actor.KT3pPkr0TFADTqBt.Item.q44zWW1IyFYKSPgT]{Resourceful}</p><p>@UUID[Actor.KT3pPkr0TFADTqBt.Item.YSDyEaTnVKw0kyz9]{Skillful}</p><p>@UUID[Actor.KT3pPkr0TFADTqBt.Item.nBhefbKCnzondl2p]{Versatile}</p></div>\n\t\t\t\t<hr class=\"hr-1\" /><div class=\"rd__b  rd__b--1\"><div class=\"rd__b  rd__b--2\"><p>Found throughout the multiverse, humans are as varied as they are numerous, and they endeavor to achieve as much as they can in the years they are given. Their ambition and resourcefulness are commended, respected, and feared on many worlds.</p><p>Humans are as diverse in appearance as the people of Earth, and they have many gods. Scholars dispute the origin of humanity, but one of the earliest known human gatherings is said to have occurred in Sigil, the torus-shaped city at the center of the multiverse and the place where the Common language was born. From there, humans could have spread to every part of the multiverse, bringing the City of Doors' cosmopolitanism with them.</p></div></div>\n\t\t\t</div>",
+          "chat": ""
+        },
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "194",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "movement": {
+          "burrow": null,
+          "climb": null,
+          "fly": null,
+          "swim": null,
+          "walk": 30,
+          "units": "ft",
+          "hover": false
+        },
+        "type": {
+          "value": "humanoid",
+          "subtype": "human",
+          "custom": ""
+        },
+        "senses": {
+          "darkvision": null,
+          "blindsight": null,
+          "truesight": null,
+          "tremorsense": null,
+          "units": "ft",
+          "special": ""
+        },
+        "advancement": [
+          {
+            "_id": "ujAZiDfXI6bWnGhE",
+            "type": "Size",
+            "configuration": {
+              "sizes": [
+                "sm",
+                "med"
+              ]
+            },
+            "value": {
+              "size": "med"
+            },
+            "level": 0,
+            "title": ""
+          },
+          {
+            "_id": "DegTOekC4FXXkkWM",
+            "type": "ItemGrant",
+            "level": 0,
+            "title": "Features",
+            "icon": "https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/races/XPHB/Human.webp",
+            "configuration": {
+              "items": [
+                {
+                  "uuid": ".q44zWW1IyFYKSPgT",
+                  "optional": false
+                },
+                {
+                  "uuid": ".YSDyEaTnVKw0kyz9",
+                  "optional": false
+                },
+                {
+                  "uuid": ".nBhefbKCnzondl2p",
+                  "optional": false
+                }
+              ],
+              "optional": false,
+              "spell": {
+                "ability": [
+                  ""
+                ],
+                "preparation": "",
+                "uses": {
+                  "max": "",
+                  "per": "",
+                  "requireSlot": false
+                }
+              }
+            },
+            "value": {
+              "added": {
+                "q44zWW1IyFYKSPgT": ".q44zWW1IyFYKSPgT",
+                "YSDyEaTnVKw0kyz9": ".YSDyEaTnVKw0kyz9",
+                "nBhefbKCnzondl2p": ".nBhefbKCnzondl2p"
+              }
+            }
+          }
+        ],
+        "identifier": "human"
+      },
+      "effects": [],
+      "flags": {
+        "plutonium": {
+          "page": "races.html",
+          "source": "XPHB",
+          "hash": "human_xphb",
+          "propDroppable": "race",
+          "isDirectImport": true
+        },
+        "scene-packer": {
+          "hash": "4d8669a9ad4e59caf4fff1939e2291b93ec399c8"
+        }
+      },
+      "img": "https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/races/XPHB/Human.webp",
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748284650375,
+        "modifiedTime": 1748284650464,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "q44zWW1IyFYKSPgT",
+      "name": "Resourceful",
+      "type": "feat",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "194",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--3\"><p>You gain @variantrule[Heroic Inspiration|XPHB] whenever you finish a @variantrule[Long Rest|XPHB].</p></div>",
+          "chat": ""
+        },
+        "requirements": "Human",
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "type": {
+          "value": "race",
+          "subtype": ""
+        },
+        "properties": [],
+        "advancement": [],
+        "activities": {},
+        "identifier": "resourceful",
+        "cover": null,
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "img": "icons/environment/people/commoner.webp",
+      "flags": {
+        "plutonium": {
+          "page": "raceFeature",
+          "source": "XPHB",
+          "hash": "resourceful_human_xphb_xphb"
+        },
+        "scene-packer": {
+          "hash": "b5f9ec5067b4fb9b2527b3c53711160d53a3ee86"
+        },
+        "dnd5e": {
+          "sourceId": ".q44zWW1IyFYKSPgT",
+          "advancementOrigin": "YHsJT0ySwK897Nzx.DegTOekC4FXXkkWM"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748284650375,
+        "modifiedTime": 1748284650604,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "YSDyEaTnVKw0kyz9",
+      "name": "Skillful",
+      "type": "feat",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "194",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--3\"><p>You gain proficiency in one skill of your choice.</p></div>",
+          "chat": ""
+        },
+        "requirements": "Human",
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "type": {
+          "value": "race",
+          "subtype": ""
+        },
+        "properties": [],
+        "advancement": [],
+        "activities": {},
+        "identifier": "skillful",
+        "cover": null,
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "img": "icons/environment/people/commoner.webp",
+      "flags": {
+        "plutonium": {
+          "page": "raceFeature",
+          "source": "XPHB",
+          "hash": "skillful_human_xphb_xphb"
+        },
+        "scene-packer": {
+          "hash": "d089a212a4854f0c2731041a0727c7ae50c166a9"
+        },
+        "dnd5e": {
+          "sourceId": ".YSDyEaTnVKw0kyz9",
+          "advancementOrigin": "YHsJT0ySwK897Nzx.DegTOekC4FXXkkWM"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748284650375,
+        "modifiedTime": 1748284650604,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "nBhefbKCnzondl2p",
+      "name": "Versatile",
+      "type": "feat",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "194",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--3\"><p>You gain an <a href=\"https://5e.tools/feats.html#blankhash,flstcategory:o=1\">Origin feat</a> of your choice.</p></div>",
+          "chat": ""
+        },
+        "requirements": "Human",
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "type": {
+          "value": "race",
+          "subtype": ""
+        },
+        "properties": [],
+        "advancement": [],
+        "activities": {},
+        "identifier": "versatile",
+        "cover": null,
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "img": "icons/environment/people/commoner.webp",
+      "flags": {
+        "plutonium": {
+          "page": "raceFeature",
+          "source": "XPHB",
+          "hash": "versatile_human_xphb_xphb"
+        },
+        "scene-packer": {
+          "hash": "6c7213f33cb56c6ec0acd21220319b82953e5ca6"
+        },
+        "dnd5e": {
+          "sourceId": ".nBhefbKCnzondl2p",
+          "advancementOrigin": "YHsJT0ySwK897Nzx.DegTOekC4FXXkkWM"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748284650375,
+        "modifiedTime": 1748284650604,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "l2C8va0yfIorhU5c",
+      "name": "Tough",
+      "type": "feat",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "202",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div><hr /><div>\n\t\t\t\t<p><i>Origin Feat</i></p>\n\t\t\t\t\n\t\t\t\t<div class=\"rd__b  rd__b--3\"><p>Your Hit Point maximum increases by an amount equal to twice your character level when you gain this feat. Whenever you gain a character level thereafter, your Hit Point maximum increases by an additional 2 Hit Points.</p></div>\n\t\t\t</div></div>",
+          "chat": ""
+        },
+        "requirements": "",
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "type": {
+          "value": "feat",
+          "subtype": "origin"
+        },
+        "properties": [],
+        "advancement": [],
+        "activities": {},
+        "identifier": "tough",
+        "cover": null,
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "img": "icons/equipment/shoulder/pauldron-segmented-steel-yellow.webp",
+      "flags": {
+        "plutonium": {
+          "page": "feats.html",
+          "source": "XPHB",
+          "hash": "tough_xphb"
+        },
+        "scene-packer": {
+          "hash": "11d4be821788c7f373c361ddc7d7dc6eeccb9b5a"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748284661984,
+        "modifiedTime": 1748284661984,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "xApAcfJ8KUnB2MMj",
+      "name": "Giant Foundling",
+      "type": "background",
+      "system": {
+        "description": {
+          "value": "<div><div class=\"rd__b  rd__b--1\"><p>Though you aren't a Giant, you grew up among giants. Maybe you were an orphan taken in by a sympathetic family of stone giants who raised you as one of their own. Or perhaps you lived in a lost prehistoric pocket of the world, surrounded by giants and fearsome behemoths or hulking dinosaurs.</p><p>Something about your environment—perhaps the food or water that sustained you, elemental magic inherent in the site of your home, or some verdant blessing of growth placed on you—caused you to grow to a remarkable size for your kind. With the aid of this magic, you have learned how to embody the might of giants. You are used to moving through a world much bigger than you, and that is reflected in your skills, attitude, and perspective on life.</p></div><hr /><div class=\"rd__b  rd__b--1\"><ul class=\"rd__list rd__list-hang-notitle\"><li class=\"rd__li \"><p class=\"rd__p-list-item\" data-roll-name-ancestor=\"Skill Proficiencies:\"><span class=\"bold rd__list-item-name\">Skill Proficiencies:</span> &amp;Reference[skill=Intimidation], &amp;Reference[skill=Survival]</p></li><li class=\"rd__li \"><p class=\"rd__p-list-item\" data-roll-name-ancestor=\"Languages:\"><span class=\"bold rd__list-item-name\">Languages:</span> Giant and one other language of your choice</p></li><li class=\"rd__li \"><p class=\"rd__p-list-item\" data-roll-name-ancestor=\"Equipment:\"><span class=\"bold rd__list-item-name\">Equipment:</span> A @item[backpack|phb], a set of @item[traveler's clothes|phb], a small stone or sprig that reminds you of home, and a @item[pouch|phb] containing 10 gp</p></li></ul><div data-roll-name-ancestor=\"Origin Stories\" class=\"rd__b  rd__b--2\"><h3 class=\"rd__h rd__h--2\" data-title-index=\"1\"> <span class=\"entry-title-inner\">Origin Stories</span></h3> <p>How you came to live among colossal creatures is up to you to determine, but the Foundling Origin table suggests a variety of possibilities.</p><table class=\"w-100 rd__table  stripe-odd-table\" data-roll-name-ancestor=\"Foundling Origin\"><caption>Foundling Origin</caption><thead><tr><th class=\"rd__th ve-col-2 ve-text-center \" data-rd-isroller=\"true\">[[/r d6]]</th><th class=\"rd__th ve-col-10 \" data-rd-isroller=\"false\">Origin</th></tr></thead><tbody><tr><td class=\"rd__th ve-col-2 ve-text-center \" data-roll-min=\"1\" data-roll-max=\"1\">1</td><td class=\"rd__th ve-col-10 \">You were found as a baby by a family of nomadic giants who raised you as one of their own.</td></tr><tr><td class=\"rd__th ve-col-2 ve-text-center \" data-roll-min=\"2\" data-roll-max=\"2\">2</td><td class=\"rd__th ve-col-10 \">A family of stone giants rescued you when you fell into a mountain chasm, and you have lived with them underground ever since.</td></tr><tr><td class=\"rd__th ve-col-2 ve-text-center \" data-roll-min=\"3\" data-roll-max=\"3\">3</td><td class=\"rd__th ve-col-10 \">You were lost or abandoned as a child in a jungle that teemed with ravenous dinosaurs. There, you found an equally lost frost giant; together, you survived.</td></tr><tr><td class=\"rd__th ve-col-2 ve-text-center \" data-roll-min=\"4\" data-roll-max=\"4\">4</td><td class=\"rd__th ve-col-10 \">Your farm was crushed and your family killed in a battle between warring groups of giants. Racked with guilt over the destruction, a sympathetic giant soldier promised to care for you.</td></tr><tr><td class=\"rd__th ve-col-2 ve-text-center \" data-roll-min=\"5\" data-roll-max=\"5\">5</td><td class=\"rd__th ve-col-10 \">After you had a series of strange dreams as a child, your superstitious parents sent you to study with a powerful but aloof storm giant oracle.</td></tr><tr><td class=\"rd__th ve-col-2 ve-text-center \" data-roll-min=\"6\" data-roll-max=\"6\">6</td><td class=\"rd__th ve-col-10 \">While playing hide-and-seek with your friends, you stumbled into the castle of a cloud giant, who immediately adopted you.</td></tr></tbody></table></div><div data-roll-name-ancestor=\"Building a Giant Foundling Character\" class=\"rd__b  rd__b--2\"><h3 class=\"rd__h rd__h--2\" data-title-index=\"2\"> <span class=\"entry-title-inner\">Building a Giant Foundling Character</span></h3> <p>Your life among giants has given you a unique perspective. Though you are unusually large for your kind, you're no larger than a giant child, so you might be very mindful of your size.</p></div><div data-roll-name-ancestor=\"Feature: Strike of the Giants\" class=\"rd__b  rd__b--2\"><h3 class=\"rd__h rd__h--2\" data-title-index=\"3\"> <span class=\"entry-title-inner\">Feature: Strike of the Giants</span></h3> <p>You gain the @feat[Strike of the Giants|BGG] feat.</p></div><div data-roll-name-ancestor=\"Suggested Characteristics\" class=\"rd__b  rd__b--2\"><h3 class=\"rd__h rd__h--2\" data-title-index=\"4\"> <span class=\"entry-title-inner\">Suggested Characteristics</span></h3> <p>The Giant Foundling Personality Traits table suggests a variety of traits you might adopt for your character.</p><table class=\"w-100 rd__table  stripe-odd-table\"><thead><tr><th class=\"rd__th ve-col-2 ve-text-center \" data-rd-isroller=\"true\">[[/r d6]]</th><th class=\"rd__th ve-col-10 \" data-rd-isroller=\"false\">Personality Trait</th></tr></thead><tbody><tr><td class=\"rd__th ve-col-2 ve-text-center \" data-roll-min=\"1\" data-roll-max=\"1\">1</td><td class=\"rd__th ve-col-10 \">What I lack in stature compared to giants, I make up for with sheer spite.</td></tr><tr><td class=\"rd__th ve-col-2 ve-text-center \" data-roll-min=\"2\" data-roll-max=\"2\">2</td><td class=\"rd__th ve-col-10 \">I insist on being taken seriously as a full-grown adult. Nobody talks down to me!</td></tr><tr><td class=\"rd__th ve-col-2 ve-text-center \" data-roll-min=\"3\" data-roll-max=\"3\">3</td><td class=\"rd__th ve-col-10 \">Crowded spaces make me uncomfortable. I'd much rather be in an open field than a bustling tavern.</td></tr><tr><td class=\"rd__th ve-col-2 ve-text-center \" data-roll-min=\"4\" data-roll-max=\"4\">4</td><td class=\"rd__th ve-col-10 \">I embrace my shorter stature. It helps me stay unnoticed—and underestimated.</td></tr><tr><td class=\"rd__th ve-col-2 ve-text-center \" data-roll-min=\"5\" data-roll-max=\"5\">5</td><td class=\"rd__th ve-col-10 \">Every avalanche begins as a single pebble.</td></tr><tr><td class=\"rd__th ve-col-2 ve-text-center \" data-roll-min=\"6\" data-roll-max=\"6\">6</td><td class=\"rd__th ve-col-10 \">The world always feels too big, and I'm afraid I'll never find my place in it.</td></tr></tbody></table></div></div></div>",
+          "chat": ""
+        },
+        "source": {
+          "custom": "",
+          "book": "BGG",
+          "page": "6",
+          "license": "",
+          "rules": "2014",
+          "revision": 1
+        },
+        "advancement": [
+          {
+            "_id": "r4Tj8qg5duMjuprd",
+            "type": "Trait",
+            "configuration": {
+              "mode": "default",
+              "allowReplacements": false,
+              "grants": [
+                "skills:itm",
+                "skills:sur"
+              ],
+              "choices": []
+            },
+            "level": 0,
+            "title": "Skills",
+            "value": {
+              "chosen": [
+                "skills:itm",
+                "skills:sur"
+              ]
+            }
+          },
+          {
+            "_id": "5WXuRLnALjlneQie",
+            "type": "ItemGrant",
+            "level": 0,
+            "title": "Features",
+            "icon": "https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/backgrounds/BGG/Giant%20Foundling.webp",
+            "configuration": {
+              "items": [
+                {
+                  "uuid": ".6gxIC6dxDFzji5oc",
+                  "optional": false
+                }
+              ],
+              "optional": false,
+              "spell": {
+                "ability": [
+                  ""
+                ],
+                "preparation": "",
+                "uses": {
+                  "max": "",
+                  "per": "",
+                  "requireSlot": false
+                }
+              }
+            },
+            "value": {
+              "added": {
+                "6gxIC6dxDFzji5oc": ".6gxIC6dxDFzji5oc"
+              }
+            }
+          }
+        ],
+        "identifier": "giant-foundling",
+        "startingEquipment": []
+      },
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "flags": {
+        "plutonium": {
+          "page": "backgrounds.html",
+          "source": "BGG",
+          "hash": "giant%20foundling_bgg",
+          "propDroppable": "background",
+          "isDirectImport": true
+        },
+        "scene-packer": {
+          "hash": "d6a0a1e92e896cdfbcee5e01d7221083297ae574"
+        }
+      },
+      "effects": [],
+      "img": "https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/backgrounds/BGG/Giant%20Foundling.webp",
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748284696511,
+        "modifiedTime": 1748284696608,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "ypXK3Wmmhi7VjG6V",
+      "name": "Strike of the Giants",
+      "type": "feat",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "BGG",
+          "page": "19",
+          "license": "",
+          "rules": "2014",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div><hr /><div>\n\t\t\t\t<p><i>Prerequisites: Martial Proficiency or @background[Giant Foundling|BGG]</i></p>\n\t\t\t\t\n\t\t\t\t<div class=\"rd__b  rd__b--3\"><p>You have absorbed primeval magic that gives you an echo of the might of giants. When you take this feat, choose one of the benefits listed below. Once per turn, when you hit a target with a melee weapon attack or a ranged weapon attack using a thrown weapon, you can imbue the attack with an additional effect depending on the benefit you chose:</p><div data-roll-name-ancestor=\"Cloud Strike\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"1\"> <span class=\"entry-title-inner\">Cloud Strike.</span></span> The target takes an extra [[/damage 1d4 type=thunder]] damage. If the target is a creature, it must succeed on a Wisdom saving throw, or you become invisible to it until the start of your next turn or until immediately after you make an attack roll or cast a spell.</p></div><div data-roll-name-ancestor=\"Fire Strike\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"2\"> <span class=\"entry-title-inner\">Fire Strike.</span></span> The target takes an extra [[/damage 1d10 type=fire]] damage.</p></div><div data-roll-name-ancestor=\"Frost Strike\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"3\"> <span class=\"entry-title-inner\">Frost Strike.</span></span> The target takes an extra [[/damage 1d6 type=cold]] damage. If the target is a creature, it must succeed on a Constitution saving throw, or its speed is reduced to 0 until the start of your next turn.</p></div><div data-roll-name-ancestor=\"Hill Strike\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"4\"> <span class=\"entry-title-inner\">Hill Strike.</span></span> The target takes an extra [[/damage 1d6]] damage of the weapon's type. If the target is a creature, it must succeed on a Strength saving throw or have the prone condition.</p></div><div data-roll-name-ancestor=\"Stone Strike\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"5\"> <span class=\"entry-title-inner\">Stone Strike.</span></span> The target takes an extra [[/damage 1d6 type=force]] damage. If the target is a creature, it must succeed on a Strength saving throw or be pushed 10 feet from you in a straight line.</p></div><div data-roll-name-ancestor=\"Storm Strike\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"6\"> <span class=\"entry-title-inner\">Storm Strike.</span></span> The target takes an extra [[/damage 1d6 type=lightning]] damage. If the target is a creature, it must succeed on a Constitution saving throw, or it has disadvantage on attack rolls until the start of your next turn.</p><p>The saving throw DC for these effects equals 8 + your proficiency bonus + your Strength or Constitution modifier.</p><p>You can use this feat a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.</p></div></div>\n\t\t\t</div></div>",
+          "chat": ""
+        },
+        "requirements": "Martial Proficiency or Giant Foundling",
+        "uses": {
+          "max": "@prof",
+          "recovery": [
+            {
+              "period": "lr",
+              "type": "recoverAll"
+            }
+          ],
+          "spent": 0
+        },
+        "type": {
+          "value": "feat",
+          "subtype": ""
+        },
+        "properties": [],
+        "advancement": [],
+        "activities": {
+          "VSBn5YajGyBH3Umc": {
+            "_id": "VSBn5YajGyBH3Umc",
+            "type": "save",
+            "name": "Save: 1d4 Thunder Damage",
+            "activation": {
+              "type": "",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": [
+                {
+                  "target": "",
+                  "value": "1",
+                  "type": "itemUses",
+                  "scaling": {}
+                }
+              ]
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "save": {
+              "ability": [
+                "wis"
+              ],
+              "dc": {
+                "calculation": "spellcasting"
+              }
+            },
+            "damage": {
+              "onSave": "full",
+              "parts": [
+                {
+                  "types": [
+                    "thunder"
+                  ],
+                  "number": 1,
+                  "denomination": 4,
+                  "bonus": "",
+                  "scaling": {
+                    "mode": "",
+                    "number": 1
+                  },
+                  "custom": {
+                    "enabled": false
+                  }
+                }
+              ]
+            },
+            "sort": 0
+          },
+          "962sk8CuUXaOYf6G": {
+            "_id": "962sk8CuUXaOYf6G",
+            "type": "save",
+            "name": "Save: 1d10 Fire Damage",
+            "activation": {
+              "type": "",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": [
+                {
+                  "target": "",
+                  "value": "1",
+                  "type": "itemUses",
+                  "scaling": {}
+                }
+              ]
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "save": {
+              "ability": [
+                "wis"
+              ],
+              "dc": {
+                "calculation": "spellcasting"
+              }
+            },
+            "damage": {
+              "onSave": "none",
+              "parts": [
+                {
+                  "types": [
+                    "fire"
+                  ],
+                  "number": 1,
+                  "denomination": 10,
+                  "bonus": "",
+                  "scaling": {
+                    "mode": "",
+                    "number": 1
+                  },
+                  "custom": {
+                    "enabled": false
+                  }
+                }
+              ]
+            },
+            "sort": 0
+          },
+          "Y4RXoWc9dsmFo0s4": {
+            "_id": "Y4RXoWc9dsmFo0s4",
+            "type": "save",
+            "name": "Save: 1d6 Cold Damage",
+            "activation": {
+              "type": "",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": [
+                {
+                  "target": "",
+                  "value": "1",
+                  "type": "itemUses",
+                  "scaling": {}
+                }
+              ]
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "save": {
+              "ability": [
+                "wis"
+              ],
+              "dc": {
+                "calculation": "spellcasting"
+              }
+            },
+            "damage": {
+              "onSave": "full",
+              "parts": [
+                {
+                  "types": [
+                    "cold"
+                  ],
+                  "number": 1,
+                  "denomination": 6,
+                  "bonus": "",
+                  "scaling": {
+                    "mode": "",
+                    "number": 1
+                  },
+                  "custom": {
+                    "enabled": false
+                  }
+                }
+              ]
+            },
+            "sort": 0
+          },
+          "7XcbsisKlcYnL3RC": {
+            "_id": "7XcbsisKlcYnL3RC",
+            "type": "save",
+            "name": "Save",
+            "activation": {
+              "type": "",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": [
+                {
+                  "target": "",
+                  "value": "1",
+                  "type": "itemUses",
+                  "scaling": {}
+                }
+              ]
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "save": {
+              "ability": [
+                "wis"
+              ],
+              "dc": {
+                "calculation": "spellcasting"
+              }
+            },
+            "damage": {
+              "onSave": "none",
+              "parts": [
+                {
+                  "types": [],
+                  "number": 1,
+                  "denomination": 6,
+                  "bonus": "",
+                  "scaling": {
+                    "mode": "",
+                    "number": 1
+                  },
+                  "custom": {
+                    "enabled": false
+                  }
+                }
+              ]
+            },
+            "sort": 0
+          },
+          "0yKHlVW0pNaVwrXA": {
+            "_id": "0yKHlVW0pNaVwrXA",
+            "type": "save",
+            "name": "Save: 1d6 Force Damage",
+            "activation": {
+              "type": "",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": [
+                {
+                  "target": "",
+                  "value": "1",
+                  "type": "itemUses",
+                  "scaling": {}
+                }
+              ]
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "save": {
+              "ability": [
+                "wis"
+              ],
+              "dc": {
+                "calculation": "spellcasting"
+              }
+            },
+            "damage": {
+              "onSave": "full",
+              "parts": [
+                {
+                  "types": [
+                    "force"
+                  ],
+                  "number": 1,
+                  "denomination": 6,
+                  "bonus": "",
+                  "scaling": {
+                    "mode": "",
+                    "number": 1
+                  },
+                  "custom": {
+                    "enabled": false
+                  }
+                }
+              ]
+            },
+            "sort": 0
+          },
+          "VXbvGYL82NrdxE5s": {
+            "_id": "VXbvGYL82NrdxE5s",
+            "type": "save",
+            "name": "Save: 1d6 Lightning Damage",
+            "activation": {
+              "type": "",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": [
+                {
+                  "target": "",
+                  "value": "1",
+                  "type": "itemUses",
+                  "scaling": {}
+                }
+              ]
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "save": {
+              "ability": [
+                "wis"
+              ],
+              "dc": {
+                "calculation": "spellcasting"
+              }
+            },
+            "damage": {
+              "onSave": "full",
+              "parts": [
+                {
+                  "types": [
+                    "lightning"
+                  ],
+                  "number": 1,
+                  "denomination": 6,
+                  "bonus": "",
+                  "scaling": {
+                    "mode": "",
+                    "number": 1
+                  },
+                  "custom": {
+                    "enabled": false
+                  }
+                }
+              ]
+            },
+            "sort": 0
+          }
+        },
+        "identifier": "strike-of-the-giants",
+        "cover": null,
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "img": "systems/dnd5e/icons/svg/items/feature.svg",
+      "flags": {
+        "plutonium": {
+          "page": "feats.html",
+          "source": "BGG",
+          "hash": "strike%20of%20the%20giants_bgg"
+        },
+        "scene-packer": {
+          "hash": "9798206ad60288eb0b29662c8d54b9ad6e0b4af2"
+        },
+        "dnd5e": {
+          "last": {
+            "VXbvGYL82NrdxE5s": {
+              "damageType": {
+                "0": "lightning"
+              }
+            }
+          }
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748284710638,
+        "modifiedTime": 1748285518623,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "Pw6IXT0kv3gFLQfT",
+      "name": "Telekinetic",
+      "type": "feat",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "208",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div><hr /><div>\n\t\t\t\t<p><i>General Feat (Prerequisite: Level 4+)</i></p>\n\t\t\t\t\n\t\t\t\t<div class=\"rd__b  rd__b--3\"><p>You gain the following benefits.</p><div data-roll-name-ancestor=\"Ability Score Increase\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"1\"> <span class=\"entry-title-inner\">Ability Score Increase.</span></span> Increase your Intelligence, Wisdom, or Charisma by 1, to a maximum of 20.</p></div><div data-roll-name-ancestor=\"Minor Telekinesis\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"2\"> <span class=\"entry-title-inner\">Minor Telekinesis.</span></span> You learn the @spell[Mage Hand|XPHB] spell. You can cast it without Verbal or Somatic components, you can make the spectral hand &amp;Reference[condition=Invisible], and its range and the distance it can be away from you both increase by 30 feet when you cast it. The spell's spellcasting ability is the ability increased by this feat.</p></div><div data-roll-name-ancestor=\"Telekinetic Shove\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"3\"> <span class=\"entry-title-inner\">Telekinetic Shove.</span></span> As a Bonus Action, you can telekinetically shove one creature you can see within 30 feet of yourself. When you do so, the target must succeed on a Strength saving throw (DC <span class=\"rd__dc\">8</span> plus the ability modifier of the score increased by this feat and your Proficiency Bonus) or be moved 5 feet toward or away from you.</p></div></div>\n\t\t\t</div></div>",
+          "chat": ""
+        },
+        "requirements": "",
+        "prerequisites": {
+          "level": 4,
+          "repeatable": false
+        },
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "type": {
+          "value": "feat",
+          "subtype": "general"
+        },
+        "properties": [],
+        "advancement": [],
+        "activities": {
+          "XHjWUTSznIyT4dwh": {
+            "_id": "XHjWUTSznIyT4dwh",
+            "type": "save",
+            "activation": {
+              "type": "bonus",
+              "value": 1,
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "value": "30",
+              "units": "ft",
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "save": {
+              "ability": [
+                "str"
+              ],
+              "dc": {
+                "calculation": "spellcasting"
+              }
+            },
+            "damage": {
+              "onSave": "none",
+              "parts": []
+            },
+            "sort": 0
+          }
+        },
+        "identifier": "telekinetic",
+        "cover": null,
+        "crewed": false,
+        "enchant": {}
+      },
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "img": "icons/magic/air/wind-vortex-swirl-purple.webp",
+      "flags": {
+        "plutonium": {
+          "page": "feats.html",
+          "source": "XPHB",
+          "hash": "telekinetic_xphb"
+        },
+        "scene-packer": {
+          "hash": "a3e719de3952a112b216f9a147ba01485e1c7eda"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748284913699,
+        "modifiedTime": 1748284913699,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "cOBnQgE3p5LnPao2",
+      "name": "Mage Hand",
+      "type": "spell",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "293",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--3\"><p>A spectral, floating hand appears at a point you choose within range. The hand lasts for the duration. The hand vanishes if it is ever more than 30 feet away from you or if you cast this spell again.</p><p>When you cast the spell, you can use the hand to manipulate an object, open an unlocked door or container, stow or retrieve an item from an open container, or pour the contents out of a vial.</p><p>As a @action[Magic|XPHB] action on your later turns, you can control the hand thus again. As part of that action, you can move the hand up to 30 feet.</p><p>The hand can't attack, activate magic items, or carry more than 10 pounds.</p></div>",
+          "chat": ""
+        },
+        "level": 0,
+        "school": "con",
+        "properties": [
+          "vocal",
+          "somatic"
+        ],
+        "materials": {
+          "value": "",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "target": {
+          "template": {
+            "count": "",
+            "contiguous": false,
+            "type": "",
+            "size": "",
+            "width": "",
+            "height": "",
+            "units": ""
+          },
+          "affects": {
+            "count": "",
+            "type": "",
+            "choice": false,
+            "special": ""
+          }
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "activation": {
+          "type": "action",
+          "value": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "preparation": {
+          "mode": "always",
+          "prepared": true
+        },
+        "activities": {
+          "ArUhSg3Fb1n2b0Ko": {
+            "_id": "ArUhSg3Fb1n2b0Ko",
+            "type": "utility",
+            "name": "Cast",
+            "activation": {
+              "type": "action",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "roll": {
+              "prompt": false,
+              "visible": false
+            },
+            "sort": 0
+          }
+        },
+        "identifier": "mage-hand"
+      },
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "img": "icons/magic/unholy/strike-hand-glow-pink.webp",
+      "flags": {
+        "plutonium": {
+          "page": "spells.html",
+          "source": "XPHB",
+          "hash": "mage%20hand_xphb",
+          "propDroppable": "spell",
+          "spellClassNames": [
+            "Bard",
+            "Sorcerer",
+            "Warlock",
+            "Wizard",
+            "Artificer"
+          ]
+        },
+        "scene-packer": {
+          "hash": "4c5435c1af90fca4a15e52d96c2cd12c3b195c97"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1748284914185,
+        "modifiedTime": 1748284914185,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
+    }
+  ],
+  "effects": [],
+  "flags": {
+    "scene-packer": {
+      "hash": "b0ae9404c3b7a41c8e29be8225822ba9f7d2eac5",
+      "sourceId": "Actor.KT3pPkr0TFADTqBt",
+      "defaultPermission": 2
+    },
+    "dnd5e": {
+      "savageAttacks": false,
+      "weaponCriticalThreshold": 20,
+      "wildMagic": false,
+      "spellSniper": false,
+      "initiativeHalfProf": false,
+      "showTokenPortrait": true
+    },
+    "ddbimporter": {
+      "dndbeyond": {
+        "url": "https://www.dndbeyond.com/characters/109381819/LIDtFj",
+        "characterId": "109381819",
+        "totalLevels": 1,
+        "proficiencies": null,
+        "proficienciesIncludingEffects": null,
+        "roUrl": "https://dndbeyond.com/characters/109381819",
+        "characterValues": null,
+        "templateStrings": null,
+        "campaign": {
+          "id": 3578775,
+          "name": "Share Content Creation",
+          "description": "",
+          "link": "/campaigns/3578775",
+          "publicNotes": "",
+          "dmUserId": 100449060,
+          "dmUsername": "VerKnight",
+          "characters": [
+            {
+              "userId": 118372506,
+              "username": "JazzCats",
+              "characterId": 109382343,
+              "characterName": "Ragna",
+              "characterUrl": "/profile/JazzCats/characters/109382343",
+              "avatarUrl": null,
+              "privacyType": 3,
+              "campaignId": null,
+              "isAssigned": true
+            },
+            {
+              "userId": 110561327,
+              "username": "sighko_",
+              "characterId": 109381819,
+              "characterName": "Cade De la Cour",
+              "characterUrl": "/profile/sighko_/characters/109381819",
+              "avatarUrl": "https://www.dndbeyond.com/avatars/46187/230/1581111423-109381819.jpeg?width=150&height=150&fit=crop&quality=95&auto=webp",
+              "privacyType": 3,
+              "campaignId": null,
+              "isAssigned": true
+            },
+            {
+              "userId": 100198453,
+              "username": "Kulamonster77",
+              "characterId": 109382542,
+              "characterName": "Kulamonster77's Character",
+              "characterUrl": "/profile/Kulamonster77/characters/109382542",
+              "avatarUrl": null,
+              "privacyType": 2,
+              "campaignId": null,
+              "isAssigned": true
+            },
+            {
+              "userId": 118430703,
+              "username": "FraaOrolo",
+              "characterId": 109382686,
+              "characterName": "Faeryax Ophir",
+              "characterUrl": "/profile/FraaOrolo/characters/109382686",
+              "avatarUrl": null,
+              "privacyType": 2,
+              "campaignId": null,
+              "isAssigned": true
+            },
+            {
+              "userId": 100449060,
+              "username": "VerKnight",
+              "characterId": 109381845,
+              "characterName": "R3-P0",
+              "characterUrl": "/profile/VerKnight/characters/109381845",
+              "avatarUrl": "https://www.dndbeyond.com/avatars/37603/33/1581111423-109381845.jpeg?width=150&height=150&fit=crop&quality=95&auto=webp",
+              "privacyType": 2,
+              "campaignId": null,
+              "isAssigned": true
+            },
+            {
+              "userId": 100198453,
+              "username": "Kulamonster77",
+              "characterId": 114308627,
+              "characterName": "GD- Folen Yllakas",
+              "characterUrl": "/profile/Kulamonster77/characters/114308627",
+              "avatarUrl": "https://www.dndbeyond.com/avatars/38814/402/1581111423-114308627.jpeg?width=150&height=150&fit=crop&quality=95&auto=webp",
+              "privacyType": 2,
+              "campaignId": null,
+              "isAssigned": true
+            },
+            {
+              "userId": 119191010,
+              "username": "Evaperies",
+              "characterId": 114424060,
+              "characterName": "Saphira",
+              "characterUrl": "/profile/Evaperies/characters/114424060",
+              "avatarUrl": "https://www.dndbeyond.com/avatars/38819/98/1581111423-114424060.jpeg?width=150&height=150&fit=crop&quality=95&auto=webp",
+              "privacyType": 2,
+              "campaignId": null,
+              "isAssigned": true
+            },
+            {
+              "userId": 101164673,
+              "username": "HarleyQueenn",
+              "characterId": 115413107,
+              "characterName": "Venmoira",
+              "characterUrl": "/profile/HarleyQueenn/characters/115413107",
+              "avatarUrl": "https://www.dndbeyond.com/avatars/38984/262/1581111423-115413107.jpeg?width=150&height=150&fit=crop&quality=95&auto=webp",
+              "privacyType": 2,
+              "campaignId": null,
+              "isAssigned": true
+            },
+            {
+              "userId": 110561327,
+              "username": "sighko_",
+              "characterId": 139308547,
+              "characterName": "Cade De la Cour",
+              "characterUrl": "/profile/sighko_/characters/139308547",
+              "avatarUrl": "https://www.dndbeyond.com/avatars/46187/230/1581111423-109381819.jpeg?width=150&height=150&fit=crop&quality=95&auto=webp",
+              "privacyType": 0,
+              "campaignId": null,
+              "isAssigned": true
+            },
+            {
+              "userId": 105424069,
+              "username": "OrtizAl3hammer",
+              "characterId": 146725675,
+              "characterName": "Moriah Kiah",
+              "characterUrl": "/profile/OrtizAl3hammer/characters/146725675",
+              "avatarUrl": null,
+              "privacyType": 2,
+              "campaignId": null,
+              "isAssigned": true
+            }
+          ]
+        },
+        "profBonus": 2,
+        "weaponMasteries": [
+          {
+            "weapon": "Rapier",
+            "mastery": "Vex",
+            "dnd5eName": "rapier"
+          },
+          {
+            "weapon": "Dagger",
+            "mastery": "Nick",
+            "dnd5eName": "dagger"
+          }
+        ],
+        "effectAbilities": null,
+        "abilityOverrides": null
+      },
+      "activeUpdate": false,
+      "compendium": false,
+      "acEffects": [
+        {
+          "name": "AC Studded Leather (Light): 16",
+          "changes": [
+            {
+              "key": "system.attributes.ac.calc",
+              "value": "custom",
+              "mode": 5,
+              "priority": 30
+            },
+            {
+              "key": "system.attributes.ac.formula",
+              "value": "12 + @abilities.dex.mod",
+              "mode": 5,
+              "priority": 30
+            }
+          ],
+          "duration": {
+            "seconds": null,
+            "startTime": null,
+            "rounds": null,
+            "turns": null,
+            "startRound": null,
+            "startTurn": null
+          },
+          "origin": "AC",
+          "tint": "",
+          "disabled": false,
+          "transfer": true,
+          "selectedKey": [],
+          "img": "icons/svg/shield.svg",
+          "flags": {
+            "dae": {
+              "transfer": true,
+              "armorEffect": true
+            },
+            "ddbimporter": {
+              "disabled": true,
+              "itemId": 1689310608,
+              "entityTypeId": 1439493548,
+              "characterEffect": true
+            }
+          }
+        },
+        {
+          "name": "AC Base Armor - Racial (Unarmored): 14",
+          "changes": [
+            {
+              "key": "system.attributes.ac.calc",
+              "value": "custom",
+              "mode": 5,
+              "priority": 15
+            },
+            {
+              "key": "system.attributes.ac.formula",
+              "value": "14 + @abilities.dex.mod",
+              "mode": 5,
+              "priority": 15
+            }
+          ],
+          "duration": {
+            "seconds": null,
+            "startTime": null,
+            "rounds": null,
+            "turns": null,
+            "startRound": null,
+            "startTurn": null
+          },
+          "origin": "AC",
+          "tint": "",
+          "disabled": false,
+          "transfer": true,
+          "selectedKey": [],
+          "img": "icons/svg/shield.svg",
+          "flags": {
+            "dae": {
+              "transfer": true,
+              "armorEffect": true
+            },
+            "ddbimporter": {
+              "disabled": false,
+              "characterEffect": true
+            }
+          }
+        }
+      ],
+      "baseAC": 14,
+      "autoAC": {
+        "calc": "default",
+        "flat": null
+      },
+      "overrideAC": {
+        "flat": 16,
+        "calc": "flat",
+        "formula": ""
+      },
+      "rolledHP": false,
+      "baseHitPoints": 8,
+      "resources": {
+        "ask": false,
+        "type": "remove",
+        "primary": "",
+        "secondary": "",
+        "tertiary": ""
+      },
+      "importId": "U4ujZocA68gj41rq",
+      "syncItemReady": true,
+      "syncActionReady": true,
+      "activeSyncSpells": true
+    },
+    "tidy5e-sheet": {
+      "maxPreparedSpells": 0
+    },
+    "tidy5e-sheet-kgar": {
+      "maxPreparedSpells": 0
+    },
+    "ddb-importer": {
+      "version": "6.2.1"
+    },
+    "midi-qol": {
+      "onUseMacroName": "[postActiveEffects]"
+    },
+    "core": {
+      "sheetClass": "dnd5e.ActorSheet5eCharacter"
+    },
+    "exportSource": {
+      "world": "waterdeep-a-grand-game",
+      "system": "dnd5e",
+      "coreVersion": "12.331",
+      "systemVersion": "4.3.9"
+    }
+  },
+  "_stats": {
+    "coreVersion": "12.331",
+    "systemId": "dnd5e",
+    "systemVersion": "4.3.9",
+    "createdTime": 1747849674428,
+    "modifiedTime": 1748285561340,
+    "lastModifiedBy": "d8mHpZu9bQALnigO"
+  }
+}

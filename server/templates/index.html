@@ -6,17 +6,36 @@
     <title>Bugbear Banter GM Interface</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; height: 100vh; background-color: #f4f4f4; }
-        .column { padding: 15px; overflow-y: auto; box-sizing: border-box; } /* Removed transition for smoother resizing */
+        .column { overflow-y: auto; box-sizing: border-box; }
         
-        #left-column { width: 30%; min-width: 200px; max-width: 600px; /* Added min/max widths */ background-color: #e9e9e9; border-right: 1px solid #ccc; height: 100vh; }
-        #left-column.collapsed { width: 0; min-width: 0; padding: 0; border-right: none; }
+        #left-column {
+            width: 30%; /* Initial width */
+            min-width: 200px; /* User cannot drag smaller than this */
+            max-width: 60%;  /* User cannot drag larger than this */
+            background-color: #e9e9e9;
+            border-right: 1px solid #ccc;
+            height: 100vh;
+        }
+
         #left-column-content { padding: 15px; }
-        #left-column.collapsed #left-column-content { display: none; }
 
-        #resizer { width: 20px; background-color: #d0d0d0; cursor: col-resize; /* Changed cursor */ display: flex; align-items: center; justify-content: center; font-size: 18px; color: #333; border-right: 1px solid #ccc; user-select: none; /* Prevent text selection */ }
-        #resizer:hover { background-color: #b0b0b0; }
+        #resizer {
+            width: 10px; /* Made the resizer bar thinner */
+            background-color: #d0d0d0;
+            cursor: col-resize;
+            border-right: 1px solid #ccc;
+            user-select: none; /* Prevent text selection during drag */
+        }
+        #resizer:hover { background-color: #007bff; } /* Highlight on hover */
 
-        #center-column { flex-grow: 1; /* Allow center to fill remaining space */ background-color: #fff; display: flex; flex-direction: column; height: 100vh; }
+        #center-column {
+            flex-grow: 1; /* Makes the center column fill the remaining space */
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            padding: 15px;
+        }
 
         .collapsible-section h3 { cursor: pointer; background-color: #d8d8d8; padding: 8px; margin: 10px -15px 5px -15px; user-select: none; }
         .collapsible-section h3::after { content: ' ▼'; float: right; }
@@ -52,22 +71,6 @@
     <div id="left-column" class="column">
         <div id="left-column-content">
             <h2>Characters & Details</h2>
-            
-            <div id="pc-list-section" class="collapsible-section">
-                <h3>Active Player Characters</h3>
-                <div class="collapsible-content character-list">
-                    <div id="active-pc-list">
-                        <p><em>No Player Characters defined yet.</em></p>
-                    </div>
-                </div>
-            </div>
-
-            <div id="npc-list-section" class="collapsible-section">
-                <h3>NPC List</h3>
-                <div class="collapsible-content character-list">
-                    <div id="character-list"><ul></ul></div>
-                </div>
-            </div>
 
             <div id="character-details-section" class="collapsible-section">
                 <h3>Character Details: <span id="details-char-name">None</span></h3>
@@ -95,6 +98,21 @@
                 </div>
             </div>
 
+            <div id="pc-list-section" class="collapsible-section">
+                <h3>Active Player Characters</h3>
+                <div class="collapsible-content character-list">
+                    <div id="active-pc-list">
+                        <p><em>No Player Characters defined yet.</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="npc-list-section" class="collapsible-section">
+                <h3>NPC List</h3>
+                <div class="collapsible-content character-list">
+                    <div id="character-list"><ul></ul></div>
+                </div>
+            </div>
 
             <div id="create-character-section" class="collapsible-section collapsed">
                 <h3>Create New Character</h3>
@@ -116,7 +134,7 @@
         </div>
     </div>
 
-    <div id="resizer">&lt;</div>
+    <div id="resizer"></div>
 
     <div id="center-column" class="column">
         <h2>Scene Interaction</h2>
@@ -505,32 +523,23 @@
     function setupInterfaceControls() {
         const resizer = getElem('resizer');
         const leftColumn = getElem('left-column');
-        let isResizing = false;
+        
+        // --- REMOVED CLICK-TO-COLLAPSE LOGIC ---
 
-        // Logic for collapsing the panel
-        resizer.addEventListener('click', (e) => {
-            // This check prevents the click from firing after a drag
-            if (e.detail > 0 && e.clientX !== 0) {
-                 leftColumn.classList.toggle('collapsed');
-                 resizer.textContent = leftColumn.classList.contains('collapsed') ? '>' : '<';
-            }
-        });
-
-        // Logic for resizing the panel
+        // Logic for resizing the panel by dragging
         resizer.addEventListener('mousedown', (e) => {
             e.preventDefault();
-            isResizing = true;
+            
             const startX = e.clientX;
             const startWidth = leftColumn.offsetWidth;
 
             const handleMouseMove = (e) => {
-                if (!isResizing) return;
                 const newWidth = startWidth + (e.clientX - startX);
+                // The min/max width is now handled by CSS properties
                 leftColumn.style.width = `${newWidth}px`;
             };
 
             const handleMouseUp = () => {
-                isResizing = false;
                 window.removeEventListener('mousemove', handleMouseMove);
                 window.removeEventListener('mouseup', handleMouseUp);
             };
@@ -539,7 +548,7 @@
             window.addEventListener('mouseup', handleMouseUp);
         });
 
-        // Logic for collapsible sections within the panel
+        // Logic for collapsible sections within the left panel
         document.querySelectorAll('.collapsible-section h3').forEach(header => {
             header.addEventListener('click', () => {
                 header.parentElement.classList.toggle('collapsed');
