@@ -51,16 +51,31 @@
         h5 { margin-top: 15px; margin-bottom: 5px; color: #333; border-bottom: 1px solid #eee; padding-bottom: 3px;}
         button { padding: 8px 12px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 5px; }
         button:hover { background-color: #0056b3; }
+        button:disabled { background-color: #cccccc; cursor: not-allowed;}
         textarea, input[type="text"], input[type="number"], select { width: calc(100% - 16px); padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;}
         label { display: block; margin-bottom: 5px; font-weight: bold; }
 
         .character-list ul { list-style-type: none; padding: 0; max-height: 180px; overflow-y: auto; border: 1px solid #ddd; background: #fff; }
-        .character-list li { padding: 8px; cursor: pointer; border-bottom: 1px solid #ddd; }
+        .character-list li { 
+            padding: 8px; 
+            cursor: default;
+            border-bottom: 1px solid #ddd; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
         .character-list li:last-child { border-bottom: none; }
-        .character-list li:hover, .character-list li.selected { background-color: #d1e7ff; }
+        .character-list li.active-in-scene { background-color: #e6f2ff; } 
+        /* .character-list li.focused-npc { background-color: #cce4ff; font-weight: bold; } No longer needed */
+        .character-list li .npc-actions button { font-size: 0.8em; padding: 2px 5px; margin-left: 5px;}
+
 
         #dialogue-interface { display: none; flex-grow: 1; display: flex; flex-direction: column; }
-        #dialogue-transcript { flex-grow: 1; border: 1px solid #eee; padding: 10px; margin-bottom:10px; overflow-y: auto; background-color: #f9f9f9; min-height: 200px; }
+        #multi-npc-dialogue-container { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: row; flex: 1 1 200px; min-width: 180px; gap: 15px; }
+        .npc-dialogue-area { border: 1px solid #ddd; padding: 10px; border-radius: 5px; background-color: #f9f9f9;}
+        .npc-dialogue-area h3 { margin-top: 0; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #eee;}
+        .npc-transcript { min-height: 100px; max-height: 250px; overflow-y: auto; border: 1px solid #eee; padding: 8px; background-color: #fff; margin-bottom: 10px;}
+        
         .dialogue-entry { margin-bottom: 8px; padding: 5px; border-radius: 3px; }
         .player-utterance { background-color: #e1f7d5; text-align: right; }
         .npc-response { background-color: #ddebf7; }
@@ -106,14 +121,14 @@
             background-color: #e0e0e0; 
             border-radius: 3px; 
             height: 18px; 
-            min-width: 150px; /* Ensure enough space for labels */
+            min-width: 150px; 
             position: relative;
-            overflow: hidden; /* Clip bars that go out of bounds if calculations are extreme */
+            overflow: hidden; 
         }
-        .stat-bar-wrapper::before { /* Zero line */
+        .stat-bar-wrapper::before { 
             content: '';
             position: absolute;
-            left: var(--zero-offset, 25%); /* Default to 25% if var not set, for -5 to 15 range */
+            left: var(--zero-offset, 25%); 
             top: 0;
             bottom: 0;
             width: 1px;
@@ -139,7 +154,7 @@
             padding-right: 5px; 
         }
         .stat-bar.negative {
-            left: var(--bar-left); /* bar-left will be calculated to position it before zero */
+            left: var(--bar-left); 
             width: var(--bar-width);
             background-color: #dc3545; 
             text-align: left; 
@@ -174,7 +189,7 @@
                 </div>
             </div>
             <div id="npc-list-section" class="collapsible-section">
-                <h3>NPC List (for Dialogue)</h3>
+                <h3>NPCs in Scene</h3>
                 <div class="collapsible-content character-list">
                     <div id="character-list"><ul><li><em>Loading NPCs...</em></li></ul></div>
                 </div>
@@ -240,17 +255,16 @@
                 <textarea id="scene-context" rows="4" placeholder="Describe the current environment, mood, ongoing events..."></textarea>
             </div>
             <hr>
-            <h3>Dialogue with <span id="active-npc-name">No NPC Selected</span></h3>
-            <div id="dialogue-transcript">
-                <p class="scene-event">Select an NPC from the list to begin interaction.</p>
+            <div id="multi-npc-dialogue-container">
+                 <p class="scene-event">Select NPCs to add them to the scene.</p>
             </div>
+            <hr>
             <div id="dialogue-input-area">
-                <label for="player-utterance">Player Says:</label>
+                <label for="player-utterance">Player Says (to all active NPCs):</label>
                 <textarea id="player-utterance" rows="2" placeholder="Enter player dialogue here..."></textarea>
-                <button onclick="generateDialogue()" id="generate-dialogue-btn" disabled>Send to NPC</button>
+                <button onclick="generateDialogue()" id="generate-dialogue-btn" disabled>Send to NPCs</button>
             </div>
-            <div id="ai-suggestions">
-                <h4>AI Suggestions:</h4>
+            <div id="ai-suggestions"> <h4>AI Suggestions:</h4>
                 <div id="suggested-memories-list"></div>
                 <div id="suggested-topics-list"></div>
             </div>
@@ -267,10 +281,13 @@
 <script>
     console.log("Script execution started."); 
 
-    let selectedNpcId = null;
-    let activePcIds = new Set();
+    // let focusedNpcId = null; // Removed
+    let activeSceneNpcIds = new Set(); 
+    let activePcIds = new Set(); 
     let allCharacters = [];
-    let dialogueHistory = [];
+    let dialogueHistory = []; 
+    let dialogueHistories = {}; // Store individual NPC dialogue: dialogueHistories[npcId] = [{...}, ...]
+
     let currentlyExpandedAbility = null; 
     let currentlyExpandedSkill = null; 
     let skillSortKey = null; 
@@ -330,7 +347,7 @@
             const response = await fetch(`${API_BASE_URL}/api/npcs`);
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             allCharacters = await response.json();
-            renderNpcList();
+            renderNpcListForScene(); 
             renderPcList();
             updateView(); 
         } catch (error) { 
@@ -338,9 +355,9 @@
             alert('Failed to load characters. Check console for details: ' + error.message); 
         }
     }
-
-    function renderNpcList() {
-        const listContainer = getElem('character-list');
+    
+    function renderNpcListForScene() {
+        const listContainer = getElem('character-list'); 
         let ul = listContainer.querySelector('ul');
         if (!ul) { 
             ul = document.createElement('ul');
@@ -348,16 +365,105 @@
         }
         ul.innerHTML = ''; 
         const npcs = allCharacters.filter(char => char.character_type === 'NPC');
-        if (npcs.length === 0) { ul.innerHTML = '<li><p><em>No NPCs defined yet.</em></p></li>'; return; }
+        
+        if (npcs.length === 0) { 
+            ul.innerHTML = '<li><p><em>No NPCs defined yet. Create NPCs to add them to scenes.</em></p></li>'; 
+            return; 
+        }
+
         npcs.forEach(char => {
             const li = document.createElement('li');
-            li.textContent = char.name;
-            li.dataset.charId = char._id; 
-            li.onclick = () => selectNpcForDialogue(char._id);
-            if (char._id === selectedNpcId) li.classList.add('selected');
+            li.dataset.charId = char._id;
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = `npc-scene-checkbox-${char._id}`;
+            checkbox.checked = activeSceneNpcIds.has(char._id);
+            checkbox.onchange = () => toggleNpcInScene(char._id, char.name);
+            
+            const nameLabel = document.createElement('label');
+            nameLabel.htmlFor = `npc-scene-checkbox-${char._id}`;
+            nameLabel.textContent = char.name;
+            nameLabel.style.flexGrow = "1";
+            nameLabel.style.cursor = "pointer"; // Make name clickable for checkbox
+
+            li.appendChild(checkbox);
+            li.appendChild(nameLabel);
+            
+            if (activeSceneNpcIds.has(char._id)) {
+                li.classList.add('active-in-scene');
+            }
+            // No more 'focused-npc' class as we removed the concept of a single target
             ul.appendChild(li);
         });
     }
+
+    function toggleNpcInScene(npcId, npcName) {
+        const multiNpcContainer = getElem('multi-npc-dialogue-container');
+        if (activeSceneNpcIds.has(npcId)) {
+            activeSceneNpcIds.delete(npcId);
+            removeNpcDialogueArea(npcId);
+            delete dialogueHistories[npcId]; // Clear specific history
+        } else {
+            activeSceneNpcIds.add(npcId);
+            createNpcDialogueArea(npcId, npcName);
+            dialogueHistories[npcId] = []; // Initialize history for this NPC
+        }
+        
+        // If it's the first NPC being added, remove the placeholder
+        if (activeSceneNpcIds.size === 1 && multiNpcContainer.querySelector('p.scene-event')) {
+            multiNpcContainer.innerHTML = ''; // Clear placeholder
+            activeSceneNpcIds.forEach(id => { // Re-add the first one after clearing
+                 const npc = allCharacters.find(c=> c._id === id);
+                 if(npc) createNpcDialogueArea(id, npc.name);
+            });
+        } else if (activeSceneNpcIds.size === 0) {
+             multiNpcContainer.innerHTML = '<p class="scene-event">Select NPCs to add them to the scene.</p>';
+        }
+
+        renderNpcListForScene(); // Re-render to update highlights
+        disableBtn('generate-dialogue-btn', activeSceneNpcIds.size === 0);
+        updateView(); // Ensure correct main view is shown
+    }
+
+    function createNpcDialogueArea(npcId, npcName) {
+        const container = getElem('multi-npc-dialogue-container');
+        // Remove placeholder if it exists and we are adding the first NPC
+        const placeholder = container.querySelector('p.scene-event');
+        if (placeholder && activeSceneNpcIds.size > 0) {
+            placeholder.remove();
+        }
+
+        if (getElem(`npc-area-${npcId}`)) return; // Already exists
+
+        const areaDiv = document.createElement('div');
+        areaDiv.className = 'npc-dialogue-area';
+        areaDiv.id = `npc-area-${npcId}`;
+
+        const nameHeader = document.createElement('h3');
+        nameHeader.textContent = npcName;
+        areaDiv.appendChild(nameHeader);
+
+        const transcriptDiv = document.createElement('div');
+        transcriptDiv.className = 'npc-transcript';
+        transcriptDiv.id = `transcript-${npcId}`;
+        transcriptDiv.innerHTML = `<p class="scene-event">Dialogue with ${npcName} starts.</p>`;
+        areaDiv.appendChild(transcriptDiv);
+        
+        container.appendChild(areaDiv);
+    }
+
+    function removeNpcDialogueArea(npcId) {
+        const areaDiv = getElem(`npc-area-${npcId}`);
+        if (areaDiv) {
+            areaDiv.remove();
+        }
+        const container = getElem('multi-npc-dialogue-container');
+        if (activeSceneNpcIds.size === 0 && !container.querySelector('p.scene-event')) {
+             container.innerHTML = '<p class="scene-event">Select NPCs to add them to the scene.</p>';
+        }
+    }
+
 
     function renderPcList() {
         const pcListDiv = getElem('active-pc-list');
@@ -372,16 +478,12 @@
             const li = document.createElement('li');
             li.textContent = pc.name;
             li.dataset.charId = pc._id;
-            li.onclick = () => {
-                if (selectedNpcId) { 
-                    selectedNpcId = null; 
-                    const currentlySelectedNpcLi = document.querySelector('#character-list li.selected');
-                    if (currentlySelectedNpcLi) {
-                        currentlySelectedNpcLi.classList.remove('selected');
-                    }
-                    updateText('active-npc-name', 'No NPC Selected'); 
-                    disableBtn('generate-dialogue-btn', true);
-                }
+            li.onclick = () => { 
+                activeSceneNpcIds.clear(); // Clear active NPCs when switching to PC view
+                getElem('multi-npc-dialogue-container').innerHTML = '<p class="scene-event">Select NPCs to add them to the scene.</p>';
+                renderNpcListForScene(); 
+                disableBtn('generate-dialogue-btn', true);
+
                 togglePcSelection(pc._id, li); 
                 selectCharacterForDetails(pc._id); 
                 updateView();
@@ -424,7 +526,7 @@
             activePcIds.add(pcId);
             element.classList.add('selected');
         }
-        if(getElem('pc-dashboard-view').style.display !== 'none') {
+        if(getElem('pc-dashboard-view').style.display !== 'none') { 
             if (currentlyExpandedAbility) {
                 const expansionDiv = document.getElementById(`expanded-${currentlyExpandedAbility}`);
                 const selectedPcsForExpansion = allCharacters.filter(char => activePcIds.has(char._id) && char.character_type === 'PC' && char.vtt_data);
@@ -454,9 +556,11 @@
     function updateView() {
         const dialogueInterface = getElem('dialogue-interface');
         const pcDashboardView = getElem('pc-dashboard-view');
-        if (selectedNpcId) {
+        
+        if (activeSceneNpcIds.size > 0) { // If any NPC is active in scene, show dialogue interface
             dialogueInterface.style.display = 'flex'; 
             pcDashboardView.style.display = 'none';
+            // Close any open PC dashboard expansions
             if(currentlyExpandedAbility){ 
                 const expansionDiv = document.getElementById(`expanded-${currentlyExpandedAbility}`);
                 if(expansionDiv) expansionDiv.style.display = 'none';
@@ -471,27 +575,13 @@
                 if(skillHeader) skillHeader.querySelector('span.arrow-indicator').textContent = ' ►';
                 currentlyExpandedSkill = null;
             }
-        } else {
+        } else { // Otherwise, show PC dashboard (or default message if no PCs selected)
             dialogueInterface.style.display = 'none';
             pcDashboardView.style.display = 'block';
             updatePcDashboard(); 
         }
     }
     
-    function selectNpcForDialogue(npcId) {
-        selectedNpcId = npcId; 
-        const selectedChar = allCharacters.find(char => char._id === npcId);
-        if (selectedChar) {
-            updateText('active-npc-name', selectedChar.name);
-            disableBtn('generate-dialogue-btn', false);
-            dialogueHistory = []; 
-            getElem('dialogue-transcript').innerHTML = `<p class="scene-event">Interacting with NPC: ${selectedChar.name}.</p>`;
-            selectCharacterForDetails(npcId); 
-        }
-        renderNpcList(); 
-        updateView(); 
-    }
-
     function updatePcDashboard() {
         const dashboardContent = getElem('pc-dashboard-content');
         dashboardContent.innerHTML = ''; 
@@ -710,22 +800,23 @@
             skillSortKey = skillKey; 
             currentlyExpandedSkill = skillKey; 
         }
-        updatePcDashboard(); 
+        updatePcDashboard(); // This will re-render and apply sorting
 
+        // After re-rendering, explicitly manage the visibility of the clicked/unclicked skill detail
         const allSkillHeaders = document.querySelectorAll(`#skills-overview-table th.clickable-skill-header`);
         allSkillHeaders.forEach(header => {
             const sKey = header.dataset.skillKey;
             const arrow = header.querySelector('span.arrow-indicator');
             const expDiv = document.getElementById(`expanded-skill-${sKey}`);
-            if (sKey === currentlyExpandedSkill) { 
-                if (arrow) arrow.textContent = ' ▼';
-                if (expDiv) {
+            if (expDiv) { // Ensure div exists
+                if (sKey === currentlyExpandedSkill) { 
+                    if (arrow) arrow.textContent = ' ▼';
                     populateExpandedSkillDetails(sKey, expDiv, allCharacters.filter(char => activePcIds.has(char._id) && char.character_type === 'PC' && char.vtt_data));
                     expDiv.style.display = 'block';
+                } else { 
+                    if (arrow) arrow.textContent = ' ►';
+                    expDiv.style.display = 'none';
                 }
-            } else { 
-                if (arrow) arrow.textContent = ' ►';
-                if (expDiv) expDiv.style.display = 'none';
             }
         });
     }
@@ -741,7 +832,6 @@
         const skillFullName = skillNameMap[skillKey] || skillKey.toUpperCase();
         let contentHTML = `<h5>${skillFullName} Skill Modifiers & Rules</h5>`;
 
-        // Skill Modifier Bar Graph
         contentHTML += `<div class="skill-bar-chart-container">`;
         const skillDataForGraph = selectedPcs.map(pc => {
             const pcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || 1;
@@ -754,35 +844,40 @@
             return { name: pc.name, modifier: bonus };
         }).sort((a,b) => b.modifier - a.modifier); 
 
-        const graphMinMod = -3; // Define a fixed minimum for the graph's scale
-        const graphMaxMod = 17; // Define a fixed maximum for the graph's scale
-        const graphRange = graphMaxMod - graphMinMod;
-        const zeroOffsetPercent = ((0 - graphMinMod) / graphRange) * 100;
-        
-        // Set the --zero-offset CSS variable for the wrapper
-        const wrapper = expansionDiv.querySelector('.skill-bar-chart-container') || document.createElement('div'); // Get or create if not exists
-        if(wrapper) wrapper.style.setProperty('--zero-offset', `${zeroOffsetPercent}%`);
+        const allModifiers = skillDataForGraph.map(d => d.modifier);
+        const dataMinMod = Math.min(0, ...allModifiers); 
+        const dataMaxMod = Math.max(0, ...allModifiers); 
 
+        const visualMin = Math.min(-2, dataMinMod -1); // Ensure scale can show at least -2 or one less than actual min
+        const visualMax = Math.max(5, dataMaxMod + 1);   // Ensure scale can show at least +5 or one more than actual max
+        const visualRange = visualMax - visualMin;
+        
+        const zeroPositionPercent = visualRange !== 0 ? ((0 - visualMin) / visualRange) * 100 : 50; // Handle division by zero if range is 0
 
         skillDataForGraph.forEach(data => {
             let barWidthPercent = 0;
-            let barLeftPercent = zeroOffsetPercent;
+            let barLeftPercent = zeroPositionPercent;
             let barClass = 'stat-bar';
 
-            if (data.modifier >= 0) {
-                barClass += ' positive';
-                barWidthPercent = (data.modifier / graphRange) * 100;
-            } else { // Negative modifier
-                barClass += ' negative';
-                barWidthPercent = (Math.abs(data.modifier) / graphRange) * 100;
-                barLeftPercent = zeroOffsetPercent - barWidthPercent;
+            if (visualRange !== 0) {
+                if (data.modifier >= 0) {
+                    barClass += ' positive';
+                    barWidthPercent = (data.modifier / visualRange) * 100;
+                } else { 
+                    barClass += ' negative';
+                    barWidthPercent = (Math.abs(data.modifier) / visualRange) * 100;
+                    barLeftPercent = zeroPositionPercent - barWidthPercent; 
+                }
+            } else { // All values are the same (visualRange is 0)
+                 barWidthPercent = data.modifier === 0 ? 0 : 50; // Arbitrary for non-zero same values
+                 if(data.modifier < 0) barLeftPercent = 0;
             }
-            barWidthPercent = Math.max(1, barWidthPercent); // Ensure a minimum visible width
+            barWidthPercent = Math.max(0.5, barWidthPercent); 
 
             contentHTML += `<div class="pc-bar-row"> 
                                 <div class="stat-comparison-pc-name" title="${data.name}">${data.name.substring(0,15)+(data.name.length > 15 ? '...' : '')}</div>
-                                <div class="stat-bar-wrapper" style="--zero-offset: ${zeroOffsetPercent}%;">
-                                    <div class="${barClass}" style="--bar-left: ${barLeftPercent}%; --bar-width: ${barWidthPercent}%;">
+                                <div class="stat-bar-wrapper" style="--zero-offset: ${zeroPositionPercent}%;">
+                                    <div class="${barClass}" style="left: ${barLeftPercent}%; width: ${barWidthPercent}%;">
                                         ${data.modifier >= 0 ? '+' : ''}${data.modifier}
                                     </div>
                                 </div>
@@ -833,7 +928,7 @@
         contentHTML += `<div class="ability-bar-chart-container">`;
         sortedPcs.forEach(pc => {
             const score = pc.vtt_data.abilities[lowerAblKey]?.value || 0;
-            const barWidth = Math.max(5, (score / 20) * 100); // Ensure a minimum width of 5% for visibility
+            const barWidth = Math.max(5, (score / 20) * 100); 
             contentHTML += `<div class="pc-bar-row"> 
                                 <div class="stat-comparison-pc-name" title="${pc.name}">${pc.name.substring(0,15)+(pc.name.length > 15 ? '...' : '')}</div>
                                 <div class="stat-bar-wrapper"><div class="stat-bar" style="width: ${barWidth}%;">${score}</div></div>
@@ -1086,7 +1181,7 @@
         console.log("window.onload triggered. Calling fetchCharacters...");
         fetchCharacters();
         setupInterfaceControls();
-        if (!selectedNpcId) {
+        if (!activeSceneNpcIds.size > 0) { // Check if any NPCs are active
             updateView();
         }
     };
@@ -1155,16 +1250,11 @@
         let currentCharacterIdForMemory = null;
         const charNameInDetails = getElem('details-char-name').textContent;
         if (charNameInDetails && charNameInDetails !== 'None') {
-            const charForMemory = allCharacters.find(c => c.name === charNameInDetails && c.character_type === 'NPC');
-            if (charForMemory) {
-                currentCharacterIdForMemory = charForMemory._id;
-            }
-        }
-        if (!currentCharacterIdForMemory && selectedNpcId) { 
-            currentCharacterIdForMemory = selectedNpcId;
+            const charInDetails = allCharacters.find(c => c.name === charNameInDetails && c.character_type === 'NPC');
+            if (charInDetails) currentCharacterIdForMemory = charInDetails._id;
         }
 
-        if (!currentCharacterIdForMemory) { alert("Please select an NPC or ensure an NPC is viewed in details."); return; }
+        if (!currentCharacterIdForMemory) { alert("View an NPC's details in the Profile section to add a memory to them."); return; }
 
         const memoryContent = content || getElem('new-memory-content').value;
         const memoryType = type || getElem('new-memory-type').value || 'manual_fact';
@@ -1180,7 +1270,7 @@
             if (charIndex > -1) {
                 if (!allCharacters[charIndex].memories) allCharacters[charIndex].memories = [];
                 allCharacters[charIndex].memories = result.updated_memories; 
-                if (selectedNpcId === currentCharacterIdForMemory || (getElem('details-char-name').textContent === allCharacters[charIndex].name && allCharacters[charIndex].character_type === 'NPC')) {
+                if (getElem('details-char-name').textContent === allCharacters[charIndex].name) {
                     renderMemories(allCharacters[charIndex].memories);
                 }
             }
@@ -1195,13 +1285,8 @@
         let currentCharacterIdForMemory = null;
         const charNameInDetails = getElem('details-char-name').textContent;
         if (charNameInDetails && charNameInDetails !== 'None') {
-            const charForMemory = allCharacters.find(c => c.name === charNameInDetails && c.character_type === 'NPC');
-            if (charForMemory) {
-                currentCharacterIdForMemory = charForMemory._id;
-            }
-        }
-         if (!currentCharacterIdForMemory && selectedNpcId) {
-            currentCharacterIdForMemory = selectedNpcId;
+            const charInDetails = allCharacters.find(c => c.name === charNameInDetails && c.character_type === 'NPC');
+            if (charInDetails) currentCharacterIdForMemory = charInDetails._id;
         }
 
         if (!currentCharacterIdForMemory || !memoryId) return;
@@ -1214,7 +1299,7 @@
             const charIndex = allCharacters.findIndex(char => char._id === currentCharacterIdForMemory);
             if (charIndex > -1) { 
                 allCharacters[charIndex].memories = result.updated_memories; 
-                if (selectedNpcId === currentCharacterIdForMemory || (getElem('details-char-name').textContent === allCharacters[charIndex].name && allCharacters[charIndex].character_type === 'NPC')) {
+                if (getElem('details-char-name').textContent === allCharacters[charIndex].name) {
                      renderMemories(allCharacters[charIndex].memories);
                 }
             }
@@ -1222,78 +1307,155 @@
     }
 
     async function generateDialogue() {
-        if (!selectedNpcId) { alert('Please select an NPC first.'); return; }
+        if (activeSceneNpcIds.size === 0) { alert('Please add NPCs to the scene first.'); return; }
         const sceneContext = getElem('scene-context').value;
         const playerUtterance = getElem('player-utterance').value;
-        const activePCNames = Array.from(activePcIds).map(id => { const pc = allCharacters.find(char => char._id === id); return pc ? pc.name : 'Unknown PC';});
+        const activePCsInfo = Array.from(activePcIds).map(id => { 
+            const pc = allCharacters.find(char => char._id === id); 
+            return pc ? { id: pc._id, name: pc.name } : null;
+        }).filter(pc => pc !== null);
+
         if (!sceneContext) { alert('Scene context is required.'); return; }
         
-        addDialogueToTranscript(playerUtterance, 'player');
-        dialogueHistory.push(`Player: ${playerUtterance}`);
+        // Add player utterance to global history and all active NPC transcripts
+        dialogueHistory.push({ type: 'player', speakerName: 'Player', id: null, utterance: playerUtterance });
+        activeSceneNpcIds.forEach(npcId => {
+            addDialogueToTranscript(playerUtterance, 'player', 'Player', npcId); // Add to specific NPC's transcript
+            if(!dialogueHistories[npcId]) dialogueHistories[npcId] = [];
+            dialogueHistories[npcId].push({ type: 'player', speakerName: 'Player', id: null, utterance: playerUtterance });
+        });
         
-        const payload = { 
-            scene_context: sceneContext, 
-            player_utterance: playerUtterance, 
-            active_pcs: activePCNames, 
-            recent_dialogue_history: dialogueHistory.slice(-5)
-        };
-        try {
-            disableBtn('generate-dialogue-btn', true);
-            const response = await fetch(`${API_BASE_URL}/api/npcs/${selectedNpcId}/dialogue`, {
-                method: 'POST', 
-                headers: { 'Content-Type': 'application/json' }, 
-                body: JSON.stringify(payload)
+        disableBtn('generate-dialogue-btn', true);
+        const promises = [];
+
+        activeSceneNpcIds.forEach(currentNpcId => {
+            const currentNpc = allCharacters.find(c => c._id === currentNpcId);
+            if (!currentNpc) return;
+
+            const otherActiveNpcsDialogueSummary = [];
+            activeSceneNpcIds.forEach(otherNpcId => {
+                if (otherNpcId !== currentNpcId) {
+                    const otherNpc = allCharacters.find(c => c._id === otherNpcId);
+                    if (otherNpc) {
+                        let lastUtterance = "";
+                        const historyForOtherNpc = dialogueHistories[otherNpcId] || [];
+                        for (let i = historyForOtherNpc.length - 1; i >= 0; i--) {
+                            if (historyForOtherNpc[i].id === otherNpcId) { // Check if it's an utterance from this specific NPC
+                                lastUtterance = historyForOtherNpc[i].utterance;
+                                break;
+                            }
+                        }
+                         if (!lastUtterance) { // If no specific utterance, check global history for that NPC
+                            for (let i = dialogueHistory.length - 1; i >= 0; i--) {
+                                if (dialogueHistory[i].id === otherNpcId) {
+                                    lastUtterance = dialogueHistory[i].utterance;
+                                    break;
+                                }
+                            }
+                        }
+                        otherActiveNpcsDialogueSummary.push({
+                            npc_id: otherNpc._id,
+                            npc_name: otherNpc.name,
+                            last_utterance: lastUtterance
+                        });
+                    }
+                }
             });
-            const result = await response.json();
-            if (!response.ok) {
-                throw new Error(result.error || `HTTP error! status: ${response.status}`);
+
+            const payload = { 
+                scene_context: sceneContext, 
+                player_utterance: playerUtterance, 
+                active_pcs: activePCsInfo.map(pc => pc.name), 
+                recent_dialogue_history: dialogueHistory.slice(-10).map(d => `${d.speakerName}: ${d.utterance}`),
+                other_active_npcs_dialogue: otherActiveNpcsDialogueSummary
+            };
+
+            promises.push(
+                fetch(`${API_BASE_URL}/api/npcs/${currentNpcId}/dialogue`, {
+                    method: 'POST', 
+                    headers: { 'Content-Type': 'application/json' }, 
+                    body: JSON.stringify(payload)
+                })
+                .then(response => response.json().then(data => ({ok: response.ok, status: response.status, data, npcId: currentNpcId, npcName: currentNpc.name })))
+                .catch(error => ({ok: false, error, npcId: currentNpcId, npcName: currentNpc.name }))
+            );
+        });
+
+        try {
+            const results = await Promise.all(promises);
+            results.forEach(result => {
+                if (result.ok) {
+                    addDialogueToTranscript(result.data.npc_dialogue, 'npc', result.npcName, result.npcId);
+                    dialogueHistory.push({ type: 'npc', speakerName: result.npcName, id: result.npcId, utterance: result.data.npc_dialogue });
+                    if(!dialogueHistories[result.npcId]) dialogueHistories[result.npcId] = [];
+                    dialogueHistories[result.npcId].push({ type: 'npc', speakerName: result.npcName, id: result.npcId, utterance: result.data.npc_dialogue });
+                    // Potentially render AI suggestions based on the first successful response or aggregate them
+                    if (results.find(r => r.ok && r.data.new_memory_suggestions)) { // Example: use first available
+                        renderAISuggestions(result.data.new_memory_suggestions, result.data.generated_topics);
+                    }
+                } else {
+                    console.error(`Error generating dialogue for ${result.npcName}:`, result.data?.error || result.error);
+                    addDialogueToTranscript(`Error: ${result.data?.error || 'Failed to get response'}`, 'system-error', 'System', result.npcId);
+                }
+            });
+            getElem('player-utterance').value = ''; 
+        } catch (error) {
+            // This catch is for Promise.all itself failing, less likely with individual catches.
+            console.error('Overall error in generateDialogue Promise.all:', error);
+            // Add a general error to a general transcript area if needed, or just log.
+        } finally {
+             disableBtn('generate-dialogue-btn', activeSceneNpcIds.size === 0);
+        }
+    }
+
+    function addDialogueToTranscript(text, type, speakerName, targetNpcId = null) {
+        // If targetNpcId is provided, add to that specific NPC's transcript.
+        // Player utterances should also be mirrored to all active NPC transcripts.
+        
+        const addToSpecificTranscript = (npcId) => {
+            const transcriptDiv = getElem(`transcript-${npcId}`);
+            if (!transcriptDiv) {
+                console.warn(`Transcript div not found for NPC ID: ${npcId}`);
+                return;
+            }
+            const entry = document.createElement('div'); 
+            entry.classList.add('dialogue-entry');
+            
+            let speakerPrefix = "";
+            if (type === 'player') {
+                entry.classList.add('player-utterance');
+                speakerPrefix = `${speakerName || 'Player'}: `;
+            } else if (type === 'npc') { // This is an NPC's own response
+                entry.classList.add('npc-response');
+                speakerPrefix = `${speakerName || 'NPC'}: `; // speakerName here is the NPC responding
+            } else if (type === 'system-error') {
+                entry.classList.add('scene-event'); // Use scene-event for styling
+                entry.style.color = 'red';
+                speakerPrefix = `${speakerName || 'System'}: `;
             }
             
-            addDialogueToTranscript(result.npc_dialogue, 'npc');
-            const npcName = allCharacters.find(c => c._id === selectedNpcId)?.name || 'NPC';
-            dialogueHistory.push(`${npcName}: ${result.npc_dialogue}`);
-            getElem('player-utterance').value = ''; 
-            renderAISuggestions(result.new_memory_suggestions, result.generated_topics);
-        } catch (error) { 
-            console.error('Error generating dialogue:', error); 
-            alert(`Dialogue generation failed: ${error.message}`); 
-            addDialogueToTranscript(`Error: ${error.message}`, 'system-error');
-        } finally { 
-            disableBtn('generate-dialogue-btn', false); 
-        }
-    }
+            const strongSpeaker = document.createElement('strong');
+            strongSpeaker.textContent = speakerPrefix;
+            entry.appendChild(strongSpeaker);
+            entry.appendChild(document.createTextNode(text));
 
-    function addDialogueToTranscript(text, type) {
-        const transcriptDiv = getElem('dialogue-transcript');
-        const entry = document.createElement('div'); 
-        entry.classList.add('dialogue-entry');
-        
-        let speakerPrefix = "";
-        const activeNPCName = getElem('active-npc-name').textContent;
+            const initialMessage = transcriptDiv.querySelector('p.scene-event');
+            if (initialMessage) {
+                initialMessage.remove();
+            }
+            transcriptDiv.appendChild(entry);
+            transcriptDiv.scrollTop = transcriptDiv.scrollHeight;
+        };
 
         if (type === 'player') {
-            entry.classList.add('player-utterance');
-            speakerPrefix = "You (Player): ";
-        } else if (type === 'npc') {
-            entry.classList.add('npc-response');
-            speakerPrefix = `${activeNPCName || 'NPC'}: `;
-        } else if (type === 'scene-event' || type === 'system-error') {
-            entry.classList.add('scene-event');
-            if (type === 'system-error') entry.style.color = 'red';
+            activeSceneNpcIds.forEach(npcId => {
+                addToSpecificTranscript(npcId);
+            });
+        } else if (targetNpcId) { // NPC response or system error specific to an NPC
+            addToSpecificTranscript(targetNpcId);
         }
-        
-        const strongSpeaker = document.createElement('strong');
-        strongSpeaker.textContent = speakerPrefix;
-        entry.appendChild(strongSpeaker);
-        
-        entry.appendChild(document.createTextNode(text));
-
-        if (transcriptDiv.childElementCount === 1 && transcriptDiv.firstChild.classList.contains('scene-event') && type !== 'scene-event' && type !== 'system-error') {
-            transcriptDiv.innerHTML = ''; 
-        }
-        transcriptDiv.appendChild(entry);
-        transcriptDiv.scrollTop = transcriptDiv.scrollHeight;
     }
+
 
    function renderAISuggestions(memorySuggestions, topicSuggestions) {
         const memListDiv = getElem('suggested-memories-list');
@@ -1333,8 +1495,11 @@
     }
     
     function populateAddMemoryForm(content, type) {
-        if (!selectedNpcId && !(getElem('details-char-name').textContent && getElem('profile-char-type').textContent === 'NPC')) {
-            alert("Select an NPC or view an NPC's details to add a memory.");
+        const charNameInDetails = getElem('details-char-name').textContent;
+        const charInDetails = allCharacters.find(c => c.name === charNameInDetails && c.character_type === 'NPC');
+
+        if (!charInDetails) {
+            alert("View an NPC's details in the Profile section to add a memory to them.");
             return;
         }
         getElem('new-memory-content').value = content;
