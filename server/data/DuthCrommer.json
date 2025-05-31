@@ -1,0 +1,49 @@
+{
+  "name": "Duth III Crommer",
+  "character_type": "NPC",
+  "description": "A polished and urbane shield dwarf who leads the Crommer Brassworks with a steady hand and a shrewd eye for commerce and politics.",
+  "race": "Dwarf",
+  "class": "Artificer (Guild Crafter)",
+  "alignment": "Lawful Neutral",
+  "age": "Late 180s",
+  "personality_traits": [
+    "Measured and diplomatic in speech",
+    "Deep respect for tradition",
+    "Quick to see the angles in a deal",
+    "Calm but commanding presence"
+  ],
+  "ideals": [
+    "Legacy: 'The forge's fire must outlast even the strongest steel.'",
+    "Honor: 'Every deal is a reflection of our name.'",
+    "Progress: 'To stay strong, even tradition must evolve.'"
+  ],
+  "bonds": [
+    "The Crommer Brassworks",
+    "The guilds of Waterdeep",
+    "The Horns of Moradin"
+  ],
+  "flaws": [
+    "Sometimes too cautious to act quickly",
+    "Underestimates the creativity of outsiders",
+    "Deeply suspicious of anything not sanctioned by a guild"
+  ],
+  "backstory": "The great-grandson of Duth II, Duth III modernized the family business while maintaining its dwarven roots. He forged key alliances in Waterdeep and strengthened the family's place among the city's merchant elite.",
+  "motivations": [
+    "To secure the Crommer legacy for his son",
+    "To keep the family's business thriving in a shifting political climate",
+    "To honor Moradin with every creation"
+  ],
+  "knowledge": [
+    "Intricate knowledge of Waterdeep's plumbing infrastructure",
+    "Current trade disputes and guild politics",
+    "Historical secrets of dwarven forgemasters"
+  ],
+  "speech_patterns": "Formal and deliberate. Refers to Moradin or 'the Craft' often.",
+  "mannerisms": "Fingers stained with brass polish. Taps his signet ring thoughtfully when considering an offer.",
+  "relationships": [
+    {"name": "Brigit Crommer", "relationship": "Wife", "status": "Alive"},
+    {"name": "Kaideu Crommer", "relationship": "Son", "status": "Alive"},
+    {"name": "Borin Stonehammer", "relationship": "Bodyguard and Advisor", "status": "Alive"}
+  ],
+  "gm_notes": "He is a power broker among merchant dwarves and may request players retrieve rare materials or deal with threats to the family's interests."
+}

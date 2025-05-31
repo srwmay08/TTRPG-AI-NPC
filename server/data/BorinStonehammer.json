@@ -1,0 +1,49 @@
+{
+  "name": "Borin Stonehammer",
+  "character_type": "NPC",
+  "description": "An ancient and iron-willed dwarf with a steel gaze and a shield marked by age and faith, guarding the Crommers for nearly two centuries.",
+  "race": "Dwarf",
+  "class": "Fighter (Champion) / Paladin of Moradin",
+  "alignment": "Lawful Good",
+  "age": "Over 230",
+  "personality_traits": [
+    "Taciturn but wise",
+    "Moves slowly but deliberately",
+    "Never breaks a promise",
+    "Harbors a quiet love for music"
+  ],
+  "ideals": [
+    "Duty: 'My shield has stood for generations. It will stand still.'",
+    "Tradition: 'There is honor in the old ways.'",
+    "Faith: 'Moradin guides my hand.'"
+  ],
+  "bonds": [
+    "The Crommer family",
+    "His worn but sacred shield",
+    "The dwarven guards under his command"
+  ],
+  "flaws": [
+    "Won’t retire, even if it puts him at risk",
+    "Distrusts any unfamiliar magic",
+    "Blames himself for any harm to the family"
+  ],
+  "backstory": "Borin served Duth II and has watched over the Crommers like a granite sentinel ever since. His devotion is both personal and spiritual.",
+  "motivations": [
+    "To die with honor in service to the Crommers",
+    "To pass on his wisdom to Kaideu",
+    "To defend Moradin’s work against corruption"
+  ],
+  "knowledge": [
+    "The secret security features of the Crommer estate",
+    "Tales from before the Crommers were accepted in Waterdeep",
+    "The locations of hidden caches and relics"
+  ],
+  "speech_patterns": "Gruff and terse. Speaks slowly, with deliberate pauses.",
+  "mannerisms": "Keeps hand on weapon at all times. Straightens his beard before speaking.",
+  "relationships": [
+    {"name": "Duth III Crommer", "relationship": "Ward and Commander", "status": "Alive"},
+    {"name": "Kaideu Crommer", "relationship": "Like a Grandson", "status": "Alive"},
+    {"name": "Brigit Crommer", "relationship": "Respected High Artisan", "status": "Alive"}
+  ],
+  "gm_notes": "A potential quest-giver, mentor, or emergency protector NPC. If he dies, it should matter deeply to the party and the city."
+}

@@ -101,9 +101,50 @@
         .ability-bar-chart-container, .skill-bar-chart-container { margin-bottom: 15px; padding: 10px; background-color: #fff; border: 1px solid #eee; border-radius: 4px;}
         .pc-bar-row { display: flex; align-items: center; margin-bottom: 3px; font-size: 0.9em; }
         .stat-comparison-pc-name { width: 120px; text-align: right; margin-right: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .stat-bar-wrapper { flex-grow: 1; background-color: #e0e0e0; border-radius: 3px; height: 18px; min-width: 80px; position: relative;}
-        .stat-bar { height: 100%; background-color: #007bff; border-radius: 3px; text-align: right; padding-right: 5px; color: white; line-height: 18px; font-size: 0.8em; white-space: nowrap; overflow: hidden; position: absolute; left: 0; top: 0;}
-        .stat-bar.negative { background-color: #dc3545; /* Red for negative values */ left: auto; right: 0; text-align: left; padding-left: 5px;}
+        .stat-bar-wrapper { 
+            flex-grow: 1; 
+            background-color: #e0e0e0; 
+            border-radius: 3px; 
+            height: 18px; 
+            min-width: 150px; /* Ensure enough space for labels */
+            position: relative;
+            overflow: hidden; /* Clip bars that go out of bounds if calculations are extreme */
+        }
+        .stat-bar-wrapper::before { /* Zero line */
+            content: '';
+            position: absolute;
+            left: var(--zero-offset, 25%); /* Default to 25% if var not set, for -5 to 15 range */
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background-color: #bbb;
+        }
+        .stat-bar { 
+            height: 100%; 
+            background-color: #007bff; 
+            border-radius: 3px; 
+            color: white; 
+            line-height: 18px; 
+            font-size: 0.8em; 
+            white-space: nowrap; 
+            overflow: hidden; 
+            position: absolute; 
+            top: 0;
+            box-sizing: border-box;
+        }
+        .stat-bar.positive {
+            left: var(--bar-left);
+            width: var(--bar-width);
+            text-align: right; 
+            padding-right: 5px; 
+        }
+        .stat-bar.negative {
+            left: var(--bar-left); /* bar-left will be calculated to position it before zero */
+            width: var(--bar-width);
+            background-color: #dc3545; 
+            text-align: left; 
+            padding-left: 5px; 
+        }
 
 
         .derived-stats-table { width: 100%; border-collapse: collapse; font-size: 0.9em; margin-top:5px; margin-bottom: 15px; }
@@ -572,7 +613,7 @@
         }
         skillsTableHTML += `</tr></thead><tbody>`;
 
-        let pcsForSkillTable = [...selectedPcs]; // Use a copy for sorting
+        let pcsForSkillTable = [...selectedPcs]; 
         if (skillSortKey) {
             pcsForSkillTable.sort((a, b) => {
                 const pcLevelA = a.flags?.ddbimporter?.dndbeyond?.totalLevels || a.system?.details?.level || 1;
@@ -589,9 +630,9 @@
                 const abilityScoreB = b.vtt_data.abilities[abilityKeyB]?.value || 10;
                 const bonusB = skillDataB ? calculateSkillBonus(abilityScoreB, skillDataB.value || 0, profBonusB) : getAbilityModifier(abilityScoreB);
                 
-                return bonusB - bonusA; // Sort descending
+                return bonusB - bonusA; 
             });
-        } else { // Default sort by name if no skillSortKey
+        } else { 
              pcsForSkillTable.sort((a,b) => a.name.localeCompare(b.name));
         }
 
@@ -662,29 +703,27 @@
     }
     
     function toggleSkillExpansion(skillKey) {
-        // If the same skill header is clicked and it's already open, close it and reset sort.
         if (currentlyExpandedSkill === skillKey) {
-            skillSortKey = null; // Reset sort key
-            currentlyExpandedSkill = null; // Indicate no skill is expanded
+            skillSortKey = null; 
+            currentlyExpandedSkill = null; 
         } else {
-            skillSortKey = skillKey; // Set the sort key for the newly clicked skill
-            currentlyExpandedSkill = skillKey; // Set this skill as the one to be expanded
+            skillSortKey = skillKey; 
+            currentlyExpandedSkill = skillKey; 
         }
-        updatePcDashboard(); // Re-render the dashboard which will sort the skills table and manage expansion visibility
+        updatePcDashboard(); 
 
-        // After re-rendering, ensure the correct arrow and expansion state
         const allSkillHeaders = document.querySelectorAll(`#skills-overview-table th.clickable-skill-header`);
         allSkillHeaders.forEach(header => {
             const sKey = header.dataset.skillKey;
             const arrow = header.querySelector('span.arrow-indicator');
             const expDiv = document.getElementById(`expanded-skill-${sKey}`);
-            if (sKey === currentlyExpandedSkill) { // If this is the skill to be shown
+            if (sKey === currentlyExpandedSkill) { 
                 if (arrow) arrow.textContent = ' ▼';
                 if (expDiv) {
                     populateExpandedSkillDetails(sKey, expDiv, allCharacters.filter(char => activePcIds.has(char._id) && char.character_type === 'PC' && char.vtt_data));
                     expDiv.style.display = 'block';
                 }
-            } else { // All other skills should be collapsed
+            } else { 
                 if (arrow) arrow.textContent = ' ►';
                 if (expDiv) expDiv.style.display = 'none';
             }
@@ -708,56 +747,42 @@
             const pcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || 1;
             const profBonus = getProficiencyBonus(pcLevel);
             const skillVttData = pc.vtt_data.skills?.[skillKey];
-            const baseAbilityKey = skillVttData?.ability || (skillKey === 'ath' ? 'str' : ['acr', 'slt', 'ste'].includes(skillKey) ? 'dex' : ['arc', 'his', 'inv', 'nat', 'rel'].includes(skillKey) ? 'int' : ['ani', 'ins', 'med', 'prc', 'sur'].includes(skillKey) ? 'wis' : 'cha');
+            const defaultAbilityForSkill = (skillKey === 'ath' ? 'str' : ['acr', 'slt', 'ste'].includes(skillKey) ? 'dex' : ['arc', 'his', 'inv', 'nat', 'rel'].includes(skillKey) ? 'int' : ['ani', 'ins', 'med', 'prc', 'sur'].includes(skillKey) ? 'wis' : 'cha');
+            const baseAbilityKey = skillVttData?.ability || defaultAbilityForSkill;
             const baseAbilityScore = pc.vtt_data.abilities[baseAbilityKey]?.value || 10;
             const bonus = calculateSkillBonus(baseAbilityScore, skillVttData?.value || 0, profBonus);
             return { name: pc.name, modifier: bonus };
-        }).sort((a,b) => b.modifier - a.modifier); // Sort by modifier for the graph
+        }).sort((a,b) => b.modifier - a.modifier); 
 
-        const maxModifier = Math.max(1, ...skillDataForGraph.map(d => d.modifier), 5); // Ensure a decent scale, at least +5
-        const minModifier = Math.min(0, ...skillDataForGraph.map(d => d.modifier), -2); // Ensure scale includes negatives if present
-        const range = maxModifier - minModifier;
+        const graphMinMod = -3; // Define a fixed minimum for the graph's scale
+        const graphMaxMod = 17; // Define a fixed maximum for the graph's scale
+        const graphRange = graphMaxMod - graphMinMod;
+        const zeroOffsetPercent = ((0 - graphMinMod) / graphRange) * 100;
+        
+        // Set the --zero-offset CSS variable for the wrapper
+        const wrapper = expansionDiv.querySelector('.skill-bar-chart-container') || document.createElement('div'); // Get or create if not exists
+        if(wrapper) wrapper.style.setProperty('--zero-offset', `${zeroOffsetPercent}%`);
 
 
         skillDataForGraph.forEach(data => {
             let barWidthPercent = 0;
+            let barLeftPercent = zeroOffsetPercent;
             let barClass = 'stat-bar';
-            let barOffsetPercent = 0;
 
-            if (range === 0) { // All values are the same
-                 barWidthPercent = data.modifier >=0 ? 50 : 0; // Arbitrary for non-zero same values
-            } else {
-                if (data.modifier >= 0) {
-                    barWidthPercent = (data.modifier / maxModifier) * 50 + 50; // Scale positive from 50% to 100%
-                    barOffsetPercent = 50 - ( (maxModifier - data.modifier) / range ) * 50;
-                     barWidthPercent = (data.modifier / (maxModifier - Math.max(0, minModifier))) * 100;
-                     if (minModifier < 0) { // Adjust if there's a negative range
-                        barOffsetPercent = (Math.abs(minModifier) / range) * 100;
-                        barWidthPercent = (data.modifier / range) * 100;
-                     } else {
-                        barWidthPercent = (data.modifier / maxModifier) * 100;
-                     }
-
-
-                } else { // Negative modifier
-                    barClass += ' negative';
-                    barWidthPercent = (Math.abs(data.modifier) / Math.abs(minModifier)) * 50; // Scale negative from 0% to 50% (from right)
-                    barOffsetPercent = 50 - barWidthPercent;
-
-                    if (minModifier < 0) {
-                        barWidthPercent = (Math.abs(data.modifier) / (Math.abs(minModifier) + (maxModifier > 0 ? maxModifier : 0) )) * 100;
-                    } else { // Should not happen if modifier is negative
-                        barWidthPercent = 0;
-                    }
-                }
+            if (data.modifier >= 0) {
+                barClass += ' positive';
+                barWidthPercent = (data.modifier / graphRange) * 100;
+            } else { // Negative modifier
+                barClass += ' negative';
+                barWidthPercent = (Math.abs(data.modifier) / graphRange) * 100;
+                barLeftPercent = zeroOffsetPercent - barWidthPercent;
             }
-             barWidthPercent = Math.max(2, barWidthPercent); // Minimum visible bar width
-
+            barWidthPercent = Math.max(1, barWidthPercent); // Ensure a minimum visible width
 
             contentHTML += `<div class="pc-bar-row"> 
                                 <div class="stat-comparison-pc-name" title="${data.name}">${data.name.substring(0,15)+(data.name.length > 15 ? '...' : '')}</div>
-                                <div class="stat-bar-wrapper">
-                                    <div class="${barClass}" style="width: ${barWidthPercent}%; left: ${data.modifier < 0 && minModifier < 0 ? 50 - ( (Math.abs(data.modifier) / Math.abs(minModifier)) * 50) : (data.modifier >=0 && minModifier < 0 ? 50 : 0)}%;">
+                                <div class="stat-bar-wrapper" style="--zero-offset: ${zeroOffsetPercent}%;">
+                                    <div class="${barClass}" style="--bar-left: ${barLeftPercent}%; --bar-width: ${barWidthPercent}%;">
                                         ${data.modifier >= 0 ? '+' : ''}${data.modifier}
                                     </div>
                                 </div>
@@ -808,7 +833,7 @@
         contentHTML += `<div class="ability-bar-chart-container">`;
         sortedPcs.forEach(pc => {
             const score = pc.vtt_data.abilities[lowerAblKey]?.value || 0;
-            const barWidth = Math.max(5, (score / 20) * 100);
+            const barWidth = Math.max(5, (score / 20) * 100); // Ensure a minimum width of 5% for visibility
             contentHTML += `<div class="pc-bar-row"> 
                                 <div class="stat-comparison-pc-name" title="${pc.name}">${pc.name.substring(0,15)+(pc.name.length > 15 ? '...' : '')}</div>
                                 <div class="stat-bar-wrapper"><div class="stat-bar" style="width: ${barWidth}%;">${score}</div></div>

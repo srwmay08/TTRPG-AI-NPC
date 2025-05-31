@@ -1,0 +1,49 @@
+{
+  "name": "Brigit Crommer (née Stonebeard)",
+  "character_type": "NPC",
+  "description": "An elegant and unyielding dwarven artisan, Brigit oversees the spiritual and aesthetic dimensions of the Crommer enterprise.",
+  "race": "Dwarf",
+  "class": "Cleric of Moradin",
+  "alignment": "Lawful Good",
+  "age": "Mid-170s",
+  "personality_traits": [
+    "Highly detail-oriented",
+    "Speaks with precision and authority",
+    "Protective of the Crommer name",
+    "Deeply reverent of Moradin"
+  ],
+  "ideals": [
+    "Perfection: 'The forge reveals all flaws—so too must we.'",
+    "Faith: 'Each horn must carry Moradin's blessing.'",
+    "Discipline: 'There is no artistry without devotion.'"
+  ],
+  "bonds": [
+    "The Horns of Moradin",
+    "The shrine-forge in their estate",
+    "Her son, Kaideu"
+  ],
+  "flaws": [
+    "Unyielding when it comes to quality",
+    "Judges non-dwarves harshly at first",
+    "Harbors mistrust of new musical styles"
+  ],
+  "backstory": "Born into the Stonebeard lineage, Brigit brought an exacting eye and holy fervor to the Crommer legacy. She is the soul of the Horns of Moradin project.",
+  "motivations": [
+    "To preserve dwarven musical and spiritual heritage",
+    "To ensure Kaideu grows into a worthy heir",
+    "To maintain the divine integrity of each sacred instrument"
+  ],
+  "knowledge": [
+    "Dwarven religious rites",
+    "Brass resonance and sacred acoustics",
+    "Hidden blessings embedded in musical relics"
+  ],
+  "speech_patterns": "Clipped, clear, and reverent. Her words carry weight.",
+  "mannerisms": "Traces runes on surfaces absentmindedly. Often adjusts her apron or holy symbol while thinking.",
+  "relationships": [
+    {"name": "Duth III Crommer", "relationship": "Husband", "status": "Alive"},
+    {"name": "Kaideu Crommer", "relationship": "Son", "status": "Alive"},
+    {"name": "Borin Stonehammer", "relationship": "Respected Elder", "status": "Alive"}
+  ],
+  "gm_notes": "An intimidating but fair matriarch. She might call upon the party for a ceremonial task or protect a relic from theft or corruption."
+}

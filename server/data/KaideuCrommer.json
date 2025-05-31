@@ -1,0 +1,49 @@
+{
+  "name": "Kaideu Crommer",
+  "character_type": "NPC",
+  "description": "A curious and energetic dwarven child, often found underfoot in the forges or listening intently to Mattrim's songs.",
+  "race": "Dwarf",
+  "class": "Apprentice (Future Artificer or Bard)",
+  "alignment": "Neutral Good",
+  "age": "28",
+  "personality_traits": [
+    "Inquisitive and talkative",
+    "Fascinated by music and machines",
+    "Eager to prove himself",
+    "Occasionally clumsy"
+  ],
+  "ideals": [
+    "Discovery: 'Everything has a why—and I wanna know it!'",
+    "Heritage: 'I’ll be just like Dad and Mum—only louder!'",
+    "Wonder: 'There’s magic in fire and song!'"
+  ],
+  "bonds": [
+    "His parents",
+    "Borin Stonehammer",
+    "His secret collection of broken horn parts"
+  ],
+  "flaws": [
+    "Has a habit of sneaking into restricted areas",
+    "Easily distracted by shiny things",
+    "Sometimes speaks when he shouldn't"
+  ],
+  "backstory": "Born into legacy and flame, Kaideu is raised on stories of Moradin and metal. Whether forging or performing, his destiny is bright.",
+  "motivations": [
+    "To make something that wows his parents",
+    "To be allowed to play a real Horn of Moradin",
+    "To explore Undermountain one day"
+  ],
+  "knowledge": [
+    "Crommer estate layout (including secret passageways)",
+    "The names and quirks of every forgehand",
+    "Bits of dwarven songs, often sung off-key"
+  ],
+  "speech_patterns": "Speaks fast, often mid-thought. Mimics grown-up phrases he’s heard.",
+  "mannerisms": "Tugs on beards, even if they’re not his. Tries to act like a grown dwarf but breaks into giggles.",
+  "relationships": [
+    {"name": "Duth III Crommer", "relationship": "Father", "status": "Alive"},
+    {"name": "Brigit Crommer", "relationship": "Mother", "status": "Alive"},
+    {"name": "Borin Stonehammer", "relationship": "Mentor and Guardian", "status": "Alive"}
+  ],
+  "gm_notes": "Might sneak into trouble the players must help with, or surprise them with insight overheard from adults."
+}
