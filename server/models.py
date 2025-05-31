@@ -32,7 +32,7 @@ class NPCProfile(BaseModel):
     current_situation: Optional[str] = None
     
     personality_traits: List[str] = Field(default_factory=list, description="Key personality traits.")
-    background_story: Optional[str] = None # This might be superseded or complemented by detailed_history
+    background_story: Optional[str] = None
     motivations: List[str] = Field(default_factory=list)
     knowledge: List[str] = Field(default_factory=list, description="Specific pieces of knowledge the character has.")
     memories: List[MemoryItem] = Field(default_factory=list, description="Character's persistent memories.")
@@ -41,13 +41,12 @@ class NPCProfile(BaseModel):
     
     vtt_data: Optional[Dict[str, Any]] = Field(default=None, description="Data imported from VTT character sheets.")
 
-    # New fields for detailed history
-    associated_history_file: Optional[str] = Field(default=None, description="Filename of the associated detailed history .txt file.")
-    history_content: Optional[str] = Field(default=None, description="Content of the associated detailed history file.")
-
+    # Updated field for multiple history files
+    associated_history_files: List[str] = Field(default_factory=list, description="List of filenames of associated detailed history .txt files.")
+    # history_content will be loaded dynamically by the backend, not stored directly here in DB model.
 
     class Config:
-        populate_by_name = True
+        populate_by_name = True # Allows using 'class' as field name for 'class_str'
         json_schema_extra = {
             "example": {
                 "name": "Mattrim 'Threestrings' Mereg",
@@ -57,8 +56,8 @@ class NPCProfile(BaseModel):
                 "class": "Bard",
                 "personality_traits": ["Eternally chill", "Has the munchies"],
                 "vtt_data": {"attributes": {"hp": {"value": 10, "max": 10}}},
-                "associated_history_file": "Threestrings.txt",
-                "history_content": "Mattrim was born by the docks..."
+                "associated_history_files": ["Threestrings.txt", "Threestrings and the Crommers.txt"]
+                # "history_content" is not part of the base model for DB storage
             }
         }
 
@@ -75,9 +74,16 @@ class DialogueRequest(BaseModel):
     player_utterance: Optional[str] = None
     active_pcs: List[str] = Field(default_factory=list, description="Names or IDs of player characters present in the scene.")
     recent_dialogue_history: List[str] = Field(default_factory=list, description="Last few lines of conversation.")
+    # No direct npc_id here, it's part of the URL path
 
 class DialogueResponse(BaseModel):
     npc_id: str
     npc_dialogue: str
     new_memory_suggestions: List[str] = Field(default_factory=list, description="AI suggestions for what to add to memory, including a summarized version of the interaction.")
     generated_topics: List[str] = Field(default_factory=list, description="AI suggested topics for further conversation.")
+
+# Model for API responses that include loaded history content
+class NPCProfileWithHistory(NPCProfile):
+    history_contents_loaded: Optional[Dict[str, str]] = Field(default=None, description="Loaded content of associated history files. Key: filename, Value: content.")
+    combined_history_content: Optional[str] = Field(default=None, description="Concatenated content of all associated history files.")
+

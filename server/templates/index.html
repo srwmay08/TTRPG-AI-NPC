@@ -10,7 +10,7 @@
         
         #left-column {
             width: 30%; /* Initial width */
-            min-width: 250px; 
+            min-width: 300px; /* Increased min-width for better layout */
             max-width: 60%; 
             background-color: #e9e9e9;
             border-right: 1px solid #ccc;
@@ -180,11 +180,37 @@
             padding: 10px;
             border: 1px solid #ddd;
             background-color: #f9f9f9;
-            max-height: 300px; /* Adjust as needed */
+            max-height: 300px; 
             overflow-y: auto;
-            white-space: pre-wrap; /* To respect newlines and spacing in the text file */
-            font-family: 'Courier New', Courier, monospace; /* Optional: for a more "text file" look */
+            white-space: pre-wrap; 
+            font-family: 'Courier New', Courier, monospace; 
             font-size: 0.9em;
+        }
+        #associated-history-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        #associated-history-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        #associated-history-list li:last-child {
+            border-bottom: none;
+        }
+        .remove-history-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 3px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+        .remove-history-btn:hover {
+            background-color: #c82333;
         }
 
     </style>
@@ -238,14 +264,20 @@
                     <div id="character-history-collapsible-section" class="collapsible-section collapsed">
                         <h3>Character History</h3>
                         <div class="collapsible-content">
-                            <label for="history-file-select">Available History Files:</label>
+                            <label for="history-file-select">Available History Files to Add:</label>
                             <select id="history-file-select">
                                 <option value="">-- Select a history file --</option>
                             </select>
-                            <button onclick="associateHistoryFile()" id="associate-history-btn" disabled>Associate Selected History</button>
-                            <p><strong>Currently Associated:</strong> <span id="current-associated-history">None</span></p>
+                            <button onclick="associateHistoryFile()" id="associate-history-btn" disabled>Add Selected History</button>
+                            
+                            <h5>Currently Associated Files:</h5>
+                            <ul id="associated-history-list">
+                                <li><em>None associated.</em></li>
+                            </ul>
+                            
+                            <h5>History Content:</h5>
                             <div id="history-content-display">
-                                <p><em>No history content loaded. Associate a file to view its content.</em></p>
+                                <p><em>No history content loaded. Associate files to view their content.</em></p>
                             </div>
                         </div>
                     </div>
@@ -318,7 +350,7 @@
     let skillSortKey = null; 
 
     // --- Constants ---
-    const API_BASE_URL = ''; // Assuming Flask serves from the same origin
+    const API_BASE_URL = ''; 
 
     // --- Utility Functions ---
     function getElem(id) { return document.getElementById(id); }
@@ -534,16 +566,9 @@
                 option.textContent = file;
                 selectElement.appendChild(option);
             });
-            // If a character is currently selected in the profile, try to set the dropdown to their associated file
-            if (currentProfileCharId) {
-                const character = allCharacters.find(c => c._id === currentProfileCharId);
-                if (character && character.associated_history_file) {
-                    selectElement.value = character.associated_history_file;
-                }
-            }
         } catch (error) {
             console.error("Error in fetchHistoryFiles function:", error.message, error);
-            selectElement.innerHTML += `<option value="" disabled>Error loading files: ${error.message}</option>`;
+            selectElement.innerHTML += `<option value="" disabled>Error loading files.</option>`;
         }
     }
 
@@ -554,7 +579,7 @@
         }
         const selectedFile = getElem('history-file-select').value;
         if (!selectedFile) {
-            alert("Please select a history file from the dropdown.");
+            alert("Please select a history file from the dropdown to add.");
             return;
         }
         try {
@@ -567,16 +592,16 @@
                 const errorData = await response.json().catch(() => ({ message: "Server returned non-JSON error response."}));
                 throw new Error(errorData.error || errorData.message || 'Failed to associate history file.');
             }
-            const result = await response.json();
+            const result = await response.json(); // Expecting { message, character }
             alert(result.message || "History file associated successfully.");
             
+            // Update local character data
             const charIndex = allCharacters.findIndex(c => c._id === currentProfileCharId);
             if (charIndex > -1) {
-                allCharacters[charIndex].associated_history_file = selectedFile;
-                allCharacters[charIndex].history_content = result.history_content; // Store fetched content
+                allCharacters[charIndex] = result.character; // Replace with the full updated character from backend
             }
-            updateText('current-associated-history', selectedFile);
-            getElem('history-content-display').textContent = result.history_content || "No content found or file is empty.";
+            // Re-render the history section for the current character
+            selectCharacterForDetails(currentProfileCharId); 
 
         } catch (error) {
             console.error("Error associating history file:", error);
@@ -584,60 +609,124 @@
         }
     }
 
-    function selectCharacterForDetails(charId) {
-        currentProfileCharId = charId; 
-        const selectedChar = allCharacters.find(char => char._id === charId);
-        const historyContentDisplay = getElem('history-content-display');
-
-        if (selectedChar) {
-            updateText('details-char-name', selectedChar.name); 
-            updateText('profile-char-type', selectedChar.character_type);
-            updateText('profile-description', selectedChar.description || "N/A");
-            updateText('profile-personality', (selectedChar.personality_traits || []).join(', ') || "N/A");
-            
-            getElem('gm-notes').value = selectedChar.gm_notes || '';
-            disableBtn('save-gm-notes-btn', false);
-
-            const isNpc = selectedChar.character_type === 'NPC';
-            getElem('npc-memories-collapsible-section').style.display = isNpc ? 'block' : 'none';
-            getElem('character-history-collapsible-section').style.display = 'block'; 
-            
-            if (isNpc) {
-                renderMemories(selectedChar.memories || []);
-                disableBtn('add-memory-btn', false);
-            } else { 
-                 disableBtn('add-memory-btn', true);
-                 getElem('character-memories-list').innerHTML = '<p><em>Memories are typically managed for NPCs.</em></p>';
-            }
-            fetchHistoryFiles().then(() => { // Ensure files are loaded before trying to set value
-                if (selectedChar.associated_history_file) {
-                    getElem('history-file-select').value = selectedChar.associated_history_file;
-                    updateText('current-associated-history', selectedChar.associated_history_file);
-                    historyContentDisplay.textContent = selectedChar.history_content || "Associated file content not loaded. Re-associate or check server.";
-                } else {
-                    updateText('current-associated-history', 'None');
-                    historyContentDisplay.textContent = "No history file associated.";
-                }
+    async function dissociateHistoryFile(filename) {
+        if (!currentProfileCharId) {
+            alert("No character selected.");
+            return;
+        }
+        if (!confirm(`Are you sure you want to remove "${filename}" from this character's history?`)) {
+            return;
+        }
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/character/${currentProfileCharId}/dissociate_history`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ history_file: filename })
             });
-            disableBtn('associate-history-btn', false);
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({ message: "Server error during dissociation." }));
+                throw new Error(errorData.error || errorData.message || "Failed to dissociate history file.");
+            }
+            const result = await response.json();
+            alert(result.message || "History file dissociated successfully.");
 
-        } else {
-            currentProfileCharId = null;
-            updateText('details-char-name', "None");
-            updateText('profile-char-type', "");
-            updateText('profile-description', "");
-            updateText('profile-personality', "");
-            getElem('gm-notes').value = '';
-            disableBtn('save-gm-notes-btn', true);
-            getElem('npc-memories-collapsible-section').style.display = 'none';
-            getElem('character-history-collapsible-section').style.display = 'none';
-            disableBtn('add-memory-btn', true);
-            disableBtn('associate-history-btn', true);
-            getElem('history-file-select').innerHTML = '<option value="">-- Select a history file --</option>';
-            updateText('current-associated-history', 'None');
-            historyContentDisplay.textContent = "Select a character to view their profile.";
+            const charIndex = allCharacters.findIndex(c => c._id === currentProfileCharId);
+            if (charIndex > -1) {
+                allCharacters[charIndex] = result.character; // Update with full character data from backend
+            }
+            selectCharacterForDetails(currentProfileCharId); // Refresh display
+
+        } catch (error) {
+            console.error("Error dissociating history file:", error);
+            alert(`Error: ${error.message}`);
         }
     }
+
+
+    function renderAssociatedHistoryFiles(character) {
+        const listElement = getElem('associated-history-list');
+        listElement.innerHTML = ''; // Clear current list
+
+        if (character && character.associated_history_files && character.associated_history_files.length > 0) {
+            character.associated_history_files.forEach(filename => {
+                const li = document.createElement('li');
+                li.textContent = filename;
+                
+                const removeBtn = document.createElement('button');
+                removeBtn.textContent = 'Remove';
+                removeBtn.className = 'remove-history-btn';
+                removeBtn.onclick = () => dissociateHistoryFile(filename);
+                
+                li.appendChild(removeBtn);
+                listElement.appendChild(li);
+            });
+        } else {
+            listElement.innerHTML = '<li><em>None associated.</em></li>';
+        }
+
+        // Display combined history content
+        const historyContentDisplay = getElem('history-content-display');
+        if (character && character.combined_history_content) {
+            historyContentDisplay.textContent = character.combined_history_content;
+        } else if (character && character.associated_history_files && character.associated_history_files.length > 0) {
+            historyContentDisplay.textContent = "Loading content..."; // Or fetch content if not pre-loaded
+        } else {
+            historyContentDisplay.textContent = "No history content. Associate files to view their content.";
+        }
+    }
+
+
+    function selectCharacterForDetails(charId) {
+        currentProfileCharId = charId; 
+        // Fetch the full character details, including loaded history, from the backend
+        fetch(`${API_BASE_URL}/api/npcs/${charId}`)
+            .then(response => {
+                if (!response.ok) throw new Error(`Failed to fetch character details: ${response.status}`);
+                return response.json();
+            })
+            .then(selectedChar => {
+                // Update the allCharacters array with the fresh data (important for history content)
+                const charIndex = allCharacters.findIndex(c => c._id === charId);
+                if (charIndex > -1) {
+                    allCharacters[charIndex] = selectedChar;
+                } else {
+                    allCharacters.push(selectedChar); // Should ideally not happen if charId came from existing list
+                }
+
+                updateText('details-char-name', selectedChar.name); 
+                updateText('profile-char-type', selectedChar.character_type);
+                updateText('profile-description', selectedChar.description || "N/A");
+                updateText('profile-personality', (selectedChar.personality_traits || []).join(', ') || "N/A");
+                
+                getElem('gm-notes').value = selectedChar.gm_notes || '';
+                disableBtn('save-gm-notes-btn', false);
+
+                const isNpc = selectedChar.character_type === 'NPC';
+                getElem('npc-memories-collapsible-section').style.display = isNpc ? 'block' : 'none';
+                getElem('character-history-collapsible-section').style.display = 'block'; 
+                
+                if (isNpc) {
+                    renderMemories(selectedChar.memories || []);
+                    disableBtn('add-memory-btn', false);
+                } else { 
+                    disableBtn('add-memory-btn', true);
+                    getElem('character-memories-list').innerHTML = '<p><em>Memories are typically managed for NPCs.</em></p>';
+                }
+                
+                renderAssociatedHistoryFiles(selectedChar); // Display associated files and their content
+                fetchHistoryFiles(); // Populate the dropdown for adding new files
+                disableBtn('associate-history-btn', false);
+            })
+            .catch(error => {
+                console.error("Error fetching character details:", error);
+                currentProfileCharId = null;
+                updateText('details-char-name', "Error");
+                // Clear other fields
+                getElem('history-content-display').textContent = "Error loading character details.";
+                getElem('associated-history-list').innerHTML = '<li><em>Error loading.</em></li>';
+            });
+    }
+
 
     function togglePcSelection(pcId, element) {
         if (activePcIds.has(pcId)) {
@@ -1297,9 +1386,8 @@
     
     // --- Window Onload ---
     window.onload = () => {
-        fetchCharacters(); // Fetches all characters, then calls render lists and updateView
+        fetchCharacters(); 
         setupInterfaceControls();
-        // updateView will be called by fetchCharacters, no need to call it here if activeSceneNpcIds is empty
     };
 
     // --- Full Functions for CRUD and Dialogue ---
@@ -1313,7 +1401,15 @@
             const response = await fetch(`${API_BASE_URL}/api/npcs`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, description, character_type: characterType, personality_traits: personality, memories: [], gm_notes: "" })
+                body: JSON.stringify({ 
+                    name, 
+                    description, 
+                    character_type: characterType, 
+                    personality_traits: personality, 
+                    memories: [], 
+                    gm_notes: "",
+                    associated_history_files: [] // Initialize with empty list
+                })
             });
             if (!response.ok) { const errorData = await response.json(); throw new Error(errorData.error || `HTTP error! status: ${response.status}`);}
             const result = await response.json();
