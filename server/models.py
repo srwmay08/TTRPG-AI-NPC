@@ -32,16 +32,19 @@ class NPCProfile(BaseModel):
     current_situation: Optional[str] = None
     
     personality_traits: List[str] = Field(default_factory=list, description="Key personality traits.")
-    background_story: Optional[str] = None
+    background_story: Optional[str] = None # This might be superseded or complemented by detailed_history
     motivations: List[str] = Field(default_factory=list)
     knowledge: List[str] = Field(default_factory=list, description="Specific pieces of knowledge the character has.")
     memories: List[MemoryItem] = Field(default_factory=list, description="Character's persistent memories.")
     linked_lore_ids: List[str] = Field(default_factory=list, description="IDs of linked world information items.")
     gm_notes: Optional[str] = Field(default=None, description="Private GM notes for this character.")
     
-    # ***** ADD THIS LINE *****
     vtt_data: Optional[Dict[str, Any]] = Field(default=None, description="Data imported from VTT character sheets.")
-    # *************************
+
+    # New fields for detailed history
+    associated_history_file: Optional[str] = Field(default=None, description="Filename of the associated detailed history .txt file.")
+    history_content: Optional[str] = Field(default=None, description="Content of the associated detailed history file.")
+
 
     class Config:
         populate_by_name = True
@@ -53,7 +56,9 @@ class NPCProfile(BaseModel):
                 "race": "Human",
                 "class": "Bard",
                 "personality_traits": ["Eternally chill", "Has the munchies"],
-                "vtt_data": {"attributes": {"hp": {"value": 10, "max": 10}}}
+                "vtt_data": {"attributes": {"hp": {"value": 10, "max": 10}}},
+                "associated_history_file": "Threestrings.txt",
+                "history_content": "Mattrim was born by the docks..."
             }
         }
 

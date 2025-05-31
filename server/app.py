@@ -8,13 +8,19 @@ from pydantic import ValidationError
 
 from config import config as app_config
 from database import db_connector
-from models import NPCProfile, DialogueRequest, DialogueResponse, MemoryItem # NPCProfile now includes vtt_data
+from models import NPCProfile, DialogueRequest, DialogueResponse, MemoryItem # NPCProfile now includes history fields
 from ai_service import ai_service_instance
 
 app = Flask(__name__)
 app.secret_key = app_config.FLASK_SECRET_KEY
 
 mongo_db = db_connector.get_db()
+
+# Define the path to the history directory
+HISTORY_DATA_DIR = os.path.join(os.path.dirname(__file__), 'data', 'history')
+PRIMARY_DATA_DIR = os.path.join(os.path.dirname(__file__), 'data')
+VTT_IMPORT_DIR = os.path.join(os.path.dirname(__file__), 'data', 'vtt_imports')
+
 
 def parse_json(data):
     return json.loads(json_util.dumps(data))
@@ -29,62 +35,64 @@ def slugify(text):
     text = re.sub(r'[^\w-]+', '', text) # Remove non-alphanumeric characters except hyphens
     return text
 
-def find_fvtt_file(character_name, vtt_import_dir):
+def find_fvtt_file(character_name, vtt_import_dir_abs):
     """
     Tries to find a matching FVTT export file based on the character name.
     Assumes FVTT files are named like 'fvtt-Actor-<slugified-name>-<some-id>.json'
     """
     slug_name = slugify(character_name)
-    if not os.path.isdir(vtt_import_dir):
+    if not os.path.isdir(vtt_import_dir_abs):
         return None
-    for filename in os.listdir(vtt_import_dir):
+    for filename in os.listdir(vtt_import_dir_abs):
         if filename.startswith(f"fvtt-Actor-{slug_name}") and filename.endswith('.json'):
-            return os.path.join(vtt_import_dir, filename)
+            return os.path.join(vtt_import_dir_abs, filename)
     return None
 
 def sync_data_from_files():
     """
     Loads character data from JSON files in the 'data/' directory
     and merges it with corresponding FVTT data from 'data/vtt_imports/',
+    and attempts to pre-associate history files from 'data/history/',
     then syncs to MongoDB.
     """
     if mongo_db is None:
         print("[Data Sync] Skipping: Database not available.")
         return
 
-    primary_data_dir = 'data'
-    vtt_import_dir = 'data/vtt_imports' # Directory for FVTT JSON exports
-
     print("\n" + "-"*50)
-    print(f"[Data Sync] Starting character data synchronization from '{primary_data_dir}' and '{vtt_import_dir}'...")
+    print(f"[Data Sync] Starting character data synchronization from '{PRIMARY_DATA_DIR}', '{VTT_IMPORT_DIR}', and '{HISTORY_DATA_DIR}'...")
 
-    if not os.path.isdir(primary_data_dir):
-        print(f"[Data Sync] Warning: Primary data directory '{primary_data_dir}' not found. Skipping.")
+    if not os.path.isdir(PRIMARY_DATA_DIR):
+        print(f"[Data Sync] Warning: Primary data directory '{PRIMARY_DATA_DIR}' not found. Skipping.")
         print("-" * 50)
         return
     
-    if not os.path.isdir(vtt_import_dir):
-        print(f"[Data Sync] Note: VTT import directory '{vtt_import_dir}' not found. Will proceed without VTT data.")
-        # We can proceed without VTT data, it's an enhancement.
+    if not os.path.isdir(VTT_IMPORT_DIR):
+        print(f"[Data Sync] Note: VTT import directory '{VTT_IMPORT_DIR}' not found. Will proceed without VTT data.")
     
+    if not os.path.isdir(HISTORY_DATA_DIR):
+        print(f"[Data Sync] Note: History data directory '{HISTORY_DATA_DIR}' not found. Will proceed without pre-associating history files.")
+
     characters_collection = mongo_db.npcs
     synced_count = 0
     updated_count = 0
     new_count = 0
 
-    for filename in os.listdir(primary_data_dir):
+    for filename in os.listdir(PRIMARY_DATA_DIR):
         if filename.endswith('.json'):
-            primary_file_path = os.path.join(primary_data_dir, filename)
+            primary_file_path = os.path.join(PRIMARY_DATA_DIR, filename)
             try:
                 with open(primary_file_path, 'r', encoding='utf-8') as f:
                     primary_char_data = json.load(f)
 
                 # Validate primary data first to get the name
+                # Temporarily create an NPCProfile instance just for name extraction
+                # This ensures 'name' field exists before we try to use it.
                 temp_profile_for_name = NPCProfile(**primary_char_data)
                 char_name = temp_profile_for_name.name
                 
                 fvtt_system_data = None
-                fvtt_file_path = find_fvtt_file(char_name, vtt_import_dir)
+                fvtt_file_path = find_fvtt_file(char_name, VTT_IMPORT_DIR)
 
                 if fvtt_file_path:
                     try:
@@ -102,29 +110,51 @@ def sync_data_from_files():
                 else:
                     print(f"[Data Sync] -> No matching VTT file found for {char_name} (searched for slug: {slugify(char_name)}).")
 
-                # Combine primary data with FVTT data before final validation
-                combined_data = primary_char_data.copy() # Start with primary
+                # Attempt to pre-associate history file
+                associated_history_file = None
+                history_content = None
+                potential_history_filename = f"{char_name}.txt" # Assuming history files are named like "Character Name.txt"
+                history_file_path_abs = os.path.join(HISTORY_DATA_DIR, potential_history_filename)
+
+                if os.path.exists(history_file_path_abs):
+                    try:
+                        with open(history_file_path_abs, 'r', encoding='utf-8') as f_hist:
+                            history_content = f_hist.read()
+                        associated_history_file = potential_history_filename
+                        print(f"[Data Sync] -> Found and loaded history file for {char_name}: {potential_history_filename}")
+                    except Exception as e_hist:
+                        print(f"[Data Sync] Error reading history file {potential_history_filename} for {char_name}: {e_hist}")
+                else:
+                    print(f"[Data Sync] -> No matching history file found for {char_name} (searched for: {potential_history_filename}).")
+
+
+                # Combine primary data with VTT data and history data before final validation
+                combined_data = primary_char_data.copy() 
                 if fvtt_system_data:
                     combined_data['vtt_data'] = fvtt_system_data 
+                if associated_history_file:
+                    combined_data['associated_history_file'] = associated_history_file
+                if history_content:
+                    combined_data['history_content'] = history_content
                 
-                # Validate the combined data structure
+                # Validate the combined data structure using the updated NPCProfile model
                 validated_profile = NPCProfile(**combined_data)
                 
                 existing_char_in_db = characters_collection.find_one({"name": char_name})
                 
-                # Prepare document for MongoDB, ensuring Pydantic model_dump is used
-                # Exclude fields that are auto-generated or managed differently (like _id)
-                # The `vtt_data` field is now part of the model, so it will be included by model_dump.
                 mongo_doc = validated_profile.model_dump(mode='json', exclude_none=True) 
 
                 if existing_char_in_db:
-                    # Create an update payload, excluding _id
                     update_payload = {k: v for k, v in mongo_doc.items() if k != '_id'}
                     
-                    # Check if there are actual changes to avoid unnecessary DB writes
                     is_changed = False
                     for key, value in update_payload.items():
-                        if existing_char_in_db.get(key) != value:
+                        # Handle nested dicts like vtt_data by comparing them as a whole
+                        if isinstance(value, dict) or isinstance(existing_char_in_db.get(key), dict):
+                            if json.dumps(existing_char_in_db.get(key), sort_keys=True) != json.dumps(value, sort_keys=True):
+                                is_changed = True
+                                break
+                        elif existing_char_in_db.get(key) != value:
                             is_changed = True
                             break
                     
@@ -153,7 +183,7 @@ def sync_data_from_files():
     print(f"[Data Sync] Finished. Processed: {synced_count} | New in DB: {new_count} | Updated in DB: {updated_count}")
     print("-" * 50 + "\n")
 
-# --- Existing API Routes (No changes needed for this request) ---
+
 @app.route('/')
 def serve_index():
     return render_template('index.html')
@@ -165,7 +195,8 @@ def create_npc():
     try:
         data = request.get_json()
         if not data: return jsonify({"error": "Invalid JSON payload"}), 400
-        # vtt_data can be part of the initial creation payload if provided
+        # vtt_data, associated_history_file, history_content can be part of the initial creation payload if provided
+        # Though typically history would be associated later or via sync
         character_profile_data = NPCProfile(**data) 
     except ValidationError as e:
         return jsonify({"error": "Validation Error", "details": e.errors()}), 400
@@ -174,10 +205,9 @@ def create_npc():
 
     try:
         characters_collection = mongo_db.npcs 
-        character_dict = character_profile_data.model_dump(mode='json', exclude_none=True) # Ensure vtt_data is included if present
+        character_dict = character_profile_data.model_dump(mode='json', exclude_none=True)
         result = characters_collection.insert_one(character_dict)
-        character_id = str(result.inserted_id)
-        # Fetch from DB to include _id
+        # Fetch from DB to include _id and ensure all defaults are present
         created_character_from_db = characters_collection.find_one({"_id": result.inserted_id})
         return jsonify({"message": f"{created_character_from_db.get('character_type', 'Character')} created successfully", 
                         "character": parse_json(created_character_from_db)}), 201
@@ -192,11 +222,10 @@ def get_all_npcs():
         characters_cursor = mongo_db.npcs.find({})
         characters_list = []
         for char_doc in characters_cursor:
-            # Ensure _id is a string
             char_doc['_id'] = str(char_doc['_id'])
-            # Basic defaults if fields are missing (though Pydantic should handle this on write)
-            if 'character_type' not in char_doc:
-                char_doc['character_type'] = 'NPC' 
+            # Ensure new fields have defaults if missing from older DB entries
+            char_doc.setdefault('associated_history_file', None)
+            char_doc.setdefault('history_content', None)
             if 'memories' in char_doc and char_doc['memories']:
                 for mem in char_doc['memories']:
                     if isinstance(mem.get('memory_id'), ObjectId):
@@ -218,15 +247,26 @@ def get_npc(npc_id_str: str):
     if not npc_data:
         return jsonify({"error": "Character not found"}), 404
     
-    # No need to validate with NPCProfile on GET if we trust the DB schema
-    # or if we want to return raw data.
-    # If strict validation on GET is needed, uncomment the try-except below.
-    # try:
-    #     npc_profile = NPCProfile(**parse_json(npc_data))
-    #     return jsonify(parse_json(npc_profile.model_dump(mode='json', exclude_none=True))), 200
-    # except ValidationError as e:
-    #     print(f"Warning: Character data for {npc_id_str} from DB has validation issues: {e.errors()}")
-    #     return jsonify({"warning": "Character data from DB may be inconsistent", "raw_data": parse_json(npc_data)}), 200
+    # Ensure new fields have defaults if missing
+    npc_data.setdefault('associated_history_file', None)
+    npc_data.setdefault('history_content', None)
+    
+    # If associated_history_file exists but history_content is missing (e.g. after a manual DB edit or if sync didn't populate it)
+    # try to load it now.
+    if npc_data.get("associated_history_file") and not npc_data.get("history_content"):
+        history_file_path = os.path.join(HISTORY_DATA_DIR, npc_data["associated_history_file"])
+        if os.path.exists(history_file_path):
+            try:
+                with open(history_file_path, 'r', encoding='utf-8') as f_hist:
+                    npc_data["history_content"] = f_hist.read()
+            except Exception as e:
+                print(f"Error reading history file {npc_data['associated_history_file']} for NPC {npc_id_str} on GET: {e}")
+                # Optionally set content to an error message or leave as None
+                npc_data["history_content"] = f"Error: Could not load history file {npc_data['associated_history_file']}."
+        else:
+            npc_data["history_content"] = f"Error: History file {npc_data['associated_history_file']} not found."
+
+
     return jsonify(parse_json(npc_data)), 200
 
 
@@ -246,37 +286,35 @@ def update_npc(npc_id_str: str):
         update_data_req = request.get_json()
         if not update_data_req:
             return jsonify({"error": "Invalid JSON payload for update"}), 400
-
-        # Create a new NPCProfile instance from existing data merged with update_data_req
-        # This ensures that any new vtt_data sent in the PUT request is also validated
-        # and properly structured if it's being updated.
         
         current_data_for_validation = existing_npc_data.copy()
-        # Remove ObjectId before merging with request data for Pydantic validation
         if '_id' in current_data_for_validation:
             del current_data_for_validation['_id'] 
 
-        # Merge existing data with new update data, new data takes precedence
         merged_for_validation = {**current_data_for_validation, **update_data_req}
         
-        # Validate the entire potential new state of the character
         validated_update_profile = NPCProfile(**merged_for_validation)
         
-        # Prepare the document for MongoDB, excluding fields that shouldn't be directly set by PUT
-        # or are managed by other endpoints (like memories).
-        # vtt_data CAN be updated via PUT if included in request.
+        # Note: 'associated_history_file' and 'history_content' are typically managed by their own endpoint
+        # or by the sync process. Direct PUT updates to these fields are allowed by the model but might be unusual.
         update_doc_set = validated_update_profile.model_dump(
             mode='json', 
-            exclude={'memories', 'linked_lore_ids', '_id'}, # _id is never in $set
-            exclude_none=True
+            exclude={'memories', 'linked_lore_ids', '_id'}, 
+            exclude_none=True # Important: if a field is None in validated_profile, it won't be in update_doc_set
+                              # unless exclude_none is False. For $set, we usually want to update only provided fields.
         )
         
-        # Only include fields that were actually in the request or are part of the model
-        # This prevents accidentally wiping fields not sent in the PUT if they were None in validated_update_profile
+        # To ensure we only $set fields that were actually in the request or are part of the model
+        # and avoid wiping existing fields not sent in PUT if they were None in validated_update_profile.
         final_set_payload = {}
         for key, value in update_doc_set.items():
-            if key in update_data_req or key in NPCProfile.model_fields: # Check against model fields
+            if key in update_data_req or key in NPCProfile.model_fields:
                  final_set_payload[key] = value
+        
+        # If 'gm_notes' is explicitly set to empty string in request, allow it to be updated
+        if 'gm_notes' in update_data_req and update_data_req['gm_notes'] == "":
+            final_set_payload['gm_notes'] = ""
+
 
         if not final_set_payload:
             return jsonify({"message": "No valid or changed fields provided for update."}), 200
@@ -288,15 +326,83 @@ def update_npc(npc_id_str: str):
 
     try:
         result = mongo_db.npcs.update_one({"_id": npc_id_obj}, {"$set": final_set_payload})
-        if result.matched_count == 0: # Should not happen due to check above, but good practice
+        if result.matched_count == 0:
             return jsonify({"error": "Character not found for update (race condition?)"}), 404
-        if result.modified_count == 0:
-             return jsonify({"message": "Character data was the same, no changes applied.", "character_id": npc_id_str}), 200
         
         updated_npc_data_from_db = mongo_db.npcs.find_one({"_id": npc_id_obj})
+        # Ensure new fields are present in the response
+        updated_npc_data_from_db.setdefault('associated_history_file', None)
+        updated_npc_data_from_db.setdefault('history_content', None)
+
+        if result.modified_count == 0 and not any(key in final_set_payload for key in ['associated_history_file', 'history_content'] if key not in existing_npc_data): # Check if only history fields were "updated" to same value
+             return jsonify({"message": "Character data was the same, no changes applied.", "character": parse_json(updated_npc_data_from_db)}), 200
+        
         return jsonify({"message": "Character updated successfully", "character": parse_json(updated_npc_data_from_db)}), 200
     except Exception as e:
         return jsonify({"error": f"Could not update character: {str(e)}"}), 500
+
+# --- New API Endpoints for History Files ---
+@app.route('/api/history_files', methods=['GET'])
+def list_history_files():
+    if not os.path.isdir(HISTORY_DATA_DIR):
+        print(f"History directory not found: {HISTORY_DATA_DIR}")
+        return jsonify({"error": "History directory not found on server."}), 500
+    try:
+        files = [f for f in os.listdir(HISTORY_DATA_DIR) if f.endswith('.txt') and os.path.isfile(os.path.join(HISTORY_DATA_DIR, f))]
+        return jsonify(sorted(files)), 200
+    except Exception as e:
+        print(f"Error listing history files: {e}")
+        return jsonify({"error": f"Could not list history files: {str(e)}"}), 500
+
+@app.route('/api/character/<npc_id_str>/associate_history', methods=['POST'])
+def associate_history_file_with_npc(npc_id_str: str):
+    if mongo_db is None: return jsonify({"error": "Database not available"}), 503
+    try:
+        npc_id_obj = ObjectId(npc_id_str)
+    except Exception:
+        return jsonify({"error": "Invalid Character ID format"}), 400
+
+    data = request.get_json()
+    history_filename = data.get('history_file')
+
+    if not history_filename:
+        return jsonify({"error": "History filename not provided"}), 400
+
+    history_file_path = os.path.join(HISTORY_DATA_DIR, history_filename)
+    if not os.path.exists(history_file_path) or not os.path.isfile(history_file_path):
+        return jsonify({"error": f"History file '{history_filename}' not found on server."}), 404
+
+    history_content = ""
+    try:
+        with open(history_file_path, 'r', encoding='utf-8') as f:
+            history_content = f.read()
+    except Exception as e:
+        return jsonify({"error": f"Could not read history file '{history_filename}': {str(e)}"}), 500
+
+    try:
+        update_result = mongo_db.npcs.update_one(
+            {"_id": npc_id_obj},
+            {"$set": {
+                "associated_history_file": history_filename,
+                "history_content": history_content
+            }}
+        )
+        if update_result.matched_count == 0:
+            return jsonify({"error": "Character not found to associate history"}), 404
+        
+        # Fetch the updated character to return it, including the new history fields
+        updated_npc = mongo_db.npcs.find_one({"_id": npc_id_obj})
+        updated_npc.setdefault('associated_history_file', history_filename) # ensure it's there
+        updated_npc.setdefault('history_content', history_content) # ensure it's there
+
+        return jsonify({
+            "message": f"History file '{history_filename}' associated successfully.",
+            "character": parse_json(updated_npc), # Send back the full updated character
+            "history_content": history_content # Explicitly send history_content for frontend
+        }), 200
+    except Exception as e:
+        return jsonify({"error": f"Could not associate history file: {str(e)}"}), 500
+
 
 @app.route('/api/npcs/<npc_id_str>/memory', methods=['POST'])
 def add_npc_memory(npc_id_str: str):
@@ -314,7 +420,6 @@ def add_npc_memory(npc_id_str: str):
         if not memory_req_data or 'content' not in memory_req_data:
             return jsonify({"error": "Memory content is required"}), 400
         
-        # Create MemoryItem instance
         memory_item = MemoryItem(
             content=memory_req_data['content'],
             type=memory_req_data.get('type', 'user_added'),
@@ -324,7 +429,6 @@ def add_npc_memory(npc_id_str: str):
         return jsonify({"error": "Validation Error for memory item", "details": e.errors()}), 400
     
     try:
-        # Push the Pydantic model dumped as a dict
         mongo_db.npcs.update_one(
             {"_id": npc_id_obj},
             {"$push": {"memories": memory_item.model_dump(mode='json')}}
@@ -333,7 +437,7 @@ def add_npc_memory(npc_id_str: str):
         return jsonify({
             "message": "Memory added successfully", 
             "npc_id": npc_id_str, 
-            "new_memory": memory_item.model_dump(mode='json'), # Send back the validated and structured memory
+            "new_memory": memory_item.model_dump(mode='json'),
             "updated_memories": parse_json(updated_npc.get("memories", []))
         }), 200
     except Exception as e:
@@ -347,8 +451,6 @@ def delete_npc_memory(npc_id_str: str, memory_id_str: str):
         npc_id_obj = ObjectId(npc_id_str)
     except Exception:
         return jsonify({"error": "Invalid Character ID format"}), 400
-    
-    # No need to validate memory_id_str as ObjectId, it's a UUID string from MemoryItem model
     
     try:
         update_result = mongo_db.npcs.update_one(
@@ -389,7 +491,16 @@ def generate_dialogue_for_npc(npc_id_str: str):
         return jsonify({"error": "Dialogue generation is only supported for NPCs."}), 400
     
     try:
-        # Parse with Pydantic, which now includes the vtt_data field
+        # Ensure history content is loaded if associated, for the AI prompt
+        if npc_data_from_db.get("associated_history_file") and not npc_data_from_db.get("history_content"):
+            history_file_path_for_dialogue = os.path.join(HISTORY_DATA_DIR, npc_data_from_db["associated_history_file"])
+            if os.path.exists(history_file_path_for_dialogue):
+                with open(history_file_path_for_dialogue, 'r', encoding='utf-8') as f_hist_dialogue:
+                    npc_data_from_db["history_content"] = f_hist_dialogue.read()
+            else: # If file not found, ensure history_content is None or empty for Pydantic
+                 npc_data_from_db["history_content"] = None
+
+
         npc_profile = NPCProfile(**parse_json(npc_data_from_db))
     except ValidationError as e:
         return jsonify({"error": "NPC data in DB is invalid", "details": e.errors(), "raw_data": parse_json(npc_data_from_db)}), 500
@@ -403,8 +514,7 @@ def generate_dialogue_for_npc(npc_id_str: str):
     if npc_profile.linked_lore_ids:
         world_lore_summary = f"This NPC is linked to lore items: {', '.join(npc_profile.linked_lore_ids)}."
     
-    # Generate the NPC's dialogue response
-    # The ai_service can now potentially access npc_profile.vtt_data if it's designed to
+    # Pass the full npc_profile (which now includes history_content if available)
     generated_text = ai_service_instance.generate_npc_dialogue(npc_profile, dialogue_request_data, world_lore_summary)
     
     memory_suggestions = []
@@ -425,12 +535,14 @@ def generate_dialogue_for_npc(npc_id_str: str):
 
 # --- Main Execution Block ---
 if __name__ == '__main__':
-    # Create the vtt_imports directory if it doesn't exist, to avoid errors if user forgets
-    vtt_dir = 'data/vtt_imports'
-    if not os.path.exists(vtt_dir):
-        os.makedirs(vtt_dir)
-        print(f"Created directory: {vtt_dir}")
-        print(f"Please place your FVTT JSON export files in '{vtt_dir}' for them to be imported.")
+    # Create directories if they don't exist
+    for dir_path in [PRIMARY_DATA_DIR, VTT_IMPORT_DIR, HISTORY_DATA_DIR]:
+        if not os.path.exists(dir_path):
+            os.makedirs(dir_path)
+            print(f"Created directory: {dir_path}")
+    
+    print(f"Data directories: Primary='{PRIMARY_DATA_DIR}', VTT='{VTT_IMPORT_DIR}', History='{HISTORY_DATA_DIR}'")
+
 
     if mongo_db is not None:
         sync_data_from_files()
