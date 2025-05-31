@@ -534,15 +534,19 @@
             li.style.cursor = "pointer"; 
             li.textContent = pc.name;
             li.dataset.charId = pc._id;
-            li.onclick = () => { 
+            li.onclick = async () => { // Make the handler async
                 activeSceneNpcIds.clear(); 
                 getElem('multi-npc-dialogue-container').innerHTML = '<p class="scene-event">Select NPCs to add them to the scene.</p>';
                 renderNpcListForScene(); 
                 disableBtn('generate-dialogue-btn', true);
 
                 togglePcSelection(pc._id, li); 
-                selectCharacterForDetails(pc._id); 
-                updateView();
+                
+                // Await the completion of fetching and processing character details
+                // This ensures 'allCharacters' is updated before 'updateView' and 'updatePcDashboard' use it.
+                await selectCharacterForDetails(pc._id); 
+                
+                updateView(); // Now call updateView, which will show the PC dashboard with fresh data
             };
             if (activePcIds.has(pc._id)) li.classList.add('selected');
             ul.appendChild(li);
@@ -1525,7 +1529,29 @@
 
         activeSceneNpcIds.forEach(currentNpcId => {
             const currentNpc = allCharacters.find(c => c._id === currentNpcId);
-            if (!currentNpc) return;
+            if (!currentNpc) {
+                console.error(`Could not find NPC with ID ${currentNpcId} in allCharacters array.`);
+                return; // Skip this NPC if not found
+            }
+// ...
+
+            const payload = { 
+                scene_context: sceneContext, 
+                player_utterance: playerUtterance, 
+                active_pcs: activePCsInfo.map(pc => pc.name), 
+                // Use NPC-specific recent history if available, otherwise global
+                recent_dialogue_history: (dialogueHistories[currentNpcId] && dialogueHistories[currentNpcId].length > 0) ?
+                                         dialogueHistories[currentNpcId].slice(-10).map(d => `${d.speakerName}: ${d.utterance}`) :
+                                         dialogueHistory.slice(-10).map(d => `${d.speakerName}: ${d.utterance}`),
+                other_active_npcs_dialogue: otherActiveNpcsDialogueSummary,
+                // --- THIS IS THE CRUCIAL LINE FOR NPC HISTORY ---
+                npc_history: currentNpc.combined_history_content || "" 
+                // --- Make sure currentNpc object has 'combined_history_content' populated ---
+            };
+            
+            // For debugging the payload being sent from frontend:
+            console.log(`Payload for ${currentNpc.name} (ID: ${currentNpcId}):`, JSON.parse(JSON.stringify(payload)));
+
 
             const otherActiveNpcsDialogueSummary = [];
             activeSceneNpcIds.forEach(otherNpcId => {
@@ -1557,12 +1583,17 @@
                 }
             });
 
-            const payload = { 
-                scene_context: sceneContext, 
-                player_utterance: playerUtterance, 
-                active_pcs: activePCsInfo.map(pc => pc.name), 
-                recent_dialogue_history: dialogueHistory.slice(-10).map(d => `${d.speakerName}: ${d.utterance}`),
-                other_active_npcs_dialogue: otherActiveNpcsDialogueSummary
+            const npcSpecificRecentHistory = dialogueHistories[currentNpcId] ?
+                                 dialogueHistories[currentNpcId].slice(-10).map(d => `${d.speakerName}: ${d.utterance}`) :
+                                 dialogueHistory.slice(-10).map(d => `${d.speakerName}: ${d.utterance}`); // Fallback or choose one source
+
+            const payload = {
+                scene_context: sceneContext,
+                player_utterance: playerUtterance,
+                active_pcs: activePCsInfo.map(pc => pc.name), // Consider sending PC objects if more detail is needed by AI
+                recent_dialogue_history: npcSpecificRecentHistory,
+                other_active_npcs_dialogue: otherActiveNpcsDialogueSummary,
+                npc_history: currentNpc.combined_history_content || "" // <<< ADD THIS LINE
             };
 
             promises.push(
