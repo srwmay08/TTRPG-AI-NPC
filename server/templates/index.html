@@ -71,22 +71,24 @@
         .clickable-suggestion { cursor: pointer; text-decoration: underline; color: blue; }
         
         #pc-dashboard-view { display: block; flex-grow: 1; overflow-y: auto; }
-        .pc-dashboard-grid { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px; }
-        .pc-stat-card { border: 1px solid #ddd; border-radius: 4px; padding: 15px; background-color: #f9f9f9; flex: 1 1 150px; min-width: 120px; }
-        .pc-stat-card h4 { margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px; }
-        .pc-stat-card p { margin: 5px 0; }
-        .pc-stat-card ul { list-style-type: none; padding-left: 0; }
-        .pc-stat-card li { padding: 3px 0; }
-        .pc-dashboard-no-selection { text-align: center; color: #777; margin-top: 50px; font-size: 1.2em;}
+        .pc-dashboard-grid { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 10px; margin-bottom: 20px; } 
+        .pc-stat-card { border: 1px solid #ddd; border-radius: 4px; padding: 10px; background-color: #f9f9f9; flex: 1 1 200px; min-width: 180px; box-sizing: border-box; } 
+        .pc-stat-card h4 { margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 8px; font-size: 1.1em; }
+        .pc-stat-card p { margin: 4px 0; font-size: 0.9em; }
+        
+        #main-stats-table, #skills-overview-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 0.9em; }
+        #main-stats-table th, #main-stats-table td,
+        #skills-overview-table th, #skills-overview-table td { border: 1px solid #ddd; padding: 6px; text-align: center; }
+        #main-stats-table th, #skills-overview-table th { background-color: #e9ecef; font-weight: bold; }
+        #main-stats-table td:first-child { text-align: left; font-weight: bold; } 
+        #skills-overview-table th:first-child { text-align: left; font-weight: bold; } 
+        #skills-overview-table td:first-child { text-align: left; font-weight: bold; } 
 
-        #main-stats-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 0.9em; }
-        #main-stats-table th, #main-stats-table td { border: 1px solid #ddd; padding: 6px; text-align: center; }
-        #main-stats-table th { background-color: #e9ecef; font-weight: bold; }
-        #main-stats-table td:first-child { text-align: left; font-weight: bold; }
-        .clickable-ability-header { cursor: pointer; color: #0056b3; text-decoration: underline;}
-        .clickable-ability-header span.arrow-indicator { font-size: 0.8em; margin-left: 3px;}
+        
+        .clickable-ability-header, .clickable-skill-header { cursor: pointer; color: #0056b3; text-decoration: underline;}
+        .clickable-ability-header span.arrow-indicator, .clickable-skill-header span.arrow-indicator { font-size: 0.8em; margin-left: 3px;}
 
-        .expanded-ability-content {
+        .expanded-ability-content, .expanded-skill-content {
             border: 1px solid #ccc;
             padding: 15px;
             margin-top: 0px; 
@@ -94,14 +96,16 @@
             background-color: #f8f9fa;
             border-top: none; 
         }
-        .expanded-ability-content h5 { margin-top:10px; margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 3px;} /* Adjusted for sections */
+        .expanded-ability-content h5, .expanded-skill-content h5 { margin-top:10px; margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 3px;}
         
-        .ability-bar-chart-container { margin-bottom: 15px; padding: 10px; background-color: #fff; border: 1px solid #eee; border-radius: 4px;}
+        .ability-bar-chart-container, .skill-bar-chart-container { margin-bottom: 15px; padding: 10px; background-color: #fff; border: 1px solid #eee; border-radius: 4px;}
         .pc-bar-row { display: flex; align-items: center; margin-bottom: 3px; font-size: 0.9em; }
         .stat-comparison-pc-name { width: 120px; text-align: right; margin-right: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .stat-bar-wrapper { flex-grow: 1; background-color: #e0e0e0; border-radius: 3px; height: 18px; min-width: 80px; }
-        .stat-bar { height: 100%; background-color: #007bff; border-radius: 3px; text-align: right; padding-right: 5px; color: white; line-height: 18px; font-size: 0.8em; white-space: nowrap; overflow: hidden;}
-        
+        .stat-bar-wrapper { flex-grow: 1; background-color: #e0e0e0; border-radius: 3px; height: 18px; min-width: 80px; position: relative;}
+        .stat-bar { height: 100%; background-color: #007bff; border-radius: 3px; text-align: right; padding-right: 5px; color: white; line-height: 18px; font-size: 0.8em; white-space: nowrap; overflow: hidden; position: absolute; left: 0; top: 0;}
+        .stat-bar.negative { background-color: #dc3545; /* Red for negative values */ left: auto; right: 0; text-align: left; padding-left: 5px;}
+
+
         .derived-stats-table { width: 100%; border-collapse: collapse; font-size: 0.9em; margin-top:5px; margin-bottom: 15px; }
         .derived-stats-table th, .derived-stats-table td { border: 1px solid #ddd; padding: 5px; text-align: left; }
         .derived-stats-table th { background-color: #f1f1f1; font-weight: normal; }
@@ -112,6 +116,8 @@
         .rules-explanation-table td { border: 1px solid #e0e0e0; padding: 8px; }
         .rules-explanation-table ul { margin-top: 0; margin-bottom: 0; padding-left: 20px; }
         .rules-explanation-table strong { color: #333; }
+        .pc-dashboard-no-selection { text-align: center; color: #777; margin-top: 50px; font-size: 1.2em;}
+
     </style>
 </head>
 <body>
@@ -119,8 +125,7 @@
     <div id="left-column" class="column">
         <div id="left-column-content">
             <h2>Characters & Details</h2>
-
-                        
+            
             <div id="pc-list-section" class="collapsible-section">
                 <h3>Active Player Characters</h3>
                 <div class="collapsible-content character-list">
@@ -143,31 +148,27 @@
                         <p><strong>Personality:</strong> <span id="profile-personality"></span></p>
                     </div>
                     <div id="gm-notes-collapsible-section" class="collapsible-section">
-                <h3>GM Notes</h3>
-                <div class="collapsible-content">
-                    <textarea id="gm-notes" rows="3" placeholder="Private notes for this character..."></textarea>
-                    <button onclick="saveGMNotes()" id="save-gm-notes-btn" disabled>Save Notes</button>
-                </div>
-            </div>
-
-            <div id="npc-memories-collapsible-section" class="collapsible-section">
-                <h3>NPC Memories</h3>
-                <div class="collapsible-content" id="npc-specific-details-content">
-                    <div id="add-memory-form">
-                        <label for="new-memory-content">Add Custom Memory:</label>
-                        <input type="text" id="new-memory-content" placeholder="Fact, event, observation...">
-                        <input type="text" id="new-memory-type" placeholder="Type (e.g., fact, seen)">
-                        <button onclick="addMemoryToCharacter()" id="add-memory-btn" disabled>Add Memory</button>
+                        <h3>GM Notes</h3>
+                        <div class="collapsible-content">
+                            <textarea id="gm-notes" rows="3" placeholder="Private notes for this character..."></textarea>
+                            <button onclick="saveGMNotes()" id="save-gm-notes-btn" disabled>Save Notes</button>
+                        </div>
                     </div>
-                    <div id="character-memories-list"></div>
-                </div>
-            </div>
+                    <div id="npc-memories-collapsible-section" class="collapsible-section">
+                        <h3>NPC Memories</h3>
+                        <div class="collapsible-content" id="npc-specific-details-content">
+                            <div id="add-memory-form">
+                                <label for="new-memory-content">Add Custom Memory:</label>
+                                <input type="text" id="new-memory-content" placeholder="Fact, event, observation...">
+                                <input type="text" id="new-memory-type" placeholder="Type (e.g., fact, seen)">
+                                <button onclick="addMemoryToCharacter()" id="add-memory-btn" disabled>Add Memory</button>
+                            </div>
+                            <div id="character-memories-list"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-
-            
-
             <div id="create-character-section" class="collapsible-section collapsed">
                 <h3>Create New Character</h3>
                 <div id="create-character-form" class="collapsible-content">
@@ -230,12 +231,15 @@
     let allCharacters = [];
     let dialogueHistory = [];
     let currentlyExpandedAbility = null; 
+    let currentlyExpandedSkill = null; 
+    let skillSortKey = null; 
 
     const API_BASE_URL = ''; 
     function getElem(id) { return document.getElementById(id); }
     function updateText(id, text) { getElem(id).textContent = text; }
     function disableBtn(id, disabled) { getElem(id).disabled = disabled; }
 
+    // --- D&D 5e Calculation Functions ---
     function getAbilityModifier(score) { return Math.floor((score - 10) / 2); }
     function carryingCapacity(score) { return score * 15; }
     function pushDragLift(score) { return score * 30; } 
@@ -254,7 +258,6 @@
     function calculateSkillBonus(baseStatScore, skillProficiencyValue, proficiencyBonus) {
         const modifier = getAbilityModifier(baseStatScore);
         let skillBonus = modifier;
-        // VTT proficiency: 0 = none, 0.5 = half, 1 = proficient, 2 = expert
         if (skillProficiencyValue === 1) { 
             skillBonus += proficiencyBonus;
         } else if (skillProficiencyValue === 2) {
@@ -267,7 +270,7 @@
     
     function calculatePassiveSkill(baseStatScore, skillProficiencyValue, proficiencyBonus) {
         const skillBonus = calculateSkillBonus(baseStatScore, skillProficiencyValue, proficiencyBonus);
-        return 10 + skillBonus - getAbilityModifier(baseStatScore); // Passive = 10 + total skill bonus
+        return 10 + skillBonus; 
     }
 
 
@@ -280,6 +283,7 @@
         return 6;
     }
 
+    // --- Character Data & Rendering ---
     async function fetchCharacters() {
         try {
             const response = await fetch(`${API_BASE_URL}/api/npcs`);
@@ -391,6 +395,17 @@
                     }
                 }
             }
+             if (currentlyExpandedSkill) { 
+                const skillExpansionDiv = document.getElementById(`expanded-skill-${currentlyExpandedSkill}`);
+                const selectedPcsForSkillExpansion = allCharacters.filter(char => activePcIds.has(char._id) && char.character_type === 'PC' && char.vtt_data);
+                 if (skillExpansionDiv && skillExpansionDiv.style.display === 'block') {
+                    if (selectedPcsForSkillExpansion.length > 0) {
+                        populateExpandedSkillDetails(currentlyExpandedSkill, skillExpansionDiv, selectedPcsForSkillExpansion);
+                    } else {
+                        skillExpansionDiv.innerHTML = '<p>Select PCs to see details for this skill.</p>';
+                    }
+                }
+            }
             updatePcDashboard(); 
         }
     }
@@ -407,6 +422,13 @@
                 const headerTH = document.querySelector(`#main-stats-table th[data-ability="${currentlyExpandedAbility}"]`);
                 if (headerTH) headerTH.querySelector('span.arrow-indicator').textContent = ' ►';
                 currentlyExpandedAbility = null;
+            }
+            if(currentlyExpandedSkill){ 
+                const skillExpansionDiv = document.getElementById(`expanded-skill-${currentlyExpandedSkill}`);
+                if(skillExpansionDiv) skillExpansionDiv.style.display = 'none';
+                const skillHeader = document.querySelector(`#skills-overview-table th.clickable-skill-header[data-skill-key="${currentlyExpandedSkill}"]`);
+                if(skillHeader) skillHeader.querySelector('span.arrow-indicator').textContent = ' ►';
+                currentlyExpandedSkill = null;
             }
         } else {
             dialogueInterface.style.display = 'none';
@@ -445,19 +467,69 @@
                 if (headerTH) headerTH.querySelector('span.arrow-indicator').textContent = ' ►';
                 currentlyExpandedAbility = null;
             }
+            if (currentlyExpandedSkill) {
+                const skillExpansionDiv = document.getElementById(`expanded-skill-${currentlyExpandedSkill}`);
+                if (skillExpansionDiv) skillExpansionDiv.style.display = 'none';
+                const skillHeader = document.querySelector(`#skills-overview-table th.clickable-skill-header[data-skill-key="${currentlyExpandedSkill}"]`);
+                if (skillHeader) skillHeader.querySelector('span.arrow-indicator').textContent = ' ►';
+                currentlyExpandedSkill = null;
+            }
             return;
         }
 
+        // --- Individual Quick Stat Cards ---
+        let statCardsHTML = `<h4>PC Quick View</h4><div class="pc-dashboard-grid">`;
+        const sortedSelectedPcsByName = [...selectedPcs].sort((a,b) => a.name.localeCompare(b.name));
+        sortedSelectedPcsByName.forEach(pc => {
+            const pcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || 1;
+            const profBonus = getProficiencyBonus(pcLevel);
+            statCardsHTML += `<div class="pc-stat-card"><h4>${pc.name} (Lvl ${pcLevel})</h4>`;
+            const hpCurrent = pc.vtt_data.attributes.hp?.value !== undefined ? pc.vtt_data.attributes.hp.value : 'N/A';
+            const hpMax = pc.vtt_data.attributes.hp?.max !== undefined && pc.vtt_data.attributes.hp.max !== null ? pc.vtt_data.attributes.hp.max : 'N/A';
+            statCardsHTML += `<p><strong>HP:</strong> ${hpCurrent} / ${hpMax}</p>`;
+            
+            let acDisplay = pc.flags?.ddbimporter?.overrideAC?.flat; 
+            if (acDisplay === undefined || acDisplay === null) {
+                acDisplay = pc.vtt_data.attributes.ac?.value;
+            }
+            if (acDisplay === undefined || acDisplay === null) {
+                acDisplay = pc.vtt_data.attributes.ac?.flat;
+            }
+            if (acDisplay === undefined || acDisplay === null) {
+                acDisplay = 'N/A';
+            }
+            statCardsHTML += `<p><strong>AC:</strong> ${acDisplay}</p>`;
+            
+            let passivePercFormatted = 'N/A';
+            const wisScoreForPassive = pc.vtt_data.abilities?.wis?.value;
+            const percSkillInfo = pc.vtt_data.skills?.prc; 
+            if (wisScoreForPassive !== undefined && percSkillInfo !== undefined) {
+                passivePercFormatted = calculatePassiveSkill(wisScoreForPassive, percSkillInfo.value || 0, profBonus);
+            }
+            statCardsHTML += `<p><strong>Pas. Perception:</strong> ${passivePercFormatted}</p>`;
+
+            let passiveInvFormatted = 'N/A';
+            const intScoreForPassive = pc.vtt_data.abilities?.int?.value;
+            const invSkillInfo = pc.vtt_data.skills?.inv; 
+            if (intScoreForPassive !== undefined && invSkillInfo !== undefined) {
+                 passiveInvFormatted = calculatePassiveSkill(intScoreForPassive, invSkillInfo.value || 0, profBonus);
+            }
+            statCardsHTML += `<p><strong>Pas. Investigation:</strong> ${passiveInvFormatted}</p>`;
+            statCardsHTML += `</div>`;
+        });
+        statCardsHTML += `</div>`; 
+        dashboardContent.innerHTML += statCardsHTML;
+
+        // --- Main Ability Scores Overview Table ---
         const abilities = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
-        let mainStatsTableHTML = `<h4>Player Stats Overview</h4>
+        let mainStatsTableHTML = `<h4>Ability Scores Overview</h4>
                                   <table id="main-stats-table"><thead><tr><th>Character</th>`;
         abilities.forEach(ablKey => {
             const arrow = (currentlyExpandedAbility === ablKey && document.getElementById(`expanded-${ablKey}`)?.style.display !== 'none') ? '▼' : '►';
             mainStatsTableHTML += `<th class="clickable-ability-header" data-ability="${ablKey}" onclick="toggleAbilityExpansion('${ablKey}')">${ablKey} <span class="arrow-indicator">${arrow}</span></th>`;
         });
         mainStatsTableHTML += `</tr></thead><tbody>`;
-        const sortedSelectedPcsByName = [...selectedPcs].sort((a,b) => a.name.localeCompare(b.name));
-        sortedSelectedPcsByName.forEach(pc => {
+        sortedSelectedPcsByName.forEach(pc => { 
             mainStatsTableHTML += `<tr><td>${pc.name}</td>`;
             abilities.forEach(ablKey => {
                 const score = pc.vtt_data.abilities[ablKey.toLowerCase()]?.value || 0;
@@ -467,10 +539,11 @@
             mainStatsTableHTML += `</tr>`;
         });
         mainStatsTableHTML += `</tbody></table>`;
-        const expansionContainer = document.createElement('div');
-        expansionContainer.id = 'expanded-ability-details-sections';
-        dashboardContent.innerHTML = mainStatsTableHTML;
-        dashboardContent.appendChild(expansionContainer);
+        const abilityExpansionContainer = document.createElement('div');
+        abilityExpansionContainer.id = 'expanded-ability-details-sections';
+        dashboardContent.innerHTML += mainStatsTableHTML; 
+        dashboardContent.appendChild(abilityExpansionContainer); 
+
         abilities.forEach(ablKey => {
             const expansionDiv = document.createElement('div');
             expansionDiv.id = `expanded-${ablKey}`;
@@ -479,61 +552,85 @@
             if (currentlyExpandedAbility === ablKey && selectedPcs.length > 0) {
                 populateExpandedAbilityDetails(ablKey, expansionDiv, selectedPcs);
             }
-            expansionContainer.appendChild(expansionDiv);
+            abilityExpansionContainer.appendChild(expansionDiv);
         });
-        let statCardsHTML = `<h4 style="margin-top: 20px;">Individual Stat Blocks</h4><div class="pc-dashboard-grid">`;
-        sortedSelectedPcsByName.forEach(pc => {
+
+        // --- Skills Overview Table (PCs as rows, Skills as columns) ---
+        const skillNameMap = {
+            "acr": "Acrobatics", "ani": "Animal Handling", "arc": "Arcana", "ath": "Athletics", 
+            "dec": "Deception", "his": "History", "ins": "Insight", "itm": "Intimidation", 
+            "inv": "Investigation", "med": "Medicine", "nat": "Nature", "prc": "Perception", 
+            "prf": "Performance", "per": "Persuasion", "rel": "Religion", "slt": "Sleight of Hand", 
+            "ste": "Stealth", "sur": "Survival"
+        };
+        let skillsTableHTML = `<h4>Skills Overview</h4>
+                               <table id="skills-overview-table"><thead><tr><th>Character</th>`;
+        for (const skillKey in skillNameMap) {
+            const skillFullName = skillNameMap[skillKey];
+            const arrow = (currentlyExpandedSkill === skillKey && document.getElementById(`expanded-skill-${skillKey}`)?.style.display !== 'none') ? '▼' : '►';
+            skillsTableHTML += `<th class="clickable-skill-header" data-skill-key="${skillKey}" onclick="toggleSkillExpansion('${skillKey}')">${skillFullName} <span class="arrow-indicator">${arrow}</span></th>`;
+        }
+        skillsTableHTML += `</tr></thead><tbody>`;
+
+        let pcsForSkillTable = [...selectedPcs]; // Use a copy for sorting
+        if (skillSortKey) {
+            pcsForSkillTable.sort((a, b) => {
+                const pcLevelA = a.flags?.ddbimporter?.dndbeyond?.totalLevels || a.system?.details?.level || 1;
+                const profBonusA = getProficiencyBonus(pcLevelA);
+                const skillDataA = a.vtt_data.skills?.[skillSortKey];
+                const abilityKeyA = skillDataA?.ability || (skillSortKey === 'ath' ? 'str' : ['acr', 'slt', 'ste'].includes(skillSortKey) ? 'dex' : ['arc', 'his', 'inv', 'nat', 'rel'].includes(skillSortKey) ? 'int' : ['ani', 'ins', 'med', 'prc', 'sur'].includes(skillSortKey) ? 'wis' : 'cha');
+                const abilityScoreA = a.vtt_data.abilities[abilityKeyA]?.value || 10;
+                const bonusA = skillDataA ? calculateSkillBonus(abilityScoreA, skillDataA.value || 0, profBonusA) : getAbilityModifier(abilityScoreA);
+
+                const pcLevelB = b.flags?.ddbimporter?.dndbeyond?.totalLevels || b.system?.details?.level || 1;
+                const profBonusB = getProficiencyBonus(pcLevelB);
+                const skillDataB = b.vtt_data.skills?.[skillSortKey];
+                const abilityKeyB = skillDataB?.ability || (skillSortKey === 'ath' ? 'str' : ['acr', 'slt', 'ste'].includes(skillSortKey) ? 'dex' : ['arc', 'his', 'inv', 'nat', 'rel'].includes(skillSortKey) ? 'int' : ['ani', 'ins', 'med', 'prc', 'sur'].includes(skillSortKey) ? 'wis' : 'cha');
+                const abilityScoreB = b.vtt_data.abilities[abilityKeyB]?.value || 10;
+                const bonusB = skillDataB ? calculateSkillBonus(abilityScoreB, skillDataB.value || 0, profBonusB) : getAbilityModifier(abilityScoreB);
+                
+                return bonusB - bonusA; // Sort descending
+            });
+        } else { // Default sort by name if no skillSortKey
+             pcsForSkillTable.sort((a,b) => a.name.localeCompare(b.name));
+        }
+
+
+        pcsForSkillTable.forEach(pc => {
             const pcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || 1;
             const profBonus = getProficiencyBonus(pcLevel);
-            statCardsHTML += `<div class="pc-stat-card"><h4>${pc.name} (Level ${pcLevel})</h4>`;
-            const hpCurrent = pc.vtt_data.attributes.hp?.value !== undefined ? pc.vtt_data.attributes.hp.value : 'N/A';
-            const hpMax = pc.vtt_data.attributes.hp?.max !== undefined && pc.vtt_data.attributes.hp.max !== null ? pc.vtt_data.attributes.hp.max : 'N/A';
-            statCardsHTML += `<p><strong>HP:</strong> ${hpCurrent} / ${hpMax}</p>`;
-            let acDisplay = pc.vtt_data.attributes.ac?.value;
-            if (acDisplay === undefined || acDisplay === null) acDisplay = pc.vtt_data.attributes.ac?.flat;
-            if (acDisplay === undefined || acDisplay === null) acDisplay = 'N/A (check VTT)';
-            statCardsHTML += `<p><strong>AC:</strong> ${acDisplay}</p>`;
-            let passivePercFormatted = 'N/A';
-            const wisScoreForPassive = pc.vtt_data.abilities?.wis?.value;
-            const percSkillInfo = pc.vtt_data.skills?.prc;
-            if (percSkillInfo?.bonuses?.passive !== undefined && percSkillInfo?.bonuses?.passive !== "") {
-                passivePercFormatted = percSkillInfo.bonuses.passive;
-            } else if (wisScoreForPassive !== undefined && percSkillInfo?.value !== undefined) {
-                passivePercFormatted = calculatePassiveSkill(wisScoreForPassive, percSkillInfo.value, profBonus);
-            }
-            statCardsHTML += `<p><strong>Passive Perception:</strong> ${passivePercFormatted}</p>`;
-            let passiveInvFormatted = 'N/A';
-            const intScoreForPassive = pc.vtt_data.abilities?.int?.value;
-            const invSkillInfo = pc.vtt_data.skills?.inv;
-             if (invSkillInfo?.bonuses?.passive !== undefined && invSkillInfo?.bonuses?.passive !== "") {
-                passiveInvFormatted = invSkillInfo.bonuses.passive;
-            } else if (intScoreForPassive !== undefined && invSkillInfo?.value !== undefined) {
-                 passiveInvFormatted = calculatePassiveSkill(intScoreForPassive, invSkillInfo.value, profBonus);
-            }
-            statCardsHTML += `<p><strong>Passive Investigation:</strong> ${passiveInvFormatted}</p>`;
-            statCardsHTML += '<h5>Abilities:</h5><ul>';
-            abilities.forEach(ablKeyIter => {
-                const score = pc.vtt_data.abilities[ablKeyIter.toLowerCase()]?.value || 0;
-                const mod = getAbilityModifier(score);
-                statCardsHTML += `<li>${ablKeyIter}: ${score} (${mod >= 0 ? '+' : ''}${mod})</li>`;
-            });
-            statCardsHTML += '</ul><h5>Skills:</h5><ul>';
-            const skillNameMap = {"acr": "Acrobatics", "ani": "Animal Handling", "arc": "Arcana", "ath": "Athletics", "dec": "Deception", "his": "History", "ins": "Insight", "itm": "Intimidation", "inv": "Investigation", "med": "Medicine", "nat": "Nature", "prc": "Perception", "prf": "Performance", "per": "Persuasion", "rel": "Religion", "slt": "Sleight of Hand", "ste": "Stealth", "sur": "Survival"};
-            if (pc.vtt_data.skills) {
-                for (const skillAbbr in skillNameMap) { // Iterate in a defined order
-                    if (pc.vtt_data.skills.hasOwnProperty(skillAbbr)) {
-                        const skill = pc.vtt_data.skills[skillAbbr];
-                        if (!skill.ability || !pc.vtt_data.abilities[skill.ability]) continue; 
-                        const abilityScoreForSkill = pc.vtt_data.abilities[skill.ability]?.value || 10;
-                        const skillBonusValue = calculateSkillBonus(abilityScoreForSkill, skill.value, profBonus);
-                        statCardsHTML += `<li>${skillNameMap[skillAbbr]}: ${skillBonusValue >= 0 ? '+' : ''}${skillBonusValue}</li>`;
-                    }
+            skillsTableHTML += `<tr><td>${pc.name}</td>`;
+            for (const skillKey in skillNameMap) {
+                const skillData = pc.vtt_data.skills?.[skillKey];
+                let skillBonusFormatted = "N/A";
+                const defaultAbilityForSkill = (skillKey === 'ath' ? 'str' : ['acr', 'slt', 'ste'].includes(skillKey) ? 'dex' : ['arc', 'his', 'inv', 'nat', 'rel'].includes(skillKey) ? 'int' : ['ani', 'ins', 'med', 'prc', 'sur'].includes(skillKey) ? 'wis' : 'cha');
+                const abilityKeyForSkill = skillData?.ability || defaultAbilityForSkill;
+
+                if (pc.vtt_data.abilities[abilityKeyForSkill]) {
+                    const abilityScore = pc.vtt_data.abilities[abilityKeyForSkill]?.value || 10;
+                    const bonus = calculateSkillBonus(abilityScore, skillData?.value || 0, profBonus);
+                    skillBonusFormatted = `${bonus >= 0 ? '+' : ''}${bonus}`;
                 }
+                skillsTableHTML += `<td>${skillBonusFormatted}</td>`;
             }
-            statCardsHTML += '</ul></div>';
+            skillsTableHTML += `</tr>`;
         });
-        statCardsHTML += `</div>`; 
-        dashboardContent.innerHTML += statCardsHTML;
+        skillsTableHTML += `</tbody></table>`;
+        const skillExpansionContainer = document.createElement('div');
+        skillExpansionContainer.id = 'expanded-skill-details-sections';
+        dashboardContent.innerHTML += skillsTableHTML;
+        dashboardContent.appendChild(skillExpansionContainer);
+
+        for (const skillKey in skillNameMap) {
+            const expansionDiv = document.createElement('div');
+            expansionDiv.id = `expanded-skill-${skillKey}`;
+            expansionDiv.className = 'expanded-skill-content'; 
+            expansionDiv.style.display = (currentlyExpandedSkill === skillKey) ? 'block' : 'none';
+            if (currentlyExpandedSkill === skillKey && selectedPcs.length > 0) { 
+                populateExpandedSkillDetails(skillKey, expansionDiv, selectedPcs);
+            }
+            skillExpansionContainer.appendChild(expansionDiv);
+        }
     }
 
     function toggleAbilityExpansion(ablKey) {
@@ -543,14 +640,10 @@
         const arrowSpan = headerTH ? headerTH.querySelector('span.arrow-indicator') : null;
 
         if (!expansionDiv || !headerTH || !arrowSpan) return;
-
         const isCurrentlyHidden = expansionDiv.style.display === 'none';
 
         if (isCurrentlyHidden) { 
-            if (selectedPcs.length === 0) { 
-                 arrowSpan.textContent = ' ►';
-                 return;
-            }
+            if (selectedPcs.length === 0) { arrowSpan.textContent = ' ►'; return; }
             if (currentlyExpandedAbility && currentlyExpandedAbility !== ablKey) {
                 const otherDiv = document.getElementById(`expanded-${currentlyExpandedAbility}`);
                 const otherHeaderTH = document.querySelector(`#main-stats-table th[data-ability="${currentlyExpandedAbility}"]`);
@@ -567,6 +660,139 @@
             currentlyExpandedAbility = null;
         }
     }
+    
+    function toggleSkillExpansion(skillKey) {
+        // If the same skill header is clicked and it's already open, close it and reset sort.
+        if (currentlyExpandedSkill === skillKey) {
+            skillSortKey = null; // Reset sort key
+            currentlyExpandedSkill = null; // Indicate no skill is expanded
+        } else {
+            skillSortKey = skillKey; // Set the sort key for the newly clicked skill
+            currentlyExpandedSkill = skillKey; // Set this skill as the one to be expanded
+        }
+        updatePcDashboard(); // Re-render the dashboard which will sort the skills table and manage expansion visibility
+
+        // After re-rendering, ensure the correct arrow and expansion state
+        const allSkillHeaders = document.querySelectorAll(`#skills-overview-table th.clickable-skill-header`);
+        allSkillHeaders.forEach(header => {
+            const sKey = header.dataset.skillKey;
+            const arrow = header.querySelector('span.arrow-indicator');
+            const expDiv = document.getElementById(`expanded-skill-${sKey}`);
+            if (sKey === currentlyExpandedSkill) { // If this is the skill to be shown
+                if (arrow) arrow.textContent = ' ▼';
+                if (expDiv) {
+                    populateExpandedSkillDetails(sKey, expDiv, allCharacters.filter(char => activePcIds.has(char._id) && char.character_type === 'PC' && char.vtt_data));
+                    expDiv.style.display = 'block';
+                }
+            } else { // All other skills should be collapsed
+                if (arrow) arrow.textContent = ' ►';
+                if (expDiv) expDiv.style.display = 'none';
+            }
+        });
+    }
+
+    function populateExpandedSkillDetails(skillKey, expansionDiv, selectedPcs) {
+        const skillNameMap = {
+            "acr": "Acrobatics", "ani": "Animal Handling", "arc": "Arcana", "ath": "Athletics", 
+            "dec": "Deception", "his": "History", "ins": "Insight", "itm": "Intimidation", 
+            "inv": "Investigation", "med": "Medicine", "nat": "Nature", "prc": "Perception", 
+            "prf": "Performance", "per": "Persuasion", "rel": "Religion", "slt": "Sleight of Hand", 
+            "ste": "Stealth", "sur": "Survival"
+        };
+        const skillFullName = skillNameMap[skillKey] || skillKey.toUpperCase();
+        let contentHTML = `<h5>${skillFullName} Skill Modifiers & Rules</h5>`;
+
+        // Skill Modifier Bar Graph
+        contentHTML += `<div class="skill-bar-chart-container">`;
+        const skillDataForGraph = selectedPcs.map(pc => {
+            const pcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || 1;
+            const profBonus = getProficiencyBonus(pcLevel);
+            const skillVttData = pc.vtt_data.skills?.[skillKey];
+            const baseAbilityKey = skillVttData?.ability || (skillKey === 'ath' ? 'str' : ['acr', 'slt', 'ste'].includes(skillKey) ? 'dex' : ['arc', 'his', 'inv', 'nat', 'rel'].includes(skillKey) ? 'int' : ['ani', 'ins', 'med', 'prc', 'sur'].includes(skillKey) ? 'wis' : 'cha');
+            const baseAbilityScore = pc.vtt_data.abilities[baseAbilityKey]?.value || 10;
+            const bonus = calculateSkillBonus(baseAbilityScore, skillVttData?.value || 0, profBonus);
+            return { name: pc.name, modifier: bonus };
+        }).sort((a,b) => b.modifier - a.modifier); // Sort by modifier for the graph
+
+        const maxModifier = Math.max(1, ...skillDataForGraph.map(d => d.modifier), 5); // Ensure a decent scale, at least +5
+        const minModifier = Math.min(0, ...skillDataForGraph.map(d => d.modifier), -2); // Ensure scale includes negatives if present
+        const range = maxModifier - minModifier;
+
+
+        skillDataForGraph.forEach(data => {
+            let barWidthPercent = 0;
+            let barClass = 'stat-bar';
+            let barOffsetPercent = 0;
+
+            if (range === 0) { // All values are the same
+                 barWidthPercent = data.modifier >=0 ? 50 : 0; // Arbitrary for non-zero same values
+            } else {
+                if (data.modifier >= 0) {
+                    barWidthPercent = (data.modifier / maxModifier) * 50 + 50; // Scale positive from 50% to 100%
+                    barOffsetPercent = 50 - ( (maxModifier - data.modifier) / range ) * 50;
+                     barWidthPercent = (data.modifier / (maxModifier - Math.max(0, minModifier))) * 100;
+                     if (minModifier < 0) { // Adjust if there's a negative range
+                        barOffsetPercent = (Math.abs(minModifier) / range) * 100;
+                        barWidthPercent = (data.modifier / range) * 100;
+                     } else {
+                        barWidthPercent = (data.modifier / maxModifier) * 100;
+                     }
+
+
+                } else { // Negative modifier
+                    barClass += ' negative';
+                    barWidthPercent = (Math.abs(data.modifier) / Math.abs(minModifier)) * 50; // Scale negative from 0% to 50% (from right)
+                    barOffsetPercent = 50 - barWidthPercent;
+
+                    if (minModifier < 0) {
+                        barWidthPercent = (Math.abs(data.modifier) / (Math.abs(minModifier) + (maxModifier > 0 ? maxModifier : 0) )) * 100;
+                    } else { // Should not happen if modifier is negative
+                        barWidthPercent = 0;
+                    }
+                }
+            }
+             barWidthPercent = Math.max(2, barWidthPercent); // Minimum visible bar width
+
+
+            contentHTML += `<div class="pc-bar-row"> 
+                                <div class="stat-comparison-pc-name" title="${data.name}">${data.name.substring(0,15)+(data.name.length > 15 ? '...' : '')}</div>
+                                <div class="stat-bar-wrapper">
+                                    <div class="${barClass}" style="width: ${barWidthPercent}%; left: ${data.modifier < 0 && minModifier < 0 ? 50 - ( (Math.abs(data.modifier) / Math.abs(minModifier)) * 50) : (data.modifier >=0 && minModifier < 0 ? 50 : 0)}%;">
+                                        ${data.modifier >= 0 ? '+' : ''}${data.modifier}
+                                    </div>
+                                </div>
+                           </div>`;
+        });
+        contentHTML += `</div>`;
+
+
+        // Rule Text
+        contentHTML += `<table class="rules-explanation-table"><tr><td>`;
+        switch (skillKey) {
+            case 'acr': contentHTML += "Your Dexterity (Acrobatics) check covers your attempt to stay on your feet in a tricky situation, such as when you’re trying to run across a sheet of ice, balance on a tightrope, or stay upright on a rocking ship’s deck. The GM might also call for a Dexterity (Acrobatics) check to see if you can perform acrobatic stunts, including dives, rolls, somersaults, and flips."; break;
+            case 'ath': contentHTML += "Your Strength (Athletics) check covers difficult situations you encounter while climbing, jumping, or swimming. Examples include: attempting to climb a sheer or slippery cliff, trying to jump an unusually long distance, or struggling to swim in treacherous currents."; break;
+            case 'slt': contentHTML += "Whenever you attempt an act of legerdemain or manual trickery, such as planting something on someone else or concealing an object on your person, make a Dexterity (Sleight of Hand) check. The GM might also call for a Dexterity (Sleight of Hand) check to determine whether you can lift a coin purse off another person or slip something out of another person’s pocket."; break;
+            case 'ste': contentHTML += "Make a Dexterity (Stealth) check when you attempt to conceal yourself from enemies, slink past guards, slip away without being noticed, or sneak up on someone without being seen or heard."; break;
+            case 'arc': contentHTML += "Your Intelligence (Arcana) check measures your ability to recall lore about spells, magic items, eldritch symbols, magical traditions, the planes of existence, and the inhabitants of those planes."; break;
+            case 'his': contentHTML += "Your Intelligence (History) check measures your ability to recall lore about historical events, legendary people, ancient kingdoms, past disputes, recent wars, and lost civilizations."; break;
+            case 'inv': contentHTML += "When you look around for clues and make deductions based on those clues, you make an Intelligence (Investigation) check. You might deduce the location of a hidden object, discern from the appearance of a wound what kind of weapon dealt it, or determine the weakest point in a tunnel that could cause it to collapse."; break;
+            case 'nat': contentHTML += "Your Intelligence (Nature) check measures your ability to recall lore about terrain, plants and animals, the weather, and natural cycles."; break;
+            case 'rel': contentHTML += "Your Intelligence (Religion) check measures your ability to recall lore about deities, rites and prayers, religious hierarchies, holy symbols, and the practices of secret cults."; break;
+            case 'ani': contentHTML += "When there is any question whether you can calm down a domesticated animal, keep a mount from getting spooked, or intuit an animal’s intentions, the GM might call for a Wisdom (Animal Handling) check. You also make a Wisdom (Animal Handling) check to control your mount when you attempt a risky maneuver."; break;
+            case 'ins': contentHTML += "Your Wisdom (Insight) check decides whether you can determine the true intentions of a creature, such as when searching out a lie or predicting someone’s next move. Doing so involves gleaning clues from body language, speech habits, and changes in mannerisms."; break;
+            case 'med': contentHTML += "A Wisdom (Medicine) check lets you try to stabilize a dying companion or diagnose an illness."; break;
+            case 'prc': contentHTML += "Your Wisdom (Perception) check lets you spot, hear, or otherwise detect the presence of something. It measures your general awareness of your surroundings and the keenness of your senses."; break;
+            case 'sur': contentHTML += "The GM might ask you to make a Wisdom (Survival) check to follow tracks, hunt wild game, guide your group through frozen wastelands, identify signs that owlbears live nearby, predict the weather, or avoid quicksand and other natural hazards."; break;
+            case 'dec': contentHTML += "Your Charisma (Deception) check determines whether you can convincingly hide the truth, either verbally or through your actions. This deception can encompass everything from misleading others through ambiguity to telling outright lies."; break;
+            case 'itm': contentHTML += "When you attempt to influence someone through overt threats, hostile actions, and physical violence, the GM might ask you to make a Charisma (Intimidation) check."; break;
+            case 'prf': contentHTML += "Your Charisma (Performance) check determines how well you can delight an audience with music, dance, acting, storytelling, or some other form of entertainment."; break;
+            case 'per': contentHTML += "When you attempt to influence someone or a group of people with tact, social graces, or good nature, the GM might ask you to make a Charisma (Persuasion) check."; break;
+            default: contentHTML += `General information about the ${skillFullName} skill. (Details to be added).`; break;
+        }
+        contentHTML += "</td></tr></table>";
+        expansionDiv.innerHTML = contentHTML;
+    }
+
 
     function populateExpandedAbilityDetails(ablKey, expansionDiv, selectedPcsInput) {
         const upperAblKey = ablKey.toUpperCase();
@@ -599,7 +825,6 @@
         else if (upperAblKey === 'DEX') generalDerivedMetrics.push("Initiative");
         else if (upperAblKey === 'CON') generalDerivedMetrics.push("Hold Breath");
         else if (upperAblKey === 'WIS') generalDerivedMetrics.push("Passive Perception (Calc)");
-        // For INT & CHA, spellcasting stats are handled in their specific sections if applicable
 
         sortedPcs.forEach(pc => {
             const pcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || 1;
@@ -636,7 +861,6 @@
 
         contentHTML += `<hr><h4>${upperAblKey} Applications & Calculations</h4>`;
 
-        // --- Strength Specifics ---
         if (upperAblKey === 'STR') {
             contentHTML += `<h5>Strength Checks & Athletics</h5><table class="rules-explanation-table"><tr><td><strong>General:</strong> Strength checks model any attempt to lift, push, pull, or break something, to force your body through a space, or to otherwise apply brute force to a situation. The Athletics skill reflects aptitude in certain kinds of Strength checks.</td></tr><tr><td><strong>Athletics Examples:</strong><ul><li>Attempt to climb a sheer or slippery cliff, avoid hazards while scaling a wall, or cling to a surface while something is trying to knock you off.</li><li>Try to jump an unusually long distance or pull off a stunt midjump.</li><li>Struggle to swim or stay afloat in treacherous currents, storm-tossed waves, or areas of thick seaweed. Or another creature tries to push or pull you underwater or otherwise interfere with your swimming.</li></ul></td></tr><tr><td><strong>Other Strength Check Examples:</strong><ul><li>Force open a stuck, locked, or barred door.</li><li>Break free of bonds.</li><li>Push through a tunnel that is too small.</li><li>Hang on to a wagon while being dragged behind it.</li><li>Tip over a statue.</li><li>Keep a boulder from rolling.</li></ul></td></tr></table>`;
             contentHTML += `<h5>Attack Rolls and Damage (Melee Weapons)</h5><table class="rules-explanation-table"><tr><td>You add your Strength modifier to your attack roll and your damage roll when attacking with a melee weapon such as a mace, a battleaxe, or a javelin. You use melee weapons to make melee attacks in hand-to-hand combat, and some of them can be thrown to make a ranged attack.</td></tr></table>`;
@@ -663,23 +887,9 @@
                 contentHTML += `<tr><td>${pc.name}</td><td>${score * 5}</td><td>${score * 10}</td></tr>`;
             });
             contentHTML += `</tbody></table>`;
-        }
-        // --- Dexterity Specifics ---
+        } 
         else if (upperAblKey === 'DEX') {
             contentHTML += `<h5>Dexterity Checks</h5><table class="rules-explanation-table"><tr><td>A Dexterity check can model any attempt to move nimbly, quickly, or quietly, or to keep from falling on tricky footing. The Acrobatics, Sleight of Hand, and Stealth skills reflect aptitude in certain kinds of Dexterity checks.</td></tr></table>`;
-            
-            contentHTML += `<h5>Acrobatics</h5><table class="rules-explanation-table"><tr><td>Your Dexterity (Acrobatics) check covers your attempt to stay on your feet in a tricky situation, such as when you’re trying to run across a sheet of ice, balance on a tightrope, or stay upright on a rocking ship’s deck. The GM might also call for a Dexterity (Acrobatics) check to see if you can perform acrobatic stunts, including dives, rolls, somersaults, and flips.</td></tr></table>`;
-            contentHTML += createSkillTable("Acrobatics", "acr", "dex", sortedPcs);
-
-            contentHTML += `<h5>Sleight of Hand</h5><table class="rules-explanation-table"><tr><td>Whenever you attempt an act of legerdemain or manual trickery, such as planting something on someone else or concealing an object on your person, make a Dexterity (Sleight of Hand) check. The GM might also call for a Dexterity (Sleight of Hand) check to determine whether you can lift a coin purse off another person or slip something out of another person’s pocket.</td></tr></table>`;
-            contentHTML += createSkillTable("Sleight of Hand", "slt", "dex", sortedPcs);
-
-            contentHTML += `<h5>Stealth</h5><table class="rules-explanation-table"><tr><td>Make a Dexterity (Stealth) check when you attempt to conceal yourself from enemies, slink past guards, slip away without being noticed, or sneak up on someone without being seen or heard.</td></tr></table>`;
-            contentHTML += createSkillTable("Stealth", "ste", "dex", sortedPcs);
-            
-            contentHTML += `<h5>Other Dexterity Checks & Tools</h5><table class="rules-explanation-table"><tr><td>The GM might call for a Dexterity check when you try to accomplish tasks like: Control a heavily laden cart on a steep descent, steer a chariot around a tight turn, pick a lock, disable a trap, securely tie up a prisoner, wriggle free of bonds, play a stringed instrument, craft a small or detailed object.</td></tr></table>`;
-            contentHTML += createToolTable("Thieves' Tools", "thief", "dex", sortedPcs); // Example for Thieves' Tools
-
             contentHTML += `<h5>Attack Rolls and Damage (Ranged/Finesse)</h5><table class="rules-explanation-table"><tr><td>You add your Dexterity modifier to your attack roll and your damage roll when attacking with a ranged weapon, such as a sling or a longbow. You can also add your Dexterity modifier to your attack roll and your damage roll when attacking with a melee weapon that has the finesse property, such as a dagger or a rapier.</td></tr></table>`;
             contentHTML += `<table class="derived-stats-table"><thead><tr><th>Character</th><th>DEX Modifier (for Ranged/Finesse Attack/Damage)</th></tr></thead><tbody>`;
             sortedPcs.forEach(pc => {
@@ -689,13 +899,10 @@
             contentHTML += `</tbody></table>`;
             contentHTML += `<h5>Armor Class</h5><table class="rules-explanation-table"><tr><td>Depending on the armor you wear, you might add some or all of your Dexterity modifier to your Armor Class. (Actual AC is on individual character cards).</td></tr></table>`;
             contentHTML += `<h5>Initiative</h5><table class="rules-explanation-table"><tr><td>At the beginning of every combat, you roll initiative by making a Dexterity check. Initiative determines the order of creatures’ turns in combat.</td></tr></table>`;
-            // Initiative is already in the summary table, no need to repeat identical table here.
             contentHTML += `<h5>Hiding</h5><table class="rules-explanation-table"><tr><td>Make a Dexterity (Stealth) check. Contested by Wisdom (Perception) of searchers...<br><strong>Passive Perception:</strong> Your Dexterity (Stealth) check is compared against a creature's passive Wisdom (Perception) score (10 + creature's Wisdom modifier + bonuses/penalties).</td></tr></table>`;
         }
-        // --- Constitution Specifics ---
         else if (upperAblKey === 'CON') {
             contentHTML += `<h5>Constitution Checks</h5><table class="rules-explanation-table"><tr><td>Constitution checks are uncommon, and no skills apply to Constitution checks, because the endurance this ability represents is largely passive... Examples: Hold your breath, march or labor for hours without rest, go without sleep, survive without food or water, quaff an entire stein of ale in one go.</td></tr></table>`;
-            // Hold Breath is already in the summary table.
             contentHTML += `<h5>Hit Points</h5><table class="rules-explanation-table"><tr><td>Your Constitution modifier contributes to your hit points. Typically, you add your Constitution modifier to each Hit Die you roll for your hit points. If your Constitution modifier changes, your hit point maximum changes as well, as though you had the new modifier from 1st level.</td></tr></table>`;
             contentHTML += `<table class="derived-stats-table"><thead><tr><th>Character</th><th>CON Modifier (for HP)</th><th>Max HP (from VTT)</th></tr></thead><tbody>`;
             sortedPcs.forEach(pc => {
@@ -705,21 +912,9 @@
             });
             contentHTML += `</tbody></table>`;
         }
-        // --- Intelligence Specifics ---
         else if (upperAblKey === 'INT') {
             contentHTML += `<h5>Intelligence Checks</h5><table class="rules-explanation-table"><tr><td>An Intelligence check comes into play when you need to draw on logic, education, memory, or deductive reasoning. The Arcana, History, Investigation, Nature, and Religion skills reflect aptitude in certain kinds of Intelligence checks.</td></tr></table>`;
-            contentHTML += `<h5>Arcana</h5><table class="rules-explanation-table"><tr><td>Your Intelligence (Arcana) check measures your ability to recall lore about spells, magic items, eldritch symbols, magical traditions, the planes of existence, and the inhabitants of those planes.</td></tr></table>`;
-            contentHTML += createSkillTable("Arcana", "arc", "int", sortedPcs);
-            contentHTML += `<h5>History</h5><table class="rules-explanation-table"><tr><td>Your Intelligence (History) check measures your ability to recall lore about historical events, legendary people, ancient kingdoms, past disputes, recent wars, and lost civilizations.</td></tr></table>`;
-            contentHTML += createSkillTable("History", "his", "int", sortedPcs);
-            contentHTML += `<h5>Investigation</h5><table class="rules-explanation-table"><tr><td>When you look around for clues and make deductions based on those clues, you make an Intelligence (Investigation) check. You might deduce the location of a hidden object, discern from the appearance of a wound what kind of weapon dealt it, or determine the weakest point in a tunnel that could cause it to collapse. Poring through ancient scrolls in search of a hidden fragment of knowledge might also call for an Intelligence (Investigation) check. (Passive Investigation on individual character cards)</td></tr></table>`;
-            contentHTML += createSkillTable("Investigation", "inv", "int", sortedPcs);
-            contentHTML += `<h5>Nature</h5><table class="rules-explanation-table"><tr><td>Your Intelligence (Nature) check measures your ability to recall lore about terrain, plants and animals, the weather, and natural cycles.</td></tr></table>`;
-            contentHTML += createSkillTable("Nature", "nat", "int", sortedPcs);
-            contentHTML += `<h5>Religion</h5><table class="rules-explanation-table"><tr><td>Your Intelligence (Religion) check measures your ability to recall lore about deities, rites and prayers, religious hierarchies, holy symbols, and the practices of secret cults.</td></tr></table>`;
-            contentHTML += createSkillTable("Religion", "rel", "int", sortedPcs);
             contentHTML += `<h5>Other Intelligence Checks</h5><table class="rules-explanation-table"><tr><td>The GM might call for an Intelligence check when you try to accomplish tasks like: Communicate with a creature without using words, estimate the value of a precious item, pull together a disguise to pass as a city guard, forge a document, recall lore about a craft or trade, win a game of skill.</td></tr></table>`;
-            contentHTML += createToolTable("Forgery Kit", "forgery", "int", sortedPcs, " (If applicable)"); // Example for Forgery Kit
             contentHTML += `<h5>Spellcasting Ability (Wizards)</h5><table class="rules-explanation-table"><tr><td>Wizards use Intelligence as their spellcasting ability, which helps determine the saving throw DCs of spells they cast.</td></tr></table>`;
             if (sortedPcs.some(pc => pc.vtt_data.attributes?.spellcasting === 'int')) {
                 contentHTML += `<table class="derived-stats-table"><thead><tr><th>Character (INT Casters)</th><th>Spell Save DC</th><th>Spell Attack Bonus</th></tr></thead><tbody>`;
@@ -730,22 +925,11 @@
                 contentHTML += `</tbody></table>`;
             }
         }
-        // --- Wisdom Specifics ---
         else if (upperAblKey === 'WIS') {
             contentHTML += `<h5>Wisdom Checks</h5><table class="rules-explanation-table"><tr><td>A Wisdom check might reflect an effort to read body language, understand someone’s feelings, notice things about the environment, or care for an injured person. The Animal Handling, Insight, Medicine, Perception, and Survival skills reflect aptitude in certain kinds of Wisdom checks.</td></tr></table>`;
-            contentHTML += `<h5>Animal Handling</h5><table class="rules-explanation-table"><tr><td>When there is any question whether you can calm down a domesticated animal, keep a mount from getting spooked, or intuit an animal’s intentions, the GM might call for a Wisdom (Animal Handling) check. You also make a Wisdom (Animal Handling) check to control your mount when you attempt a risky maneuver.</td></tr></table>`;
-            contentHTML += createSkillTable("Animal Handling", "ani", "wis", sortedPcs);
-            contentHTML += `<h5>Insight</h5><table class="rules-explanation-table"><tr><td>Your Wisdom (Insight) check decides whether you can determine the true intentions of a creature, such as when searching out a lie or predicting someone’s next move. Doing so involves gleaning clues from body language, speech habits, and changes in mannerisms.</td></tr></table>`;
-            contentHTML += createSkillTable("Insight", "ins", "wis", sortedPcs);
-            contentHTML += `<h5>Medicine</h5><table class="rules-explanation-table"><tr><td>A Wisdom (Medicine) check lets you try to stabilize a dying companion or diagnose an illness.</td></tr></table>`;
-            contentHTML += createSkillTable("Medicine", "med", "wis", sortedPcs);
-            contentHTML += `<h5>Perception</h5><table class="rules-explanation-table"><tr><td>Your Wisdom (Perception) check lets you spot, hear, or otherwise detect the presence of something. It measures your general awareness of your surroundings and the keenness of your senses. (Passive Perception is in summary and individual cards).</td></tr></table>`;
-            contentHTML += createSkillTable("Perception", "prc", "wis", sortedPcs);
-            contentHTML += `<h5>Survival</h5><table class="rules-explanation-table"><tr><td>The GM might ask you to make a Wisdom (Survival) check to follow tracks, hunt wild game, guide your group through frozen wastelands, identify signs that owlbears live nearby, predict the weather, or avoid quicksand and other natural hazards.</td></tr></table>`;
-            contentHTML += createSkillTable("Survival", "sur", "wis", sortedPcs);
             contentHTML += `<h5>Other Wisdom Checks</h5><table class="rules-explanation-table"><tr><td>The GM might call for a Wisdom check when you try to accomplish tasks like: Get a gut feeling about what course of action to follow, discern whether a seemingly dead or living creature is undead.</td></tr></table>`;
             contentHTML += `<h5>Spellcasting Ability (Clerics, Druids, Rangers)</h5><table class="rules-explanation-table"><tr><td>Clerics, druids, and rangers use Wisdom as their spellcasting ability, which helps determine the saving throw DCs of spells they cast.</td></tr></table>`;
-            if (sortedPcs.some(pc => pc.vtt_data.attributes?.spellcasting === 'wis')) {
+             if (sortedPcs.some(pc => pc.vtt_data.attributes?.spellcasting === 'wis')) {
                 contentHTML += `<table class="derived-stats-table"><thead><tr><th>Character (WIS Casters)</th><th>Spell Save DC</th><th>Spell Attack Bonus</th></tr></thead><tbody>`;
                 sortedPcs.filter(pc => pc.vtt_data.attributes?.spellcasting === 'wis').forEach(pc => {
                     const score = pc.vtt_data.abilities.wis?.value || 0;
@@ -754,17 +938,8 @@
                 contentHTML += `</tbody></table>`;
             }
         }
-        // --- Charisma Specifics ---
         else if (upperAblKey === 'CHA') {
             contentHTML += `<h5>Charisma Checks</h5><table class="rules-explanation-table"><tr><td>A Charisma check might arise when you try to influence or entertain others, when you try to make an impression or tell a convincing lie, or when you are navigating a tricky social situation. The Deception, Intimidation, Performance, and Persuasion skills reflect aptitude in certain kinds of Charisma checks.</td></tr></table>`;
-            contentHTML += `<h5>Deception</h5><table class="rules-explanation-table"><tr><td>Your Charisma (Deception) check determines whether you can convincingly hide the truth, either verbally or through your actions. This deception can encompass everything from misleading others through ambiguity to telling outright lies...</td></tr></table>`;
-            contentHTML += createSkillTable("Deception", "dec", "cha", sortedPcs);
-            contentHTML += `<h5>Intimidation</h5><table class="rules-explanation-table"><tr><td>When you attempt to influence someone through overt threats, hostile actions, and physical violence, the GM might ask you to make a Charisma (Intimidation) check...</td></tr></table>`;
-            contentHTML += createSkillTable("Intimidation", "itm", "cha", sortedPcs);
-            contentHTML += `<h5>Performance</h5><table class="rules-explanation-table"><tr><td>Your Charisma (Performance) check determines how well you can delight an audience with music, dance, acting, storytelling, or some other form of entertainment.</td></tr></table>`;
-            contentHTML += createSkillTable("Performance", "prf", "cha", sortedPcs);
-            contentHTML += `<h5>Persuasion</h5><table class="rules-explanation-table"><tr><td>When you attempt to influence someone or a group of people with tact, social graces, or good nature, the GM might ask you to make a Charisma (Persuasion) check...</td></tr></table>`;
-            contentHTML += createSkillTable("Persuasion", "per", "cha", sortedPcs);
             contentHTML += `<h5>Other Charisma Checks</h5><table class="rules-explanation-table"><tr><td>The GM might call for a Charisma check when you try to accomplish tasks like: Find the best person to talk to for news, rumors, and gossip, blend into a crowd to get the sense of key topics of conversation.</td></tr></table>`;
             contentHTML += `<h5>Spellcasting Ability (Bards, Paladins, Sorcerers, Warlocks)</h5><table class="rules-explanation-table"><tr><td>Bards, paladins, sorcerers, and warlocks use Charisma as their spellcasting ability, which helps determine the saving throw DCs of spells they cast.</td></tr></table>`;
             if (sortedPcs.some(pc => pc.vtt_data.attributes?.spellcasting === 'cha')) {
@@ -784,45 +959,46 @@
         let foundSkill = false;
         sortedPcs.forEach(pc => {
             const skillData = pc.vtt_data.skills?.[skillAbbr];
-            const abilityScore = pc.vtt_data.abilities?.[ablKey.toLowerCase()]?.value || 10; // Default to 10 if ability score missing
+            const abilityScore = pc.vtt_data.abilities?.[ablKey.toLowerCase()]?.value || 10; 
             let skillBonusFormatted = "N/A";
 
-            if (skillData) {
+            if (skillData) { 
                  const skillBonusValue = calculateSkillBonus(abilityScore, skillData.value || 0, pc.calculatedProfBonus);
                  skillBonusFormatted = `${skillBonusValue >= 0 ? '+' : ''}${skillBonusValue}`;
                  foundSkill = true;
+            } else { 
+                const modifier = getAbilityModifier(abilityScore);
+                skillBonusFormatted = `${modifier >= 0 ? '+' : ''}${modifier} (No Prof.)`;
             }
             tableHTML += `<tr><td>${pc.name}</td><td>${skillBonusFormatted}</td></tr>`;
         });
         tableHTML += `</tbody></table>`;
-        return foundSkill || sortedPcs.length > 0 ? tableHTML : `<p><em>No specific ${skillName} data found for selected PCs. General ${ablKey.toUpperCase()} modifier applies.</em></p>`;
+        return tableHTML; 
     }
 
     function createToolTable(toolName, toolAbbr, ablKey, sortedPcs, note = "") {
         let tableHTML = `<table class="derived-stats-table"><thead><tr><th>Character</th><th>${toolName} Bonus ${note}</th></tr></thead><tbody>`;
-        let foundTool = false;
+        let foundToolForAnyPC = false;
         sortedPcs.forEach(pc => {
             const toolData = pc.vtt_data.tools?.[toolAbbr];
-            const abilityScore = pc.vtt_data.abilities?.[(toolData?.ability || ablKey).toLowerCase()]?.value || 10;
-            let toolBonusFormatted = "N/P"; // Not Proficient by default
+            const baseAbilityScore = pc.vtt_data.abilities?.[(toolData?.ability || ablKey).toLowerCase()]?.value || 10;
+            let toolBonusFormatted = "N/P"; 
 
-            if (toolData && toolData.value === 1) { // value 1 means proficient in FVTT
-                const modifier = getAbilityModifier(abilityScore);
+            if (toolData && toolData.value === 1) { 
+                const modifier = getAbilityModifier(baseAbilityScore);
                 const toolBonusValue = modifier + pc.calculatedProfBonus;
                 toolBonusFormatted = `${toolBonusValue >= 0 ? '+' : ''}${toolBonusValue}`;
-                foundTool = true;
-            } else if (toolData) { // Tool exists but not proficient (value might be 0 or other)
-                 const modifier = getAbilityModifier(abilityScore);
+                foundToolForAnyPC = true;
+            } else if (toolData) { 
+                 const modifier = getAbilityModifier(baseAbilityScore);
                  toolBonusFormatted = `${modifier >= 0 ? '+' : ''}${modifier} (Not Proficient)`;
-                 foundTool = true; // Still show modifier if tool data is there
+                 foundToolForAnyPC = true; 
             }
-
             tableHTML += `<tr><td>${pc.name}</td><td>${toolBonusFormatted}</td></tr>`;
         });
         tableHTML += `</tbody></table>`;
-         return foundTool || sortedPcs.length > 0 ? tableHTML : `<p><em>No ${toolName} proficiency data found for selected PCs.</em></p>`;
+         return foundToolForAnyPC || sortedPcs.length > 0 ? tableHTML : `<p><em>No ${toolName} proficiency data found for selected PCs.</em></p>`;
     }
-
 
     // --- UI Control Functions ---
     function setupInterfaceControls() {
@@ -872,14 +1048,9 @@
             header.addEventListener('click', () => {
                 const section = header.parentElement;
                 section.classList.toggle('collapsed');
-                const arrowIndicator = header.querySelector('span.arrow-indicator') || header.childNodes[header.childNodes.length -1];
-                
-                if (section.classList.contains('collapsible-section')) {
-                    if(arrowIndicator && arrowIndicator.nodeType === Node.TEXT_NODE && (arrowIndicator.textContent.includes('▼') || arrowIndicator.textContent.includes('►'))) {
-                         arrowIndicator.textContent = section.classList.contains('collapsed') ? ' ►' : ' ▼';
-                    } else if (arrowIndicator && arrowIndicator.classList && arrowIndicator.classList.contains('arrow-indicator')) {
-                         arrowIndicator.textContent = section.classList.contains('collapsed') ? ' ►' : ' ▼';
-                    }
+                const arrowIndicator = header.childNodes[header.childNodes.length -1]; 
+                if(arrowIndicator && arrowIndicator.nodeType === Node.TEXT_NODE) {
+                    arrowIndicator.textContent = section.classList.contains('collapsed') ? ' ►' : ' ▼';
                 }
             });
         });
