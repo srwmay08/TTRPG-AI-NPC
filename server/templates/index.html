@@ -66,7 +66,7 @@
         }
         .character-list li:last-child { border-bottom: none; }
         .character-list li.active-in-scene { background-color: #e6f2ff; } 
-        .character-list li.selected { background-color: #d1e7fd; font-weight: bold; } /* Style for selected PCs */
+        .character-list li.selected { background-color: #d1e7fd; font-weight: bold; }
         .character-list li .npc-name-clickable { flex-grow: 1; cursor: pointer; }
         .character-list li .npc-name-clickable:hover { text-decoration: underline; color: #0056b3;}
 
@@ -162,7 +162,6 @@
             padding-left: 5px; 
         }
 
-
         .derived-stats-table { width: 100%; border-collapse: collapse; font-size: 0.9em; margin-top:5px; margin-bottom: 15px; }
         .derived-stats-table th, .derived-stats-table td { border: 1px solid #ddd; padding: 5px; text-align: left; }
         .derived-stats-table th { background-color: #f1f1f1; font-weight: normal; }
@@ -212,7 +211,6 @@
         .remove-history-btn:hover {
             background-color: #c82333;
         }
-
     </style>
 </head>
 <body>
@@ -341,7 +339,7 @@
     // --- Global State Variables ---
     let activeSceneNpcIds = new Set(); 
     let activePcIds = new Set(); 
-    let allCharacters = [];
+    let allCharacters = []; // This will store character objects
     let dialogueHistory = []; 
     let dialogueHistories = {}; 
     let currentProfileCharId = null; 
@@ -401,7 +399,15 @@
         try {
             const response = await fetch(`${API_BASE_URL}/api/npcs`);
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            allCharacters = await response.json();
+            const charactersFromServer = await response.json();
+            // Ensure all _id fields are strings for consistent handling in JS
+            allCharacters = charactersFromServer.map(char => {
+                if (char._id && typeof char._id === 'object' && char._id.$oid) {
+                    char._id = char._id.$oid;
+                }
+                return char;
+            });
+            console.log("Fetched allCharacters, IDs ensured to be strings:", allCharacters.map(c => ({id: c._id, name: c.name})));
             renderNpcListForScene(); 
             renderPcList();
             updateView(); 
@@ -428,48 +434,49 @@
         }
 
         npcs.forEach(char => {
+            const charIdStr = String(char._id); // Ensure ID is string for dataset and comparisons
             const li = document.createElement('li');
-            li.dataset.charId = char._id;
+            li.dataset.charId = charIdStr;
 
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
-            checkbox.id = `npc-scene-checkbox-${char._id}`;
-            checkbox.checked = activeSceneNpcIds.has(char._id);
-            checkbox.onchange = () => toggleNpcInScene(char._id, char.name);
+            checkbox.id = `npc-scene-checkbox-${charIdStr}`;
+            checkbox.checked = activeSceneNpcIds.has(charIdStr); // Compare string IDs
+            checkbox.onchange = () => toggleNpcInScene(charIdStr, char.name);
             
             const nameSpan = document.createElement('span');
             nameSpan.textContent = char.name;
             nameSpan.className = 'npc-name-clickable';
-            nameSpan.onclick = () => {
-                selectCharacterForDetails(char._id);
+            nameSpan.onclick = async () => { // Make async if selectCharacterForDetails is awaited
+                await selectCharacterForDetails(charIdStr);
             };
             
             li.appendChild(checkbox);
             li.appendChild(nameSpan);
             
-            if (activeSceneNpcIds.has(char._id)) {
+            if (activeSceneNpcIds.has(charIdStr)) {
                 li.classList.add('active-in-scene');
             }
             ul.appendChild(li);
         });
     }
 
-    function toggleNpcInScene(npcId, npcName) {
+    function toggleNpcInScene(npcIdStr, npcName) { // Ensure npcIdStr is a string
         const multiNpcContainer = getElem('multi-npc-dialogue-container');
-        if (activeSceneNpcIds.has(npcId)) {
-            activeSceneNpcIds.delete(npcId);
-            removeNpcDialogueArea(npcId);
-            delete dialogueHistories[npcId]; 
+        if (activeSceneNpcIds.has(npcIdStr)) {
+            activeSceneNpcIds.delete(npcIdStr);
+            removeNpcDialogueArea(npcIdStr);
+            delete dialogueHistories[npcIdStr]; 
         } else {
-            activeSceneNpcIds.add(npcId);
-            createNpcDialogueArea(npcId, npcName);
-            dialogueHistories[npcId] = []; 
+            activeSceneNpcIds.add(npcIdStr);
+            createNpcDialogueArea(npcIdStr, npcName);
+            dialogueHistories[npcIdStr] = []; 
         }
         
         if (activeSceneNpcIds.size >= 1 && multiNpcContainer.querySelector('p.scene-event')) {
             multiNpcContainer.innerHTML = ''; 
             activeSceneNpcIds.forEach(id => { 
-                 const npc = allCharacters.find(c=> c._id === id);
+                 const npc = allCharacters.find(c=> String(c._id) === String(id)); // Ensure string comparison
                  if(npc && !getElem(`npc-area-${id}`)) { 
                     createNpcDialogueArea(id, npc.name);
                  }
@@ -483,18 +490,18 @@
         updateView(); 
     }
 
-    function createNpcDialogueArea(npcId, npcName) {
+    function createNpcDialogueArea(npcIdStr, npcName) { // Ensure npcIdStr is string
         const container = getElem('multi-npc-dialogue-container');
         const placeholder = container.querySelector('p.scene-event');
         if (placeholder && activeSceneNpcIds.size > 0) { 
             placeholder.remove();
         }
 
-        if (getElem(`npc-area-${npcId}`)) return; 
+        if (getElem(`npc-area-${npcIdStr}`)) return; 
 
         const areaDiv = document.createElement('div');
         areaDiv.className = 'npc-dialogue-area';
-        areaDiv.id = `npc-area-${npcId}`;
+        areaDiv.id = `npc-area-${npcIdStr}`;
 
         const nameHeader = document.createElement('h3');
         nameHeader.textContent = npcName;
@@ -502,15 +509,15 @@
 
         const transcriptDiv = document.createElement('div');
         transcriptDiv.className = 'npc-transcript';
-        transcriptDiv.id = `transcript-${npcId}`;
+        transcriptDiv.id = `transcript-${npcIdStr}`;
         transcriptDiv.innerHTML = `<p class="scene-event">Dialogue with ${npcName} starts.</p>`;
         areaDiv.appendChild(transcriptDiv);
         
         container.appendChild(areaDiv);
     }
 
-    function removeNpcDialogueArea(npcId) {
-        const areaDiv = getElem(`npc-area-${npcId}`);
+    function removeNpcDialogueArea(npcIdStr) { // Ensure npcIdStr is string
+        const areaDiv = getElem(`npc-area-${npcIdStr}`);
         if (areaDiv) {
             areaDiv.remove();
         }
@@ -530,25 +537,27 @@
         }
         const ul = document.createElement('ul');
         pcs.forEach(pc => {
+            const pcIdStr = String(pc._id); // Ensure ID is a string for dataset and Set operations
             const li = document.createElement('li');
             li.style.cursor = "pointer"; 
             li.textContent = pc.name;
-            li.dataset.charId = pc._id;
-            // MODIFIED: Made onclick async and awaited selectCharacterForDetails
+            li.dataset.charId = pcIdStr;
+            
             li.onclick = async () => { 
-                console.log(`PC List Item clicked: ${pc.name} (ID: ${pc._id})`);
+                console.log(`PC List Item clicked: ${pc.name} (ID: ${pcIdStr})`);
                 activeSceneNpcIds.clear(); 
                 getElem('multi-npc-dialogue-container').innerHTML = '<p class="scene-event">Select NPCs to add them to the scene.</p>';
                 renderNpcListForScene(); 
                 disableBtn('generate-dialogue-btn', true);
 
-                togglePcSelection(pc._id, li); 
+                togglePcSelection(pcIdStr, li); // Pass string ID
                 
-                await selectCharacterForDetails(pc._id); 
+                await selectCharacterForDetails(pcIdStr); // Pass string ID, await completion
                 
                 updateView();
             };
-            if (activePcIds.has(pc._id)) {
+
+            if (activePcIds.has(pcIdStr)) { // Compare string IDs
                  li.classList.add('selected');
             } else {
                 li.classList.remove('selected');
@@ -581,7 +590,8 @@
     }
 
     async function associateHistoryFile() {
-        if (!currentProfileCharId) {
+        const charIdToUse = String(currentProfileCharId); // Ensure string
+        if (!charIdToUse) {
             alert("Please select a character in the profile section first.");
             return;
         }
@@ -591,23 +601,26 @@
             return;
         }
         try {
-            const response = await fetch(`${API_BASE_URL}/api/character/${currentProfileCharId}/associate_history`, {
+            const response = await fetch(`${API_BASE_URL}/api/character/${charIdToUse}/associate_history`, {
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ history_file: selectedFile })
             });
+            const result = await response.json(); // Try to parse JSON first
             if (!response.ok) {
-                const errorData = await response.json().catch(() => ({ message: "Server returned non-JSON error response."}));
-                throw new Error(errorData.error || errorData.message || 'Failed to associate history file.');
+                throw new Error(result.error || result.message || `Failed to associate history file. Status: ${response.status}`);
             }
-            const result = await response.json(); 
             alert(result.message || "History file associated successfully.");
             
-            const charIndex = allCharacters.findIndex(c => c._id === currentProfileCharId);
-            if (charIndex > -1) {
+            const charIndex = allCharacters.findIndex(c => String(c._id) === charIdToUse);
+            if (charIndex > -1 && result.character) { // Ensure character data is in response
+                 // Ensure the _id in result.character is also a string for consistency
+                if (result.character._id && typeof result.character._id === 'object' && result.character._id.$oid) {
+                    result.character._id = result.character._id.$oid;
+                }
                 allCharacters[charIndex] = result.character; 
             }
-            selectCharacterForDetails(currentProfileCharId); 
+            await selectCharacterForDetails(charIdToUse); 
 
         } catch (error) {
             console.error("Error associating history file:", error);
@@ -616,7 +629,8 @@
     }
 
     async function dissociateHistoryFile(filename) {
-        if (!currentProfileCharId) {
+        const charIdToUse = String(currentProfileCharId); // Ensure string
+        if (!charIdToUse) {
             alert("No character selected.");
             return;
         }
@@ -624,30 +638,31 @@
             return;
         }
         try {
-            const response = await fetch(`${API_BASE_URL}/api/character/${currentProfileCharId}/dissociate_history`, {
+            const response = await fetch(`${API_BASE_URL}/api/character/${charIdToUse}/dissociate_history`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ history_file: filename })
             });
-            if (!response.ok) {
-                const errorData = await response.json().catch(() => ({ message: "Server error during dissociation." }));
-                throw new Error(errorData.error || errorData.message || "Failed to dissociate history file.");
-            }
             const result = await response.json();
+            if (!response.ok) {
+                throw new Error(result.error || result.message || "Failed to dissociate history file.");
+            }
             alert(result.message || "History file dissociated successfully.");
 
-            const charIndex = allCharacters.findIndex(c => c._id === currentProfileCharId);
-            if (charIndex > -1) {
+            const charIndex = allCharacters.findIndex(c => String(c._id) === charIdToUse);
+            if (charIndex > -1 && result.character) {
+                if (result.character._id && typeof result.character._id === 'object' && result.character._id.$oid) {
+                    result.character._id = result.character._id.$oid;
+                }
                 allCharacters[charIndex] = result.character; 
             }
-            selectCharacterForDetails(currentProfileCharId); 
+            await selectCharacterForDetails(charIdToUse); 
 
         } catch (error) {
             console.error("Error dissociating history file:", error);
             alert(`Error: ${error.message}`);
         }
     }
-
 
     function renderAssociatedHistoryFiles(character) {
         const listElement = getElem('associated-history-list');
@@ -671,22 +686,20 @@
         }
 
         const historyContentDisplay = getElem('history-content-display');
-        if (character && character.combined_history_content) { // Check for the specific field from backend
+        if (character && character.combined_history_content) { 
             historyContentDisplay.textContent = character.combined_history_content;
         } else if (character && character.associated_history_files && character.associated_history_files.length > 0) {
-            // This case might indicate backend didn't send combined_history_content when it should have
-            historyContentDisplay.textContent = "History files are associated, but content is not displaying. Check server logs or data structure.";
+            historyContentDisplay.textContent = "History files associated, but content appears empty or wasn't loaded.";
         } else {
             historyContentDisplay.textContent = "No history content. Associate files to view their content.";
         }
     }
 
-
-    async function selectCharacterForDetails(charId) { // Made async
-        console.log("Fetching details for character ID:", charId);
-        currentProfileCharId = charId; 
+    async function selectCharacterForDetails(charIdStr) { // charIdStr is expected to be a string
+        console.log("Fetching details for character ID:", charIdStr);
+        currentProfileCharId = charIdStr; 
         try {
-            const response = await fetch(`${API_BASE_URL}/api/npcs/${charId}`);
+            const response = await fetch(`${API_BASE_URL}/api/npcs/${charIdStr}`);
             if (!response.ok) {
                 let errorMsg = `Failed to fetch character details: ${response.status}`;
                 try {
@@ -695,14 +708,20 @@
                 } catch (e) { /* ignore parsing error if response not json */ }
                 throw new Error(errorMsg);
             }
-            const selectedChar = await response.json();
-            console.log("Fetched character details:", selectedChar);
+            let selectedChar = await response.json();
             
-            const charIndex = allCharacters.findIndex(c => c._id === charId);
+            // Ensure _id is a string in selectedChar before updating allCharacters
+            if (selectedChar._id && typeof selectedChar._id === 'object' && selectedChar._id.$oid) {
+                selectedChar._id = selectedChar._id.$oid;
+            }
+            console.log("Fetched character details (ID as string):", selectedChar);
+            
+            const charIndex = allCharacters.findIndex(c => String(c._id) === charIdStr); // String comparison
             if (charIndex > -1) {
-                allCharacters[charIndex] = selectedChar;
+                allCharacters[charIndex] = selectedChar; // Update with fresh data
             } else {
                 allCharacters.push(selectedChar); 
+                console.warn("Fetched character was not found in allCharacters, pushed new. This might indicate an issue if it was expected to exist.", charIdStr)
             }
 
             updateText('details-char-name', selectedChar.name || "N/A"); 
@@ -726,7 +745,7 @@
             }
             
             renderAssociatedHistoryFiles(selectedChar); 
-            await fetchHistoryFiles(); // Await if it affects subsequent UI logic, or if selections depend on it.
+            await fetchHistoryFiles(); 
             disableBtn('associate-history-btn', false);
         } catch (error) {
             console.error("Error in selectCharacterForDetails:", error);
@@ -743,20 +762,19 @@
         }
     }
 
-    function togglePcSelection(pcId, element) {
-        console.log("Toggling PC selection for:", pcId, "Current activePcIds:", new Set(activePcIds));
-        if (activePcIds.has(pcId)) {
-            activePcIds.delete(pcId);
+    function togglePcSelection(pcIdStr, element) { // pcIdStr should be a string
+        console.log("Toggling PC selection for:", pcIdStr, "Current activePcIds:", new Set(activePcIds));
+        if (activePcIds.has(pcIdStr)) {
+            activePcIds.delete(pcIdStr);
             element.classList.remove('selected');
             console.log("Removed. New activePcIds:", new Set(activePcIds));
         } else {
-            activePcIds.add(pcId);
+            activePcIds.add(pcIdStr);
             element.classList.add('selected');
             console.log("Added. New activePcIds:", new Set(activePcIds));
         }
-        // If PC Dashboard is visible, update it
-        if (getElem('pc-dashboard-view').style.display !== 'none') {
-            updatePcDashboard();
+        if(getElem('pc-dashboard-view').style.display !== 'none') { 
+            updatePcDashboard(); 
         }
     }
     
@@ -793,14 +811,16 @@
         const dashboardContent = getElem('pc-dashboard-content');
         dashboardContent.innerHTML = ''; 
 
-        const selectedPcs = allCharacters.filter(char => activePcIds.has(char._id) && char.character_type === 'PC' && char.vtt_data);
+        // Ensure comparison uses string IDs from activePcIds against string IDs from allCharacters
+        const selectedPcs = allCharacters.filter(char => 
+            activePcIds.has(String(char._id)) && char.character_type === 'PC' && char.vtt_data
+        );
         console.log("Selected PCs for dashboard:", selectedPcs.map(p => p.name));
 
 
         if (selectedPcs.length === 0) {
             const anyPcsExist = allCharacters.some(char => char.character_type === 'PC' && char.vtt_data);
             dashboardContent.innerHTML = `<p class="pc-dashboard-no-selection">${anyPcsExist ? 'Select Player Characters from the left panel to view their details.' : 'No Player Characters with VTT data available. Create PCs and ensure VTT data is synced.'}</p>`;
-            // Ensure any expanded ability/skill sections are closed if no PCs are selected
             if (currentlyExpandedAbility) {
                 const expansionDiv = document.getElementById(`expanded-${currentlyExpandedAbility}`);
                 if (expansionDiv) expansionDiv.style.display = 'none';
@@ -818,12 +838,19 @@
             return;
         }
 
+        // Ensure calculatedProfBonus is available on each PC object for rendering
+        selectedPcs.forEach(pc => {
+             const pcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || 1;
+             pc.calculatedProfBonus = getProficiencyBonus(pcLevel);
+        });
+
+
         // --- Individual Quick Stat Cards ---
         let statCardsHTML = `<h4>PC Quick View</h4><div class="pc-dashboard-grid">`;
         const sortedSelectedPcsByName = [...selectedPcs].sort((a,b) => a.name.localeCompare(b.name));
         sortedSelectedPcsByName.forEach(pc => {
             const pcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || 1;
-            const profBonus = getProficiencyBonus(pcLevel);
+            // profBonus is already on pc.calculatedProfBonus
             statCardsHTML += `<div class="pc-stat-card"><h4>${pc.name} (Lvl ${pcLevel})</h4>`;
             const hpCurrent = pc.vtt_data.attributes.hp?.value !== undefined ? pc.vtt_data.attributes.hp.value : 'N/A';
             const hpMax = pc.vtt_data.attributes.hp?.max !== undefined && pc.vtt_data.attributes.hp.max !== null ? pc.vtt_data.attributes.hp.max : 'N/A';
@@ -844,16 +871,16 @@
             let passivePercFormatted = 'N/A';
             const wisScoreForPassive = pc.vtt_data.abilities?.wis?.value;
             const percSkillInfo = pc.vtt_data.skills?.prc; 
-            if (wisScoreForPassive !== undefined && percSkillInfo !== undefined) { // Check both exist
-                passivePercFormatted = calculatePassiveSkill(wisScoreForPassive, percSkillInfo.value || 0, profBonus);
+            if (wisScoreForPassive !== undefined && percSkillInfo !== undefined) { 
+                passivePercFormatted = calculatePassiveSkill(wisScoreForPassive, percSkillInfo.value || 0, pc.calculatedProfBonus);
             }
             statCardsHTML += `<p><strong>Pas. Perception:</strong> ${passivePercFormatted}</p>`;
 
             let passiveInvFormatted = 'N/A';
             const intScoreForPassive = pc.vtt_data.abilities?.int?.value;
             const invSkillInfo = pc.vtt_data.skills?.inv; 
-            if (intScoreForPassive !== undefined && invSkillInfo !== undefined) { // Check both exist
-                 passiveInvFormatted = calculatePassiveSkill(intScoreForPassive, invSkillInfo.value || 0, profBonus);
+            if (intScoreForPassive !== undefined && invSkillInfo !== undefined) { 
+                 passiveInvFormatted = calculatePassiveSkill(intScoreForPassive, invSkillInfo.value || 0, pc.calculatedProfBonus);
             }
             statCardsHTML += `<p><strong>Pas. Investigation:</strong> ${passiveInvFormatted}</p>`;
             statCardsHTML += `</div>`;
@@ -916,19 +943,19 @@
         let pcsForSkillTable = [...selectedPcs]; 
         if (skillSortKey) {
             pcsForSkillTable.sort((a, b) => {
-                const pcLevelA = a.flags?.ddbimporter?.dndbeyond?.totalLevels || a.system?.details?.level || 1;
-                const profBonusA = getProficiencyBonus(pcLevelA);
+                // const pcLevelA = a.flags?.ddbimporter?.dndbeyond?.totalLevels || a.system?.details?.level || 1;
+                // const profBonusA = getProficiencyBonus(pcLevelA); // Now on a.calculatedProfBonus
                 const skillDataA = a.vtt_data.skills?.[skillSortKey];
                 const abilityKeyA = skillDataA?.ability || (skillSortKey === 'ath' ? 'str' : ['acr', 'slt', 'ste'].includes(skillSortKey) ? 'dex' : ['arc', 'his', 'inv', 'nat', 'rel'].includes(skillSortKey) ? 'int' : ['ani', 'ins', 'med', 'prc', 'sur'].includes(skillSortKey) ? 'wis' : 'cha');
                 const abilityScoreA = a.vtt_data.abilities[abilityKeyA]?.value || 10;
-                const bonusA = skillDataA ? calculateSkillBonus(abilityScoreA, skillDataA.value || 0, profBonusA) : getAbilityModifier(abilityScoreA);
+                const bonusA = skillDataA ? calculateSkillBonus(abilityScoreA, skillDataA.value || 0, a.calculatedProfBonus) : getAbilityModifier(abilityScoreA);
 
-                const pcLevelB = b.flags?.ddbimporter?.dndbeyond?.totalLevels || b.system?.details?.level || 1;
-                const profBonusB = getProficiencyBonus(pcLevelB);
+                // const pcLevelB = b.flags?.ddbimporter?.dndbeyond?.totalLevels || b.system?.details?.level || 1;
+                // const profBonusB = getProficiencyBonus(pcLevelB); // Now on b.calculatedProfBonus
                 const skillDataB = b.vtt_data.skills?.[skillSortKey];
                 const abilityKeyB = skillDataB?.ability || (skillSortKey === 'ath' ? 'str' : ['acr', 'slt', 'ste'].includes(skillSortKey) ? 'dex' : ['arc', 'his', 'inv', 'nat', 'rel'].includes(skillSortKey) ? 'int' : ['ani', 'ins', 'med', 'prc', 'sur'].includes(skillSortKey) ? 'wis' : 'cha');
                 const abilityScoreB = b.vtt_data.abilities[abilityKeyB]?.value || 10;
-                const bonusB = skillDataB ? calculateSkillBonus(abilityScoreB, skillDataB.value || 0, profBonusB) : getAbilityModifier(abilityScoreB);
+                const bonusB = skillDataB ? calculateSkillBonus(abilityScoreB, skillDataB.value || 0, b.calculatedProfBonus) : getAbilityModifier(abilityScoreB);
                 
                 return bonusB - bonusA; 
             });
@@ -938,8 +965,8 @@
 
 
         pcsForSkillTable.forEach(pc => {
-            const pcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || 1;
-            const profBonus = getProficiencyBonus(pcLevel);
+            // const pcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || 1;
+            // const profBonus = getProficiencyBonus(pcLevel); // Now on pc.calculatedProfBonus
             skillsTableHTML += `<tr><td>${pc.name}</td>`;
             for (const skillKey in skillNameMap) {
                 const skillData = pc.vtt_data.skills?.[skillKey];
@@ -949,7 +976,7 @@
 
                 if (pc.vtt_data.abilities[abilityKeyForSkill]) {
                     const abilityScore = pc.vtt_data.abilities[abilityKeyForSkill]?.value || 10;
-                    const bonus = calculateSkillBonus(abilityScore, skillData?.value || 0, profBonus);
+                    const bonus = calculateSkillBonus(abilityScore, skillData?.value || 0, pc.calculatedProfBonus);
                     skillBonusFormatted = `${bonus >= 0 ? '+' : ''}${bonus}`;
                 }
                 skillsTableHTML += `<td>${skillBonusFormatted}</td>`;
@@ -975,7 +1002,7 @@
     }
 
     function toggleAbilityExpansion(ablKey) {
-        const selectedPcs = allCharacters.filter(char => activePcIds.has(char._id) && char.character_type === 'PC' && char.vtt_data);
+        const selectedPcs = allCharacters.filter(char => activePcIds.has(String(char._id)) && char.character_type === 'PC' && char.vtt_data);
         const expansionDiv = document.getElementById(`expanded-${ablKey}`);
         const headerTH = document.querySelector(`#main-stats-table th[data-ability="${ablKey}"]`);
         const arrowSpan = headerTH ? headerTH.querySelector('span.arrow-indicator') : null;
@@ -984,7 +1011,7 @@
         const isCurrentlyHidden = expansionDiv.style.display === 'none';
 
         if (isCurrentlyHidden) { 
-            if (selectedPcs.length === 0) { arrowSpan.textContent = ' ►'; return; } // Don't expand if no PCs selected
+            if (selectedPcs.length === 0) { arrowSpan.textContent = ' ►'; return; } 
             if (currentlyExpandedAbility && currentlyExpandedAbility !== ablKey) {
                 const otherDiv = document.getElementById(`expanded-${currentlyExpandedAbility}`);
                 const otherHeaderTH = document.querySelector(`#main-stats-table th[data-ability="${currentlyExpandedAbility}"]`);
@@ -1003,17 +1030,15 @@
     }
     
     function toggleSkillExpansion(skillKey) {
-        // If already expanded and clicked again, sort by name (effectively deselecting specific skill sort)
         if (currentlyExpandedSkill === skillKey) {
             skillSortKey = null; 
-            currentlyExpandedSkill = null; // Collapse it
-        } else { // If a new skill is clicked, or no skill was expanded
+            currentlyExpandedSkill = null; 
+        } else {
             skillSortKey = skillKey; 
             currentlyExpandedSkill = skillKey; 
         }
         updatePcDashboard(); // This will re-render the table, potentially sorted, and handle expansion display
 
-        // This ensures only the currently selected skill (if any) is expanded
         const allSkillHeaders = document.querySelectorAll(`#skills-overview-table th.clickable-skill-header`);
         allSkillHeaders.forEach(header => {
             const sKey = header.dataset.skillKey;
@@ -1022,9 +1047,7 @@
             if (expDiv && arrow) { 
                 if (sKey === currentlyExpandedSkill) { 
                     arrow.textContent = ' ▼';
-                    // Populate and display - updatePcDashboard might have already done this,
-                    // but ensure it's populated if it was just expanded.
-                    populateExpandedSkillDetails(sKey, expDiv, allCharacters.filter(char => activePcIds.has(char._id) && char.character_type === 'PC' && char.vtt_data));
+                    populateExpandedSkillDetails(sKey, expDiv, allCharacters.filter(char => activePcIds.has(String(char._id)) && char.character_type === 'PC' && char.vtt_data));
                     expDiv.style.display = 'block';
                 } else { 
                     arrow.textContent = ' ►';
@@ -1051,13 +1074,13 @@
 
         contentHTML += `<div class="skill-bar-chart-container">`;
         const skillDataForGraph = selectedPcs.map(pc => {
-            const pcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || 1;
-            const profBonus = getProficiencyBonus(pcLevel);
+            // const pcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || 1;
+            // const profBonus = getProficiencyBonus(pcLevel); // Already on pc.calculatedProfBonus
             const skillVttData = pc.vtt_data.skills?.[skillKey];
             const defaultAbilityForSkill = (skillKey === 'ath' ? 'str' : ['acr', 'slt', 'ste'].includes(skillKey) ? 'dex' : ['arc', 'his', 'inv', 'nat', 'rel'].includes(skillKey) ? 'int' : ['ani', 'ins', 'med', 'prc', 'sur'].includes(skillKey) ? 'wis' : 'cha');
             const baseAbilityKey = skillVttData?.ability || defaultAbilityForSkill;
             const baseAbilityScore = pc.vtt_data.abilities[baseAbilityKey]?.value || 10;
-            const bonus = calculateSkillBonus(baseAbilityScore, skillVttData?.value || 0, profBonus);
+            const bonus = calculateSkillBonus(baseAbilityScore, skillVttData?.value || 0, pc.calculatedProfBonus);
             return { name: pc.name, modifier: bonus };
         }).sort((a,b) => b.modifier - a.modifier); 
 
@@ -1132,7 +1155,7 @@
 
 
     function populateExpandedAbilityDetails(ablKey, expansionDiv, selectedPcsInput) {
-        if (!selectedPcsInput || selectedPcsInput.length === 0) {
+         if (!selectedPcsInput || selectedPcsInput.length === 0) {
             expansionDiv.innerHTML = '<p><em>Select PCs to view ability details.</em></p>';
             return;
         }
@@ -1167,9 +1190,12 @@
         else if (upperAblKey === 'CON') generalDerivedMetrics.push("Hold Breath");
         else if (upperAblKey === 'WIS') generalDerivedMetrics.push("Passive Perception (Calc)");
 
-        sortedPcs.forEach(pc => { // Ensure calculatedProfBonus is set on each PC object for this rendering pass
-            const pcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || 1;
-            pc.calculatedProfBonus = getProficiencyBonus(pcLevel); // Add it directly to the PC object in allCharacters
+        // Ensure calculatedProfBonus is on the pc objects if not already
+        sortedPcs.forEach(pc => {
+            if (pc.calculatedProfBonus === undefined) {
+                const pcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || 1;
+                pc.calculatedProfBonus = getProficiencyBonus(pcLevel);
+            }
         });
 
         generalDerivedMetrics.forEach(metricName => {
@@ -1182,7 +1208,7 @@
 
                 if (metricName === "Modifier") value = `${modifier >= 0 ? '+' : ''}${modifier}`;
                 else if (metricName === `${upperAblKey} Save`) {
-                    const saveBonus = savingThrowBonus(score, isSaveProficient, pc.calculatedProfBonus); // Use pre-calculated
+                    const saveBonus = savingThrowBonus(score, isSaveProficient, pc.calculatedProfBonus);
                     value = `${saveBonus >= 0 ? '+' : ''}${saveBonus} ${isSaveProficient ? '<abbr title="Proficient">(P)</abbr>' : ''}`;
                 }
                 else if (metricName === "Long Jump (Run/Stand)" && upperAblKey === 'STR') value = `${longJump(score, true)}ft / ${longJump(score, false)}ft`;
@@ -1192,9 +1218,9 @@
                 else if (metricName === "Passive Perception (Calc)" && upperAblKey === 'WIS') {
                     const wisScoreVal = pc.vtt_data.abilities.wis?.value || 0;
                     const percSkillInfo = pc.vtt_data.skills?.prc;
-                    if (wisScoreVal !== undefined && percSkillInfo !== undefined) { // Ensure data exists
-                         value = calculatePassiveSkill(wisScoreVal, percSkillInfo.value || 0, pc.calculatedProfBonus); // Use pre-calculated
-                    }
+                     if (wisScoreVal !== undefined && percSkillInfo !== undefined) {
+                         value = calculatePassiveSkill(wisScoreVal, percSkillInfo.value || 0, pc.calculatedProfBonus);
+                     }
                 }
                 contentHTML += `<td>${value}</td>`;
             });
@@ -1297,7 +1323,7 @@
         expansionDiv.innerHTML = contentHTML;
     }
 
-    function createSkillTable(skillName, skillAbbr, ablKey, sortedPcs) {
+    function createSkillTable(skillName, skillAbbr, ablKey, sortedPcs) { // `pc.calculatedProfBonus` should be set before this
         let tableHTML = `<table class="derived-stats-table"><thead><tr><th>Character</th><th>${skillName} Modifier</th></tr></thead><tbody>`;
         let foundSkill = false;
         sortedPcs.forEach(pc => {
@@ -1319,7 +1345,7 @@
         return tableHTML; 
     }
 
-    function createToolTable(toolName, toolAbbr, ablKey, sortedPcs, note = "") {
+    function createToolTable(toolName, toolAbbr, ablKey, sortedPcs, note = "") { // `pc.calculatedProfBonus` should be set
         let tableHTML = `<table class="derived-stats-table"><thead><tr><th>Character</th><th>${toolName} Bonus ${note}</th></tr></thead><tbody>`;
         let foundToolForAnyPC = false;
         sortedPcs.forEach(pc => {
@@ -1435,16 +1461,17 @@
     }
 
     async function saveGMNotes() {
-        if (!currentProfileCharId) { alert('No character selected in profile to save notes for.'); return; }
+        const charIdToUse = String(currentProfileCharId);
+        if (!charIdToUse) { alert('No character selected in profile to save notes for.'); return; }
         
         const notes = getElem('gm-notes').value;
         try {
-            const response = await fetch(`${API_BASE_URL}/api/npcs/${currentProfileCharId}`, { 
+            const response = await fetch(`${API_BASE_URL}/api/npcs/${charIdToUse}`, { 
                 method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ gm_notes: notes })
             });
             if (!response.ok) throw new Error('Failed to save notes');
             const result = await response.json(); alert(result.message);
-            const charIndex = allCharacters.findIndex(char => char._id === currentProfileCharId);
+            const charIndex = allCharacters.findIndex(char => String(char._id) === charIdToUse);
             if (charIndex > -1) allCharacters[charIndex].gm_notes = notes;
         } catch (error) { console.error('Error saving GM notes:', error); alert('Failed to save GM notes.');}
     }
@@ -1465,8 +1492,9 @@
     }
 
     async function addMemoryToCharacter(content = null, type = null) {
-        if (!currentProfileCharId) { alert("View a character's details in the Profile section to add a memory to them."); return; }
-        const characterForMemory = allCharacters.find(c => c._id === currentProfileCharId);
+        const charIdToUse = String(currentProfileCharId);
+        if (!charIdToUse) { alert("View a character's details in the Profile section to add a memory to them."); return; }
+        const characterForMemory = allCharacters.find(c => String(c._id) === charIdToUse);
         if (!characterForMemory || characterForMemory.character_type !== 'NPC') {
             alert("Memories can only be added to NPCs currently viewed in the profile.");
             return;
@@ -1476,15 +1504,15 @@
         const memoryType = type || getElem('new-memory-type').value || 'manual_fact';
         if (!memoryContent) { alert('Memory content cannot be empty.'); return; }
         try {
-            const response = await fetch(`${API_BASE_URL}/api/npcs/${currentProfileCharId}/memory`, {
+            const response = await fetch(`${API_BASE_URL}/api/npcs/${charIdToUse}/memory`, {
                 method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ content: memoryContent, type: memoryType, source: 'gm_interface_manual' })
             });
             const result = await response.json();
             if (!response.ok) throw new Error(result.error || `Failed to add memory.`);
             alert(result.message || 'Memory added!');
-            const charIndex = allCharacters.findIndex(char => char._id === currentProfileCharId);
-            if (charIndex > -1) {
-                if (!allCharacters[charIndex].memories) allCharacters[charIndex].memories = [];
+            const charIndex = allCharacters.findIndex(char => String(char._id) === charIdToUse);
+            if (charIndex > -1 && result.updated_memories) { // Check if updated_memories exists
+                // No need to check if allCharacters[charIndex].memories exists if we are replacing it
                 allCharacters[charIndex].memories = result.updated_memories; 
                 renderMemories(allCharacters[charIndex].memories); 
             }
@@ -1496,8 +1524,9 @@
     }
 
     async function deleteMemory(memoryId) {
-        if (!currentProfileCharId) { alert("View an NPC's details in the Profile section to delete a memory."); return; }
-        const characterForMemory = allCharacters.find(c => c._id === currentProfileCharId);
+        const charIdToUse = String(currentProfileCharId);
+        if (!charIdToUse) { alert("View an NPC's details in the Profile section to delete a memory."); return; }
+        const characterForMemory = allCharacters.find(c => String(c._id) === charIdToUse);
         if (!characterForMemory || characterForMemory.character_type !== 'NPC') {
             alert("Memories can only be deleted from NPCs currently viewed in the profile.");
             return;
@@ -1505,12 +1534,12 @@
         if (!memoryId) return;
         if (!confirm('Are you sure you want to delete this memory?')) return;
         try {
-            const response = await fetch(`${API_BASE_URL}/api/npcs/${currentProfileCharId}/memory/${memoryId}`, { method: 'DELETE' });
+            const response = await fetch(`${API_BASE_URL}/api/npcs/${charIdToUse}/memory/${memoryId}`, { method: 'DELETE' });
             const result = await response.json();
             if (!response.ok) throw new Error(result.error || `Failed to delete memory.`);
             alert(result.message || 'Memory deleted!');
-            const charIndex = allCharacters.findIndex(char => char._id === currentProfileCharId);
-            if (charIndex > -1) { 
+            const charIndex = allCharacters.findIndex(char => String(char._id) === charIdToUse);
+            if (charIndex > -1 && result.updated_memories) { 
                 allCharacters[charIndex].memories = result.updated_memories; 
                 renderMemories(allCharacters[charIndex].memories);
             }
@@ -1525,8 +1554,8 @@
         const sceneContext = getElem('scene-context').value;
         const playerUtterance = getElem('player-utterance').value;
         const activePCsInfo = Array.from(activePcIds).map(id => {
-            const pc = allCharacters.find(char => char._id === id);
-            return pc ? { id: pc._id, name: pc.name } : null;
+            const pc = allCharacters.find(char => String(char._id) === String(id)); // String comparison
+            return pc ? { id: String(pc._id), name: pc.name } : null; // Ensure ID is string here too
         }).filter(pc => pc !== null);
 
         if (!sceneContext && playerUtterance.trim() === "") {
@@ -1536,48 +1565,49 @@
 
         if (playerUtterance.trim() !== "") {
             dialogueHistory.push({ type: 'player', speakerName: 'Player', id: null, utterance: playerUtterance });
-            activeSceneNpcIds.forEach(npcId => {
-                addDialogueToTranscript(playerUtterance, 'player', 'Player', npcId);
-                if (!dialogueHistories[npcId]) dialogueHistories[npcId] = [];
-                dialogueHistories[npcId].push({ type: 'player', speakerName: 'Player', id: null, utterance: playerUtterance });
+            activeSceneNpcIds.forEach(npcIdStr => { // Assuming npcIdStr is string from Set
+                addDialogueToTranscript(playerUtterance, 'player', 'Player', npcIdStr);
+                if (!dialogueHistories[npcIdStr]) dialogueHistories[npcIdStr] = [];
+                dialogueHistories[npcIdStr].push({ type: 'player', speakerName: 'Player', id: null, utterance: playerUtterance });
             });
         }
 
         disableBtn('generate-dialogue-btn', true);
         const promises = [];
 
-        activeSceneNpcIds.forEach(currentNpcId => {
-            const currentNpc = allCharacters.find(c => c._id === currentNpcId);
+        activeSceneNpcIds.forEach(currentNpcIdStr => { // Assuming currentNpcIdStr from Set is string
+            const currentNpc = allCharacters.find(c => String(c._id) === currentNpcIdStr); // String comparison
             if (!currentNpc) {
-                console.error(`Could not find NPC data for ID ${currentNpcId} when generating dialogue.`);
-                addDialogueToTranscript(`Error: NPC data for ID ${currentNpcId} not found. Cannot generate dialogue.`, 'system-error', 'System', currentNpcId);
-                return; // Skip this NPC
+                console.error(`Could not find NPC data for ID ${currentNpcIdStr} when generating dialogue.`);
+                addDialogueToTranscript(`Error: NPC data for ID ${currentNpcIdStr} not found. Cannot generate dialogue.`, 'system-error', 'System', currentNpcIdStr);
+                return;
             }
 
             const otherActiveNpcsDialogueSummary = [];
-            activeSceneNpcIds.forEach(otherNpcId => {
-                if (otherNpcId !== currentNpcId) {
-                    const otherNpc = allCharacters.find(c => c._id === otherNpcId);
+            activeSceneNpcIds.forEach(otherNpcIdStr => {
+                if (otherNpcIdStr !== currentNpcIdStr) {
+                    const otherNpc = allCharacters.find(c => String(c._id) === otherNpcIdStr);
                     if (otherNpc) {
                         let lastUtterance = "";
-                        const historyForOtherNpc = dialogueHistories[otherNpcId] || [];
+                        const historyForOtherNpc = dialogueHistories[otherNpcIdStr] || [];
                         for (let i = historyForOtherNpc.length - 1; i >= 0; i--) {
-                            if (historyForOtherNpc[i].id === otherNpcId) { // Check if this entry actually belongs to the otherNpc
+                            // Assuming historyForOtherNpc[i].id is also string if it was set from activeSceneNpcIds
+                            if (String(historyForOtherNpc[i].id) === otherNpcIdStr) { 
                                 lastUtterance = historyForOtherNpc[i].utterance;
                                 break;
                             }
                         }
-                        if (!lastUtterance) { // Fallback to global history if no specific found
+                        if (!lastUtterance) { 
                             for (let i = dialogueHistory.length - 1; i >= 0; i--) {
-                                if (dialogueHistory[i].id === otherNpcId) {
+                                if (String(dialogueHistory[i].id) === otherNpcIdStr) {
                                     lastUtterance = dialogueHistory[i].utterance;
                                     break;
                                 }
                             }
                         }
-                        if (lastUtterance) { // Only add if an utterance was found
+                        if (lastUtterance) {
                             otherActiveNpcsDialogueSummary.push({
-                                npc_id: otherNpc._id,
+                                npc_id: String(otherNpc._id), // Ensure string
                                 npc_name: otherNpc.name,
                                 last_utterance: lastUtterance
                             });
@@ -1586,24 +1616,23 @@
                 }
             });
             
-            const npcSpecificRecentHistory = (dialogueHistories[currentNpcId] && dialogueHistories[currentNpcId].length > 0) ?
-                                         dialogueHistories[currentNpcId].slice(-10).map(d => `${d.speakerName}: ${d.utterance}`) :
-                                         dialogueHistory.slice(-10).map(d => `${d.speakerName}: ${d.utterance}`); // Fallback
+            const npcSpecificRecentHistory = (dialogueHistories[currentNpcIdStr] && dialogueHistories[currentNpcIdStr].length > 0) ?
+                                         dialogueHistories[currentNpcIdStr].slice(-10).map(d => `${d.speakerName}: ${d.utterance}`) :
+                                         dialogueHistory.slice(-10).map(d => `${d.speakerName}: ${d.utterance}`);
 
-            // Ensure payload is defined HERE, inside the loop, before its use.
             const payload = {
                 scene_context: sceneContext,
                 player_utterance: playerUtterance,
                 active_pcs: activePCsInfo.map(pc => pc.name),
                 recent_dialogue_history: npcSpecificRecentHistory,
                 other_active_npcs_dialogue: otherActiveNpcsDialogueSummary,
-                npc_history: currentNpc.combined_history_content || "" // Crucial for NPC context
+                npc_history: currentNpc.combined_history_content || ""
             };
             
-            console.log(`Payload for ${currentNpc.name} (ID: ${currentNpcId}):`, JSON.parse(JSON.stringify(payload)));
+            console.log(`Payload for ${currentNpc.name} (ID: ${currentNpcIdStr}):`, JSON.parse(JSON.stringify(payload)));
 
             promises.push(
-                fetch(`${API_BASE_URL}/api/npcs/${currentNpcId}/dialogue`, {
+                fetch(`${API_BASE_URL}/api/npcs/${currentNpcIdStr}/dialogue`, { // Use string ID for URL
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
@@ -1621,11 +1650,11 @@
                             throw new Error(`HTTP error ${response.status} for ${currentNpc.name}. Server response might not be valid JSON: ${response.statusText}`);
                         });
                     }
-                    return response.json().then(data => ({ok: true, data, npcId: currentNpcId, npcName: currentNpc.name }));
+                    return response.json().then(data => ({ok: true, data, npcId: currentNpcIdStr, npcName: currentNpc.name }));
                 })
                 .catch(error => {
                     console.error(`Fetch or processing error for NPC ${currentNpc.name}:`, error);
-                    return {ok: false, error: error.message || 'Network error or failed to parse response', npcId: currentNpcId, npcName: currentNpc.name };
+                    return {ok: false, error: error.message || 'Network error or failed to parse response', npcId: currentNpcIdStr, npcName: currentNpc.name };
                 })
             );
         });
@@ -1633,11 +1662,14 @@
         try {
             const results = await Promise.all(promises);
             results.forEach(result => {
-                if (result.ok && result.data && result.data.npc_dialogue !== undefined) { // Check for npc_dialogue specifically
-                    addDialogueToTranscript(result.data.npc_dialogue, 'npc', result.npcName, result.npcId);
-                    dialogueHistory.push({ type: 'npc', speakerName: result.npcName, id: result.npcId, utterance: result.data.npc_dialogue });
-                    if(!dialogueHistories[result.npcId]) dialogueHistories[result.npcId] = [];
-                    dialogueHistories[result.npcId].push({ type: 'npc', speakerName: result.npcName, id: result.npcId, utterance: result.data.npc_dialogue });
+                // Ensure result.npcId is string for addDialogueToTranscript
+                const npcIdForTranscript = String(result.npcId); 
+
+                if (result.ok && result.data && result.data.npc_dialogue !== undefined) {
+                    addDialogueToTranscript(result.data.npc_dialogue, 'npc', result.npcName, npcIdForTranscript);
+                    dialogueHistory.push({ type: 'npc', speakerName: result.npcName, id: npcIdForTranscript, utterance: result.data.npc_dialogue });
+                    if(!dialogueHistories[npcIdForTranscript]) dialogueHistories[npcIdForTranscript] = [];
+                    dialogueHistories[npcIdForTranscript].push({ type: 'npc', speakerName: result.npcName, id: npcIdForTranscript, utterance: result.data.npc_dialogue });
                     
                     if (result.data.new_memory_suggestions || result.data.generated_topics) { 
                         renderAISuggestions(result.data.new_memory_suggestions, result.data.generated_topics);
@@ -1645,14 +1677,13 @@
                 } else {
                     let errorMessage = result.error || "Dialogue generation failed or NPC did not respond.";
                     if (result.data && result.data.details) { errorMessage += ` Details: ${result.data.details}`; }
-                    else if (result.data && result.data.npc_dialogue) { // If it was an error message from AI service passed as dialogue
+                    else if (result.data && result.data.npc_dialogue) { 
                          errorMessage = result.data.npc_dialogue;
                     }
                     console.error(`Dialogue generation failed for ${result.npcName || 'Unknown NPC'}:`, errorMessage, result.data);
-                    addDialogueToTranscript(errorMessage, 'system-error', 'System', result.npcId);
+                    addDialogueToTranscript(errorMessage, 'system-error', 'System', npcIdForTranscript);
                 }
             });
-            // Only clear if it was meant to be a player-initiated turn
             if (playerUtterance.trim() !== "" || sceneContext.trim() !== "") {
                  getElem('player-utterance').value = ''; 
             }
@@ -1663,8 +1694,8 @@
         }
     }
 
-    function addDialogueToTranscript(text, type, speakerName, targetNpcId = null) {
-        const addToSpecificTranscript = (npcId) => {
+    function addDialogueToTranscript(text, type, speakerName, targetNpcIdStr = null) { // targetNpcIdStr string
+        const addToSpecificTranscript = (npcId) => { // npcId here is also string
             const transcriptDiv = getElem(`transcript-${npcId}`);
             if (!transcriptDiv) {
                 console.warn(`Transcript div not found for NPC ID: ${npcId}`);
@@ -1681,8 +1712,8 @@
                 entry.classList.add('npc-response');
                 speakerPrefix = `${speakerName || 'NPC'}: `; 
             } else if (type === 'system-error') {
-                entry.classList.add('scene-event'); // Use scene-event for system errors for consistent styling
-                entry.style.color = 'red'; // Override color for error
+                entry.classList.add('scene-event'); 
+                entry.style.color = 'red'; 
                 speakerPrefix = `${speakerName || 'System'}: `;
             }
             
@@ -1692,7 +1723,7 @@
             entry.appendChild(document.createTextNode(text));
 
             const initialMessage = transcriptDiv.querySelector('p.scene-event');
-            if (initialMessage && initialMessage.textContent.includes("starts.")) { // Only remove initial "starts" message
+            if (initialMessage && initialMessage.textContent.includes("starts.")) { 
                 initialMessage.remove();
             }
             transcriptDiv.appendChild(entry);
@@ -1700,11 +1731,11 @@
         };
 
         if (type === 'player') {
-            activeSceneNpcIds.forEach(npcId => {
+            activeSceneNpcIds.forEach(npcId => { // npcId from Set is already string
                 addToSpecificTranscript(npcId);
             });
-        } else if (targetNpcId) { 
-            addToSpecificTranscript(targetNpcId);
+        } else if (targetNpcIdStr) { 
+            addToSpecificTranscript(targetNpcIdStr);
         }
     }
 
@@ -1747,11 +1778,12 @@
     }
     
     function populateAddMemoryForm(content, type) {
-        if (!currentProfileCharId) {
+        const charIdToUse = String(currentProfileCharId);
+        if (!charIdToUse) {
              alert("View an NPC's details in the Profile section to add a memory to them.");
              return;
         }
-        const characterForMemory = allCharacters.find(c => c._id === currentProfileCharId);
+        const characterForMemory = allCharacters.find(c => String(c._id) === charIdToUse);
         if (!characterForMemory || characterForMemory.character_type !== 'NPC') {
             alert("Memories can only be added to NPCs currently viewed in the profile.");
             return;
