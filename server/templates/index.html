@@ -297,7 +297,7 @@
     let allCharacters = [];
     let dialogueHistory = []; 
     let dialogueHistories = {}; 
-    let currentProfileCharId = null; // ID of the character whose details are in the profile section
+    let currentProfileCharId = null; 
 
     let currentlyExpandedAbility = null; 
     let currentlyExpandedSkill = null; 
@@ -363,7 +363,6 @@
             updateView(); 
         } catch (error) { 
             console.error('Error in fetchCharacters:', error); 
-            alert('Failed to load characters. Check console for details: ' + error.message); 
         }
     }
     
@@ -397,12 +396,6 @@
             nameSpan.className = 'npc-name-clickable';
             nameSpan.onclick = () => {
                 selectCharacterForDetails(char._id);
-                // If dialogue interface is active, don't switch view, just update profile.
-                // If PC dashboard is active, switch to dialogue view if NPCs are added.
-                if (activeSceneNpcIds.size === 0) { // If no NPCs in scene, and we click an NPC name, implies we want to start dialogue
-                    toggleNpcInScene(char._id, char.name); // Add them to scene
-                }
-                updateView(); // This will handle showing dialogue if NPCs are active
             };
             
             li.appendChild(checkbox);
@@ -427,11 +420,13 @@
             dialogueHistories[npcId] = []; 
         }
         
-        if (activeSceneNpcIds.size === 1 && multiNpcContainer.querySelector('p.scene-event')) {
+        if (activeSceneNpcIds.size >= 1 && multiNpcContainer.querySelector('p.scene-event')) {
             multiNpcContainer.innerHTML = ''; 
             activeSceneNpcIds.forEach(id => { 
                  const npc = allCharacters.find(c=> c._id === id);
-                 if(npc) createNpcDialogueArea(id, npc.name);
+                 if(npc && !getElem(`npc-area-${id}`)) { 
+                    createNpcDialogueArea(id, npc.name);
+                 }
             });
         } else if (activeSceneNpcIds.size === 0) {
              multiNpcContainer.innerHTML = '<p class="scene-event">Select NPCs to add them to the scene.</p>';
@@ -445,7 +440,7 @@
     function createNpcDialogueArea(npcId, npcName) {
         const container = getElem('multi-npc-dialogue-container');
         const placeholder = container.querySelector('p.scene-event');
-        if (placeholder && activeSceneNpcIds.size > 0) {
+        if (placeholder && activeSceneNpcIds.size > 0) { 
             placeholder.remove();
         }
 
@@ -491,7 +486,7 @@
         const ul = document.createElement('ul');
         pcs.forEach(pc => {
             const li = document.createElement('li');
-            li.style.cursor = "pointer"; // Make PC names clickable for details
+            li.style.cursor = "pointer"; 
             li.textContent = pc.name;
             li.dataset.charId = pc._id;
             li.onclick = () => { 
@@ -512,18 +507,24 @@
     
     async function fetchHistoryFiles() {
         const selectElement = getElem('history-file-select');
-        selectElement.innerHTML = '<option value="">-- Select a history file --</option>'; // Reset
+        selectElement.innerHTML = '<option value="">-- Select a history file --</option>'; 
         try {
+            console.log("Fetching history files from /api/history_files");
             const response = await fetch(`${API_BASE_URL}/api/history_files`);
-            if (!response.ok) throw new Error('Failed to fetch history files.');
+            console.log("History files response status:", response.status);
+            if (!response.ok) {
+                const errorText = await response.text(); // Attempt to get more error info
+                console.error("History files response not OK. Status:", response.status, "Text:", errorText, "Full Response:", response);
+                throw new Error(`Failed to fetch history files. Status: ${response.status}. Message: ${errorText}`);
+            }
             const files = await response.json();
+            console.log("History files received:", files);
             files.forEach(file => {
                 const option = document.createElement('option');
                 option.value = file;
                 option.textContent = file;
                 selectElement.appendChild(option);
             });
-            // Pre-select if character has associated history
             if (currentProfileCharId) {
                 const character = allCharacters.find(c => c._id === currentProfileCharId);
                 if (character && character.associated_history_file) {
@@ -534,8 +535,8 @@
                 }
             }
         } catch (error) {
-            console.error("Error fetching history files:", error);
-            selectElement.innerHTML += '<option value="" disabled>Error loading files</option>';
+            console.error("Error in fetchHistoryFiles function:", error.message, error);
+            selectElement.innerHTML += `<option value="" disabled>Error loading files: ${error.message}</option>`;
         }
     }
 
@@ -549,24 +550,25 @@
             alert("Please select a history file from the dropdown.");
             return;
         }
-
+        console.log(`Associating history file: ${selectedFile} with character ID: ${currentProfileCharId}`);
         try {
             const response = await fetch(`${API_BASE_URL}/api/character/${currentProfileCharId}/associate_history`, {
-                method: 'POST', // Or PUT, depending on your API design
+                method: 'POST', 
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ history_file: selectedFile })
             });
             if (!response.ok) {
-                const errorData = await response.json();
+                const errorData = await response.json().catch(() => ({ message: "Server returned non-JSON error response."}));
+                console.error("Error associating history file - Server response:", response.status, errorData);
                 throw new Error(errorData.message || 'Failed to associate history file.');
             }
             const result = await response.json();
             alert(result.message || "History file associated successfully.");
             
-            // Update local character data
             const charIndex = allCharacters.findIndex(c => c._id === currentProfileCharId);
             if (charIndex > -1) {
                 allCharacters[charIndex].associated_history_file = selectedFile;
+                allCharacters[charIndex].history_content = result.history_content; 
             }
             updateText('current-associated-history', selectedFile);
 
@@ -578,9 +580,11 @@
 
 
     function selectCharacterForDetails(charId) {
-        currentProfileCharId = charId; // Store the ID of the character being viewed in profile
+        console.log("selectCharacterForDetails called for ID:", charId);
+        currentProfileCharId = charId; 
         const selectedChar = allCharacters.find(char => char._id === charId);
         if (selectedChar) {
+            console.log("Selected character for profile:", selectedChar.name);
             updateText('details-char-name', selectedChar.name); 
             updateText('profile-char-type', selectedChar.character_type);
             updateText('profile-description', selectedChar.description || "N/A");
@@ -591,23 +595,29 @@
 
             const isNpc = selectedChar.character_type === 'NPC';
             getElem('npc-memories-collapsible-section').style.display = isNpc ? 'block' : 'none';
+            getElem('character-history-collapsible-section').style.display = 'block'; 
             
             if (isNpc) {
                 renderMemories(selectedChar.memories || []);
                 disableBtn('add-memory-btn', false);
-            } else {
+            } else { 
                  disableBtn('add-memory-btn', true);
                  getElem('character-memories-list').innerHTML = '<p><em>Memories are typically managed for NPCs.</em></p>';
             }
-            // For Character History section
-            fetchHistoryFiles(); // This will also handle pre-selection
+            fetchHistoryFiles(); 
             disableBtn('associate-history-btn', false);
 
         } else {
+            console.warn("No character found for ID:", charId, "Clearing profile.");
             currentProfileCharId = null;
             updateText('details-char-name', "None");
-            // Clear other profile fields...
+            updateText('profile-char-type', "");
+            updateText('profile-description', "");
+            updateText('profile-personality', "");
+            getElem('gm-notes').value = '';
             disableBtn('save-gm-notes-btn', true);
+            getElem('npc-memories-collapsible-section').style.display = 'none';
+            getElem('character-history-collapsible-section').style.display = 'none';
             disableBtn('add-memory-btn', true);
             disableBtn('associate-history-btn', true);
             getElem('history-file-select').innerHTML = '<option value="">-- Select a history file --</option>';
@@ -724,6 +734,7 @@
             }
             if (acDisplay === undefined || acDisplay === null) {
                 acDisplay = 'N/A';
+                console.log(`AC data for ${pc.name}: overrideAC:`, pc.flags?.ddbimporter?.overrideAC, "vtt_data.attributes.ac:", pc.vtt_data.attributes.ac);
             }
             statCardsHTML += `<p><strong>AC:</strong> ${acDisplay}</p>`;
             
@@ -896,15 +907,14 @@
             skillSortKey = skillKey; 
             currentlyExpandedSkill = skillKey; 
         }
-        updatePcDashboard(); // This will re-render and apply sorting
+        updatePcDashboard(); 
 
-        // After re-rendering, explicitly manage the visibility of the clicked/unclicked skill detail
         const allSkillHeaders = document.querySelectorAll(`#skills-overview-table th.clickable-skill-header`);
         allSkillHeaders.forEach(header => {
             const sKey = header.dataset.skillKey;
             const arrow = header.querySelector('span.arrow-indicator');
             const expDiv = document.getElementById(`expanded-skill-${sKey}`);
-            if (expDiv) { // Ensure div exists
+            if (expDiv) { 
                 if (sKey === currentlyExpandedSkill) { 
                     if (arrow) arrow.textContent = ' ▼';
                     populateExpandedSkillDetails(sKey, expDiv, allCharacters.filter(char => activePcIds.has(char._id) && char.character_type === 'PC' && char.vtt_data));
@@ -1277,7 +1287,7 @@
         console.log("window.onload triggered. Calling fetchCharacters...");
         fetchCharacters();
         setupInterfaceControls();
-        if (!activeSceneNpcIds.size > 0) { // Check if any NPCs are active
+        if (!activeSceneNpcIds.size > 0) { 
             updateView();
         }
     };
@@ -1308,7 +1318,7 @@
         
         const notes = getElem('gm-notes').value;
         try {
-            const response = await fetch(`${API_BASE_URL}/api/npcs/${currentProfileCharId}`, { // Use currentProfileCharId
+            const response = await fetch(`${API_BASE_URL}/api/npcs/${currentProfileCharId}`, { 
                 method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ gm_notes: notes })
             });
             if (!response.ok) throw new Error('Failed to save notes');
@@ -1355,7 +1365,7 @@
             if (charIndex > -1) {
                 if (!allCharacters[charIndex].memories) allCharacters[charIndex].memories = [];
                 allCharacters[charIndex].memories = result.updated_memories; 
-                renderMemories(allCharacters[charIndex].memories); // Re-render memories for the current profile character
+                renderMemories(allCharacters[charIndex].memories); 
             }
             if (!content) getElem('new-memory-content').value = ''; 
             if (!type) getElem('new-memory-type').value = '';
@@ -1387,6 +1397,7 @@
     }
 
     async function generateDialogue() {
+        console.log("generateDialogue called. Active NPCs:", Array.from(activeSceneNpcIds));
         if (activeSceneNpcIds.size === 0) { alert('Please add NPCs to the scene first.'); return; }
         const sceneContext = getElem('scene-context').value;
         const playerUtterance = getElem('player-utterance').value;
@@ -1395,8 +1406,9 @@
             return pc ? { id: pc._id, name: pc.name } : null;
         }).filter(pc => pc !== null);
 
-        if (!sceneContext) { alert('Scene context is required.'); return; }
+        if (!sceneContext && playerUtterance.trim() === "") { alert('Scene context or player utterance is required.'); return; }
         
+        console.log("Player utterance:", playerUtterance);
         dialogueHistory.push({ type: 'player', speakerName: 'Player', id: null, utterance: playerUtterance });
         activeSceneNpcIds.forEach(npcId => {
             addDialogueToTranscript(playerUtterance, 'player', 'Player', npcId); 
@@ -1409,7 +1421,11 @@
 
         activeSceneNpcIds.forEach(currentNpcId => {
             const currentNpc = allCharacters.find(c => c._id === currentNpcId);
-            if (!currentNpc) return;
+            if (!currentNpc) {
+                console.warn("Could not find NPC with ID:", currentNpcId, "in allCharacters for dialogue generation.");
+                return;
+            }
+            console.log(`Preparing payload for ${currentNpc.name} (ID: ${currentNpcId})`);
 
             const otherActiveNpcsDialogueSummary = [];
             activeSceneNpcIds.forEach(otherNpcId => {
@@ -1448,6 +1464,7 @@
                 recent_dialogue_history: dialogueHistory.slice(-10).map(d => `${d.speakerName}: ${d.utterance}`),
                 other_active_npcs_dialogue: otherActiveNpcsDialogueSummary
             };
+            console.log(`Payload for ${currentNpc.name}:`, JSON.stringify(payload, null, 2));
 
             promises.push(
                 fetch(`${API_BASE_URL}/api/npcs/${currentNpcId}/dialogue`, {
@@ -1455,32 +1472,53 @@
                     headers: { 'Content-Type': 'application/json' }, 
                     body: JSON.stringify(payload)
                 })
-                .then(response => response.json().then(data => ({ok: response.ok, status: response.status, data, npcId: currentNpcId, npcName: currentNpc.name })))
-                .catch(error => ({ok: false, error, npcId: currentNpcId, npcName: currentNpc.name }))
+                .then(response => {
+                    console.log(`Response status for ${currentNpc.name}: ${response.status}`);
+                    if (!response.ok) {
+                        return response.json().then(errData => {
+                            const error = new Error(errData.error || `HTTP error ${response.status} for ${currentNpc.name}`);
+                            error.response = response; 
+                            error.data = errData;
+                            throw error;
+                        }).catch((parseError) => { 
+                            console.error(`Failed to parse JSON error for ${currentNpc.name}:`, parseError);
+                            throw new Error(`HTTP error ${response.status} for ${currentNpc.name} and failed to parse error response.`);
+                        });
+                    }
+                    return response.json().then(data => ({ok: true, data, npcId: currentNpcId, npcName: currentNpc.name }));
+                })
+                .catch(error => {
+                    console.error(`Fetch error for ${currentNpc.name}:`, error.message, error);
+                    return {ok: false, error: error.message || 'Network error or failed to parse response', npcId: currentNpcId, npcName: currentNpc.name };
+                })
             );
         });
+        console.log("All dialogue promises created:", promises.length);
 
         try {
             const results = await Promise.all(promises);
+            console.log("Results from Promise.all:", results);
             results.forEach(result => {
-                if (result.ok) {
+                if (result.ok && result.data) { // Check if result.data exists
+                    console.log(`Success for ${result.npcName}:`, result.data);
                     addDialogueToTranscript(result.data.npc_dialogue, 'npc', result.npcName, result.npcId);
                     dialogueHistory.push({ type: 'npc', speakerName: result.npcName, id: result.npcId, utterance: result.data.npc_dialogue });
                     if(!dialogueHistories[result.npcId]) dialogueHistories[result.npcId] = [];
                     dialogueHistories[result.npcId].push({ type: 'npc', speakerName: result.npcName, id: result.npcId, utterance: result.data.npc_dialogue });
-                    if (results.find(r => r.ok && r.data.new_memory_suggestions)) { 
+                    if (result.data.new_memory_suggestions || result.data.generated_topics) { 
                         renderAISuggestions(result.data.new_memory_suggestions, result.data.generated_topics);
                     }
                 } else {
-                    console.error(`Error generating dialogue for ${result.npcName}:`, result.data?.error || result.error);
-                    addDialogueToTranscript(`Error: ${result.data?.error || 'Failed to get response'}`, 'system-error', 'System', result.npcId);
+                    console.error(`Error in result for ${result.npcName}:`, result.error);
+                    addDialogueToTranscript(`Error for ${result.npcName}: ${result.error}`, 'system-error', 'System', result.npcId);
                 }
             });
             getElem('player-utterance').value = ''; 
         } catch (error) {
-            console.error('Overall error in generateDialogue Promise.all:', error);
+            console.error('Overall error in generateDialogue Promise.all processing:', error);
         } finally {
              disableBtn('generate-dialogue-btn', activeSceneNpcIds.size === 0);
+             console.log("generateDialogue finished.");
         }
     }
 
