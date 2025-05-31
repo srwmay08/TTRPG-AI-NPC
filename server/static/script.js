@@ -712,7 +712,7 @@ function updatePcDashboard() {
     mainStatsTableHTML += `</tbody></table>`;
     const abilityExpansionContainer = document.createElement('div');
     abilityExpansionContainer.id = 'expanded-ability-details-sections';
-    dashboardContent.innerHTML += mainStatsTableHTML;
+    dashboardContent.innerHTML += `<div class="table-wrapper">${mainStatsTableHTML}</div>`; 
     dashboardContent.appendChild(abilityExpansionContainer);
 
     abilities.forEach(ablKey => {
@@ -781,7 +781,7 @@ function updatePcDashboard() {
     skillsTableHTML += `</tbody></table>`;
     const skillExpansionContainer = document.createElement('div');
     skillExpansionContainer.id = 'expanded-skill-details-sections';
-    dashboardContent.innerHTML += skillsTableHTML;
+    dashboardContent.innerHTML += `<div class="table-wrapper">${skillsTableHTML}</div>`;
     dashboardContent.appendChild(skillExpansionContainer);
 
     for (const skillKey in skillNameMap) {

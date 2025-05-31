@@ -84,7 +84,21 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 .pc-stat-card h4 { margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 8px; font-size: 1.1em; }
 .pc-stat-card p { margin: 4px 0; font-size: 0.9em; }
 
-#main-stats-table, #skills-overview-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 0.9em; }
+.table-wrapper {
+    overflow-x: auto; /* Adds horizontal scroll if content is wider */
+    width: 100%;      /* Makes the wrapper take full available width */
+    margin-bottom: 15px; /* Keeps some space below the table/wrapper */
+}
+
+#main-stats-table, #skills-overview-table {
+    /* width: 100%; */ /* This can sometimes conflict with overflow-x if table content is inherently very wide.
+                          The wrapper will handle the 100% width constraint.
+                          The table will expand as needed and the wrapper will scroll. */
+    min-width: 100%; /* Optional: ensure table has a minimum sensible width for its columns before scrolling. Adjust as needed. */
+    border-collapse: collapse;
+    /* margin-bottom: 15px; /* Moved to .table-wrapper */
+    font-size: 0.9em;
+}
 #main-stats-table th, #main-stats-table td,
 #skills-overview-table th, #skills-overview-table td { border: 1px solid #ddd; padding: 6px; text-align: center; }
 #main-stats-table th, #skills-overview-table th { background-color: #e9ecef; font-weight: bold; }
