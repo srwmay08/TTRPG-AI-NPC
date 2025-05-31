@@ -78,13 +78,16 @@ async function fetchCharacters() {
             if (char._id && typeof char._id === 'object' && char._id.$oid) {
                 char._id = char._id.$oid;
             }
-            if (char.combined_history_content === undefined) {
-                char.combined_history_content = "";
-            }
+            // Ensure potentially missing fields from backend have defaults for frontend logic
+            char.combined_history_content = char.combined_history_content || "";
+            char.vtt_data = char.vtt_data || {}; // Ensure vtt_data is an object
+            char.vtt_flags = char.vtt_flags || {}; // Ensure vtt_flags is an object
+            char.items = char.items || []; // Ensure items is an array
+            char.system = char.system || {}; // Ensure system is an object
             return char;
         });
         console.log("script.js: fetchCharacters() - Data processed, allCharacters count:", allCharacters.length);
-        console.log("Fetched allCharacters sample (first 3):", allCharacters.slice(0,3).map(c => ({id: c._id, name: c.name, historyDefined: c.combined_history_content !== undefined})));
+        console.log("Fetched allCharacters sample (first 3):", allCharacters.slice(0,3).map(c => ({id: c._id, name: c.name, historyDefined: c.combined_history_content !== undefined, vttDataKeys: Object.keys(c.vtt_data || {}), vttFlagsKeys: Object.keys(c.vtt_flags || {}) })));
 
         renderNpcListForScene();
         renderPcList();
@@ -155,12 +158,13 @@ function toggleNpcInScene(npcIdStr, npcName) {
         createNpcDialogueArea(npcIdStr, npcName);
         dialogueHistories[npcIdStr] = [];
     }
+    adjustNpcDialogueAreaWidths(); // Adjust widths after adding/removing
 
     if (activeSceneNpcIds.size >= 1 && multiNpcContainer.querySelector('p.scene-event')) {
         multiNpcContainer.innerHTML = '';
         activeSceneNpcIds.forEach(id => {
              const npc = allCharacters.find(c=> String(c._id) === String(id));
-             if(npc && !getElem(`npc-area-${id}`)) {
+             if(npc && !getElem(`npc-area-${id}`)) { // Re-create if it was removed by innerHTML clear
                 createNpcDialogueArea(id, npc.name);
              }
         });
@@ -198,6 +202,7 @@ function createNpcDialogueArea(npcIdStr, npcName) {
     areaDiv.appendChild(transcriptDiv);
 
     container.appendChild(areaDiv);
+    adjustNpcDialogueAreaWidths(); // Adjust widths after adding a new area
 }
 
 function removeNpcDialogueArea(npcIdStr) {
@@ -205,12 +210,35 @@ function removeNpcDialogueArea(npcIdStr) {
     if (areaDiv) {
         areaDiv.remove();
     }
+    adjustNpcDialogueAreaWidths(); // Adjust widths after removing an area
+
     const container = getElem('multi-npc-dialogue-container');
     if (!container) { console.error("removeNpcDialogueArea: 'multi-npc-dialogue-container' not found."); return; }
     if (activeSceneNpcIds.size === 0 && !container.querySelector('p.scene-event')) {
          container.innerHTML = '<p class="scene-event">Select NPCs to add them to the scene.</p>';
     }
 }
+
+function adjustNpcDialogueAreaWidths() {
+    const container = getElem('multi-npc-dialogue-container');
+    if (!container) return;
+    const dialogueAreas = container.querySelectorAll('.npc-dialogue-area');
+    const numAreas = dialogueAreas.length;
+
+    if (numAreas === 0) return;
+
+    const widthPercent = 100 / numAreas;
+    dialogueAreas.forEach(area => {
+        area.style.width = `${widthPercent}%`;
+        // Add some margin if there are multiple areas for better spacing
+        area.style.marginRight = numAreas > 1 ? '5px' : '0';
+    });
+    // Remove margin from the last element
+    if (numAreas > 0 && dialogueAreas[numAreas - 1]) {
+        dialogueAreas[numAreas - 1].style.marginRight = '0';
+    }
+}
+
 
 function renderPcList() {
     const pcListDiv = getElem('active-pc-list');
@@ -238,10 +266,17 @@ function renderPcList() {
             disableBtn('generate-dialogue-btn', true);
 
             togglePcSelection(pcIdStr, li);
+            await selectCharacterForDetails(pcIdStr); // This updates the left-hand profile
 
-            await selectCharacterForDetails(pcIdStr);
-
-            updateView();
+            // Ensure PC Dashboard overview is shown when selecting from this list
+            const dashboardContent = getElem('pc-dashboard-content');
+            if (dashboardContent) {
+                // If a detailed sheet is open, or if it's not the overview, force overview
+                if (dashboardContent.querySelector('.detailed-pc-sheet') || activePcIds.size > 0) {
+                     updatePcDashboard(); // This will render the overview cards
+                }
+            }
+            updateView(); // This ensures the PC dashboard view is active
         };
 
         if (activePcIds.has(pcIdStr)) {
@@ -412,10 +447,16 @@ async function selectCharacterForDetails(charIdStr) {
         if (selectedChar._id && typeof selectedChar._id === 'object' && selectedChar._id.$oid) {
             selectedChar._id = selectedChar._id.$oid;
         }
-        if (selectedChar.combined_history_content === undefined) {
-            selectedChar.combined_history_content = "";
-        }
-        console.log("selectCharacterForDetails: Fetched character details (ID as string):", {id: selectedChar._id, name: selectedChar.name, historyDefined: selectedChar.combined_history_content !== undefined });
+        // Ensure all necessary nested objects exist for safety
+        selectedChar.combined_history_content = selectedChar.combined_history_content || "";
+        selectedChar.vtt_data = selectedChar.vtt_data || {};
+        selectedChar.vtt_flags = selectedChar.vtt_flags || {};
+        selectedChar.items = selectedChar.items || [];
+        selectedChar.system = selectedChar.system || {};
+
+
+        console.log("selectCharacterForDetails: Fetched character details (ID as string):", {id: selectedChar._id, name: selectedChar.name, historyDefined: selectedChar.combined_history_content !== undefined, vttDataKeys: Object.keys(selectedChar.vtt_data), vttFlagsKeys: Object.keys(selectedChar.vtt_flags) });
+
 
         const charIndex = allCharacters.findIndex(c => String(c._id) === charIdStr);
         if (charIndex > -1) {
@@ -442,7 +483,7 @@ async function selectCharacterForDetails(charIdStr) {
         if (charHistorySection) charHistorySection.style.display = 'block';
 
         if (isNpc) {
-            renderMemories(selectedChar.memories || []); // This was the line with the error
+            renderMemories(selectedChar.memories || []);
             disableBtn('add-memory-btn', false);
         } else {
             disableBtn('add-memory-btn', true);
@@ -482,8 +523,20 @@ function togglePcSelection(pcIdStr, element) {
         console.log("Added. New activePcIds:", new Set(activePcIds));
     }
     const pcDashboardViewElem = getElem('pc-dashboard-view');
-    if(pcDashboardViewElem && pcDashboardViewElem.style.display !== 'none') {
-        updatePcDashboard();
+    if(pcDashboardViewElem && pcDashboardViewElem.style.display === 'block') { // Check if dashboard is visible
+        // If a detailed sheet is NOT showing, or if the current detailed sheet is NOT for the toggled PC, update overview.
+        const detailedSheet = pcDashboardViewElem.querySelector('.detailed-pc-sheet');
+        if (!detailedSheet || (detailedSheet && detailedSheet.dataset.pcId !== pcIdStr)) {
+            // updatePcDashboard(); // Don't force overview if just toggling selection for already detailed PC
+        }
+        // If the detailed sheet for THIS pcId IS showing, and we just DE-selected it, then revert to overview.
+        else if (detailedSheet && detailedSheet.dataset.pcId === pcIdStr && !activePcIds.has(pcIdStr)) {
+            updatePcDashboard();
+        }
+         // If no detailed sheet is showing, and we just selected a PC, show overview.
+        else if (!detailedSheet && activePcIds.size > 0) {
+            updatePcDashboard();
+        }
     }
 }
 
@@ -495,9 +548,16 @@ function updateView() {
         return;
     }
 
-    if (activeSceneNpcIds.size > 0) {
+    if (activeSceneNpcIds.size > 0) { // If NPCs are active for dialogue, show dialogue interface
         dialogueInterface.style.display = 'flex';
         pcDashboardView.style.display = 'none';
+        const dashboardContent = getElem('pc-dashboard-content');
+        if (dashboardContent.querySelector('.detailed-pc-sheet')) {
+            // If switching from a detailed PC view to NPC dialogue, clear detailed view and show overview next time
+            dashboardContent.innerHTML = ''; // Clear detailed view
+            updatePcDashboard(); // Prepare overview for next time PC dashboard is shown
+        }
+
         if(currentlyExpandedAbility){
             const expansionDiv = document.getElementById(`expanded-${currentlyExpandedAbility}`);
             if(expansionDiv) expansionDiv.style.display = 'none';
@@ -512,26 +572,34 @@ function updateView() {
             if(skillHeader && skillHeader.querySelector('span.arrow-indicator')) skillHeader.querySelector('span.arrow-indicator').textContent = ' ►';
             currentlyExpandedSkill = null;
         }
-    } else {
+    } else { // Otherwise, show PC Dashboard
         dialogueInterface.style.display = 'none';
         pcDashboardView.style.display = 'block';
-        updatePcDashboard();
+        // If no specific PC detail sheet is currently displayed, show the overview.
+        // This ensures that if we switch from NPC view back to PC view, we see the overview.
+        if (!getElem('pc-dashboard-content').querySelector('.detailed-pc-sheet')) {
+            updatePcDashboard();
+        }
+        // If a detailed sheet IS up, let it stay. Clicking a PC card from quick view will call renderDetailedPcSheet.
+        // Clicking a PC from the list will also handle updating the view correctly to show the overview.
     }
 }
 
 function updatePcDashboard() {
-    console.log("Updating PC Dashboard. Active PC IDs:", new Set(activePcIds));
+    console.log("Updating PC Dashboard (Overview). Active PC IDs:", new Set(activePcIds));
     const dashboardContent = getElem('pc-dashboard-content');
     if (!dashboardContent) { console.error("updatePcDashboard: 'pc-dashboard-content' not found."); return; }
-    dashboardContent.innerHTML = '';
+
+    dashboardContent.innerHTML = ''; // Clear for overview
 
     const selectedPcs = allCharacters.filter(char =>
         activePcIds.has(String(char._id)) && char.character_type === 'PC' && char.vtt_data
     );
-    console.log("Selected PCs for dashboard:", selectedPcs.map(p => ({name: p.name, id: p._id, vtt: !!p.vtt_data }) ));
+    console.log("Selected PCs for dashboard overview:", selectedPcs.map(p => ({name: p.name, id: p._id, vtt: !!p.vtt_data, flags: !!p.vtt_flags }) ));
+
 
     if (selectedPcs.length === 0) {
-        const anyPcsExist = allCharacters.some(char => char.character_type === 'PC' && char.vtt_data);
+        const anyPcsExist = allCharacters.some(char => char.character_type === 'PC' && (char.vtt_data && Object.keys(char.vtt_data).length > 0));
         dashboardContent.innerHTML = `<p class="pc-dashboard-no-selection">${anyPcsExist ? 'Select Player Characters from the left panel to view their details.' : 'No Player Characters with VTT data available. Create PCs and ensure VTT data is synced.'}</p>`;
         if (currentlyExpandedAbility) {
             const expansionDiv = document.getElementById(`expanded-${currentlyExpandedAbility}`);
@@ -551,50 +619,74 @@ function updatePcDashboard() {
     }
 
     selectedPcs.forEach(pc => {
-         const pcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || pc.vtt_data?.details?.level || 1;
+         const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || pc.vtt_data?.details?.level || 1;
          pc.calculatedProfBonus = getProficiencyBonus(pcLevel);
     });
 
-    let statCardsHTML = `<h4>PC Quick View</h4><div class="pc-dashboard-grid">`;
+    let statCardsHTML = `<h4>PC Quick View (Click card for details)</h4><div class="pc-dashboard-grid">`;
     const sortedSelectedPcsByName = [...selectedPcs].sort((a,b) => a.name.localeCompare(b.name));
     sortedSelectedPcsByName.forEach(pc => {
-        const pcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || pc.vtt_data?.details?.level || 1;
-        // Make the entire card clickable for detailed view
+        const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || pc.vtt_data?.details?.level || 1;
         statCardsHTML += `<div class="pc-stat-card clickable-pc-card" data-pc-id="${String(pc._id)}"><h4>${pc.name} (Lvl ${pcLevel})</h4>`;
-        const hpCurrent = pc.vtt_data.attributes.hp?.value !== undefined ? pc.vtt_data.attributes.hp.value : 'N/A';
-        const hpMax = pc.vtt_data.attributes.hp?.max !== undefined && pc.vtt_data.attributes.hp.max !== null ? pc.vtt_data.attributes.hp.max : (pc.system?.attributes?.hp?.max || 'N/A');
+        
+        const hpCurrent = pc.vtt_data?.attributes?.hp?.value !== undefined ? pc.vtt_data.attributes.hp.value : 'N/A';
+        const hpMax = pc.vtt_data?.attributes?.hp?.max !== undefined && pc.vtt_data.attributes.hp.max !== null ? pc.vtt_data.attributes.hp.max : (pc.system?.attributes?.hp?.max || 'N/A');
         statCardsHTML += `<p><strong>HP:</strong> ${hpCurrent} / ${hpMax}</p>`;
 
-        let acDisplay = pc.flags?.ddbimporter?.overrideAC?.flat;
-        if (acDisplay === undefined || acDisplay === null) acDisplay = pc.vtt_data.attributes.ac?.value;
-        if (acDisplay === undefined || acDisplay === null) acDisplay = pc.vtt_data.attributes.ac?.flat;
-        if (acDisplay === undefined || acDisplay === null) acDisplay = 'N/A';
+        let acDisplay = pc.vtt_flags?.ddbimporter?.overrideAC?.flat;
+        if (acDisplay === undefined || acDisplay === null) acDisplay = pc.vtt_data?.attributes?.ac?.value;
+        if (acDisplay === undefined || acDisplay === null) acDisplay = pc.vtt_data?.attributes?.ac?.flat;
+        if (acDisplay === undefined || acDisplay === null) { 
+            const equippedArmor = pc.items?.find(item => item.type === 'equipment' && item.system?.equipped && item.system?.armor?.value !== undefined);
+            if (equippedArmor) {
+                acDisplay = equippedArmor.system.armor.value;
+                if (equippedArmor.system.armor.dex !== null && equippedArmor.system.armor.dex !== undefined && pc.vtt_data?.abilities?.dex?.value) {
+                    const dexMod = getAbilityModifier(pc.vtt_data.abilities.dex.value);
+                    acDisplay += Math.min(dexMod, equippedArmor.system.armor.dex); 
+                } else if (equippedArmor.system.armor.dex === null && pc.vtt_data?.abilities?.dex?.value) { 
+                     acDisplay += getAbilityModifier(pc.vtt_data.abilities.dex.value);
+                }
+            } else {
+                acDisplay = 'N/A';
+            }
+        }
         statCardsHTML += `<p><strong>AC:</strong> ${acDisplay}</p>`;
 
-        let passivePercFormatted = 'N/A';
-        const wisScoreForPassive = pc.vtt_data.abilities?.wis?.value;
-        const percSkillInfo = pc.vtt_data.skills?.prc;
-        if (wisScoreForPassive !== undefined && percSkillInfo !== undefined && pc.calculatedProfBonus !== undefined) {
-            passivePercFormatted = calculatePassiveSkill(wisScoreForPassive, percSkillInfo.value || 0, pc.calculatedProfBonus);
-        }
-        statCardsHTML += `<p><strong>Pas. Perception:</strong> ${passivePercFormatted}</p>`;
+        statCardsHTML += `<p><strong>Prof. Bonus:</strong> +${pc.calculatedProfBonus}</p>`;
+        statCardsHTML += `<p><strong>Speed:</strong> ${pc.vtt_data?.attributes?.movement?.walk || pc.system?.attributes?.movement?.walk || 0} ft</p>`;
+        
+        let initiativeBonus = 'N/A';
+        const initAbility = pc.vtt_data?.attributes?.init?.ability;
+        const dexValue = pc.vtt_data?.abilities?.dex?.value;
 
-        let passiveInvFormatted = 'N/A';
-        const intScoreForPassive = pc.vtt_data.abilities?.int?.value;
-        const invSkillInfo = pc.vtt_data.skills?.inv;
-        if (intScoreForPassive !== undefined && invSkillInfo !== undefined && pc.calculatedProfBonus !== undefined) {
-             passiveInvFormatted = calculatePassiveSkill(intScoreForPassive, invSkillInfo.value || 0, pc.calculatedProfBonus);
+        if (initAbility && pc.vtt_data?.abilities?.[initAbility]) {
+            initiativeBonus = getAbilityModifier(pc.vtt_data.abilities[initAbility].value || 10);
+        } else if (pc.vtt_data?.attributes?.init?.bonus !== undefined && pc.vtt_data.attributes.init.bonus !== "") {
+            initiativeBonus = pc.vtt_data.attributes.init.bonus;
+        } else if (dexValue !== undefined) {
+            initiativeBonus = getAbilityModifier(dexValue);
         }
-        statCardsHTML += `<p><strong>Pas. Investigation:</strong> ${passiveInvFormatted}</p>`;
-        statCardsHTML += `</div>`; // End pc-stat-card
+        statCardsHTML += `<p><strong>Initiative:</strong> ${initiativeBonus >= 0 ? '+' : ''}${initiativeBonus}</p>`;
+
+        const spellcastingAbilityKey = pc.system?.attributes?.spellcasting || pc.vtt_data?.attributes?.spellcasting;
+        let spellDcText = "N/A";
+        if (spellcastingAbilityKey && pc.vtt_data?.abilities?.[spellcastingAbilityKey]?.value !== undefined) {
+            const castingScore = pc.vtt_data.abilities[spellcastingAbilityKey].value || 10;
+            spellDcText = spellSaveDC(castingScore, pc.calculatedProfBonus);
+        } else if (pc.vtt_data?.attributes?.spell?.dc) { 
+            spellDcText = pc.vtt_data.attributes.spell.dc;
+        }
+        statCardsHTML += `<p><strong>Spell DC:</strong> ${spellDcText}</p>`;
+
+        statCardsHTML += `</div>`;
     });
     statCardsHTML += `</div>`;
     dashboardContent.innerHTML += statCardsHTML;
 
-    // Add event listeners for the new clickable PC cards
     dashboardContent.querySelectorAll('.clickable-pc-card').forEach(card => {
         card.addEventListener('click', (event) => {
             const clickedPcId = event.currentTarget.dataset.pcId;
+            console.log("PC Quick View Card clicked for detailed view: ID", clickedPcId);
             renderDetailedPcSheet(clickedPcId);
         });
     });
@@ -611,7 +703,7 @@ function updatePcDashboard() {
     sortedSelectedPcsByName.forEach(pc => {
         mainStatsTableHTML += `<tr><td>${pc.name}</td>`;
         abilities.forEach(ablKey => {
-            const score = pc.vtt_data.abilities[ablKey.toLowerCase()]?.value || 0;
+            const score = pc.vtt_data?.abilities?.[ablKey.toLowerCase()]?.value || 0;
             const mod = getAbilityModifier(score);
             mainStatsTableHTML += `<td>${score} (${mod >= 0 ? '+' : ''}${mod})</td>`;
         });
@@ -653,14 +745,14 @@ function updatePcDashboard() {
     let pcsForSkillTable = [...selectedPcs];
     if (skillSortKey) {
         pcsForSkillTable.sort((a, b) => {
-            const skillDataA = a.vtt_data.skills?.[skillSortKey];
+            const skillDataA = a.vtt_data?.skills?.[skillSortKey];
             const abilityKeyA = skillDataA?.ability || (skillSortKey === 'ath' ? 'str' : ['acr', 'slt', 'ste'].includes(skillSortKey) ? 'dex' : ['arc', 'his', 'inv', 'nat', 'rel'].includes(skillSortKey) ? 'int' : ['ani', 'ins', 'med', 'prc', 'sur'].includes(skillSortKey) ? 'wis' : 'cha');
-            const abilityScoreA = a.vtt_data.abilities[abilityKeyA]?.value || 10;
+            const abilityScoreA = a.vtt_data?.abilities?.[abilityKeyA]?.value || 10;
             const bonusA = skillDataA ? calculateSkillBonus(abilityScoreA, skillDataA.value || 0, a.calculatedProfBonus) : getAbilityModifier(abilityScoreA);
 
-            const skillDataB = b.vtt_data.skills?.[skillSortKey];
+            const skillDataB = b.vtt_data?.skills?.[skillSortKey];
             const abilityKeyB = skillDataB?.ability || (skillSortKey === 'ath' ? 'str' : ['acr', 'slt', 'ste'].includes(skillSortKey) ? 'dex' : ['arc', 'his', 'inv', 'nat', 'rel'].includes(skillSortKey) ? 'int' : ['ani', 'ins', 'med', 'prc', 'sur'].includes(skillSortKey) ? 'wis' : 'cha');
-            const abilityScoreB = b.vtt_data.abilities[abilityKeyB]?.value || 10;
+            const abilityScoreB = b.vtt_data?.abilities?.[abilityKeyB]?.value || 10;
             const bonusB = skillDataB ? calculateSkillBonus(abilityScoreB, skillDataB.value || 0, b.calculatedProfBonus) : getAbilityModifier(abilityScoreB);
 
             return bonusB - bonusA;
@@ -672,12 +764,12 @@ function updatePcDashboard() {
     pcsForSkillTable.forEach(pc => {
         skillsTableHTML += `<tr><td>${pc.name}</td>`;
         for (const skillKey in skillNameMap) {
-            const skillData = pc.vtt_data.skills?.[skillKey];
+            const skillData = pc.vtt_data?.skills?.[skillKey];
             let skillBonusFormatted = "N/A";
             const defaultAbilityForSkill = (skillKey === 'ath' ? 'str' : ['acr', 'slt', 'ste'].includes(skillKey) ? 'dex' : ['arc', 'his', 'inv', 'nat', 'rel'].includes(skillKey) ? 'int' : ['ani', 'ins', 'med', 'prc', 'sur'].includes(skillKey) ? 'wis' : 'cha');
             const abilityKeyForSkill = skillData?.ability || defaultAbilityForSkill;
 
-            if (pc.vtt_data.abilities[abilityKeyForSkill] && pc.calculatedProfBonus !== undefined) {
+            if (pc.vtt_data?.abilities?.[abilityKeyForSkill] && pc.calculatedProfBonus !== undefined) {
                 const abilityScore = pc.vtt_data.abilities[abilityKeyForSkill]?.value || 10;
                 const bonus = calculateSkillBonus(abilityScore, skillData?.value || 0, pc.calculatedProfBonus);
                 skillBonusFormatted = `${bonus >= 0 ? '+' : ''}${bonus}`;
@@ -740,25 +832,19 @@ function toggleSkillExpansion(skillKey) {
         skillSortKey = skillKey;
         currentlyExpandedSkill = skillKey;
     }
-    updatePcDashboard();
+    updatePcDashboard(); // This will re-render the skill table and handle showing/hiding the correct expansion
 
+    // Update arrow indicators after re-render
     const allSkillHeaders = document.querySelectorAll(`#skills-overview-table th.clickable-skill-header`);
     allSkillHeaders.forEach(header => {
         const sKey = header.dataset.skillKey;
         const arrow = header.querySelector('span.arrow-indicator');
-        const expDiv = document.getElementById(`expanded-skill-${sKey}`);
-        if (expDiv && arrow) {
-            if (sKey === currentlyExpandedSkill) {
-                arrow.textContent = ' ▼';
-                populateExpandedSkillDetails(sKey, expDiv, allCharacters.filter(char => activePcIds.has(String(char._id)) && char.character_type === 'PC' && char.vtt_data));
-                expDiv.style.display = 'block';
-            } else {
-                arrow.textContent = ' ►';
-                expDiv.style.display = 'none';
-            }
+        if (arrow) { // Ensure arrow exists
+            arrow.textContent = (sKey === currentlyExpandedSkill) ? ' ▼' : ' ►';
         }
     });
 }
+
 
 function populateExpandedSkillDetails(skillKey, expansionDiv, selectedPcs) {
     if (!selectedPcs || selectedPcs.length === 0) {
@@ -777,10 +863,10 @@ function populateExpandedSkillDetails(skillKey, expansionDiv, selectedPcs) {
 
     contentHTML += `<div class="skill-bar-chart-container">`;
     const skillDataForGraph = selectedPcs.map(pc => {
-        const skillVttData = pc.vtt_data.skills?.[skillKey];
+        const skillVttData = pc.vtt_data?.skills?.[skillKey];
         const defaultAbilityForSkill = (skillKey === 'ath' ? 'str' : ['acr', 'slt', 'ste'].includes(skillKey) ? 'dex' : ['arc', 'his', 'inv', 'nat', 'rel'].includes(skillKey) ? 'int' : ['ani', 'ins', 'med', 'prc', 'sur'].includes(skillKey) ? 'wis' : 'cha');
         const baseAbilityKey = skillVttData?.ability || defaultAbilityForSkill;
-        const baseAbilityScore = pc.vtt_data.abilities[baseAbilityKey]?.value || 10;
+        const baseAbilityScore = pc.vtt_data?.abilities?.[baseAbilityKey]?.value || 10;
         const bonus = calculateSkillBonus(baseAbilityScore, skillVttData?.value || 0, pc.calculatedProfBonus);
         return { name: pc.name, modifier: bonus };
     }).sort((a,b) => b.modifier - a.modifier);
@@ -860,15 +946,15 @@ function populateExpandedAbilityDetails(ablKey, expansionDiv, selectedPcsInput) 
     const lowerAblKey = ablKey.toLowerCase();
 
     const sortedPcs = [...selectedPcsInput].sort((a, b) => {
-        const scoreA = a.vtt_data.abilities[lowerAblKey]?.value || 0;
-        const scoreB = b.vtt_data.abilities[lowerAblKey]?.value || 0;
+        const scoreA = a.vtt_data?.abilities?.[lowerAblKey]?.value || 0;
+        const scoreB = b.vtt_data?.abilities?.[lowerAblKey]?.value || 0;
         return scoreB - scoreA;
     });
 
     let contentHTML = `<h5>${upperAblKey} Score Comparison</h5>`;
     contentHTML += `<div class="ability-bar-chart-container">`;
     sortedPcs.forEach(pc => {
-        const score = pc.vtt_data.abilities[lowerAblKey]?.value || 0;
+        const score = pc.vtt_data?.abilities?.[lowerAblKey]?.value || 0;
         const barWidth = Math.max(5, (score / 20) * 100);
         contentHTML += `<div class="pc-bar-row">
                             <div class="stat-comparison-pc-name" title="${pc.name}">${pc.name.substring(0,15)+(pc.name.length > 15 ? '...' : '')}</div>
@@ -889,7 +975,7 @@ function populateExpandedAbilityDetails(ablKey, expansionDiv, selectedPcsInput) 
 
     sortedPcs.forEach(pc => {
         if (pc.calculatedProfBonus === undefined) {
-            const pcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || pc.vtt_data?.details?.level || 1;
+            const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || pc.vtt_data?.details?.level || 1;
             pc.calculatedProfBonus = getProficiencyBonus(pcLevel);
         }
     });
@@ -897,9 +983,10 @@ function populateExpandedAbilityDetails(ablKey, expansionDiv, selectedPcsInput) 
     generalDerivedMetrics.forEach(metricName => {
         contentHTML += `<tr><th>${metricName}</th>`;
         sortedPcs.forEach(pc => {
-            const score = pc.vtt_data.abilities[lowerAblKey]?.value || 0;
+            const abilityData = pc.vtt_data?.abilities?.[lowerAblKey];
+            const score = abilityData?.value || 0;
             const modifier = getAbilityModifier(score);
-            const isSaveProficient = pc.vtt_data.abilities[lowerAblKey]?.proficient === 1;
+            const isSaveProficient = abilityData?.proficient === 1;
             let value = 'N/A';
 
             if (metricName === "Modifier") value = `${modifier >= 0 ? '+' : ''}${modifier}`;
@@ -912,8 +999,8 @@ function populateExpandedAbilityDetails(ablKey, expansionDiv, selectedPcsInput) 
             else if (metricName === "Initiative" && upperAblKey === 'DEX') value = `${initiative(score) >= 0 ? '+' : ''}${initiative(score)}`;
             else if (metricName === "Hold Breath" && upperAblKey === 'CON') value = `${holdBreath(score)}`;
             else if (metricName === "Passive Perception (Calc)" && upperAblKey === 'WIS') {
-                const wisScoreVal = pc.vtt_data.abilities.wis?.value || 0;
-                const percSkillInfo = pc.vtt_data.skills?.prc;
+                const wisScoreVal = pc.vtt_data?.abilities?.wis?.value || 0;
+                const percSkillInfo = pc.vtt_data?.skills?.prc;
                  if (wisScoreVal !== undefined && percSkillInfo !== undefined && pc.calculatedProfBonus !== undefined) {
                      value = calculatePassiveSkill(wisScoreVal, percSkillInfo.value || 0, pc.calculatedProfBonus);
                  }
@@ -931,14 +1018,14 @@ function populateExpandedAbilityDetails(ablKey, expansionDiv, selectedPcsInput) 
         contentHTML += `<h5>Attack Rolls and Damage (Melee Weapons)</h5><table class="rules-explanation-table"><tr><td>You add your Strength modifier to your attack roll and your damage roll when attacking with a melee weapon such as a mace, a battleaxe, or a javelin. You use melee weapons to make melee attacks in hand-to-hand combat, and some of them can be thrown to make a ranged attack.</td></tr></table>`;
         contentHTML += `<table class="derived-stats-table"><thead><tr><th>Character</th><th>STR Modifier (for Melee Attack/Damage)</th></tr></thead><tbody>`;
         sortedPcs.forEach(pc => {
-            const score = pc.vtt_data.abilities.str?.value || 0; const mod = getAbilityModifier(score);
+            const score = pc.vtt_data?.abilities?.str?.value || 0; const mod = getAbilityModifier(score);
             contentHTML += `<tr><td>${pc.name}</td><td>${mod >= 0 ? '+' : ''}${mod}</td></tr>`;
         });
         contentHTML += `</tbody></table>`;
         contentHTML += `<h5>Lifting and Carrying</h5><table class="rules-explanation-table"><tr><td><strong>Carrying Capacity Rule:</strong> Your carrying capacity is your Strength score multiplied by 15. This is the weight (in pounds) that you can carry.</td></tr><tr><td><strong>Push, Drag, or Lift Rule:</strong> You can push, drag, or lift a weight in pounds up to twice your carrying capacity (or 30 times your Strength score). While pushing or dragging weight in excess of your carrying capacity, your speed drops to 5 feet.</td></tr><tr><td><strong>Size and Strength Rule:</strong> Larger creatures can bear more weight, whereas Tiny creatures can carry less. For each size category above Medium, double the creature’s carrying capacity and the amount it can push, drag, or lift. For a Tiny creature, halve these weights. (Calculations below account for this).</td></tr></table>`;
         contentHTML += `<table class="derived-stats-table"><thead><tr><th>Character</th><th>Size</th><th>Carrying Capacity (lbs)</th><th>Push/Drag/Lift (lbs)</th></tr></thead><tbody>`;
         sortedPcs.forEach(pc => {
-            const score = pc.vtt_data.abilities.str?.value || 0; const size = pc.system?.traits?.size || pc.vtt_data?.traits?.size || 'med';
+            const score = pc.vtt_data?.abilities?.str?.value || 0; const size = pc.system?.traits?.size || pc.vtt_data?.traits?.size || 'med';
             let capMultiplier = 1; if (size === 'tiny') capMultiplier = 0.5; else if (size === 'lg') capMultiplier = 2; else if (size === 'huge') capMultiplier = 4; else if (size === 'grg') capMultiplier = 8;
             const baseCap = carryingCapacity(score); const actualCap = Math.floor(baseCap * capMultiplier); const pdl = actualCap * 2;
             const sizeMap = { 'tiny': 'Tiny', 'sm': 'Small', 'med': 'Medium', 'lg': 'Large', 'huge': 'Huge', 'grg': 'Gargantuan' };
@@ -948,7 +1035,7 @@ function populateExpandedAbilityDetails(ablKey, expansionDiv, selectedPcsInput) 
         contentHTML += `<h5>Variant: Encumbrance</h5><table class="rules-explanation-table"><tr><td>(When you use this variant, ignore the Strength column of the Armor table.)</td></tr><tr><td><strong>Encumbered:</strong> If you carry weight in excess of 5 times your Strength score, you are encumbered, which means your speed drops by 10 feet.</td></tr><tr><td><strong>Heavily Encumbered:</strong> If you carry weight in excess of 10 times your Strength score, up to your maximum carrying capacity, you are instead heavily encumbered, which means your speed drops by 20 feet and you have disadvantage on ability checks, attack rolls, and saving throws that use Strength, Dexterity, or Constitution.</td></tr></table>`;
         contentHTML += `<table class="derived-stats-table"><thead><tr><th>Character</th><th>Encumbered At (> lbs)</th><th>Heavily Encumbered At (> lbs)</th></tr></thead><tbody>`;
         sortedPcs.forEach(pc => {
-            const score = pc.vtt_data.abilities.str?.value || 0;
+            const score = pc.vtt_data?.abilities?.str?.value || 0;
             contentHTML += `<tr><td>${pc.name}</td><td>${score * 5}</td><td>${score * 10}</td></tr>`;
         });
         contentHTML += `</tbody></table>`;
@@ -958,7 +1045,7 @@ function populateExpandedAbilityDetails(ablKey, expansionDiv, selectedPcsInput) 
         contentHTML += `<h5>Attack Rolls and Damage (Ranged/Finesse)</h5><table class="rules-explanation-table"><tr><td>You add your Dexterity modifier to your attack roll and your damage roll when attacking with a ranged weapon, such as a sling or a longbow. You can also add your Dexterity modifier to your attack roll and your damage roll when attacking with a melee weapon that has the finesse property, such as a dagger or a rapier.</td></tr></table>`;
         contentHTML += `<table class="derived-stats-table"><thead><tr><th>Character</th><th>DEX Modifier (for Ranged/Finesse Attack/Damage)</th></tr></thead><tbody>`;
         sortedPcs.forEach(pc => {
-            const score = pc.vtt_data.abilities.dex?.value || 0; const mod = getAbilityModifier(score);
+            const score = pc.vtt_data?.abilities?.dex?.value || 0; const mod = getAbilityModifier(score);
             contentHTML += `<tr><td>${pc.name}</td><td>${mod >= 0 ? '+' : ''}${mod}</td></tr>`;
         });
         contentHTML += `</tbody></table>`;
@@ -971,8 +1058,8 @@ function populateExpandedAbilityDetails(ablKey, expansionDiv, selectedPcsInput) 
         contentHTML += `<h5>Hit Points</h5><table class="rules-explanation-table"><tr><td>Your Constitution modifier contributes to your hit points. Typically, you add your Constitution modifier to each Hit Die you roll for your hit points. If your Constitution modifier changes, your hit point maximum changes as well, as though you had the new modifier from 1st level.</td></tr></table>`;
         contentHTML += `<table class="derived-stats-table"><thead><tr><th>Character</th><th>CON Modifier (for HP)</th><th>Max HP (from VTT)</th></tr></thead><tbody>`;
         sortedPcs.forEach(pc => {
-            const score = pc.vtt_data.abilities.con?.value || 0; const mod = getAbilityModifier(score);
-            const hpMax = pc.vtt_data.attributes.hp?.max !== undefined && pc.vtt_data.attributes.hp.max !== null ? pc.vtt_data.attributes.hp.max : (pc.system?.attributes?.hp?.max || 'N/A');
+            const score = pc.vtt_data?.abilities?.con?.value || 0; const mod = getAbilityModifier(score);
+            const hpMax = pc.vtt_data?.attributes?.hp?.max !== undefined && pc.vtt_data.attributes.hp.max !== null ? pc.vtt_data.attributes.hp.max : (pc.system?.attributes?.hp?.max || 'N/A');
             contentHTML += `<tr><td>${pc.name}</td><td>${mod >= 0 ? '+' : ''}${mod}</td><td>${hpMax}</td></tr>`;
         });
         contentHTML += `</tbody></table>`;
@@ -981,10 +1068,10 @@ function populateExpandedAbilityDetails(ablKey, expansionDiv, selectedPcsInput) 
         contentHTML += `<h5>Intelligence Checks</h5><table class="rules-explanation-table"><tr><td>An Intelligence check comes into play when you need to draw on logic, education, memory, or deductive reasoning. The Arcana, History, Investigation, Nature, and Religion skills reflect aptitude in certain kinds of Intelligence checks.</td></tr></table>`;
         contentHTML += `<h5>Other Intelligence Checks</h5><table class="rules-explanation-table"><tr><td>The GM might call for an Intelligence check when you try to accomplish tasks like: Communicate with a creature without using words, estimate the value of a precious item, pull together a disguise to pass as a city guard, forge a document, recall lore about a craft or trade, win a game of skill.</td></tr></table>`;
         contentHTML += `<h5>Spellcasting Ability (Wizards, Artificers)</h5><table class="rules-explanation-table"><tr><td>Wizards and Artificers use Intelligence as their spellcasting ability, which helps determine the saving throw DCs of spells they cast.</td></tr></table>`;
-        if (sortedPcs.some(pc => pc.vtt_data.attributes?.spellcasting === 'int')) {
+        if (sortedPcs.some(pc => pc.vtt_data?.attributes?.spellcasting === 'int')) {
             contentHTML += `<table class="derived-stats-table"><thead><tr><th>Character (INT Casters)</th><th>Spell Save DC</th><th>Spell Attack Bonus</th></tr></thead><tbody>`;
-            sortedPcs.filter(pc => pc.vtt_data.attributes?.spellcasting === 'int').forEach(pc => {
-                const score = pc.vtt_data.abilities.int?.value || 0;
+            sortedPcs.filter(pc => pc.vtt_data?.attributes?.spellcasting === 'int').forEach(pc => {
+                const score = pc.vtt_data?.abilities?.int?.value || 0;
                 contentHTML += `<tr><td>${pc.name}</td><td>${spellSaveDC(score, pc.calculatedProfBonus)}</td><td>+${spellAttackBonus(score, pc.calculatedProfBonus)}</td></tr>`;
             });
             contentHTML += `</tbody></table>`;
@@ -994,10 +1081,10 @@ function populateExpandedAbilityDetails(ablKey, expansionDiv, selectedPcsInput) 
         contentHTML += `<h5>Wisdom Checks</h5><table class="rules-explanation-table"><tr><td>A Wisdom check might reflect an effort to read body language, understand someone’s feelings, notice things about the environment, or care for an injured person. The Animal Handling, Insight, Medicine, Perception, and Survival skills reflect aptitude in certain kinds of Wisdom checks.</td></tr></table>`;
         contentHTML += `<h5>Other Wisdom Checks</h5><table class="rules-explanation-table"><tr><td>The GM might call for a Wisdom check when you try to accomplish tasks like: Get a gut feeling about what course of action to follow, discern whether a seemingly dead or living creature is undead.</td></tr></table>`;
         contentHTML += `<h5>Spellcasting Ability (Clerics, Druids, Rangers, Monks)</h5><table class="rules-explanation-table"><tr><td>Clerics, druids, rangers, and some monks use Wisdom as their spellcasting ability, which helps determine the saving throw DCs of spells they cast.</td></tr></table>`;
-         if (sortedPcs.some(pc => pc.vtt_data.attributes?.spellcasting === 'wis')) {
+         if (sortedPcs.some(pc => pc.vtt_data?.attributes?.spellcasting === 'wis')) {
             contentHTML += `<table class="derived-stats-table"><thead><tr><th>Character (WIS Casters)</th><th>Spell Save DC</th><th>Spell Attack Bonus</th></tr></thead><tbody>`;
-            sortedPcs.filter(pc => pc.vtt_data.attributes?.spellcasting === 'wis').forEach(pc => {
-                const score = pc.vtt_data.abilities.wis?.value || 0;
+            sortedPcs.filter(pc => pc.vtt_data?.attributes?.spellcasting === 'wis').forEach(pc => {
+                const score = pc.vtt_data?.abilities?.wis?.value || 0;
                 contentHTML += `<tr><td>${pc.name}</td><td>${spellSaveDC(score, pc.calculatedProfBonus)}</td><td>+${spellAttackBonus(score, pc.calculatedProfBonus)}</td></tr>`;
             });
             contentHTML += `</tbody></table>`;
@@ -1007,10 +1094,10 @@ function populateExpandedAbilityDetails(ablKey, expansionDiv, selectedPcsInput) 
         contentHTML += `<h5>Charisma Checks</h5><table class="rules-explanation-table"><tr><td>A Charisma check might arise when you try to influence or entertain others, when you try to make an impression or tell a convincing lie, or when you are navigating a tricky social situation. The Deception, Intimidation, Performance, and Persuasion skills reflect aptitude in certain kinds of Charisma checks.</td></tr></table>`;
         contentHTML += `<h5>Other Charisma Checks</h5><table class="rules-explanation-table"><tr><td>The GM might call for a Charisma check when you try to accomplish tasks like: Find the best person to talk to for news, rumors, and gossip, blend into a crowd to get the sense of key topics of conversation.</td></tr></table>`;
         contentHTML += `<h5>Spellcasting Ability (Bards, Paladins, Sorcerers, Warlocks)</h5><table class="rules-explanation-table"><tr><td>Bards, paladins, sorcerers, and warlocks use Charisma as their spellcasting ability, which helps determine the saving throw DCs of spells they cast.</td></tr></table>`;
-        if (sortedPcs.some(pc => pc.vtt_data.attributes?.spellcasting === 'cha')) {
+        if (sortedPcs.some(pc => pc.vtt_data?.attributes?.spellcasting === 'cha')) {
             contentHTML += `<table class="derived-stats-table"><thead><tr><th>Character (CHA Casters)</th><th>Spell Save DC</th><th>Spell Attack Bonus</th></tr></thead><tbody>`;
-            sortedPcs.filter(pc => pc.vtt_data.attributes?.spellcasting === 'cha').forEach(pc => {
-                const score = pc.vtt_data.abilities.cha?.value || 0;
+            sortedPcs.filter(pc => pc.vtt_data?.attributes?.spellcasting === 'cha').forEach(pc => {
+                const score = pc.vtt_data?.abilities?.cha?.value || 0;
                 contentHTML += `<tr><td>${pc.name}</td><td>${spellSaveDC(score, pc.calculatedProfBonus)}</td><td>+${spellAttackBonus(score, pc.calculatedProfBonus)}</td></tr>`;
             });
             contentHTML += `</tbody></table>`;
@@ -1023,7 +1110,7 @@ function populateExpandedAbilityDetails(ablKey, expansionDiv, selectedPcsInput) 
 // --- NEW FUNCTION for Detailed PC Sheet ---
 function renderDetailedPcSheet(pcId) {
     const pc = allCharacters.find(c => String(c._id) === String(pcId));
-    if (!pc || pc.character_type !== 'PC' || !pc.vtt_data) {
+    if (!pc || pc.character_type !== 'PC' || !pc.vtt_data) { 
         console.error("PC not found or invalid VTT data for detailed sheet:", pcId, pc);
         const dashboardContentError = getElem('pc-dashboard-content');
         if (dashboardContentError) {
@@ -1032,67 +1119,85 @@ function renderDetailedPcSheet(pcId) {
         return;
     }
 
-    console.log("Rendering detailed sheet for:", pc.name, pc.vtt_data);
+    console.log("Rendering detailed sheet for:", pc.name, "VTT Data:", pc.vtt_data, "VTT Flags:", pc.vtt_flags, "Items:", pc.items);
 
     const dashboardContent = getElem('pc-dashboard-content');
     if (!dashboardContent) {
         console.error("renderDetailedPcSheet: 'pc-dashboard-content' element not found.");
         return;
     }
-    dashboardContent.innerHTML = ''; // Clear previous content
+    dashboardContent.innerHTML = ''; 
 
-    let html = `<div class="detailed-pc-sheet">`;
+    let html = `<div class="detailed-pc-sheet" data-pc-id="${pcId}">`; 
     html += `<button onclick="updatePcDashboard()" style="margin-bottom: 15px; padding: 8px 12px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;">Back to Dashboard Overview</button>`;
     html += `<h2>${pc.name}</h2>`;
 
     // Basic Info
-    const pcLevel = pc.flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || pc.vtt_data?.details?.level || 1;
+    const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.vtt_data?.details?.level || 1; 
     pc.calculatedProfBonus = getProficiencyBonus(pcLevel);
 
     html += `<div class="pc-section"><h4>Basic Information</h4><div class="pc-info-grid">`;
-    // Attempt to get race name from items array if system.details.race is an ID
-    let raceName = pc.system?.details?.race || 'N/A';
-    if (pc.items && pc.system?.details?.race) {
-        const raceItem = pc.items.find(item => item._id === pc.system.details.race && item.type === 'race');
+    
+    let raceName = pc.vtt_data?.details?.race || 'N/A'; 
+    if (pc.items && pc.vtt_data?.details?.race) { 
+        const raceItem = pc.items.find(item => item._id === pc.vtt_data.details.race && item.type === 'race');
         if (raceItem) raceName = raceItem.name;
     }
     html += `<p><strong>Race:</strong> ${raceName}</p>`;
 
-     // Attempt to get class name from items array if system.details.originalClass is an ID
-    let className = pc.system?.details?.originalClass || (pc.vtt_data.items?.find(i => i.type === 'class')?.name || 'N/A');
-    if (pc.items && pc.system?.details?.originalClass) {
-        const classItem = pc.items.find(item => item._id === pc.system.details.originalClass && item.type === 'class');
-        if (classItem) className = classItem.name;
+    let className = 'N/A';
+    const classItemFromItems = pc.items?.find(i => i.type === 'class');
+    if (classItemFromItems) {
+        className = classItemFromItems.name;
+    } else if (pc.vtt_data?.details?.originalClass) { 
+         className = pc.vtt_data.details.originalClass;
     }
     html += `<p><strong>Class:</strong> ${className}</p>`;
     html += `<p><strong>Level:</strong> ${pcLevel}</p>`;
-    html += `<p><strong>Alignment:</strong> ${pc.system?.details?.alignment || pc.vtt_data?.details?.alignment || 'N/A'}</p>`;
-    if (pc.img && !pc.img.startsWith('ddb-images')) { // Don't show broken ddb images
-      html += `<img src="${pc.img.startsWith('http') ? pc.img : API_BASE_URL + '/' + pc.img}" alt="${pc.name}" style="max-width: 150px; float:right; margin-left:10px;">`;
+    html += `<p><strong>Alignment:</strong> ${pc.vtt_data?.details?.alignment || 'N/A'}</p>`; 
+    
+    const imgSrc = pc.img || pc.vtt_data?.img;
+    if (imgSrc && !String(imgSrc).includes('ddb-images/')) { 
+      html += `<img src="${String(imgSrc).startsWith('http') ? imgSrc : API_BASE_URL + '/' + imgSrc}" alt="${pc.name}" style="max-width: 150px; float:right; margin-left:10px; border-radius: 4px;">`;
     }
     html += `</div></div>`;
 
-
     // Combat Stats
     html += `<div class="pc-section"><h4>Combat Stats</h4><div class="pc-info-grid">`;
-    const hpCurrent = pc.vtt_data.attributes.hp?.value !== undefined ? pc.vtt_data.attributes.hp.value : 'N/A';
-    const hpMax = pc.vtt_data.attributes.hp?.max !== undefined && pc.vtt_data.attributes.hp.max !== null ? pc.vtt_data.attributes.hp.max : (pc.system?.attributes?.hp?.max || 'N/A');
+    const hpCurrent = pc.vtt_data?.attributes?.hp?.value !== undefined ? pc.vtt_data.attributes.hp.value : 'N/A';
+    const hpMax = pc.vtt_data?.attributes?.hp?.max !== undefined && pc.vtt_data.attributes.hp.max !== null ? pc.vtt_data.attributes.hp.max : 'N/A';
     html += `<p><strong>HP:</strong> ${hpCurrent} / ${hpMax}</p>`;
 
-    let acDisplay = pc.flags?.ddbimporter?.overrideAC?.flat;
-    if (acDisplay === undefined || acDisplay === null) acDisplay = pc.vtt_data.attributes.ac?.value;
-    if (acDisplay === undefined || acDisplay === null) acDisplay = pc.vtt_data.attributes.ac?.flat;
-    if (acDisplay === undefined || acDisplay === null) acDisplay = 'N/A'; // Final fallback
+    let acDisplay = pc.vtt_flags?.ddbimporter?.overrideAC?.flat;
+    if (acDisplay === undefined || acDisplay === null) acDisplay = pc.vtt_data?.attributes?.ac?.value;
+    if (acDisplay === undefined || acDisplay === null) acDisplay = pc.vtt_data?.attributes?.ac?.flat;
+    if (acDisplay === undefined || acDisplay === null) { 
+        const equippedArmor = pc.items?.find(item => item.type === 'equipment' && item.system?.equipped && item.system?.armor?.value !== undefined);
+        if (equippedArmor) {
+            acDisplay = equippedArmor.system.armor.value;
+            if (equippedArmor.system.armor.dex !== null && equippedArmor.system.armor.dex !== undefined && pc.vtt_data?.abilities?.dex?.value) {
+                const dexMod = getAbilityModifier(pc.vtt_data.abilities.dex.value);
+                acDisplay += Math.min(dexMod, equippedArmor.system.armor.dex); 
+            } else if (equippedArmor.system.armor.dex === null && pc.vtt_data?.abilities?.dex?.value) { 
+                 acDisplay += getAbilityModifier(pc.vtt_data.abilities.dex.value);
+            }
+        } else {
+            acDisplay = 'N/A';
+        }
+    }
     html += `<p><strong>AC:</strong> ${acDisplay}</p>`;
 
-    html += `<p><strong>Speed:</strong> ${pc.vtt_data.attributes.movement?.walk || 0} ft</p>`;
+    html += `<p><strong>Speed:</strong> ${pc.vtt_data?.attributes?.movement?.walk || pc.system?.attributes?.movement?.walk || 0} ft</p>`;
     let initiativeBonus = 'N/A';
-    if (pc.vtt_data.attributes.init?.ability && pc.vtt_data.abilities[pc.vtt_data.attributes.init.ability]) {
-        initiativeBonus = getAbilityModifier(pc.vtt_data.abilities[pc.vtt_data.attributes.init.ability].value || 10);
-    } else if (pc.vtt_data.attributes.init?.bonus !== undefined && pc.vtt_data.attributes.init.bonus !== "") {
+    const initAbility = pc.vtt_data?.attributes?.init?.ability;
+    const dexValue = pc.vtt_data?.abilities?.dex?.value;
+
+    if (initAbility && pc.vtt_data?.abilities?.[initAbility]) {
+        initiativeBonus = getAbilityModifier(pc.vtt_data.abilities[initAbility].value || 10);
+    } else if (pc.vtt_data?.attributes?.init?.bonus !== undefined && pc.vtt_data.attributes.init.bonus !== "") {
         initiativeBonus = pc.vtt_data.attributes.init.bonus;
-    } else if (pc.vtt_data.abilities?.dex?.value !==undefined) {
-        initiativeBonus = getAbilityModifier(pc.vtt_data.abilities.dex.value);
+    } else if (dexValue !== undefined) {
+        initiativeBonus = getAbilityModifier(dexValue);
     }
     html += `<p><strong>Initiative:</strong> ${initiativeBonus >= 0 ? '+' : ''}${initiativeBonus}</p>`;
     html += `<p><strong>Proficiency Bonus:</strong> +${pc.calculatedProfBonus}</p></div></div>`;
@@ -1101,9 +1206,9 @@ function renderDetailedPcSheet(pcId) {
     html += `<div class="pc-section"><h4>Ability Scores & Saves</h4><table class="detailed-pc-table"><thead><tr><th>Ability</th><th>Score</th><th>Mod</th><th>Save</th></tr></thead><tbody>`;
     const abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
     abilities.forEach(abl => {
-        const score = pc.vtt_data.abilities[abl]?.value || 10;
+        const score = pc.vtt_data?.abilities?.[abl]?.value || 10;
         const mod = getAbilityModifier(score);
-        const proficient = pc.vtt_data.abilities[abl]?.proficient === 1;
+        const proficient = pc.vtt_data?.abilities?.[abl]?.proficient === 1;
         const saveBonus = savingThrowBonus(score, proficient, pc.calculatedProfBonus);
         html += `<tr><td>${abl.toUpperCase()}</td><td>${score}</td><td>${mod >= 0 ? '+' : ''}${mod}</td><td>${saveBonus >= 0 ? '+' : ''}${saveBonus}${proficient ? ' <abbr title="Proficient">(P)</abbr>' : ''}</td></tr>`;
     });
@@ -1119,12 +1224,13 @@ function renderDetailedPcSheet(pcId) {
         "ste": "Stealth (Dex)", "sur": "Survival (Wis)"
     };
     for (const skillKey in skillNameMap) {
-        const skillData = pc.vtt_data.skills?.[skillKey];
+        const skillData = pc.vtt_data?.skills?.[skillKey];
         const skillDisplayName = skillNameMap[skillKey];
-        const defaultAbilityAbbrev = (skillDisplayName.match(/\(([^)]+)\)/)[1]).toLowerCase();
+        const defaultAbilityAbbrevMatch = skillDisplayName.match(/\(([^)]+)\)/);
+        const defaultAbilityAbbrev = defaultAbilityAbbrevMatch ? defaultAbilityAbbrevMatch[1].toLowerCase() : 'int'; 
         const abilityKey = skillData?.ability || defaultAbilityAbbrev;
-        const score = pc.vtt_data.abilities[abilityKey]?.value || 10;
-        const proficiencyValue = skillData?.value || 0;
+        const score = pc.vtt_data?.abilities?.[abilityKey]?.value || 10;
+        const proficiencyValue = skillData?.value || 0; 
         const bonus = calculateSkillBonus(score, proficiencyValue, pc.calculatedProfBonus);
         let profMarker = "";
         if (proficiencyValue === 1) profMarker = " <abbr title='Proficient'>(P)</abbr>";
@@ -1143,26 +1249,25 @@ function renderDetailedPcSheet(pcId) {
         weapons.forEach(w => {
             let attackBonusStr = "N/A";
             let damageStr = "N/A";
-            const weaponSystem = w.system || {}; // Ensure system exists
+            const weaponSystem = w.system || {};
 
-            // Determine ability modifier for attack/damage
             let ablMod = 0;
-            let isProficient = weaponSystem.proficient === 1 || weaponSystem.proficient === undefined; // Assume proficient if not specified as 0
-            
-            if (weaponSystem.ability) { // If ability is explicitly set on weapon
-                ablMod = getAbilityModifier(pc.vtt_data.abilities[weaponSystem.ability]?.value || 10);
-            } else if (weaponSystem.properties?.includes('fin')) { // Finesse
-                const strMod = getAbilityModifier(pc.vtt_data.abilities.str?.value || 10);
-                const dexMod = getAbilityModifier(pc.vtt_data.abilities.dex?.value || 10);
+            let isProficient = weaponSystem.proficient === 1 || weaponSystem.proficient === undefined; 
+
+            if (weaponSystem.ability) {
+                ablMod = getAbilityModifier(pc.vtt_data?.abilities?.[weaponSystem.ability]?.value || 10);
+            } else if (weaponSystem.properties?.includes('fin')) {
+                const strMod = getAbilityModifier(pc.vtt_data?.abilities?.str?.value || 10);
+                const dexMod = getAbilityModifier(pc.vtt_data?.abilities?.dex?.value || 10);
                 ablMod = Math.max(strMod, dexMod);
-            } else if (weaponSystem.type?.value?.includes('R') || weaponSystem.properties?.includes('thr')) { // Ranged or thrown (often dex, but str for thrown without finesse)
+            } else if (weaponSystem.type?.value?.includes('R') || weaponSystem.properties?.includes('thr')) {
                 if (weaponSystem.properties?.includes('thr') && !weaponSystem.properties?.includes('fin')) {
-                     ablMod = getAbilityModifier(pc.vtt_data.abilities.str?.value || 10); // Thrown uses STR unless finesse
+                     ablMod = getAbilityModifier(pc.vtt_data?.abilities?.str?.value || 10);
                 } else {
-                     ablMod = getAbilityModifier(pc.vtt_data.abilities.dex?.value || 10);
+                     ablMod = getAbilityModifier(pc.vtt_data?.abilities?.dex?.value || 10);
                 }
-            } else { // Default to STR for melee
-                ablMod = getAbilityModifier(pc.vtt_data.abilities.str?.value || 10);
+            } else {
+                ablMod = getAbilityModifier(pc.vtt_data?.abilities?.str?.value || 10);
             }
 
             attackBonusStr = isProficient ? (ablMod + pc.calculatedProfBonus) : ablMod;
@@ -1170,14 +1275,12 @@ function renderDetailedPcSheet(pcId) {
 
             if (weaponSystem.damage?.parts?.length > 0) {
                 const part = weaponSystem.damage.parts[0];
-                let dmgBonus = ablMod; // Add ability mod to damage by default for most weapons
-                if (part.bonus && String(part.bonus).trim() !== "") dmgBonus = parseInt(part.bonus) || 0; // If bonus is specified, use it
-
+                let dmgBonus = ablMod;
+                if (part.bonus && String(part.bonus).trim() !== "") dmgBonus = parseInt(part.bonus) || 0;
                 damageStr = `${part.number || '1'}d${part.denomination || '?'} ${dmgBonus >= 0 ? '+' : ''}${dmgBonus} ${part.types?.join('/') || part.type || 'damage'}`;
-            } else if (weaponSystem.damage?.base) {
-                damageStr = `${weaponSystem.damage.base.number || '1'}d${weaponSystem.damage.base.denomination || '?'} ${weaponSystem.damage.base.bonus || ''} ${weaponSystem.damage.base.types?.join('/') || ''}`;
+            } else if (weaponSystem.damage?.base) { 
+                 damageStr = `${weaponSystem.damage.base.number || '1'}d${weaponSystem.damage.base.denomination || '?'} ${weaponSystem.damage.base.bonus || ''} ${weaponSystem.damage.base.types?.join('/') || ''}`;
             }
-
             html += `<li><strong>${w.name}:</strong> Attack ${attackBonusStr}, Damage: ${damageStr} <i>(${(weaponSystem.properties || []).join(', ')})</i></li>`;
         });
         html += `</ul>`;
@@ -1192,19 +1295,18 @@ function renderDetailedPcSheet(pcId) {
     const spells = pc.items?.filter(item => item.type === 'spell') || [];
     const spellcastingAbilityKey = pc.system?.attributes?.spellcasting || pc.vtt_data?.attributes?.spellcasting;
     if (spellcastingAbilityKey && spells.length > 0) {
-        const castingScore = pc.vtt_data.abilities[spellcastingAbilityKey]?.value || 10;
+        const castingScore = pc.vtt_data?.abilities?.[spellcastingAbilityKey]?.value || 10;
         html += `<p><strong>Spellcasting Ability:</strong> ${spellcastingAbilityKey.toUpperCase()}</p>`;
         html += `<p><strong>Spell Save DC:</strong> ${spellSaveDC(castingScore, pc.calculatedProfBonus)}</p>`;
         html += `<p><strong>Spell Attack Bonus:</strong> +${spellAttackBonus(castingScore, pc.calculatedProfBonus)}</p>`;
-        
+
         const spellsByLevel = {};
         spells.forEach(s => {
-            const level = s.system.level === 0 ? "Cantrips" : `Level ${s.system.level}`;
+            const level = s.system?.level === 0 ? "Cantrips" : `Level ${s.system?.level}`;
             if (!spellsByLevel[level]) spellsByLevel[level] = [];
             spellsByLevel[level].push(s.name);
         });
 
-        // Order spell levels correctly (Cantrips, Level 1, Level 2, ...)
         const spellLevels = Object.keys(spellsByLevel).sort((a, b) => {
             if (a === "Cantrips") return -1;
             if (b === "Cantrips") return 1;
@@ -1246,12 +1348,12 @@ function renderDetailedPcSheet(pcId) {
     // Details (Biography, Personality, etc.)
     html += `<div class="pc-section"><h4>Details & Notes</h4>`;
     const details = pc.system?.details || pc.vtt_data?.details;
-    if(details?.biography?.value) html += `<p><strong>Biography:</strong><br>${details.biography.value.replace(/<p>/g, '').replace(/<\/p>/g, '<br>')}</p>`; // Basic HTML tag handling
+    if(details?.biography?.value) html += `<p><strong>Biography:</strong><br>${details.biography.value.replace(/<p>/g, '').replace(/<\/p>/g, '<br>')}</p>`;
     if(details?.trait) html += `<p><strong>Personality Traits:</strong> ${details.trait}</p>`;
     if(details?.ideal) html += `<p><strong>Ideals:</strong> ${details.ideal}</p>`;
     if(details?.bond) html += `<p><strong>Bonds:</strong> ${details.bond}</p>`;
     if(details?.flaw) html += `<p><strong>Flaws:</strong> ${details.flaw}</p>`;
-    if(pc.description && pc.description !== pc.name) html += `<p><strong>Description:</strong> ${pc.description}</p>`; // From the top-level NPC profile
+    if(pc.description && pc.description !== pc.name) html += `<p><strong>Description:</strong> ${pc.description}</p>`;
     html += `</div>`;
 
     html += `</div>`; // end detailed-pc-sheet
@@ -1569,7 +1671,11 @@ async function createCharacter() {
         race: "Unknown",
         class_str: "Commoner",
         memories: [],
-        associated_history_files: []
+        associated_history_files: [],
+        vtt_data: {}, // Ensure these are present for new characters
+        vtt_flags: {},
+        items: [],
+        system: {}
     };
 
     try {
@@ -1591,6 +1697,12 @@ async function createCharacter() {
          if (createdChar._id && typeof createdChar._id === 'object' && createdChar._id.$oid) {
             createdChar._id = createdChar._id.$oid;
         }
+        // Ensure new char has default structures for safety
+        createdChar.vtt_data = createdChar.vtt_data || {};
+        createdChar.vtt_flags = createdChar.vtt_flags || {};
+        createdChar.items = createdChar.items || [];
+        createdChar.system = createdChar.system || {};
+
         allCharacters.push(createdChar);
 
         getElem('new-char-name').value = '';

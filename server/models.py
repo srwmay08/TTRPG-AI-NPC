@@ -39,11 +39,18 @@ class NPCProfile(BaseModel):
     linked_lore_ids: List[str] = Field(default_factory=list, description="IDs of linked world information items.")
     gm_notes: Optional[str] = Field(default=None, description="Private GM notes for this character.")
     
-    vtt_data: Optional[Dict[str, Any]] = Field(default=None, description="Data imported from VTT character sheets.")
+    vtt_data: Optional[Dict[str, Any]] = Field(default=None, description="Data imported from VTT character sheets (usually the 'system' object).")
+    vtt_flags: Optional[Dict[str, Any]] = Field(default=None, description="Top-level 'flags' object imported from VTT character sheets.") # New field for flags
 
     # Updated field for multiple history files
     associated_history_files: List[str] = Field(default_factory=list, description="List of filenames of associated detailed history .txt files.")
     # history_content will be loaded dynamically by the backend, not stored directly here in DB model.
+
+    # Fields for frontend display, not stored directly in DB unless explicitly set by an update
+    img: Optional[str] = Field(default=None, description="Path to character image, potentially from VTT data.")
+    items: Optional[List[Dict[str, Any]]] = Field(default_factory=list, description="Character items (weapons, armor, inventory) from VTT data.")
+    system: Optional[Dict[str, Any]] = Field(default_factory=dict, description="Full system object from VTT if needed for complex lookups.")
+
 
     class Config:
         populate_by_name = True # Allows using 'class' as field name for 'class_str'
@@ -56,8 +63,8 @@ class NPCProfile(BaseModel):
                 "class": "Bard",
                 "personality_traits": ["Eternally chill", "Has the munchies"],
                 "vtt_data": {"attributes": {"hp": {"value": 10, "max": 10}}},
+                "vtt_flags": {"ddbimporter": {"overrideAC": {"flat": 15}}},
                 "associated_history_files": ["Threestrings.txt", "Threestrings and the Crommers.txt"]
-                # "history_content" is not part of the base model for DB storage
             }
         }
 
@@ -74,7 +81,6 @@ class DialogueRequest(BaseModel):
     player_utterance: Optional[str] = None
     active_pcs: List[str] = Field(default_factory=list, description="Names or IDs of player characters present in the scene.")
     recent_dialogue_history: List[str] = Field(default_factory=list, description="Last few lines of conversation.")
-    # No direct npc_id here, it's part of the URL path
 
 class DialogueResponse(BaseModel):
     npc_id: str
@@ -82,8 +88,6 @@ class DialogueResponse(BaseModel):
     new_memory_suggestions: List[str] = Field(default_factory=list, description="AI suggestions for what to add to memory, including a summarized version of the interaction.")
     generated_topics: List[str] = Field(default_factory=list, description="AI suggested topics for further conversation.")
 
-# Model for API responses that include loaded history content
 class NPCProfileWithHistory(NPCProfile):
     history_contents_loaded: Optional[Dict[str, str]] = Field(default=None, description="Loaded content of associated history files. Key: filename, Value: content.")
     combined_history_content: Optional[str] = Field(default=None, description="Concatenated content of all associated history files.")
-
