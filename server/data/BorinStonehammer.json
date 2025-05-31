@@ -45,5 +45,8 @@
     {"name": "Kaideu Crommer", "relationship": "Like a Grandson", "status": "Alive"},
     {"name": "Brigit Crommer", "relationship": "Respected High Artisan", "status": "Alive"}
   ],
-  "gm_notes": "A potential quest-giver, mentor, or emergency protector NPC. If he dies, it should matter deeply to the party and the city."
+  "gm_notes": "A potential quest-giver, mentor, or emergency protector NPC. If he dies, it should matter deeply to the party and the city.",
+  "associated_history_files": [
+    "Borin_Stonehammer.txt", "The_Crommer_Clan.txt", "Threestrings_and_the_Crommers.txt"
+  ]
 }

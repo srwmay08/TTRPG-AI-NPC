@@ -1,4 +1,4 @@
-body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; height: 100vh; background-color: #f4f4f4; overflow: hidden; }
+body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; height: 100vh; background-color: #975555; overflow: hidden; }
 .column { overflow-y: auto; box-sizing: border-box; }
 
 #left-column {
@@ -64,7 +64,7 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 .character-list li .npc-name-clickable:hover { text-decoration: underline; color: #0056b3;}
 
 #dialogue-interface { display: none; flex-grow: 1; display: flex; flex-direction: column; }
-#multi-npc-dialogue-container { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+#multi-npc-dialogue-container { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: row; overflow-x: scroll; gap: 15px; flex: 1 4 320px; min-width: 300px;}
 .npc-dialogue-area { border: 1px solid #ddd; padding: 10px; border-radius: 5px; background-color: #f9f9f9;}
 .npc-dialogue-area h3 { margin-top: 0; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #eee;}
 .npc-transcript { min-height: 100px; max-height: 250px; overflow-y: auto; border: 1px solid #eee; padding: 8px; background-color: #fff; margin-bottom: 10px;}
@@ -79,7 +79,7 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 .clickable-suggestion { cursor: pointer; text-decoration: underline; color: blue; }
 
 #pc-dashboard-view { display: block; flex-grow: 1; overflow-y: auto; }
-.pc-dashboard-grid { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 10px; margin-bottom: 20px; } 
+.pc-dashboard-grid { display: flex; flex-wrap: nowrap; gap: 5px; margin-top: 10px; margin-bottom: 20px; } 
 .pc-stat-card { border: 1px solid #ddd; border-radius: 4px; padding: 10px; background-color: #f9f9f9; flex: 1 1 200px; min-width: 180px; box-sizing: border-box; } 
 .pc-stat-card h4 { margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 8px; font-size: 1.1em; }
 .pc-stat-card p { margin: 4px 0; font-size: 0.9em; }
@@ -201,4 +201,58 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 }
 .remove-history-btn:hover {
     background-color: #c82333;
+}
+
+/* Add to your style.css */
+.detailed-pc-sheet {
+    padding: 15px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+.pc-section {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+.pc-section:last-child {
+    border-bottom: none;
+}
+.pc-section h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 5px;
+}
+.pc-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 5px 15px;
+}
+.pc-info-grid p {
+    margin: 3px 0;
+}
+.detailed-pc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em;
+}
+.detailed-pc-table th, .detailed-pc-table td {
+    border: 1px solid #ddd;
+    padding: 6px;
+    text-align: left;
+}
+.detailed-pc-table th {
+    background-color: #e9ecef;
+}
+.detailed-pc-sheet .pc-section ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+.clickable-pc-card {
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+.clickable-pc-card:hover {
+    background-color: #e0e0e0; /* Or some other highlight */
 }
