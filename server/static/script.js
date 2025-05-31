@@ -588,7 +588,10 @@ function updateView() {
 function updatePcDashboard() {
     console.log("Updating PC Dashboard (Overview). Active PC IDs:", new Set(activePcIds));
     const dashboardContent = getElem('pc-dashboard-content');
-    if (!dashboardContent) { console.error("updatePcDashboard: 'pc-dashboard-content' not found."); return; }
+    if (!dashboardContent) {
+        console.error("updatePcDashboard: 'pc-dashboard-content' not found.");
+        return;
+    }
 
     dashboardContent.innerHTML = ''; // Clear for overview
 
@@ -627,7 +630,8 @@ function updatePcDashboard() {
     const sortedSelectedPcsByName = [...selectedPcs].sort((a,b) => a.name.localeCompare(b.name));
     sortedSelectedPcsByName.forEach(pc => {
         const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || pc.vtt_data?.details?.level || 1;
-        statCardsHTML += `<div class="pc-stat-card clickable-pc-card" data-pc-id="${String(pc._id)}"><h4>${pc.name} (Lvl ${pcLevel})</h4>`;
+        // ADDING INLINE STYLE FOR DEBUGGING POINTER EVENTS AND Z-INDEX
+        statCardsHTML += `<div class="pc-stat-card clickable-pc-card" data-pc-id="${String(pc._id)}" style="pointer-events: auto !important; z-index: 9999 !important; border: 2px solid red !important;"><h4>${pc.name} (Lvl ${pcLevel})</h4>`;
         
         const hpCurrent = pc.vtt_data?.attributes?.hp?.value !== undefined ? pc.vtt_data.attributes.hp.value : 'N/A';
         const hpMax = pc.vtt_data?.attributes?.hp?.max !== undefined && pc.vtt_data.attributes.hp.max !== null ? pc.vtt_data.attributes.hp.max : (pc.system?.attributes?.hp?.max || 'N/A');
@@ -681,17 +685,43 @@ function updatePcDashboard() {
         statCardsHTML += `</div>`;
     });
     statCardsHTML += `</div>`;
+    
+    console.log("DEBUG: statCardsHTML to be added:\n", statCardsHTML);
     dashboardContent.innerHTML += statCardsHTML;
+    console.log("DEBUG: dashboardContent's innerHTML after adding statCardsHTML (first part - cards):\n", dashboardContent.innerHTML); 
+    
+    const cardsForListeners = dashboardContent.querySelectorAll('.clickable-pc-card');
+    console.log(`DEBUG: Found ${cardsForListeners.length} '.clickable-pc-card' elements for listeners.`, cardsForListeners);
 
-    dashboardContent.querySelectorAll('.clickable-pc-card').forEach(card => {
-        card.addEventListener('click', (event) => {
-            const clickedPcId = event.currentTarget.dataset.pcId;
-            console.log("PC Quick View Card clicked for detailed view: ID", clickedPcId);
-            renderDetailedPcSheet(clickedPcId);
+    if (cardsForListeners.length === 0 && selectedPcs.length > 0) {
+        console.warn("DEBUG: Cards were expected but not found by querySelectorAll. Check class names and HTML structure.");
+    } else if (selectedPcs.length === 0) {
+        console.log("DEBUG: No selectedPcs, so no clickable cards were generated.");
+    }
+
+    cardsForListeners.forEach((card, index) => {
+        console.log(`DEBUG: Attaching click listener to card ${index + 1}, ID: ${card.dataset.pcId}`, card);
+        // Standard (bubbling phase) listener
+        card.addEventListener('click', function(event) {
+            console.log(`DEBUG (Bubbling): >>> CLICK EVENT FIRED on card with ID ${this.dataset.pcId}! Target:`, event.target, "CurrentTarget:", event.currentTarget);
+            alert(`Card clicked (Bubbling): ${this.dataset.pcId}`);
+            
+            // const clickedPcId = this.dataset.pcId; // event.currentTarget.dataset.pcId;
+            // console.log("PC Quick View Card clicked for detailed view: ID", clickedPcId);
+            // renderDetailedPcSheet(clickedPcId);
         });
+
+        // Capturing phase listener (for deeper diagnosis)
+        // Note: Capturing listeners on the element itself might not always behave as expected if propagation is stopped *before* it reaches the element's capture phase.
+        // A more common use for capture is on a parent to catch events before they bubble up from children.
+        // However, this is worth a try for diagnostics.
+        card.addEventListener('click', function(event) {
+            console.log(`DEBUG (Capturing): >>> CLICK EVENT FIRED on card with ID ${this.dataset.pcId}! Target:`, event.target, "CurrentTarget:", event.currentTarget);
+            // alert(`Card clicked (Capturing): ${this.dataset.pcId}`);
+        }, true); // The 'true' here enables capture phase
     });
 
-
+    // ... (rest of the function for tables)
     const abilities = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
     let mainStatsTableHTML = `<h4>Ability Scores Overview</h4>
                               <table id="main-stats-table"><thead><tr><th>Character</th>`;
@@ -710,9 +740,11 @@ function updatePcDashboard() {
         mainStatsTableHTML += `</tr>`;
     });
     mainStatsTableHTML += `</tbody></table>`;
+    
+    dashboardContent.innerHTML += `<div class="table-wrapper">${mainStatsTableHTML}</div>`; 
+    
     const abilityExpansionContainer = document.createElement('div');
     abilityExpansionContainer.id = 'expanded-ability-details-sections';
-    dashboardContent.innerHTML += `<div class="table-wrapper">${mainStatsTableHTML}</div>`; 
     dashboardContent.appendChild(abilityExpansionContainer);
 
     abilities.forEach(ablKey => {
@@ -779,9 +811,11 @@ function updatePcDashboard() {
         skillsTableHTML += `</tr>`;
     });
     skillsTableHTML += `</tbody></table>`;
+    
+    dashboardContent.innerHTML += `<div class="table-wrapper">${skillsTableHTML}</div>`;
+
     const skillExpansionContainer = document.createElement('div');
     skillExpansionContainer.id = 'expanded-skill-details-sections';
-    dashboardContent.innerHTML += `<div class="table-wrapper">${skillsTableHTML}</div>`;
     dashboardContent.appendChild(skillExpansionContainer);
 
     for (const skillKey in skillNameMap) {
@@ -794,6 +828,7 @@ function updatePcDashboard() {
         }
         skillExpansionContainer.appendChild(expansionDiv);
     }
+    console.log("DEBUG: dashboardContent final innerHTML for overview:\n", dashboardContent.innerHTML);
 }
 
 function toggleAbilityExpansion(ablKey) {
