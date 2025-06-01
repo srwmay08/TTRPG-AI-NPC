@@ -16,10 +16,7 @@
                 <h3>Player Characters</h3>
                 <div class="collapsible-content character-list">
                     <div id="active-pc-list"><p><em>Loading PCs...</em></p></div>
-                    <label for="speaking-pc-select" style="margin-top: 10px;">Active Speaker:</label>
-                    <select id="speaking-pc-select" style="width: calc(100% - 16px); margin-bottom:5px;">
-                        <option value="">-- Select Speaking PC --</option>
-                    </select>
+                    {/* Speaking PC select moved to center column */}
                 </div>
             </div>
             <div id="npc-list-section" class="collapsible-section">
@@ -41,7 +38,7 @@
                     <div id="npc-faction-standings-section" class="collapsible-section">
                         <h4>NPC Standings Towards PCs</h4>
                         <div class="collapsible-content" id="npc-faction-standings-content">
-                            <p><em>Select an NPC to view their standings.</em></p>
+                            {/* Content will be populated by script.js */}
                         </div>
                     </div>
                     
@@ -71,17 +68,11 @@
                             <select id="history-file-select">
                                 <option value="">-- Select a history file --</option>
                             </select>
-                            <button onclick="associateHistoryFile()" id="associate-history-btn" disabled>Add Selected History</button>
-                            
+                            <button onclick="associateHistoryFile()" id="associate-history-btn" disabled>Associate Selected History</button>
                             <h5>Currently Associated Files:</h5>
-                            <ul id="associated-history-list">
-                                <li><em>None associated.</em></li>
-                            </ul>
-                            
+                            <ul id="associated-history-list"><li><em>None associated.</em></li></ul>
                             <h5>History Content:</h5>
-                            <div id="history-content-display">
-                                <p><em>No history content loaded. Associate files to view their content.</em></p>
-                            </div>
+                            <div id="history-content-display"><p><em>No history content loaded.</em></p></div>
                         </div>
                     </div>
                 </div>
@@ -112,40 +103,36 @@
     <div id="center-column" class="column">
         <div id="dialogue-interface"> <h2>Scene Interaction</h2>
             
-            <div id="pc-quick-view-section-in-scene" style="margin-bottom: 15px; display: none;">
-                </div>
+            <div id="pc-quick-view-section-in-scene" style="margin-bottom: 15px; display: none;"></div>
             <div id="scene-setup">
                 <label for="scene-context">Dynamic Scene Context:</label>
                 <textarea id="scene-context" rows="4" placeholder="Describe the current environment, mood, ongoing events..."></textarea>
+                
+                <label for="speaking-pc-select" style="margin-top: 10px;">Active Speaker/Event Origin:</label>
+                <select id="speaking-pc-select" style="width: calc(100% - 16px); margin-bottom:5px;">
+                    <option value="">-- DM/Scene Event --</option>
+                </select>
             </div>
             <hr>
             <div id="multi-npc-dialogue-container">
                 <p class="scene-event">Select NPCs to add them to the scene.</p>
-                </div>
+            </div>
             <hr>
             <div id="dialogue-input-area">
-                <label for="player-utterance">Player Says (to all active NPCs):</label>
-                <textarea id="player-utterance" rows="2" placeholder="Enter player dialogue here..."></textarea>
+                <label for="player-utterance">Player Says / Scene Event:</label>
+                <textarea id="player-utterance" rows="2" placeholder="Enter player dialogue or describe a scene event..."></textarea>
                 <button onclick="generateDialogue()" id="generate-dialogue-btn" disabled>Send to NPCs</button>
             </div>
-            <div id="ai-suggestions">
-                <h4>AI Suggestions:</h4>
-                <div id="suggested-memories-list"></div>
-                <div id="suggested-topics-list"></div>
-                <div id="suggested-npc-actions-list" class="ai-suggestion-category">
-                    <h5>Suggested NPC Actions/Thoughts:</h5>
-                    {/* */}
-                </div>
-                <div id="suggested-player-checks-list" class="ai-suggestion-category">
-                    <h5>Suggested Player Checks:</h5>
-                    {/* */}
-                </div>
-                <div id="suggested-faction-standing-changes" class="ai-suggestion-category">
-                    <h5>Suggested Faction Standing Change:</h5>
-                    {/* */}
-                </div>
+            <div id="ai-suggestions" style="display:none;">
+                <h4>AI Suggestions (Last Interaction):</h4>
+                <div id="suggested-memories-list" class="ai-suggestion-category"><h6>Suggested Memories:</h6></div>
+                <div id="suggested-topics-list" class="ai-suggestion-category"><h6>Suggested Follow-up Topics:</h6></div>
+                <div id="suggested-npc-actions-list" class="ai-suggestion-category"><h5>Suggested NPC Actions/Thoughts:</h5></div>
+                <div id="suggested-player-checks-list" class="ai-suggestion-category"><h5>Suggested Player Checks:</h5></div>
+                <div id="suggested-faction-standing-changes" class="ai-suggestion-category"><h5>Suggested Faction Standing Change:</h5></div>
             </div>
-        </div> <div id="pc-dashboard-view">
+        </div> 
+        <div id="pc-dashboard-view">
             <h2>Player Character Dashboard</h2>
             <div id="pc-dashboard-content">
                 <p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>
