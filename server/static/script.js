@@ -600,7 +600,6 @@ function updatePcDashboard() {
     );
     console.log("Selected PCs for dashboard overview:", selectedPcs.map(p => ({name: p.name, id: p._id, vtt: !!p.vtt_data, flags: !!p.vtt_flags }) ));
 
-
     if (selectedPcs.length === 0) {
         const anyPcsExist = allCharacters.some(char => char.character_type === 'PC' && (char.vtt_data && Object.keys(char.vtt_data).length > 0));
         dashboardContent.innerHTML = `<p class="pc-dashboard-no-selection">${anyPcsExist ? 'Select Player Characters from the left panel to view their details.' : 'No Player Characters with VTT data available. Create PCs and ensure VTT data is synced.'}</p>`;
@@ -615,7 +614,7 @@ function updatePcDashboard() {
             const skillExpansionDiv = document.getElementById(`expanded-skill-${currentlyExpandedSkill}`);
             if (skillExpansionDiv) skillExpansionDiv.style.display = 'none';
             const skillHeader = document.querySelector(`#skills-overview-table th.clickable-skill-header[data-skill-key="${currentlyExpandedSkill}"]`);
-            if (skillHeader && skillHeader.querySelector('span.arrow-indicator')) skillHeader.querySelector('span.arrow-indicator').textContent = ' ►';
+            if(skillHeader && skillHeader.querySelector('span.arrow-indicator')) skillHeader.querySelector('span.arrow-indicator').textContent = ' ►';
             currentlyExpandedSkill = null;
         }
         return;
@@ -630,8 +629,8 @@ function updatePcDashboard() {
     const sortedSelectedPcsByName = [...selectedPcs].sort((a,b) => a.name.localeCompare(b.name));
     sortedSelectedPcsByName.forEach(pc => {
         const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || pc.vtt_data?.details?.level || 1;
-        // ADDING INLINE STYLE FOR DEBUGGING POINTER EVENTS AND Z-INDEX
-        statCardsHTML += `<div class="pc-stat-card clickable-pc-card" data-pc-id="${String(pc._id)}" style="pointer-events: auto !important; z-index: 9999 !important; border: 2px solid red !important;"><h4>${pc.name} (Lvl ${pcLevel})</h4>`;
+        // Added inline style for visibility debugging, you can remove the border later
+        statCardsHTML += `<div class="pc-stat-card clickable-pc-card" data-pc-id="${String(pc._id)}" style="border: 1px dashed blue;"><h4>${pc.name} (Lvl ${pcLevel})</h4>`;
         
         const hpCurrent = pc.vtt_data?.attributes?.hp?.value !== undefined ? pc.vtt_data.attributes.hp.value : 'N/A';
         const hpMax = pc.vtt_data?.attributes?.hp?.max !== undefined && pc.vtt_data.attributes.hp.max !== null ? pc.vtt_data.attributes.hp.max : (pc.system?.attributes?.hp?.max || 'N/A');
@@ -686,42 +685,10 @@ function updatePcDashboard() {
     });
     statCardsHTML += `</div>`;
     
-    console.log("DEBUG: statCardsHTML to be added:\n", statCardsHTML);
     dashboardContent.innerHTML += statCardsHTML;
-    console.log("DEBUG: dashboardContent's innerHTML after adding statCardsHTML (first part - cards):\n", dashboardContent.innerHTML); 
-    
-    const cardsForListeners = dashboardContent.querySelectorAll('.clickable-pc-card');
-    console.log(`DEBUG: Found ${cardsForListeners.length} '.clickable-pc-card' elements for listeners.`, cardsForListeners);
+    // REMOVED the forEach loop that attached individual listeners here.
+    // The delegated listener (added in DOMContentLoaded) will handle clicks on .clickable-pc-card
 
-    if (cardsForListeners.length === 0 && selectedPcs.length > 0) {
-        console.warn("DEBUG: Cards were expected but not found by querySelectorAll. Check class names and HTML structure.");
-    } else if (selectedPcs.length === 0) {
-        console.log("DEBUG: No selectedPcs, so no clickable cards were generated.");
-    }
-
-    cardsForListeners.forEach((card, index) => {
-        console.log(`DEBUG: Attaching click listener to card ${index + 1}, ID: ${card.dataset.pcId}`, card);
-        // Standard (bubbling phase) listener
-        card.addEventListener('click', function(event) {
-            console.log(`DEBUG (Bubbling): >>> CLICK EVENT FIRED on card with ID ${this.dataset.pcId}! Target:`, event.target, "CurrentTarget:", event.currentTarget);
-            alert(`Card clicked (Bubbling): ${this.dataset.pcId}`);
-            
-            // const clickedPcId = this.dataset.pcId; // event.currentTarget.dataset.pcId;
-            // console.log("PC Quick View Card clicked for detailed view: ID", clickedPcId);
-            // renderDetailedPcSheet(clickedPcId);
-        });
-
-        // Capturing phase listener (for deeper diagnosis)
-        // Note: Capturing listeners on the element itself might not always behave as expected if propagation is stopped *before* it reaches the element's capture phase.
-        // A more common use for capture is on a parent to catch events before they bubble up from children.
-        // However, this is worth a try for diagnostics.
-        card.addEventListener('click', function(event) {
-            console.log(`DEBUG (Capturing): >>> CLICK EVENT FIRED on card with ID ${this.dataset.pcId}! Target:`, event.target, "CurrentTarget:", event.currentTarget);
-            // alert(`Card clicked (Capturing): ${this.dataset.pcId}`);
-        }, true); // The 'true' here enables capture phase
-    });
-
-    // ... (rest of the function for tables)
     const abilities = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
     let mainStatsTableHTML = `<h4>Ability Scores Overview</h4>
                               <table id="main-stats-table"><thead><tr><th>Character</th>`;
@@ -828,7 +795,7 @@ function updatePcDashboard() {
         }
         skillExpansionContainer.appendChild(expansionDiv);
     }
-    console.log("DEBUG: dashboardContent final innerHTML for overview:\n", dashboardContent.innerHTML);
+    console.log("DEBUG: dashboardContent final innerHTML for overview (updatePcDashboard end):\n", dashboardContent.innerHTML);
 }
 
 function toggleAbilityExpansion(ablKey) {
@@ -1816,6 +1783,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     console.log("script.js: DOMContentLoaded - Finished collapsible sections setup.");
+
+    // ADD THIS BLOCK FOR DELEGATED EVENT LISTENING
+    const pcDashboardContentForDelegation = getElem('pc-dashboard-content');
+    if (pcDashboardContentForDelegation) {
+        console.log("DEBUG: Attaching DELEGATED click listener to pc-dashboard-content.");
+        pcDashboardContentForDelegation.addEventListener('click', function(event) {
+            console.log('DEBUG (Delegated Listener on #pc-dashboard-content): Click detected. Target:', event.target);
+            const clickedCard = event.target.closest('.clickable-pc-card'); // Check if the click was on or inside a card
+
+            if (clickedCard) {
+                console.log('DEBUG (Delegated Listener): >>> CLICK WAS ON A .clickable-pc-card <<< PC ID:', clickedCard.dataset.pcId);
+                alert(`Card clicked (Delegated Listener): ${clickedCard.dataset.pcId}`);
+                
+                const pcIdToRender = clickedCard.dataset.pcId;
+                if (pcIdToRender) {
+                    renderDetailedPcSheet(pcIdToRender);
+                } else {
+                    console.error("DEBUG (Delegated Listener): Clicked card found, but data-pc-id is missing or undefined.");
+                }
+            } else {
+                console.log('DEBUG (Delegated Listener): Click was inside #pc-dashboard-content, but NOT on a .clickable-pc-card.');
+            }
+        });
+    } else {
+        console.error("DEBUG: Crucial element #pc-dashboard-content not found for attaching delegated listener.");
+    }
+    // END OF ADDED BLOCK
 
     console.log("script.js: DOMContentLoaded - Calling updateView().");
     updateView();
