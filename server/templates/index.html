@@ -99,6 +99,29 @@
 
     <div id="center-column" class="column">
         <div id="dialogue-interface">
+        <h2>Scene Interaction</h2>
+        
+        <div id="pc-quick-view-in-scene" class="pc-dashboard-grid" style="margin-bottom: 15px; display: none;">
+            </div>
+        <div id="scene-setup">
+            <label for="scene-context">Dynamic Scene Context:</label>
+            <textarea id="scene-context" rows="4" placeholder="Describe the current environment, mood, ongoing events..."></textarea>
+        </div>
+        <hr>
+        <div id="multi-npc-dialogue-container">
+             <p class="scene-event">Select NPCs to add them to the scene.</p>
+        </div>
+        <hr>
+        </div>
+
+                <div id="pc-dashboard-view">
+            <h2>Player Character Dashboard</h2>
+            <div id="pc-dashboard-content">
+                <p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>
+            </div>
+        </div>
+        
+        <div id="dialogue-interface">
             <h2>Scene Interaction</h2>
             <div id="scene-setup">
                 <label for="scene-context">Dynamic Scene Context:</label>
@@ -120,12 +143,7 @@
             </div>
         </div>
 
-        <div id="pc-dashboard-view">
-            <h2>Player Character Dashboard</h2>
-            <div id="pc-dashboard-content">
-                <p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>
-            </div>
-        </div>
+
     </div>
 
     <script src="../static/script.js"></script>

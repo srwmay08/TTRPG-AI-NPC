@@ -270,3 +270,65 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 .clickable-pc-card:hover {
     background-color: #e0e0e0; /* Or some other highlight */
 }
+
+
+#pc-quick-view-in-scene {
+    /* max-height: 150px; /* Example: if you want to limit its height */
+    /* overflow-y: auto; */
+    /* border-bottom: 1px solid #eee; */
+    /* padding-bottom: 10px; */
+}
+#pc-quick-view-in-scene .pc-stat-card {
+    font-size: 0.85em; /* Slightly smaller for in-scene view */
+    padding: 8px;
+}
+#pc-quick-view-in-scene .pc-stat-card h4 {
+    font-size: 1em;
+    margin-bottom: 5px;
+}
+
+/* Styles for the PC Quick View cards in the Scene Interaction area */
+#pc-quick-view-in-scene {
+    display: flex; /* Uses flex to align cards */
+    flex-wrap: wrap; /* Allows cards to wrap if space is limited */
+    gap: 10px;      /* Space between cards */
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee; /* Optional: visual separator */
+}
+
+#pc-quick-view-in-scene .pc-stat-card {
+    font-size: 0.8em; /* Make cards in scene a bit smaller */
+    padding: 8px;
+    min-width: 150px; /* Ensure cards have a minimum width */
+    flex: 1 1 auto; /* Allow cards to grow and shrink */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+#pc-quick-view-in-scene .pc-stat-card h4 {
+    font-size: 0.95em;
+    margin-bottom: 4px;
+    display: flex; /* To align title and button */
+    justify-content: space-between; /* Puts button to the right */
+    align-items: center;
+}
+
+.remove-pc-from-scene-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    line-height: 18px; /* Adjust for vertical centering */
+    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0;
+    margin-left: 5px;
+}
+
+.remove-pc-from-scene-btn:hover {
+    background: #c0392b;
+}
