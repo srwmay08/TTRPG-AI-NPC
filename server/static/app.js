@@ -300,6 +300,50 @@ function handleTogglePcSelection(pcIdStr) {
     }
 }
 
+
+// app.js
+function handleBackToDashboardOverview() {
+    // Clear any specific PC view state if necessary
+    // Then call updateMainView to re-render the dashboard overview
+    const dashboardContent = getElem('pc-dashboard-content');
+    if (dashboardContent) {
+        const detailedSheet = dashboardContent.querySelector('.detailed-pc-sheet');
+        if (detailedSheet) detailedSheet.remove(); // Remove detailed sheet
+    }
+    updateMainView();
+}
+
+// And functions for toggling ability/skill expansion:
+function toggleAbilityExpansion(ablKey) {
+    // Logic from original script.js
+    // It should update appState.currentlyExpandedAbility
+    // Then call:
+    // updatePcDashboardUI(getElem('pc-dashboard-content'), appState.getAllCharacters(), appState.activePcIds, appState.getExpandedAbility(), appState.getExpandedSkill(), appState.getSkillSortKey());
+    const currentAbility = appState.getExpandedAbility();
+    if (currentAbility === ablKey) {
+        appState.setExpandedAbility(null);
+    } else {
+        appState.setExpandedAbility(ablKey);
+    }
+    updateMainView(); // This will re-render the dashboard
+}
+
+function toggleSkillExpansion(skillKey) {
+    // Logic from original script.js
+    // It should update appState.currentlyExpandedSkill and appState.skillSortKey
+    // Then call:
+    // updatePcDashboardUI(getElem('pc-dashboard-content'), appState.getAllCharacters(), appState.activePcIds, appState.getExpandedAbility(), appState.getExpandedSkill(), appState.getSkillSortKey());
+    const currentSkill = appState.getExpandedSkill();
+    if (currentSkill === skillKey) {
+        appState.setExpandedSkill(null);
+        appState.setSkillSortKey(null);
+    } else {
+        appState.setExpandedSkill(skillKey);
+        appState.setSkillSortKey(skillKey);
+    }
+    updateMainView(); // This will re-render the dashboard
+}
+
 // If using ES6 modules:
 // import { initializeAppCharacters, ... } from './characterService.js';
 // import { setupResizer, ... } from './eventHandlers.js';

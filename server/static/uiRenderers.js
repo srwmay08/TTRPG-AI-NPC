@@ -43,6 +43,13 @@ function renderNpcListForSceneUI(listContainerElement, allCharacters, activeNpcI
     });
 }
 
+function createPcQuickViewSectionHTML(isForDashboard) {
+    // Assumes PC_QUICK_VIEW_BASE_TITLE is available from config.js
+    const titleText = PC_QUICK_VIEW_BASE_TITLE;
+    const fullTitle = isForDashboard ? `${titleText} (Click card for details)` : titleText;
+    return `<h4>${fullTitle}</h4><div class="pc-dashboard-grid">`; // Ensure class "pc-dashboard-grid" exists
+}
+
 function renderPcListUI(pcListDiv, speakingPcSelect, allCharacters, activePcIds, onPcItemClick) {
     if (!pcListDiv) return;
 
