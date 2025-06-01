@@ -153,11 +153,77 @@ async function fetchAndRenderHistoryFiles() {
     }
 }
 
+// (Make sure elements object is complete and correct in these handlers)
+const profileElementIds = {
+    detailsCharName: 'details-char-name', profileCharType: 'profile-char-type',
+    profileDescription: 'profile-description', profilePersonality: 'profile-personality',
+    gmNotesTextarea: 'gm-notes', saveGmNotesBtn: 'save-gm-notes-btn',
+    npcMemoriesSection: 'npc-memories-collapsible-section', characterMemoriesList: 'character-memories-list',
+    addMemoryBtn: 'add-memory-btn', npcFactionStandingsSection: 'npc-faction-standings-section',
+    npcFactionStandingsContent: 'npc-faction-standings-content', characterHistorySection: 'character-history-collapsible-section',
+    associatedHistoryList: 'associated-history-list', historyContentDisplay: 'history-content-display',
+    associateHistoryBtn: 'associate-history-btn',
+    // Make sure these callbacks refer to globally accessible functions or are passed in correctly
+    deleteMemoryCallback: window.handleDeleteMemory,
+    factionChangeCallback: window.handleSaveFactionStanding,
+    dissociateHistoryCallback: window.handleDissociateHistoryFile
+};
+
+
 async function handleAssociateHistoryFile() {
-    // ... (similar to original, using appState and apiService)
+    const charId = appState.getCurrentProfileCharId();
+    if (!charId) {
+        alert("Please select a character first.");
+        return;
+    }
+    const selectedFileElement = window.getElem('history-file-select'); // Use window.getElem
+    if (!selectedFileElement) {
+        console.error("History file select element not found");
+        return;
+    }
+    const selectedFile = selectedFileElement.value;
+
+    if (!selectedFile) {
+        alert("Please select a history file to add.");
+        return;
+    }
+
+    try {
+        const result = await window.associateHistoryFileWithNpc(charId, selectedFile); // from apiService.js
+
+        if (result && result.character) {
+            const updatedChar = appState.updateCharacterInList(result.character);
+            // Re-render the entire profile to reflect changes
+            window.renderCharacterProfileUI(updatedChar, profileElementIds); // from uiRenderers.js
+            alert(result.message || "History file associated successfully.");
+        } else {
+            alert("Failed to associate history file: No character data returned from server.");
+        }
+    } catch (error) {
+        console.error("Error associating history file:", error);
+        alert(`Error associating history file: ${error.message}`);
+    }
 }
-async function handleDissociateHistoryFile(filename) {
-    // ... (similar to original, using appState and apiService)
+
+async function handleDissociateHistoryFile(filename) { // Filename is passed directly
+    const charId = appState.getCurrentProfileCharId();
+    if (!charId) { alert("No character selected."); return; }
+    if (!confirm(`Remove "${filename}" from this character's history?`)) return;
+
+    try {
+        const result = await window.dissociateHistoryFileFromNpc(charId, filename); // from apiService.js
+        if (result && result.character) {
+            const updatedChar = appState.updateCharacterInList(result.character);
+            window.renderCharacterProfileUI(updatedChar, profileElementIds); // from uiRenderers.js
+            alert(result.message || "History file dissociated successfully.");
+        } else {
+            alert("Failed to dissociate history file: No character data returned from server.");
+        }
+    } catch (error) {
+        console.error("Error dissociating history file:", error);
+        alert(`Error dissociating file: ${error.message}`);
+    }
+}
 }
 async function handleSaveFactionStanding(pcId, newStandingValue) {
     // ... (logic to call apiService.updateNpcFactionStanding and update appState/UI)
