@@ -338,26 +338,34 @@ function togglePcSelection(pcIdStr) { // Removed elementListItem parameter
 function updateView() {
     const dialogueInterface = getElem('dialogue-interface');
     const pcDashboardView = getElem('pc-dashboard-view');
-    const pcQuickViewInScene = getElem('pc-quick-view-in-scene');
-    if (!dialogueInterface || !pcDashboardView || !pcQuickViewInScene) { console.error("updateView: Critical UI element(s) missing."); return; }
+    const pcQuickViewInScene = getElem('pc-quick-view-in-scene'); // Assuming this is also managed
+
+    if (!dialogueInterface || !pcDashboardView || !pcQuickViewInScene) {
+        console.error("updateView: Critical UI element(s) missing for view update.");
+        return;
+    }
 
     if (activeSceneNpcIds.size > 0) { // NPC Dialogue Mode
-        dialogueInterface.style.display = 'flex'; 
-        pcDashboardView.style.display = 'none';
-        if (activePcIds.size > 0) { 
-            renderPcQuickViewInScene(); 
-            pcQuickViewInScene.style.display = 'flex'; 
-        } else { 
-            pcQuickViewInScene.style.display = 'none'; 
-            pcQuickViewInScene.innerHTML = ''; 
+        dialogueInterface.style.display = 'flex'; // Show Scene Interaction
+        pcDashboardView.style.display = 'none';  // Hide PC Dashboard
+        
+        if (activePcIds.size > 0) {
+            renderPcQuickViewInScene(); // Populate PC cards in scene
+            pcQuickViewInScene.style.display = 'flex'; // Show the PC cards in scene
+        } else {
+            pcQuickViewInScene.style.display = 'none'; // Hide PC cards if no PCs active
+            pcQuickViewInScene.innerHTML = '';
         }
     } else { // PC Dashboard Mode (No NPCs in Scene)
-        dialogueInterface.style.display = 'none'; 
-        pcDashboardView.style.display = 'block';  
-        pcQuickViewInScene.style.display = 'none'; 
-        pcQuickViewInScene.innerHTML = '';       
-        if (!getElem('pc-dashboard-content').querySelector('.detailed-pc-sheet')) { 
-            updatePcDashboard(); 
+        dialogueInterface.style.display = 'none'; // << IMPORTANT: Hide Scene Interaction
+        pcDashboardView.style.display = 'block';  // << IMPORTANT: Show PC Dashboard
+        
+        pcQuickViewInScene.style.display = 'none'; // Ensure PC quick view in scene is also hidden
+        pcQuickViewInScene.innerHTML = '';         // And clear it
+
+        // If no specific PC detail sheet is up in the dashboard, show the overview
+        if (!getElem('pc-dashboard-content').querySelector('.detailed-pc-sheet')) {
+            updatePcDashboard();
         }
     }
 }
