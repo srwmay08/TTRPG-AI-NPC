@@ -1,4 +1,4 @@
-// config.js
+// static/config.js
 // Responsibility: Store global constants and configurations.
 
 const API_BASE_URL = ''; // Adjust if your API is hosted elsewhere
@@ -31,6 +31,3 @@ const FACTION_STANDING_SLIDER_ORDER = [
     FACTION_STANDING_LEVELS.AMIABLE, FACTION_STANDING_LEVELS.KINDLY,
     FACTION_STANDING_LEVELS.WARMLY, FACTION_STANDING_LEVELS.ALLY
 ];
-
-// If using ES6 modules, you would export these:
-// export { API_BASE_URL, DEBUG_DELEGATED_CARD_CLICK, ABILITY_KEYS_ORDER, ... };

@@ -1,145 +1,163 @@
-// characterService.js
+// static/characterService.js
 // Responsibility: Logic related to fetching, processing, and managing character data.
-// Assumes apiService.js, appState.js, and relevant UI renderers are available.
 
-async function initializeAppCharacters() {
+// Make profileElementIds global for access within this file by its own functions
+window.profileElementIds = {
+    detailsCharName: 'details-char-name', profileCharType: 'profile-char-type',
+    profileDescription: 'profile-description', profilePersonality: 'profile-personality',
+    gmNotesTextarea: 'gm-notes', saveGmNotesBtn: 'save-gm-notes-btn',
+    npcMemoriesSection: 'npc-memories-collapsible-section', characterMemoriesList: 'character-memories-list',
+    addMemoryBtn: 'add-memory-btn', npcFactionStandingsSection: 'npc-faction-standings-section',
+    npcFactionStandingsContent: 'npc-faction-standings-content', characterHistorySection: 'character-history-collapsible-section',
+    associatedHistoryList: 'associated-history-list', historyContentDisplay: 'history-content-display',
+    associateHistoryBtn: 'associate-history-btn',
+    // Callbacks will reference globally defined handlers
+    deleteMemoryCallback: () => window.handleDeleteMemory,
+    factionChangeCallback: () => window.handleSaveFactionStanding,
+    dissociateHistoryCallback: () => window.handleDissociateHistoryFile
+};
+
+window.initializeAppCharacters = async function() {
     console.log("Fetching characters via characterService...");
     try {
-        const charactersFromServer = await fetchCharactersFromServer(); // from apiService.js
-        appState.setAllCharacters(charactersFromServer); // Process and store in appState
+        const charactersFromServer = await window.fetchCharactersFromServer();
+        appState.setAllCharacters(charactersFromServer); // appState is global
         console.log("Characters fetched and processed:", appState.getAllCharacters().length);
 
-        // Initial Renders (could also be triggered from app.js)
-        renderNpcListForSceneUI(getElem('character-list'), appState.getAllCharacters(), appState.activeSceneNpcIds, handleToggleNpcInScene, handleSelectCharacterForDetails);
-        renderPcListUI(getElem('active-pc-list'), getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, handleTogglePcSelection);
-        updateMainView(); // This global function will need to be refactored or called from app.js
+        window.renderNpcListForSceneUI(window.getElem('character-list'), appState.getAllCharacters(), appState.activeSceneNpcIds, window.handleToggleNpcInScene, window.handleSelectCharacterForDetails);
+        window.renderPcListUI(window.getElem('active-pc-list'), window.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, window.handleTogglePcSelection);
+        window.updateMainView();
     } catch (error) {
         console.error('Error in initializeAppCharacters:', error);
-        if (getElem('character-list')) getElem('character-list').innerHTML = '<ul><li><em>Error loading NPCs.</em></li></ul>';
-        if (getElem('active-pc-list')) getElem('active-pc-list').innerHTML = '<p><em>Error loading PCs.</em></p>';
+        if (window.getElem('character-list')) window.getElem('character-list').innerHTML = '<ul><li><em>Error loading NPCs.</em></li></ul>';
+        if (window.getElem('active-pc-list')) window.getElem('active-pc-list').innerHTML = '<p><em>Error loading PCs.</em></p>';
     }
-}
+};
 
-async function handleSelectCharacterForDetails(charIdStr) {
+window.handleSelectCharacterForDetails = async function(charIdStr) {
     if (!charIdStr || charIdStr === "null") {
         appState.setCurrentProfileCharId(null);
-        // Call a UI function to reset/clear the profile pane
-        renderCharacterProfileUI(null, profileElementIds /* define this object with IDs */);
+        window.renderCharacterProfileUI(null, window.profileElementIds);
         return;
     }
     appState.setCurrentProfileCharId(charIdStr);
     try {
-        const selectedChar = await fetchNpcDetails(charIdStr); // from apiService.js
-        const processedChar = appState.updateCharacterInList(selectedChar); // Process and update in state
+        const selectedCharFromServer = await window.fetchNpcDetails(charIdStr);
+        const processedChar = appState.updateCharacterInList(selectedCharFromServer);
 
-        // Define profileElementIds for renderCharacterProfileUI
-        const elements = {
-            detailsCharName: 'details-char-name',
-            profileCharType: 'profile-char-type',
-            profileDescription: 'profile-description',
-            profilePersonality: 'profile-personality',
-            gmNotesTextarea: 'gm-notes',
-            saveGmNotesBtn: 'save-gm-notes-btn',
-            npcMemoriesSection: 'npc-memories-collapsible-section',
-            characterMemoriesList: 'character-memories-list',
-            addMemoryBtn: 'add-memory-btn',
-            npcFactionStandingsSection: 'npc-faction-standings-section',
-            npcFactionStandingsContent: 'npc-faction-standings-content',
-            characterHistorySection: 'character-history-collapsible-section',
-            associatedHistoryList: 'associated-history-list',
-            historyContentDisplay: 'history-content-display',
-            associateHistoryBtn: 'associate-history-btn',
-            deleteMemoryCallback: handleDeleteMemory, // Pass actual handler
-            factionChangeCallback: handleSaveFactionStanding, // Pass actual handler
-            dissociateHistoryCallback: handleDissociateHistoryFile // Pass actual handler
-        };
-        renderCharacterProfileUI(processedChar, elements);
-        await fetchAndRenderHistoryFiles(); // Update history file dropdown
+        window.renderCharacterProfileUI(processedChar, window.profileElementIds);
+        await window.fetchAndRenderHistoryFiles();
     } catch (error) {
         console.error("Error in handleSelectCharacterForDetails:", error);
-        updateText('details-char-name', 'Error loading details');
-        // Potentially clear other parts of the profile UI
+        window.updateText('details-char-name', 'Error loading details');
+         // Attempt to render the profile pane with an error message or clear it
+        window.renderCharacterProfileUI(null, window.profileElementIds); // Clears profile
     }
-}
+};
 
-async function handleSaveGmNotes() {
+window.handleSaveGmNotes = async function() {
     const charId = appState.getCurrentProfileCharId();
     if (!charId) return;
-    const notes = getElem('gm-notes').value;
+    const notes = window.getElem('gm-notes').value;
     try {
-        const updatedCharData = await saveCharacterNotes(charId, notes); // from apiService.js
-        appState.updateCharacterInList(updatedCharData.character); // Update state
-        alert('GM Notes saved!');
+        // Pass the whole character object or specific fields the backend expects
+        // The backend PUT /api/npcs/{npc_id_str} expects a partial or full NPCProfile
+        const updatePayload = { gm_notes: notes };
+        const response = await window.updateCharacterOnServer(charId, updatePayload); // Use specific update function
+        if (response && response.character) {
+            appState.updateCharacterInList(response.character);
+            alert('GM Notes saved!');
+        } else {
+            alert('Error: Could not save GM notes. No character data returned.');
+        }
     } catch (error) {
         console.error("Error saving GM notes:", error);
         alert(`Error saving notes: ${error.message}`);
     }
-}
+};
 
-async function handleAddMemory() {
+window.handleAddMemory = async function() {
     const charId = appState.getCurrentProfileCharId();
     const character = appState.getCharacterById(charId);
     if (!charId || !character || character.character_type !== 'NPC') {
         alert("Please select an NPC to add memories to.");
         return;
     }
-    const content = getElem('new-memory-content').value.trim();
-    const type = getElem('new-memory-type').value.trim() || 'fact'; // Default type
+    const content = window.getElem('new-memory-content').value.trim();
+    const type = window.getElem('new-memory-type').value.trim() || 'fact';
     if (!content) {
         alert("Memory content cannot be empty.");
         return;
     }
     try {
-        const memoryData = { content, type, source: "manual GM entry" }; // memory_id and timestamp added by backend/model
-        const response = await addMemoryToNpc(charId, memoryData); // from apiService.js
-        const charToUpdate = appState.getCharacterById(charId);
-        if (charToUpdate) {
-            charToUpdate.memories = response.updated_memories; // Assuming backend returns the full list
-            appState.updateCharacterInList(charToUpdate); // Update character in state
-             renderMemoriesUI(charToUpdate.memories, getElem('character-memories-list'), handleDeleteMemory);
+        const memoryData = { content, type, source: "manual GM entry" };
+        const response = await window.addMemoryToNpc(charId, memoryData);
+        const charToUpdate = appState.getCharacterById(charId); // Re-fetch or use response
+        if (charToUpdate && response.updated_memories) { // Ensure response has updated_memories
+            charToUpdate.memories = response.updated_memories;
+            appState.updateCharacterInList(charToUpdate);
+            window.renderMemoriesUI(charToUpdate.memories, window.getElem('character-memories-list'), window.handleDeleteMemory);
         }
-        getElem('new-memory-content').value = '';
-        getElem('new-memory-type').value = '';
+        window.getElem('new-memory-content').value = '';
+        window.getElem('new-memory-type').value = '';
     } catch (error) {
         console.error("Error adding memory:", error);
         alert("Error adding memory: " + error.message);
     }
-}
+};
 
-async function handleDeleteMemory(memoryId) {
+window.handleDeleteMemory = async function(memoryId) {
     const charId = appState.getCurrentProfileCharId();
     if (!charId || !memoryId) return;
     if (!confirm("Are you sure you want to delete this memory?")) return;
 
     try {
-        const response = await deleteNpcMemory(charId, memoryId); // from apiService.js
+        const response = await window.deleteNpcMemory(charId, memoryId);
         const charToUpdate = appState.getCharacterById(charId);
-        if (charToUpdate) {
+        if (charToUpdate && response.updated_memories) {
             charToUpdate.memories = response.updated_memories;
             appState.updateCharacterInList(charToUpdate);
-            renderMemoriesUI(charToUpdate.memories, getElem('character-memories-list'), handleDeleteMemory);
+            window.renderMemoriesUI(charToUpdate.memories, window.getElem('character-memories-list'), window.handleDeleteMemory);
         }
     } catch (error) {
         console.error("Error deleting memory:", error);
         alert("Error deleting memory: " + error.message);
     }
-}
+};
 
-async function handleCharacterCreation() {
-    // ... (get values from form)
-    // const newCharData = { name, description, personality_traits, character_type };
-    // const result = await createCharacterOnServer(newCharData);
-    // appState.updateCharacterInList(result.character);
-    // ... (re-render lists, clear form, alert user)
-}
+window.handleCharacterCreation = async function() {
+    const name = window.getElem('new-char-name').value.trim();
+    const description = window.getElem('new-char-description').value.trim();
+    const personality = window.getElem('new-char-personality').value.split(',').map(s => s.trim()).filter(s => s);
+    const type = window.getElem('new-char-type').value;
 
-async function fetchAndRenderHistoryFiles() {
-    const selectElement = getElem('history-file-select');
+    if (!name || !description) {
+        alert("Name and Description are required.");
+        return;
+    }
+    const newCharData = { name, description, personality_traits: personality, character_type: type };
+    try {
+        const result = await window.createCharacterOnServer(newCharData);
+        appState.updateCharacterInList(result.character);
+        window.renderNpcListForSceneUI(window.getElem('character-list'), appState.getAllCharacters(), appState.activeSceneNpcIds, window.handleToggleNpcInScene, window.handleSelectCharacterForDetails);
+        window.renderPcListUI(window.getElem('active-pc-list'), window.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, window.handleTogglePcSelection);
+        window.getElem('new-char-name').value = '';
+        window.getElem('new-char-description').value = '';
+        window.getElem('new-char-personality').value = '';
+        alert("Character created successfully!");
+    } catch (error) {
+        console.error("Error creating character:", error);
+        alert(`Error creating character: ${error.message}`);
+    }
+};
+
+window.fetchAndRenderHistoryFiles = async function() {
+    const selectElement = window.getElem('history-file-select');
     if (!selectElement) return;
     const currentValue = selectElement.value;
     selectElement.innerHTML = '<option value="">-- Select a history file --</option>';
     try {
-        const files = await fetchHistoryFilesFromServer(); // from apiService.js
+        const files = await window.fetchHistoryFilesFromServer();
         files.forEach(file => {
             const option = document.createElement('option');
             option.value = file;
@@ -149,34 +167,17 @@ async function fetchAndRenderHistoryFiles() {
         if (files.includes(currentValue)) selectElement.value = currentValue;
     } catch (error) {
         console.error("Error fetching/rendering history files:", error);
-        selectElement.innerHTML += `<option value="" disabled>Error loading.</option>`;
+        selectElement.innerHTML += `<option value="" disabled>Error loading history files.</option>`;
     }
-}
-
-// (Make sure elements object is complete and correct in these handlers)
-const profileElementIds = {
-    detailsCharName: 'details-char-name', profileCharType: 'profile-char-type',
-    profileDescription: 'profile-description', profilePersonality: 'profile-personality',
-    gmNotesTextarea: 'gm-notes', saveGmNotesBtn: 'save-gm-notes-btn',
-    npcMemoriesSection: 'npc-memories-collapsible-section', characterMemoriesList: 'character-memories-list',
-    addMemoryBtn: 'add-memory-btn', npcFactionStandingsSection: 'npc-faction-standings-section',
-    npcFactionStandingsContent: 'npc-faction-standings-content', characterHistorySection: 'character-history-collapsible-section',
-    associatedHistoryList: 'associated-history-list', historyContentDisplay: 'history-content-display',
-    associateHistoryBtn: 'associate-history-btn',
-    // Make sure these callbacks refer to globally accessible functions or are passed in correctly
-    deleteMemoryCallback: window.handleDeleteMemory,
-    factionChangeCallback: window.handleSaveFactionStanding,
-    dissociateHistoryCallback: window.handleDissociateHistoryFile
 };
 
-
-async function handleAssociateHistoryFile() {
+window.handleAssociateHistoryFile = async function() {
     const charId = appState.getCurrentProfileCharId();
     if (!charId) {
         alert("Please select a character first.");
         return;
     }
-    const selectedFileElement = window.getElem('history-file-select'); // Use window.getElem
+    const selectedFileElement = window.getElem('history-file-select');
     if (!selectedFileElement) {
         console.error("History file select element not found");
         return;
@@ -187,14 +188,11 @@ async function handleAssociateHistoryFile() {
         alert("Please select a history file to add.");
         return;
     }
-
     try {
-        const result = await window.associateHistoryFileWithNpc(charId, selectedFile); // from apiService.js
-
+        const result = await window.associateHistoryFileWithNpc(charId, selectedFile);
         if (result && result.character) {
             const updatedChar = appState.updateCharacterInList(result.character);
-            // Re-render the entire profile to reflect changes
-            window.renderCharacterProfileUI(updatedChar, profileElementIds); // from uiRenderers.js
+            window.renderCharacterProfileUI(updatedChar, window.profileElementIds);
             alert(result.message || "History file associated successfully.");
         } else {
             alert("Failed to associate history file: No character data returned from server.");
@@ -203,18 +201,17 @@ async function handleAssociateHistoryFile() {
         console.error("Error associating history file:", error);
         alert(`Error associating history file: ${error.message}`);
     }
-}
+};
 
-async function handleDissociateHistoryFile(filename) { // Filename is passed directly
+window.handleDissociateHistoryFile = async function(filename) {
     const charId = appState.getCurrentProfileCharId();
     if (!charId) { alert("No character selected."); return; }
     if (!confirm(`Remove "${filename}" from this character's history?`)) return;
-
     try {
-        const result = await window.dissociateHistoryFileFromNpc(charId, filename); // from apiService.js
+        const result = await window.dissociateHistoryFileFromNpc(charId, filename);
         if (result && result.character) {
             const updatedChar = appState.updateCharacterInList(result.character);
-            window.renderCharacterProfileUI(updatedChar, profileElementIds); // from uiRenderers.js
+            window.renderCharacterProfileUI(updatedChar, window.profileElementIds);
             alert(result.message || "History file dissociated successfully.");
         } else {
             alert("Failed to dissociate history file: No character data returned from server.");
@@ -223,12 +220,34 @@ async function handleDissociateHistoryFile(filename) { // Filename is passed dir
         console.error("Error dissociating history file:", error);
         alert(`Error dissociating file: ${error.message}`);
     }
-}
-}
-async function handleSaveFactionStanding(pcId, newStandingValue) {
-    // ... (logic to call apiService.updateNpcFactionStanding and update appState/UI)
-}
+};
 
-
-// If using ES6 modules:
-// export { initializeAppCharacters, handleSelectCharacterForDetails, ... };
+window.handleSaveFactionStanding = async function(npcId, pcId, newStandingValue) {
+    if (!npcId || !pcId || !newStandingValue) {
+        console.error("Missing IDs or new standing for faction update");
+        return;
+    }
+    try {
+        const response = await window.updateNpcFactionStanding(npcId, pcId, newStandingValue);
+        if (response && response.character) {
+            const updatedCharState = appState.updateCharacterInList(response.character); // Get the character from state
+            const currentProfileChar = appState.getCurrentProfileChar();
+            if (currentProfileChar && String(currentProfileChar._id) === String(npcId)) {
+                 window.renderNpcFactionStandingsUI(
+                    updatedCharState, // Use the character from state which is processed
+                    appState.activePcIds,
+                    appState.getAllCharacters(),
+                    window.getElem('npc-faction-standings-content'),
+                    window.handleSaveFactionStanding
+                );
+            }
+        } else {
+            console.error("Failed to update faction standing: No character data returned from server.");
+            alert("Failed to update faction standing on server.");
+        }
+    } catch (error) {
+        console.error("Error saving faction standing:", error);
+        alert(`Error saving faction standing: ${error.message}`);
+    }
+};
+// This is the end of characterService.js. Ensure no extra braces.

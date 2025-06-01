@@ -1,33 +1,26 @@
-// app.js
-// Responsibility: Application entry point, initialization, and coordination.
-// Assumes all other modules are loaded and their functions/objects are available globally or via imports.
+// static/app.js
 
-// --- Initialization ---
 document.addEventListener('DOMContentLoaded', async () => {
     console.log("app.js: DOMContentLoaded event fired.");
     try {
-        await initializeAppCharacters(); // from characterService.js
-        await fetchAndRenderHistoryFiles(); // from characterService.js
-        setupResizer(); // from eventHandlers.js
-        setupCollapsibleSections(); // from eventHandlers.js
-        assignButtonEventHandlers(); // from eventHandlers.js
-        updateMainView(); // Initial view setup
+        await window.initializeAppCharacters();
+        await window.fetchAndRenderHistoryFiles(); // Ensure this is defined on window from characterService
+        window.setupResizer();
+        window.setupCollapsibleSections();
+        window.assignButtonEventHandlers();
+        window.updateMainView();
     } catch (e) {
         console.error("Error during initial app setup:", e);
-        // Display a user-friendly error message on the page if critical parts fail
         const body = document.querySelector('body');
-        if (body) body.innerHTML = "<h1>Critical Error Initializing Application. Please check console.</h1>";
+        if (body) body.innerHTML = `<h1>Critical Error Initializing Application: ${e.message}. Please check console.</h1><pre>${e.stack}</pre>`;
     }
     console.log("app.js: DOMContentLoaded finished.");
 });
 
-
-// --- Core Application Logic / Event Handlers ---
-
-function updateMainView() {
-    const dialogueInterfaceElem = getElem('dialogue-interface');
-    const pcDashboardViewElem = getElem('pc-dashboard-view');
-    const pcQuickViewInSceneElem = getElem('pc-quick-view-section-in-scene');
+window.updateMainView = function() {
+    const dialogueInterfaceElem = window.getElem('dialogue-interface');
+    const pcDashboardViewElem = window.getElem('pc-dashboard-view');
+    const pcQuickViewInSceneElem = window.getElem('pc-quick-view-section-in-scene');
 
     if (!dialogueInterfaceElem || !pcDashboardViewElem || !pcQuickViewInSceneElem) {
         console.error("updateMainView: Critical UI element(s) missing.");
@@ -37,40 +30,39 @@ function updateMainView() {
     const activeNpcCount = appState.getActiveNpcCount();
     const showPcDashboard = appState.getActivePcCount() > 0;
 
-    updateMainViewUI(dialogueInterfaceElem, pcDashboardViewElem, pcQuickViewInSceneElem, activeNpcCount, showPcDashboard);
+    window.updateMainViewUI(dialogueInterfaceElem, pcDashboardViewElem, pcQuickViewInSceneElem, activeNpcCount, showPcDashboard);
 
     if (activeNpcCount > 0 && appState.getActivePcCount() > 0) {
         const activePcsData = appState.getAllCharacters().filter(char => appState.hasActivePc(String(char._id)));
-        renderPcQuickViewInSceneUI(pcQuickViewInSceneElem, activePcsData);
+        window.renderPcQuickViewInSceneUI(pcQuickViewInSceneElem, activePcsData);
     } else {
-        pcQuickViewInSceneElem.style.display = 'none';
-        pcQuickViewInSceneElem.innerHTML = '';
+        if (pcQuickViewInSceneElem) {
+            pcQuickViewInSceneElem.style.display = 'none';
+            pcQuickViewInSceneElem.innerHTML = '';
+        }
     }
-     disableBtn('generate-dialogue-btn', appState.getActiveNpcCount() === 0);
-}
+    window.disableBtn('generate-dialogue-btn', appState.getActiveNpcCount() === 0);
+};
 
-
-async function handleToggleNpcInScene(npcIdStr, npcName) {
-    const multiNpcContainer = getElem('multi-npc-dialogue-container');
+window.handleToggleNpcInScene = async function(npcIdStr, npcName) {
+    const multiNpcContainer = window.getElem('multi-npc-dialogue-container');
     if (!multiNpcContainer) {
         console.error("Multi-NPC dialogue container not found.");
         return;
     }
 
     const isAdding = !appState.hasActiveNpc(npcIdStr);
-    const speakingPcSelect = getElem('speaking-pc-select');
+    const speakingPcSelect = window.getElem('speaking-pc-select');
     const currentSpeakingPcId = speakingPcSelect ? speakingPcSelect.value : null;
-
 
     if (isAdding) {
         appState.addActiveNpc(npcIdStr);
-        createNpcDialogueAreaUI(npcIdStr, npcName, multiNpcContainer); // from uiRenderers.js
+        window.createNpcDialogueAreaUI(npcIdStr, npcName, multiNpcContainer);
         appState.initDialogueHistory(npcIdStr);
         const toggledNpc = appState.getCharacterById(npcIdStr);
 
-        // Greeting logic
         if (toggledNpc && (appState.getActivePcCount() > 0 || currentSpeakingPcId === "")) {
-            const sceneContext = getElem('scene-context').value.trim();
+            const sceneContext = window.getElem('scene-context').value.trim();
             const activePcNames = appState.getActivePcIds().map(pcId => appState.getCharacterById(pcId)?.name || "a PC");
             const greetingPayload = {
                 scene_context: sceneContext || `${activePcNames.join(', ')} ${activePcNames.length > 1 ? 'are' : 'is'} present.`,
@@ -79,11 +71,9 @@ async function handleToggleNpcInScene(npcIdStr, npcName) {
                 speaking_pc_id: currentSpeakingPcId,
                 recent_dialogue_history: []
             };
-             // Trigger greeting after a short delay to allow UI to update
-            setTimeout(() => triggerNpcInteraction(npcIdStr, toggledNpc.name, greetingPayload, true), 100);
+            setTimeout(() => window.triggerNpcInteraction(npcIdStr, toggledNpc.name, greetingPayload, true), 100);
         }
 
-        // Reaction from other NPCs
         const otherNpcIdsInScene = appState.getActiveNpcIds().filter(id => id !== npcIdStr);
         if (otherNpcIdsInScene.length > 0 && toggledNpc) {
             const arrivalMessageForOthers = `(System Observation: ${toggledNpc.name} has just arrived or become prominent in the scene.)`;
@@ -91,12 +81,12 @@ async function handleToggleNpcInScene(npcIdStr, npcName) {
                 const existingNpc = appState.getCharacterById(existingNpcId);
                 if (!existingNpc) return;
 
-                const transcriptArea = getElem(`transcript-${existingNpcId}`);
+                const transcriptArea = window.getElem(`transcript-${existingNpcId}`);
                 if (transcriptArea) {
-                     appendMessageToTranscriptUI(transcriptArea, arrivalMessageForOthers, 'scene-event');
+                     window.appendMessageToTranscriptUI(transcriptArea, arrivalMessageForOthers, 'scene-event');
                      appState.addDialogueToHistory(existingNpcId, arrivalMessageForOthers);
                 }
-                const sceneContext = getElem('scene-context').value.trim();
+                const sceneContext = window.getElem('scene-context').value.trim();
                 const activePcNames = appState.getActivePcIds().map(pcId => appState.getCharacterById(pcId)?.name || "a PC");
                 const reactionPayload = {
                     scene_context: sceneContext,
@@ -105,21 +95,20 @@ async function handleToggleNpcInScene(npcIdStr, npcName) {
                     speaking_pc_id: currentSpeakingPcId,
                     recent_dialogue_history: appState.getRecentDialogueHistory(existingNpcId)
                 };
-                if (transcriptArea) { // Add thinking message
+                if (transcriptArea) {
                     const thinkingEntry = document.createElement('p');
                     thinkingEntry.className = 'scene-event';
-                    thinkingEntry.id = `thinking-${existingNpcId}-arrival-${slugify(toggledNpc.name)}`; // slugify needed
+                    thinkingEntry.id = `thinking-${existingNpcId}-arrival-${window.slugify(toggledNpc.name)}`;
                     thinkingEntry.textContent = `${existingNpc.name} notices ${toggledNpc.name}...`;
                     transcriptArea.appendChild(thinkingEntry);
                     transcriptArea.scrollTop = transcriptArea.scrollHeight;
                 }
-                await triggerNpcInteraction(existingNpcId, existingNpc.name, reactionPayload, false, `thinking-${existingNpcId}-arrival-${slugify(toggledNpc.name)}`);
+                await window.triggerNpcInteraction(existingNpcId, existingNpc.name, reactionPayload, false, `thinking-${existingNpcId}-arrival-${window.slugify(toggledNpc.name)}`);
             });
         }
-
     } else {
         appState.removeActiveNpc(npcIdStr);
-        removeNpcDialogueAreaUI(npcIdStr, multiNpcContainer); // from uiRenderers.js
+        window.removeNpcDialogueAreaUI(npcIdStr, multiNpcContainer);
         appState.deleteDialogueHistory(npcIdStr);
     }
 
@@ -130,30 +119,20 @@ async function handleToggleNpcInScene(npcIdStr, npcName) {
         multiNpcContainer.innerHTML = '<p class="scene-event">Select NPCs to add them to the scene.</p>';
     }
 
-    adjustNpcDialogueAreaWidthsUI(multiNpcContainer); // from uiRenderers.js
-    renderNpcListForSceneUI(getElem('character-list'), appState.getAllCharacters(), appState.activeSceneNpcIds, handleToggleNpcInScene, handleSelectCharacterForDetails); // Re-render list
-    updateMainView();
-}
+    window.adjustNpcDialogueAreaWidthsUI(multiNpcContainer);
+    window.renderNpcListForSceneUI(window.getElem('character-list'), appState.getAllCharacters(), appState.activeSceneNpcIds, window.handleToggleNpcInScene, window.handleSelectCharacterForDetails);
+    window.updateMainView();
+};
 
-function slugify(text) { // Simple slugify, move to utils.js if used more broadly
-    return text.toString().toLowerCase()
-        .replace(/\s+/g, '-')           // Replace spaces with -
-        .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-        .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-        .replace(/^-+/, '')             // Trim - from start of text
-        .replace(/-+$/, '');            // Trim - from end of text
-}
-
-
-async function triggerNpcInteraction(npcIdStr, npcName, payload, isGreeting = false, thinkingMessageId = null) {
-    const transcriptArea = getElem(`transcript-${npcIdStr}`);
+window.triggerNpcInteraction = async function(npcIdStr, npcName, payload, isGreeting = false, thinkingMessageId = null) {
+    const transcriptArea = window.getElem(`transcript-${npcIdStr}`);
     if (!transcriptArea) {
         console.error(`Transcript area for NPC ID ${npcIdStr} not found.`);
         return;
     }
-     let thinkingMessageElement = thinkingMessageId ? getElem(thinkingMessageId) : null;
+    let thinkingMessageElement = thinkingMessageId ? window.getElem(thinkingMessageId) : null;
 
-    if (!thinkingMessageElement && isGreeting) { // Add default thinking message if not already present for greetings
+    if (!thinkingMessageElement && isGreeting) {
         const sceneEventP = document.createElement('p');
         sceneEventP.className = 'scene-event';
         sceneEventP.textContent = `${npcName} is formulating a response...`;
@@ -162,100 +141,50 @@ async function triggerNpcInteraction(npcIdStr, npcName, payload, isGreeting = fa
         thinkingMessageElement = sceneEventP;
     }
 
-
     try {
-        const result = await generateNpcDialogue(npcIdStr, payload); // from apiService.js
+        const result = await window.generateNpcDialogue(npcIdStr, payload); // from apiService
         if(thinkingMessageElement && thinkingMessageElement.parentNode) thinkingMessageElement.remove();
 
-
-        appendMessageToTranscriptUI(transcriptArea, `${npcName}: ${result.npc_dialogue}`, 'dialogue-entry npc-response');
+        window.appendMessageToTranscriptUI(transcriptArea, `${npcName}: ${result.npc_dialogue}`, 'dialogue-entry npc-response');
         appState.addDialogueToHistory(npcIdStr, `${npcName}: ${result.npc_dialogue}`);
-
-        // renderAiSuggestionsUI - needs its own module or part of dialogueAreaRenderer.js
-        // renderAiSuggestions(result.new_memory_suggestions, result.generated_topics, npcIdStr, ...);
-         const suggestionsContainerId = `ai-suggestions-${npcIdStr}`;
-         const suggestionsContainer = getElem(suggestionsContainerId);
-         if (suggestionsContainer) {
-             renderAiSuggestionsContent(
-                 result, // Pass the whole result object
-                 npcIdStr,
-                 suggestionsContainer, // Pass the container to render into
-                 appState.getCurrentProfileCharId() === npcIdStr // Check if this NPC is the one in the profile for global suggestions
-             );
-         }
-
-
+        window.renderAiSuggestionsContent(result, npcIdStr); // from uiRenderers (ensure this is defined on window)
     } catch (error) {
         console.error(`Error generating dialogue for ${npcName}:`, error);
         if(thinkingMessageElement && thinkingMessageElement.parentNode) thinkingMessageElement.remove();
-        appendMessageToTranscriptUI(transcriptArea, `${npcName}: (Error: ${error.message})`, 'dialogue-entry npc-response');
+        window.appendMessageToTranscriptUI(transcriptArea, `${npcName}: (Error: ${error.message})`, 'dialogue-entry npc-response');
         appState.addDialogueToHistory(npcIdStr, `${npcName}: (Error generating dialogue)`);
     }
     transcriptArea.scrollTop = transcriptArea.scrollHeight;
-}
-function renderAiSuggestionsContent(aiResult, forNpcId, suggestionsContainerElement, isProfiledNpc) {
-    // Simplified: this needs to be fleshed out like your original renderAiSuggestions
-    // It should populate the specific suggestion divs inside suggestionsContainerElement
-    // For now, a placeholder:
-    if (!suggestionsContainerElement) return;
-    suggestionsContainerElement.innerHTML = ''; // Clear previous
-    suggestionsContainerElement.style.display = 'none'; // Hide by default
+};
 
-    let contentGenerated = false;
-
-    if (aiResult.new_memory_suggestions && aiResult.new_memory_suggestions.length > 0) {
-        // ... render memory suggestions ...
-        contentGenerated = true;
-    }
-    if (aiResult.suggested_npc_actions && aiResult.suggested_npc_actions.length > 0) {
-        const actionsList = getElem(`suggested-npc-actions-list-npc-${forNpcId}`) || suggestionsContainerElement.querySelector(`#suggested-npc-actions-list-npc-${forNpcId}`);
-        if (actionsList) {
-            actionsList.innerHTML = `<h5>NPC Actions/Thoughts:</h5>` + aiResult.suggested_npc_actions.map(action => `<div class="suggested-item">${action}</div>`).join('');
-            contentGenerated = true;
-        }
-    }
-    // ... (render other suggestion types: player_checks, faction_standing_changes)
-
-    if (contentGenerated) {
-        suggestionsContainerElement.style.display = 'block';
-    }
-
-    // Also handle global AI suggestions if isProfiledNpc
-    if (isProfiledNpc) {
-        // ... update global suggestion lists (e.g., #suggested-memories-list) ...
-    }
-}
-
-
-async function handleGenerateDialogue() {
-    const playerUtterance = getElem('player-utterance').value.trim();
-    const sceneContext = getElem('scene-context').value.trim();
-    const speakingPcSelect = getElem('speaking-pc-select');
+window.handleGenerateDialogue = async function() {
+    const playerUtterance = window.getElem('player-utterance').value.trim();
+    const sceneContext = window.getElem('scene-context').value.trim();
+    const speakingPcSelect = window.getElem('speaking-pc-select');
     const speakingPcId = speakingPcSelect ? speakingPcSelect.value : null;
 
-    if (!playerUtterance && !sceneContext) {
-        alert("Please enter player dialogue or scene context.");
+    if (!playerUtterance && !sceneContext.trim() && playerUtterance !== "") {
+        alert("Please enter player dialogue or ensure scene context is descriptive.");
         return;
     }
-     disableBtn('generate-dialogue-btn', true); // Disable button during generation
+    window.disableBtn('generate-dialogue-btn', true);
 
-    const activePcs = appState.getActivePcIds().map(id => appState.getCharacterById(id)?.name).filter(name => name);
+    const activePcsNames = appState.getActivePcIds().map(id => appState.getCharacterById(id)?.name).filter(name => name);
+    let speakerDisplayName = "Player";
+    if (speakingPcId && speakingPcId !== "") {
+        const pc = appState.getCharacterById(speakingPcId);
+        if (pc) speakerDisplayName = pc.name;
+        else speakerDisplayName = speakingPcId; // Fallback if ID not found in characters (e.g. old ID)
+    } else if (speakingPcId === "") {
+        speakerDisplayName = "DM/Scene Event";
+    }
 
-    // Add player utterance to all active NPC transcripts
     appState.getActiveNpcIds().forEach(npcId => {
-        const transcriptArea = getElem(`transcript-${npcId}`);
+        const transcriptArea = window.getElem(`transcript-${npcId}`);
         if (transcriptArea && playerUtterance) {
-            let speakerName = "Player";
-            if(speakingPcId && speakingPcId !== "") {
-                const pc = appState.getCharacterById(speakingPcId);
-                if(pc) speakerName = pc.name;
-            } else if (speakingPcId === "") {
-                speakerName = "DM/Scene Event";
-            }
-             appendMessageToTranscriptUI(transcriptArea, `${speakerName}: ${playerUtterance}`, 'dialogue-entry player-utterance');
-             appState.addDialogueToHistory(npcId, `${speakerName}: ${playerUtterance}`);
+            window.appendMessageToTranscriptUI(transcriptArea, `${speakerDisplayName}: ${playerUtterance}`, 'dialogue-entry player-utterance');
+            appState.addDialogueToHistory(npcId, `${speakerDisplayName}: ${playerUtterance}`);
         }
-         // Add thinking message
         const npc = appState.getCharacterById(npcId);
         if (transcriptArea && npc) {
             const thinkingEntry = document.createElement('p');
@@ -269,70 +198,59 @@ async function handleGenerateDialogue() {
 
     const dialoguePromises = appState.getActiveNpcIds().map(npcId => {
         const npc = appState.getCharacterById(npcId);
-        if (!npc) return Promise.resolve(); // Should not happen if IDs are managed well
+        if (!npc) return Promise.resolve();
 
         const payload = {
             scene_context: sceneContext,
             player_utterance: playerUtterance,
-            active_pcs: activePcs,
+            active_pcs: activePcsNames,
             speaking_pc_id: speakingPcId,
-            recent_dialogue_history: appState.getRecentDialogueHistory(npcId, 10) // Get more history
+            recent_dialogue_history: appState.getRecentDialogueHistory(npcId, 10)
         };
-        return triggerNpcInteraction(npcId, npc.name, payload, false, `thinking-${npcId}-main`);
+        return window.triggerNpcInteraction(npcId, npc.name, payload, false, `thinking-${npcId}-main`);
     });
 
     await Promise.all(dialoguePromises);
 
-    getElem('player-utterance').value = ''; // Clear input after sending
-    disableBtn('generate-dialogue-btn', false); // Re-enable button
-}
+    if (playerUtterance) window.getElem('player-utterance').value = '';
+    window.disableBtn('generate-dialogue-btn', false);
+};
 
-
-function handleTogglePcSelection(pcIdStr) {
+window.handleTogglePcSelection = function(pcIdStr) {
     appState.toggleActivePc(pcIdStr);
-    renderPcListUI(getElem('active-pc-list'), getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, handleTogglePcSelection);
-    updateMainView();
+    window.renderPcListUI(window.getElem('active-pc-list'), window.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, window.handleTogglePcSelection);
+    window.updateMainView();
 
     const currentProfileChar = appState.getCurrentProfileChar();
     if (currentProfileChar && currentProfileChar.character_type === 'NPC') {
-        // Re-render faction standings for the currently profiled NPC as PC selection changed
-        renderNpcFactionStandingsUI(currentProfileChar, appState.getActivePcIds(), appState.getAllCharacters(), getElem('npc-faction-standings-content'), handleSaveFactionStanding);
+        window.renderNpcFactionStandingsUI(currentProfileChar, appState.activePcIds, appState.getAllCharacters(), window.getElem('npc-faction-standings-content'), window.handleSaveFactionStanding);
     }
-}
+};
 
-
-// app.js
-function handleBackToDashboardOverview() {
-    // Clear any specific PC view state if necessary
-    // Then call updateMainView to re-render the dashboard overview
-    const dashboardContent = getElem('pc-dashboard-content');
+window.handleBackToDashboardOverview = function() {
+    const dashboardContent = window.getElem('pc-dashboard-content');
     if (dashboardContent) {
         const detailedSheet = dashboardContent.querySelector('.detailed-pc-sheet');
-        if (detailedSheet) detailedSheet.remove(); // Remove detailed sheet
+        if (detailedSheet) detailedSheet.remove();
     }
-    updateMainView();
-}
+    appState.setExpandedAbility(null);
+    appState.setExpandedSkill(null);
+    appState.setSkillSortKey(null);
+    window.updateMainView();
+};
 
-// And functions for toggling ability/skill expansion:
-function toggleAbilityExpansion(ablKey) {
-    // Logic from original script.js
-    // It should update appState.currentlyExpandedAbility
-    // Then call:
-    // updatePcDashboardUI(getElem('pc-dashboard-content'), appState.getAllCharacters(), appState.activePcIds, appState.getExpandedAbility(), appState.getExpandedSkill(), appState.getSkillSortKey());
+window.toggleAbilityExpansion = function(ablKey) {
     const currentAbility = appState.getExpandedAbility();
     if (currentAbility === ablKey) {
         appState.setExpandedAbility(null);
     } else {
         appState.setExpandedAbility(ablKey);
+        appState.setExpandedSkill(null); // Collapse skills when expanding abilities
     }
-    updateMainView(); // This will re-render the dashboard
-}
+    window.updateMainView();
+};
 
-function toggleSkillExpansion(skillKey) {
-    // Logic from original script.js
-    // It should update appState.currentlyExpandedSkill and appState.skillSortKey
-    // Then call:
-    // updatePcDashboardUI(getElem('pc-dashboard-content'), appState.getAllCharacters(), appState.activePcIds, appState.getExpandedAbility(), appState.getExpandedSkill(), appState.getSkillSortKey());
+window.toggleSkillExpansion = function(skillKey) {
     const currentSkill = appState.getExpandedSkill();
     if (currentSkill === skillKey) {
         appState.setExpandedSkill(null);
@@ -340,11 +258,49 @@ function toggleSkillExpansion(skillKey) {
     } else {
         appState.setExpandedSkill(skillKey);
         appState.setSkillSortKey(skillKey);
+        appState.setExpandedAbility(null); // Collapse abilities when expanding skills
     }
-    updateMainView(); // This will re-render the dashboard
-}
+    window.updateMainView();
+};
 
-// If using ES6 modules:
-// import { initializeAppCharacters, ... } from './characterService.js';
-// import { setupResizer, ... } from './eventHandlers.js';
-// ... etc.
+window.addSuggestedMemoryAsActual = async function(npcId, memoryContent) {
+    if (!npcId || !memoryContent) return;
+    const character = appState.getCharacterById(npcId);
+    if (!character || character.character_type !== 'NPC') {
+        alert("Cannot add memory: Invalid NPC ID or character is not an NPC.");
+        return;
+    }
+    try {
+        const memoryData = { content: memoryContent, type: "AI_suggestion", source: "AI suggestion" };
+        const response = await window.addMemoryToNpc(npcId, memoryData);
+        const charToUpdate = appState.getCharacterById(npcId);
+        if (charToUpdate && response.updated_memories) {
+            charToUpdate.memories = response.updated_memories;
+            appState.updateCharacterInList(charToUpdate);
+            if (appState.getCurrentProfileCharId() === npcId) {
+                window.renderMemoriesUI(charToUpdate.memories, window.getElem('character-memories-list'), window.handleDeleteMemory);
+            }
+        }
+        alert(`Suggested memory added to ${character.name}.`);
+    } catch (error) {
+        console.error("Error adding suggested memory:", error);
+        alert("Error adding suggested memory: " + error.message);
+    }
+};
+
+window.acceptFactionStandingChange = async function(npcIdToUpdate, pcTargetId, newStanding) {
+    if (!npcIdToUpdate || !pcTargetId || !newStanding) {
+        alert("Missing information to update faction standing.");
+        return;
+    }
+    const npc = appState.getCharacterById(npcIdToUpdate);
+    const pc = appState.getCharacterById(pcTargetId);
+    if (!npc || !pc) {
+        alert("NPC or PC not found for faction standing update.");
+        return;
+    }
+
+    if (confirm(`Change ${npc.name}'s standing towards ${pc.name} to ${newStanding}?`)) {
+        await window.handleSaveFactionStanding(npcIdToUpdate, pcTargetId, newStanding);
+    }
+};
