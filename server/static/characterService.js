@@ -17,22 +17,27 @@ window.profileElementIds = {
     dissociateHistoryCallback: () => window.handleDissociateHistoryFile
 };
 
+// static/characterService.js
+
 window.initializeAppCharacters = async function() {
     console.log("Fetching characters via characterService...");
     try {
         const charactersFromServer = await window.fetchCharactersFromServer();
-        appState.setAllCharacters(charactersFromServer); // appState is global
+        appState.setAllCharacters(charactersFromServer);
         console.log("Characters fetched and processed:", appState.getAllCharacters().length);
 
         window.renderNpcListForSceneUI(window.getElem('character-list'), appState.getAllCharacters(), appState.activeSceneNpcIds, window.handleToggleNpcInScene, window.handleSelectCharacterForDetails);
         window.renderPcListUI(window.getElem('active-pc-list'), window.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, window.handleTogglePcSelection);
-        window.updateMainView();
+        
+        setTimeout(window.updateMainView, 0); // <-- DEFER THIS CALL
     } catch (error) {
         console.error('Error in initializeAppCharacters:', error);
         if (window.getElem('character-list')) window.getElem('character-list').innerHTML = '<ul><li><em>Error loading NPCs.</em></li></ul>';
         if (window.getElem('active-pc-list')) window.getElem('active-pc-list').innerHTML = '<p><em>Error loading PCs.</em></p>';
     }
 };
+
+// ... rest of characterService.js code ...
 
 window.handleSelectCharacterForDetails = async function(charIdStr) {
     if (!charIdStr || charIdStr === "null") {

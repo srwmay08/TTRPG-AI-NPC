@@ -3,12 +3,13 @@
 document.addEventListener('DOMContentLoaded', async () => {
     console.log("app.js: DOMContentLoaded event fired.");
     try {
-        await window.initializeAppCharacters();
-        await window.fetchAndRenderHistoryFiles(); // Ensure this is defined on window from characterService
+        await window.initializeAppCharacters(); // This itself calls updateMainView
+        await window.fetchAndRenderHistoryFiles();
         window.setupResizer();
         window.setupCollapsibleSections();
         window.assignButtonEventHandlers();
-        window.updateMainView();
+        // Initial call after everything else in DOMContentLoaded
+        setTimeout(window.updateMainView, 0); // <-- DEFER THIS CALL
     } catch (e) {
         console.error("Error during initial app setup:", e);
         const body = document.querySelector('body');
@@ -18,15 +19,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 window.updateMainView = function() {
+    console.log("updateMainView called"); // Add a log to see when it's called
     const dialogueInterfaceElem = window.getElem('dialogue-interface');
     const pcDashboardViewElem = window.getElem('pc-dashboard-view');
     const pcQuickViewInSceneElem = window.getElem('pc-quick-view-section-in-scene');
 
     if (!dialogueInterfaceElem || !pcDashboardViewElem || !pcQuickViewInSceneElem) {
-        console.error("updateMainView: Critical UI element(s) missing.");
-        return;
+        console.error("updateMainView: Critical UI element(s) missing. dialogueInterface:", dialogueInterfaceElem, "pcDashboardView:", pcDashboardViewElem, "pcQuickViewInScene:", pcQuickViewInSceneElem);
+        return; // Exit if main containers aren't found
     }
 
+    // ... (rest of the function as provided before)
     const activeNpcCount = appState.getActiveNpcCount();
     const showPcDashboard = appState.getActivePcCount() > 0;
 
@@ -41,7 +44,15 @@ window.updateMainView = function() {
             pcQuickViewInSceneElem.innerHTML = '';
         }
     }
-    window.disableBtn('generate-dialogue-btn', appState.getActiveNpcCount() === 0);
+    
+    // Conditional disableBtn
+    const generateBtn = window.getElem('generate-dialogue-btn');
+    if (generateBtn) {
+        window.disableBtn('generate-dialogue-btn', appState.getActiveNpcCount() === 0);
+    } else {
+        // This warning might still appear on the very first load if dialogue-interface is hidden
+        // console.warn("generate-dialogue-btn not found during updateMainView, this might be okay if dialogue interface is hidden.");
+    }
 };
 
 window.handleToggleNpcInScene = async function(npcIdStr, npcName) {

@@ -467,39 +467,9 @@ def parse_ai_suggestions(full_ai_output: str, speaking_pc_id: Optional[str]) -> 
     dialogue_parts = []
     npc_action_str = "None"
     player_check_str = "None"
-    new_standing_str = "No change"
-    justification_str = "Not specified"
-    
-    # Key for parsing suggestions related to the speaker
-    suggestion_pc_key = speaking_pc_id if speaking_pc_id and speaking_pc_id.strip() != "" else "PLAYER"
-
-    lines = full_ai_output.splitlines()
-    dialogue_section_ended = False
-
-    # Attempt to find the "--- END OF DIALOGUE ---" marker
-    end_dialogue_marker = "--- END OF DIALOGUE ---"
-    dialogue_end_index = -1
-    for i, line in enumerate(lines):
-        if end_dialogue_marker in line:
-            dialogue_end_index = i
-            break
-    
-    if dialogue_end_index != -1:
-        dialogue_parts = lines[:dialogue_end_index]
-        suggestion_lines = lines[dialogue_end_index + 1:]
-    else: # Fallback if marker not found, assume suggestions are at the end after keywords
-        suggestion_lines = []
-        temp_dialogue_parts = []
-        keywords_found = False
-        for line in lines:
-            stripped_line = line.strip()
-            if any(stripped_line.startswith(kw) for kw in ["NPC_ACTION:", "PLAYER_CHECK:", f"STANDING_CHANGE_SUGGESTION_FOR_{suggestion_pc_key}:", "JUSTIFICATION:"]):
-                keywords_found = True
-            if keywords_found:
-                suggestion_lines.append(line)
-            else:
-                temp_dialogue_parts.append(line)
-        dialogue_parts = temp_dialogue_parts
+    new_standing_str = "No change" # Default
+    justification_str = "Not specified" # Default
+    suggestion_pc_key_for_parsing = speaking_pc_id if speaking_pc_id and speaking_pc_id.strip() != "" else "PLAYER"
 
 
     for line in suggestion_lines:
@@ -508,31 +478,43 @@ def parse_ai_suggestions(full_ai_output: str, speaking_pc_id: Optional[str]) -> 
             npc_action_str = stripped_line.replace("NPC_ACTION:", "").strip()
         elif stripped_line.startswith("PLAYER_CHECK:"):
             player_check_str = stripped_line.replace("PLAYER_CHECK:", "").strip()
-        elif stripped_line.startswith(f"STANDING_CHANGE_SUGGESTION_FOR_{suggestion_pc_key}:"):
-            new_standing_str = stripped_line.replace(f"STANDING_CHANGE_SUGGESTION_FOR_{suggestion_pc_key}:", "").strip()
+        elif stripped_line.startswith(f"STANDING_CHANGE_SUGGESTION_FOR_{suggestion_pc_key_for_parsing}:"):
+            # Clean the standing string more robustly
+            raw_standing_val = stripped_line.replace(f"STANDING_CHANGE_SUGGESTION_FOR_{suggestion_pc_key_for_parsing}:", "").strip()
+            # Remove potential brackets and extra quotes
+            cleaned_standing_val = raw_standing_val.replace('[', '').replace(']', '').replace('"', '').replace("'", "").strip()
+            new_standing_str = cleaned_standing_val # Store the cleaned string for potential enum conversion
         elif stripped_line.startswith("JUSTIFICATION:"):
             justification_str = stripped_line.replace("JUSTIFICATION:", "").strip()
     
     npc_dialogue_final = "\n".join(dialogue_parts).strip()
-    if not npc_dialogue_final and (npc_action_str != "None" or player_check_str != "None" or new_standing_str != "No change"):
-        npc_dialogue_final = f"({npc_name_fallback} considers the situation...)"
-
+    # ... (rest of dialogue finalization) ...
 
     parsed_new_standing_enum = None
     if new_standing_str and new_standing_str.lower() not in ["no change", "none", ""]:
         try:
-            parsed_new_standing_enum = FactionStandingLevel(new_standing_str)
-        except ValueError:
-            print(f"Warning: AI suggested an invalid standing level: '{new_standing_str}' for PC '{suggestion_pc_key}'")
-            justification_str += f" (AI suggested invalid standing: {new_standing_str})"
-            # new_standing_str remains the AI's output for transparency if it's invalid
-    
+            # Attempt to match cleaned_standing_str with FactionStandingLevel values
+            matched_level = None
+            for level in FactionStandingLevel: # FactionStandingLevel from models.py
+                if level.value.lower() == new_standing_str.lower():
+                    matched_level = level
+                    break
+            
+            if matched_level:
+                parsed_new_standing_enum = matched_level
+            else:
+                print(f"Warning: AI suggested an unrecognized standing level: '{new_standing_str}' for PC '{suggestion_pc_key_for_parsing}'")
+                justification_str += f" (AI suggested unrecognized standing: {new_standing_str})"
+        except Exception as e_standing: # Catch any error during enum conversion
+             print(f"Error converting AI standing '{new_standing_str}' to enum: {e_standing}")
+             justification_str += f" (Error processing AI standing: {new_standing_str})"
+
     return {
         "dialogue": npc_dialogue_final if npc_dialogue_final else "(No dialogue response)",
         "npc_action": [npc_action_str] if npc_action_str and npc_action_str.lower() != "none" else [],
         "player_check": [player_check_str] if player_check_str and player_check_str.lower() != "none" else [],
         "new_standing": parsed_new_standing_enum, 
-        "new_standing_str_for_response": new_standing_str, 
+        "new_standing_str_for_response": new_standing_str, # Keep original potentially for UI if enum fails
         "justification": justification_str
     }
 
