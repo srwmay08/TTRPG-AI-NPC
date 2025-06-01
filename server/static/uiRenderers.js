@@ -316,6 +316,7 @@ window.renderAiSuggestionsContent = function(aiResult, forNpcId) {
 };
 
 window.renderNpcFactionStandingsUI = function(npcCharacter, activePcIdsSet, allCharactersArray, contentElement, onStandingChangeCallback) {
+    // ... (Full code for renderNpcFactionStandingsUI as provided in my previous response)
     if (!contentElement) { console.error("renderNpcFactionStandingsUI: contentElement not found"); return; }
     if (!npcCharacter || npcCharacter.character_type !== 'NPC') {
         contentElement.innerHTML = "<p><em>Faction standings are for NPCs. Ensure an NPC is selected.</em></p>";
@@ -339,7 +340,7 @@ window.renderNpcFactionStandingsUI = function(npcCharacter, activePcIdsSet, allC
         select.id = `standing-select-${npcCharacter._id}-${pcIdStr}`;
         select.dataset.pcId = pcIdStr;
         select.style.width = "150px";
-        FACTION_STANDING_SLIDER_ORDER.forEach(levelKey => { // FACTION_STANDING_SLIDER_ORDER from config.js
+        FACTION_STANDING_SLIDER_ORDER.forEach(levelKey => {
             const option = document.createElement('option');
             option.value = levelKey;
             option.textContent = levelKey;
@@ -347,8 +348,7 @@ window.renderNpcFactionStandingsUI = function(npcCharacter, activePcIdsSet, allC
         });
         const currentStandingObj = npcCharacter.pc_faction_standings ? npcCharacter.pc_faction_standings[pcIdStr] : null;
         const currentStandingValue = (typeof currentStandingObj === 'object' && currentStandingObj !== null && typeof currentStandingObj.value !== 'undefined') ? currentStandingObj.value : currentStandingObj;
-        select.value = currentStandingValue || FACTION_STANDING_LEVELS.INDIFFERENT; // FACTION_STANDING_LEVELS from config.js
-
+        select.value = currentStandingValue || FACTION_STANDING_LEVELS.INDIFFERENT;
         select.addEventListener('change', (event) => {
             onStandingChangeCallback(npcCharacter._id, pcIdStr, event.target.value);
         });
@@ -358,59 +358,119 @@ window.renderNpcFactionStandingsUI = function(npcCharacter, activePcIdsSet, allC
     });
 };
 
+
+// static/uiRenderers.js
+// Make sure this function is defined after its dependencies like renderMemoriesUI etc. if they are in the same file,
+// OR ensure all are on window and uiRenderers.js is fully parsed before this is called.
+
 window.renderCharacterProfileUI = function(character, elements) {
-    if (!elements) { console.error("renderCharacterProfileUI: elements object not provided"); return; }
+    if (!elements) {
+        console.error("renderCharacterProfileUI: elements object not provided. This object should contain DOM element IDs.");
+        // Try to get some default elements to prevent further errors, but this is not ideal.
+        elements = {
+            detailsCharName: 'details-char-name',
+            profileCharType: 'profile-char-type',
+            profileDescription: 'profile-description',
+            profilePersonality: 'profile-personality',
+            gmNotesTextarea: 'gm-notes',
+            saveGmNotesBtn: 'save-gm-notes-btn',
+            npcMemoriesSection: 'npc-memories-collapsible-section',
+            characterMemoriesList: 'character-memories-list',
+            addMemoryBtn: 'add-memory-btn',
+            npcFactionStandingsSection: 'npc-faction-standings-section',
+            npcFactionStandingsContent: 'npc-faction-standings-content',
+            characterHistorySection: 'character-history-collapsible-section',
+            associatedHistoryList: 'associated-history-list',
+            historyContentDisplay: 'history-content-display',
+            associateHistoryBtn: 'associate-history-btn',
+            // Callbacks should be actual functions, e.g., window.handleDeleteMemory
+            // These are expected to be passed in correctly by characterService.js
+            deleteMemoryCallback: elements.deleteMemoryCallback || function() { console.warn("deleteMemoryCallback not provided to renderCharacterProfileUI"); },
+            factionChangeCallback: elements.factionChangeCallback || function() { console.warn("factionChangeCallback not provided to renderCharacterProfileUI"); },
+            dissociateHistoryCallback: elements.dissociateHistoryCallback || function() { console.warn("dissociateHistoryCallback not provided to renderCharacterProfileUI"); }
+        };
+    }
+
+    const detailsCharNameElem = window.getElem(elements.detailsCharName);
+    const profileCharTypeElem = window.getElem(elements.profileCharType);
+    const profileDescriptionElem = window.getElem(elements.profileDescription);
+    const profilePersonalityElem = window.getElem(elements.profilePersonality);
+    const gmNotesTextareaElem = window.getElem(elements.gmNotesTextarea);
+    const saveGmNotesBtnElem = window.getElem(elements.saveGmNotesBtn);
+    const npcMemoriesSectionElem = window.getElem(elements.npcMemoriesSection);
+    const characterMemoriesListElem = window.getElem(elements.characterMemoriesList);
+    const addMemoryBtnElem = window.getElem(elements.addMemoryBtn);
+    const npcFactionStandingsSectionElem = window.getElem(elements.npcFactionStandingsSection);
+    const npcFactionStandingsContentElem = window.getElem(elements.npcFactionStandingsContent);
+    const characterHistorySectionElem = window.getElem(elements.characterHistorySection);
+    const associatedHistoryListElem = window.getElem(elements.associatedHistoryList);
+    const historyContentDisplayElem = window.getElem(elements.historyContentDisplay);
+    const associateHistoryBtnElem = window.getElem(elements.associateHistoryBtn);
+
     if (!character) {
-        window.updateText(elements.detailsCharName, 'None');
-        window.updateText(elements.profileCharType, '');
-        window.updateText(elements.profileDescription, '');
-        window.updateText(elements.profilePersonality, '');
-        const gmNotesTextarea = window.getElem(elements.gmNotesTextarea);
-        if (gmNotesTextarea) gmNotesTextarea.value = '';
-        window.disableBtn(elements.saveGmNotesBtn, true);
-        const npcMemSection = window.getElem(elements.npcMemoriesSection);
-        if(npcMemSection) npcMemSection.style.display = 'none';
-        const npcFactSection = window.getElem(elements.npcFactionStandingsSection);
-        if(npcFactSection) npcFactSection.style.display = 'none';
-        const charHistSection = window.getElem(elements.characterHistorySection);
-        if(charHistSection) charHistSection.style.display = 'block';
-        const assocHistList = window.getElem(elements.associatedHistoryList);
-        if(assocHistList) assocHistList.innerHTML = '<li><em>Select a character.</em></li>';
-        const histContDisp = window.getElem(elements.historyContentDisplay);
-        if(histContDisp) histContDisp.textContent = 'Select a character to view history.';
-        window.disableBtn(elements.addMemoryBtn, true);
-        window.disableBtn(elements.associateHistoryBtn, true);
+        if (detailsCharNameElem) window.updateText(elements.detailsCharName, 'None');
+        if (profileCharTypeElem) window.updateText(elements.profileCharType, '');
+        if (profileDescriptionElem) window.updateText(elements.profileDescription, '');
+        if (profilePersonalityElem) window.updateText(elements.profilePersonality, '');
+        if (gmNotesTextareaElem) gmNotesTextareaElem.value = '';
+        if (saveGmNotesBtnElem) window.disableBtn(elements.saveGmNotesBtn, true);
+
+        if (npcMemoriesSectionElem) npcMemoriesSectionElem.style.display = 'none';
+        if (npcFactionStandingsSectionElem) npcFactionStandingsSectionElem.style.display = 'none';
+        if (characterHistorySectionElem) characterHistorySectionElem.style.display = 'block'; // Keep visible
+
+        if (associatedHistoryListElem) associatedHistoryListElem.innerHTML = '<li><em>Select a character.</em></li>';
+        if (historyContentDisplayElem) historyContentDisplayElem.textContent = 'Select a character to view history.';
+
+        if (addMemoryBtnElem) window.disableBtn(elements.addMemoryBtn, true);
+        if (associateHistoryBtnElem) window.disableBtn(elements.associateHistoryBtn, true);
         return;
     }
 
-    window.updateText(elements.detailsCharName, character.name || "N/A");
-    window.updateText(elements.profileCharType, character.character_type || "N/A");
-    window.updateText(elements.profileDescription, character.description || "N/A");
-    window.updateText(elements.profilePersonality, (character.personality_traits || []).join(', ') || "N/A");
-    const gmNotesTextareaElem = window.getElem(elements.gmNotesTextarea);
-    if(gmNotesTextareaElem) gmNotesTextareaElem.value = character.gm_notes || '';
-    window.disableBtn(elements.saveGmNotesBtn, false);
+    // Ensure character has expected structure, defaulting where necessary
+    character.personality_traits = character.personality_traits || [];
+    character.memories = character.memories || [];
+    character.associated_history_files = character.associated_history_files || [];
+    character.pc_faction_standings = character.pc_faction_standings || {};
+
+
+    if (detailsCharNameElem) window.updateText(elements.detailsCharName, character.name || "N/A");
+    if (profileCharTypeElem) window.updateText(elements.profileCharType, character.character_type || "N/A");
+    if (profileDescriptionElem) window.updateText(elements.profileDescription, character.description || "N/A");
+    if (profilePersonalityElem) window.updateText(elements.profilePersonality, character.personality_traits.join(', ') || "N/A");
+
+    if (gmNotesTextareaElem) gmNotesTextareaElem.value = character.gm_notes || '';
+    if (saveGmNotesBtnElem) window.disableBtn(elements.saveGmNotesBtn, false);
+
     const isNpc = character.character_type === 'NPC';
-    const npcMemSectionElem = window.getElem(elements.npcMemoriesSection);
-    if(npcMemSectionElem) npcMemSectionElem.style.display = isNpc ? 'block' : 'none';
-    const npcFactSectionElem = window.getElem(elements.npcFactionStandingsSection);
-    if(npcFactSectionElem) npcFactSectionElem.style.display = isNpc ? 'block' : 'none';
-    const charHistSectionElem = window.getElem(elements.characterHistorySection);
-    if(charHistSectionElem) charHistSectionElem.style.display = 'block';
+
+    if (npcMemoriesSectionElem) npcMemoriesSectionElem.style.display = isNpc ? 'block' : 'none';
+    if (npcFactionStandingsSectionElem) npcFactionStandingsSectionElem.style.display = isNpc ? 'block' : 'none';
+    if (characterHistorySectionElem) characterHistorySectionElem.style.display = 'block';
 
     if (isNpc) {
-        window.renderMemoriesUI(character.memories || [], window.getElem(elements.characterMemoriesList), elements.deleteMemoryCallback());
-        window.renderNpcFactionStandingsUI(character, appState.activePcIds, appState.getAllCharacters(), window.getElem(elements.npcFactionStandingsContent), elements.factionChangeCallback());
-        window.disableBtn(elements.addMemoryBtn, false);
-    } else {
-        const charMemList = window.getElem(elements.characterMemoriesList);
-        if(charMemList) charMemList.innerHTML = '<p><em>Memories are for NPCs only.</em></p>';
-        window.disableBtn(elements.addMemoryBtn, true);
-        const factionContent = window.getElem(elements.npcFactionStandingsContent);
-        if (factionContent) factionContent.innerHTML = '<p><em>Faction standings are for NPCs.</em></p>';
+        if (characterMemoriesListElem) {
+            // The callback elements.deleteMemoryCallback() should resolve to window.handleDeleteMemory
+            window.renderMemoriesUI(character.memories, characterMemoriesListElem, elements.deleteMemoryCallback());
+        }
+        if (npcFactionStandingsContentElem) {
+            // The callback elements.factionChangeCallback() should resolve to window.handleSaveFactionStanding
+            // Ensure appState is globally available
+            window.renderNpcFactionStandingsUI(character, appState.activePcIds, appState.getAllCharacters(), npcFactionStandingsContentElem, elements.factionChangeCallback());
+        }
+        if (addMemoryBtnElem) window.disableBtn(elements.addMemoryBtn, false);
+    } else { // Is PC
+        if (characterMemoriesListElem) characterMemoriesListElem.innerHTML = '<p><em>Memories are for NPCs only.</em></p>';
+        if (addMemoryBtnElem) window.disableBtn(elements.addMemoryBtn, true);
+        if (npcFactionStandingsContentElem) npcFactionStandingsContentElem.innerHTML = '<p><em>Faction standings are for NPCs.</em></p>';
+        if (npcFactionStandingsSectionElem) npcFactionStandingsSectionElem.style.display = 'none'; // Hide entire section for PC
     }
-    window.renderAssociatedHistoryFilesUI(character, window.getElem(elements.associatedHistoryList), window.getElem(elements.historyContentDisplay), elements.dissociateHistoryCallback());
-    window.disableBtn(elements.associateHistoryBtn, false);
+
+    if (associatedHistoryListElem && historyContentDisplayElem) {
+        // The callback elements.dissociateHistoryCallback() should resolve to window.handleDissociateHistoryFile
+        window.renderAssociatedHistoryFilesUI(character, associatedHistoryListElem, historyContentDisplayElem, elements.dissociateHistoryCallback());
+    }
+    if (associateHistoryBtnElem) window.disableBtn(elements.associateHistoryBtn, false);
 };
 
 window.renderMemoriesUI = function(memories, listElement, deleteCallback) {
