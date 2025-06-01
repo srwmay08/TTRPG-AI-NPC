@@ -1,17 +1,16 @@
 // static/uiRenderers.js
-// All functions intended for global access are prefixed with window.
+// All functions intended for global access are explicitly prefixed with window.
 
 console.log("uiRenderers.js: Parsing STARTED");
 
 window.createPcQuickViewSectionHTML = function(isForDashboard) {
-    const titleText = PC_QUICK_VIEW_BASE_TITLE; // From config.js (ensure config.js is loaded first and this is global)
+    const titleText = PC_QUICK_VIEW_BASE_TITLE; // From config.js
     const fullTitle = isForDashboard ? `${titleText} (Click card for details)` : titleText;
     return `<h4>${fullTitle}</h4><div class="pc-dashboard-grid">`;
 };
 
 window.generatePcQuickViewCardHTML = function(pc, isClickableForDetailedView = false) {
     if (!pc) return '';
-    // Ensure VTT data structures exist (this should ideally be pre-processed when characters are loaded into appState)
     pc.vtt_data = pc.vtt_data || { abilities: {}, attributes: { hp: {}, ac: {}, movement: {}, init: {}, spell: {} }, details: {}, skills: {}, traits: { languages: {}, armorProf: {}, weaponProf: {}} };
     pc.vtt_data.abilities = pc.vtt_data.abilities || {};
     pc.vtt_data.attributes = pc.vtt_data.attributes || { hp: {}, ac: {}, movement: {}, init: {}, spell: {} };
@@ -93,7 +92,6 @@ window.generatePcQuickViewCardHTML = function(pc, isClickableForDetailedView = f
 
 
 window.renderNpcListForSceneUI = function(listContainerElement, allCharacters, activeNpcIds, onCheckboxChange, onNameClick) {
-    // (Full function as provided in previous responses - ensure callbacks are correctly assigned)
     if (!listContainerElement) { console.error("renderNpcListForSceneUI: listContainerElement not found"); return; }
     let ul = listContainerElement.querySelector('ul');
     if (!ul) {
@@ -115,11 +113,11 @@ window.renderNpcListForSceneUI = function(listContainerElement, allCharacters, a
         checkbox.type = 'checkbox';
         checkbox.id = `npc-scene-checkbox-${charIdStr}`;
         checkbox.checked = activeNpcIds.has(charIdStr);
-        checkbox.onchange = () => onCheckboxChange(charIdStr, char.name); // onCheckboxChange is window.handleToggleNpcInScene
+        checkbox.onchange = () => onCheckboxChange(charIdStr, char.name);
         const nameSpan = document.createElement('span');
         nameSpan.textContent = char.name;
         nameSpan.className = 'npc-name-clickable';
-        nameSpan.onclick = async () => { await onNameClick(charIdStr); }; // onNameClick is window.handleSelectCharacterForDetails
+        nameSpan.onclick = async () => { await onNameClick(charIdStr); };
         li.appendChild(checkbox);
         li.appendChild(nameSpan);
         if (activeNpcIds.has(charIdStr)) li.classList.add('active-in-scene');
@@ -128,7 +126,6 @@ window.renderNpcListForSceneUI = function(listContainerElement, allCharacters, a
 };
 
 window.renderPcListUI = function(pcListDiv, speakingPcSelect, allCharacters, activePcIds, onPcItemClick) {
-    // (Full function as provided in previous responses - ensure callback is correctly assigned)
     if (!pcListDiv) { console.error("renderPcListUI: pcListDiv not found"); return;}
     pcListDiv.innerHTML = '';
     if (speakingPcSelect) {
@@ -146,7 +143,7 @@ window.renderPcListUI = function(pcListDiv, speakingPcSelect, allCharacters, act
         li.style.cursor = "pointer";
         li.textContent = pc.name;
         li.dataset.charId = pcIdStr;
-        li.onclick = () => onPcItemClick(pcIdStr); // onPcItemClick is window.handleTogglePcSelection
+        li.onclick = () => onPcItemClick(pcIdStr);
         if (activePcIds.has(pcIdStr)) {
             li.classList.add('selected');
         } else {
@@ -164,7 +161,6 @@ window.renderPcListUI = function(pcListDiv, speakingPcSelect, allCharacters, act
 };
 
 window.createNpcDialogueAreaUI = function(npcIdStr, npcName, containerElement) {
-    // (Full function as provided in previous responses)
     if (!containerElement || window.getElem(`npc-area-${npcIdStr}`)) return;
     const areaDiv = document.createElement('div');
     areaDiv.className = 'npc-dialogue-area';
@@ -193,18 +189,15 @@ window.createNpcDialogueAreaUI = function(npcIdStr, npcName, containerElement) {
 };
 
 window.removeNpcDialogueAreaUI = function(npcIdStr, containerElement) {
-    // (Full function as provided in previous responses)
     const areaDiv = window.getElem(`npc-area-${npcIdStr}`);
     if (areaDiv) areaDiv.remove();
     window.adjustNpcDialogueAreaWidthsUI(containerElement);
-    // Access appState directly as it's global
     if (appState.getActiveNpcCount() === 0 && containerElement && !containerElement.querySelector('p.scene-event')) {
         containerElement.innerHTML = '<p class="scene-event">Select NPCs to add them to the scene.</p>';
     }
 };
 
 window.adjustNpcDialogueAreaWidthsUI = function(containerElement) {
-    // (Full function as provided in previous responses)
     if (!containerElement) return;
     const dialogueAreas = containerElement.querySelectorAll('.npc-dialogue-area');
     const numAreas = dialogueAreas.length;
@@ -224,7 +217,6 @@ window.adjustNpcDialogueAreaWidthsUI = function(containerElement) {
 };
 
 window.appendMessageToTranscriptUI = function(transcriptArea, message, className) {
-    // (Full function as provided in previous responses)
     if (!transcriptArea) return;
     const entry = document.createElement('p');
     entry.className = className;
@@ -234,18 +226,16 @@ window.appendMessageToTranscriptUI = function(transcriptArea, message, className
 };
 
 window.renderAiSuggestionsContent = function(aiResult, forNpcId) {
-    // (Full function as provided in previous response - ensure all getElem calls are window.getElem, appState is global)
     const suggestionsContainerNpc = window.getElem(`ai-suggestions-${forNpcId}`);
     if (!suggestionsContainerNpc) return;
     suggestionsContainerNpc.innerHTML = '';
     let contentGeneratedForNpc = false;
 
-    // Memories
     const memoriesListNpc = document.createElement('div');
     memoriesListNpc.id = `suggested-memories-list-npc-${forNpcId}`;
     memoriesListNpc.className = 'ai-suggestion-category';
     if (aiResult.new_memory_suggestions && aiResult.new_memory_suggestions.length > 0) {
-        memoriesListNpc.innerHTML = '<h6>Suggested Memories:</h6>' + aiResult.new_memory_suggestions.map(mem => 
+        memoriesListNpc.innerHTML = '<h6>Suggested Memories:</h6>' + aiResult.new_memory_suggestions.map(mem =>
             `<div class="suggested-item">${mem} <button onclick="window.addSuggestedMemoryAsActual('${forNpcId}', '${mem.replace(/'/g, "\\'")}')">Add</button></div>`
         ).join('');
         contentGeneratedForNpc = true;
@@ -254,7 +244,6 @@ window.renderAiSuggestionsContent = function(aiResult, forNpcId) {
     }
     suggestionsContainerNpc.appendChild(memoriesListNpc);
 
-    // Topics
     const topicsListNpc = document.createElement('div');
     topicsListNpc.id = `suggested-topics-list-npc-${forNpcId}`;
     topicsListNpc.className = 'ai-suggestion-category';
@@ -266,7 +255,6 @@ window.renderAiSuggestionsContent = function(aiResult, forNpcId) {
     }
     suggestionsContainerNpc.appendChild(topicsListNpc);
 
-    // NPC Actions
     const actionsListNpc = document.createElement('div');
     actionsListNpc.id = `suggested-npc-actions-list-npc-${forNpcId}`;
     actionsListNpc.className = 'ai-suggestion-category';
@@ -278,7 +266,6 @@ window.renderAiSuggestionsContent = function(aiResult, forNpcId) {
     }
     suggestionsContainerNpc.appendChild(actionsListNpc);
 
-    // Player Checks
     const checksListNpc = document.createElement('div');
     checksListNpc.id = `suggested-player-checks-list-npc-${forNpcId}`;
     checksListNpc.className = 'ai-suggestion-category';
@@ -290,100 +277,107 @@ window.renderAiSuggestionsContent = function(aiResult, forNpcId) {
     }
     suggestionsContainerNpc.appendChild(checksListNpc);
 
-    // Faction Standing
     const standingChangesNpc = document.createElement('div');
     standingChangesNpc.id = `suggested-faction-standing-changes-npc-${forNpcId}`;
     standingChangesNpc.className = 'ai-suggestion-category';
     if (aiResult.suggested_new_standing && aiResult.suggested_standing_pc_id) {
         const pcForStanding = appState.getCharacterById(aiResult.suggested_standing_pc_id);
         const pcNameForStanding = pcForStanding ? pcForStanding.name : aiResult.suggested_standing_pc_id;
+        const standingValue = (typeof aiResult.suggested_new_standing === 'object' && aiResult.suggested_new_standing !== null) ? aiResult.suggested_new_standing.value : aiResult.suggested_new_standing;
         standingChangesNpc.innerHTML = `<h5>Suggested Faction Standing Change:</h5>
             <div class="suggested-item">
-                Towards ${pcNameForStanding}: ${aiResult.suggested_new_standing.value || aiResult.suggested_new_standing} (Justification: ${aiResult.standing_change_justification || 'None'})
-                <button onclick="window.acceptFactionStandingChange('${forNpcId}', '${aiResult.suggested_standing_pc_id}', '${aiResult.suggested_new_standing.value || aiResult.suggested_new_standing}')">Accept</button>
+                Towards ${pcNameForStanding}: ${standingValue}
+                (Justification: ${aiResult.standing_change_justification || 'None'})
+                <button onclick="window.acceptFactionStandingChange('${forNpcId}', '${aiResult.suggested_standing_pc_id}', '${standingValue}')">Accept</button>
             </div>`;
         contentGeneratedForNpc = true;
     } else {
          standingChangesNpc.innerHTML = `<h5>Suggested Faction Standing Change:</h5>`;
     }
     suggestionsContainerNpc.appendChild(standingChangesNpc);
-
     suggestionsContainerNpc.style.display = contentGeneratedForNpc ? 'block' : 'none';
 
-    // Update GLOBAL suggestions area if this NPC is the one in the profile
     const globalSuggestionsArea = window.getElem('ai-suggestions');
     if (globalSuggestionsArea && appState.getCurrentProfileCharId() === forNpcId) {
         globalSuggestionsArea.style.display = 'block';
-        // Populate global lists based on aiResult
         const globalMem = window.getElem('suggested-memories-list');
-        if (globalMem) {
-            if (aiResult.new_memory_suggestions && aiResult.new_memory_suggestions.length > 0) {
-                 globalMem.innerHTML = '<h6>Suggested Memories:</h6>' + aiResult.new_memory_suggestions.map(mem => `<div class="suggested-item">${mem} <button onclick="window.addSuggestedMemoryAsActual('${forNpcId}', '${mem.replace(/'/g, "\\'")}')">Add</button></div>`).join('');
-            } else {
-                globalMem.innerHTML = '<h6>Suggested Memories:</h6>';
-            }
-        }
-        // ... (populate other global suggestion categories similarly)
+        if (globalMem) globalMem.innerHTML = memoriesListNpc.innerHTML;
         const globalTopics = window.getElem('suggested-topics-list');
-         if(globalTopics) {
-            if (aiResult.generated_topics && aiResult.generated_topics.length > 0) {
-                globalTopics.innerHTML = '<h6>Suggested Follow-up Topics:</h6>' + aiResult.generated_topics.map(topic => `<div class="suggested-item">${topic}</div>`).join('');
-            } else {
-                globalTopics.innerHTML = '<h6>Suggested Follow-up Topics:</h6>';
-            }
-        }
+        if (globalTopics) globalTopics.innerHTML = topicsListNpc.innerHTML;
         const globalActions = window.getElem('suggested-npc-actions-list');
-        if(globalActions) {
-            if (aiResult.suggested_npc_actions && aiResult.suggested_npc_actions.length > 0) {
-                globalActions.innerHTML = '<h5>Suggested NPC Actions/Thoughts:</h5>' + aiResult.suggested_npc_actions.map(action => `<div class="suggested-item">${action}</div>`).join('');
-            } else {
-                globalActions.innerHTML = '<h5>Suggested NPC Actions/Thoughts:</h5>';
-            }
-        }
+        if (globalActions) globalActions.innerHTML = actionsListNpc.innerHTML;
         const globalChecks = window.getElem('suggested-player-checks-list');
-        if(globalChecks){
-            if (aiResult.suggested_player_checks && aiResult.suggested_player_checks.length > 0) {
-                globalChecks.innerHTML = '<h5>Suggested Player Checks:</h5>' + aiResult.suggested_player_checks.map(check => `<div class="suggested-item">${check}</div>`).join('');
-            } else {
-                globalChecks.innerHTML = '<h5>Suggested Player Checks:</h5>';
-            }
-        }
+        if (globalChecks) globalChecks.innerHTML = checksListNpc.innerHTML;
         const globalStanding = window.getElem('suggested-faction-standing-changes');
-        if(globalStanding){
-            if (aiResult.suggested_new_standing && aiResult.suggested_standing_pc_id) {
-                const pcForStandingGlobal = appState.getCharacterById(aiResult.suggested_standing_pc_id);
-                const pcNameForStandingGlobal = pcForStandingGlobal ? pcForStandingGlobal.name : aiResult.suggested_standing_pc_id;
-                globalStanding.innerHTML = `<h5>Suggested Faction Standing Change:</h5>
-                    <div class="suggested-item">
-                        Towards ${pcNameForStandingGlobal}: ${aiResult.suggested_new_standing.value || aiResult.suggested_new_standing}
-                        (Justification: ${aiResult.standing_change_justification || 'None'})
-                        <button onclick="window.acceptFactionStandingChange('${forNpcId}', '${aiResult.suggested_standing_pc_id}', '${aiResult.suggested_new_standing.value || aiResult.suggested_new_standing}')">Accept</button>
-                    </div>`;
-            } else {
-                 globalStanding.innerHTML = `<h5>Suggested Faction Standing Change:</h5>`;
-            }
-        }
-
-    } else if (globalSuggestionsArea && appState.getActiveNpcCount() === 0) { // Hide if no NPCs
+        if (globalStanding) globalStanding.innerHTML = standingChangesNpc.innerHTML;
+    } else if (globalSuggestionsArea && appState.getActiveNpcCount() === 0) {
         globalSuggestionsArea.style.display = 'none';
     }
 };
 
+window.renderNpcFactionStandingsUI = function(npcCharacter, activePcIdsSet, allCharactersArray, contentElement, onStandingChangeCallback) {
+    if (!contentElement) { console.error("renderNpcFactionStandingsUI: contentElement not found"); return; }
+    if (!npcCharacter || npcCharacter.character_type !== 'NPC') {
+        contentElement.innerHTML = "<p><em>Faction standings are for NPCs. Ensure an NPC is selected.</em></p>";
+        return;
+    }
+    contentElement.innerHTML = '';
+    const activePcs = allCharactersArray.filter(char => char.character_type === 'PC' && activePcIdsSet.has(String(char._id)));
+    if (activePcs.length === 0) {
+        contentElement.innerHTML = "<p><em>No PCs selected in the left panel to show standings towards. Add PCs via the main list.</em></p>";
+        return;
+    }
+    activePcs.forEach(pc => {
+        const pcIdStr = String(pc._id);
+        const standingEntryDiv = document.createElement('div');
+        standingEntryDiv.className = 'faction-standing-entry';
+        const label = document.createElement('label');
+        label.htmlFor = `standing-select-${npcCharacter._id}-${pcIdStr}`;
+        label.textContent = `${pc.name}:`;
+        label.style.marginRight = "10px";
+        const select = document.createElement('select');
+        select.id = `standing-select-${npcCharacter._id}-${pcIdStr}`;
+        select.dataset.pcId = pcIdStr;
+        select.style.width = "150px";
+        FACTION_STANDING_SLIDER_ORDER.forEach(levelKey => { // FACTION_STANDING_SLIDER_ORDER from config.js
+            const option = document.createElement('option');
+            option.value = levelKey;
+            option.textContent = levelKey;
+            select.appendChild(option);
+        });
+        const currentStandingObj = npcCharacter.pc_faction_standings ? npcCharacter.pc_faction_standings[pcIdStr] : null;
+        const currentStandingValue = (typeof currentStandingObj === 'object' && currentStandingObj !== null && typeof currentStandingObj.value !== 'undefined') ? currentStandingObj.value : currentStandingObj;
+        select.value = currentStandingValue || FACTION_STANDING_LEVELS.INDIFFERENT; // FACTION_STANDING_LEVELS from config.js
+
+        select.addEventListener('change', (event) => {
+            onStandingChangeCallback(npcCharacter._id, pcIdStr, event.target.value);
+        });
+        standingEntryDiv.appendChild(label);
+        standingEntryDiv.appendChild(select);
+        contentElement.appendChild(standingEntryDiv);
+    });
+};
+
 window.renderCharacterProfileUI = function(character, elements) {
-    // (Full function as provided in previous responses, ensure all getElem, disableBtn, updateText are window. prefixed)
-    // (And callbacks like elements.deleteMemoryCallback are correctly window.handleDeleteMemory)
+    if (!elements) { console.error("renderCharacterProfileUI: elements object not provided"); return; }
     if (!character) {
         window.updateText(elements.detailsCharName, 'None');
         window.updateText(elements.profileCharType, '');
         window.updateText(elements.profileDescription, '');
         window.updateText(elements.profilePersonality, '');
-        window.getElem(elements.gmNotesTextarea).value = '';
+        const gmNotesTextarea = window.getElem(elements.gmNotesTextarea);
+        if (gmNotesTextarea) gmNotesTextarea.value = '';
         window.disableBtn(elements.saveGmNotesBtn, true);
-        window.getElem(elements.npcMemoriesSection).style.display = 'none';
-        window.getElem(elements.npcFactionStandingsSection).style.display = 'none';
-        window.getElem(elements.characterHistorySection).style.display = 'block'; // Keep visible for selection
-        window.getElem(elements.associatedHistoryList).innerHTML = '<li><em>Select a character.</em></li>';
-        window.getElem(elements.historyContentDisplay).textContent = 'Select a character to view history.';
+        const npcMemSection = window.getElem(elements.npcMemoriesSection);
+        if(npcMemSection) npcMemSection.style.display = 'none';
+        const npcFactSection = window.getElem(elements.npcFactionStandingsSection);
+        if(npcFactSection) npcFactSection.style.display = 'none';
+        const charHistSection = window.getElem(elements.characterHistorySection);
+        if(charHistSection) charHistSection.style.display = 'block';
+        const assocHistList = window.getElem(elements.associatedHistoryList);
+        if(assocHistList) assocHistList.innerHTML = '<li><em>Select a character.</em></li>';
+        const histContDisp = window.getElem(elements.historyContentDisplay);
+        if(histContDisp) histContDisp.textContent = 'Select a character to view history.';
         window.disableBtn(elements.addMemoryBtn, true);
         window.disableBtn(elements.associateHistoryBtn, true);
         return;
@@ -393,32 +387,33 @@ window.renderCharacterProfileUI = function(character, elements) {
     window.updateText(elements.profileCharType, character.character_type || "N/A");
     window.updateText(elements.profileDescription, character.description || "N/A");
     window.updateText(elements.profilePersonality, (character.personality_traits || []).join(', ') || "N/A");
-
-    window.getElem(elements.gmNotesTextarea).value = character.gm_notes || '';
+    const gmNotesTextareaElem = window.getElem(elements.gmNotesTextarea);
+    if(gmNotesTextareaElem) gmNotesTextareaElem.value = character.gm_notes || '';
     window.disableBtn(elements.saveGmNotesBtn, false);
-
     const isNpc = character.character_type === 'NPC';
-    window.getElem(elements.npcMemoriesSection).style.display = isNpc ? 'block' : 'none';
-    window.getElem(elements.npcFactionStandingsSection).style.display = isNpc ? 'block' : 'none';
-    window.getElem(elements.characterHistorySection).style.display = 'block';
+    const npcMemSectionElem = window.getElem(elements.npcMemoriesSection);
+    if(npcMemSectionElem) npcMemSectionElem.style.display = isNpc ? 'block' : 'none';
+    const npcFactSectionElem = window.getElem(elements.npcFactionStandingsSection);
+    if(npcFactSectionElem) npcFactSectionElem.style.display = isNpc ? 'block' : 'none';
+    const charHistSectionElem = window.getElem(elements.characterHistorySection);
+    if(charHistSectionElem) charHistSectionElem.style.display = 'block';
 
     if (isNpc) {
         window.renderMemoriesUI(character.memories || [], window.getElem(elements.characterMemoriesList), elements.deleteMemoryCallback());
         window.renderNpcFactionStandingsUI(character, appState.activePcIds, appState.getAllCharacters(), window.getElem(elements.npcFactionStandingsContent), elements.factionChangeCallback());
         window.disableBtn(elements.addMemoryBtn, false);
     } else {
-        window.getElem(elements.characterMemoriesList).innerHTML = '<p><em>Memories are for NPCs only.</em></p>';
+        const charMemList = window.getElem(elements.characterMemoriesList);
+        if(charMemList) charMemList.innerHTML = '<p><em>Memories are for NPCs only.</em></p>';
         window.disableBtn(elements.addMemoryBtn, true);
         const factionContent = window.getElem(elements.npcFactionStandingsContent);
         if (factionContent) factionContent.innerHTML = '<p><em>Faction standings are for NPCs.</em></p>';
     }
-
     window.renderAssociatedHistoryFilesUI(character, window.getElem(elements.associatedHistoryList), window.getElem(elements.historyContentDisplay), elements.dissociateHistoryCallback());
     window.disableBtn(elements.associateHistoryBtn, false);
 };
 
 window.renderMemoriesUI = function(memories, listElement, deleteCallback) {
-    // (Full function as provided previously)
     if (!listElement) return;
     listElement.innerHTML = '';
     if (!memories || memories.length === 0) {
@@ -438,7 +433,6 @@ window.renderMemoriesUI = function(memories, listElement, deleteCallback) {
 };
 
 window.renderAssociatedHistoryFilesUI = function(character, listElement, contentDisplayElement, dissociateCallback) {
-    // (Full function as provided previously)
     if (!listElement || !contentDisplayElement) return;
     listElement.innerHTML = '';
     if (character?.associated_history_files?.length > 0) {
@@ -459,38 +453,7 @@ window.renderAssociatedHistoryFilesUI = function(character, listElement, content
                                        (character?.associated_history_files?.length > 0 ? "Content loading or is empty." : "No history files associated to display content.");
 };
 
-// (Full function as provided in my LAST response, this is the one that calls updatePcDashboardUI)
-window.updateMainViewUI = function(dialogueInterfaceElem, pcDashboardViewElem, pcQuickViewInSceneElem, activeNpcCount, showPcDashboard) {
-    if (!dialogueInterfaceElem || !pcDashboardViewElem || !pcQuickViewInSceneElem) {
-        console.error("updateMainViewUI: One or more main view elements are missing!");
-        return;
-    }
-    if (activeNpcCount > 0) {
-        dialogueInterfaceElem.style.display = 'flex';
-        pcDashboardViewElem.style.display = 'none';
-        // pcQuickViewInSceneElem display is handled by its own renderer
-    } else {
-        dialogueInterfaceElem.style.display = 'none';
-        pcDashboardViewElem.style.display = 'block';
-        pcQuickViewInSceneElem.style.display = 'none'; // Hide it explicitly when no NPCs
-        pcQuickViewInSceneElem.innerHTML = '';     // Clear it
-
-        const dashboardContent = window.getElem('pc-dashboard-content');
-        if (dashboardContent && !dashboardContent.querySelector('.detailed-pc-sheet')) {
-             if (showPcDashboard) {
-                 // This is a critical call
-                 window.updatePcDashboardUI(dashboardContent, appState.getAllCharacters(), appState.activePcIds, appState.getExpandedAbility(), appState.getExpandedSkill(), appState.getSkillSortKey());
-             } else {
-                 dashboardContent.innerHTML = `<p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>`;
-             }
-        } else if (!dashboardContent) {
-            console.error("updateMainViewUI: pc-dashboard-content element not found.");
-        }
-    }
-};
-
 window.renderPcQuickViewInSceneUI = function(wrapperElement, activePcsData) {
-    // (Full function as provided previously)
     if (!wrapperElement) { console.error("renderPcQuickViewInSceneUI: wrapperElement not found"); return; }
     if (activePcsData.length === 0) {
         wrapperElement.innerHTML = '';
@@ -510,14 +473,8 @@ window.renderPcQuickViewInSceneUI = function(wrapperElement, activePcsData) {
     wrapperElement.style.display = 'block';
 };
 
-// FULL definition of updatePcDashboardUI (ensure this is complete)
 window.updatePcDashboardUI = function(dashboardContentElement, allCharacters, activePcIds, currentlyExpandedAbility, currentlyExpandedSkill, skillSortKey) {
-    // (Full definition as provided in my previous detailed response for uiRenderers.js)
-    // This includes creating quick view cards, ability score table, skill overview table, and their expansion divs.
-    // ALL INTERNAL CALLS TO OTHER RENDER HELPERS OR DND CALCS MUST BE PREFIXED WITH window.
-    // e.g., window.createPcQuickViewSectionHTML, window.generatePcQuickViewCardHTML, window.getAbilityModifier,
-    // window.populateExpandedAbilityDetailsUI, window.populateExpandedSkillDetailsUI
-    // window.toggleAbilityExpansion and window.toggleSkillExpansion in onclicks.
+    // (Full definition as provided in the previous response, ensuring all internal calls are window. prefixed)
     if (!dashboardContentElement) {
         console.error("updatePcDashboardUI: 'pc-dashboard-content' element not found.");
         return;
@@ -639,7 +596,7 @@ window.updatePcDashboardUI = function(dashboardContentElement, allCharacters, ac
 };
 
 window.renderDetailedPcSheetUI = function(pcData, dashboardContentElement) {
-    // (Full function as provided in my previous detailed response, including collapsible sections)
+    // (Full definition as provided in my previous detailed response, including collapsible sections)
     if (!pcData || pcData.character_type !== 'PC' || !pcData.vtt_data) {
         console.error("PC not found or invalid VTT data for detailed sheet:", pcData);
         if (dashboardContentElement) dashboardContentElement.innerHTML = `<p>Error loading PC. <button onclick="window.handleBackToDashboardOverview()">Back to Dashboard Overview</button></p>`;
@@ -669,7 +626,7 @@ window.renderDetailedPcSheetUI = function(pcData, dashboardContentElement) {
     html += `<p class="pc-basic-info-subtext">${raceName} ${className}, Level ${pcLevel} &bull; Alignment: ${pcData.vtt_data?.details?.alignment || pcData.alignment || 'N/A'}</p></div>`;
 
     html += `<div class="pc-sheet-columns">`;
-    html += `<div class="pc-sheet-column pc-sheet-column-left">`; // Column 1
+    html += `<div class="pc-sheet-column pc-sheet-column-left">`;
     html += `<div class="pc-section"><h4>Combat Stats</h4><div class="pc-info-grid">`;
     const hpCurrent = pcData.vtt_data?.attributes?.hp?.value ?? 'N/A';
     const hpMax = pcData.vtt_data?.attributes?.hp?.max ?? pcData.system?.attributes?.hp?.max ?? 'N/A';
@@ -759,7 +716,7 @@ window.renderDetailedPcSheetUI = function(pcData, dashboardContentElement) {
     html += `</tbody></table></div>`;
     html += `</div>`; 
 
-    html += `<div class="pc-sheet-column pc-sheet-column-right">`; // Column 2
+    html += `<div class="pc-sheet-column pc-sheet-column-right">`;
     html += `<div class="pc-section"><h4>Skills</h4><table class="detailed-pc-table"><thead><tr><th>Skill</th><th>Bonus</th></tr></thead><tbody>`;
     for (const skillKey in SKILL_NAME_MAP) {
         const skillData = pcData.vtt_data?.skills?.[skillKey]; const skillDisplayName = SKILL_NAME_MAP[skillKey];
@@ -777,9 +734,9 @@ window.renderDetailedPcSheetUI = function(pcData, dashboardContentElement) {
     }
     html += `</tbody></table></div>`;
     html += `</div>`; 
-    html += `</div>`; // End pc-sheet-columns
+    html += `</div>`;
 
-    const collapsibleSectionsDataDetailed = [ /* ... (Full array from previous response, using pcData) ... */ 
+    const collapsibleSectionsDataDetailed = [
         {
             title: "Personality & Roleplaying",
             contentFn: () => { 
@@ -921,7 +878,6 @@ window.renderDetailedPcSheetUI = function(pcData, dashboardContentElement) {
             }
         }
     ];
-
     collapsibleSectionsDataDetailed.forEach(sectionData => {
         html += `<div class="pc-section collapsible-section collapsed">
                     <h4 style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
