@@ -1,16 +1,17 @@
 # app.py
 import os
 import json
-import re # For slugifying names
+import re 
 from flask import Flask, request, jsonify, render_template
 from bson import ObjectId, json_util
 from pydantic import ValidationError
-import traceback # For more detailed error logging
+import traceback 
 from werkzeug.utils import secure_filename
+from typing import Optional, List, Dict, Any # <--- ADDED THIS LINE
 
 from config import config as app_config
 from database import db_connector
-from models import NPCProfile, DialogueRequest, DialogueResponse, MemoryItem, NPCProfileWithHistory
+from models import NPCProfile, DialogueRequest, DialogueResponse, MemoryItem, NPCProfileWithHistory, FactionStandingLevel
 from ai_service import ai_service_instance
 
 app = Flask(__name__)
@@ -94,37 +95,29 @@ def sync_data_from_files():
 
                 temp_profile_for_name = NPCProfile(**primary_char_data)
                 char_name = temp_profile_for_name.name
+                
+                primary_char_data.setdefault('pc_faction_standings', {})
+
 
                 combined_data = primary_char_data.copy()
-
-                # Load and merge VTT data if available
+                
                 fvtt_file_path = find_fvtt_file(char_name, VTT_IMPORT_DIR)
                 if fvtt_file_path:
                     with open(fvtt_file_path, 'r', encoding='utf-8') as f_vtt:
                         fvtt_json_data = json.load(f_vtt)
-                    if 'system' in fvtt_json_data:
-                        combined_data['vtt_data'] = fvtt_json_data['system']
-                    if 'flags' in fvtt_json_data: # Store VTT flags
-                        combined_data['vtt_flags'] = fvtt_json_data['flags']
-                    if 'img' in fvtt_json_data and fvtt_json_data['img']: # Store VTT image path
-                        combined_data['img'] = fvtt_json_data['img']
-                    if 'items' in fvtt_json_data: # Store VTT items
-                        combined_data['items'] = fvtt_json_data['items']
-                    # Store the full system object if needed for more complex frontend logic
-                    # This might be redundant if vtt_data is already the system object
-                    if 'system' in fvtt_json_data:
-                         combined_data['system'] = fvtt_json_data['system']
+                    if 'system' in fvtt_json_data: combined_data['vtt_data'] = fvtt_json_data['system']
+                    if 'flags' in fvtt_json_data: combined_data['vtt_flags'] = fvtt_json_data['flags']
+                    if 'img' in fvtt_json_data and fvtt_json_data['img']: combined_data['img'] = fvtt_json_data['img']
+                    if 'items' in fvtt_json_data: combined_data['items'] = fvtt_json_data['items']
+                    if 'system' in fvtt_json_data: combined_data['system'] = fvtt_json_data['system']
 
-
-                # Associate default history file if it exists
-                if 'associated_history_files' not in combined_data:
-                    combined_data['associated_history_files'] = []
-                potential_history_filename = f"{char_name}.txt"
+                combined_data.setdefault('associated_history_files', [])
+                potential_history_filename = f"{char_name}.txt" 
                 history_file_path_abs = os.path.join(HISTORY_DATA_DIR, secure_filename(potential_history_filename))
                 if os.path.exists(history_file_path_abs):
                     if potential_history_filename not in combined_data['associated_history_files']:
                         combined_data['associated_history_files'].append(potential_history_filename)
-
+                
                 validated_profile = NPCProfile(**combined_data)
                 mongo_doc = validated_profile.model_dump(mode='json', by_alias=True, exclude_none=True)
 
@@ -132,10 +125,11 @@ def sync_data_from_files():
 
                 if existing_char_in_db:
                     update_payload = {k: v for k, v in mongo_doc.items() if k != '_id'}
-                    # A more robust check might be needed if complex nested objects change often
-                    if json_util.dumps(existing_char_in_db, sort_keys=True) != json_util.dumps({**existing_char_in_db, **update_payload}, sort_keys=True):
-                        characters_collection.update_one({"_id": existing_char_in_db['_id']}, {"$set": update_payload})
-                        updated_count += 1
+                    if 'pc_faction_standings' not in update_payload:
+                        update_payload['pc_faction_standings'] = existing_char_in_db.get('pc_faction_standings', {})
+                    
+                    characters_collection.update_one({"_id": existing_char_in_db['_id']}, {"$set": update_payload})
+                    updated_count += 1 
                 else:
                     characters_collection.insert_one(mongo_doc)
                     new_count += 1
@@ -162,12 +156,11 @@ def create_npc_api():
         data = request.get_json()
         if not data: return jsonify({"error": "Invalid JSON payload"}), 400
         data.setdefault('associated_history_files', [])
-        # Ensure vtt_data and vtt_flags are at least empty dicts if not provided
         data.setdefault('vtt_data', {})
         data.setdefault('vtt_flags', {})
         data.setdefault('items', [])
         data.setdefault('system', {})
-
+        data.setdefault('pc_faction_standings', {}) 
 
         character_profile_data = NPCProfile(**data)
     except ValidationError as e:
@@ -201,11 +194,12 @@ def get_all_npcs_api():
             char_doc['_id'] = str(char_doc['_id'])
             char_doc.setdefault('associated_history_files', [])
             char_doc.setdefault('combined_history_content', '')
-            char_doc.setdefault('vtt_data', {}) # Ensure these exist for frontend
+            char_doc.setdefault('vtt_data', {}) 
             char_doc.setdefault('vtt_flags', {})
             char_doc.setdefault('img', None)
             char_doc.setdefault('items', [])
             char_doc.setdefault('system', {})
+            char_doc.setdefault('pc_faction_standings', {}) 
             characters_list.append(char_doc)
         return jsonify(characters_list), 200
     except Exception as e:
@@ -226,11 +220,12 @@ def get_npc_api(npc_id_str: str):
         return jsonify({"error": "Character not found"}), 404
 
     npc_data.setdefault('associated_history_files', [])
-    npc_data.setdefault('vtt_data', {}) # Ensure these exist for frontend
+    npc_data.setdefault('vtt_data', {}) 
     npc_data.setdefault('vtt_flags', {})
     npc_data.setdefault('img', None)
     npc_data.setdefault('items', [])
     npc_data.setdefault('system', {})
+    npc_data.setdefault('pc_faction_standings', {}) 
     npc_data_with_history = load_history_content_for_npc(npc_data)
 
     return jsonify(parse_json(npc_data_with_history)), 200
@@ -249,8 +244,6 @@ def update_npc_api(npc_id_str: str):
         update_data_req = request.get_json()
         if not update_data_req: return jsonify({"error": "Invalid JSON payload"}), 400
 
-        # Ensure fields from the model that are not in the request but are in existing_npc_data are preserved
-        # for validation, and ensure vtt_data/vtt_flags are dicts if present
         current_data_for_validation = {
             **{k: v for k, v in existing_npc_data.items() if k != '_id'}, 
             **update_data_req
@@ -259,6 +252,7 @@ def update_npc_api(npc_id_str: str):
         current_data_for_validation.setdefault('vtt_flags', {})
         current_data_for_validation.setdefault('items', [])
         current_data_for_validation.setdefault('system', {})
+        current_data_for_validation.setdefault('pc_faction_standings', {}) 
 
 
         if 'associated_history_files' in current_data_for_validation and \
@@ -267,35 +261,30 @@ def update_npc_api(npc_id_str: str):
 
         validated_update_profile = NPCProfile(**current_data_for_validation)
         
-        # Prepare the $set payload: only include fields that were actually in the request
-        # or fields that have default values in Pydantic and might need to be set if not present.
-        # For direct updates, we primarily care about fields explicitly sent by the client.
         final_set_payload = {}
-        for key, value in validated_update_profile.model_dump(mode='json', by_alias=True, exclude_none=False).items():
-            if key in update_data_req: # Only update fields that were in the request
-                 final_set_payload[key] = update_data_req[key] # Use the exact value from request
-            elif key == 'gm_notes' and 'gm_notes' not in update_data_req and existing_npc_data.get('gm_notes') is not None:
-                # If gm_notes is not in request, but exists, keep it (don't set to None unless explicitly requested)
-                # This case is tricky; usually, if a field is not in PUT, it's not changed.
-                # Pydantic's exclude_none=False might set it to None if not in request.
-                # Let's ensure we only update what's in update_data_req for simplicity here.
-                pass
-
-
-        # Specifically handle gm_notes if it's explicitly set to empty string in request
-        if 'gm_notes' in update_data_req and update_data_req['gm_notes'] == "":
-            final_set_payload['gm_notes'] = ""
+        dumped_valid_data = validated_update_profile.model_dump(mode='json', by_alias=True, exclude_none=False)
         
-        # If only _id or other non-updatable fields were in update_data_req, final_set_payload might be empty
+        for key in validated_update_profile.model_fields.keys():
+            if key in update_data_req: 
+                final_set_payload[key] = update_data_req[key]
+            elif key in dumped_valid_data and key not in ['_id', 'id']:
+                if key in dumped_valid_data:
+                    final_set_payload[key] = dumped_valid_data[key]
+
+        if 'pc_faction_standings' in update_data_req:
+             final_set_payload['pc_faction_standings'] = update_data_req['pc_faction_standings']
+        elif 'pc_faction_standings' not in final_set_payload : 
+             final_set_payload['pc_faction_standings'] = existing_npc_data.get('pc_faction_standings', {})
+
+
         if not final_set_payload:
-             updated_npc_data_from_db = mongo_db.npcs.find_one({"_id": npc_id_obj}) # Re-fetch to be sure
+             updated_npc_data_from_db = mongo_db.npcs.find_one({"_id": npc_id_obj}) 
              if updated_npc_data_from_db:
                 updated_npc_data_from_db = load_history_content_for_npc(updated_npc_data_from_db)
                 return jsonify({"message": "No changes applied to the character.", "character": parse_json(updated_npc_data_from_db)}), 200
-             else: # Should not happen if existing_npc_data was found
+             else: 
                 return jsonify({"error": "Character disappeared after update attempt"}), 500
-
-
+                
     except ValidationError as e:
         print(f"Validation Error during update for NPC {npc_id_str}: {e.errors()}")
         return jsonify({"error": "Validation Error during update", "details": e.errors()}), 400
@@ -353,7 +342,7 @@ def associate_history_file_with_npc_api(npc_id_str: str):
     try:
         update_result = mongo_db.npcs.update_one(
             {"_id": npc_id_obj},
-            {"$addToSet": {"associated_history_files": history_filename}} # Use original name for DB storage
+            {"$addToSet": {"associated_history_files": history_filename_from_req}} 
         )
         if update_result.matched_count == 0: return jsonify({"error": "Character not found"}), 404
 
@@ -361,7 +350,7 @@ def associate_history_file_with_npc_api(npc_id_str: str):
         if npc_doc:
             npc_doc_with_history = load_history_content_for_npc(npc_doc)
             return jsonify({
-                "message": f"History file '{history_filename_from_req}' associated.", # Use original name in message
+                "message": f"History file '{history_filename_from_req}' associated.", 
                 "character": parse_json(npc_doc_with_history)
             }), 200
         else:
@@ -381,14 +370,11 @@ def dissociate_history_file_from_npc_api(npc_id_str: str):
     data = request.get_json()
     history_filename_from_req = data.get('history_file')
     if not history_filename_from_req: return jsonify({"error": "history_file not provided"}), 400
-
-    # Store and operate with the original filename as it's stored in DB
-    # secure_filename was for path construction, not for DB value matching.
-
+    
     try:
         update_result = mongo_db.npcs.update_one(
             {"_id": npc_id_obj},
-            {"$pull": {"associated_history_files": history_filename_from_req}} # Use original name
+            {"$pull": {"associated_history_files": history_filename_from_req}}
         )
         if update_result.matched_count == 0: return jsonify({"error": "Character not found"}), 404
 
@@ -450,6 +436,63 @@ def delete_npc_memory_api(npc_id_str: str, memory_id_str_path: str):
     else:
         return jsonify({"error": "Failed to retrieve updated NPC after deleting memory"}), 500
 
+def parse_ai_suggestions(full_ai_output: str, speaking_pc_id: Optional[str]):
+    dialogue_parts = []
+    npc_action_str = "None"
+    player_check_str = "None"
+    new_standing_str = "No change"
+    justification_str = "Not specified"
+    
+    parsed_speaking_pc_id_key = speaking_pc_id if speaking_pc_id else "PLAYER"
+
+    # Split by common section delimiters, then refine
+    # This is a basic approach and might need more robust regex for edge cases
+    sections = re.split(r"\n--- (?:Additional Suggestions|Standing Assessment|Your Task) ---", full_ai_output, flags=re.IGNORECASE)
+    
+    dialogue_parts.append(sections[0].strip()) # Assume first part is always dialogue
+
+    if len(sections) > 1:
+        suggestion_block = sections[-1] # Last block should contain suggestions
+        for line in suggestion_block.splitlines():
+            line = line.strip()
+            if line.startswith("NPC_ACTION:"):
+                npc_action_str = line.replace("NPC_ACTION:", "").strip()
+            elif line.startswith("PLAYER_CHECK:"):
+                player_check_str = line.replace("PLAYER_CHECK:", "").strip()
+            elif line.startswith(f"STANDING_CHANGE_SUGGESTION_FOR_{parsed_speaking_pc_id_key}:"):
+                new_standing_str = line.replace(f"STANDING_CHANGE_SUGGESTION_FOR_{parsed_speaking_pc_id_key}:", "").strip()
+            elif line.startswith("JUSTIFICATION:"):
+                justification_str = line.replace("JUSTIFICATION:", "").strip()
+    
+    npc_dialogue_final = "\n".join(dialogue_parts).strip()
+    # Filter out any potential suggestion lines that got mixed with dialogue if AI was inconsistent
+    npc_dialogue_final = "\n".join(line for line in npc_dialogue_final.splitlines() if not (
+        line.startswith("NPC_ACTION:") or
+        line.startswith("PLAYER_CHECK:") or
+        line.startswith(f"STANDING_CHANGE_SUGGESTION_FOR_") or # More generic check
+        line.startswith("JUSTIFICATION:")
+    )).strip()
+
+
+    parsed_new_standing_enum = None
+    if new_standing_str.lower() != "no change" and new_standing_str != "None":
+        try:
+            parsed_new_standing_enum = FactionStandingLevel(new_standing_str)
+        except ValueError:
+            print(f"Warning: AI suggested an invalid standing level: '{new_standing_str}'")
+            justification_str += f" (AI suggested invalid standing: {new_standing_str})"
+            new_standing_str = "No change" # Keep string as "No change" for response
+    
+    return {
+        "dialogue": npc_dialogue_final if npc_dialogue_final else "...", # Fallback if dialogue becomes empty
+        "npc_action": [npc_action_str] if npc_action_str and npc_action_str.lower() != "none" else [],
+        "player_check": [player_check_str] if player_check_str and player_check_str.lower() != "none" else [],
+        "new_standing": parsed_new_standing_enum, 
+        "new_standing_str_for_response": new_standing_str, 
+        "justification": justification_str
+    }
+
+
 @app.route('/api/npcs/<npc_id_str>/dialogue', methods=['POST'])
 def generate_dialogue_for_npc_api(npc_id_str: str):
     if mongo_db is None: return jsonify({"error": "Database not available"}), 503
@@ -480,25 +523,38 @@ def generate_dialogue_for_npc_api(npc_id_str: str):
 
     detailed_history_for_ai = npc_data_with_history.get('combined_history_content', '')
     
-    print(f"DEBUG: Generating dialogue for {npc_profile_for_ai.name}. History length: {len(detailed_history_for_ai)}")
+    current_pc_standing_val = None
+    speaking_pc_name_for_ai = "the player" 
+    if dialogue_req_data.speaking_pc_id:
+        current_pc_standing_val = npc_profile_for_ai.pc_faction_standings.get(dialogue_req_data.speaking_pc_id)
+        pc_object_found = mongo_db.npcs.find_one({"_id": ObjectId(dialogue_req_data.speaking_pc_id), "character_type": "PC"}) # Ensure it's a PC
+        if pc_object_found:
+            speaking_pc_name_for_ai = pc_object_found.get("name", dialogue_req_data.speaking_pc_id)
+        else: 
+            speaking_pc_name_for_ai = dialogue_req_data.speaking_pc_id # Fallback to ID if name not found or not a PC
+
+    print(f"DEBUG: Generating dialogue for {npc_profile_for_ai.name} towards {speaking_pc_name_for_ai} (ID: {dialogue_req_data.speaking_pc_id}) with standing {current_pc_standing_val.value if current_pc_standing_val else 'None'}")
 
     try:
-        generated_text_or_error = ai_service_instance.generate_npc_dialogue(
+        full_ai_output_str = ai_service_instance.generate_npc_dialogue(
             npc=npc_profile_for_ai,
             dialogue_request=dialogue_req_data,
+            current_pc_standing=current_pc_standing_val, 
+            speaking_pc_name=speaking_pc_name_for_ai,
             world_lore_summary=None,
             detailed_character_history=detailed_history_for_ai
         )
-        
-        if generated_text_or_error.startswith("Error:") or "AI generation blocked" in generated_text_or_error :
-             print(f"AI Service returned an error message for {npc_profile_for_ai.name}: {generated_text_or_error}")
-        generated_text = generated_text_or_error
-
     except Exception as e:
         print(f"Error calling AI service for {npc_profile_for_ai.name}: {e}")
         traceback.print_exc()
         return jsonify({"error": "Dialogue generation failed internally due to an unexpected AI service error.", "details": str(e)}), 500
 
+    parsed_suggestions = parse_ai_suggestions(full_ai_output_str, dialogue_req_data.speaking_pc_id)
+    generated_text = parsed_suggestions["dialogue"]
+    
+    if generated_text.startswith("Error:") or "AI generation blocked" in generated_text :
+         print(f"AI Service returned an error/blocked message for {npc_profile_for_ai.name}: {generated_text}")
+    
     memory_suggestions = []
     if dialogue_req_data.player_utterance and generated_text and not (generated_text.startswith("Error:") or "AI generation blocked" in generated_text):
         summarized_memory = ai_service_instance.summarize_interaction_for_memory(
@@ -510,9 +566,15 @@ def generate_dialogue_for_npc_api(npc_id_str: str):
         npc_id=npc_id_str,
         npc_dialogue=generated_text,
         new_memory_suggestions=memory_suggestions,
-        generated_topics=[]
+        generated_topics=[], 
+        suggested_npc_actions=parsed_suggestions["npc_action"],
+        suggested_player_checks=parsed_suggestions["player_check"],
+        suggested_standing_pc_id=dialogue_req_data.speaking_pc_id if parsed_suggestions["new_standing"] else None,
+        suggested_new_standing=parsed_suggestions["new_standing"], 
+        standing_change_justification=parsed_suggestions["justification"]
     )
     return jsonify(response_data_model.model_dump(mode='json')), 200
+
 
 if __name__ == '__main__':
     for dir_path in [PRIMARY_DATA_DIR, VTT_IMPORT_DIR, HISTORY_DATA_DIR]:
@@ -534,9 +596,5 @@ if __name__ == '__main__':
     print(f"Flask Secret Key: {'Set' if app_config.FLASK_SECRET_KEY != 'a_default_secret_key' else 'Using Default (Unsafe for Production)'}")
     print(f"Gemini API Key: {'Set' if app_config.GEMINI_API_KEY else 'NOT SET'}")
     print(f"Mongo URI: {app_config.MONGO_URI}")
-    print("-" * 50)
-    print(">>> Attempting to start Flask development server...")
-    print(">>> If the server starts, you will see 'Running on...' messages below.")
-    print(">>> If the script exits back to the command prompt, there is a critical error during startup.")
     print("-" * 50)
     app.run(debug=True, host='0.0.0.0', port=5000)

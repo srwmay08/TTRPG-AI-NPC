@@ -398,3 +398,59 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 .remove-pc-from-scene-btn:hover {
     background: #c0392b;
 }
+
+
+
+/* ... (your existing CSS) ... */
+
+#npc-faction-standings-section h4 {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 3px;
+}
+
+.faction-standing-entry {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    font-size: 0.9em;
+}
+
+.faction-standing-entry label {
+    margin-right: 10px;
+    font-weight: normal;
+}
+
+.faction-standing-entry select {
+    width: 150px; /* Adjust as needed */
+    padding: 3px;
+    margin-bottom: 0; /* Override general margin if needed */
+}
+
+.ai-suggestion-category {
+    margin-top: 10px;
+    padding-top: 5px;
+    border-top: 1px dashed #eee;
+}
+.ai-suggestion-category h5 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 0.95em;
+    color: #555;
+}
+
+#suggested-faction-standing-changes .suggested-item button {
+    font-size: 0.8em;
+    padding: 2px 5px;
+    margin-left: 10px;
+    background-color: #28a745; /* Green for accept */
+}
+#suggested-faction-standing-changes .suggested-item button:hover {
+    background-color: #218838;
+}
+#suggested-faction-standing-changes .suggested-item button:disabled {
+    background-color: #cccccc;
+}

@@ -13,9 +13,13 @@
             <h2>Characters & Details</h2>
             
             <div id="pc-list-section" class="collapsible-section">
-                <h3>Active Player Characters</h3>
+                <h3>Player Characters</h3>
                 <div class="collapsible-content character-list">
                     <div id="active-pc-list"><p><em>Loading PCs...</em></p></div>
+                    <label for="speaking-pc-select" style="margin-top: 10px;">Active Speaker:</label>
+                    <select id="speaking-pc-select" style="width: calc(100% - 16px); margin-bottom:5px;">
+                        <option value="">-- Select Speaking PC --</option>
+                    </select>
                 </div>
             </div>
             <div id="npc-list-section" class="collapsible-section">
@@ -33,6 +37,14 @@
                         <p><strong>Description:</strong> <span id="profile-description"></span></p>
                         <p><strong>Personality:</strong> <span id="profile-personality"></span></p>
                     </div>
+
+                    <div id="npc-faction-standings-section" class="collapsible-section">
+                        <h4>NPC Standings Towards PCs</h4>
+                        <div class="collapsible-content" id="npc-faction-standings-content">
+                            <p><em>Select an NPC to view their standings.</em></p>
+                        </div>
+                    </div>
+                    
                     <div id="gm-notes-collapsible-section" class="collapsible-section">
                         <h3>GM Notes</h3>
                         <div class="collapsible-content">
@@ -120,6 +132,18 @@
                 <h4>AI Suggestions:</h4>
                 <div id="suggested-memories-list"></div>
                 <div id="suggested-topics-list"></div>
+                <div id="suggested-npc-actions-list" class="ai-suggestion-category">
+                    <h5>Suggested NPC Actions/Thoughts:</h5>
+                    {/* */}
+                </div>
+                <div id="suggested-player-checks-list" class="ai-suggestion-category">
+                    <h5>Suggested Player Checks:</h5>
+                    {/* */}
+                </div>
+                <div id="suggested-faction-standing-changes" class="ai-suggestion-category">
+                    <h5>Suggested Faction Standing Change:</h5>
+                    {/* */}
+                </div>
             </div>
         </div> <div id="pc-dashboard-view">
             <h2>Player Character Dashboard</h2>
