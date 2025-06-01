@@ -1,3 +1,6 @@
+// --- Global Debug Flags ---
+const DEBUG_DELEGATED_CARD_CLICK = false; // Set to true to enable specific card click logs
+
 // --- Global State Variables ---
 let activeSceneNpcIds = new Set();
 let activePcIds = new Set();
@@ -78,12 +81,11 @@ async function fetchCharacters() {
             if (char._id && typeof char._id === 'object' && char._id.$oid) {
                 char._id = char._id.$oid;
             }
-            // Ensure potentially missing fields from backend have defaults for frontend logic
             char.combined_history_content = char.combined_history_content || "";
-            char.vtt_data = char.vtt_data || {}; // Ensure vtt_data is an object
-            char.vtt_flags = char.vtt_flags || {}; // Ensure vtt_flags is an object
-            char.items = char.items || []; // Ensure items is an array
-            char.system = char.system || {}; // Ensure system is an object
+            char.vtt_data = char.vtt_data || {};
+            char.vtt_flags = char.vtt_flags || {};
+            char.items = char.items || [];
+            char.system = char.system || {};
             return char;
         });
         console.log("script.js: fetchCharacters() - Data processed, allCharacters count:", allCharacters.length);
@@ -158,13 +160,13 @@ function toggleNpcInScene(npcIdStr, npcName) {
         createNpcDialogueArea(npcIdStr, npcName);
         dialogueHistories[npcIdStr] = [];
     }
-    adjustNpcDialogueAreaWidths(); // Adjust widths after adding/removing
+    adjustNpcDialogueAreaWidths();
 
     if (activeSceneNpcIds.size >= 1 && multiNpcContainer.querySelector('p.scene-event')) {
         multiNpcContainer.innerHTML = '';
         activeSceneNpcIds.forEach(id => {
              const npc = allCharacters.find(c=> String(c._id) === String(id));
-             if(npc && !getElem(`npc-area-${id}`)) { // Re-create if it was removed by innerHTML clear
+             if(npc && !getElem(`npc-area-${id}`)) {
                 createNpcDialogueArea(id, npc.name);
              }
         });
@@ -202,7 +204,7 @@ function createNpcDialogueArea(npcIdStr, npcName) {
     areaDiv.appendChild(transcriptDiv);
 
     container.appendChild(areaDiv);
-    adjustNpcDialogueAreaWidths(); // Adjust widths after adding a new area
+    adjustNpcDialogueAreaWidths();
 }
 
 function removeNpcDialogueArea(npcIdStr) {
@@ -210,7 +212,7 @@ function removeNpcDialogueArea(npcIdStr) {
     if (areaDiv) {
         areaDiv.remove();
     }
-    adjustNpcDialogueAreaWidths(); // Adjust widths after removing an area
+    adjustNpcDialogueAreaWidths();
 
     const container = getElem('multi-npc-dialogue-container');
     if (!container) { console.error("removeNpcDialogueArea: 'multi-npc-dialogue-container' not found."); return; }
@@ -230,15 +232,12 @@ function adjustNpcDialogueAreaWidths() {
     const widthPercent = 100 / numAreas;
     dialogueAreas.forEach(area => {
         area.style.width = `${widthPercent}%`;
-        // Add some margin if there are multiple areas for better spacing
         area.style.marginRight = numAreas > 1 ? '5px' : '0';
     });
-    // Remove margin from the last element
     if (numAreas > 0 && dialogueAreas[numAreas - 1]) {
         dialogueAreas[numAreas - 1].style.marginRight = '0';
     }
 }
-
 
 function renderPcList() {
     const pcListDiv = getElem('active-pc-list');
@@ -266,17 +265,15 @@ function renderPcList() {
             disableBtn('generate-dialogue-btn', true);
 
             togglePcSelection(pcIdStr, li);
-            await selectCharacterForDetails(pcIdStr); // This updates the left-hand profile
+            await selectCharacterForDetails(pcIdStr);
 
-            // Ensure PC Dashboard overview is shown when selecting from this list
             const dashboardContent = getElem('pc-dashboard-content');
             if (dashboardContent) {
-                // If a detailed sheet is open, or if it's not the overview, force overview
                 if (dashboardContent.querySelector('.detailed-pc-sheet') || activePcIds.size > 0) {
-                     updatePcDashboard(); // This will render the overview cards
+                     updatePcDashboard();
                 }
             }
-            updateView(); // This ensures the PC dashboard view is active
+            updateView();
         };
 
         if (activePcIds.has(pcIdStr)) {
@@ -447,16 +444,13 @@ async function selectCharacterForDetails(charIdStr) {
         if (selectedChar._id && typeof selectedChar._id === 'object' && selectedChar._id.$oid) {
             selectedChar._id = selectedChar._id.$oid;
         }
-        // Ensure all necessary nested objects exist for safety
         selectedChar.combined_history_content = selectedChar.combined_history_content || "";
         selectedChar.vtt_data = selectedChar.vtt_data || {};
         selectedChar.vtt_flags = selectedChar.vtt_flags || {};
         selectedChar.items = selectedChar.items || [];
         selectedChar.system = selectedChar.system || {};
 
-
         console.log("selectCharacterForDetails: Fetched character details (ID as string):", {id: selectedChar._id, name: selectedChar.name, historyDefined: selectedChar.combined_history_content !== undefined, vttDataKeys: Object.keys(selectedChar.vtt_data), vttFlagsKeys: Object.keys(selectedChar.vtt_flags) });
-
 
         const charIndex = allCharacters.findIndex(c => String(c._id) === charIdStr);
         if (charIndex > -1) {
@@ -523,17 +517,14 @@ function togglePcSelection(pcIdStr, element) {
         console.log("Added. New activePcIds:", new Set(activePcIds));
     }
     const pcDashboardViewElem = getElem('pc-dashboard-view');
-    if(pcDashboardViewElem && pcDashboardViewElem.style.display === 'block') { // Check if dashboard is visible
-        // If a detailed sheet is NOT showing, or if the current detailed sheet is NOT for the toggled PC, update overview.
+    if(pcDashboardViewElem && pcDashboardViewElem.style.display === 'block') {
         const detailedSheet = pcDashboardViewElem.querySelector('.detailed-pc-sheet');
         if (!detailedSheet || (detailedSheet && detailedSheet.dataset.pcId !== pcIdStr)) {
-            // updatePcDashboard(); // Don't force overview if just toggling selection for already detailed PC
+            // updatePcDashboard(); // Keep commented
         }
-        // If the detailed sheet for THIS pcId IS showing, and we just DE-selected it, then revert to overview.
         else if (detailedSheet && detailedSheet.dataset.pcId === pcIdStr && !activePcIds.has(pcIdStr)) {
             updatePcDashboard();
         }
-         // If no detailed sheet is showing, and we just selected a PC, show overview.
         else if (!detailedSheet && activePcIds.size > 0) {
             updatePcDashboard();
         }
@@ -548,14 +539,13 @@ function updateView() {
         return;
     }
 
-    if (activeSceneNpcIds.size > 0) { // If NPCs are active for dialogue, show dialogue interface
+    if (activeSceneNpcIds.size > 0) {
         dialogueInterface.style.display = 'flex';
         pcDashboardView.style.display = 'none';
         const dashboardContent = getElem('pc-dashboard-content');
         if (dashboardContent.querySelector('.detailed-pc-sheet')) {
-            // If switching from a detailed PC view to NPC dialogue, clear detailed view and show overview next time
-            dashboardContent.innerHTML = ''; // Clear detailed view
-            updatePcDashboard(); // Prepare overview for next time PC dashboard is shown
+            dashboardContent.innerHTML = '';
+            updatePcDashboard();
         }
 
         if(currentlyExpandedAbility){
@@ -572,28 +562,21 @@ function updateView() {
             if(skillHeader && skillHeader.querySelector('span.arrow-indicator')) skillHeader.querySelector('span.arrow-indicator').textContent = ' ►';
             currentlyExpandedSkill = null;
         }
-    } else { // Otherwise, show PC Dashboard
+    } else {
         dialogueInterface.style.display = 'none';
         pcDashboardView.style.display = 'block';
-        // If no specific PC detail sheet is currently displayed, show the overview.
-        // This ensures that if we switch from NPC view back to PC view, we see the overview.
         if (!getElem('pc-dashboard-content').querySelector('.detailed-pc-sheet')) {
             updatePcDashboard();
         }
-        // If a detailed sheet IS up, let it stay. Clicking a PC card from quick view will call renderDetailedPcSheet.
-        // Clicking a PC from the list will also handle updating the view correctly to show the overview.
     }
 }
 
 function updatePcDashboard() {
     console.log("Updating PC Dashboard (Overview). Active PC IDs:", new Set(activePcIds));
     const dashboardContent = getElem('pc-dashboard-content');
-    if (!dashboardContent) {
-        console.error("updatePcDashboard: 'pc-dashboard-content' not found.");
-        return;
-    }
+    if (!dashboardContent) { console.error("updatePcDashboard: 'pc-dashboard-content' not found."); return; }
 
-    dashboardContent.innerHTML = ''; // Clear for overview
+    dashboardContent.innerHTML = '';
 
     const selectedPcs = allCharacters.filter(char =>
         activePcIds.has(String(char._id)) && char.character_type === 'PC' && char.vtt_data
@@ -614,7 +597,7 @@ function updatePcDashboard() {
             const skillExpansionDiv = document.getElementById(`expanded-skill-${currentlyExpandedSkill}`);
             if (skillExpansionDiv) skillExpansionDiv.style.display = 'none';
             const skillHeader = document.querySelector(`#skills-overview-table th.clickable-skill-header[data-skill-key="${currentlyExpandedSkill}"]`);
-            if(skillHeader && skillHeader.querySelector('span.arrow-indicator')) skillHeader.querySelector('span.arrow-indicator').textContent = ' ►';
+            if (skillHeader && skillHeader.querySelector('span.arrow-indicator')) skillHeader.querySelector('span.arrow-indicator').textContent = ' ►';
             currentlyExpandedSkill = null;
         }
         return;
@@ -629,8 +612,7 @@ function updatePcDashboard() {
     const sortedSelectedPcsByName = [...selectedPcs].sort((a,b) => a.name.localeCompare(b.name));
     sortedSelectedPcsByName.forEach(pc => {
         const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || pc.vtt_data?.details?.level || 1;
-        // Added inline style for visibility debugging, you can remove the border later
-        statCardsHTML += `<div class="pc-stat-card clickable-pc-card" data-pc-id="${String(pc._id)}" style="border: 1px dashed blue;"><h4>${pc.name} (Lvl ${pcLevel})</h4>`;
+        statCardsHTML += `<div class="pc-stat-card clickable-pc-card" data-pc-id="${String(pc._id)}"><h4>${pc.name} (Lvl ${pcLevel})</h4>`;
         
         const hpCurrent = pc.vtt_data?.attributes?.hp?.value !== undefined ? pc.vtt_data.attributes.hp.value : 'N/A';
         const hpMax = pc.vtt_data?.attributes?.hp?.max !== undefined && pc.vtt_data.attributes.hp.max !== null ? pc.vtt_data.attributes.hp.max : (pc.system?.attributes?.hp?.max || 'N/A');
@@ -684,10 +666,10 @@ function updatePcDashboard() {
         statCardsHTML += `</div>`;
     });
     statCardsHTML += `</div>`;
-    
     dashboardContent.innerHTML += statCardsHTML;
-    // REMOVED the forEach loop that attached individual listeners here.
-    // The delegated listener (added in DOMContentLoaded) will handle clicks on .clickable-pc-card
+
+    // NOTE: Individual listeners for cards were removed from here.
+    // The delegated listener in DOMContentLoaded now handles these clicks.
 
     const abilities = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
     let mainStatsTableHTML = `<h4>Ability Scores Overview</h4>
@@ -834,19 +816,17 @@ function toggleSkillExpansion(skillKey) {
         skillSortKey = skillKey;
         currentlyExpandedSkill = skillKey;
     }
-    updatePcDashboard(); // This will re-render the skill table and handle showing/hiding the correct expansion
+    updatePcDashboard(); 
 
-    // Update arrow indicators after re-render
     const allSkillHeaders = document.querySelectorAll(`#skills-overview-table th.clickable-skill-header`);
     allSkillHeaders.forEach(header => {
         const sKey = header.dataset.skillKey;
         const arrow = header.querySelector('span.arrow-indicator');
-        if (arrow) { // Ensure arrow exists
+        if (arrow) {
             arrow.textContent = (sKey === currentlyExpandedSkill) ? ' ▼' : ' ►';
         }
     });
 }
-
 
 function populateExpandedSkillDetails(skillKey, expansionDiv, selectedPcs) {
     if (!selectedPcs || selectedPcs.length === 0) {
@@ -880,7 +860,6 @@ function populateExpandedSkillDetails(skillKey, expansionDiv, selectedPcs) {
     const visualMin = Math.min(-2, dataMinMod -1);
     const visualMax = Math.max(5, dataMaxMod + 1);
     const visualRange = visualMax - visualMin;
-
     const zeroPositionPercent = visualRange !== 0 ? ((0 - visualMin) / visualRange) * 100 : 50;
 
     skillDataForGraph.forEach(data => {
@@ -1012,7 +991,6 @@ function populateExpandedAbilityDetails(ablKey, expansionDiv, selectedPcsInput) 
         contentHTML += `</tr>`;
     });
     contentHTML += `</tbody></table>`;
-
     contentHTML += `<hr><h4>${upperAblKey} Applications & Calculations</h4>`;
 
     if (upperAblKey === 'STR') {
@@ -1108,8 +1086,6 @@ function populateExpandedAbilityDetails(ablKey, expansionDiv, selectedPcsInput) 
     expansionDiv.innerHTML = contentHTML;
 }
 
-
-// --- NEW FUNCTION for Detailed PC Sheet ---
 function renderDetailedPcSheet(pcId) {
     const pc = allCharacters.find(c => String(c._id) === String(pcId));
     if (!pc || pc.character_type !== 'PC' || !pc.vtt_data) { 
@@ -1133,8 +1109,7 @@ function renderDetailedPcSheet(pcId) {
     let html = `<div class="detailed-pc-sheet" data-pc-id="${pcId}">`; 
     html += `<button onclick="updatePcDashboard()" style="margin-bottom: 15px; padding: 8px 12px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;">Back to Dashboard Overview</button>`;
     html += `<h2>${pc.name}</h2>`;
-
-    // Basic Info
+    
     const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.vtt_data?.details?.level || 1; 
     pc.calculatedProfBonus = getProficiencyBonus(pcLevel);
 
@@ -1164,7 +1139,6 @@ function renderDetailedPcSheet(pcId) {
     }
     html += `</div></div>`;
 
-    // Combat Stats
     html += `<div class="pc-section"><h4>Combat Stats</h4><div class="pc-info-grid">`;
     const hpCurrent = pc.vtt_data?.attributes?.hp?.value !== undefined ? pc.vtt_data.attributes.hp.value : 'N/A';
     const hpMax = pc.vtt_data?.attributes?.hp?.max !== undefined && pc.vtt_data.attributes.hp.max !== null ? pc.vtt_data.attributes.hp.max : 'N/A';
@@ -1204,9 +1178,8 @@ function renderDetailedPcSheet(pcId) {
     html += `<p><strong>Initiative:</strong> ${initiativeBonus >= 0 ? '+' : ''}${initiativeBonus}</p>`;
     html += `<p><strong>Proficiency Bonus:</strong> +${pc.calculatedProfBonus}</p></div></div>`;
 
-    // Ability Scores & Saves
     html += `<div class="pc-section"><h4>Ability Scores & Saves</h4><table class="detailed-pc-table"><thead><tr><th>Ability</th><th>Score</th><th>Mod</th><th>Save</th></tr></thead><tbody>`;
-    const abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+    const abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha']; // DEFINED ABILITIES HERE
     abilities.forEach(abl => {
         const score = pc.vtt_data?.abilities?.[abl]?.value || 10;
         const mod = getAbilityModifier(score);
@@ -1216,15 +1189,9 @@ function renderDetailedPcSheet(pcId) {
     });
     html += `</tbody></table></div>`;
 
-    // Skills
     html += `<div class="pc-section"><h4>Skills</h4><table class="detailed-pc-table"><thead><tr><th>Skill</th><th>Mod</th><th>Bonus</th></tr></thead><tbody>`;
-    const skillNameMap = {
-        "acr": "Acrobatics (Dex)", "ani": "Animal Handling (Wis)", "arc": "Arcana (Int)", "ath": "Athletics (Str)",
-        "dec": "Deception (Cha)", "his": "History (Int)", "ins": "Insight (Wis)", "itm": "Intimidation (Cha)",
-        "inv": "Investigation (Int)", "med": "Medicine (Wis)", "nat": "Nature (Int)", "prc": "Perception (Wis)",
-        "prf": "Performance (Cha)", "per": "Persuasion (Cha)", "rel": "Religion (Int)", "slt": "Sleight of Hand (Dex)",
-        "ste": "Stealth (Dex)", "sur": "Survival (Wis)"
-    };
+    // skillNameMap already defined globally, but good to have a local copy or ensure it's accessible if moved.
+    // const skillNameMap = { /* ... as defined globally ... */ };
     for (const skillKey in skillNameMap) {
         const skillData = pc.vtt_data?.skills?.[skillKey];
         const skillDisplayName = skillNameMap[skillKey];
@@ -1243,7 +1210,6 @@ function renderDetailedPcSheet(pcId) {
     }
     html += `</tbody></table></div>`;
 
-    // Weapons
     html += `<div class="pc-section"><h4>Weapons & Attacks</h4>`;
     const weapons = pc.items?.filter(item => item.type === 'weapon') || [];
     if (weapons.length > 0) {
@@ -1252,7 +1218,6 @@ function renderDetailedPcSheet(pcId) {
             let attackBonusStr = "N/A";
             let damageStr = "N/A";
             const weaponSystem = w.system || {};
-
             let ablMod = 0;
             let isProficient = weaponSystem.proficient === 1 || weaponSystem.proficient === undefined; 
 
@@ -1291,8 +1256,6 @@ function renderDetailedPcSheet(pcId) {
     }
     html += `</div>`;
 
-
-    // Spells
     html += `<div class="pc-section"><h4>Spells</h4>`;
     const spells = pc.items?.filter(item => item.type === 'spell') || [];
     const spellcastingAbilityKey = pc.system?.attributes?.spellcasting || pc.vtt_data?.attributes?.spellcasting;
@@ -1324,7 +1287,6 @@ function renderDetailedPcSheet(pcId) {
     }
     html += `</div>`;
 
-    // Inventory & Currency
     html += `<div class="pc-section"><h4>Inventory & Currency</h4>`;
     const inventoryItems = pc.items?.filter(item => !['weapon', 'spell', 'feat', 'class', 'race', 'background'].includes(item.type)) || [];
     if (inventoryItems.length > 0) {
@@ -1347,7 +1309,6 @@ function renderDetailedPcSheet(pcId) {
     html += currencyString.length > 0 ? currencyString.join(', ') : 'None';
     html += `</p></div>`;
 
-    // Details (Biography, Personality, etc.)
     html += `<div class="pc-section"><h4>Details & Notes</h4>`;
     const details = pc.system?.details || pc.vtt_data?.details;
     if(details?.biography?.value) html += `<p><strong>Biography:</strong><br>${details.biography.value.replace(/<p>/g, '').replace(/<\/p>/g, '<br>')}</p>`;
@@ -1358,13 +1319,11 @@ function renderDetailedPcSheet(pcId) {
     if(pc.description && pc.description !== pc.name) html += `<p><strong>Description:</strong> ${pc.description}</p>`;
     html += `</div>`;
 
-    html += `</div>`; // end detailed-pc-sheet
+    html += `</div>`;
     dashboardContent.innerHTML = html;
 }
 
-
 // --- Memory Management Functions ---
-
 function renderMemories(memories = []) {
     const listElement = getElem('character-memories-list');
     if (!listElement) {
@@ -1382,7 +1341,6 @@ function renderMemories(memories = []) {
     memories.forEach(memory => {
         const li = document.createElement('li');
         li.className = 'memory-item';
-
         let memoryTimestamp = 'N/A';
         if (memory.timestamp) {
             if (typeof memory.timestamp === 'object' && memory.timestamp.$date) {
@@ -1391,7 +1349,6 @@ function renderMemories(memories = []) {
                 memoryTimestamp = new Date(memory.timestamp).toLocaleString();
             }
         }
-
         li.innerHTML = `<span><strong>${memory.type || 'Generic'}:</strong> ${memory.content || 'No content'}
                         <br><small><em>(ID: ${memory.memory_id}, Source: ${memory.source || 'Unknown'}, Time: ${memoryTimestamp})</em></small></span>`;
 
@@ -1476,7 +1433,6 @@ async function deleteMemory(memoryId) {
 }
 
 // --- Dialogue Management Functions ---
-
 async function generateDialogue() {
     const playerUtterance = getElem('player-utterance').value.trim();
     const sceneContext = getElem('scene-context').value.trim();
@@ -1485,7 +1441,6 @@ async function generateDialogue() {
         alert("Please select at least one NPC to send dialogue to.");
         return;
     }
-
     disableBtn('generate-dialogue-btn', true);
 
     for (const npcIdStr of activeSceneNpcIds) {
@@ -1524,7 +1479,6 @@ async function generateDialogue() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(dialogueRequestPayload)
             });
-
             const result = await response.json();
 
             if (!response.ok) {
@@ -1548,7 +1502,6 @@ async function generateDialogue() {
                 renderAiSuggestions(result.new_memory_suggestions, result.generated_topics, npcIdStr);
             }
             transcriptArea.scrollTop = transcriptArea.scrollHeight;
-
         } catch (error) {
             console.error(`Error generating dialogue for ${npc.name}:`, error);
             const npcErrorEntry = document.createElement('p');
@@ -1561,12 +1514,10 @@ async function generateDialogue() {
             transcriptArea.scrollTop = transcriptArea.scrollHeight;
         }
     }
-
     const playerUtteranceElem = getElem('player-utterance');
     if (playerUtteranceElem) playerUtteranceElem.value = '';
     disableBtn('generate-dialogue-btn', activeSceneNpcIds.size === 0);
 }
-
 
 function renderAiSuggestions(memorySuggestions = [], topicSuggestions = [], forNpcId) {
     const memoryListElem = getElem('suggested-memories-list');
@@ -1626,7 +1577,6 @@ function renderAiSuggestions(memorySuggestions = [], topicSuggestions = [], forN
 }
 
 // --- Character Creation and GM Notes Functions ---
-
 async function saveGMNotes() {
     if (!currentProfileCharId) {
         alert("No character selected to save notes for.");
@@ -1674,7 +1624,7 @@ async function createCharacter() {
         class_str: "Commoner",
         memories: [],
         associated_history_files: [],
-        vtt_data: {}, // Ensure these are present for new characters
+        vtt_data: {},
         vtt_flags: {},
         items: [],
         system: {}
@@ -1699,7 +1649,6 @@ async function createCharacter() {
          if (createdChar._id && typeof createdChar._id === 'object' && createdChar._id.$oid) {
             createdChar._id = createdChar._id.$oid;
         }
-        // Ensure new char has default structures for safety
         createdChar.vtt_data = createdChar.vtt_data || {};
         createdChar.vtt_flags = createdChar.vtt_flags || {};
         createdChar.items = createdChar.items || [];
@@ -1721,23 +1670,22 @@ async function createCharacter() {
     }
 }
 
-
 // --- Event Listeners & Initial Setup ---
-console.log("script.js: File execution started.");
+console.log("script.js: File execution started."); // Line 1677 from your log
 
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("script.js: DOMContentLoaded event fired.");
+document.addEventListener('DOMContentLoaded', () => { // Line 1679 from your log
+    console.log("script.js: DOMContentLoaded event fired."); // Line 1680
 
     try {
-        console.log("script.js: DOMContentLoaded - Attempting to call fetchCharacters().");
+        console.log("script.js: DOMContentLoaded - Attempting to call fetchCharacters()."); // Line 1683
         fetchCharacters();
-        console.log("script.js: DOMContentLoaded - Attempting to call fetchHistoryFiles().");
+        console.log("script.js: DOMContentLoaded - Attempting to call fetchHistoryFiles()."); // Line 1685
         fetchHistoryFiles();
     } catch (e) {
         console.error("script.js: DOMContentLoaded - Error during initial fetch calls:", e);
     }
 
-    console.log("script.js: DOMContentLoaded - Setting up resizer logic.");
+    console.log("script.js: DOMContentLoaded - Setting up resizer logic."); // Line 1691
     const leftColumn = getElem('left-column');
     const resizer = getElem('resizer');
     const centerColumn = getElem('center-column');
@@ -1752,7 +1700,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.removeEventListener('mousemove', handleMouseMove);
             });
         });
-
         function handleMouseMove(e) {
             if (!isResizing) return;
             const newLeftWidth = e.clientX;
@@ -1761,11 +1708,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     } else {
-        console.warn("script.js: DOMContentLoaded - One or more resizer elements not found (left-column, resizer, or center-column).");
+        console.warn("script.js: DOMContentLoaded - One or more resizer elements not found.");
     }
-    console.log("script.js: DOMContentLoaded - Finished resizer logic setup.");
+    console.log("script.js: DOMContentLoaded - Finished resizer logic setup."); // Line 1716
 
-    console.log("script.js: DOMContentLoaded - Setting up collapsible sections.");
+    console.log("script.js: DOMContentLoaded - Setting up collapsible sections."); // Line 1718
     document.querySelectorAll('.collapsible-section h3').forEach(header => {
         header.addEventListener('click', () => {
             const section = header.parentElement;
@@ -1782,36 +1729,42 @@ document.addEventListener('DOMContentLoaded', () => {
             header.parentElement.classList.add('collapsed');
         }
     });
-    console.log("script.js: DOMContentLoaded - Finished collapsible sections setup.");
+    console.log("script.js: DOMContentLoaded - Finished collapsible sections setup."); // Line 1735
 
-    // ADD THIS BLOCK FOR DELEGATED EVENT LISTENING
     const pcDashboardContentForDelegation = getElem('pc-dashboard-content');
     if (pcDashboardContentForDelegation) {
-        console.log("DEBUG: Attaching DELEGATED click listener to pc-dashboard-content.");
+        // This log confirms the setup of the delegated listener.
+        console.log("DEBUG: Attaching DELEGATED click listener to pc-dashboard-content."); // Line 1739
         pcDashboardContentForDelegation.addEventListener('click', function(event) {
-            console.log('DEBUG (Delegated Listener on #pc-dashboard-content): Click detected. Target:', event.target);
-            const clickedCard = event.target.closest('.clickable-pc-card'); // Check if the click was on or inside a card
+            const clickedCard = event.target.closest('.clickable-pc-card');
+
+            // --- Start of Toggleable Debug Block ---
+            if (DEBUG_DELEGATED_CARD_CLICK) {
+                console.log('DEBUG (Delegated Listener on #pc-dashboard-content): Click detected. Target:', event.target);
+                if (clickedCard) {
+                    console.log('DEBUG (Delegated Listener): >>> CARD CLICK DETECTED (toggleable) <<< PC ID:', clickedCard.dataset.pcId);
+                    // alert(`Card clicked (Delegated Listener - Toggleable): ${clickedCard.dataset.pcId}`); // Alert is now also toggleable
+                } else {
+                    console.log('DEBUG (Delegated Listener - Toggleable): Click was inside #pc-dashboard-content, but NOT on a .clickable-pc-card.');
+                }
+            }
+            // --- End of Toggleable Debug Block ---
 
             if (clickedCard) {
-                console.log('DEBUG (Delegated Listener): >>> CLICK WAS ON A .clickable-pc-card <<< PC ID:', clickedCard.dataset.pcId);
-                alert(`Card clicked (Delegated Listener): ${clickedCard.dataset.pcId}`);
-                
                 const pcIdToRender = clickedCard.dataset.pcId;
                 if (pcIdToRender) {
                     renderDetailedPcSheet(pcIdToRender);
                 } else {
-                    console.error("DEBUG (Delegated Listener): Clicked card found, but data-pc-id is missing or undefined.");
+                    // This error log is good to keep, as it indicates a potential issue.
+                    console.error("Delegated Listener: Clicked card found, but data-pc-id is missing.");
                 }
-            } else {
-                console.log('DEBUG (Delegated Listener): Click was inside #pc-dashboard-content, but NOT on a .clickable-pc-card.');
             }
         });
     } else {
         console.error("DEBUG: Crucial element #pc-dashboard-content not found for attaching delegated listener.");
     }
-    // END OF ADDED BLOCK
 
-    console.log("script.js: DOMContentLoaded - Calling updateView().");
+    console.log("script.js: DOMContentLoaded - Calling updateView()."); // Line 1766
     updateView();
-    console.log("script.js: DOMContentLoaded - updateView() called.");
+    console.log("script.js: DOMContentLoaded - updateView() called."); // Line 1768
 });
