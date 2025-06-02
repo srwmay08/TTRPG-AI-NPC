@@ -1,12 +1,12 @@
-# ai_service.py
+# server/ai_service.py
 import google.generativeai as genai
-from config import config 
-from typing import Optional, List, Dict, Any 
+from config import config
+from typing import Optional, List, Dict, Any
 import traceback
 
-from models import NPCProfile, DialogueRequest, FactionStandingLevel 
+from models import NPCProfile, DialogueRequest, FactionStandingLevel
 
-GENERATIVE_MODEL_NAME = "gemini-1.5-flash" 
+GENERATIVE_MODEL_NAME = "gemini-1.5-flash"
 genai_configured_successfully = False
 
 try:
@@ -27,10 +27,10 @@ class AIService:
         if genai_configured_successfully:
             try:
                 self.generation_config = genai.types.GenerationConfig(
-                    temperature=0.75, 
+                    temperature=0.75,
                     top_p=0.95,
                     top_k=40,
-                    max_output_tokens=450 
+                    max_output_tokens=450
                 )
                 self.safety_settings = [
                     {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_MEDIUM_AND_ABOVE"},
@@ -50,11 +50,11 @@ class AIService:
                 self.model = None
         else:
             print(f"Skipping Generative AI model initialization because SDK configuration failed or was skipped.")
-            
+
     def summarize_interaction_for_memory(self, player_utterance: str, npc_response: str) -> str:
         if self.model is None:
             print("AI Service Error: Model not available for memory summarization.")
-            return f"Player: {player_utterance} / NPC: {npc_response}" 
+            return f"Player: {player_utterance} / NPC: {npc_response}"
         try:
             prompt = (
                 "You are a summarization assistant for a TTRPG. "
@@ -66,12 +66,12 @@ class AIService:
                 "Concise memory (third person perspective for the NPC, e.g., 'He learned that...' or 'She felt...'):"
             )
             response = self.model.generate_content(prompt)
-            
+
             if response.prompt_feedback and response.prompt_feedback.block_reason:
                 block_reason_msg = response.prompt_feedback.block_reason_message or response.prompt_feedback.block_reason
                 print(f"Memory summarization blocked. Reason: {block_reason_msg}")
                 return f"Interaction regarding '{player_utterance}' occurred."
-            
+
             if response.candidates and response.candidates[0].content and response.candidates[0].content.parts:
                 return response.candidates[0].content.parts[0].text.strip()
             else:
@@ -83,17 +83,17 @@ class AIService:
             traceback.print_exc()
             return f"Player asked about '{player_utterance}', and I responded."
 
-    def generate_npc_dialogue(self, 
-                              npc: NPCProfile, 
+    def generate_npc_dialogue(self,
+                              npc: NPCProfile,
                               dialogue_request: DialogueRequest,
                               current_pc_standing: Optional[FactionStandingLevel] = None,
                               speaking_pc_name: Optional[str] = "the player",
-                              world_lore_summary: Optional[str] = None, # Added
+                              world_lore_summary: Optional[str] = None,
                               detailed_character_history: Optional[str] = None) -> str:
         if self.model is None:
             print("AI Service Error: Model is not available for dialogue generation.")
             return "Error: AI model not available. Please check configuration and GEMINI_API_KEY."
-        
+
         try:
             prompt_parts = [
                 f"You are embodying the character of {npc.name} in a tabletop roleplaying game.",
@@ -112,12 +112,11 @@ class AIService:
             if npc.background_story:
                 prompt_parts.append(f"\n--- Your General Background ---")
                 prompt_parts.append(npc.background_story)
-            
+
             if detailed_character_history and detailed_character_history.strip():
                 prompt_parts.append("\n--- Your Detailed History (Draw upon this deeply) ---")
                 prompt_parts.append(detailed_character_history.strip())
-            
-            # Integrate World Lore Summary
+
             if world_lore_summary and world_lore_summary.strip() and world_lore_summary.lower() != "no specific linked lore." and world_lore_summary.lower() != "no specific linked lore found or summaries generated.":
                 prompt_parts.append("\n--- Relevant World Lore & Context (Refer to this) ---")
                 prompt_parts.append(world_lore_summary.strip())
@@ -127,21 +126,26 @@ class AIService:
 
             if npc.motivations:
                 prompt_parts.append(f"\nYour Motivations: {', '.join(npc.motivations)}")
-            
-            if npc.memories: 
-                relevant_memories = npc.memories[-5:] 
+
+            if npc.memories:
+                relevant_memories = npc.memories[-5:]
                 if relevant_memories:
                     memory_summary = "\n".join([f"- ({mem.type} on {mem.timestamp.strftime('%Y-%m-%d %H:%M')} from {mem.source}): {mem.content}" for mem in relevant_memories])
                     prompt_parts.append("\n--- Your Recent Memories (Most recent first) ---")
                     prompt_parts.append(memory_summary)
-            
+
 
             prompt_parts.append(f"\n--- Your Current Disposition towards {speaking_pc_name} ---")
             if current_pc_standing:
                 prompt_parts.append(f"Your current standing towards {speaking_pc_name} is: {current_pc_standing.value}.")
                 prompt_parts.append("This standing has consequences:")
                 prompt_parts.append("  Ally: Required for Rank 5 Faction Missions.")
-                # ... (rest of standing descriptions)
+                prompt_parts.append("  Warmly: You are friendly and helpful.")
+                prompt_parts.append("  Kindly: You are polite and might offer minor aid.")
+                prompt_parts.append("  Amiable: You are generally pleasant and open to interaction.")
+                prompt_parts.append("  Indifferent: You are neutral and business-like.")
+                prompt_parts.append("  Apprehensive: You are wary and might be uncooperative.")
+                prompt_parts.append("  Dubious: You are suspicious and likely to be unhelpful or deceitful.")
                 prompt_parts.append("  Threatening: Kill-on-sight.")
                 prompt_parts.append(f"Let your {current_pc_standing.value} standing heavily influence your tone, willingness to share information, and general demeanor towards {speaking_pc_name}.")
             else:
@@ -155,24 +159,30 @@ class AIService:
             if dialogue_request.recent_dialogue_history:
                 prompt_parts.append("\n--- Recent Conversation (Most recent line last) ---")
                 prompt_parts.append("\n".join(dialogue_request.recent_dialogue_history))
-            
+
             prompt_parts.append("\n--- Your Task ---")
+            player_utterance_is_system_directive = dialogue_request.player_utterance and dialogue_request.player_utterance.strip().startswith("(System Directive:")
+
             if dialogue_request.player_utterance and dialogue_request.player_utterance.strip():
-                prompt_parts.append(f"{speaking_pc_name} says to you, {npc.name}: \"{dialogue_request.player_utterance.strip()}\"")
-                main_instruction = f"Respond IN CHARACTER as {npc.name}. Your response should be ONLY your spoken dialogue. Do not narrate actions (unless minor parenthetical, e.g., '(chuckles)'). Do not break character. Directly address {speaking_pc_name} if appropriate. Consider all provided context, especially any linked lore and your history."
-            else: 
+                if player_utterance_is_system_directive:
+                    prompt_parts.append(f"A system event or directive has occurred: \"{dialogue_request.player_utterance.strip()}\"")
+                    main_instruction = f"Respond IN CHARACTER as {npc.name} to this event/directive. Your response should be ONLY your spoken dialogue or a brief description of your reaction. Do not narrate actions (unless minor parenthetical, e.g., '(chuckles)'). Do not break character. Consider all provided context, especially any linked lore and your history."
+                else:
+                    prompt_parts.append(f"{speaking_pc_name} says to you, {npc.name}: \"{dialogue_request.player_utterance.strip()}\"")
+                    main_instruction = f"Respond IN CHARACTER as {npc.name}. Your response should be ONLY your spoken dialogue. Do not narrate actions (unless minor parenthetical, e.g., '(chuckles)'). Do not break character. Directly address {speaking_pc_name} if appropriate. Consider all provided context, especially any linked lore and your history."
+            else:
                 main_instruction = f"Describe what you, {npc.name}, say or do in this situation. Be concise and in character. Your response should be primarily your spoken dialogue. Do not break character. Consider all provided context, especially any linked lore and your history."
             prompt_parts.append(main_instruction)
-            
+
             prompt_parts.append("\n--- Additional Suggestions (Strict Format Expected) ---")
             prompt_parts.append(f"After your dialogue, provide the following in the exact format below (use 'None' if not applicable):")
             prompt_parts.append(f"NPC_ACTION: [Suggest a brief non-verbal action {npc.name} might take or an internal decision, e.g., 'Scratches chin thoughtfully', 'Decides to offer a quest if they seem trustworthy', 'Glances towards the door.']")
             prompt_parts.append(f"PLAYER_CHECK: [Suggest one skill check a player might reasonably attempt in response, e.g., 'Insight to detect deception', 'Persuasion to ask for a discount', 'History to recall the mentioned battle.']")
             prompt_parts.append(f"STANDING_CHANGE_SUGGESTION_FOR_{dialogue_request.speaking_pc_id if dialogue_request.speaking_pc_id else 'PLAYER'}: [Suggest a new standing level ({', '.join([s.value for s in FactionStandingLevel])}) for {speaking_pc_name} OR 'No change']")
             prompt_parts.append(f"JUSTIFICATION: [Briefly explain why the standing should change or why it remains the same, based on the interaction]")
-            
+
             prompt = "\n".join(prompt_parts)
-            
+
             print(f"\n----- AI PROMPT for {npc.name} -----")
             print(prompt)
             print("----- END PROMPT -----\n")
@@ -183,18 +193,20 @@ class AIService:
                 block_reason_msg = response.prompt_feedback.block_reason_message or response.prompt_feedback.block_reason
                 detailed_error = f"AI generation blocked for {npc.name}. Reason: {block_reason_msg}."
                 print(detailed_error)
-                # ... (rest of error handling)
                 return f"({npc.name} hesitates, unable to speak on that matter due to certain restrictions. [{block_reason_msg}])\nNPC_ACTION: None\nPLAYER_CHECK: None\nSTANDING_CHANGE_SUGGESTION_FOR_{dialogue_request.speaking_pc_id if dialogue_request.speaking_pc_id else 'PLAYER'}: No change\nJUSTIFICATION: AI content blocked."
 
             if response.candidates and response.candidates[0].content and response.candidates[0].content.parts:
                 full_ai_output = "".join(part.text for part in response.candidates[0].content.parts if hasattr(part, 'text')).strip()
-                return full_ai_output 
-            else: 
-                # ... (rest of handling for no response parts)
+                return full_ai_output
+            else:
+                error_message = f"AI did not generate a response for {npc.name}. Candidates: {response.candidates}"
+                print(f"Warning: {error_message}")
                 return f"({npc.name} seems lost in thought and doesn't respond.)\nNPC_ACTION: None\nPLAYER_CHECK: None\nSTANDING_CHANGE_SUGGESTION_FOR_{dialogue_request.speaking_pc_id if dialogue_request.speaking_pc_id else 'PLAYER'}: No change\nJUSTIFICATION: No response generated."
 
         except Exception as e:
-            # ... (rest of exception handling)
+            error_details = f"Error during AI dialogue generation for {npc.name}: {e}"
+            print(error_details)
+            traceback.print_exc()
             return f"Error: Exception during AI dialogue generation - {type(e).__name__}. Check server logs.\nNPC_ACTION: None\nPLAYER_CHECK: None\nSTANDING_CHANGE_SUGGESTION_FOR_{dialogue_request.speaking_pc_id if dialogue_request.speaking_pc_id else 'PLAYER'}: No change\nJUSTIFICATION: Internal server error."
 
 ai_service_instance = AIService()

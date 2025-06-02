@@ -32,3 +32,21 @@ window.slugify = function(text) {
         .replace(/^-+/, '')             // Trim - from start of text
         .replace(/-+$/, '');            // Trim - from end of text
 };
+
+window.escapeHtml = function(unsafe) {
+    if (typeof unsafe !== 'string') {
+        if (unsafe === null || typeof unsafe === 'undefined') return '';
+        try {
+            unsafe = String(unsafe);
+        } catch (e) {
+            console.error("Could not convert to string for escaping:", unsafe, e);
+            return '';
+        }
+    }
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
+};

@@ -1,4 +1,4 @@
-# database.py
+# server/database.py
 from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure
 from config import config
@@ -28,8 +28,7 @@ class Database:
 
     def get_db(self):
         """Returns the database instance."""
-        if self.db is None:
-            # Try to reconnect or handle error
+        if self.db is None and self.client is None: # Only attempt reconnect if truly not connected
             print("Database not initialized. Attempting to reconnect...")
             try:
                 self.client = MongoClient(config.MONGO_URI)
@@ -39,23 +38,15 @@ class Database:
             except Exception as e:
                 print(f"Failed to reconnect to MongoDB: {e}")
                 return None
+        elif self.db is None and self.client is not None: # Client exists but db object is None
+             self.db = self.client[config.DB_NAME] # Re-assign db object
         return self.db
 
-# Initialize and expose the database connection instance
 db_connector = Database()
 
-# Example usage (optional, for testing connection directly)
 if __name__ == '__main__':
     db = db_connector.get_db()
     if db:
         print(f"Connected to database: {db.name}")
-        # You can try inserting a test document
-        # try:
-        #     test_collection = db.test_connection
-        #     test_collection.insert_one({"status": "connected"})
-        #     print("Test document inserted.")
-        #     test_collection.delete_one({"status": "connected"}) # Clean up
-        # except Exception as e:
-        #     print(f"Error interacting with database: {e}")
     else:
         print("Failed to get database instance.")

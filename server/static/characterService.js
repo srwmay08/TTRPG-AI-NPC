@@ -2,31 +2,30 @@
 // Responsibility: Logic related to fetching, processing, and managing character data.
 
 window.profileElementIds = {
-    // ... (IDs remain the same as in your uiRenderers.js definition)
-    detailsCharName: 'details-char-name', 
+    detailsCharName: 'details-char-name',
     profileCharType: 'profile-char-type',
-    profileDescription: 'profile-description', 
+    profileDescription: 'profile-description',
     profilePersonality: 'profile-personality',
-    gmNotesTextarea: 'gm-notes', 
+    gmNotesTextarea: 'gm-notes',
     saveGmNotesBtn: 'save-gm-notes-btn',
-    npcMemoriesSection: 'npc-memories-collapsible-section', 
+    npcMemoriesSection: 'npc-memories-collapsible-section',
     characterMemoriesList: 'character-memories-list',
-    addMemoryBtn: 'add-memory-btn', 
+    addMemoryBtn: 'add-memory-btn',
     npcFactionStandingsSection: 'npc-faction-standings-section',
-    npcFactionStandingsContent: 'npc-faction-standings-content', 
+    npcFactionStandingsContent: 'npc-faction-standings-content',
     characterHistorySection: 'character-history-collapsible-section',
-    associatedHistoryList: 'associated-history-list', 
+    associatedHistoryList: 'associated-history-list',
     historyContentDisplay: 'history-content-display',
     associateHistoryBtn: 'associate-history-btn',
-    characterLoreLinksSection: 'character-lore-links-section', 
-    loreEntrySelectForCharacter: 'lore-entry-select-for-character', 
-    linkLoreToCharBtn: 'link-lore-to-char-btn', 
+    characterLoreLinksSection: 'character-lore-links-section',
+    loreEntrySelectForCharacter: 'lore-entry-select-for-character',
+    linkLoreToCharBtn: 'link-lore-to-char-btn',
     associatedLoreListForCharacter: 'associated-lore-list-for-character',
-    
+
     deleteMemoryCallback: () => window.handleDeleteMemory,
     factionChangeCallback: () => window.handleSaveFactionStanding,
     dissociateHistoryCallback: () => window.handleDissociateHistoryFile,
-    unlinkLoreFromCharacterCallback: () => window.handleUnlinkLoreFromCharacter 
+    unlinkLoreFromCharacterCallback: () => window.handleUnlinkLoreFromCharacter
 };
 
 window.initializeAppCharacters = async function() {
@@ -36,30 +35,26 @@ window.initializeAppCharacters = async function() {
         appState.setAllCharacters(charactersFromServer);
         console.log("Characters fetched and processed:", appState.getAllCharacters().length);
 
-        // Render PC list (always visible)
         window.renderPcListUI(window.getElem('active-pc-list'), window.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, window.handleTogglePcSelection);
-        
-        // Render NPC list for the SCENE tab (initially with no filter)
+
         window.renderNpcListForContextUI(
-            window.getElem('character-list-scene-tab'), 
-            appState.getAllCharacters(), 
-            appState.activeSceneNpcIds, 
-            window.handleToggleNpcInScene, 
+            window.getElem('character-list-scene-tab'),
+            appState.getAllCharacters(),
+            appState.activeSceneNpcIds,
+            window.handleToggleNpcInScene,
             window.handleSelectCharacterForDetails,
-            null 
+            null
         );
-        // Render ALL NPCs for the NPCs management tab
         window.renderAllNpcListForManagementUI(
             window.getElem('all-character-list-management'),
             appState.getAllCharacters(),
-            window.handleSelectCharacterForDetails 
+            window.handleSelectCharacterForDetails
         );
-        
-        await window.fetchAllLoreEntriesAndUpdateState(); 
-        window.populateLoreTypeDropdownUI(); 
-        // populateSceneContextSelectorUI is now called within fetchAllLoreEntriesAndUpdateState
 
-        setTimeout(window.updateMainView, 0); 
+        await window.fetchAllLoreEntriesAndUpdateState();
+        window.populateLoreTypeDropdownUI();
+
+        setTimeout(window.updateMainView, 0);
     } catch (error) {
         console.error('Error in initializeAppCharacters:', error);
         if (window.getElem('character-list-scene-tab')) window.getElem('character-list-scene-tab').innerHTML = '<ul><li><em>Error loading NPCs for scene.</em></li></ul>';
@@ -70,32 +65,29 @@ window.initializeAppCharacters = async function() {
 
 window.handleSelectCharacterForDetails = async function(charIdStr) {
     const characterProfileSection = window.getElem('character-profile-main-section');
-    if (!charIdStr || charIdStr === "null") { 
+    if (!charIdStr || charIdStr === "null") {
         appState.setCurrentProfileCharId(null);
-        window.renderCharacterProfileUI(null, window.profileElementIds); 
-        if (characterProfileSection) characterProfileSection.classList.add('collapsed'); // Collapse if no char
+        window.renderCharacterProfileUI(null, window.profileElementIds);
+        if (characterProfileSection) characterProfileSection.classList.add('collapsed');
         return;
     }
-    appState.setCurrentProfileCharId(charIdStr); 
+    appState.setCurrentProfileCharId(charIdStr);
     try {
-        const selectedCharFromServer = await window.fetchNpcDetails(charIdStr); 
-        const processedChar = appState.updateCharacterInList(selectedCharFromServer); 
+        const selectedCharFromServer = await window.fetchNpcDetails(charIdStr);
+        const processedChar = appState.updateCharacterInList(selectedCharFromServer);
 
-        window.renderCharacterProfileUI(processedChar, window.profileElementIds); 
-        if (characterProfileSection) characterProfileSection.classList.remove('collapsed'); // Expand profile
+        window.renderCharacterProfileUI(processedChar, window.profileElementIds);
+        if (characterProfileSection) characterProfileSection.classList.remove('collapsed');
 
-        await window.fetchAndRenderHistoryFiles(); 
-        // populateLoreEntrySelectForCharacterLinkingUI is called within renderCharacterProfileUI
+        await window.fetchAndRenderHistoryFiles();
     } catch (error) {
         console.error("Error in handleSelectCharacterForDetails:", error);
         window.updateText('details-char-name', 'Error loading details');
-        window.renderCharacterProfileUI(null, window.profileElementIds); 
+        window.renderCharacterProfileUI(null, window.profileElementIds);
         if (characterProfileSection) characterProfileSection.classList.add('collapsed');
     }
 };
 
-// ... (handleSaveGmNotes, handleAddMemory, handleDeleteMemory - these should be fine) ...
-// ... (handleCharacterCreation - make sure it calls renderAllNpcListForManagementUI) ...
 window.handleCharacterCreation = async function() {
     const name = window.getElem('new-char-name').value.trim();
     const description = window.getElem('new-char-description').value.trim();
@@ -110,11 +102,10 @@ window.handleCharacterCreation = async function() {
     try {
         const result = await window.createCharacterOnServer(newCharData);
         appState.updateCharacterInList(result.character);
-        // Re-render both NPC lists
         window.renderNpcListForContextUI(window.getElem('character-list-scene-tab'), appState.getAllCharacters(), appState.activeSceneNpcIds, window.handleToggleNpcInScene, window.handleSelectCharacterForDetails, appState.currentSceneContextFilter);
         window.renderAllNpcListForManagementUI(window.getElem('all-character-list-management'), appState.getAllCharacters(), window.handleSelectCharacterForDetails);
         window.renderPcListUI(window.getElem('active-pc-list'), window.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, window.handleTogglePcSelection);
-        
+
         window.getElem('new-char-name').value = '';
         window.getElem('new-char-description').value = '';
         window.getElem('new-char-personality').value = '';
@@ -125,125 +116,6 @@ window.handleCharacterCreation = async function() {
     }
 };
 
-
-// ... (fetchAndRenderHistoryFiles, handleAssociateHistoryFile, handleDissociateHistoryFile, handleSaveFactionStanding - these should be fine) ...
-
-window.fetchAllLoreEntriesAndUpdateState = async function() {
-    try {
-        const loreEntries = await window.fetchAllLoreEntries(); 
-        appState.setAllLoreEntries(loreEntries);
-        window.renderLoreEntryListUI(appState.getAllLoreEntries()); 
-        window.populateLoreEntrySelectForCharacterLinkingUI(); 
-        window.populateSceneContextSelectorUI(); // Ensure this is called after lore entries are in appState
-        window.populateSceneContextTypeFilterUI(); // New: Populate the type filter
-    } catch (error) {
-        console.error("Error fetching all lore entries:", error);
-    }
-};
-
-// ... (handleCreateLoreEntry, handleSelectLoreEntryForDetails, handleUpdateLoreEntryGmNotes, handleDeleteLoreEntry, handleLinkLoreToCharacter, handleUnlinkLoreFromCharacter - these should be fine) ...
-
-// Saves GM notes for the currently selected character.
-window.handleSaveGmNotes = async function() {
-    const charId = appState.getCurrentProfileCharId();
-    if (!charId) return;
-    const notes = window.getElem('gm-notes').value;
-    try {
-        const updatePayload = { gm_notes: notes };
-        const response = await window.updateCharacterOnServer(charId, updatePayload); 
-        if (response && response.character) {
-            appState.updateCharacterInList(response.character);
-            alert('GM Notes saved!');
-        } else {
-            alert('Error: Could not save GM notes. No character data returned.');
-        }
-    } catch (error) {
-        console.error("Error saving GM notes:", error);
-        alert(`Error saving notes: ${error.message}`);
-    }
-};
-
-// Adds a new memory to the currently selected NPC.
-window.handleAddMemory = async function() {
-    const charId = appState.getCurrentProfileCharId();
-    const character = appState.getCharacterById(charId);
-    if (!charId || !character || character.character_type !== 'NPC') {
-        alert("Please select an NPC to add memories to.");
-        return;
-    }
-    const content = window.getElem('new-memory-content').value.trim();
-    const type = window.getElem('new-memory-type').value.trim() || 'fact';
-    if (!content) {
-        alert("Memory content cannot be empty.");
-        return;
-    }
-    try {
-        const memoryData = { content, type, source: "manual GM entry" };
-        const response = await window.addMemoryToNpc(charId, memoryData);
-        const charToUpdate = appState.getCharacterById(charId); 
-        if (charToUpdate && response.updated_memories) { 
-            charToUpdate.memories = response.updated_memories;
-            appState.updateCharacterInList(charToUpdate);
-            window.renderMemoriesUI(charToUpdate.memories, window.getElem('character-memories-list'), window.handleDeleteMemory);
-        }
-        window.getElem('new-memory-content').value = '';
-        window.getElem('new-memory-type').value = '';
-    } catch (error) {
-        console.error("Error adding memory:", error);
-        alert("Error adding memory: " + error.message);
-    }
-};
-
-// Deletes a memory from the currently selected NPC.
-window.handleDeleteMemory = async function(memoryId) {
-    const charId = appState.getCurrentProfileCharId();
-    if (!charId || !memoryId) return;
-    if (!confirm("Are you sure you want to delete this memory?")) return;
-
-    try {
-        const response = await window.deleteNpcMemory(charId, memoryId);
-        const charToUpdate = appState.getCharacterById(charId);
-        if (charToUpdate && response.updated_memories) {
-            charToUpdate.memories = response.updated_memories;
-            appState.updateCharacterInList(charToUpdate);
-            window.renderMemoriesUI(charToUpdate.memories, window.getElem('character-memories-list'), window.handleDeleteMemory);
-        }
-    } catch (error) {
-        console.error("Error deleting memory:", error);
-        alert("Error deleting memory: " + error.message);
-    }
-};
-
-// Handles creation of a new character.
-window.handleCharacterCreation = async function() {
-    const name = window.getElem('new-char-name').value.trim();
-    const description = window.getElem('new-char-description').value.trim();
-    const personality = window.getElem('new-char-personality').value.split(',').map(s => s.trim()).filter(s => s);
-    const type = window.getElem('new-char-type').value;
-
-    if (!name || !description) {
-        alert("Name and Description are required.");
-        return;
-    }
-    const newCharData = { name, description, personality_traits: personality, character_type: type, linked_lore_ids: [] }; // Ensure linked_lore_ids is initialized
-    try {
-        const result = await window.createCharacterOnServer(newCharData);
-        appState.updateCharacterInList(result.character); // Add new character to state
-        // Re-render lists
-        window.renderNpcListForSceneUI(window.getElem('character-list'), appState.getAllCharacters(), appState.activeSceneNpcIds, window.handleToggleNpcInScene, window.handleSelectCharacterForDetails);
-        window.renderPcListUI(window.getElem('active-pc-list'), window.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, window.handleTogglePcSelection);
-        // Clear form
-        window.getElem('new-char-name').value = '';
-        window.getElem('new-char-description').value = '';
-        window.getElem('new-char-personality').value = '';
-        alert("Character created successfully!");
-    } catch (error) {
-        console.error("Error creating character:", error);
-        alert(`Error creating character: ${error.message}`);
-    }
-};
-
-// Fetches and renders the list of available history files.
 window.fetchAndRenderHistoryFiles = async function() {
     const selectElement = window.getElem('history-file-select');
     if (!selectElement) return;
@@ -264,7 +136,6 @@ window.fetchAndRenderHistoryFiles = async function() {
     }
 };
 
-// Associates a selected history file with the current character.
 window.handleAssociateHistoryFile = async function() {
     const charId = appState.getCurrentProfileCharId();
     if (!charId) {
@@ -297,7 +168,6 @@ window.handleAssociateHistoryFile = async function() {
     }
 };
 
-// Dissociates a history file from the current character.
 window.handleDissociateHistoryFile = async function(filename) {
     const charId = appState.getCurrentProfileCharId();
     if (!charId) { alert("No character selected."); return; }
@@ -317,29 +187,25 @@ window.handleDissociateHistoryFile = async function(filename) {
     }
 };
 
-// Handles saving changes to an NPC's faction standing towards a PC.
 window.handleSaveFactionStanding = async function(npcId, pcId, newStandingValue) {
     if (!npcId || !pcId || !newStandingValue) {
         console.error("Missing IDs or new standing for faction update");
         return;
     }
     try {
-        // The payload should correctly target the specific PC's standing within the npc's pc_faction_standings object
-        const payload = { 
-            pc_faction_standings: { 
-                ...(appState.getCharacterById(npcId)?.pc_faction_standings || {}), // Preserve existing standings
-                [pcId]: newStandingValue // Update/add the specific PC's standing
+        const payload = {
+            pc_faction_standings: {
+                ...(appState.getCharacterById(npcId)?.pc_faction_standings || {}),
+                [pcId]: newStandingValue
             }
         };
-
-        const response = await window.updateCharacterOnServer(npcId, payload); // Use the general update endpoint
+        const response = await window.updateCharacterOnServer(npcId, payload);
         if (response && response.character) {
-            const updatedCharState = appState.updateCharacterInList(response.character); 
+            const updatedCharState = appState.updateCharacterInList(response.character);
             const currentProfileChar = appState.getCurrentProfileChar();
-            // Re-render if the updated NPC is the one currently in profile
             if (currentProfileChar && String(currentProfileChar._id) === String(npcId)) {
                  window.renderNpcFactionStandingsUI(
-                    updatedCharState, 
+                    updatedCharState,
                     appState.activePcIds,
                     appState.getAllCharacters(),
                     window.getElem('npc-faction-standings-content'),
@@ -356,14 +222,14 @@ window.handleSaveFactionStanding = async function(npcId, pcId, newStandingValue)
     }
 };
 
-// --- Lore Management Functions ---
 window.fetchAllLoreEntriesAndUpdateState = async function() {
     try {
-        const loreEntries = await window.fetchAllLoreEntries(); 
+        const loreEntries = await window.fetchAllLoreEntries();
         appState.setAllLoreEntries(loreEntries);
         window.renderLoreEntryListUI(appState.getAllLoreEntries());
-        window.populateLoreEntrySelectForCharacterLinkingUI(); 
-        window.populateSceneContextSelectorUI(); // Populate the new scene context dropdown
+        window.populateLoreEntrySelectForCharacterLinkingUI();
+        window.populateSceneContextSelectorUI();
+        window.populateSceneContextTypeFilterUI();
     } catch (error) {
         console.error("Error fetching all lore entries:", error);
     }
@@ -383,15 +249,14 @@ window.handleCreateLoreEntry = async function() {
     }
     const loreData = { name, lore_type, description, key_facts, tags, gm_notes };
     try {
-        const result = await window.createLoreEntryOnServer(loreData); 
-        appState.updateLoreEntryInList(result.lore_entry); // Add to local state
-        window.renderLoreEntryListUI(appState.getAllLoreEntries()); // Re-render list
-        window.populateLoreEntrySelectForCharacterLinkingUI(); // Update linking dropdown
-        window.populateSceneContextSelectorUI(); // Update scene context dropdown
+        const result = await window.createLoreEntryOnServer(loreData);
+        appState.updateLoreEntryInList(result.lore_entry);
+        window.renderLoreEntryListUI(appState.getAllLoreEntries());
+        window.populateLoreEntrySelectForCharacterLinkingUI();
+        window.populateSceneContextSelectorUI();
 
-        // Clear form
         window.getElem('new-lore-name').value = '';
-        window.getElem('new-lore-type').value = LORE_TYPES[0]; 
+        window.getElem('new-lore-type').value = LORE_TYPES[0];
         window.getElem('new-lore-description').value = '';
         window.getElem('new-lore-key-facts').value = '';
         window.getElem('new-lore-tags').value = '';
@@ -410,11 +275,11 @@ window.handleSelectLoreEntryForDetails = async function(loreIdStr) {
     }
     appState.setCurrentLoreEntryId(loreIdStr);
     try {
-        const loreEntry = await window.fetchLoreEntryDetails(loreIdStr); 
-        window.renderLoreEntryDetailUI(loreEntry); 
+        const loreEntry = await window.fetchLoreEntryDetails(loreIdStr);
+        window.renderLoreEntryDetailUI(loreEntry);
     } catch (error) {
         console.error("Error fetching lore entry details:", error);
-        window.closeLoreDetailViewUI(); 
+        window.closeLoreDetailViewUI();
     }
 };
 
@@ -424,7 +289,7 @@ window.handleUpdateLoreEntryGmNotes = async function() {
     const gm_notes = window.getElem('details-lore-gm-notes').value;
     try {
         const result = await window.updateLoreEntryOnServer(loreId, { gm_notes });
-        appState.updateLoreEntryInList(result.lore_entry); // Update local state
+        appState.updateLoreEntryInList(result.lore_entry);
         alert("Lore GM Notes saved!");
     } catch (error) {
         console.error("Error saving lore GM notes:", error);
@@ -437,18 +302,16 @@ window.handleDeleteLoreEntry = async function() {
     if (!loreId) return;
     if (!confirm("Are you sure you want to delete this lore entry? This will also unlink it from all characters.")) return;
     try {
-        await window.deleteLoreEntryFromServer(loreId); 
-        appState.removeLoreEntryFromList(loreId); // Remove from local state
-        window.renderLoreEntryListUI(appState.getAllLoreEntries()); // Re-render list
-        window.populateLoreEntrySelectForCharacterLinkingUI(); // Update linking dropdown
-        window.populateSceneContextSelectorUI(); // Update scene context dropdown
-        window.closeLoreDetailViewUI(); 
-        
-        // Refresh any open character profile that might have been linked to this lore
+        await window.deleteLoreEntryFromServer(loreId);
+        appState.removeLoreEntryFromList(loreId);
+        window.renderLoreEntryListUI(appState.getAllLoreEntries());
+        window.populateLoreEntrySelectForCharacterLinkingUI();
+        window.populateSceneContextSelectorUI();
+        window.closeLoreDetailViewUI();
+
         const currentProfileCharId = appState.getCurrentProfileCharId();
         if(currentProfileCharId){
              const charData = appState.getCharacterById(currentProfileCharId);
-             // Refilter its linked_lore_ids and re-render
              if (charData && charData.linked_lore_ids) {
                 charData.linked_lore_ids = charData.linked_lore_ids.filter(id => id !== loreId);
                 appState.updateCharacterInList(charData);
@@ -475,11 +338,9 @@ window.handleLinkLoreToCharacter = async function() {
         return;
     }
     try {
-        const result = await window.linkLoreToCharacterOnServer(charId, loreId); 
-        const updatedChar = appState.updateCharacterInList(result.character); // Update char in local state
-        
-        window.renderCharacterProfileUI(updatedChar, window.profileElementIds); // Re-render profile
-        // The populateLoreEntrySelectForCharacterLinkingUI will be called within renderCharacterProfileUI indirectly or directly
+        const result = await window.linkLoreToCharacterOnServer(charId, loreId);
+        const updatedChar = appState.updateCharacterInList(result.character);
+        window.renderCharacterProfileUI(updatedChar, window.profileElementIds);
         alert("Lore linked to character.");
     } catch (error) {
         console.error("Error linking lore to character:", error);
@@ -490,20 +351,87 @@ window.handleLinkLoreToCharacter = async function() {
 window.handleUnlinkLoreFromCharacter = async function(loreIdToUnlink) {
     const charId = appState.getCurrentProfileCharId();
     if (!charId || !loreIdToUnlink) return;
-    
+
     const character = appState.getCharacterById(charId);
     if (!character) return;
 
     if (!confirm(`Unlink this lore entry from ${character.name}?`)) return;
 
     try {
-        const result = await window.unlinkLoreFromCharacterOnServer(charId, loreIdToUnlink); 
-        const updatedChar = appState.updateCharacterInList(result.character); // Update char in local state
-        
-        window.renderCharacterProfileUI(updatedChar, window.profileElementIds); // Re-render profile
+        const result = await window.unlinkLoreFromCharacterOnServer(charId, loreIdToUnlink);
+        const updatedChar = appState.updateCharacterInList(result.character);
+        window.renderCharacterProfileUI(updatedChar, window.profileElementIds);
         alert("Lore unlinked from character.");
     } catch (error) {
         console.error("Error unlinking lore:", error);
         alert(`Error unlinking lore: ${error.message}`);
+    }
+};
+
+window.handleSaveGmNotes = async function() {
+    const charId = appState.getCurrentProfileCharId();
+    if (!charId) return;
+    const notes = window.getElem('gm-notes').value;
+    try {
+        const updatePayload = { gm_notes: notes };
+        const response = await window.updateCharacterOnServer(charId, updatePayload);
+        if (response && response.character) {
+            appState.updateCharacterInList(response.character);
+            alert('GM Notes saved!');
+        } else {
+            alert('Error: Could not save GM notes. No character data returned.');
+        }
+    } catch (error) {
+        console.error("Error saving GM notes:", error);
+        alert(`Error saving notes: ${error.message}`);
+    }
+};
+
+window.handleAddMemory = async function() {
+    const charId = appState.getCurrentProfileCharId();
+    const character = appState.getCharacterById(charId);
+    if (!charId || !character || character.character_type !== 'NPC') {
+        alert("Please select an NPC to add memories to.");
+        return;
+    }
+    const content = window.getElem('new-memory-content').value.trim();
+    const type = window.getElem('new-memory-type').value.trim() || 'fact';
+    if (!content) {
+        alert("Memory content cannot be empty.");
+        return;
+    }
+    try {
+        const memoryData = { content, type, source: "manual GM entry" };
+        const response = await window.addMemoryToNpc(charId, memoryData);
+        const charToUpdate = appState.getCharacterById(charId);
+        if (charToUpdate && response.updated_memories) {
+            charToUpdate.memories = response.updated_memories;
+            appState.updateCharacterInList(charToUpdate);
+            window.renderMemoriesUI(charToUpdate.memories, window.getElem('character-memories-list'), window.handleDeleteMemory);
+        }
+        window.getElem('new-memory-content').value = '';
+        window.getElem('new-memory-type').value = '';
+    } catch (error) {
+        console.error("Error adding memory:", error);
+        alert("Error adding memory: " + error.message);
+    }
+};
+
+window.handleDeleteMemory = async function(memoryId) {
+    const charId = appState.getCurrentProfileCharId();
+    if (!charId || !memoryId) return;
+    if (!confirm("Are you sure you want to delete this memory?")) return;
+
+    try {
+        const response = await window.deleteNpcMemory(charId, memoryId);
+        const charToUpdate = appState.getCharacterById(charId);
+        if (charToUpdate && response.updated_memories) {
+            charToUpdate.memories = response.updated_memories;
+            appState.updateCharacterInList(charToUpdate);
+            window.renderMemoriesUI(charToUpdate.memories, window.getElem('character-memories-list'), window.handleDeleteMemory);
+        }
+    } catch (error) {
+        console.error("Error deleting memory:", error);
+        alert("Error deleting memory: " + error.message);
     }
 };

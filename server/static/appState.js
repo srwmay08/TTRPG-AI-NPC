@@ -5,13 +5,14 @@ const appState = {
     activeSceneNpcIds: new Set(),
     activePcIds: new Set(),
     allCharacters: [],
-    allLoreEntries: [], // New: For storing all fetched lore entries
+    allLoreEntries: [],
     dialogueHistories: {},
     currentProfileCharId: null,
-    currentLoreEntryId: null, // New: For the currently viewed/edited lore entry
+    currentLoreEntryId: null,
     currentlyExpandedAbility: null,
     currentlyExpandedSkill: null,
     skillSortKey: null,
+    currentSceneContextFilter: null, // Added for scene context
 
     setAllCharacters(characters) {
         this.allCharacters = characters.map(char => this.processCharacterData(char));
@@ -31,22 +32,23 @@ const appState = {
             updatedChar._id = updatedChar._id.$oid;
         }
         const index = this.allCharacters.findIndex(c => String(c._id) === String(updatedChar._id));
-        const processedChar = this.processCharacterData(updatedChar); 
+        const processedChar = this.processCharacterData(updatedChar);
         if (index > -1) {
             this.allCharacters[index] = processedChar;
         } else {
             this.allCharacters.push(processedChar);
         }
-        return processedChar; 
+        return processedChar;
     },
 
     processCharacterData(char) {
         if (char._id && typeof char._id === 'object' && char._id.$oid) {
             char._id = char._id.$oid;
         }
-        char.vtt_data = char.vtt_data || { abilities: {}, attributes: { hp: {}, ac: {}, movement: {}, init: {}, spell: {} }, details: {}, skills: {}, traits: { languages: {}, armorProf: {}, weaponProf: {}} };
+        // Ensure vtt_data and its nested structures are properly initialized
+        char.vtt_data = char.vtt_data || {};
         char.vtt_data.abilities = char.vtt_data.abilities || {};
-        char.vtt_data.attributes = char.vtt_data.attributes || { hp: {}, ac: {}, movement: {}, init: {}, spell: {} };
+        char.vtt_data.attributes = char.vtt_data.attributes || {};
         char.vtt_data.attributes.hp = char.vtt_data.attributes.hp || {};
         char.vtt_data.attributes.ac = char.vtt_data.attributes.ac || {};
         char.vtt_data.attributes.movement = char.vtt_data.attributes.movement || {};
@@ -54,13 +56,17 @@ const appState = {
         char.vtt_data.attributes.spell = char.vtt_data.attributes.spell || {};
         char.vtt_data.details = char.vtt_data.details || {};
         char.vtt_data.skills = char.vtt_data.skills || {};
-        char.vtt_data.traits = char.vtt_data.traits || { languages: {}, armorProf: {}, weaponProf: {}};
+        char.vtt_data.traits = char.vtt_data.traits || {};
+        char.vtt_data.traits.languages = char.vtt_data.traits.languages || {};
+        char.vtt_data.traits.armorProf = char.vtt_data.traits.armorProf || {};
+        char.vtt_data.traits.weaponProf = char.vtt_data.traits.weaponProf || {};
+
         char.vtt_flags = char.vtt_flags || {};
         char.items = char.items || [];
-        char.system = char.system || {};
+        char.system = char.system || {}; // This holds the full FVTT system object
         char.memories = char.memories || [];
         char.associated_history_files = char.associated_history_files || [];
-        char.linked_lore_ids = char.linked_lore_ids || []; // Ensure this exists
+        char.linked_lore_ids = char.linked_lore_ids || [];
         char.personality_traits = char.personality_traits || [];
         char.ideals = char.ideals || [];
         char.bonds = char.bonds || [];
@@ -69,8 +75,11 @@ const appState = {
         char.pc_faction_standings = char.pc_faction_standings || {};
 
         if (char.character_type === 'PC') {
-            const pcLevel = char.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || char.system?.details?.level || char.vtt_data?.details?.level || 1;
-            char.calculatedProfBonus = window.getProficiencyBonus(pcLevel); 
+            const pcLevel = char.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels ||
+                            char.system?.details?.level || // From FVTT 'system'
+                            char.vtt_data?.details?.level || // Fallback to 'vtt_data.details'
+                            1;
+            char.calculatedProfBonus = window.getProficiencyBonus(pcLevel);
         }
         return char;
     },
@@ -125,7 +134,6 @@ const appState = {
             if (entry.lore_id && typeof entry.lore_id === 'object' && entry.lore_id.$oid) {
                 entry.lore_id = entry.lore_id.$oid;
             }
-            // Ensure defaults for lore entry structure
             entry.key_facts = entry.key_facts || [];
             entry.tags = entry.tags || [];
             entry.linked_character_ids = entry.linked_character_ids || [];

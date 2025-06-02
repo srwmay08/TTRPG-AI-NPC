@@ -3,77 +3,76 @@ body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; hei
 .column { overflow-y: auto; box-sizing: border-box; }
 
 #left-column {
-    width: 30%; 
-    min-width: 375px; 
-    max-width: 60%; 
+    width: 30%;
+    min-width: 375px;
+    max-width: 60%;
     background-color: #e9e9e9;
     border-right: 1px solid #ccc;
     height: 100vh;
-    padding: 0; 
-    flex-shrink: 0; 
-    display: flex; 
-    flex-direction: column; 
+    padding: 0;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 #left-column-header {
-    padding: 10px 15px 0px 15px; 
-    background-color: #e0e0e0; 
+    padding: 10px 15px 0px 15px;
+    background-color: #e0e0e0;
     border-bottom: 1px solid #ccc;
 }
 #left-column-header h2 {
     margin-top: 0;
     margin-bottom: 10px;
-    font-size: 1.3em; 
+    font-size: 1.3em;
     color: #333;
 }
 hr.tab-hr {
     border: 0;
     height: 1px;
     background-color: #ccc;
-    margin: 10px 0 0 0; 
+    margin: 10px 0 0 0;
 }
 
 
 .tabs {
     display: flex;
-    margin-top: 5px; /* Added margin above tabs */
+    margin-top: 5px;
 }
 
 .tab-link {
-    background-color: #d8d8d8; /* Standard tab background */
-    border: 1px solid #b0b0b0; /* Slightly darker border */
-    border-bottom: none; 
-    padding: 8px 12px; 
+    background-color: #d8d8d8;
+    border: 1px solid #b0b0b0;
+    border-bottom: none;
+    padding: 8px 12px;
     cursor: pointer;
     outline: none;
     transition: background-color 0.3s, color 0.3s;
-    margin-right: 3px; /* Spacing between tabs */
+    margin-right: 3px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    color: #333; /* Darker text for better readability */
+    color: #333;
     font-weight: normal;
 }
 
 .tab-link:hover {
-    background-color: #c8c8c8; /* Lighter hover */
+    background-color: #c8c8c8;
     color: #000;
 }
 
 .tab-link.active {
-    background-color: #e9e9e9;  /* Match content area for seamless look */
-    border-color: #b0b0b0 #b0b0b0 #e9e9e9 #b0b0b0; /* Bottom border transparent */
+    background-color: #e9e9e9;
+    border-color: #b0b0b0 #b0b0b0 #e9e9e9 #b0b0b0;
     position: relative;
-    /* top: 1px; */ /* Removed to simplify alignment */
-    color: #0056b3; /* Distinct active text color */
+    color: #0056b3;
     font-weight: bold;
 }
 
 .tab-content {
-    display: none; 
+    display: none;
     padding: 15px;
-    animation: fadeIn 0.3s; 
-    border-top: 1px solid #b0b0b0; /* Match tab border color */
-    background-color: #e9e9e9; /* Ensure content area has bg */
+    animation: fadeIn 0.3s;
+    border-top: 1px solid #b0b0b0;
+    background-color: #e9e9e9;
 }
 
 .tab-content.active-tab {
@@ -86,67 +85,66 @@ hr.tab-hr {
 }
 
 
-#left-column-content { 
-    padding: 0; 
-    height: 100%; 
-    overflow-y: auto; 
+#left-column-content {
+    padding: 0;
+    height: 100%;
+    overflow-y: auto;
     box-sizing: border-box;
-    flex-grow: 1; 
+    flex-grow: 1;
 }
 
 
 #resizer {
-    width: 10px; 
+    width: 10px;
     background-color: #d0d0d0;
     cursor: col-resize;
     border-left: 1px solid #ccc;
     border-right: 1px solid #ccc;
-    user-select: none; 
+    user-select: none;
     flex-shrink: 0;
 }
 #resizer:hover { background-color: #007bff; }
 
 #center-column {
-    flex-grow: 1; 
+    flex-grow: 1;
     background-color: #fff;
     display: flex;
     flex-direction: column;
     height: 100vh;
     padding: 15px;
-    min-width: 0; 
+    min-width: 0;
 }
 
 #center-column h5 { padding: 0px; margin: 0px; }
 
-/* Collapsible section styling adjusted for tabs */
-#pc-list-section-outer { margin-bottom: 0; } 
+#pc-list-section-outer { margin-bottom: 0; }
 #pc-list-section-outer > h3 { margin-bottom: 5px; }
 
 
 .collapsible-section { margin-bottom: 10px; }
-.collapsible-section h3, .collapsible-section h4 { 
-    cursor: pointer; 
-    background-color: #d8d8d8; 
-    padding: 8px 12px; 
-    margin: 0 0 0 0; 
-    user-select: none; 
-    position: relative; 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
+.collapsible-section h3, .collapsible-section h4 {
+    cursor: pointer;
+    background-color: #d8d8d8;
+    padding: 8px 12px;
+    margin: 0 0 0 0;
+    user-select: none;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border-radius: 3px;
     border: 1px solid #ccc;
 }
-.collapsible-section h3 .arrow-indicator, .collapsible-section h4 .arrow-indicator { 
+.collapsible-section h3 .arrow-indicator, .collapsible-section h4 .arrow-indicator {
     transition: transform 0.2s ease-in-out;
-    margin-left: 5px; 
+    margin-left: 5px;
 }
 .collapsible-section.collapsed .arrow-indicator { transform: rotate(-90deg); }
 .collapsible-section:not(.collapsed) .arrow-indicator { transform: rotate(0deg); }
 .collapsible-section .collapsible-content {
     padding: 10px;
     border: 1px solid #ccc;
-    border-top: none; 
+    border-top: none;
     border-radius: 0 0 3px 3px;
     background-color: #f9f9f9;
 }
@@ -161,27 +159,25 @@ button:disabled { background-color: #cccccc; cursor: not-allowed;}
 textarea, input[type="text"], input[type="number"], select { width: calc(100% - 16px); padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;}
 label { display: block; margin-bottom: 5px; font-weight: bold; }
 
-/* PC List specific styling to prevent scrolling for ~5 PCs */
 #active-pc-list ul {
-    max-height: none; /* Remove max-height to allow content to determine height */
-    /* OR set a specific height if you know it: e.g., height: 150px; */
+    max-height: none;
 }
 #active-pc-list li {
-    padding: 6px 8px; /* Slightly reduced padding if needed */
+    padding: 6px 8px;
 }
 
 
-.character-list ul { list-style-type: none; padding: 0; /* max-height: 150px; */ /* Keep for NPC lists */ overflow-y: auto; border: 1px solid #ddd; background: #fff; }
+.character-list ul { list-style-type: none; padding: 0; overflow-y: auto; border: 1px solid #ddd; background: #fff; }
 .character-list li { padding: 8px; cursor: default; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; }
 .character-list li:last-child { border-bottom: none; }
-.character-list li.active-in-scene { background-color: #e6f2ff; } 
+.character-list li.active-in-scene { background-color: #e6f2ff; }
 .character-list li.selected { background-color: #d1e7fd; font-weight: bold; }
 .character-list li .npc-name-clickable, .character-list li .lore-entry-name-clickable { flex-grow: 1; cursor: pointer; }
 .character-list li .npc-name-clickable:hover, .character-list li .lore-entry-name-clickable:hover { text-decoration: underline; color: #0056b3;}
 
 
 #dialogue-interface { display: none; flex-grow: 1; flex-direction: column; }
-#multi-npc-dialogue-container { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: row; overflow-x: scroll; gap: 15px; min-width: calc(25%);}
+#multi-npc-dialogue-container { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: row; overflow-x: auto; gap: 15px; min-width: calc(25%);} /* Changed overflow-x to auto */
 .npc-dialogue-area { border: 1px solid #ddd; padding: 10px; border-radius: 5px; background-color: #f9f9f9;}
 .npc-dialogue-area h3 { margin-top: 0; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #eee;}
 .npc-transcript { min-height: 100px; max-height: 250px; overflow-y: auto; border: 1px solid #eee; padding: 8px; background-color: #fff; margin-bottom: 10px;}
@@ -196,8 +192,17 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 .clickable-suggestion { cursor: pointer; text-decoration: underline; color: blue; }
 
 #pc-dashboard-view { display: block; flex-grow: 1; overflow-y: auto; }
-.pc-dashboard-grid { display: flex; flex-wrap: nowrap; gap: 5px; margin-top: 10px; margin-bottom: 20px; overflow-x: auto; } 
-.pc-stat-card { border: 1px solid #ddd; border-radius: 4px; padding: 10px; background-color: #f9f9f9; flex: 1 1 200px; min-width: 180px; box-sizing: border-box; } 
+/* Unified style for PC card grids */
+.pc-dashboard-grid {
+    display: flex;
+    flex-wrap: wrap; /* Changed from nowrap to wrap for consistency */
+    gap: 10px; /* Consistent gap */
+    margin-top: 10px;
+    margin-bottom: 20px;
+    /* overflow-x: auto; Removed as wrap handles overflow differently */
+    padding-bottom: 5px; /* Add some padding if scrollbars appear due to content */
+}
+.pc-stat-card { border: 1px solid #ddd; border-radius: 4px; padding: 10px; background-color: #f9f9f9; flex: 1 1 200px; min-width: 180px; box-sizing: border-box; }
 .pc-stat-card h4 { margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 8px; font-size: 1.1em; }
 .pc-stat-card p { margin: 4px 0; font-size: 0.9em; }
 
@@ -206,7 +211,7 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 #main-stats-table th, #main-stats-table td,
 #skills-overview-table th, #skills-overview-table td { border: 1px solid #ddd; padding: 6px; text-align: center; }
 #main-stats-table th, #skills-overview-table th { background-color: #e9ecef; font-weight: bold; }
-#main-stats-table td:first-child, #skills-overview-table td:first-child { text-align: left; font-weight: bold; } 
+#main-stats-table td:first-child, #skills-overview-table td:first-child { text-align: left; font-weight: bold; }
 
 .clickable-ability-header, .clickable-skill-header { cursor: pointer; color: #0056b3; text-decoration: underline;}
 .clickable-ability-header span.arrow-indicator, .clickable-skill-header span.arrow-indicator { font-size: 0.8em; margin-left: 3px;}
@@ -258,10 +263,19 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 .close-detailed-pc-sheet-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; font-weight: bold; color: #777; cursor: pointer; line-height: 1; padding: 0 5px; z-index: 10;}
 .close-detailed-pc-sheet-btn:hover { color: #333; }
 
-#pc-quick-view-section-in-scene { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+/* PC Quick View in Scene specific styling */
+#pc-quick-view-section-in-scene {
+    display: flex;
+    flex-wrap: wrap; /* Changed from nowrap for consistency */
+    gap: 10px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    /* overflow-x: auto; Removed as wrap handles overflow differently */
+}
 #pc-quick-view-section-in-scene .pc-stat-card h4 { display: flex; justify-content: space-between; align-items: center; }
 
-/* Faction Standing Slider Styles */
+
 .faction-standing-entry { display: flex; align-items: center; padding: 8px 0; font-size: 0.9em; }
 .faction-standing-entry label { margin-right: 10px; font-weight: normal; min-width: 100px; flex-shrink: 0; }
 .faction-standing-entry input[type="range"] { flex-grow: 1; margin-right: 10px; cursor: pointer; }
@@ -274,7 +288,6 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 #suggested-faction-standing-changes .suggested-item button:hover { background-color: #218838; }
 #suggested-faction-standing-changes .suggested-item button:disabled { background-color: #cccccc; }
 
-/* Lore Management Specific Styles */
 #create-lore-entry-form label, #lore-entry-profile-section label { margin-top: 8px; }
 #lore-entry-list-container { margin-top:10px; }
 #lore-entry-profile-section { background-color: #f0f0f0; border-radius: 4px; padding:15px; }
@@ -282,35 +295,34 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 #character-lore-links-section .collapsible-content { padding-top:10px; }
 #associated-lore-list-for-character { margin-top: 5px; }
 
-/* Ensure profile sections within tabs are styled consistently */
-#tab-npcs > h3 { /* Target the main profile name header */
-    background-color: transparent; 
+#tab-npcs > h3 {
+    background-color: transparent;
     padding: 0;
     margin-bottom: 10px;
     border: none;
-    cursor: default; 
-    font-size: 1.2em; 
+    cursor: default;
+    font-size: 1.2em;
 }
-#tab-npcs #character-profile-main-section > h3 .arrow-indicator { display: inline-block !important; } /* Ensure arrow always shows for profile */
+#tab-npcs #character-profile-main-section > h3 .arrow-indicator { display: inline-block !important; }
 #tab-npcs #character-profile-main-section > h3 { cursor: pointer !important; }
 
 
-#scene-context-setup > h3 { 
-    cursor: pointer; 
-    background-color: #d8d8d8; 
-    padding: 8px 12px; 
-    margin: 0 0 0 0; 
-    user-select: none; 
-    position: relative; 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
+#scene-context-setup > h3 {
+    cursor: pointer;
+    background-color: #d8d8d8;
+    padding: 8px 12px;
+    margin: 0 0 0 0;
+    user-select: none;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border-radius: 3px;
     border: 1px solid #ccc;
 }
-#scene-context-setup > h3 .arrow-indicator { 
+#scene-context-setup > h3 .arrow-indicator {
     transition: transform 0.2s ease-in-out;
-    margin-left: 5px; 
+    margin-left: 5px;
 }
 #scene-context-setup.collapsed .arrow-indicator { transform: rotate(-90deg); }
 #scene-context-setup:not(.collapsed) .arrow-indicator { transform: rotate(0deg); }
@@ -322,8 +334,16 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
     padding-left: 5px;
 }
 
-/* Specific styling for character lists within tabs to ensure consistent max-height if needed */
 #character-list-scene-tab ul, #all-character-list-management ul {
-    max-height: 200px; /* Or another suitable value */
+    max-height: 200px;
     overflow-y: auto;
+}
+
+/* Ensure all clickable cards have pointer */
+.clickable-pc-card {
+    cursor: pointer;
+}
+.clickable-pc-card:hover {
+    background-color: #e2e6ea; /* Slightly different hover for distinction */
+    border-color: #adb5bd;
 }
