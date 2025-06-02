@@ -652,6 +652,67 @@ def generate_dialogue_for_npc_api(npc_id_str: str):
 
 
 # --- Lore Entry Endpoints ---
+def get_all_lore_entries_api():
+    if mongo_db is None: return jsonify({"error": "Database not available"}), 503
+    try:
+        lore_cursor = mongo_db.lore_entries.find({})
+        # Use json_util.dumps and then json.loads to correctly handle BSON types like ObjectId
+        # then map _id to lore_id if necessary for client consistency
+        
+        # Correct way to parse for client, ensuring ObjectId is string
+        raw_list = list(lore_cursor) # Get all documents
+        parsed_list = json.loads(json_util.dumps(raw_list)) # Converts ObjectId to {"$oid": "..."}
+
+        client_ready_list = []
+        for entry in parsed_list:
+            if '_id' in entry and '$oid' in entry['_id']:
+                entry['lore_id'] = entry['_id']['$oid']
+                del entry['_id']
+            # Ensure enum values are strings
+            if 'lore_type' in entry and isinstance(entry['lore_type'], dict) and '$value' in entry['lore_type']: # From potential Enum serialization
+                entry['lore_type'] = entry['lore_type']['$value']
+            elif isinstance(entry.get('lore_type'), Enum):
+                 entry['lore_type'] = entry['lore_type'].value
+
+
+            client_ready_list.append(entry)
+            
+        return jsonify(client_ready_list), 200
+    except Exception as e:
+        print(f"Error in get_all_lore_entries_api: {e}")
+        traceback.print_exc()
+        return jsonify({"error": f"Could not retrieve lore entries: {str(e)}"}), 500
+
+@app.route('/api/lore_entries/<lore_id_str>', methods=['GET'])
+def get_lore_entry_api(lore_id_str: str):
+    if mongo_db is None: return jsonify({"error": "Database not available"}), 503
+    try:
+        # The lore_id_str from the client should now be the string representation of MongoDB's _id
+        lore_id_obj = ObjectId(lore_id_str) 
+    except Exception:
+        return jsonify({"error": "Invalid Lore ID format provided."}), 400 # More specific error
+    
+    entry_doc = mongo_db.lore_entries.find_one({"_id": lore_id_obj})
+    if not entry_doc:
+        return jsonify({"error": "Lore entry not found"}), 404
+
+    # Use json_util.dumps and then json.loads for proper BSON type conversion
+    parsed_entry = json.loads(json_util.dumps(entry_doc))
+    
+    # Map _id to lore_id for client consistency
+    if '_id' in parsed_entry and '$oid' in parsed_entry['_id']:
+        parsed_entry['lore_id'] = parsed_entry['_id']['$oid']
+        del parsed_entry['_id']
+    if 'lore_type' in parsed_entry and isinstance(parsed_entry['lore_type'], dict) and '$value' in parsed_entry['lore_type']: # From potential Enum serialization
+        parsed_entry['lore_type'] = parsed_entry['lore_type']['$value']
+    elif isinstance(parsed_entry.get('lore_type'), Enum):
+            parsed_entry['lore_type'] = parsed_entry['lore_type'].value
+
+
+    return jsonify(parsed_entry), 200
+
+# Ensure create_lore_entry_api saves lore_id as _id or that queries use lore_id field.
+# Given models.py now sets lore_id with str(ObjectId()), it's best if this becomes the _id.
 @app.route('/api/lore_entries', methods=['POST'])
 def create_lore_entry_api():
     if mongo_db is None: return jsonify({"error": "Database not available"}), 503
@@ -659,108 +720,128 @@ def create_lore_entry_api():
         data = request.get_json()
         if not data: return jsonify({"error": "Invalid JSON payload"}), 400
         
-        # Set default for lore_type if not provided, using the Enum's default or a specific one
-        data.setdefault('lore_type', LoreEntryType.MISC.value)
-        
+        # Pydantic model will use default_factory for lore_id if not provided
+        # If data contains 'lore_id', it should be a valid ObjectId string or Pydantic will use default
+        if 'lore_id' in data: # If client sends an ID, make sure it's valid or remove for auto-generation
+            try:
+                ObjectId(data['lore_id'])
+            except:
+                del data['lore_id'] # Invalid, let Pydantic generate
+
         lore_entry_data = LoreEntry(**data)
-        lore_entry_data.updated_at = datetime.utcnow() # Ensure updated_at is set
+        lore_entry_data.updated_at = datetime.utcnow() 
+
+        # Prepare document for MongoDB, ensuring lore_id from model becomes _id
+        lore_dict_for_db = lore_entry_data.model_dump(exclude_none=True)
+        if 'lore_id' in lore_dict_for_db:
+             # Ensure the lore_id (which should be an ObjectId string) is used as _id
+            try:
+                lore_dict_for_db['_id'] = ObjectId(lore_dict_for_db.pop('lore_id'))
+            except: # If lore_id somehow isn't a valid ObjectId string, let MongoDB generate _id
+                 if '_id' in lore_dict_for_db: del lore_dict_for_db['_id'] # remove if it was bad
+                 pass # mongo will make an _id
+
+        elif '_id' not in lore_dict_for_db: # if no lore_id and no _id, generate one
+             lore_dict_for_db['_id'] = ObjectId()
+
+
     except ValidationError as e:
         return jsonify({"error": "Validation Error for LoreEntry", "details": e.errors()}), 400
+    except Exception as ex: # Catch other potential errors during prep
+        print(f"Error preparing lore entry for DB: {ex}")
+        return jsonify({"error": f"Could not prepare lore entry data: {str(ex)}"}), 500
 
     try:
         lore_collection = mongo_db.lore_entries
-        lore_dict = lore_entry_data.model_dump(mode='json', by_alias=True, exclude_none=True)
-        result = lore_collection.insert_one(lore_dict)
-        created_lore_entry = lore_collection.find_one({"_id": result.inserted_id})
-        return jsonify({"message": "Lore entry created", "lore_entry": parse_json(created_lore_entry)}), 201
+        result = lore_collection.insert_one(lore_dict_for_db)
+        
+        created_lore_entry_doc = lore_collection.find_one({"_id": result.inserted_id})
+        
+        # Parse for client
+        parsed_entry = json.loads(json_util.dumps(created_lore_entry_doc))
+        if '_id' in parsed_entry and '$oid' in parsed_entry['_id']:
+            parsed_entry['lore_id'] = parsed_entry['_id']['$oid']
+            del parsed_entry['_id']
+        if 'lore_type' in parsed_entry and isinstance(parsed_entry.get('lore_type'), Enum): # Ensure enum is value
+            parsed_entry['lore_type'] = parsed_entry['lore_type'].value
+
+
+        return jsonify({"message": "Lore entry created", "lore_entry": parsed_entry}), 201
     except Exception as e:
-        print(f"Error in create_lore_entry_api: {e}")
+        print(f"Error in create_lore_entry_api (DB insert): {e}")
         traceback.print_exc()
-        return jsonify({"error": f"Could not create lore entry: {str(e)}"}), 500
-
-@app.route('/api/lore_entries', methods=['GET'])
-def get_all_lore_entries_api():
-    if mongo_db is None: return jsonify({"error": "Database not available"}), 503
-    try:
-        lore_cursor = mongo_db.lore_entries.find({})
-        lore_list = [parse_json(entry) for entry in lore_cursor]
-        return jsonify(lore_list), 200
-    except Exception as e:
-        return jsonify({"error": f"Could not retrieve lore entries: {str(e)}"}), 500
-
-@app.route('/api/lore_entries/<lore_id_str>', methods=['GET'])
-def get_lore_entry_api(lore_id_str: str):
-    if mongo_db is None: return jsonify({"error": "Database not available"}), 503
-    try:
-        lore_id_obj = ObjectId(lore_id_str)
-    except Exception:
-        return jsonify({"error": "Invalid Lore ID format"}), 400
-    lore_entry = mongo_db.lore_entries.find_one({"_id": lore_id_obj})
-    if not lore_entry:
-        return jsonify({"error": "Lore entry not found"}), 404
-    return jsonify(parse_json(lore_entry)), 200
-
+        return jsonify({"error": f"Could not create lore entry in DB: {str(e)}"}), 500
+        
+# Similar mapping for update_lore_entry_api if it returns the entry
 @app.route('/api/lore_entries/<lore_id_str>', methods=['PUT'])
 def update_lore_entry_api(lore_id_str: str):
     if mongo_db is None: return jsonify({"error": "Database not available"}), 503
     try:
         lore_id_obj = ObjectId(lore_id_str)
-    except Exception: return jsonify({"error": "Invalid Lore ID format"}), 400
+    except Exception: return jsonify({"error": "Invalid Lore ID format for update"}), 400
 
     existing_lore_data = mongo_db.lore_entries.find_one({"_id": lore_id_obj})
     if not existing_lore_data: return jsonify({"error": "Lore entry not found for update"}), 404
     
     try:
-        update_data = request.get_json()
-        if not update_data: return jsonify({"error": "Invalid JSON payload"}), 400
+        update_data_req = request.get_json()
+        if not update_data_req: return jsonify({"error": "Invalid JSON payload"}), 400
 
-        # Prepare for validation: Use existing data as base, overlay with updates
-        data_for_validation = {**existing_lore_data, **update_data}
-        data_for_validation.pop('_id', None) # Pydantic shouldn't see DB's _id
-        data_for_validation['lore_id'] = lore_id_str # Ensure lore_id is present for validation
+        # Use Pydantic model for validation and to handle defaults for fields NOT being updated
+        # Create a temporary dict for validation, merging existing with updates
+        # Convert existing_lore_data (_id to lore_id) for Pydantic model
+        existing_pydantic_data = json.loads(json_util.dumps(existing_lore_data))
+        if '_id' in existing_pydantic_data and '$oid' in existing_pydantic_data['_id']:
+            existing_pydantic_data['lore_id'] = existing_pydantic_data['_id']['$oid']
+            del existing_pydantic_data['_id']
+
+        data_for_validation = {**existing_pydantic_data, **update_data_req}
         
-        # Ensure `lore_type` if present in update_data is a valid Enum member string
-        if 'lore_type' in update_data:
-            try: # Validate lore_type against Enum values if it's being updated
-                LoreEntryType(update_data['lore_type'])
-            except ValueError:
-                return jsonify({"error": f"Invalid lore_type '{update_data['lore_type']}'. Valid types are: {[e.value for e in LoreEntryType]}"}), 400
+        validated_lore = LoreEntry(**data_for_validation) # This will re-validate all fields
+        validated_lore.updated_at = datetime.utcnow() 
 
-        validated_lore = LoreEntry(**data_for_validation)
-        validated_lore.updated_at = datetime.utcnow() # Update timestamp
-
-        # Prepare $set payload only with fields that were in the request or are defaults from model
-        # This avoids resetting fields not included in the PUT request to their Pydantic defaults.
-        final_set_payload = validated_lore.model_dump(by_alias=True, exclude_unset=True) 
-        # `exclude_unset=True` is crucial here if Pydantic v2, or manually construct based on `update_data` keys
-
-        # If Pydantic v1 behavior is preferred (where all fields of model are dumped even if not in request):
-        # final_set_payload = validated_lore.model_dump(mode='json', by_alias=True, exclude_none=True)
-        # But then we should ensure we only update fields that were actually sent or are intended to be defaulted
-        # For safety, constructing based on request keys is better for partial updates:
+        # Prepare $set payload only with fields that were in the request
+        final_set_payload = {}
+        for key, value in update_data_req.items():
+            if key in validated_lore.model_fields_set or key in validated_lore.model_extra: # Check if key is part of model or an extra field
+                # For Enums like LoreEntryType, Pydantic stores them as Enum members.
+                # MongoDB needs the string value.
+                attr_value = getattr(validated_lore, key, None)
+                if isinstance(attr_value, Enum):
+                     final_set_payload[key] = attr_value.value
+                else:
+                    final_set_payload[key] = attr_value
         
-        payload_for_mongo = {}
-        for key, value in update_data.items():
-            if key in validated_lore.model_fields_set: # Check if the field was actually provided or is a default
-                 payload_for_mongo[key] = getattr(validated_lore, key)
-                 if isinstance(payload_for_mongo[key], Enum): # Convert enums to values for DB
-                     payload_for_mongo[key] = payload_for_mongo[key].value
-        
-        payload_for_mongo['updated_at'] = validated_lore.updated_at
-
+        final_set_payload['updated_at'] = validated_lore.updated_at # Always update this
 
     except ValidationError as e:
         return jsonify({"error": "Validation Error for LoreEntry update", "details": e.errors()}), 400
+    except Exception as ex_val:
+        print(f"Error during lore update validation: {ex_val}")
+        return jsonify({"error": f"Data validation error: {ex_val}"}), 400
 
-    if not payload_for_mongo:
+
+    if not final_set_payload:
         return jsonify({"message": "No changes provided for lore entry."}), 200
 
     try:
-        mongo_db.lore_entries.update_one({"_id": lore_id_obj}, {"$set": payload_for_mongo})
-        updated_lore_entry = mongo_db.lore_entries.find_one({"_id": lore_id_obj})
-        return jsonify({"message": "Lore entry updated", "lore_entry": parse_json(updated_lore_entry)}), 200
+        mongo_db.lore_entries.update_one({"_id": lore_id_obj}, {"$set": final_set_payload})
+        updated_lore_entry_doc = mongo_db.lore_entries.find_one({"_id": lore_id_obj})
+        
+        parsed_entry = json.loads(json_util.dumps(updated_lore_entry_doc))
+        if '_id' in parsed_entry and '$oid' in parsed_entry['_id']:
+            parsed_entry['lore_id'] = parsed_entry['_id']['$oid']
+            del parsed_entry['_id']
+        if 'lore_type' in parsed_entry and isinstance(parsed_entry.get('lore_type'), Enum):
+            parsed_entry['lore_type'] = parsed_entry['lore_type'].value
+
+
+        return jsonify({"message": "Lore entry updated", "lore_entry": parsed_entry}), 200
     except Exception as e:
-        return jsonify({"error": f"Could not update lore entry: {str(e)}"}), 500
+        print(f"Error updating lore entry in DB: {e}")
+        return jsonify({"error": f"Could not update lore entry in DB: {str(e)}"}), 500
+
+
 
 
 @app.route('/api/lore_entries/<lore_id_str>', methods=['DELETE'])

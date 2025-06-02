@@ -1,8 +1,8 @@
 // static/characterService.js
 // Responsibility: Logic related to fetching, processing, and managing character data.
 
-// Defines the IDs of HTML elements used for displaying character profile information.
 window.profileElementIds = {
+    // ... (IDs remain the same as in your uiRenderers.js definition)
     detailsCharName: 'details-char-name', 
     profileCharType: 'profile-char-type',
     profileDescription: 'profile-description', 
@@ -21,64 +21,127 @@ window.profileElementIds = {
     characterLoreLinksSection: 'character-lore-links-section', 
     loreEntrySelectForCharacter: 'lore-entry-select-for-character', 
     linkLoreToCharBtn: 'link-lore-to-char-btn', 
-    associatedLoreListForCharacter: 'associated-lore-list-for-character', 
+    associatedLoreListForCharacter: 'associated-lore-list-for-character',
     
-    // Callbacks that resolve to globally defined handler functions.
     deleteMemoryCallback: () => window.handleDeleteMemory,
     factionChangeCallback: () => window.handleSaveFactionStanding,
     dissociateHistoryCallback: () => window.handleDissociateHistoryFile,
     unlinkLoreFromCharacterCallback: () => window.handleUnlinkLoreFromCharacter 
 };
 
-// Initializes application characters and related UI elements.
 window.initializeAppCharacters = async function() {
     console.log("Fetching characters via characterService...");
     try {
-        const charactersFromServer = await window.fetchCharactersFromServer(); // Fetches all character data.
-        appState.setAllCharacters(charactersFromServer); // Processes and stores characters in global state.
+        const charactersFromServer = await window.fetchCharactersFromServer();
+        appState.setAllCharacters(charactersFromServer);
         console.log("Characters fetched and processed:", appState.getAllCharacters().length);
 
-        // Renders UI lists for player characters and NPCs.
+        // Render PC list (always visible)
         window.renderPcListUI(window.getElem('active-pc-list'), window.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, window.handleTogglePcSelection);
-        window.renderNpcListForSceneUI(window.getElem('character-list'), appState.getAllCharacters(), appState.activeSceneNpcIds, window.handleToggleNpcInScene, window.handleSelectCharacterForDetails);
         
-        await window.fetchAllLoreEntriesAndUpdateState(); // Fetches and renders lore entries.
-        window.populateLoreTypeDropdownUI(); // Populates the lore type dropdown in the lore creation form.
-        window.populateSceneContextSelectorUI(); // New: Populates the scene context (Location/Organization) dropdown.
+        // Render NPC list for the SCENE tab (initially with no filter)
+        window.renderNpcListForContextUI(
+            window.getElem('character-list-scene-tab'), 
+            appState.getAllCharacters(), 
+            appState.activeSceneNpcIds, 
+            window.handleToggleNpcInScene, 
+            window.handleSelectCharacterForDetails,
+            null 
+        );
+        // Render ALL NPCs for the NPCs management tab
+        window.renderAllNpcListForManagementUI(
+            window.getElem('all-character-list-management'),
+            appState.getAllCharacters(),
+            window.handleSelectCharacterForDetails 
+        );
+        
+        await window.fetchAllLoreEntriesAndUpdateState(); 
+        window.populateLoreTypeDropdownUI(); 
+        // populateSceneContextSelectorUI is now called within fetchAllLoreEntriesAndUpdateState
 
-
-        setTimeout(window.updateMainView, 0); // Defers main view update to ensure all elements are ready.
+        setTimeout(window.updateMainView, 0); 
     } catch (error) {
         console.error('Error in initializeAppCharacters:', error);
-        // Updates UI to show errors if character loading fails.
-        if (window.getElem('character-list')) window.getElem('character-list').innerHTML = '<ul><li><em>Error loading NPCs.</em></li></ul>';
+        if (window.getElem('character-list-scene-tab')) window.getElem('character-list-scene-tab').innerHTML = '<ul><li><em>Error loading NPCs for scene.</em></li></ul>';
+        if (window.getElem('all-character-list-management')) window.getElem('all-character-list-management').innerHTML = '<ul><li><em>Error loading all NPCs.</em></li></ul>';
         if (window.getElem('active-pc-list')) window.getElem('active-pc-list').innerHTML = '<p><em>Error loading PCs.</em></p>';
     }
 };
 
-// Handles selection of a character to display their details.
 window.handleSelectCharacterForDetails = async function(charIdStr) {
-    if (!charIdStr || charIdStr === "null") { // If no valid character ID, clear the profile.
+    const characterProfileSection = window.getElem('character-profile-main-section');
+    if (!charIdStr || charIdStr === "null") { 
         appState.setCurrentProfileCharId(null);
         window.renderCharacterProfileUI(null, window.profileElementIds); 
-        window.populateLoreEntrySelectForCharacterLinkingUI(null); 
+        if (characterProfileSection) characterProfileSection.classList.add('collapsed'); // Collapse if no char
         return;
     }
-    appState.setCurrentProfileCharId(charIdStr); // Set the current character ID in global state.
+    appState.setCurrentProfileCharId(charIdStr); 
     try {
-        const selectedCharFromServer = await window.fetchNpcDetails(charIdStr); // Fetch full details for the selected character.
-        const processedChar = appState.updateCharacterInList(selectedCharFromServer); // Update character in global state.
+        const selectedCharFromServer = await window.fetchNpcDetails(charIdStr); 
+        const processedChar = appState.updateCharacterInList(selectedCharFromServer); 
 
-        window.renderCharacterProfileUI(processedChar, window.profileElementIds); // Render the character's profile.
-        await window.fetchAndRenderHistoryFiles(); // Fetch and display associated history files.
-        window.populateLoreEntrySelectForCharacterLinkingUI(processedChar.linked_lore_ids || []); // Populate lore linking dropdown.
+        window.renderCharacterProfileUI(processedChar, window.profileElementIds); 
+        if (characterProfileSection) characterProfileSection.classList.remove('collapsed'); // Expand profile
+
+        await window.fetchAndRenderHistoryFiles(); 
+        // populateLoreEntrySelectForCharacterLinkingUI is called within renderCharacterProfileUI
     } catch (error) {
         console.error("Error in handleSelectCharacterForDetails:", error);
         window.updateText('details-char-name', 'Error loading details');
         window.renderCharacterProfileUI(null, window.profileElementIds); 
-        window.populateLoreEntrySelectForCharacterLinkingUI(null); 
+        if (characterProfileSection) characterProfileSection.classList.add('collapsed');
     }
 };
+
+// ... (handleSaveGmNotes, handleAddMemory, handleDeleteMemory - these should be fine) ...
+// ... (handleCharacterCreation - make sure it calls renderAllNpcListForManagementUI) ...
+window.handleCharacterCreation = async function() {
+    const name = window.getElem('new-char-name').value.trim();
+    const description = window.getElem('new-char-description').value.trim();
+    const personality = window.getElem('new-char-personality').value.split(',').map(s => s.trim()).filter(s => s);
+    const type = window.getElem('new-char-type').value;
+
+    if (!name || !description) {
+        alert("Name and Description are required.");
+        return;
+    }
+    const newCharData = { name, description, personality_traits: personality, character_type: type, linked_lore_ids: [] };
+    try {
+        const result = await window.createCharacterOnServer(newCharData);
+        appState.updateCharacterInList(result.character);
+        // Re-render both NPC lists
+        window.renderNpcListForContextUI(window.getElem('character-list-scene-tab'), appState.getAllCharacters(), appState.activeSceneNpcIds, window.handleToggleNpcInScene, window.handleSelectCharacterForDetails, appState.currentSceneContextFilter);
+        window.renderAllNpcListForManagementUI(window.getElem('all-character-list-management'), appState.getAllCharacters(), window.handleSelectCharacterForDetails);
+        window.renderPcListUI(window.getElem('active-pc-list'), window.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, window.handleTogglePcSelection);
+        
+        window.getElem('new-char-name').value = '';
+        window.getElem('new-char-description').value = '';
+        window.getElem('new-char-personality').value = '';
+        alert("Character created successfully!");
+    } catch (error) {
+        console.error("Error creating character:", error);
+        alert(`Error creating character: ${error.message}`);
+    }
+};
+
+
+// ... (fetchAndRenderHistoryFiles, handleAssociateHistoryFile, handleDissociateHistoryFile, handleSaveFactionStanding - these should be fine) ...
+
+window.fetchAllLoreEntriesAndUpdateState = async function() {
+    try {
+        const loreEntries = await window.fetchAllLoreEntries(); 
+        appState.setAllLoreEntries(loreEntries);
+        window.renderLoreEntryListUI(appState.getAllLoreEntries()); 
+        window.populateLoreEntrySelectForCharacterLinkingUI(); 
+        window.populateSceneContextSelectorUI(); // Ensure this is called after lore entries are in appState
+        window.populateSceneContextTypeFilterUI(); // New: Populate the type filter
+    } catch (error) {
+        console.error("Error fetching all lore entries:", error);
+    }
+};
+
+// ... (handleCreateLoreEntry, handleSelectLoreEntryForDetails, handleUpdateLoreEntryGmNotes, handleDeleteLoreEntry, handleLinkLoreToCharacter, handleUnlinkLoreFromCharacter - these should be fine) ...
 
 // Saves GM notes for the currently selected character.
 window.handleSaveGmNotes = async function() {

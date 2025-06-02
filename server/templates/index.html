@@ -19,29 +19,46 @@
             </div>
             <hr class="tab-hr">
             <div class="tabs">
-                <button class="tab-link active" onclick="openTab(event, 'tab-scene')">Scene</button>
-                <button class="tab-link" onclick="openTab(event, 'tab-lore')">Lore</button>
+                <button class="tab-link active" onclick="openTab(event, 'tab-scene')">SCENE</button>
+                <button class="tab-link" onclick="openTab(event, 'tab-npcs')">NPCs</button>
+                <button class="tab-link" onclick="openTab(event, 'tab-lore')">LORE</button>
             </div>
         </div>
 
         <div id="left-column-content">
             <div id="tab-scene" class="tab-content active-tab">
+                <h3>Scene Configuration</h3>
                 <div id="scene-context-setup" class="collapsible-section">
-                    <h3>Scene Setup & NPCs</h3>
+                    <h4>Scene Context Filter</h4>
                     <div class="collapsible-content">
-                        <label for="scene-context-selector">Scene Context (Location/Organization):</label>
-                        <select id="scene-context-selector">
-                            <option value="">-- Select Context (All NPCs) --</option>
+                        <label for="scene-context-type-filter">Filter by Lore Type:</label>
+                        <select id="scene-context-type-filter">
+                            <option value="">-- All Relevant Types --</option>
                             </select>
-                        <div id="npc-list-section" class="character-list" style="margin-top:10px;">
-                             <h4>NPCs in Scene (based on context)</h4>
-                            <div id="character-list"><ul><li><em>Select a context or load all NPCs...</em></li></ul></div>
-                        </div>
+                        <label for="scene-context-selector">Select Specific Location/Organization:</label>
+                        <select id="scene-context-selector">
+                            <option value="">-- Select Context (Shows All NPCs Below) --</option>
+                            </select>
                     </div>
                 </div>
-                
-                <div id="character-profile-main-section" class="collapsible-section collapsed">
-                    <h3>Profile: <span id="details-char-name">None</span></h3>
+                <div id="npc-list-for-scene-section" class="collapsible-section">
+                    <h4>NPCs Present in Scene Context</h4>
+                    <div class="collapsible-content character-list">
+                        <div id="character-list-scene-tab"><ul><li><em>Select a context to see relevant NPCs or check the NPCs Tab for all.</em></li></ul></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-npcs" class="tab-content">
+                <h3>NPC Management</h3>
+                 <div id="all-npc-list-management-section" class="collapsible-section">
+                    <h4>All NPCs</h4>
+                    <div class="collapsible-content character-list">
+                        <div id="all-character-list-management"><ul><li><em>Loading all NPCs...</em></li></ul></div>
+                    </div>
+                </div>
+                <hr>
+                <div id="character-profile-main-section" class="collapsible-section collapsed"> <h3>Profile: <span id="details-char-name">None</span></h3>
                     <div class="collapsible-content">
                         <div id="char-profile-display">
                             <p><strong>Type:</strong> <span id="profile-char-type"></span></p>
@@ -103,7 +120,8 @@
                         </div>
                     </div>
                 </div>
-                <div id="create-character-section" class="collapsible-section collapsed"> <h3>Create New Character</h3>
+                <div id="create-character-section" class="collapsible-section collapsed"> 
+                    <h3>Create New Character</h3>
                     <div id="create-character-form" class="collapsible-content">
                         <label for="new-char-name">Name:</label>
                         <input type="text" id="new-char-name" required>
@@ -123,9 +141,8 @@
 
             <div id="tab-lore" class="tab-content">
                 <h3>Lore Management</h3>
-                <div id="create-lore-entry-form" class="collapsible-section">
-                     <h4>Create New Lore Entry</h4>
-                    <div class="collapsible-content">
+                <div id="create-lore-entry-form-section" class="collapsible-section"> <h4>Create New Lore Entry</h4>
+                    <div class="collapsible-content" id="create-lore-entry-form">
                         <label for="new-lore-name">Name/Title:</label>
                         <input type="text" id="new-lore-name" required>
                         <label for="new-lore-type">Type:</label>

@@ -4,7 +4,7 @@ body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; hei
 
 #left-column {
     width: 30%; 
-    min-width: 375px; /* Adjusted for better tab display */
+    min-width: 375px; 
     max-width: 60%; 
     background-color: #e9e9e9;
     border-right: 1px solid #ccc;
@@ -16,64 +16,64 @@ body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; hei
 }
 
 #left-column-header {
-    padding: 10px 15px 0px 15px; /* No bottom padding here, tabs border will handle */
-    background-color: #e0e0e0; /* Slightly different for header area */
+    padding: 10px 15px 0px 15px; 
+    background-color: #e0e0e0; 
     border-bottom: 1px solid #ccc;
 }
 #left-column-header h2 {
     margin-top: 0;
     margin-bottom: 10px;
-    font-size: 1.3em; /* Slightly smaller */
+    font-size: 1.3em; 
     color: #333;
 }
 hr.tab-hr {
     border: 0;
     height: 1px;
     background-color: #ccc;
-    margin: 10px 0 0 0; /* Margin before tabs */
+    margin: 10px 0 0 0; 
 }
 
 
 .tabs {
     display: flex;
-    /* border-bottom: 1px solid #aaa; */ /* Darker line for tab bottom */
+    margin-top: 5px; /* Added margin above tabs */
 }
 
 .tab-link {
-    background-color: #d0d0d0; /* Darker inactive tab */
-    border: 1px solid #bbb;
+    background-color: #d8d8d8; /* Standard tab background */
+    border: 1px solid #b0b0b0; /* Slightly darker border */
     border-bottom: none; 
-    padding: 8px 12px; /* Adjusted padding */
+    padding: 8px 12px; 
     cursor: pointer;
     outline: none;
     transition: background-color 0.3s, color 0.3s;
-    margin-right: 2px;
+    margin-right: 3px; /* Spacing between tabs */
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    color: #444; /* Darker text for inactive */
+    color: #333; /* Darker text for better readability */
     font-weight: normal;
 }
 
 .tab-link:hover {
-    background-color: #c0c0c0;
+    background-color: #c8c8c8; /* Lighter hover */
     color: #000;
 }
 
 .tab-link.active {
-    background-color: #e9e9e9; 
-    /* border-bottom: 1px solid #e9e9e9;  */
+    background-color: #e9e9e9;  /* Match content area for seamless look */
+    border-color: #b0b0b0 #b0b0b0 #e9e9e9 #b0b0b0; /* Bottom border transparent */
     position: relative;
-    /* top: 1px; */
-    color: #007bff; /* Active tab text color */
+    /* top: 1px; */ /* Removed to simplify alignment */
+    color: #0056b3; /* Distinct active text color */
     font-weight: bold;
-    border-color: #aaa #aaa #e9e9e9 #aaa; /* Match bg for bottom border */
 }
 
 .tab-content {
     display: none; 
     padding: 15px;
     animation: fadeIn 0.3s; 
-    border-top: 1px solid #aaa; /* Line above content matching tab bottom */
+    border-top: 1px solid #b0b0b0; /* Match tab border color */
+    background-color: #e9e9e9; /* Ensure content area has bg */
 }
 
 .tab-content.active-tab {
@@ -119,7 +119,7 @@ hr.tab-hr {
 #center-column h5 { padding: 0px; margin: 0px; }
 
 /* Collapsible section styling adjusted for tabs */
-#pc-list-section-outer { margin-bottom: 0; } /* No bottom margin if it's above tabs */
+#pc-list-section-outer { margin-bottom: 0; } 
 #pc-list-section-outer > h3 { margin-bottom: 5px; }
 
 
@@ -128,7 +128,7 @@ hr.tab-hr {
     cursor: pointer; 
     background-color: #d8d8d8; 
     padding: 8px 12px; 
-    margin: 0 0 0 0; /* No bottom margin, content will have top border if open */
+    margin: 0 0 0 0; 
     user-select: none; 
     position: relative; 
     display: flex; 
@@ -161,7 +161,17 @@ button:disabled { background-color: #cccccc; cursor: not-allowed;}
 textarea, input[type="text"], input[type="number"], select { width: calc(100% - 16px); padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;}
 label { display: block; margin-bottom: 5px; font-weight: bold; }
 
-.character-list ul { list-style-type: none; padding: 0; max-height: 150px; /* Adjusted height */ overflow-y: auto; border: 1px solid #ddd; background: #fff; }
+/* PC List specific styling to prevent scrolling for ~5 PCs */
+#active-pc-list ul {
+    max-height: none; /* Remove max-height to allow content to determine height */
+    /* OR set a specific height if you know it: e.g., height: 150px; */
+}
+#active-pc-list li {
+    padding: 6px 8px; /* Slightly reduced padding if needed */
+}
+
+
+.character-list ul { list-style-type: none; padding: 0; /* max-height: 150px; */ /* Keep for NPC lists */ overflow-y: auto; border: 1px solid #ddd; background: #fff; }
 .character-list li { padding: 8px; cursor: default; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; }
 .character-list li:last-child { border-bottom: none; }
 .character-list li.active-in-scene { background-color: #e6f2ff; } 
@@ -225,8 +235,8 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 .rules-explanation-table strong { color: #333; }
 .pc-dashboard-no-selection { text-align: center; color: #777; margin-top: 50px; font-size: 1.2em;}
 
-#history-content-display { margin-top: 10px; padding: 10px; border: 1px solid #ddd; background-color: #f9f9f9; max-height: 200px; /* Adjusted height */ overflow-y: auto; white-space: pre-wrap; font-family: 'Courier New', Courier, monospace; font-size: 0.9em;}
-#associated-history-list, #associated-lore-list-for-character { list-style-type: none; padding-left: 0; max-height: 100px; overflow-y:auto; /* Added scroll for long lists */ }
+#history-content-display { margin-top: 10px; padding: 10px; border: 1px solid #ddd; background-color: #f9f9f9; max-height: 200px; overflow-y: auto; white-space: pre-wrap; font-family: 'Courier New', Courier, monospace; font-size: 0.9em;}
+#associated-history-list, #associated-lore-list-for-character { list-style-type: none; padding-left: 0; max-height: 100px; overflow-y:auto; }
 #associated-history-list li, #associated-lore-list-for-character li { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #eee;}
 #associated-history-list li:last-child, #associated-lore-list-for-character li:last-child { border-bottom: none; }
 .remove-history-btn, .unlink-lore-btn { background-color: #dc3545; color: white; border: none; padding: 3px 8px; border-radius: 3px; cursor: pointer; font-size: 0.8em;}
@@ -253,7 +263,7 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 
 /* Faction Standing Slider Styles */
 .faction-standing-entry { display: flex; align-items: center; padding: 8px 0; font-size: 0.9em; }
-.faction-standing-entry label { margin-right: 10px; font-weight: normal; min-width: 100px; flex-shrink: 0; /* Prevent label from shrinking */ }
+.faction-standing-entry label { margin-right: 10px; font-weight: normal; min-width: 100px; flex-shrink: 0; }
 .faction-standing-entry input[type="range"] { flex-grow: 1; margin-right: 10px; cursor: pointer; }
 .faction-standing-entry .standing-level-display { min-width: 100px; font-style: italic; color: #555; text-align: right; }
 
@@ -266,3 +276,54 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 
 /* Lore Management Specific Styles */
 #create-lore-entry-form label, #lore-entry-profile-section label { margin-top: 8px; }
+#lore-entry-list-container { margin-top:10px; }
+#lore-entry-profile-section { background-color: #f0f0f0; border-radius: 4px; padding:15px; }
+#details-lore-key-facts-list { list-style-type: disc; margin-left: 20px; }
+#character-lore-links-section .collapsible-content { padding-top:10px; }
+#associated-lore-list-for-character { margin-top: 5px; }
+
+/* Ensure profile sections within tabs are styled consistently */
+#tab-npcs > h3 { /* Target the main profile name header */
+    background-color: transparent; 
+    padding: 0;
+    margin-bottom: 10px;
+    border: none;
+    cursor: default; 
+    font-size: 1.2em; 
+}
+#tab-npcs #character-profile-main-section > h3 .arrow-indicator { display: inline-block !important; } /* Ensure arrow always shows for profile */
+#tab-npcs #character-profile-main-section > h3 { cursor: pointer !important; }
+
+
+#scene-context-setup > h3 { 
+    cursor: pointer; 
+    background-color: #d8d8d8; 
+    padding: 8px 12px; 
+    margin: 0 0 0 0; 
+    user-select: none; 
+    position: relative; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}
+#scene-context-setup > h3 .arrow-indicator { 
+    transition: transform 0.2s ease-in-out;
+    margin-left: 5px; 
+}
+#scene-context-setup.collapsed .arrow-indicator { transform: rotate(-90deg); }
+#scene-context-setup:not(.collapsed) .arrow-indicator { transform: rotate(0deg); }
+
+#character-list-scene-tab h4, #all-character-list-management h4 {
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 5px;
+    padding-left: 5px;
+}
+
+/* Specific styling for character lists within tabs to ensure consistent max-height if needed */
+#character-list-scene-tab ul, #all-character-list-management ul {
+    max-height: 200px; /* Or another suitable value */
+    overflow-y: auto;
+}
