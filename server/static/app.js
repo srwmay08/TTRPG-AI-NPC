@@ -4,12 +4,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log("app.js: DOMContentLoaded event fired.");
     try {
         await window.initializeAppCharacters(); 
-        // fetchAndRenderHistoryFiles and populateLoreTypeDropdownUI are called within initializeAppCharacters
         
         window.setupResizer();
-        window.setupCollapsibleSections(); // This needs to be aware of tabs now
+        window.setupCollapsibleSections(); 
         window.assignButtonEventHandlers();
-        window.setupTabControls(); // New function to handle tab switching
+        window.setupTabControls(); 
+        window.setupSceneContextSelector(); // New: Setup for scene context dropdown
         
         setTimeout(window.updateMainView, 0); 
     } catch (e) {
@@ -21,40 +21,60 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 window.setupTabControls = function() {
-    const tabLinks = document.querySelectorAll('.tabs .tab-link');
-    const tabContents = document.querySelectorAll('.tab-content');
+    const tabLinks = document.querySelectorAll('#left-column-header .tabs .tab-link');
+    const tabContents = document.querySelectorAll('#left-column-content .tab-content');
 
-    // Function to open a tab
     window.openTab = function(event, tabName) {
         tabContents.forEach(tab => tab.classList.remove('active-tab'));
         tabLinks.forEach(link => link.classList.remove('active'));
 
-        document.getElementById(tabName).classList.add('active-tab');
-        event.currentTarget.classList.add('active');
-
-        // Special handling for character profile tab to ensure its content is visible
-        if (tabName === 'tab-character-profile') {
-            const charProfileMainSection = document.getElementById('character-profile-main-section');
-            // If we want the main profile section to always appear expanded when tab is clicked:
-            // if (charProfileMainSection && charProfileMainSection.classList.contains('collapsed')) {
-            //     charProfileMainSection.querySelector('h3').click(); // Simulate click to expand
-            // }
+        const targetTab = document.getElementById(tabName);
+        if(targetTab) targetTab.classList.add('active-tab');
+        if(event.currentTarget) event.currentTarget.classList.add('active');
+        
+        // If switching to Scene tab, ensure character profile reflects current selection or is cleared
+        if (tabName === 'tab-scene') {
+            const currentProfileId = appState.getCurrentProfileCharId();
+            if (currentProfileId) {
+                window.handleSelectCharacterForDetails(currentProfileId); // Re-render profile
+            } else {
+                window.renderCharacterProfileUI(null, window.profileElementIds); // Clear profile
+            }
         }
-         // When switching tabs, if no character is selected for profile, ensure it shows "None"
-        if (tabName === 'tab-character-profile' && !appState.getCurrentProfileCharId()) {
-            window.renderCharacterProfileUI(null, window.profileElementIds);
-        }
-        // If switching to lore tab and no lore entry is selected for detail view, ensure it's hidden
-        if (tabName === 'tab-lore-management' && !appState.getCurrentLoreEntryId()) {
-            window.closeLoreDetailViewUI();
+        // If switching to Lore tab, ensure lore detail view is closed if no lore is selected
+        if (tabName === 'tab-lore' && !appState.getCurrentLoreEntryId()) {
+            if(typeof window.closeLoreDetailViewUI === 'function'){
+                window.closeLoreDetailViewUI();
+            }
         }
     }
 
-    // Set the first tab as active by default
     if (tabLinks.length > 0 && tabContents.length > 0) {
-        tabLinks[0].classList.add('active');
-        tabContents[0].classList.add('active-tab');
+        tabLinks[0].click(); 
     }
+};
+
+window.setupSceneContextSelector = function() {
+    const selector = window.getElem('scene-context-selector');
+    if (selector) {
+        selector.addEventListener('change', (event) => {
+            const selectedLoreId = event.target.value;
+            appState.currentSceneContextFilter = selectedLoreId ? { type: 'lore', id: selectedLoreId } : null;
+            // Re-render the NPC list based on this filter
+            window.renderNpcListForSceneUI(
+                window.getElem('character-list'), 
+                appState.getAllCharacters(), 
+                appState.activeSceneNpcIds, 
+                window.handleToggleNpcInScene, 
+                window.handleSelectCharacterForDetails // This will also populate the profile section
+            );
+            // If a context is selected, and no NPC is selected for profile, clear profile
+            if(selectedLoreId && !appState.getCurrentProfileCharId()){
+                 window.renderCharacterProfileUI(null, window.profileElementIds);
+            }
+        });
+    }
+    // Initial population of the dropdown happens in initializeAppCharacters -> fetchAllLoreEntriesAndUpdateState -> populateSceneContextSelectorUI
 };
 
 
@@ -67,9 +87,6 @@ window.updateMainView = function() {
 
     if (!dialogueInterfaceElem || !pcDashboardViewElem || !pcQuickViewInSceneElem) {
         console.error("app.js/updateMainView: Critical UI container element(s) missing from DOM! Cannot update main view. Check HTML IDs.");
-        if (!dialogueInterfaceElem) console.error("Missing: dialogue-interface element.");
-        if (!pcDashboardViewElem) console.error("Missing: pc-dashboard-view element.");
-        if (!pcQuickViewInSceneElem) console.error("Missing: pc-quick-view-section-in-scene element.");
         return; 
     }
 
@@ -118,7 +135,7 @@ window.handleToggleNpcInScene = async function(npcIdStr, npcName) {
 
     if (isAdding) {
         appState.addActiveNpc(npcIdStr);
-        window.createNpcDialogueAreaUI(npcIdStr, npcName, multiNpcContainer);
+        window.createNpcDialogueAreaUI(npcIdStr, npcName, multiNpcContainer); 
         appState.initDialogueHistory(npcIdStr);
         const toggledNpc = appState.getCharacterById(npcIdStr);
 

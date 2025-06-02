@@ -2,8 +2,9 @@
 from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any
 from datetime import datetime
-import uuid
+import uuid # Still needed for MemoryItem
 from enum import Enum
+from bson import ObjectId # Import ObjectId
 
 class FactionStandingLevel(str, Enum):
     ALLY = "Ally"
@@ -33,7 +34,7 @@ class LoreEntryType(str, Enum):
 
 class LoreEntry(BaseModel):
     """Defines the structure for a world lore entry."""
-    lore_id: str = Field(default_factory=lambda: str(uuid.uuid4()), description="Unique ID for the lore entry.")
+    lore_id: str = Field(default_factory=lambda: str(ObjectId()), description="Unique ID for the lore entry (MongoDB ObjectId as string).") # CHANGED
     name: str = Field(..., min_length=1, description="The name or title of the lore entry.")
     lore_type: LoreEntryType = Field(default=LoreEntryType.MISC, description="The category of the lore entry.")
     description: str = Field(..., description="A general description of the lore entry.")
@@ -77,7 +78,7 @@ class NPCProfile(BaseModel):
     current_situation: Optional[str] = None
     
     personality_traits: List[str] = Field(default_factory=list, description="Key personality traits.")
-    background_story: Optional[str] = None # Kept for general, less structured backstory
+    background_story: Optional[str] = None 
     motivations: List[str] = Field(default_factory=list)
     knowledge: List[str] = Field(default_factory=list, description="Specific pieces of knowledge the character has (less structured than lore).")
     memories: List[MemoryItem] = Field(default_factory=list, description="Character's persistent memories.")
@@ -106,18 +107,12 @@ class NPCProfile(BaseModel):
                 "name": "Mattrim 'Threestrings' Mereg",
                 "character_type": "NPC",
                 "description": "A laid-back human bard from Waterdeep.",
-                "race": "Human",
-                "class": "Bard",
-                "personality_traits": ["Eternally chill", "Has the munchies"],
-                "vtt_data": {"attributes": {"hp": {"value": 10, "max": 10}}},
-                "vtt_flags": {"ddbimporter": {"overrideAC": {"flat": 15}}},
-                "associated_history_files": ["Threestrings.txt"],
-                "linked_lore_ids": ["lore_id_yawning_portal", "lore_id_waterdeep_rumors"],
-                "pc_faction_standings": {"pc_id_1": "Amiable", "pc_id_2": "Indifferent"}
+                # ... other fields
+                "linked_lore_ids": ["507f1f77bcf86cd799439011", "507f191e810c19729de860ea"], # Example ObjectIds
             }
         }
 
-class WorldItem(BaseModel): # Kept for potential future direct use, not the primary new lore system
+class WorldItem(BaseModel): 
     item_id: str = Field(..., description="Unique ID for the world item, can be auto-generated or user-defined.")
     name: str
     type: str
@@ -143,9 +138,7 @@ class DialogueResponse(BaseModel):
     suggested_new_standing: Optional[FactionStandingLevel] = None
     standing_change_justification: Optional[str] = None
 
-
-class NPCProfileWithHistoryAndLore(NPCProfile):
+class NPCProfileWithHistoryAndLore(NPCProfile): # Renamed for clarity, might not be strictly necessary if frontend handles combined data
     history_contents_loaded: Optional[Dict[str, str]] = Field(default=None, description="Loaded content of associated history files. Key: filename, Value: content.")
     combined_history_content: Optional[str] = Field(default=None, description="Concatenated content of all associated history files.")
-    # To hold resolved lore entries if needed directly, or just use linked_lore_ids and fetch separately
-    # resolved_lore_entries: Optional[List[LoreEntry]] = Field(default=None)
+    # resolved_lore_entries: Optional[List[LoreEntry]] = Field(default=None) # Consider if needed for direct passing or fetch on client

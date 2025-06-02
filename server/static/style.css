@@ -4,61 +4,76 @@ body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; hei
 
 #left-column {
     width: 30%; 
-    min-width: 350px; /* Increased for tabs */
+    min-width: 375px; /* Adjusted for better tab display */
     max-width: 60%; 
     background-color: #e9e9e9;
     border-right: 1px solid #ccc;
     height: 100vh;
     padding: 0; 
     flex-shrink: 0; 
-    display: flex; /* Added for header/content structure */
-    flex-direction: column; /* Added */
+    display: flex; 
+    flex-direction: column; 
 }
 
 #left-column-header {
-    padding: 10px 15px;
-    background-color: #d8d8d8;
+    padding: 10px 15px 0px 15px; /* No bottom padding here, tabs border will handle */
+    background-color: #e0e0e0; /* Slightly different for header area */
     border-bottom: 1px solid #ccc;
 }
 #left-column-header h2 {
     margin-top: 0;
     margin-bottom: 10px;
-    font-size: 1.4em;
+    font-size: 1.3em; /* Slightly smaller */
+    color: #333;
 }
+hr.tab-hr {
+    border: 0;
+    height: 1px;
+    background-color: #ccc;
+    margin: 10px 0 0 0; /* Margin before tabs */
+}
+
 
 .tabs {
     display: flex;
-    border-bottom: 1px solid #ccc; /* Separator for tabs */
+    /* border-bottom: 1px solid #aaa; */ /* Darker line for tab bottom */
 }
 
 .tab-link {
-    background-color: #f1f1f1;
-    border: 1px solid #ccc;
-    border-bottom: none; /* Remove bottom border for inactive tabs */
-    padding: 10px 15px;
+    background-color: #d0d0d0; /* Darker inactive tab */
+    border: 1px solid #bbb;
+    border-bottom: none; 
+    padding: 8px 12px; /* Adjusted padding */
     cursor: pointer;
     outline: none;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, color 0.3s;
     margin-right: 2px;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: #444; /* Darker text for inactive */
+    font-weight: normal;
 }
 
 .tab-link:hover {
-    background-color: #ddd;
+    background-color: #c0c0c0;
+    color: #000;
 }
 
 .tab-link.active {
-    background-color: #e9e9e9; /* Match left-column background */
-    border-bottom: 1px solid #e9e9e9; /* Make it look connected */
+    background-color: #e9e9e9; 
+    /* border-bottom: 1px solid #e9e9e9;  */
     position: relative;
-    top: 1px; /* To cover the border-bottom of .tabs */
+    /* top: 1px; */
+    color: #007bff; /* Active tab text color */
+    font-weight: bold;
+    border-color: #aaa #aaa #e9e9e9 #aaa; /* Match bg for bottom border */
 }
 
 .tab-content {
-    display: none; /* Hidden by default */
+    display: none; 
     padding: 15px;
-    animation: fadeIn 0.5s; /* Simple fade-in animation */
+    animation: fadeIn 0.3s; 
+    border-top: 1px solid #aaa; /* Line above content matching tab bottom */
 }
 
 .tab-content.active-tab {
@@ -72,11 +87,11 @@ body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; hei
 
 
 #left-column-content { 
-    padding: 0; /* Remove padding here, tab-content will have it */
+    padding: 0; 
     height: 100%; 
     overflow-y: auto; 
     box-sizing: border-box;
-    flex-grow: 1; /* Allow content to take remaining space */
+    flex-grow: 1; 
 }
 
 
@@ -101,43 +116,40 @@ body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; hei
     min-width: 0; 
 }
 
-#center-column h5 {
-    padding: 0px;
-    margin: 0px;
-}
+#center-column h5 { padding: 0px; margin: 0px; }
 
-.collapsible-section {
-    margin-bottom: 10px; /* Space between collapsible sections */
-}
+/* Collapsible section styling adjusted for tabs */
+#pc-list-section-outer { margin-bottom: 0; } /* No bottom margin if it's above tabs */
+#pc-list-section-outer > h3 { margin-bottom: 5px; }
 
+
+.collapsible-section { margin-bottom: 10px; }
 .collapsible-section h3, .collapsible-section h4 { 
     cursor: pointer; 
-    background-color: #d0d0d0; /* Slightly darker for better contrast */
+    background-color: #d8d8d8; 
     padding: 8px 12px; 
-    margin: 0 0 5px 0; /* Removed top margin */
+    margin: 0 0 0 0; /* No bottom margin, content will have top border if open */
     user-select: none; 
     position: relative; 
     display: flex; 
     justify-content: space-between; 
     align-items: center; 
     border-radius: 3px;
-    border: 1px solid #bbb; /* Add a border */
+    border: 1px solid #ccc;
 }
 .collapsible-section h3 .arrow-indicator, .collapsible-section h4 .arrow-indicator { 
     transition: transform 0.2s ease-in-out;
-    margin-left: 5px; /* Space for arrow */
+    margin-left: 5px; 
 }
 .collapsible-section.collapsed .arrow-indicator { transform: rotate(-90deg); }
 .collapsible-section:not(.collapsed) .arrow-indicator { transform: rotate(0deg); }
 .collapsible-section .collapsible-content {
     padding: 10px;
-    border: 1px solid #ddd;
-    border-top: none; /* Avoid double border with header */
+    border: 1px solid #ccc;
+    border-top: none; 
     border-radius: 0 0 3px 3px;
     background-color: #f9f9f9;
 }
-
-
 .collapsible-section.collapsed .collapsible-content { display: none; }
 
 
@@ -149,15 +161,8 @@ button:disabled { background-color: #cccccc; cursor: not-allowed;}
 textarea, input[type="text"], input[type="number"], select { width: calc(100% - 16px); padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;}
 label { display: block; margin-bottom: 5px; font-weight: bold; }
 
-.character-list ul { list-style-type: none; padding: 0; max-height: 180px; overflow-y: auto; border: 1px solid #ddd; background: #fff; }
-.character-list li { 
-    padding: 8px; 
-    cursor: default;
-    border-bottom: 1px solid #ddd; 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-}
+.character-list ul { list-style-type: none; padding: 0; max-height: 150px; /* Adjusted height */ overflow-y: auto; border: 1px solid #ddd; background: #fff; }
+.character-list li { padding: 8px; cursor: default; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; }
 .character-list li:last-child { border-bottom: none; }
 .character-list li.active-in-scene { background-color: #e6f2ff; } 
 .character-list li.selected { background-color: #d1e7fd; font-weight: bold; }
@@ -165,12 +170,7 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 .character-list li .npc-name-clickable:hover, .character-list li .lore-entry-name-clickable:hover { text-decoration: underline; color: #0056b3;}
 
 
-#dialogue-interface {
-    display: none; 
-    flex-grow: 1;
-    flex-direction: column;
-}
-
+#dialogue-interface { display: none; flex-grow: 1; flex-direction: column; }
 #multi-npc-dialogue-container { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: row; overflow-x: scroll; gap: 15px; min-width: calc(25%);}
 .npc-dialogue-area { border: 1px solid #ddd; padding: 10px; border-radius: 5px; background-color: #f9f9f9;}
 .npc-dialogue-area h3 { margin-top: 0; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #eee;}
@@ -225,8 +225,8 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 .rules-explanation-table strong { color: #333; }
 .pc-dashboard-no-selection { text-align: center; color: #777; margin-top: 50px; font-size: 1.2em;}
 
-#history-content-display { margin-top: 10px; padding: 10px; border: 1px solid #ddd; background-color: #f9f9f9; max-height: 300px; overflow-y: auto; white-space: pre-wrap; font-family: 'Courier New', Courier, monospace; font-size: 0.9em;}
-#associated-history-list, #associated-lore-list-for-character { list-style-type: none; padding-left: 0; }
+#history-content-display { margin-top: 10px; padding: 10px; border: 1px solid #ddd; background-color: #f9f9f9; max-height: 200px; /* Adjusted height */ overflow-y: auto; white-space: pre-wrap; font-family: 'Courier New', Courier, monospace; font-size: 0.9em;}
+#associated-history-list, #associated-lore-list-for-character { list-style-type: none; padding-left: 0; max-height: 100px; overflow-y:auto; /* Added scroll for long lists */ }
 #associated-history-list li, #associated-lore-list-for-character li { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #eee;}
 #associated-history-list li:last-child, #associated-lore-list-for-character li:last-child { border-bottom: none; }
 .remove-history-btn, .unlink-lore-btn { background-color: #dc3545; color: white; border: none; padding: 3px 8px; border-radius: 3px; cursor: pointer; font-size: 0.8em;}
@@ -252,27 +252,10 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 #pc-quick-view-section-in-scene .pc-stat-card h4 { display: flex; justify-content: space-between; align-items: center; }
 
 /* Faction Standing Slider Styles */
-.faction-standing-entry {
-    display: flex;
-    align-items: center; /* Vertically align items */
-    padding: 8px 0;
-    font-size: 0.9em;
-}
-.faction-standing-entry label {
-    margin-right: 10px;
-    font-weight: normal;
-    min-width: 100px; /* Ensure labels align nicely */
-}
-.faction-standing-entry input[type="range"] {
-    flex-grow: 1; /* Slider takes available space */
-    margin-right: 10px;
-    cursor: pointer;
-}
-.faction-standing-entry .standing-level-display {
-    min-width: 100px; /* Space for the text */
-    font-style: italic;
-    color: #555;
-}
+.faction-standing-entry { display: flex; align-items: center; padding: 8px 0; font-size: 0.9em; }
+.faction-standing-entry label { margin-right: 10px; font-weight: normal; min-width: 100px; flex-shrink: 0; /* Prevent label from shrinking */ }
+.faction-standing-entry input[type="range"] { flex-grow: 1; margin-right: 10px; cursor: pointer; }
+.faction-standing-entry .standing-level-display { min-width: 100px; font-style: italic; color: #555; text-align: right; }
 
 
 .ai-suggestion-category { margin-top: 10px; padding-top: 5px; border-top: 1px dashed #eee; }
@@ -282,23 +265,4 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 #suggested-faction-standing-changes .suggested-item button:disabled { background-color: #cccccc; }
 
 /* Lore Management Specific Styles */
-#lore-management-section .collapsible-content, #tab-character-profile .collapsible-content { padding-top: 10px; }
 #create-lore-entry-form label, #lore-entry-profile-section label { margin-top: 8px; }
-#lore-entry-list-container { margin-top:10px; }
-#lore-entry-profile-section { background-color: #f0f0f0; border-radius: 4px; padding:15px; }
-#details-lore-key-facts-list { list-style-type: disc; margin-left: 20px; }
-
-#character-lore-links-section .collapsible-content { padding-top:10px; }
-#associated-lore-list-for-character { margin-top: 5px; }
-
-/* Ensure profile sections within tabs are styled consistently */
-#tab-character-profile > h3 { /* Target the main profile name header */
-    background-color: #d8d8d8;
-    padding: 8px 12px;
-    margin-bottom: 10px;
-    border-radius: 3px;
-}
-#tab-character-profile > div > .collapsible-section > h3,
-#tab-character-profile > div > .collapsible-section > h4 {
-     margin-top: 10px; /* Add some top margin for sub-collapsibles */
-}
