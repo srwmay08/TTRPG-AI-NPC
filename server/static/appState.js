@@ -5,8 +5,10 @@ const appState = {
     activeSceneNpcIds: new Set(),
     activePcIds: new Set(),
     allCharacters: [],
+    allLoreEntries: [], // New: For storing all fetched lore entries
     dialogueHistories: {},
     currentProfileCharId: null,
+    currentLoreEntryId: null, // New: For the currently viewed/edited lore entry
     currentlyExpandedAbility: null,
     currentlyExpandedSkill: null,
     skillSortKey: null,
@@ -29,20 +31,19 @@ const appState = {
             updatedChar._id = updatedChar._id.$oid;
         }
         const index = this.allCharacters.findIndex(c => String(c._id) === String(updatedChar._id));
-        const processedChar = this.processCharacterData(updatedChar); // Process before storing
+        const processedChar = this.processCharacterData(updatedChar); 
         if (index > -1) {
             this.allCharacters[index] = processedChar;
         } else {
             this.allCharacters.push(processedChar);
         }
-        return processedChar; // Return the processed character
+        return processedChar; 
     },
 
     processCharacterData(char) {
         if (char._id && typeof char._id === 'object' && char._id.$oid) {
             char._id = char._id.$oid;
         }
-        // Ensure all default structures for character object
         char.vtt_data = char.vtt_data || { abilities: {}, attributes: { hp: {}, ac: {}, movement: {}, init: {}, spell: {} }, details: {}, skills: {}, traits: { languages: {}, armorProf: {}, weaponProf: {}} };
         char.vtt_data.abilities = char.vtt_data.abilities || {};
         char.vtt_data.attributes = char.vtt_data.attributes || { hp: {}, ac: {}, movement: {}, init: {}, spell: {} };
@@ -54,26 +55,27 @@ const appState = {
         char.vtt_data.details = char.vtt_data.details || {};
         char.vtt_data.skills = char.vtt_data.skills || {};
         char.vtt_data.traits = char.vtt_data.traits || { languages: {}, armorProf: {}, weaponProf: {}};
-
         char.vtt_flags = char.vtt_flags || {};
         char.items = char.items || [];
-        char.system = char.system || {}; // Ensure system object exists
+        char.system = char.system || {};
         char.memories = char.memories || [];
         char.associated_history_files = char.associated_history_files || [];
+        char.linked_lore_ids = char.linked_lore_ids || []; // Ensure this exists
         char.personality_traits = char.personality_traits || [];
         char.ideals = char.ideals || [];
         char.bonds = char.bonds || [];
         char.flaws = char.flaws || [];
         char.motivations = char.motivations || [];
-        char.pc_faction_standings = char.pc_faction_standings || {}; // Ensure this exists
+        char.pc_faction_standings = char.pc_faction_standings || {};
 
         if (char.character_type === 'PC') {
             const pcLevel = char.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || char.system?.details?.level || char.vtt_data?.details?.level || 1;
-            char.calculatedProfBonus = window.getProficiencyBonus(pcLevel); // Use window.
+            char.calculatedProfBonus = window.getProficiencyBonus(pcLevel); 
         }
         return char;
     },
 
+    // NPC/PC Scene Management
     addActiveNpc(id) { this.activeSceneNpcIds.add(String(id)); },
     removeActiveNpc(id) { this.activeSceneNpcIds.delete(String(id)); },
     hasActiveNpc(id) { return this.activeSceneNpcIds.has(String(id)); },
@@ -84,16 +86,14 @@ const appState = {
     removeActivePc(id) { this.activePcIds.delete(String(id)); },
     toggleActivePc(id) {
         const idStr = String(id);
-        if (this.activePcIds.has(idStr)) {
-            this.activePcIds.delete(idStr);
-        } else {
-            this.activePcIds.add(idStr);
-        }
+        if (this.activePcIds.has(idStr)) this.activePcIds.delete(idStr);
+        else this.activePcIds.add(idStr);
     },
     hasActivePc(id) { return this.activePcIds.has(String(id)); },
     getActivePcCount() { return this.activePcIds.size; },
     getActivePcIds() { return Array.from(this.activePcIds); },
 
+    // Dialogue History
     initDialogueHistory(npcId) { this.dialogueHistories[String(npcId)] = []; },
     addDialogueToHistory(npcId, message) {
         const idStr = String(npcId);
@@ -106,14 +106,50 @@ const appState = {
         return (this.dialogueHistories[String(npcId)] || []).slice(-count);
     },
 
+    // Character Profile
     setCurrentProfileCharId(id) { this.currentProfileCharId = id ? String(id) : null; },
     getCurrentProfileCharId() { return this.currentProfileCharId; },
     getCurrentProfileChar() { return this.getCharacterById(this.currentProfileCharId); },
 
+    // PC Dashboard UI State
     setExpandedAbility(abilityKey) { this.currentlyExpandedAbility = abilityKey; },
     getExpandedAbility() { return this.currentlyExpandedAbility; },
     setExpandedSkill(skillKey) { this.currentlyExpandedSkill = skillKey; },
     getExpandedSkill() { return this.currentlyExpandedSkill; },
     setSkillSortKey(key) { this.skillSortKey = key; },
-    getSkillSortKey() { return this.skillSortKey; }
+    getSkillSortKey() { return this.skillSortKey; },
+
+    // Lore Management State
+    setAllLoreEntries(loreEntries) {
+        this.allLoreEntries = loreEntries.map(entry => {
+            if (entry.lore_id && typeof entry.lore_id === 'object' && entry.lore_id.$oid) {
+                entry.lore_id = entry.lore_id.$oid;
+            }
+            // Ensure defaults for lore entry structure
+            entry.key_facts = entry.key_facts || [];
+            entry.tags = entry.tags || [];
+            entry.linked_character_ids = entry.linked_character_ids || [];
+            entry.linked_lore_entry_ids = entry.linked_lore_entry_ids || [];
+            return entry;
+        });
+    },
+    getAllLoreEntries() { return this.allLoreEntries; },
+    getLoreEntryById(id) {
+        if (!id) return null;
+        return this.allLoreEntries.find(entry => String(entry.lore_id) === String(id));
+    },
+    updateLoreEntryInList(updatedEntry) {
+        const index = this.allLoreEntries.findIndex(e => String(e.lore_id) === String(updatedEntry.lore_id));
+        if (index > -1) {
+            this.allLoreEntries[index] = updatedEntry;
+        } else {
+            this.allLoreEntries.push(updatedEntry);
+        }
+    },
+    removeLoreEntryFromList(loreId) {
+        this.allLoreEntries = this.allLoreEntries.filter(entry => String(entry.lore_id) !== String(loreId));
+    },
+    setCurrentLoreEntryId(id) { this.currentLoreEntryId = id ? String(id) : null; },
+    getCurrentLoreEntryId() { return this.currentLoreEntryId; },
+    getCurrentLoreEntry() { return this.getLoreEntryById(this.currentLoreEntryId); }
 };

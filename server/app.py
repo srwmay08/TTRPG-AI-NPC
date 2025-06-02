@@ -7,22 +7,22 @@ from bson import ObjectId, json_util
 from pydantic import ValidationError
 import traceback 
 from werkzeug.utils import secure_filename
-from typing import Optional, List, Dict, Any, Union # Added Union
-from enum import Enum # If FactionStandingLevel is used directly here
+from typing import Optional, List, Dict, Any, Union 
+from enum import Enum 
+from datetime import datetime
 
 from config import config as app_config
 from database import db_connector
-from models import NPCProfile, DialogueRequest, DialogueResponse, MemoryItem, NPCProfileWithHistory, FactionStandingLevel
+from models import NPCProfile, DialogueRequest, DialogueResponse, MemoryItem, NPCProfileWithHistoryAndLore, FactionStandingLevel, LoreEntry, LoreEntryType
 from ai_service import ai_service_instance
 
 app = Flask(__name__)
 app.secret_key = app_config.FLASK_SECRET_KEY
 mongo_db = db_connector.get_db()
-HISTORY_DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'history') # More robust path
+HISTORY_DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'history') 
 PRIMARY_DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
 VTT_IMPORT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'vtt_imports')
 
-# Global for npc_profile_for_ai for potential use in parse_ai_suggestions error case
 npc_profile_for_ai: Optional[NPCProfile] = None
 
 
@@ -46,30 +46,27 @@ def find_fvtt_file(character_name, vtt_import_dir_abs):
 
 def load_history_content_for_npc(npc_doc: Dict[str, Any]) -> Dict[str, Any]:
     npc_doc.setdefault('pc_faction_standings', {})
+    npc_doc.setdefault('linked_lore_ids', []) # Ensure this exists
     history_contents_loaded = {}
     combined_content_parts = []
     
-    # Ensure HISTORY_DATA_DIR is correctly resolved if it's relative
     abs_history_data_dir = os.path.abspath(HISTORY_DATA_DIR)
-    # print(f"DEBUG: Absolute history data dir: {abs_history_data_dir}") # For debugging path issues
 
     if 'associated_history_files' in npc_doc and npc_doc['associated_history_files']:
         for history_filename in npc_doc['associated_history_files']:
-            if not history_filename or not isinstance(history_filename, str): # Skip if None or not a string
+            if not history_filename or not isinstance(history_filename, str): 
                 print(f"Warning: Invalid history filename found for NPC {npc_doc.get('name', 'Unknown')}: {history_filename}")
                 continue
 
             safe_history_filename = secure_filename(history_filename) 
             file_path = os.path.join(abs_history_data_dir, safe_history_filename)
-            # print(f"DEBUG: Attempting to load history file: {file_path} (Original: {history_filename})")
 
-            if os.path.exists(file_path) and os.path.isfile(file_path): # Added isfile check
+            if os.path.exists(file_path) and os.path.isfile(file_path): 
                 try:
                     with open(file_path, 'r', encoding='utf-8') as f:
                         content = f.read()
                         history_contents_loaded[history_filename] = content
-                        combined_content_parts.append(f"--- From: {history_filename} ---\n{content}\n")
-                        # print(f"DEBUG: Successfully loaded history file: {history_filename}")
+                        combined_content_parts.append(f"--- From History File: {history_filename} ---\n{content}\n")
                 except Exception as e:
                     print(f"Error reading history file {safe_history_filename} for NPC {npc_doc.get('name', 'Unknown')}: {e}")
                     history_contents_loaded[history_filename] = f"[Error loading content for {safe_history_filename}]"
@@ -78,8 +75,30 @@ def load_history_content_for_npc(npc_doc: Dict[str, Any]) -> Dict[str, Any]:
                 history_contents_loaded[history_filename] = "[File not found]"
     
     npc_doc['history_contents_loaded'] = history_contents_loaded
-    npc_doc['combined_history_content'] = "\n".join(combined_content_parts).strip() if combined_content_parts else "No history content loaded." # Provide clearer default
+    npc_doc['combined_history_content'] = "\n".join(combined_content_parts).strip() if combined_content_parts else "No history file content loaded."
     return npc_doc
+
+def get_linked_lore_summary_for_npc(npc_doc: Dict[str, Any]) -> str:
+    if mongo_db is None or 'linked_lore_ids' not in npc_doc or not npc_doc['linked_lore_ids']:
+        return "No specific linked lore."
+
+    lore_summaries = []
+    lore_collection = mongo_db.lore_entries
+    for lore_id_str in npc_doc['linked_lore_ids']:
+        try:
+            lore_id_obj = ObjectId(lore_id_str)
+            lore_entry_doc = lore_collection.find_one({"_id": lore_id_obj})
+            if lore_entry_doc:
+                summary = f"Regarding '{lore_entry_doc.get('name', 'Unnamed Lore')}': {lore_entry_doc.get('description', 'No description.')[:150]}..."
+                if lore_entry_doc.get('key_facts'):
+                    summary += " Key facts: " + "; ".join(lore_entry_doc['key_facts'][:2])
+                lore_summaries.append(summary)
+        except Exception as e:
+            print(f"Error fetching or summarizing lore_id {lore_id_str}: {e}")
+    
+    if not lore_summaries:
+        return "No specific linked lore found or summaries generated."
+    return "\n".join(lore_summaries)
 
 
 def sync_data_from_files():
@@ -112,6 +131,7 @@ def sync_data_from_files():
                     continue
                 
                 primary_char_data.setdefault('pc_faction_standings', {})
+                primary_char_data.setdefault('linked_lore_ids', []) # Ensure default
 
                 combined_data = primary_char_data.copy()
                 
@@ -139,12 +159,11 @@ def sync_data_from_files():
 
                 if existing_char_in_db:
                     update_payload = {k: v for k, v in mongo_doc.items() if k != '_id'}
-                    # Ensure pc_faction_standings from DB is preserved if not in the update payload from file,
-                    # but allow file to overwrite if it's present there.
-                    if 'pc_faction_standings' not in update_payload: # If file has no standings
+                    if 'pc_faction_standings' not in update_payload:
                         update_payload['pc_faction_standings'] = existing_char_in_db.get('pc_faction_standings', {})
-                    # else: use the standings from the file (already in update_payload via mongo_doc)
-                    
+                    if 'linked_lore_ids' not in update_payload: # Preserve existing links if file doesn't specify
+                        update_payload['linked_lore_ids'] = existing_char_in_db.get('linked_lore_ids', [])
+
                     characters_collection.update_one({"_id": existing_char_in_db['_id']}, {"$set": update_payload})
                     updated_count += 1 
                 else:
@@ -162,16 +181,18 @@ def sync_data_from_files():
     print("-" * 50 + "\n")
 
 @app.route('/')
-def serve_index(): # ... (same as before)
+def serve_index():
     return render_template('index.html')
 
+# --- Character (NPC/PC) Endpoints ---
 @app.route('/api/npcs', methods=['POST'])
-def create_npc_api(): # ... (same as before, pc_faction_standings default is good)
+def create_npc_api():
     if mongo_db is None: return jsonify({"error": "Database not available"}), 503
     try:
         data = request.get_json()
         if not data: return jsonify({"error": "Invalid JSON payload"}), 400
         data.setdefault('associated_history_files', [])
+        data.setdefault('linked_lore_ids', []) # Ensure this key exists
         data.setdefault('vtt_data', {})
         data.setdefault('vtt_flags', {})
         data.setdefault('items', [])
@@ -200,7 +221,7 @@ def create_npc_api(): # ... (same as before, pc_faction_standings default is goo
         return jsonify({"error": f"Could not create character: {str(e)}"}), 500
 
 @app.route('/api/npcs', methods=['GET'])
-def get_all_npcs_api(): # ... (same as before, pc_faction_standings default is good)
+def get_all_npcs_api():
     if mongo_db is None: return jsonify({"error": "Database not available"}), 503
     try:
         characters_cursor = mongo_db.npcs.find({})
@@ -208,6 +229,7 @@ def get_all_npcs_api(): # ... (same as before, pc_faction_standings default is g
         for char_doc in characters_cursor:
             char_doc['_id'] = str(char_doc['_id'])
             char_doc.setdefault('associated_history_files', [])
+            char_doc.setdefault('linked_lore_ids', []) # Ensure this key exists
             char_doc.setdefault('combined_history_content', '')
             char_doc.setdefault('vtt_data', {}) 
             char_doc.setdefault('vtt_flags', {})
@@ -223,7 +245,7 @@ def get_all_npcs_api(): # ... (same as before, pc_faction_standings default is g
         return jsonify({"error": f"Could not retrieve characters: {str(e)}"}), 500
 
 @app.route('/api/npcs/<npc_id_str>', methods=['GET'])
-def get_npc_api(npc_id_str: str): # ... (same as before, pc_faction_standings default is good)
+def get_npc_api(npc_id_str: str):
     if mongo_db is None: return jsonify({"error": "Database not available"}), 503
     try:
         npc_id_obj = ObjectId(npc_id_str)
@@ -234,8 +256,8 @@ def get_npc_api(npc_id_str: str): # ... (same as before, pc_faction_standings de
     if not npc_data:
         return jsonify({"error": "Character not found"}), 404
 
-    # Ensure all potentially missing fields (especially new ones) have defaults before sending
     npc_data.setdefault('associated_history_files', [])
+    npc_data.setdefault('linked_lore_ids', []) # Ensure this key exists
     npc_data.setdefault('vtt_data', {}) 
     npc_data.setdefault('vtt_flags', {})
     npc_data.setdefault('img', None)
@@ -244,11 +266,13 @@ def get_npc_api(npc_id_str: str): # ... (same as before, pc_faction_standings de
     npc_data.setdefault('pc_faction_standings', {}) 
     
     npc_data_with_history = load_history_content_for_npc(npc_data)
+    # Potentially load linked lore details here if needed for the profile view directly
+    # npc_data_with_history_and_lore = load_linked_lore_details(npc_data_with_history)
 
     return jsonify(parse_json(npc_data_with_history)), 200
 
 @app.route('/api/npcs/<npc_id_str>', methods=['PUT'])
-def update_npc_api(npc_id_str: str): # ... (same as before, ensure pc_faction_standings logic is robust)
+def update_npc_api(npc_id_str: str):
     if mongo_db is None: return jsonify({"error": "Database not available"}), 503
     try:
         npc_id_obj = ObjectId(npc_id_str)
@@ -261,35 +285,34 @@ def update_npc_api(npc_id_str: str): # ... (same as before, ensure pc_faction_st
         update_data_req = request.get_json()
         if not update_data_req: return jsonify({"error": "Invalid JSON payload"}), 400
 
-        # Start with existing data, then overlay request data for validation
         current_data_for_validation = {**existing_npc_data, **update_data_req}
-        # Remove _id before Pydantic validation if it's present from existing_npc_data
         current_data_for_validation.pop('_id', None) 
         
-        # Ensure defaults for potentially missing nested dicts if not in request or existing
         current_data_for_validation.setdefault('vtt_data', {})
         current_data_for_validation.setdefault('vtt_flags', {})
         current_data_for_validation.setdefault('items', [])
         current_data_for_validation.setdefault('system', {})
         current_data_for_validation.setdefault('pc_faction_standings', existing_npc_data.get('pc_faction_standings', {}))
+        current_data_for_validation.setdefault('linked_lore_ids', existing_npc_data.get('linked_lore_ids', []))
 
 
         if 'associated_history_files' in current_data_for_validation and \
            not isinstance(current_data_for_validation['associated_history_files'], list):
             current_data_for_validation['associated_history_files'] = [current_data_for_validation['associated_history_files']]
+        
+        if 'linked_lore_ids' in current_data_for_validation and \
+           not isinstance(current_data_for_validation['linked_lore_ids'], list):
+            current_data_for_validation['linked_lore_ids'] = [current_data_for_validation['linked_lore_ids']]
+
 
         validated_update_profile = NPCProfile(**current_data_for_validation)
         
-        # Use only fields from the request for the $set payload
-        # Pydantic dump of validated_update_profile would include defaults for fields not in request
         final_set_payload = {}
         for key, value in update_data_req.items():
-            if key in validated_update_profile.model_fields: # Check if key is part of our model
-                # For Enums like FactionStandingLevel, Pydantic stores them as Enum members.
-                # MongoDB needs the string value.
+            if key in validated_update_profile.model_fields:
                 if isinstance(getattr(validated_update_profile, key), Enum):
                      final_set_payload[key] = getattr(validated_update_profile, key).value
-                elif key == 'pc_faction_standings': # Special handling for dict of enums
+                elif key == 'pc_faction_standings': 
                     standings_dict = getattr(validated_update_profile, key)
                     final_set_payload[key] = {pc_id: standing.value for pc_id, standing in standings_dict.items()}
                 else:
@@ -322,8 +345,10 @@ def update_npc_api(npc_id_str: str): # ... (same as before, ensure pc_faction_st
         traceback.print_exc()
         return jsonify({"error": f"Could not update character: {str(e)}"}), 500
 
+# --- History File Endpoints ---
 @app.route('/api/history_files', methods=['GET'])
-def list_history_files_api(): # ... (same as before)
+def list_history_files_api():
+    # ... (same as before) ...
     abs_history_data_dir = os.path.abspath(HISTORY_DATA_DIR)
     if not os.path.isdir(abs_history_data_dir):
         print(f"Warning: History directory not found at {abs_history_data_dir}. Creating it.")
@@ -342,7 +367,8 @@ def list_history_files_api(): # ... (same as before)
         return jsonify({"error": f"Could not list history files: {str(e)}"}), 500
 
 @app.route('/api/character/<npc_id_str>/associate_history', methods=['POST'])
-def associate_history_file_with_npc_api(npc_id_str: str): # ... (same as before)
+def associate_history_file_with_npc_api(npc_id_str: str):
+    # ... (same as before) ...
     if mongo_db is None: return jsonify({"error": "Database not available"}), 503
     try:
         npc_id_obj = ObjectId(npc_id_str)
@@ -381,9 +407,9 @@ def associate_history_file_with_npc_api(npc_id_str: str): # ... (same as before)
         traceback.print_exc()
         return jsonify({"error": f"Could not associate history: {str(e)}"}), 500
 
-
 @app.route('/api/character/<npc_id_str>/dissociate_history', methods=['POST'])
-def dissociate_history_file_from_npc_api(npc_id_str: str): # ... (same as before)
+def dissociate_history_file_from_npc_api(npc_id_str: str):
+    # ... (same as before) ...
     if mongo_db is None: return jsonify({"error": "Database not available"}), 503
     try:
         npc_id_obj = ObjectId(npc_id_str)
@@ -419,8 +445,11 @@ def dissociate_history_file_from_npc_api(npc_id_str: str): # ... (same as before
         traceback.print_exc()
         return jsonify({"error": f"Could not dissociate history: {str(e)}"}), 500
 
+
+# --- Memory Endpoints ---
 @app.route('/api/npcs/<npc_id_str>/memory', methods=['POST'])
-def add_npc_memory_api(npc_id_str: str): # ... (same as before)
+def add_npc_memory_api(npc_id_str: str):
+    # ... (same as before) ...
     if mongo_db is None: return jsonify({"error": "Database not available"}), 503
     try: npc_id_obj = ObjectId(npc_id_str)
     except Exception: return jsonify({"error": "Invalid ID format"}), 400
@@ -441,8 +470,10 @@ def add_npc_memory_api(npc_id_str: str): # ... (same as before)
     else:
         return jsonify({"error": "Failed to retrieve updated NPC after adding memory"}), 500
 
+
 @app.route('/api/npcs/<npc_id_str>/memory/<memory_id_str_path>', methods=['DELETE'])
-def delete_npc_memory_api(npc_id_str: str, memory_id_str_path: str): # ... (same as before)
+def delete_npc_memory_api(npc_id_str: str, memory_id_str_path: str):
+    # ... (same as before) ...
     if mongo_db is None: return jsonify({"error": "Database not available"}), 503
     try: npc_id_obj = ObjectId(npc_id_str)
     except Exception: return jsonify({"error": "Invalid NPC ID"}), 400
@@ -458,15 +489,11 @@ def delete_npc_memory_api(npc_id_str: str, memory_id_str_path: str): # ... (same
         return jsonify({"error": "Failed to retrieve updated NPC after deleting memory"}), 500
 
 
+# --- Dialogue Generation ---
 def parse_ai_suggestions(full_ai_output: str, speaking_pc_id: Optional[str]) -> Dict[str, Any]:
-    npc_name_fallback = "NPC" # Consider passing the actual NPC name for better fallbacks
-    # global npc_profile_for_ai # Remove if npc_profile_for_ai is not reliably global here
-    # if 'npc_profile_for_ai' in globals() and npc_profile_for_ai:
-    #     npc_name_fallback = npc_profile_for_ai.name
-
-
+    npc_name_fallback = "NPC"
     dialogue_parts = []
-    suggestion_lines = [] # <<< INITIALIZE suggestion_lines HERE
+    suggestion_lines = []
     npc_action_str = "None"
     player_check_str = "None"
     new_standing_str = "No change" 
@@ -475,7 +502,6 @@ def parse_ai_suggestions(full_ai_output: str, speaking_pc_id: Optional[str]) -> 
     suggestion_pc_key_for_parsing = speaking_pc_id if speaking_pc_id and speaking_pc_id.strip() != "" else "PLAYER"
 
     lines = full_ai_output.splitlines()
-    
     end_dialogue_marker = "--- END OF DIALOGUE ---"
     dialogue_end_index = -1
     for i, line in enumerate(lines):
@@ -485,54 +511,37 @@ def parse_ai_suggestions(full_ai_output: str, speaking_pc_id: Optional[str]) -> 
     
     if dialogue_end_index != -1:
         dialogue_parts = lines[:dialogue_end_index]
-        suggestion_lines = lines[dialogue_end_index + 1:] # Assigned here
+        suggestion_lines = lines[dialogue_end_index + 1:]
     else: 
-        # suggestion_lines was not initialized if this path was taken
         temp_dialogue_parts = []
         keywords_found = False
         for line in lines:
             stripped_line = line.strip()
-            # Check for keywords indicating start of suggestions
             if any(stripped_line.startswith(kw) for kw in ["NPC_ACTION:", "PLAYER_CHECK:", f"STANDING_CHANGE_SUGGESTION_FOR_{suggestion_pc_key_for_parsing}:", "JUSTIFICATION:"]):
                 keywords_found = True
-            
-            if keywords_found:
-                suggestion_lines.append(line) # Assigned here if keywords_found
-            else:
-                temp_dialogue_parts.append(line)
+            if keywords_found: suggestion_lines.append(line)
+            else: temp_dialogue_parts.append(line)
         dialogue_parts = temp_dialogue_parts
-        # If keywords_found is still False here, suggestion_lines would remain empty (correctly)
 
-    # Now, suggestion_lines will always be defined (even if empty)
     for line in suggestion_lines: 
         stripped_line = line.strip()
-        if stripped_line.startswith("NPC_ACTION:"):
-            npc_action_str = stripped_line.replace("NPC_ACTION:", "").strip()
-        elif stripped_line.startswith("PLAYER_CHECK:"):
-            player_check_str = stripped_line.replace("PLAYER_CHECK:", "").strip()
+        if stripped_line.startswith("NPC_ACTION:"): npc_action_str = stripped_line.replace("NPC_ACTION:", "").strip()
+        elif stripped_line.startswith("PLAYER_CHECK:"): player_check_str = stripped_line.replace("PLAYER_CHECK:", "").strip()
         elif stripped_line.startswith(f"STANDING_CHANGE_SUGGESTION_FOR_{suggestion_pc_key_for_parsing}:"):
             raw_standing_val = stripped_line.replace(f"STANDING_CHANGE_SUGGESTION_FOR_{suggestion_pc_key_for_parsing}:", "").strip()
             new_standing_str = raw_standing_val.replace('[', '').replace(']', '').replace('"', '').replace("'", "").strip()
-        elif stripped_line.startswith("JUSTIFICATION:"):
-            justification_str = stripped_line.replace("JUSTIFICATION:", "").strip()
+        elif stripped_line.startswith("JUSTIFICATION:"): justification_str = stripped_line.replace("JUSTIFICATION:", "").strip()
     
     npc_dialogue_final = "\n".join(dialogue_parts).strip()
     if not npc_dialogue_final and (npc_action_str != "None" or player_check_str != "None" or new_standing_str != "No change"):
         npc_dialogue_final = f"({npc_name_fallback} considers the situation...)"
 
-
     parsed_new_standing_enum = None
     if new_standing_str and new_standing_str.lower() not in ["no change", "none", ""]:
         try:
-            matched_level = None
-            for level_enum_member in FactionStandingLevel:
-                if level_enum_member.value.lower() == new_standing_str.lower():
-                    matched_level = level_enum_member
-                    break
-            
-            if matched_level:
-                parsed_new_standing_enum = matched_level
-            else:
+            matched_level = next((level_enum for level_enum in FactionStandingLevel if level_enum.value.lower() == new_standing_str.lower()), None)
+            if matched_level: parsed_new_standing_enum = matched_level
+            else: 
                 print(f"Warning: AI suggested an unrecognized standing level: '{new_standing_str}' for PC '{suggestion_pc_key_for_parsing}'")
                 justification_str += f" (AI suggested unrecognized standing: {new_standing_str})"
         except Exception as e_standing:
@@ -550,7 +559,7 @@ def parse_ai_suggestions(full_ai_output: str, speaking_pc_id: Optional[str]) -> 
 
 @app.route('/api/npcs/<npc_id_str>/dialogue', methods=['POST'])
 def generate_dialogue_for_npc_api(npc_id_str: str):
-    # ... (existing setup, NPC fetching, validation) ...
+    global npc_profile_for_ai # Use the global variable
     if mongo_db is None: return jsonify({"error": "Database not available"}), 503
     if ai_service_instance is None or ai_service_instance.model is None:
         return jsonify({"error": "AI Service not available"}), 503
@@ -565,9 +574,8 @@ def generate_dialogue_for_npc_api(npc_id_str: str):
 
     npc_data_with_history = load_history_content_for_npc(npc_data_from_db)
     
-    global npc_profile_for_ai 
     try:
-        npc_profile_for_ai = NPCProfile(**parse_json(npc_data_with_history))
+        npc_profile_for_ai = NPCProfile(**parse_json(npc_data_with_history)) # Assign to global
     except ValidationError as e:
         print(f"Pydantic validation error for NPC {npc_id_str} before AI call: {e.errors()}")
         return jsonify({"error": "NPC data from DB is invalid", "details": e.errors()}), 500
@@ -579,34 +587,25 @@ def generate_dialogue_for_npc_api(npc_id_str: str):
         return jsonify({"error": "Dialogue request invalid", "details": e.errors()}), 400
 
     detailed_history_for_ai = npc_data_with_history.get('combined_history_content', '')
+    linked_lore_summary_for_ai = get_linked_lore_summary_for_npc(npc_data_with_history) # Fetch linked lore
     
     current_pc_standing_val = None
     speaking_pc_name_for_ai = "the player" 
-    
     actual_speaking_pc_id = dialogue_req_data.speaking_pc_id if dialogue_req_data.speaking_pc_id and dialogue_req_data.speaking_pc_id.strip() != "" else None
 
     if actual_speaking_pc_id:
         current_pc_standing_val = npc_profile_for_ai.pc_faction_standings.get(actual_speaking_pc_id)
         try:
-            pc_object_id_val = ObjectId(actual_speaking_pc_id) # Validate if it's an ObjectId
+            pc_object_id_val = ObjectId(actual_speaking_pc_id)
             pc_object_found = mongo_db.npcs.find_one({"_id": pc_object_id_val, "character_type": "PC"})
-            if pc_object_found:
-                speaking_pc_name_for_ai = pc_object_found.get("name", actual_speaking_pc_id)
-            else: 
-                # If ID is valid ObjectId but not found as PC, use ID as name.
-                # Or it might be a name passed if UI allows selecting by name directly.
-                # For now, assume ID is mostly used.
-                speaking_pc_name_for_ai = actual_speaking_pc_id 
-        except Exception: # Not a valid ObjectId, assume it might be a name or placeholder
+            if pc_object_found: speaking_pc_name_for_ai = pc_object_found.get("name", actual_speaking_pc_id)
+            else: speaking_pc_name_for_ai = actual_speaking_pc_id 
+        except Exception: 
             speaking_pc_name_for_ai = actual_speaking_pc_id
-            # Attempt to find PC by name if an ID wasn't successfully used
             pc_by_name = mongo_db.npcs.find_one({"name": actual_speaking_pc_id, "character_type": "PC"})
-            if pc_by_name: # If found by name, use its ID for standing lookup
-                current_pc_standing_val = npc_profile_for_ai.pc_faction_standings.get(str(pc_by_name['_id']))
+            if pc_by_name: current_pc_standing_val = npc_profile_for_ai.pc_faction_standings.get(str(pc_by_name['_id']))
     else: 
         speaking_pc_name_for_ai = "DM/Scene Event"
-
-    print(f"DEBUG: Generating dialogue for {npc_profile_for_ai.name} towards {speaking_pc_name_for_ai} (ID: {actual_speaking_pc_id}) with standing {current_pc_standing_val.value if current_pc_standing_val else 'None'}")
 
     try:
         full_ai_output_str = ai_service_instance.generate_npc_dialogue(
@@ -614,15 +613,14 @@ def generate_dialogue_for_npc_api(npc_id_str: str):
             dialogue_request=dialogue_req_data,
             current_pc_standing=current_pc_standing_val, 
             speaking_pc_name=speaking_pc_name_for_ai,
-            world_lore_summary=None,
+            world_lore_summary=linked_lore_summary_for_ai, # Pass the lore summary
             detailed_character_history=detailed_history_for_ai
         )
     except Exception as e:
         print(f"Error calling AI service for {npc_profile_for_ai.name}: {e}")
         traceback.print_exc()
         return jsonify({
-            "npc_id": npc_id_str,
-            "npc_dialogue": f"Error: AI service failed - {type(e).__name__}",
+            "npc_id": npc_id_str, "npc_dialogue": f"Error: AI service failed - {type(e).__name__}",
             "new_memory_suggestions": [], "generated_topics": [],
             "suggested_npc_actions": ["AI Service Error"], "suggested_player_checks": [],
             "suggested_standing_pc_id": None, "suggested_new_standing": None, "standing_change_justification": None
@@ -642,10 +640,8 @@ def generate_dialogue_for_npc_api(npc_id_str: str):
         memory_suggestions.append(summarized_memory)
 
     response_data_model = DialogueResponse(
-        npc_id=npc_id_str,
-        npc_dialogue=generated_text,
-        new_memory_suggestions=memory_suggestions,
-        generated_topics=[], 
+        npc_id=npc_id_str, npc_dialogue=generated_text,
+        new_memory_suggestions=memory_suggestions, generated_topics=[], 
         suggested_npc_actions=parsed_suggestions["npc_action"],
         suggested_player_checks=parsed_suggestions["player_check"],
         suggested_standing_pc_id=actual_speaking_pc_id if parsed_suggestions["new_standing"] else None,
@@ -653,6 +649,199 @@ def generate_dialogue_for_npc_api(npc_id_str: str):
         standing_change_justification=parsed_suggestions["justification"]
     )
     return jsonify(response_data_model.model_dump(mode='json')), 200
+
+
+# --- Lore Entry Endpoints ---
+@app.route('/api/lore_entries', methods=['POST'])
+def create_lore_entry_api():
+    if mongo_db is None: return jsonify({"error": "Database not available"}), 503
+    try:
+        data = request.get_json()
+        if not data: return jsonify({"error": "Invalid JSON payload"}), 400
+        
+        # Set default for lore_type if not provided, using the Enum's default or a specific one
+        data.setdefault('lore_type', LoreEntryType.MISC.value)
+        
+        lore_entry_data = LoreEntry(**data)
+        lore_entry_data.updated_at = datetime.utcnow() # Ensure updated_at is set
+    except ValidationError as e:
+        return jsonify({"error": "Validation Error for LoreEntry", "details": e.errors()}), 400
+
+    try:
+        lore_collection = mongo_db.lore_entries
+        lore_dict = lore_entry_data.model_dump(mode='json', by_alias=True, exclude_none=True)
+        result = lore_collection.insert_one(lore_dict)
+        created_lore_entry = lore_collection.find_one({"_id": result.inserted_id})
+        return jsonify({"message": "Lore entry created", "lore_entry": parse_json(created_lore_entry)}), 201
+    except Exception as e:
+        print(f"Error in create_lore_entry_api: {e}")
+        traceback.print_exc()
+        return jsonify({"error": f"Could not create lore entry: {str(e)}"}), 500
+
+@app.route('/api/lore_entries', methods=['GET'])
+def get_all_lore_entries_api():
+    if mongo_db is None: return jsonify({"error": "Database not available"}), 503
+    try:
+        lore_cursor = mongo_db.lore_entries.find({})
+        lore_list = [parse_json(entry) for entry in lore_cursor]
+        return jsonify(lore_list), 200
+    except Exception as e:
+        return jsonify({"error": f"Could not retrieve lore entries: {str(e)}"}), 500
+
+@app.route('/api/lore_entries/<lore_id_str>', methods=['GET'])
+def get_lore_entry_api(lore_id_str: str):
+    if mongo_db is None: return jsonify({"error": "Database not available"}), 503
+    try:
+        lore_id_obj = ObjectId(lore_id_str)
+    except Exception:
+        return jsonify({"error": "Invalid Lore ID format"}), 400
+    lore_entry = mongo_db.lore_entries.find_one({"_id": lore_id_obj})
+    if not lore_entry:
+        return jsonify({"error": "Lore entry not found"}), 404
+    return jsonify(parse_json(lore_entry)), 200
+
+@app.route('/api/lore_entries/<lore_id_str>', methods=['PUT'])
+def update_lore_entry_api(lore_id_str: str):
+    if mongo_db is None: return jsonify({"error": "Database not available"}), 503
+    try:
+        lore_id_obj = ObjectId(lore_id_str)
+    except Exception: return jsonify({"error": "Invalid Lore ID format"}), 400
+
+    existing_lore_data = mongo_db.lore_entries.find_one({"_id": lore_id_obj})
+    if not existing_lore_data: return jsonify({"error": "Lore entry not found for update"}), 404
+    
+    try:
+        update_data = request.get_json()
+        if not update_data: return jsonify({"error": "Invalid JSON payload"}), 400
+
+        # Prepare for validation: Use existing data as base, overlay with updates
+        data_for_validation = {**existing_lore_data, **update_data}
+        data_for_validation.pop('_id', None) # Pydantic shouldn't see DB's _id
+        data_for_validation['lore_id'] = lore_id_str # Ensure lore_id is present for validation
+        
+        # Ensure `lore_type` if present in update_data is a valid Enum member string
+        if 'lore_type' in update_data:
+            try: # Validate lore_type against Enum values if it's being updated
+                LoreEntryType(update_data['lore_type'])
+            except ValueError:
+                return jsonify({"error": f"Invalid lore_type '{update_data['lore_type']}'. Valid types are: {[e.value for e in LoreEntryType]}"}), 400
+
+        validated_lore = LoreEntry(**data_for_validation)
+        validated_lore.updated_at = datetime.utcnow() # Update timestamp
+
+        # Prepare $set payload only with fields that were in the request or are defaults from model
+        # This avoids resetting fields not included in the PUT request to their Pydantic defaults.
+        final_set_payload = validated_lore.model_dump(by_alias=True, exclude_unset=True) 
+        # `exclude_unset=True` is crucial here if Pydantic v2, or manually construct based on `update_data` keys
+
+        # If Pydantic v1 behavior is preferred (where all fields of model are dumped even if not in request):
+        # final_set_payload = validated_lore.model_dump(mode='json', by_alias=True, exclude_none=True)
+        # But then we should ensure we only update fields that were actually sent or are intended to be defaulted
+        # For safety, constructing based on request keys is better for partial updates:
+        
+        payload_for_mongo = {}
+        for key, value in update_data.items():
+            if key in validated_lore.model_fields_set: # Check if the field was actually provided or is a default
+                 payload_for_mongo[key] = getattr(validated_lore, key)
+                 if isinstance(payload_for_mongo[key], Enum): # Convert enums to values for DB
+                     payload_for_mongo[key] = payload_for_mongo[key].value
+        
+        payload_for_mongo['updated_at'] = validated_lore.updated_at
+
+
+    except ValidationError as e:
+        return jsonify({"error": "Validation Error for LoreEntry update", "details": e.errors()}), 400
+
+    if not payload_for_mongo:
+        return jsonify({"message": "No changes provided for lore entry."}), 200
+
+    try:
+        mongo_db.lore_entries.update_one({"_id": lore_id_obj}, {"$set": payload_for_mongo})
+        updated_lore_entry = mongo_db.lore_entries.find_one({"_id": lore_id_obj})
+        return jsonify({"message": "Lore entry updated", "lore_entry": parse_json(updated_lore_entry)}), 200
+    except Exception as e:
+        return jsonify({"error": f"Could not update lore entry: {str(e)}"}), 500
+
+
+@app.route('/api/lore_entries/<lore_id_str>', methods=['DELETE'])
+def delete_lore_entry_api(lore_id_str: str):
+    if mongo_db is None: return jsonify({"error": "Database not available"}), 503
+    try:
+        lore_id_obj = ObjectId(lore_id_str)
+    except Exception: return jsonify({"error": "Invalid Lore ID format"}), 400
+    
+    result = mongo_db.lore_entries.delete_one({"_id": lore_id_obj})
+    if result.deleted_count == 0:
+        return jsonify({"error": "Lore entry not found"}), 404
+    
+    # Also remove this lore_id from any characters' linked_lore_ids
+    mongo_db.npcs.update_many(
+        {"linked_lore_ids": lore_id_str},
+        {"$pull": {"linked_lore_ids": lore_id_str}}
+    )
+    # And from other lore entries' linked_lore_entry_ids
+    mongo_db.lore_entries.update_many(
+        {"linked_lore_entry_ids": lore_id_str},
+        {"$pull": {"linked_lore_entry_ids": lore_id_str}}
+    )
+
+    return jsonify({"message": "Lore entry deleted and unlinked"}), 200
+
+# --- Linking Endpoints ---
+@app.route('/api/characters/<char_id_str>/link_lore/<lore_id_str>', methods=['POST'])
+def link_lore_to_character_api(char_id_str: str, lore_id_str: str):
+    if mongo_db is None: return jsonify({"error": "Database not available"}), 503
+    try:
+        char_id_obj = ObjectId(char_id_str)
+        lore_id_obj = ObjectId(lore_id_str) # Ensure lore_id is also valid
+    except Exception:
+        return jsonify({"error": "Invalid ID format for character or lore entry"}), 400
+
+    # Check if character and lore entry exist
+    char_exists = mongo_db.npcs.count_documents({"_id": char_id_obj}) > 0
+    lore_exists = mongo_db.lore_entries.count_documents({"_id": lore_id_obj}) > 0
+    if not char_exists: return jsonify({"error": "Character not found"}), 404
+    if not lore_exists: return jsonify({"error": "Lore entry not found"}), 404
+
+    # Add to character's linked_lore_ids
+    mongo_db.npcs.update_one(
+        {"_id": char_id_obj},
+        {"$addToSet": {"linked_lore_ids": lore_id_str}}
+    )
+    # Add to lore entry's linked_character_ids
+    mongo_db.lore_entries.update_one(
+        {"_id": lore_id_obj},
+        {"$addToSet": {"linked_character_ids": char_id_str}}
+    )
+    updated_char = mongo_db.npcs.find_one({"_id": char_id_obj})
+    return jsonify({"message": "Lore linked to character", "character": parse_json(updated_char)}), 200
+
+@app.route('/api/characters/<char_id_str>/unlink_lore/<lore_id_str>', methods=['POST'])
+def unlink_lore_from_character_api(char_id_str: str, lore_id_str: str):
+    if mongo_db is None: return jsonify({"error": "Database not available"}), 503
+    try:
+        char_id_obj = ObjectId(char_id_str)
+        # lore_id_str is already a string, no need to convert if it's for $pull
+    except Exception:
+        return jsonify({"error": "Invalid Character ID format"}), 400
+
+    # Remove from character's linked_lore_ids
+    mongo_db.npcs.update_one(
+        {"_id": char_id_obj},
+        {"$pull": {"linked_lore_ids": lore_id_str}}
+    )
+    # Remove from lore entry's linked_character_ids
+    try: # It's possible lore_id_str is not a valid ObjectId if it was already unlinked or malformed
+        lore_id_obj_for_pull = ObjectId(lore_id_str)
+        mongo_db.lore_entries.update_one(
+            {"_id": lore_id_obj_for_pull},
+            {"$pull": {"linked_character_ids": char_id_str}}
+        )
+    except Exception:
+        print(f"Note: Could not convert lore_id '{lore_id_str}' to ObjectId for unlinking from lore entry, it might have been an invalid or already removed ID.")
+
+    updated_char = mongo_db.npcs.find_one({"_id": char_id_obj})
+    return jsonify({"message": "Lore unlinked from character", "character": parse_json(updated_char)}), 200
 
 
 if __name__ == '__main__':

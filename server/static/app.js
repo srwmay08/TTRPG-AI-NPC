@@ -3,13 +3,15 @@
 document.addEventListener('DOMContentLoaded', async () => {
     console.log("app.js: DOMContentLoaded event fired.");
     try {
-        await window.initializeAppCharacters(); // This itself calls updateMainView
-        await window.fetchAndRenderHistoryFiles();
+        await window.initializeAppCharacters(); 
+        // fetchAndRenderHistoryFiles and populateLoreTypeDropdownUI are called within initializeAppCharacters
+        
         window.setupResizer();
-        window.setupCollapsibleSections();
+        window.setupCollapsibleSections(); // This needs to be aware of tabs now
         window.assignButtonEventHandlers();
-        // Initial call after everything else in DOMContentLoaded
-        setTimeout(window.updateMainView, 0); // <-- DEFER THIS CALL
+        window.setupTabControls(); // New function to handle tab switching
+        
+        setTimeout(window.updateMainView, 0); 
     } catch (e) {
         console.error("Error during initial app setup:", e);
         const body = document.querySelector('body');
@@ -17,6 +19,43 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     console.log("app.js: DOMContentLoaded finished.");
 });
+
+window.setupTabControls = function() {
+    const tabLinks = document.querySelectorAll('.tabs .tab-link');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    // Function to open a tab
+    window.openTab = function(event, tabName) {
+        tabContents.forEach(tab => tab.classList.remove('active-tab'));
+        tabLinks.forEach(link => link.classList.remove('active'));
+
+        document.getElementById(tabName).classList.add('active-tab');
+        event.currentTarget.classList.add('active');
+
+        // Special handling for character profile tab to ensure its content is visible
+        if (tabName === 'tab-character-profile') {
+            const charProfileMainSection = document.getElementById('character-profile-main-section');
+            // If we want the main profile section to always appear expanded when tab is clicked:
+            // if (charProfileMainSection && charProfileMainSection.classList.contains('collapsed')) {
+            //     charProfileMainSection.querySelector('h3').click(); // Simulate click to expand
+            // }
+        }
+         // When switching tabs, if no character is selected for profile, ensure it shows "None"
+        if (tabName === 'tab-character-profile' && !appState.getCurrentProfileCharId()) {
+            window.renderCharacterProfileUI(null, window.profileElementIds);
+        }
+        // If switching to lore tab and no lore entry is selected for detail view, ensure it's hidden
+        if (tabName === 'tab-lore-management' && !appState.getCurrentLoreEntryId()) {
+            window.closeLoreDetailViewUI();
+        }
+    }
+
+    // Set the first tab as active by default
+    if (tabLinks.length > 0 && tabContents.length > 0) {
+        tabLinks[0].classList.add('active');
+        tabContents[0].classList.add('active-tab');
+    }
+};
 
 
 window.updateMainView = function() {
@@ -26,31 +65,26 @@ window.updateMainView = function() {
     const pcDashboardViewElem = window.getElem('pc-dashboard-view');
     const pcQuickViewInSceneElem = window.getElem('pc-quick-view-section-in-scene');
 
-    // This check is crucial. If these elements aren't found, the UI can't be updated.
     if (!dialogueInterfaceElem || !pcDashboardViewElem || !pcQuickViewInSceneElem) {
         console.error("app.js/updateMainView: Critical UI container element(s) missing from DOM! Cannot update main view. Check HTML IDs.");
         if (!dialogueInterfaceElem) console.error("Missing: dialogue-interface element.");
         if (!pcDashboardViewElem) console.error("Missing: pc-dashboard-view element.");
         if (!pcQuickViewInSceneElem) console.error("Missing: pc-quick-view-section-in-scene element.");
-        return; // Stop if main containers don't exist
+        return; 
     }
 
-    const activeNpcCount = appState.getActiveNpcCount(); // Assumes appState is global
+    const activeNpcCount = appState.getActiveNpcCount(); 
     const showPcDashboard = appState.getActivePcCount() > 0;
 
-    // Call the UI rendering function (expected to be in uiRenderers.js and on window)
     if (typeof window.updateMainViewUI === 'function') {
         window.updateMainViewUI(dialogueInterfaceElem, pcDashboardViewElem, pcQuickViewInSceneElem, activeNpcCount, showPcDashboard);
     } else {
         console.error("app.js/updateMainView: FATAL ERROR - window.updateMainViewUI is not defined or not a function!");
-        // Display an error to the user on the page itself
         const body = document.querySelector('body');
         if (body) body.innerHTML = "<h1>Critical JavaScript Error: UI Rendering Function Missing. Check console.</h1>";
-        return; // Cannot proceed
+        return; 
     }
 
-
-    // Handle PC Quick View in Scene specifically
     if (activeNpcCount > 0 && appState.getActivePcCount() > 0) {
         const activePcsData = appState.getAllCharacters().filter(char => appState.hasActivePc(String(char._id)));
         if (typeof window.renderPcQuickViewInSceneUI === 'function') {
@@ -59,24 +93,17 @@ window.updateMainView = function() {
             console.error("app.js/updateMainView: window.renderPcQuickViewInSceneUI is not defined!");
         }
     } else {
-        // If no NPCs or no PCs, ensure the quick view is cleared and hidden
         pcQuickViewInSceneElem.style.display = 'none';
         pcQuickViewInSceneElem.innerHTML = '';
     }
     
-    // Disable/Enable the "Generate Dialogue" button
     const generateDialogueButton = window.getElem('generate-dialogue-btn');
     if (generateDialogueButton) {
         window.disableBtn('generate-dialogue-btn', activeNpcCount === 0);
-    } else {
-        // This might log if the dialogue interface is hidden initially, which can be normal.
-        // console.warn("app.js/updateMainView: 'generate-dialogue-btn' not found. This may be okay if dialogue interface is not visible.");
-    }
+    } 
     console.log("app.js: window.updateMainView finished.");
 };
 
-// ... (rest of your app.js code, ensuring other functions like handleToggleNpcInScene, handleTogglePcSelection, etc.
-//      are also defined on window if they are called from UI renderers or HTML onclicks)
 
 window.handleToggleNpcInScene = async function(npcIdStr, npcName) {
     const multiNpcContainer = window.getElem('multi-npc-dialogue-container');
@@ -117,7 +144,7 @@ window.handleToggleNpcInScene = async function(npcIdStr, npcName) {
 
                 const transcriptArea = window.getElem(`transcript-${existingNpcId}`);
                 if (transcriptArea) {
-                     window.appendMessageToTranscriptUI(transcriptArea, arrivalMessageForOthers, 'scene-event');
+                     window.appendMessageToTranscriptUI(transcriptArea, arrivalMessageForOthers, 'scene-event'); 
                      appState.addDialogueToHistory(existingNpcId, arrivalMessageForOthers);
                 }
                 const sceneContext = window.getElem('scene-context').value.trim();
@@ -142,7 +169,7 @@ window.handleToggleNpcInScene = async function(npcIdStr, npcName) {
         }
     } else {
         appState.removeActiveNpc(npcIdStr);
-        window.removeNpcDialogueAreaUI(npcIdStr, multiNpcContainer);
+        window.removeNpcDialogueAreaUI(npcIdStr, multiNpcContainer); 
         appState.deleteDialogueHistory(npcIdStr);
     }
 
@@ -153,8 +180,8 @@ window.handleToggleNpcInScene = async function(npcIdStr, npcName) {
         multiNpcContainer.innerHTML = '<p class="scene-event">Select NPCs to add them to the scene.</p>';
     }
 
-    window.adjustNpcDialogueAreaWidthsUI(multiNpcContainer);
-    window.renderNpcListForSceneUI(window.getElem('character-list'), appState.getAllCharacters(), appState.activeSceneNpcIds, window.handleToggleNpcInScene, window.handleSelectCharacterForDetails);
+    window.adjustNpcDialogueAreaWidthsUI(multiNpcContainer); 
+    window.renderNpcListForSceneUI(window.getElem('character-list'), appState.getAllCharacters(), appState.activeSceneNpcIds, window.handleToggleNpcInScene, window.handleSelectCharacterForDetails); 
     window.updateMainView();
 };
 
@@ -166,7 +193,7 @@ window.triggerNpcInteraction = async function(npcIdStr, npcName, payload, isGree
     }
     let thinkingMessageElement = thinkingMessageId ? window.getElem(thinkingMessageId) : null;
 
-    if (!thinkingMessageElement && isGreeting) {
+    if (!thinkingMessageElement && isGreeting) { 
         const sceneEventP = document.createElement('p');
         sceneEventP.className = 'scene-event';
         sceneEventP.textContent = `${npcName} is formulating a response...`;
@@ -176,12 +203,12 @@ window.triggerNpcInteraction = async function(npcIdStr, npcName, payload, isGree
     }
 
     try {
-        const result = await window.generateNpcDialogue(npcIdStr, payload); // from apiService
+        const result = await window.generateNpcDialogue(npcIdStr, payload); 
         if(thinkingMessageElement && thinkingMessageElement.parentNode) thinkingMessageElement.remove();
 
         window.appendMessageToTranscriptUI(transcriptArea, `${npcName}: ${result.npc_dialogue}`, 'dialogue-entry npc-response');
         appState.addDialogueToHistory(npcIdStr, `${npcName}: ${result.npc_dialogue}`);
-        window.renderAiSuggestionsContent(result, npcIdStr); // from uiRenderers (ensure this is defined on window)
+        window.renderAiSuggestionsContent(result, npcIdStr); 
     } catch (error) {
         console.error(`Error generating dialogue for ${npcName}:`, error);
         if(thinkingMessageElement && thinkingMessageElement.parentNode) thinkingMessageElement.remove();
@@ -197,7 +224,7 @@ window.handleGenerateDialogue = async function() {
     const speakingPcSelect = window.getElem('speaking-pc-select');
     const speakingPcId = speakingPcSelect ? speakingPcSelect.value : null;
 
-    if (!playerUtterance && !sceneContext.trim() && playerUtterance !== "") {
+    if (!playerUtterance && !sceneContext.trim() && playerUtterance !== "") { 
         alert("Please enter player dialogue or ensure scene context is descriptive.");
         return;
     }
@@ -208,19 +235,19 @@ window.handleGenerateDialogue = async function() {
     if (speakingPcId && speakingPcId !== "") {
         const pc = appState.getCharacterById(speakingPcId);
         if (pc) speakerDisplayName = pc.name;
-        else speakerDisplayName = speakingPcId; // Fallback if ID not found in characters (e.g. old ID)
+        else speakerDisplayName = speakingPcId; 
     } else if (speakingPcId === "") {
         speakerDisplayName = "DM/Scene Event";
     }
 
     appState.getActiveNpcIds().forEach(npcId => {
         const transcriptArea = window.getElem(`transcript-${npcId}`);
-        if (transcriptArea && playerUtterance) {
+        if (transcriptArea && playerUtterance) { 
             window.appendMessageToTranscriptUI(transcriptArea, `${speakerDisplayName}: ${playerUtterance}`, 'dialogue-entry player-utterance');
             appState.addDialogueToHistory(npcId, `${speakerDisplayName}: ${playerUtterance}`);
         }
         const npc = appState.getCharacterById(npcId);
-        if (transcriptArea && npc) {
+        if (transcriptArea && npc) { 
             const thinkingEntry = document.createElement('p');
             thinkingEntry.className = 'scene-event';
             thinkingEntry.id = `thinking-${npcId}-main`;
@@ -246,9 +273,10 @@ window.handleGenerateDialogue = async function() {
 
     await Promise.all(dialoguePromises);
 
-    if (playerUtterance) window.getElem('player-utterance').value = '';
+    if (playerUtterance) window.getElem('player-utterance').value = ''; 
     window.disableBtn('generate-dialogue-btn', false);
 };
+
 
 window.handleTogglePcSelection = function(pcIdStr) {
     appState.toggleActivePc(pcIdStr);
@@ -265,12 +293,13 @@ window.handleBackToDashboardOverview = function() {
     const dashboardContent = window.getElem('pc-dashboard-content');
     if (dashboardContent) {
         const detailedSheet = dashboardContent.querySelector('.detailed-pc-sheet');
-        if (detailedSheet) detailedSheet.remove();
+        if (detailedSheet) detailedSheet.remove(); 
     }
     appState.setExpandedAbility(null);
     appState.setExpandedSkill(null);
     appState.setSkillSortKey(null);
-    window.updateMainView();
+    
+    window.updateMainView(); 
 };
 
 window.toggleAbilityExpansion = function(ablKey) {
@@ -279,22 +308,22 @@ window.toggleAbilityExpansion = function(ablKey) {
         appState.setExpandedAbility(null);
     } else {
         appState.setExpandedAbility(ablKey);
-        appState.setExpandedSkill(null); // Collapse skills when expanding abilities
+        appState.setExpandedSkill(null); 
     }
-    window.updateMainView();
+    window.updatePcDashboardUI(window.getElem('pc-dashboard-content'), appState.getAllCharacters(), appState.activePcIds, appState.getExpandedAbility(), appState.getExpandedSkill(), appState.getSkillSortKey());
 };
 
 window.toggleSkillExpansion = function(skillKey) {
     const currentSkill = appState.getExpandedSkill();
     if (currentSkill === skillKey) {
         appState.setExpandedSkill(null);
-        appState.setSkillSortKey(null);
+        appState.setSkillSortKey(null); 
     } else {
         appState.setExpandedSkill(skillKey);
-        appState.setSkillSortKey(skillKey);
-        appState.setExpandedAbility(null); // Collapse abilities when expanding skills
+        appState.setSkillSortKey(skillKey); 
+        appState.setExpandedAbility(null); 
     }
-    window.updateMainView();
+    window.updatePcDashboardUI(window.getElem('pc-dashboard-content'), appState.getAllCharacters(), appState.activePcIds, appState.getExpandedAbility(), appState.getExpandedSkill(), appState.getSkillSortKey());
 };
 
 window.addSuggestedMemoryAsActual = async function(npcId, memoryContent) {

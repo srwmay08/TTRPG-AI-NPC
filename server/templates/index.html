@@ -9,89 +9,144 @@
 <body>
 
     <div id="left-column" class="column">
+        <div id="left-column-header">
+            <h2>GM Controls</h2>
+            <div class="tabs">
+                <button class="tab-link active" onclick="openTab(event, 'tab-characters-scene')">Characters & Scene</button>
+                <button class="tab-link" onclick="openTab(event, 'tab-character-profile')">Character Profile</button>
+                <button class="tab-link" onclick="openTab(event, 'tab-lore-management')">Lore Management</button>
+            </div>
+        </div>
+
         <div id="left-column-content">
-            <h2>Characters & Details</h2>
-            
-            <div id="pc-list-section" class="collapsible-section">
-                <h3>Player Characters</h3>
-                <div class="collapsible-content character-list">
-                    <div id="active-pc-list"><p><em>Loading PCs...</em></p></div>
+            <div id="tab-characters-scene" class="tab-content active-tab">
+                <div id="pc-list-section" class="collapsible-section">
+                    <h3>Player Characters</h3>
+                    <div class="collapsible-content character-list">
+                        <div id="active-pc-list"><p><em>Loading PCs...</em></p></div>
+                    </div>
                 </div>
-            </div>
-            <div id="npc-list-section" class="collapsible-section">
-                <h3>NPCs in Scene</h3>
-                <div class="collapsible-content character-list">
-                    <div id="character-list"><ul><li><em>Loading NPCs...</em></li></ul></div>
+                <div id="npc-list-section" class="collapsible-section">
+                    <h3>NPCs in Scene</h3>
+                    <div class="collapsible-content character-list">
+                        <div id="character-list"><ul><li><em>Loading NPCs...</em></li></ul></div>
+                    </div>
                 </div>
             </div>
 
-            <div id="character-profile-main-section" class="collapsible-section">
+            <div id="tab-character-profile" class="tab-content">
                 <h3>Profile: <span id="details-char-name">None</span></h3>
-                <div class="collapsible-content">
-                    <div id="char-profile-display">
-                        <p><strong>Type:</strong> <span id="profile-char-type"></span></p>
-                        <p><strong>Description:</strong> <span id="profile-description"></span></p>
-                        <p><strong>Personality:</strong> <span id="profile-personality"></span></p>
-                    </div>
+                <div id="char-profile-display">
+                    <p><strong>Type:</strong> <span id="profile-char-type"></span></p>
+                    <p><strong>Description:</strong> <span id="profile-description"></span></p>
+                    <p><strong>Personality:</strong> <span id="profile-personality"></span></p>
+                </div>
 
-                    <div id="npc-faction-standings-section" class="collapsible-section">
-                        <h4>NPC Standings Towards PCs</h4>
-                        <div class="collapsible-content" id="npc-faction-standings-content">
-                            {/* Content will be populated by script.js */}
-                        </div>
+                <div id="npc-faction-standings-section" class="collapsible-section collapsed">
+                    <h4>NPC Standings Towards PCs</h4>
+                    <div class="collapsible-content" id="npc-faction-standings-content">
+                        <p><em>Select an NPC to view/edit standings.</em></p>
                     </div>
-                    
-                    <div id="gm-notes-collapsible-section" class="collapsible-section">
-                        <h3>GM Notes</h3>
-                        <div class="collapsible-content">
-                            <textarea id="gm-notes" rows="3" placeholder="Private notes for this character..."></textarea>
-                            <button onclick="saveGMNotes()" id="save-gm-notes-btn" disabled>Save Notes</button>
-                        </div>
+                </div>
+                
+                <div id="gm-notes-collapsible-section" class="collapsible-section collapsed">
+                    <h3>GM Notes</h3>
+                    <div class="collapsible-content">
+                        <textarea id="gm-notes" rows="3" placeholder="Private notes for this character..."></textarea>
+                        <button onclick="window.handleSaveGmNotes()" id="save-gm-notes-btn" disabled>Save Notes</button>
                     </div>
-                    <div id="npc-memories-collapsible-section" class="collapsible-section">
-                        <h3>NPC Memories</h3>
-                        <div class="collapsible-content" id="npc-specific-details-content">
-                            <div id="add-memory-form">
-                                <label for="new-memory-content">Add Custom Memory:</label>
-                                <input type="text" id="new-memory-content" placeholder="Fact, event, observation...">
-                                <input type="text" id="new-memory-type" placeholder="Type (e.g., fact, seen)">
-                                <button onclick="addMemoryToCharacter()" id="add-memory-btn" disabled>Add Memory</button>
-                            </div>
-                            <div id="character-memories-list"></div>
+                </div>
+                <div id="npc-memories-collapsible-section" class="collapsible-section collapsed">
+                    <h3>NPC Memories</h3>
+                    <div class="collapsible-content" id="npc-specific-details-content">
+                        <div id="add-memory-form">
+                            <label for="new-memory-content">Add Custom Memory:</label>
+                            <input type="text" id="new-memory-content" placeholder="Fact, event, observation...">
+                            <input type="text" id="new-memory-type" placeholder="Type (e.g., fact, seen)">
+                            <button onclick="window.handleAddMemory()" id="add-memory-btn" disabled>Add Memory</button>
                         </div>
+                        <div id="character-memories-list"></div>
                     </div>
-                    <div id="character-history-collapsible-section" class="collapsible-section collapsed">
-                        <h3>Character History</h3>
-                        <div class="collapsible-content">
-                            <label for="history-file-select">Available History Files to Add:</label>
-                            <select id="history-file-select">
-                                <option value="">-- Select a history file --</option>
-                            </select>
-                            <button onclick="associateHistoryFile()" id="associate-history-btn" disabled>Associate Selected History</button>
-                            <h5>Currently Associated Files:</h5>
-                            <ul id="associated-history-list"><li><em>None associated.</em></li></ul>
-                            <h5>History Content:</h5>
-                            <div id="history-content-display"><p><em>No history content loaded.</em></p></div>
-                        </div>
+                </div>
+                <div id="character-history-collapsible-section" class="collapsible-section collapsed">
+                    <h3>Character History (Files)</h3>
+                    <div class="collapsible-content">
+                        <label for="history-file-select">Available History Files to Add:</label>
+                        <select id="history-file-select">
+                            <option value="">-- Select a history file --</option>
+                        </select>
+                        <button onclick="window.handleAssociateHistoryFile()" id="associate-history-btn" disabled>Associate Selected History File</button>
+                        <h5>Currently Associated Files:</h5>
+                        <ul id="associated-history-list"><li><em>None associated.</em></li></ul>
+                        <h5>History Content:</h5>
+                        <div id="history-content-display"><p><em>No history content loaded.</em></p></div>
+                    </div>
+                </div>
+                <div id="character-lore-links-section" class="collapsible-section collapsed">
+                    <h3>Character Associated Lore</h3>
+                    <div class="collapsible-content">
+                        <label for="lore-entry-select-for-character">Available Lore Entries to Link:</label>
+                        <select id="lore-entry-select-for-character">
+                            <option value="">-- Select a lore entry --</option>
+                        </select>
+                        <button onclick="window.handleLinkLoreToCharacter()" id="link-lore-to-char-btn" disabled>Link Selected Lore</button>
+                        <h5>Currently Associated Lore Entries:</h5>
+                        <ul id="associated-lore-list-for-character"><li><em>None associated.</em></li></ul>
+                    </div>
+                </div>
+                 <div id="create-character-section" class="collapsible-section collapsed">
+                    <h3>Create New Character</h3>
+                    <div id="create-character-form" class="collapsible-content">
+                        <label for="new-char-name">Name:</label>
+                        <input type="text" id="new-char-name" required>
+                        <label for="new-char-description">Description:</label>
+                        <textarea id="new-char-description" rows="3" required></textarea>
+                        <label for="new-char-personality">Personality (comma-separated):</label>
+                        <input type="text" id="new-char-personality">
+                        <label for="new-char-type">Character Type:</label>
+                        <select id="new-char-type">
+                            <option value="NPC" selected>NPC (Non-Player Character)</option>
+                            <option value="PC">PC (Player Character)</option>
+                        </select>
+                        <button onclick="window.handleCharacterCreation()">Create Character</button>
                     </div>
                 </div>
             </div>
-            
-            <div id="create-character-section" class="collapsible-section collapsed">
-                <h3>Create New Character</h3>
-                <div id="create-character-form" class="collapsible-content">
-                    <label for="new-char-name">Name:</label>
-                    <input type="text" id="new-char-name" required>
-                    <label for="new-char-description">Description:</label>
-                    <textarea id="new-char-description" rows="3" required></textarea>
-                    <label for="new-char-personality">Personality (comma-separated):</label>
-                    <input type="text" id="new-char-personality">
-                    <label for="new-char-type">Character Type:</label>
-                    <select id="new-char-type">
-                        <option value="NPC" selected>NPC (Non-Player Character)</option>
-                        <option value="PC">PC (Player Character)</option>
-                    </select>
-                    <button onclick="createCharacter()">Create Character</button>
+
+            <div id="tab-lore-management" class="tab-content">
+                <h3>Lore Management</h3>
+                <div id="create-lore-entry-form">
+                    <h4>Create New Lore Entry</h4>
+                    <label for="new-lore-name">Name/Title:</label>
+                    <input type="text" id="new-lore-name" required>
+                    <label for="new-lore-type">Type:</label>
+                    <select id="new-lore-type">
+                        </select>
+                    <label for="new-lore-description">Description:</label>
+                    <textarea id="new-lore-description" rows="3" required></textarea>
+                    <label for="new-lore-key-facts">Key Facts (one per line):</label>
+                    <textarea id="new-lore-key-facts" rows="3"></textarea>
+                    <label for="new-lore-tags">Tags (comma-separated):</label>
+                    <input type="text" id="new-lore-tags">
+                    <label for="new-lore-gm-notes">GM Notes (Optional):</label>
+                    <textarea id="new-lore-gm-notes" rows="2"></textarea>
+                    <button onclick="window.handleCreateLoreEntry()">Create Lore Entry</button>
+                </div>
+                <hr>
+                <h4>Existing Lore Entries</h4>
+                <div id="lore-entry-list-container" class="character-list">
+                    <ul id="lore-entry-list"><li><em>Loading lore...</em></li></ul>
+                </div>
+                <div id="lore-entry-profile-section" style="display:none; margin-top:15px; padding:10px; border:1px solid #ccc;">
+                    <h5>Details for: <span id="details-lore-name"></span></h5>
+                    <p><strong>Type:</strong> <span id="details-lore-type"></span></p>
+                    <p><strong>Description:</strong> <span id="details-lore-description"></span></p>
+                    <p><strong>Key Facts:</strong></p> <ul id="details-lore-key-facts-list"></ul>
+                    <p><strong>Tags:</strong> <span id="details-lore-tags"></span></p>
+                    <div><strong>GM Notes:</strong> <textarea id="details-lore-gm-notes" rows="3" style="width:100%;"></textarea></div>
+                    <button onclick="window.handleUpdateLoreEntryGmNotes()" id="save-lore-gm-notes-btn">Save Lore GM Notes</button>
+                    <button onclick="window.handleDeleteLoreEntry()" id="delete-lore-btn" style="background-color:#dc3545;">Delete Lore Entry</button>
+                    <button onclick="window.closeLoreDetailViewUI()" style="background-color:#6c757d;">Close Detail View</button>
                 </div>
             </div>
         </div>
@@ -121,7 +176,7 @@
             <div id="dialogue-input-area">
                 <label for="player-utterance">Player Says / Scene Event:</label>
                 <textarea id="player-utterance" rows="2" placeholder="Enter player dialogue or describe a scene event..."></textarea>
-                <button onclick="generateDialogue()" id="generate-dialogue-btn" disabled>Send to NPCs</button>
+                <button onclick="window.handleGenerateDialogue()" id="generate-dialogue-btn" disabled>Send to NPCs</button>
             </div>
             <div id="ai-suggestions" style="display:none;">
                 <h4>AI Suggestions (Last Interaction):</h4>

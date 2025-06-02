@@ -16,18 +16,28 @@ const PC_QUICK_VIEW_BASE_TITLE = "PC Quick View";
 
 const FACTION_STANDING_LEVELS = Object.freeze({
     THREATENING: "Threatening",
-    DUBIOUS: "Dubious",
-    APPREHENSIVE: "Apprehensive",
-    INDIFFERENT: "Indifferent",
-    AMIABLE: "Amiable",
-    KINDLY: "Kindly",
-    WARMLY: "Warmly",
-    ALLY: "Ally"
+    DUBIOUS: "Dubious",         
+    APPREHENSIVE: "Apprehensive", 
+    INDIFFERENT: "Indifferent",   
+    AMIABLE: "Amiable",       
+    KINDLY: "Kindly",         
+    WARMLY: "Warmly",         
+    ALLY: "Ally"            
 });
 
 const FACTION_STANDING_SLIDER_ORDER = [
-    FACTION_STANDING_LEVELS.THREATENING, FACTION_STANDING_LEVELS.DUBIOUS,
+    FACTION_STANDING_LEVELS.THREATENING, FACTION_STANDING_LEVELS.DUBIOUS, 
     FACTION_STANDING_LEVELS.APPREHENSIVE, FACTION_STANDING_LEVELS.INDIFFERENT,
     FACTION_STANDING_LEVELS.AMIABLE, FACTION_STANDING_LEVELS.KINDLY,
     FACTION_STANDING_LEVELS.WARMLY, FACTION_STANDING_LEVELS.ALLY
+];
+
+// New: Lore Entry Types (matches Python Enum)
+const LORE_TYPES = [
+    "Location",
+    "Organization/Faction",
+    "Historical Event",
+    "Key Item/Artifact",
+    "Concept/Deity",
+    "Miscellaneous"
 ];

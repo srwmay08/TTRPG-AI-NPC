@@ -15,6 +15,7 @@ async function fetchData(url, options = {}) {
     }
 }
 
+// Character related
 window.fetchCharactersFromServer = async function() {
     console.log("Fetching characters via apiService...");
     return fetchData(`${API_BASE_URL}/api/npcs`);
@@ -33,14 +34,6 @@ window.generateNpcDialogue = async function(npcId, payload) {
     });
 };
 
-window.saveCharacterNotes = async function(npcId, notes) {
-    // This was the previous implementation, ensure backend matches or adjust
-    return fetchData(`${API_BASE_URL}/api/npcs/${npcId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ gm_notes: notes }) // Only sending gm_notes
-    });
-};
 window.updateCharacterOnServer = async function(npcId, updatePayload) {
     return fetchData(`${API_BASE_URL}/api/npcs/${npcId}`, {
         method: 'PUT',
@@ -48,7 +41,6 @@ window.updateCharacterOnServer = async function(npcId, updatePayload) {
         body: JSON.stringify(updatePayload)
     });
 };
-
 
 window.addMemoryToNpc = async function(npcId, memoryData) {
      return fetchData(`${API_BASE_URL}/api/npcs/${npcId}/memory`, {
@@ -72,6 +64,7 @@ window.createCharacterOnServer = async function(characterData) {
     });
 };
 
+// History File related
 window.fetchHistoryFilesFromServer = async function() {
     return fetchData(`${API_BASE_URL}/api/history_files`);
 };
@@ -92,14 +85,55 @@ window.dissociateHistoryFileFromNpc = async function(npcId, fileName) {
     });
 };
 
+// Faction Standing
 window.updateNpcFactionStanding = async function(npcId, pcId, standing) {
     const payload = { pc_faction_standings: { [pcId]: standing } };
-    // This should send the entire character update, or backend needs to handle partial for just this
-    // For now, assuming backend merges this field. A safer PUT might involve fetching current NPC data first.
-    // Let's keep it simple as per previous characterService where it also called PUT on /api/npcs/{npcId}
-    return fetchData(`${API_BASE_URL}/api/npcs/${npcId}`, {
+    return fetchData(`${API_BASE_URL}/api/npcs/${npcId}`, { // Uses the general character update endpoint
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
+    });
+};
+
+// Lore Entry related
+window.fetchAllLoreEntries = async function() {
+    return fetchData(`${API_BASE_URL}/api/lore_entries`);
+};
+
+window.fetchLoreEntryDetails = async function(loreId) {
+    return fetchData(`${API_BASE_URL}/api/lore_entries/${loreId}`);
+};
+
+window.createLoreEntryOnServer = async function(loreData) {
+    return fetchData(`${API_BASE_URL}/api/lore_entries`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(loreData)
+    });
+};
+
+window.updateLoreEntryOnServer = async function(loreId, loreData) {
+    return fetchData(`${API_BASE_URL}/api/lore_entries/${loreId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(loreData)
+    });
+};
+
+window.deleteLoreEntryFromServer = async function(loreId) {
+    return fetchData(`${API_BASE_URL}/api/lore_entries/${loreId}`, {
+        method: 'DELETE'
+    });
+};
+
+window.linkLoreToCharacterOnServer = async function(charId, loreId) {
+    return fetchData(`${API_BASE_URL}/api/characters/${charId}/link_lore/${loreId}`, {
+        method: 'POST'
+    });
+};
+
+window.unlinkLoreFromCharacterOnServer = async function(charId, loreId) {
+    return fetchData(`${API_BASE_URL}/api/characters/${charId}/unlink_lore/${loreId}`, {
+        method: 'POST'
     });
 };

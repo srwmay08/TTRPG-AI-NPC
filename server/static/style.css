@@ -1,18 +1,84 @@
-body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; height: 100vh; background-color: #975555; overflow: hidden; }
+/* static/style.css */
+body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; height: 100vh; background-color: #f4f4f4; overflow: hidden; }
 .column { overflow-y: auto; box-sizing: border-box; }
 
 #left-column {
-    width: 30%; /* Initial width */
-    min-width: 300px; /* Increased min-width for better layout */
+    width: 30%; 
+    min-width: 350px; /* Increased for tabs */
     max-width: 60%; 
     background-color: #e9e9e9;
     border-right: 1px solid #ccc;
     height: 100vh;
     padding: 0; 
     flex-shrink: 0; 
+    display: flex; /* Added for header/content structure */
+    flex-direction: column; /* Added */
 }
 
-#left-column-content { padding: 15px; height: 100%; overflow-y: auto; box-sizing: border-box;}
+#left-column-header {
+    padding: 10px 15px;
+    background-color: #d8d8d8;
+    border-bottom: 1px solid #ccc;
+}
+#left-column-header h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.4em;
+}
+
+.tabs {
+    display: flex;
+    border-bottom: 1px solid #ccc; /* Separator for tabs */
+}
+
+.tab-link {
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    border-bottom: none; /* Remove bottom border for inactive tabs */
+    padding: 10px 15px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s;
+    margin-right: 2px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.tab-link:hover {
+    background-color: #ddd;
+}
+
+.tab-link.active {
+    background-color: #e9e9e9; /* Match left-column background */
+    border-bottom: 1px solid #e9e9e9; /* Make it look connected */
+    position: relative;
+    top: 1px; /* To cover the border-bottom of .tabs */
+}
+
+.tab-content {
+    display: none; /* Hidden by default */
+    padding: 15px;
+    animation: fadeIn 0.5s; /* Simple fade-in animation */
+}
+
+.tab-content.active-tab {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+
+#left-column-content { 
+    padding: 0; /* Remove padding here, tab-content will have it */
+    height: 100%; 
+    overflow-y: auto; 
+    box-sizing: border-box;
+    flex-grow: 1; /* Allow content to take remaining space */
+}
+
 
 #resizer {
     width: 10px; 
@@ -40,10 +106,40 @@ body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; hei
     margin: 0px;
 }
 
-.collapsible-section h3 { cursor: pointer; background-color: #d8d8d8; padding: 8px; margin: 10px 0 5px 0; user-select: none; position: relative; }
-.collapsible-section h3::after { content: ' ▼'; float: right; }
+.collapsible-section {
+    margin-bottom: 10px; /* Space between collapsible sections */
+}
+
+.collapsible-section h3, .collapsible-section h4 { 
+    cursor: pointer; 
+    background-color: #d0d0d0; /* Slightly darker for better contrast */
+    padding: 8px 12px; 
+    margin: 0 0 5px 0; /* Removed top margin */
+    user-select: none; 
+    position: relative; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    border-radius: 3px;
+    border: 1px solid #bbb; /* Add a border */
+}
+.collapsible-section h3 .arrow-indicator, .collapsible-section h4 .arrow-indicator { 
+    transition: transform 0.2s ease-in-out;
+    margin-left: 5px; /* Space for arrow */
+}
+.collapsible-section.collapsed .arrow-indicator { transform: rotate(-90deg); }
+.collapsible-section:not(.collapsed) .arrow-indicator { transform: rotate(0deg); }
+.collapsible-section .collapsible-content {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-top: none; /* Avoid double border with header */
+    border-radius: 0 0 3px 3px;
+    background-color: #f9f9f9;
+}
+
+
 .collapsible-section.collapsed .collapsible-content { display: none; }
-.collapsible-section.collapsed h3::after { content: ' ►'; }
+
 
 h2, h3, h4 { margin-top: 0; color: #333; }
 h5 { margin-top: 15px; margin-bottom: 5px; color: #333; border-bottom: 1px solid #eee; padding-bottom: 3px;}
@@ -65,14 +161,14 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 .character-list li:last-child { border-bottom: none; }
 .character-list li.active-in-scene { background-color: #e6f2ff; } 
 .character-list li.selected { background-color: #d1e7fd; font-weight: bold; }
-.character-list li .npc-name-clickable { flex-grow: 1; cursor: pointer; }
-.character-list li .npc-name-clickable:hover { text-decoration: underline; color: #0056b3;}
+.character-list li .npc-name-clickable, .character-list li .lore-entry-name-clickable { flex-grow: 1; cursor: pointer; }
+.character-list li .npc-name-clickable:hover, .character-list li .lore-entry-name-clickable:hover { text-decoration: underline; color: #0056b3;}
+
 
 #dialogue-interface {
-    display: none; /* Default to hidden. JS will change this to 'flex' when needed. */
+    display: none; 
     flex-grow: 1;
     flex-direction: column;
-    /* Any other existing properties for dialogue-interface can remain */
 }
 
 #multi-npc-dialogue-container { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: row; overflow-x: scroll; gap: 15px; min-width: calc(25%);}
@@ -85,98 +181,37 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 .npc-response { background-color: #ddebf7; }
 .scene-event { font-style: italic; color: #777; text-align: center; margin:10px 0; }
 
-.memory-item, .suggested-item { background-color: #fff; border: 1px solid #eee; padding: 5px; margin-bottom: 5px; border-radius: 3px; font-size:0.9em; display: flex; justify-content: space-between; align-items: center; }
-.memory-item button, .suggested-item button { font-size: 0.8em; padding: 3px 6px; margin-left: 5px; }
+.memory-item, .suggested-item, .associated-lore-item { background-color: #fff; border: 1px solid #eee; padding: 5px; margin-bottom: 5px; border-radius: 3px; font-size:0.9em; display: flex; justify-content: space-between; align-items: center; }
+.memory-item button, .suggested-item button, .associated-lore-item button { font-size: 0.8em; padding: 3px 6px; margin-left: 5px; }
 .clickable-suggestion { cursor: pointer; text-decoration: underline; color: blue; }
 
 #pc-dashboard-view { display: block; flex-grow: 1; overflow-y: auto; }
-.pc-dashboard-grid { display: flex; flex-wrap: nowrap; gap: 5px; margin-top: 10px; margin-bottom: 20px; } 
+.pc-dashboard-grid { display: flex; flex-wrap: nowrap; gap: 5px; margin-top: 10px; margin-bottom: 20px; overflow-x: auto; } 
 .pc-stat-card { border: 1px solid #ddd; border-radius: 4px; padding: 10px; background-color: #f9f9f9; flex: 1 1 200px; min-width: 180px; box-sizing: border-box; } 
 .pc-stat-card h4 { margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 8px; font-size: 1.1em; }
 .pc-stat-card p { margin: 4px 0; font-size: 0.9em; }
 
-.table-wrapper {
-    overflow-x: auto; /* Adds horizontal scroll if content is wider */
-    width: 100%;      /* Makes the wrapper take full available width */
-    margin-bottom: 15px; /* Keeps some space below the table/wrapper */
-}
-
-#main-stats-table, #skills-overview-table {
-    /* width: 100%; */ /* This can sometimes conflict with overflow-x if table content is inherently very wide.
-                          The wrapper will handle the 100% width constraint.
-                          The table will expand as needed and the wrapper will scroll. */
-    min-width: 100%; /* Optional: ensure table has a minimum sensible width for its columns before scrolling. Adjust as needed. */
-    border-collapse: collapse;
-    /* margin-bottom: 15px; /* Moved to .table-wrapper */
-    font-size: 0.9em;
-}
+.table-wrapper { overflow-x: auto; width: 100%; margin-bottom: 15px; }
+#main-stats-table, #skills-overview-table { min-width: 100%; border-collapse: collapse; font-size: 0.9em; }
 #main-stats-table th, #main-stats-table td,
 #skills-overview-table th, #skills-overview-table td { border: 1px solid #ddd; padding: 6px; text-align: center; }
 #main-stats-table th, #skills-overview-table th { background-color: #e9ecef; font-weight: bold; }
-#main-stats-table td:first-child { text-align: left; font-weight: bold; } 
-#skills-overview-table th:first-child { text-align: left; font-weight: bold; } 
-#skills-overview-table td:first-child { text-align: left; font-weight: bold; } 
+#main-stats-table td:first-child, #skills-overview-table td:first-child { text-align: left; font-weight: bold; } 
 
 .clickable-ability-header, .clickable-skill-header { cursor: pointer; color: #0056b3; text-decoration: underline;}
 .clickable-ability-header span.arrow-indicator, .clickable-skill-header span.arrow-indicator { font-size: 0.8em; margin-left: 3px;}
 
-.expanded-ability-content, .expanded-skill-content {
-    border: 1px solid #ccc;
-    padding: 15px;
-    margin-top: 0px; 
-    margin-bottom: 10px;
-    background-color: #f8f9fa;
-    border-top: none; 
-}
+.expanded-ability-content, .expanded-skill-content { border: 1px solid #ccc; padding: 15px; margin-top: 0px; margin-bottom: 10px; background-color: #f8f9fa; border-top: none; }
 .expanded-ability-content h5, .expanded-skill-content h5 { margin-top:10px; margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 3px;}
 
 .ability-bar-chart-container, .skill-bar-chart-container { margin-bottom: 15px; padding: 10px; background-color: #fff; border: 1px solid #eee; border-radius: 4px;}
 .pc-bar-row { display: flex; align-items: center; margin-bottom: 3px; font-size: 0.9em; }
 .stat-comparison-pc-name { width: 120px; text-align: right; margin-right: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.stat-bar-wrapper { 
-    flex-grow: 1; 
-    background-color: #e0e0e0; 
-    border-radius: 3px; 
-    height: 18px; 
-    min-width: 150px; 
-    position: relative;
-    overflow: hidden; 
-}
-.stat-bar-wrapper::before { 
-    content: '';
-    position: absolute;
-    left: var(--zero-offset, 25%); 
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background-color: #bbb;
-}
-.stat-bar { 
-    height: 100%; 
-    background-color: #007bff; 
-    border-radius: 3px; 
-    color: white; 
-    line-height: 18px; 
-    font-size: 0.8em; 
-    white-space: nowrap; 
-    overflow: hidden; 
-    position: absolute; 
-    top: 0;
-    box-sizing: border-box;
-}
-.stat-bar.positive {
-    left: var(--bar-left);
-    width: var(--bar-width);
-    text-align: right; 
-    padding-right: 5px; 
-}
-.stat-bar.negative {
-    left: var(--bar-left); 
-    width: var(--bar-width);
-    background-color: #dc3545; 
-    text-align: left; 
-    padding-left: 5px; 
-}
+.stat-bar-wrapper { flex-grow: 1; background-color: #e0e0e0; border-radius: 3px; height: 18px; min-width: 150px; position: relative; overflow: hidden; }
+.stat-bar-wrapper::before { content: ''; position: absolute; left: var(--zero-offset, 25%); top: 0; bottom: 0; width: 1px; background-color: #bbb; }
+.stat-bar { height: 100%; background-color: #007bff; border-radius: 3px; color: white; line-height: 18px; font-size: 0.8em; white-space: nowrap; overflow: hidden; position: absolute; top: 0; box-sizing: border-box;}
+.stat-bar.positive { left: var(--bar-left); width: var(--bar-width); text-align: right; padding-right: 5px; }
+.stat-bar.negative { left: var(--bar-left); width: var(--bar-width); background-color: #dc3545; text-align: left; padding-left: 5px; }
 
 .derived-stats-table { width: 100%; border-collapse: collapse; font-size: 0.9em; margin-top:5px; margin-bottom: 15px; }
 .derived-stats-table th, .derived-stats-table td { border: 1px solid #ddd; padding: 5px; text-align: left; }
@@ -190,272 +225,80 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 .rules-explanation-table strong { color: #333; }
 .pc-dashboard-no-selection { text-align: center; color: #777; margin-top: 50px; font-size: 1.2em;}
 
-#history-content-display {
-    margin-top: 10px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    background-color: #f9f9f9;
-    max-height: 300px; 
-    overflow-y: auto;
-    white-space: pre-wrap; 
-    font-family: 'Courier New', Courier, monospace; 
-    font-size: 0.9em;
-}
-#associated-history-list {
-    list-style-type: none;
-    padding-left: 0;
-}
-#associated-history-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 0;
-    border-bottom: 1px solid #eee;
-}
-#associated-history-list li:last-child {
-    border-bottom: none;
-}
-.remove-history-btn {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 3px 8px;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 0.8em;
-}
-.remove-history-btn:hover {
-    background-color: #c82333;
-}
+#history-content-display { margin-top: 10px; padding: 10px; border: 1px solid #ddd; background-color: #f9f9f9; max-height: 300px; overflow-y: auto; white-space: pre-wrap; font-family: 'Courier New', Courier, monospace; font-size: 0.9em;}
+#associated-history-list, #associated-lore-list-for-character { list-style-type: none; padding-left: 0; }
+#associated-history-list li, #associated-lore-list-for-character li { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #eee;}
+#associated-history-list li:last-child, #associated-lore-list-for-character li:last-child { border-bottom: none; }
+.remove-history-btn, .unlink-lore-btn { background-color: #dc3545; color: white; border: none; padding: 3px 8px; border-radius: 3px; cursor: pointer; font-size: 0.8em;}
+.remove-history-btn:hover, .unlink-lore-btn:hover { background-color: #c82333;}
 
-/* Add to your style.css */
-.detailed-pc-sheet {
-    padding: 15px;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-}
-.pc-section {
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #eee;
-}
-.pc-section:last-child {
-    border-bottom: none;
-}
-.pc-section h4 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    color: #333;
-    border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 5px;
-}
-.pc-info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 5px 15px;
-}
-.pc-info-grid p {
-    margin: 3px 0;
-}
-.detailed-pc-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.9em;
-}
-.detailed-pc-table th, .detailed-pc-table td {
-    border: 1px solid #ddd;
-    padding: 6px;
-    text-align: left;
-}
-.detailed-pc-table th {
-    background-color: #e9ecef;
-}
-.detailed-pc-sheet .pc-section ul {
-    list-style-type: disc;
-    margin-left: 20px;
-}
-.clickable-pc-card {
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-}
-.clickable-pc-card:hover {
-    background-color: #e0e0e0; /* Or some other highlight */
-}
+.detailed-pc-sheet { padding: 15px; border: 1px solid #ccc; background-color: #f9f9f9; position: relative; padding-top: 35px; }
+.pc-section { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee;}
+.pc-section:last-child { border-bottom: none; }
+.pc-section h4 { margin-top: 0; margin-bottom: 10px; color: #333; border-bottom: 1px solid #e0e0e0; padding-bottom: 5px;}
+.pc-info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 5px 15px;}
+.pc-info-grid p { margin: 3px 0; }
+.detailed-pc-table { width: 100%; border-collapse: collapse; font-size: 0.9em;}
+.detailed-pc-table th, .detailed-pc-table td { border: 1px solid #ddd; padding: 6px; text-align: left;}
+.detailed-pc-table th { background-color: #e9ecef; }
+.detailed-pc-sheet .pc-section ul { list-style-type: disc; margin-left: 20px; }
+.clickable-pc-card { cursor: pointer; transition: background-color 0.2s ease-in-out; }
+.clickable-pc-card:hover { background-color: #e0e0e0; }
 
-/* Add to your style.css */
+.close-detailed-pc-sheet-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; font-weight: bold; color: #777; cursor: pointer; line-height: 1; padding: 0 5px; z-index: 10;}
+.close-detailed-pc-sheet-btn:hover { color: #333; }
 
-/* Ensure the detailed PC sheet can act as a positioning context */
-.detailed-pc-sheet {
-    position: relative; /* Added for positioning context */
-    padding: 15px;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-    /* Add a top padding to make space for the X button if it's close to the top content */
-    padding-top: 35px; /* Adjust as needed */
-}
+#pc-quick-view-section-in-scene { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+#pc-quick-view-section-in-scene .pc-stat-card h4 { display: flex; justify-content: space-between; align-items: center; }
 
-.close-detailed-pc-sheet-btn {
-    position: absolute;
-    top: 10px; /* Adjust to position from the top edge of .detailed-pc-sheet */
-    right: 15px; /* Adjust to position from the right edge of .detailed-pc-sheet */
-    font-size: 24px; 
-    font-weight: bold;
-    color: #777; /* A slightly muted color for the X */
-    cursor: pointer;
-    line-height: 1; /* Ensures the X is vertically centered if it's just text */
-    padding: 0 5px; /* Small padding to make it easier to click */
-    z-index: 10; /* Ensure it's above other content if there's overlap */
-}
-
-.close-detailed-pc-sheet-btn:hover {
-    color: #333; /* Darker color on hover */
-}
-
-
-/* Styles for the PC Quick View cards in the Scene Interaction area */
-#pc-quick-view-in-scene {
-    display: flex; /* Uses flex to align cards */
-    flex-wrap: wrap; /* Allows cards to wrap if space is limited */
-    gap: 10px;      /* Space between cards */
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #eee; /* Optional: visual separator for the section */
-}
-
-#pc-quick-view-in-scene .pc-stat-card {
-    /* REMOVE specific font-size, padding, min-width, flex, and box-shadow */
-    /* These will now be inherited from the general .pc-stat-card style, */
-    /* or we explicitly match them if .pc-stat-card needs to be the source of truth. */
-
-    /* To ensure exact match with .pc-stat-card defined earlier: */
-    /* (Assuming .pc-stat-card provides: padding: 10px; flex: 1 1 200px; min-width: 180px; etc.) */
-    /* No specific overrides here means it will use the .pc-stat-card base styles */
-}
-
-#pc-quick-view-in-scene .pc-stat-card h4 {
-    /* REMOVE specific font-size and margin-bottom overrides */
-    /* These will now be inherited from the general .pc-stat-card h4 style */
-
-    /* The display:flex properties here were for aligning with a button, */
-    /* if the button is not present in the in-scene card's h4, these aren't strictly needed for the text itself. */
-    /* However, to keep it structurally identical in case a button is added later: */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* Styles for remove button, if you decide to re-add it to the in-scene cards */
-.remove-pc-from-scene-btn {
-    background: #e74c3c;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    line-height: 18px; /* Adjust for vertical centering */
-    text-align: center;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-    padding: 0;
-    margin-left: 5px;
-}
-
-.remove-pc-from-scene-btn:hover {
-    background: #c0392b;
-}
-.remove-pc-from-scene-btn {
-    background: #e74c3c;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    line-height: 18px; /* Adjust for vertical centering */
-    text-align: center;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-    padding: 0;
-    margin-left: 5px;
-}
-
-.remove-pc-from-scene-btn:hover {
-    background: #c0392b;
-}
-
-.remove-pc-from-scene-btn {
-    background: #e74c3c;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    line-height: 18px; /* Adjust for vertical centering */
-    text-align: center;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-    padding: 0;
-    margin-left: 5px;
-}
-
-.remove-pc-from-scene-btn:hover {
-    background: #c0392b;
-}
-
-
-
-/* ... (your existing CSS) ... */
-
-#npc-faction-standings-section h4 {
-    margin-top: 15px;
-    margin-bottom: 5px;
-    color: #333;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 3px;
-}
-
+/* Faction Standing Slider Styles */
 .faction-standing-entry {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 0;
+    align-items: center; /* Vertically align items */
+    padding: 8px 0;
     font-size: 0.9em;
 }
-
 .faction-standing-entry label {
     margin-right: 10px;
     font-weight: normal;
+    min-width: 100px; /* Ensure labels align nicely */
 }
-
-.faction-standing-entry select {
-    width: 150px; /* Adjust as needed */
-    padding: 3px;
-    margin-bottom: 0; /* Override general margin if needed */
+.faction-standing-entry input[type="range"] {
+    flex-grow: 1; /* Slider takes available space */
+    margin-right: 10px;
+    cursor: pointer;
 }
-
-.ai-suggestion-category {
-    margin-top: 10px;
-    padding-top: 5px;
-    border-top: 1px dashed #eee;
-}
-.ai-suggestion-category h5 {
-    margin-top: 0;
-    margin-bottom: 8px;
-    font-size: 0.95em;
+.faction-standing-entry .standing-level-display {
+    min-width: 100px; /* Space for the text */
+    font-style: italic;
     color: #555;
 }
 
-#suggested-faction-standing-changes .suggested-item button {
-    font-size: 0.8em;
-    padding: 2px 5px;
-    margin-left: 10px;
-    background-color: #28a745; /* Green for accept */
+
+.ai-suggestion-category { margin-top: 10px; padding-top: 5px; border-top: 1px dashed #eee; }
+.ai-suggestion-category h5 { margin-top: 0; margin-bottom: 8px; font-size: 0.95em; color: #555; }
+#suggested-faction-standing-changes .suggested-item button { font-size: 0.8em; padding: 2px 5px; margin-left: 10px; background-color: #28a745; }
+#suggested-faction-standing-changes .suggested-item button:hover { background-color: #218838; }
+#suggested-faction-standing-changes .suggested-item button:disabled { background-color: #cccccc; }
+
+/* Lore Management Specific Styles */
+#lore-management-section .collapsible-content, #tab-character-profile .collapsible-content { padding-top: 10px; }
+#create-lore-entry-form label, #lore-entry-profile-section label { margin-top: 8px; }
+#lore-entry-list-container { margin-top:10px; }
+#lore-entry-profile-section { background-color: #f0f0f0; border-radius: 4px; padding:15px; }
+#details-lore-key-facts-list { list-style-type: disc; margin-left: 20px; }
+
+#character-lore-links-section .collapsible-content { padding-top:10px; }
+#associated-lore-list-for-character { margin-top: 5px; }
+
+/* Ensure profile sections within tabs are styled consistently */
+#tab-character-profile > h3 { /* Target the main profile name header */
+    background-color: #d8d8d8;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    border-radius: 3px;
 }
-#suggested-faction-standing-changes .suggested-item button:hover {
-    background-color: #218838;
-}
-#suggested-faction-standing-changes .suggested-item button:disabled {
-    background-color: #cccccc;
+#tab-character-profile > div > .collapsible-section > h3,
+#tab-character-profile > div > .collapsible-section > h4 {
+     margin-top: 10px; /* Add some top margin for sub-collapsibles */
 }
