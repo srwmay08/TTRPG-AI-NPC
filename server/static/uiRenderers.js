@@ -19,7 +19,7 @@ var UIRenderers = {
         pc.vtt_data.attributes.ac = pc.vtt_data.attributes.ac || {};
         pc.vtt_data.attributes.movement = pc.vtt_data.attributes.movement || {};
         pc.vtt_data.attributes.init = pc.vtt_data.attributes.init || {};
-        pc.vtt_data.attributes.spell = pc.vtt_data.attributes.spell || {};
+        pc.vtt_data.attributes.spell = pc.vtt_data.attributes.spell || {}; // Ensure spell attribute exists
         pc.vtt_data.details = pc.vtt_data.details || {};
         pc.vtt_data.skills = pc.vtt_data.skills || {};
         pc.vtt_data.traits = pc.vtt_data.traits || { languages: {}, armorProf: {}, weaponProf: {}};
@@ -49,29 +49,28 @@ var UIRenderers = {
         cardHTML += `<p><strong>AC:</strong> ${acDisplayValue}</p>`;
 
         cardHTML += `<p><strong>Prof. Bonus:</strong> +${pc.calculatedProfBonus}</p>`;
-        cardHTML += `<p><strong>Speed:</strong> ${pc.vtt_data.attributes.movement?.walk || pc.system?.attributes?.movement?.walk || 0} ft</p>`;
 
         let initiativeBonus = 'N/A';
         const initAbilityKey = pc.vtt_data.attributes.init?.ability || pc.system?.attributes?.init?.ability || 'dex';
-        const dexValueForInit = pc.vtt_data.abilities.dex?.value ?? pc.system?.abilities?.dex?.value;
+        const abilitiesSourceForInit = pc.vtt_data.abilities[initAbilityKey] ? pc.vtt_data.abilities : (pc.system?.abilities || {});
+        const abilityValueForInit = abilitiesSourceForInit[initAbilityKey]?.value;
 
-        if (pc.vtt_data.abilities[initAbilityKey] || pc.system?.abilities?.[initAbilityKey]) {
-            initiativeBonus = DNDCalculations.getAbilityModifier((pc.vtt_data.abilities[initAbilityKey]?.value || pc.system?.abilities?.[initAbilityKey]?.value) || 10);
+        if (typeof abilityValueForInit !== 'undefined') {
+            initiativeBonus = DNDCalculations.getAbilityModifier(abilityValueForInit);
         } else if (typeof (pc.vtt_data.attributes.init?.bonus ?? pc.system?.attributes?.init?.bonus) !== 'undefined' && (pc.vtt_data.attributes.init?.bonus ?? pc.system?.attributes?.init?.bonus) !== "") {
             initiativeBonus = parseInt(pc.vtt_data.attributes.init?.bonus ?? pc.system?.attributes?.init?.bonus) || 0;
-        } else if (typeof dexValueForInit !== 'undefined') {
-            initiativeBonus = DNDCalculations.getAbilityModifier(dexValueForInit);
         }
+        const initBonusFromAttributes = parseInt(pc.vtt_data.attributes.init?.bonus ?? pc.system?.attributes?.init?.bonus);
+        if (!isNaN(initBonusFromAttributes) && typeof abilityValueForInit === 'undefined') { // if only bonus is defined, use it
+             initiativeBonus = initBonusFromAttributes;
+        } else if (!isNaN(initBonusFromAttributes) && typeof abilityValueForInit !== 'undefined'){ // if both are defined, add them
+            initiativeBonus += initBonusFromAttributes;
+        }
+
+
         cardHTML += `<p><strong>Initiative:</strong> ${initiativeBonus >= 0 ? '+' : ''}${initiativeBonus}</p>`;
-
-        const strScore = pc.vtt_data.abilities.str?.value ?? pc.system?.abilities?.str?.value ?? 10;
-        cardHTML += `<p><strong>Carry Cap:</strong> ${DNDCalculations.carryingCapacity(strScore)} lbs</p>`;
-        cardHTML += `<p><strong>Push/Drag/Lift:</strong> ${DNDCalculations.pushDragLift(strScore)} lbs</p>`;
-
-        const wisScoreForPassive = pc.vtt_data.abilities.wis?.value ?? pc.system?.abilities?.wis?.value ?? 10;
-        const percProf = pc.vtt_data.skills.prc?.value ?? pc.system?.skills?.prc?.value ?? 0;
-        cardHTML += `<p><strong>Passive Perc:</strong> ${DNDCalculations.calculatePassiveSkill(wisScoreForPassive, percProf, pc.calculatedProfBonus)}</p>`;
-
+        cardHTML += `<p><strong>Speed:</strong> ${pc.vtt_data.attributes.movement?.walk || pc.system?.attributes?.movement?.walk || 0} ft</p>`;
+        
         let spellDcText = DNDCalculations.spellSaveDC(pc);
          if (spellDcText === 'N/A (No Casting Ability)' || spellDcText === 'N/A (Proficiency Error)') {
              if (pc.vtt_data.attributes.spell?.dc ?? pc.system?.attributes?.spell?.dc) {
@@ -81,6 +80,14 @@ var UIRenderers = {
              }
         }
         cardHTML += `<p><strong>Spell DC:</strong> ${spellDcText}</p>`;
+        
+        let spellAtkBonusText = DNDCalculations.spellAttackBonus(pc);
+        if (spellAtkBonusText === 'N/A (No Casting Ability)' || spellAtkBonusText === 'N/A (Proficiency Error)') {
+            spellAtkBonusText = "N/A"; // Or try to get from attributes if available, similar to DC
+        }
+        cardHTML += `<p><strong>Spell Atk:</strong> +${spellAtkBonusText}</p>`;
+
+
         cardHTML += `</div>`;
         return cardHTML;
     },
@@ -96,19 +103,21 @@ var UIRenderers = {
 
         let npcsToDisplay = allCharacters.filter(char => char.character_type === 'NPC');
 
+        // Apply context filter if one is active
         if (contextFilter && contextFilter.type === 'lore' && contextFilter.id) {
             npcsToDisplay = npcsToDisplay.filter(npc => {
                 const linkedIds = (npc.linked_lore_ids || []).map(id => String(id));
                 return linkedIds.includes(String(contextFilter.id));
             });
         }
+        // If no filter is selected (contextFilter is null or contextFilter.id is null/empty), all NPCs are shown by default (no additional filtering needed here)
 
         npcsToDisplay.sort((a, b) => a.name.localeCompare(b.name));
 
         if (npcsToDisplay.length === 0) {
-            ul.innerHTML = contextFilter && contextFilter.id ?
-                '<li><p><em>No NPCs linked to this context. Link NPCs in the NPCs tab.</em></p></li>' :
-                '<li><p><em>No NPCs to display. Select a context or create NPCs in the NPCs Tab.</em></p></li>';
+            ul.innerHTML = (contextFilter && contextFilter.id) ?
+                '<li><p><em>No NPCs linked to this specific context. Link NPCs in the NPCs Tab.</em></p></li>' :
+                '<li><p><em>No NPCs to display. Create NPCs in the NPCs Tab or clear context filters.</em></p></li>';
             return;
         }
 
@@ -126,10 +135,10 @@ var UIRenderers = {
             nameSpan.textContent = char.name;
             nameSpan.className = 'npc-name-clickable';
             nameSpan.onclick = async () => {
-                await CharacterService.handleSelectCharacterForDetails(charIdStr); // CharacterService namespace
+                await CharacterService.handleSelectCharacterForDetails(charIdStr);
                 const npcTabButton = document.querySelector('.tab-link[onclick*="tab-npcs"]');
                 if(npcTabButton && !npcTabButton.classList.contains('active')) {
-                    App.openTab(null, 'tab-npcs'); // App namespace
+                    App.openTab(null, 'tab-npcs');
                 } else if (npcTabButton && npcTabButton.classList.contains('active')) {
                     const characterProfileSection = Utils.getElem('character-profile-main-section');
                     if (characterProfileSection && characterProfileSection.classList.contains('collapsed')) {
@@ -289,8 +298,6 @@ var UIRenderers = {
         memoriesListNpc.className = 'ai-suggestion-category';
         if (aiResult.new_memory_suggestions && aiResult.new_memory_suggestions.length > 0) {
             memoriesListNpc.innerHTML = '<h5>Suggested Memories:</h5>' + aiResult.new_memory_suggestions.map(mem =>
-                // Functions called from onclick are expected to be global.
-                // App.addSuggestedMemoryAsActual will be exposed to window in app.js
                 `<div class="suggested-item">${Utils.escapeHtml(mem)} <button onclick="addSuggestedMemoryAsActual('${forNpcId}', '${Utils.escapeHtml(mem).replace(/'/g, "\\'")}')">Add</button></div>`
             ).join('');
             contentGeneratedForNpc = true;
@@ -338,7 +345,7 @@ var UIRenderers = {
                     Towards ${Utils.escapeHtml(pcNameForStanding)}: ${Utils.escapeHtml(standingValue)}
                     (Justification: ${Utils.escapeHtml(aiResult.standing_change_justification || 'None')})
                     <button onclick="acceptFactionStandingChange('${forNpcId}', '${aiResult.suggested_standing_pc_id}', '${Utils.escapeHtml(standingValue)}')">Accept</button>
-                </div>`; // App.acceptFactionStandingChange will be global
+                </div>`;
             contentGeneratedForNpc = true;
         } else {
              standingChangesNpc.innerHTML = `<h5>Suggested Faction Standing Change:</h5><p><em>None</em></p>`;
@@ -385,10 +392,10 @@ var UIRenderers = {
             slider.id = `standing-slider-${npcCharacter._id}-${pcIdStr}`;
             slider.dataset.pcId = pcIdStr;
             slider.min = 0;
-            slider.max = FACTION_STANDING_SLIDER_ORDER.length - 1; // FACTION_STANDING_SLIDER_ORDER is global from config.js
+            slider.max = FACTION_STANDING_SLIDER_ORDER.length - 1;
             slider.step = 1;
             const currentStandingObj = npcCharacter.pc_faction_standings ? npcCharacter.pc_faction_standings[pcIdStr] : null;
-            let currentStandingValue = FACTION_STANDING_LEVELS.INDIFFERENT; // FACTION_STANDING_LEVELS is global
+            let currentStandingValue = FACTION_STANDING_LEVELS.INDIFFERENT;
             if (currentStandingObj) {
                 if (typeof currentStandingObj === 'string' && FACTION_STANDING_SLIDER_ORDER.includes(currentStandingObj)) {
                     currentStandingValue = currentStandingObj;
@@ -435,9 +442,7 @@ var UIRenderers = {
         const characterHistorySectionElem = Utils.getElem(elements.characterHistorySection);
         const associatedHistoryListElem = Utils.getElem(elements.associatedHistoryList);
         const historyContentDisplayElem = Utils.getElem(elements.historyContentDisplay);
-        // const associateHistoryBtnElem = Utils.getElem(elements.associateHistoryBtn); // Not used here directly
         const characterLoreLinksSectionElem = Utils.getElem(elements.characterLoreLinksSection);
-        // const associatedLoreListForCharacterElem = Utils.getElem(elements.associatedLoreListForCharacter); // Used by renderAssociatedLoreForCharacterUI
         const linkLoreToCharBtnElem = Utils.getElem(elements.linkLoreToCharBtn);
 
         character.personality_traits = character.personality_traits || [];
@@ -518,7 +523,7 @@ var UIRenderers = {
         const selectElement = Utils.getElem('new-lore-type');
         if (!selectElement) { console.warn("UIRenderers.populateLoreTypeDropdownUI: 'new-lore-type' select element not found."); return; }
         selectElement.innerHTML = '';
-        if (typeof LORE_TYPES !== 'undefined' && Array.isArray(LORE_TYPES)) { // LORE_TYPES is global from config.js
+        if (typeof LORE_TYPES !== 'undefined' && Array.isArray(LORE_TYPES)) {
             LORE_TYPES.forEach(type => {
                 const option = document.createElement('option'); option.value = type; option.textContent = type; selectElement.appendChild(option);
             });
@@ -561,7 +566,7 @@ var UIRenderers = {
         Utils.disableBtn('delete-lore-btn', false);
     },
 
-    closeLoreDetailViewUI: function() { // This is called by HTML onclick="window.closeLoreDetailViewUI()"
+    closeLoreDetailViewUI: function() {
         const detailSection = Utils.getElem('lore-entry-profile-section');
         if (detailSection) { detailSection.style.display = 'none'; }
         appState.setCurrentLoreEntryId(null);
@@ -570,7 +575,7 @@ var UIRenderers = {
     populateLoreEntrySelectForCharacterLinkingUI: function(alreadyLinkedIds = []) {
         const selectElement = Utils.getElem('lore-entry-select-for-character');
         if (!selectElement) { console.warn("UIRenderers.populateLoreEntrySelectForCharacterLinkingUI: Select element not found."); return; }
-        const currentCharacter = appState.getCurrentProfileChar(); // appState is global
+        const currentCharacter = appState.getCurrentProfileChar();
         const linkButton = Utils.getElem('link-lore-to-char-btn');
         if (!currentCharacter) { selectElement.innerHTML = '<option value="">-- Select char first --</option>'; selectElement.disabled = true; if(linkButton) Utils.disableBtn('link-lore-to-char-btn', true); return; }
         selectElement.disabled = false; if(linkButton) Utils.disableBtn('link-lore-to-char-btn', false);
@@ -607,7 +612,7 @@ var UIRenderers = {
         const selector = Utils.getElem('scene-context-type-filter');
         if (!selector) { console.warn("UIRenderers.populateSceneContextTypeFilterUI: Scene context type filter not found."); return; }
         selector.innerHTML = '<option value="">-- All Relevant Lore Types --</option>';
-        const relevantLoreTypes = [LORE_TYPES[0], LORE_TYPES[1]]; // LORE_TYPES is global
+        const relevantLoreTypes = [LORE_TYPES[0], LORE_TYPES[1]];
         relevantLoreTypes.forEach(type => {
             const option = document.createElement('option'); option.value = type; option.textContent = type; selector.appendChild(option);
         });
@@ -653,7 +658,7 @@ var UIRenderers = {
                     appState.activeSceneNpcIds,
                     App.handleToggleNpcInScene,
                     CharacterService.handleSelectCharacterForDetails,
-                    null
+                    null // No specific context, should show all NPCs by default
                 );
             }
         }
@@ -689,30 +694,40 @@ var UIRenderers = {
             dashboardContentElement.innerHTML = `<p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>`;
             return;
         }
+        
+        let sortedSelectedPcs = [...selectedPcs];
+        if (currentlyExpandedAbility === 'STR') {
+             sortedSelectedPcs.sort((a,b) => {
+                const scoreA = (a.vtt_data?.abilities?.str?.value ?? a.system?.abilities?.str?.value) || 10;
+                const scoreB = (b.vtt_data?.abilities?.str?.value ?? b.system?.abilities?.str?.value) || 10;
+                return scoreB - scoreA; // Sort descending by Strength
+            });
+        } else {
+            sortedSelectedPcs.sort((a, b) => a.name.localeCompare(b.name)); // Default sort by name
+        }
 
-        selectedPcs.forEach(pc => {
+
+        sortedSelectedPcs.forEach(pc => {
             const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || pc.vtt_data?.details?.level || 1;
             pc.calculatedProfBonus = DNDCalculations.getProficiencyBonus(pcLevel);
         });
 
         let quickViewHTML = this.createPcQuickViewSectionHTML(true);
-        const sortedSelectedPcsByName = [...selectedPcs].sort((a, b) => a.name.localeCompare(b.name));
-        sortedSelectedPcsByName.forEach(pc => {
+        sortedSelectedPcs.forEach(pc => { // Use the potentially sorted list
             quickViewHTML += this.generatePcQuickViewCardHTML(pc, true);
         });
         quickViewHTML += `</div>`;
         dashboardContentElement.innerHTML += quickViewHTML;
 
-        const abilitiesForTable = ABILITY_KEYS_ORDER.map(k => k.toUpperCase()); // ABILITY_KEYS_ORDER is global
+        const abilitiesForTable = ABILITY_KEYS_ORDER.map(k => k.toUpperCase());
         let mainStatsTableHTML = `<h4>Ability Scores Overview</h4><div class="table-wrapper"><table id="main-stats-table"><thead><tr><th>Character</th>`;
         abilitiesForTable.forEach(ablKey => {
             const isExpanded = currentlyExpandedAbility === ablKey;
             const arrow = isExpanded ? '▼' : '►';
-            // App.toggleAbilityExpansion will be global
             mainStatsTableHTML += `<th class="clickable-ability-header" data-ability="${ablKey}" onclick="toggleAbilityExpansion('${ablKey}')">${ablKey} <span class="arrow-indicator">${arrow}</span></th>`;
         });
         mainStatsTableHTML += `</tr></thead><tbody>`;
-        sortedSelectedPcsByName.forEach(pc => {
+        sortedSelectedPcs.forEach(pc => { // Use the potentially sorted list
             mainStatsTableHTML += `<tr><td>${pc.name}</td>`;
             ABILITY_KEYS_ORDER.forEach(ablKey => {
                 const score = (pc.vtt_data?.abilities?.[ablKey]?.value ?? pc.system?.abilities?.[ablKey]?.value) || 10;
@@ -733,22 +748,21 @@ var UIRenderers = {
             expansionDiv.className = 'expanded-ability-content';
             expansionDiv.style.display = (currentlyExpandedAbility === ablKey) ? 'block' : 'none';
             if (currentlyExpandedAbility === ablKey && selectedPcs.length > 0) {
-                this.populateExpandedAbilityDetailsUI(ablKey, expansionDiv, selectedPcs);
+                this.populateExpandedAbilityDetailsUI(ablKey, expansionDiv, sortedSelectedPcs); // Pass sorted list
             }
             abilityExpansionContainer.appendChild(expansionDiv);
         });
 
         let skillsTableHTML = `<h4>Skills Overview</h4><div class="table-wrapper"><table id="skills-overview-table"><thead><tr><th>Character</th>`;
-        for (const skillKey in SKILL_NAME_MAP) { // SKILL_NAME_MAP is global
+        for (const skillKey in SKILL_NAME_MAP) {
             const skillFullName = SKILL_NAME_MAP[skillKey].replace(/\s\(...\)/, '');
             const isExpanded = currentlyExpandedSkill === skillKey;
             const arrow = isExpanded ? '▼' : '►';
-            // App.toggleSkillExpansion will be global
             skillsTableHTML += `<th class="clickable-skill-header" data-skill-key="${skillKey}" onclick="toggleSkillExpansion('${skillKey}')">${skillFullName} <span class="arrow-indicator">${arrow}</span></th>`;
         }
         skillsTableHTML += `</tr></thead><tbody>`;
-        let pcsForSkillTable = [...selectedPcs];
-        if (skillSortKey) {
+        let pcsForSkillTable = [...selectedPcs]; // Use a copy of the already name-sorted or strength-sorted list
+        if (skillSortKey && skillSortKey !== 'STR') { // Only re-sort if skillSortKey is active and not STR (which is handled above)
             pcsForSkillTable.sort((a,b) => {
                 const skillAData = a.vtt_data?.skills?.[skillSortKey] ?? a.system?.skills?.[skillSortKey];
                 const skillBData = b.vtt_data?.skills?.[skillSortKey] ?? b.system?.skills?.[skillSortKey];
@@ -767,9 +781,12 @@ var UIRenderers = {
                     skillBData?.value || 0,
                     b.calculatedProfBonus
                 );
-                return valB - valA; // Sort descending
+                return valB - valA;
             });
-        } else { pcsForSkillTable.sort((a,b) => a.name.localeCompare(b.name)); }
+        } else if (!skillSortKey && currentlyExpandedAbility !== 'STR') { // Default sort by name if no skill sort and not STR sorted
+             pcsForSkillTable.sort((a,b) => a.name.localeCompare(b.name));
+        }
+
 
         pcsForSkillTable.forEach(pc => {
             skillsTableHTML += `<tr><td>${pc.name}</td>`;
@@ -779,7 +796,6 @@ var UIRenderers = {
                 const defaultAbilityAbbrevMatch = SKILL_NAME_MAP[skillKey].match(/\(([^)]+)\)/);
                 const defaultAbilityAbbrev = defaultAbilityAbbrevMatch ? defaultAbilityAbbrevMatch[1].toLowerCase() : 'int';
                 const abilityKeyForSkill = skillData?.ability || defaultAbilityAbbrev;
-
                 const abilitiesSource = pc.vtt_data?.abilities ?? pc.system?.abilities;
 
                 if (abilitiesSource?.[abilityKeyForSkill] && typeof pc.calculatedProfBonus !== 'undefined') {
@@ -803,7 +819,7 @@ var UIRenderers = {
             expansionDiv.className = 'expanded-skill-content';
             expansionDiv.style.display = (currentlyExpandedSkill === skillKey) ? 'block' : 'none';
             if (currentlyExpandedSkill === skillKey && selectedPcs.length > 0) {
-                this.populateExpandedSkillDetailsUI(skillKey, expansionDiv, selectedPcs);
+                this.populateExpandedSkillDetailsUI(skillKey, expansionDiv, pcsForSkillTable); // Use the potentially skill-sorted list
             }
             skillExpansionContainer.appendChild(expansionDiv);
         }
@@ -812,51 +828,102 @@ var UIRenderers = {
     populateExpandedAbilityDetailsUI: function(ablKey, expansionDiv, selectedPcsInput) {
         console.log("UIRenderers.populateExpandedAbilityDetailsUI for", ablKey);
         if (!expansionDiv) { console.error("populateExpandedAbilityDetailsUI: expansionDiv is null for", ablKey); return; }
-        if (!selectedPcsInput || selectedPcsInput.length === 0) { expansionDiv.innerHTML = '<p><em>Select PCs to view ability details.</em></p>'; return; }
+        
+        let sortedPcs = [...selectedPcsInput]; // Use the passed-in list which might already be sorted by STR
+        if (ablKey.toLowerCase() !== 'str') { // If not STR, sort by the current ability for this display
+            sortedPcs.sort((a, b) => {
+                const scoreA = (a.vtt_data?.abilities?.[ablKey.toLowerCase()]?.value ?? a.system?.abilities?.[ablKey.toLowerCase()]?.value) || 10;
+                const scoreB = (b.vtt_data?.abilities?.[ablKey.toLowerCase()]?.value ?? b.system?.abilities?.[ablKey.toLowerCase()]?.value) || 10;
+                return scoreB - scoreA;
+            });
+        }
+
+
+        if (!sortedPcs || sortedPcs.length === 0) { expansionDiv.innerHTML = '<p><em>Select PCs to view ability details.</em></p>'; return; }
 
         expansionDiv.innerHTML = `<h5>${ablKey.toUpperCase()} Score Details & Comparisons</h5>`;
-        // Bar chart for ability score
         const barChartContainer = document.createElement('div');
         barChartContainer.className = 'ability-bar-chart-container';
         expansionDiv.appendChild(barChartContainer);
-        selectedPcsInput.forEach(pc => {
+        sortedPcs.forEach(pc => {
             const abilitiesSource = pc.vtt_data?.abilities ?? pc.system?.abilities;
             const score = abilitiesSource?.[ablKey.toLowerCase()]?.value || 10;
             const mod = DNDCalculations.getAbilityModifier(score);
-            barChartContainer.innerHTML += UIRenderers.generateBarChartRowHTML(pc.name, score, mod, 20, 10); // Max score 20, average 10
+            barChartContainer.innerHTML += UIRenderers.generateBarChartRowHTML(pc.name, score, mod, 20, 10);
         });
 
-        // Table for derived stats
+        // Table for derived stats based on the ability
+        let derivedTableHTML = `<h5>${ablKey.toUpperCase()} Derived Stats & Skills</h5><table class="detailed-pc-ability-table">`;
+        derivedTableHTML += `<thead><tr><th>PC Name</th>`;
+
+        // Add relevant skill headers for this ability
+        for (const skillKey in SKILL_NAME_MAP) {
+            const skillNameParts = SKILL_NAME_MAP[skillKey].match(/\(([^)]+)\)/);
+            const skillAbilityKey = skillNameParts ? skillNameParts[1].toLowerCase() : 'int';
+            if (skillAbilityKey === ablKey.toLowerCase()) {
+                derivedTableHTML += `<th>${SKILL_NAME_MAP[skillKey].replace(/\s\(...\)/, '')} Bonus</th>`;
+            }
+        }
+        // Add other derived stat headers
         if (ablKey.toLowerCase() === 'str') {
-            let strTable = `<h5>Strength Derived Stats</h5><table class="derived-stats-table"><thead><tr><th>PC Name</th><th>Carry Cap.</th><th>Push/Drag/Lift</th><th>Long Jump (S)</th><th>Long Jump (R)</th><th>High Jump (S)</th><th>High Jump (R)</th></tr></thead><tbody>`;
-            selectedPcsInput.forEach(pc => {
-                const strScore = (pc.vtt_data?.abilities?.str?.value ?? pc.system?.abilities?.str?.value) || 10;
-                strTable += `<tr><td>${pc.name}</td>
-                    <td>${DNDCalculations.carryingCapacity(strScore)} lbs</td>
-                    <td>${DNDCalculations.pushDragLift(strScore)} lbs</td>
-                    <td>${DNDCalculations.longJump(strScore, false)} ft</td>
-                    <td>${DNDCalculations.longJump(strScore, true)} ft</td>
-                    <td>${DNDCalculations.highJump(strScore, false)} ft</td>
-                    <td>${DNDCalculations.highJump(strScore, true)} ft</td>
-                </tr>`;
-            });
-            strTable += `</tbody></table>`;
-            expansionDiv.innerHTML += strTable;
+            derivedTableHTML += `<th>Melee Atk (STR)</th><th>Melee Dmg (STR)</th><th>Carry Cap.</th><th>Push/Drag/Lift</th><th>Encumbered At</th><th>Heavily Enc. At</th>`;
+        } else if (ablKey.toLowerCase() === 'dex') {
+            derivedTableHTML += `<th>AC (Unarmored)</th><th>Initiative Bonus</th><th>Finesse Atk (DEX)</th><th>Ranged Atk (DEX)</th>`;
+        } else if (ablKey.toLowerCase() === 'con') {
+            derivedTableHTML += `<th>HP Bonus/Lvl</th><th>Hold Breath</th>`;
+        } else if (ablKey.toLowerCase() === 'wis') {
+             // Passive perception is now on quick card, specific wisdom skills handled in skill loop
         }
-        // Add similar tables for other abilities if they have specific derived stats not covered by skills
-        if (ablKey.toLowerCase() === 'con') {
-            let conTable = `<h5>Constitution Derived Stats</h5><table class="derived-stats-table"><thead><tr><th>PC Name</th><th>HP Bonus/Lvl</th><th>Hold Breath</th></tr></thead><tbody>`;
-            selectedPcsInput.forEach(pc => {
-                const conScore = (pc.vtt_data?.abilities?.con?.value ?? pc.system?.abilities?.con?.value) || 10;
-                const conMod = DNDCalculations.getAbilityModifier(conScore);
-                conTable += `<tr><td>${pc.name}</td>
-                    <td>${conMod >= 0 ? '+' : ''}${conMod}</td>
-                    <td>${DNDCalculations.holdBreath(conScore)}</td>
-                </tr>`;
-            });
-            conTable += `</tbody></table>`;
-            expansionDiv.innerHTML += conTable;
-        }
+        // INT and CHA have skills but fewer unique derived stats not covered by skills or general spellcasting stats
+        derivedTableHTML += `</tr></thead><tbody>`;
+
+        sortedPcs.forEach(pc => {
+            derivedTableHTML += `<tr><td>${pc.name}</td>`;
+            const abilitiesSource = pc.vtt_data?.abilities ?? pc.system?.abilities;
+            const score = abilitiesSource?.[ablKey.toLowerCase()]?.value || 10;
+            const mod = DNDCalculations.getAbilityModifier(score);
+
+            for (const skillKey in SKILL_NAME_MAP) {
+                const skillNameParts = SKILL_NAME_MAP[skillKey].match(/\(([^)]+)\)/);
+                const skillAbilityKey = skillNameParts ? skillNameParts[1].toLowerCase() : 'int';
+                if (skillAbilityKey === ablKey.toLowerCase()) {
+                    const skillData = pc.vtt_data?.skills?.[skillKey] ?? pc.system?.skills?.[skillKey];
+                    const bonus = DNDCalculations.calculateSkillBonus(score, skillData?.value || 0, pc.calculatedProfBonus);
+                    derivedTableHTML += `<td>${bonus >= 0 ? '+' : ''}${bonus}</td>`;
+                }
+            }
+
+            if (ablKey.toLowerCase() === 'str') {
+                derivedTableHTML += `<td>${mod + pc.calculatedProfBonus >= 0 ? '+' : ''}${mod + pc.calculatedProfBonus}</td>`; // Melee Atk
+                derivedTableHTML += `<td>${mod >= 0 ? '+' : ''}${mod}</td>`; // Melee Dmg
+                derivedTableHTML += `<td>${DNDCalculations.carryingCapacity(score)} lbs</td>`;
+                derivedTableHTML += `<td>${DNDCalculations.pushDragLift(score)} lbs</td>`;
+                derivedTableHTML += `<td>${DNDCalculations.carryingCapacity(score)/3} lbs</td>`; // Encumbered
+                derivedTableHTML += `<td>${(DNDCalculations.carryingCapacity(score)/3)*2} lbs</td>`; // Heavily Encumbered
+
+            } else if (ablKey.toLowerCase() === 'dex') {
+                const dexScoreForAC = (pc.vtt_data?.abilities?.dex?.value ?? pc.system?.abilities?.dex?.value) || 10;
+                const conScoreForAC = (pc.vtt_data?.abilities?.con?.value ?? pc.system?.abilities?.con?.value) || 10;
+                const wisScoreForAC = (pc.vtt_data?.abilities?.wis?.value ?? pc.system?.abilities?.wis?.value) || 10;
+                let acDesc = DNDCalculations.getUnarmoredAC(DNDCalculations.getAbilityModifier(dexScoreForAC)); // Default
+                const classNames = DNDCalculations.getCharacterClassNames(pc);
+                if(classNames.includes('monk')) acDesc = DNDCalculations.getMonkUnarmoredAC(DNDCalculations.getAbilityModifier(dexScoreForAC), DNDCalculations.getAbilityModifier(wisScoreForAC));
+                else if(classNames.includes('barbarian')) acDesc = DNDCalculations.getBarbarianUnarmoredAC(DNDCalculations.getAbilityModifier(dexScoreForAC), DNDCalculations.getAbilityModifier(conScoreForAC));
+
+                derivedTableHTML += `<td>${acDesc}</td>`;
+                const initiativeBonus = DNDCalculations.getAbilityModifier((pc.vtt_data?.abilities?.[pc.vtt_data?.attributes?.init?.ability || 'dex']?.value ?? pc.system?.abilities?.[pc.system?.attributes?.init?.ability || 'dex']?.value) || 10) + (parseInt(pc.vtt_data?.attributes?.init?.bonus ?? pc.system?.attributes?.init?.bonus) || 0);
+                derivedTableHTML += `<td>${initiativeBonus >= 0 ? '+' : ''}${initiativeBonus}</td>`;
+                derivedTableHTML += `<td>${mod + pc.calculatedProfBonus >= 0 ? '+' : ''}${mod + pc.calculatedProfBonus}</td>`; // Finesse Atk
+                derivedTableHTML += `<td>${mod + pc.calculatedProfBonus >= 0 ? '+' : ''}${mod + pc.calculatedProfBonus}</td>`; // Ranged Atk
+
+            } else if (ablKey.toLowerCase() === 'con') {
+                derivedTableHTML += `<td>${mod >= 0 ? '+' : ''}${mod}</td>`;
+                derivedTableHTML += `<td>${DNDCalculations.holdBreath(score)}</td>`;
+            }
+            derivedTableHTML += `</tr>`;
+        });
+        derivedTableHTML += `</tbody></table>`;
+        expansionDiv.innerHTML += derivedTableHTML;
     },
 
     populateExpandedSkillDetailsUI: function(skillKey, expansionDiv, selectedPcs) {
@@ -877,14 +944,14 @@ var UIRenderers = {
             const abilitiesSource = pc.vtt_data?.abilities ?? pc.system?.abilities;
             const abilityScore = abilitiesSource?.[abilityKeyForSkill]?.value || 10;
             const bonus = DNDCalculations.calculateSkillBonus(abilityScore, skillData?.value || 0, pc.calculatedProfBonus);
-            barChartContainer.innerHTML += UIRenderers.generateBarChartRowHTML(pc.name, bonus, bonus, 10, 0); // Max bonus ~+10, average 0
+            barChartContainer.innerHTML += UIRenderers.generateBarChartRowHTML(pc.name, bonus, bonus, 10, 0);
         });
          expansionDiv.innerHTML += `<p><em>Passive ${skillFullName}: Calculated as 10 + Skill Bonus.</em></p>`;
     },
 
     generateBarChartRowHTML: function(pcName, value, modifier, maxValue = 20, neutralValue = 10) {
         const modDisplay = modifier >= 0 ? `+${modifier}` : modifier;
-        const percentage = ((value - (neutralValue - (maxValue - neutralValue))) / (2 * (maxValue - neutralValue))) * 100; // Normalize from min to max possible range
+        const percentage = ((value - (neutralValue - (maxValue - neutralValue))) / (2 * (maxValue - neutralValue))) * 100;
         const zeroOffsetPercentage = ((neutralValue - (neutralValue - (maxValue - neutralValue))) / (2 * (maxValue - neutralValue))) * 100;
 
         let barLeft, barWidth;
@@ -905,7 +972,7 @@ var UIRenderers = {
             if (dashboardContentElement) dashboardContentElement.innerHTML = `<p>Error loading PC. <button onclick="handleBackToDashboardOverview()">Back to Dashboard Overview</button></p>`;
             return;
         }
-        dashboardContentElement.innerHTML = ''; // Clear previous content
+        dashboardContentElement.innerHTML = ''; 
 
         const pcLevel = pcData.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pcData.system?.details?.level || pcData.vtt_data?.details?.level || 1;
         pcData.calculatedProfBonus = DNDCalculations.getProficiencyBonus(pcLevel);
@@ -914,6 +981,23 @@ var UIRenderers = {
         let sheetHTML = `<div class="detailed-pc-sheet">
             <button class="close-detailed-pc-sheet-btn" onclick="handleBackToDashboardOverview()" title="Back to Dashboard Overview">&times;</button>
             <h3>${pcData.name} - Level ${pcLevel} ${pcData.vtt_data?.details?.race || pcData.system?.details?.race || ''} ${pcData.vtt_data?.details?.originalClass || DNDCalculations.getCharacterClassNames(pcData).join('/') || ''}</h3>`;
+
+        // Abilities Table
+        sheetHTML += `<div class="pc-section"><h4>Ability Scores</h4><div class="table-wrapper"><table class="detailed-pc-ability-table"><thead><tr>`;
+        ABILITY_KEYS_ORDER.forEach(key => sheetHTML += `<th>${key.toUpperCase()}</th>`);
+        sheetHTML += `</tr></thead><tbody><tr>`;
+        ABILITY_KEYS_ORDER.forEach(key => {
+            const score = (pcData.vtt_data?.abilities?.[key]?.value ?? pcData.system?.abilities?.[key]?.value) || 10;
+            sheetHTML += `<td>${score}</td>`;
+        });
+        sheetHTML += `</tr><tr>`;
+        ABILITY_KEYS_ORDER.forEach(key => {
+            const score = (pcData.vtt_data?.abilities?.[key]?.value ?? pcData.system?.abilities?.[key]?.value) || 10;
+            const mod = DNDCalculations.getAbilityModifier(score);
+            sheetHTML += `<td>(${mod >= 0 ? '+' : ''}${mod})</td>`;
+        });
+        sheetHTML += `</tr></tbody></table></div></div>`;
+
 
         // Derived Combat Stats Section
         sheetHTML += `<div class="pc-section"><h4>Derived Combat Stats</h4><table class="detailed-pc-table">`;
@@ -931,55 +1015,45 @@ var UIRenderers = {
         sheetHTML += `<tr><th>Spell Attack Bonus</th><td>+${spellAtk}</td></tr>`;
         sheetHTML += `</table></div>`;
 
-        // Abilities Section
-        sheetHTML += `<div class="pc-section"><h4>Abilities & Derived Stats</h4>`;
-        ABILITY_KEYS_ORDER.forEach(key => {
-            const ability = (pcData.vtt_data?.abilities?.[key] ?? pcData.system?.abilities?.[key]) || { value: 10 };
-            const score = ability.value;
-            const mod = DNDCalculations.getAbilityModifier(score);
-            sheetHTML += `<div class="pc-info-grid" style="margin-bottom:10px; padding-bottom:10px; border-bottom: 1px dotted #ddd;">`;
-            sheetHTML += `<p><strong>${key.toUpperCase()}:</strong> ${score} (${mod >= 0 ? '+' : ''}${mod})</p>`;
-
-            if (key === 'str') {
-                sheetHTML += `<p><strong>Carry Cap:</strong> ${DNDCalculations.carryingCapacity(score)} lbs</p>`;
-                sheetHTML += `<p><strong>Push/Drag/Lift:</strong> ${DNDCalculations.pushDragLift(score)} lbs</p>`;
-                sheetHTML += `<p><strong>Stand Long Jump:</strong> ${DNDCalculations.longJump(score, false)} ft</p><p><strong>Run Long Jump:</strong> ${DNDCalculations.longJump(score, true)} ft</p>`;
-                sheetHTML += `<p><strong>Stand High Jump:</strong> ${DNDCalculations.highJump(score, false)} ft</p><p><strong>Run High Jump:</strong> ${DNDCalculations.highJump(score, true)} ft</p>`;
-            } else if (key === 'dex') {
-                // Initiative is in derived stats. AC explanation:
-                let acExplanation = "Contributes to AC if unarmored or wearing light/medium armor.";
-                const equippedArmorItem = pcData.items?.find(item => item.type === 'equipment' && item.system?.equipped && item.system?.armor && item.system.armor.type !== 'shield');
-                if (equippedArmorItem && equippedArmorItem.system?.armor) {
-                    if (equippedArmorItem.system.armor.type === 'heavy') acExplanation = "Dex modifier does not apply to AC with heavy armor.";
-                    else if (equippedArmorItem.system.armor.type === 'medium' && typeof equippedArmorItem.system.armor.dex === 'number') acExplanation = `Dex modifier (max +${equippedArmorItem.system.armor.dex}) applies to AC.`;
-                }
-                sheetHTML += `<p><em>${acExplanation}</em></p>`;
-            } else if (key === 'con') {
-                const hpBonus = DNDCalculations.getAbilityModifier(score);
-                sheetHTML += `<p><strong>HP Bonus/Lvl:</strong> ${hpBonus >= 0 ? '+' : ''}${hpBonus}</p>`;
-                sheetHTML += `<p><strong>Hold Breath:</strong> ${DNDCalculations.holdBreath(score)}</p>`;
-            }
-            sheetHTML += `</div>`;
-        });
-        sheetHTML += `</div>`;
-
-
-        // Skills Section
-        sheetHTML += `<div class="pc-section"><h4>Skills</h4><table class="detailed-pc-table"><thead><tr><th>Skill</th><th>Bonus</th><th>Passive</th></tr></thead><tbody>`;
-        for (const skillKey in SKILL_NAME_MAP) {
-            const skillData = pcData.vtt_data?.skills?.[skillKey] ?? pcData.system?.skills?.[skillKey];
-            const defaultAbilityAbbrevMatch = SKILL_NAME_MAP[skillKey].match(/\(([^)]+)\)/);
-            const defaultAbilityAbbrev = defaultAbilityAbbrevMatch ? defaultAbilityAbbrevMatch[1].toLowerCase() : 'int';
-            const abilityKeyForSkill = skillData?.ability || defaultAbilityAbbrev;
+        // Skills & Other Stats by Ability
+        ABILITY_KEYS_ORDER.forEach(ablKey => {
+            sheetHTML += `<div class="pc-section"><h4>${ablKey.toUpperCase()} Based Skills & Stats</h4><table class="detailed-pc-table">`;
             const abilitiesSource = pcData.vtt_data?.abilities ?? pcData.system?.abilities;
-            const abilityScore = abilitiesSource?.[abilityKeyForSkill]?.value || 10;
-            const proficiencyValue = skillData?.value || 0; // 0=None, 1=Prof, 2=Exp
+            const score = abilitiesSource?.[ablKey]?.value || 10;
+            const mod = DNDCalculations.getAbilityModifier(score);
 
-            const bonus = DNDCalculations.calculateSkillBonus(abilityScore, proficiencyValue, pcData.calculatedProfBonus);
-            const passive = DNDCalculations.calculatePassiveSkill(abilityScore, proficiencyValue, pcData.calculatedProfBonus);
-            sheetHTML += `<tr><td>${SKILL_NAME_MAP[skillKey]}</td><td>${bonus >= 0 ? '+' : ''}${bonus}</td><td>${passive}</td></tr>`;
-        }
-        sheetHTML += `</tbody></table></div>`;
+            // Skills for this ability
+            for (const skillKey in SKILL_NAME_MAP) {
+                const skillNameParts = SKILL_NAME_MAP[skillKey].match(/\(([^)]+)\)/);
+                const skillAbilityKeyFromMap = skillNameParts ? skillNameParts[1].toLowerCase() : 'int';
+                if (skillAbilityKeyFromMap === ablKey) {
+                    const skillData = pcData.vtt_data?.skills?.[skillKey] ?? pcData.system?.skills?.[skillKey];
+                    const proficiencyValue = skillData?.value || 0;
+                    const bonus = DNDCalculations.calculateSkillBonus(score, proficiencyValue, pcData.calculatedProfBonus);
+                    const passive = DNDCalculations.calculatePassiveSkill(score, proficiencyValue, pcData.calculatedProfBonus);
+                    sheetHTML += `<tr><td>${SKILL_NAME_MAP[skillKey].replace(/\s\(...\)/, '')}</td><td>Bonus: ${bonus >= 0 ? '+' : ''}${bonus}</td><td>Passive: ${passive}</td></tr>`;
+                }
+            }
+            // Other derived stats for this ability
+            if (ablKey === 'str') {
+                sheetHTML += `<tr><td>Melee Attack (STR)</td><td colspan="2">${mod + pcData.calculatedProfBonus >= 0 ? '+' : ''}${mod + pcData.calculatedProfBonus}</td></tr>`;
+                sheetHTML += `<tr><td>Melee Damage (STR)</td><td colspan="2">${mod >= 0 ? '+' : ''}${mod}</td></tr>`;
+                sheetHTML += `<tr><td>Carry Capacity</td><td colspan="2">${DNDCalculations.carryingCapacity(score)} lbs</td></tr>`;
+                sheetHTML += `<tr><td>Push/Drag/Lift</td><td colspan="2">${DNDCalculations.pushDragLift(score)} lbs</td></tr>`;
+                 sheetHTML += `<tr><td>Encumbered At</td><td colspan="2">${Math.floor(DNDCalculations.carryingCapacity(score)/3)} lbs</td></tr>`;
+                sheetHTML += `<tr><td>Heavily Encumbered At</td><td colspan="2">${Math.floor((DNDCalculations.carryingCapacity(score)/3)*2)} lbs</td></tr>`;
+            } else if (ablKey === 'dex') {
+                 // AC and Initiative are in derived stats section
+                sheetHTML += `<tr><td>Finesse Attack (DEX)</td><td colspan="2">${mod + pcData.calculatedProfBonus >= 0 ? '+' : ''}${mod + pcData.calculatedProfBonus}</td></tr>`;
+                sheetHTML += `<tr><td>Ranged Attack (DEX)</td><td colspan="2">${mod + pcData.calculatedProfBonus >= 0 ? '+' : ''}${mod + pcData.calculatedProfBonus}</td></tr>`;
+            } else if (ablKey === 'con') {
+                sheetHTML += `<tr><td>HP Bonus/Level</td><td colspan="2">${mod >= 0 ? '+' : ''}${mod}</td></tr>`;
+                sheetHTML += `<tr><td>Hold Breath</td><td colspan="2">${DNDCalculations.holdBreath(score)}</td></tr>`;
+            }
+            // WIS, INT, CHA primarily have skills listed above. Spellcasting stats are in derived combat stats.
+            sheetHTML += `</table></div>`;
+        });
+
 
         // Other Details: Traits, Languages, Proficiencies
         sheetHTML += `<div class="pc-section"><h4>Other Details</h4>`;
@@ -995,7 +1069,7 @@ var UIRenderers = {
         sheetHTML += `</div>`;
 
 
-        sheetHTML += `</div>`; // End of detailed-pc-sheet
+        sheetHTML += `</div>`;
         dashboardContentElement.innerHTML = sheetHTML;
     },
 
@@ -1031,13 +1105,11 @@ var UIRenderers = {
                 }
             }
         }
+        Utils.disableBtn('generate-dialogue-btn', activeNpcCount === 0);
+        console.log("App.js: App.updateMainView finished.");
     }
 };
 
-// Re-export functions that are called directly from HTML onclick attributes
 window.closeLoreDetailViewUI = UIRenderers.closeLoreDetailViewUI;
-// Note: Other functions like toggleAbilityExpansion, addSuggestedMemoryAsActual etc.,
-// are typically called from App.js event handlers or dynamically generated HTML.
-// App.js will handle their global exposure if needed.
 
 console.log("uiRenderers.js: All functions are now part of the UIRenderers namespace. Parsing FINISHED.");

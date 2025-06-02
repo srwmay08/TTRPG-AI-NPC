@@ -27,22 +27,23 @@
         <div id="left-column-content">
             <div id="tab-scene" class="tab-content active-tab">
                 <h3>Scene Configuration</h3>
-                <div id="scene-context-setup" class="collapsible-section">
-                    <h4>Scene Context Filter</h4>
-                    <div class="collapsible-content">
+                <div id="scene-context-filters-direct">
+                    <div>
                         <label for="scene-context-type-filter">Filter by Lore Type:</label>
                         <select id="scene-context-type-filter">
                             <option value="">-- All Relevant Types --</option>
-                            </select>
+                        </select>
+                    </div>
+                    <div>
                         <label for="scene-context-selector">Select Specific Location/Organization:</label>
                         <select id="scene-context-selector">
                             <option value="">-- Select Context (Shows All NPCs Below) --</option>
-                            </select>
+                        </select>
                     </div>
                 </div>
                 <div id="npc-list-for-scene-section" class="collapsible-section"> <h4>NPCs Present in Scene Context</h4>
                     <div class="collapsible-content character-list">
-                        <div id="character-list-scene-tab"><ul><li><em>Select a context to see relevant NPCs or check the NPCs Tab for all.</em></li></ul></div>
+                        <div id="character-list-scene-tab"><ul><li><em>Loading NPCs based on context...</em></li></ul></div>
                     </div>
                 </div>
             </div>
@@ -101,7 +102,7 @@
                                 <h5>Currently Associated Files:</h5>
                                 <ul id="associated-history-list"><li><em>None associated.</em></li></ul>
                                 <h5>History Content:</h5>
-                                <div id="history-content-display"><p><em>No history content loaded.</em></p></div>
+                                <div id="history-content-display"><p><em>No history files associated to display content.</em></p></div>
                             </div>
                         </div>
                         <div id="character-lore-links-section" class="collapsible-section collapsed">

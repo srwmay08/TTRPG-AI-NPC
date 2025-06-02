@@ -93,6 +93,24 @@ hr.tab-hr {
     flex-grow: 1;
 }
 
+#scene-context-filters-direct {
+    padding-bottom: 10px; /* Add some spacing below the direct filters */
+    margin-bottom: 10px;
+    border-bottom: 1px dashed #ccc;
+}
+#scene-context-filters-direct div {
+    margin-bottom: 8px;
+}
+#scene-context-filters-direct label {
+    display: block;
+    margin-bottom: 3px;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+#scene-context-filters-direct select {
+    width: calc(100% - 16px); /* Consistent with other selects */
+}
+
 
 #resizer {
     width: 10px;
@@ -198,18 +216,18 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
     gap: 10px; /* Consistent gap */
     margin-top: 10px;
     margin-bottom: 20px;
-    /* overflow-x: auto; Removed as wrap handles overflow differently */
-    padding-bottom: 5px; /* Add some padding if scrollbars appear due to content */
+    padding-bottom: 5px; 
 }
 .pc-stat-card { border: 1px solid #ddd; border-radius: 4px; padding: 10px; background-color: #f9f9f9; flex: 1 1 200px; min-width: 180px; box-sizing: border-box; }
 .pc-stat-card h4 { margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 8px; font-size: 1.1em; }
 .pc-stat-card p { margin: 4px 0; font-size: 0.9em; }
 
 .table-wrapper { overflow-x: auto; width: 100%; margin-bottom: 15px; }
-#main-stats-table, #skills-overview-table { min-width: 100%; border-collapse: collapse; font-size: 0.9em; }
+#main-stats-table, #skills-overview-table, .detailed-pc-ability-table { min-width: 100%; border-collapse: collapse; font-size: 0.9em; }
 #main-stats-table th, #main-stats-table td,
-#skills-overview-table th, #skills-overview-table td { border: 1px solid #ddd; padding: 6px; text-align: center; }
-#main-stats-table th, #skills-overview-table th { background-color: #e9ecef; font-weight: bold; }
+#skills-overview-table th, #skills-overview-table td,
+.detailed-pc-ability-table th, .detailed-pc-ability-table td { border: 1px solid #ddd; padding: 6px; text-align: center; }
+#main-stats-table th, #skills-overview-table th, .detailed-pc-ability-table th { background-color: #e9ecef; font-weight: bold; }
 #main-stats-table td:first-child, #skills-overview-table td:first-child { text-align: left; font-weight: bold; }
 
 .clickable-ability-header, .clickable-skill-header { cursor: pointer; color: #0056b3; text-decoration: underline;}
@@ -270,7 +288,6 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
     margin-bottom: 15px;
     padding-bottom: 10px;
     border-bottom: 1px solid #eee;
-    /* overflow-x: auto; Removed as wrap handles overflow differently */
 }
 #pc-quick-view-section-in-scene .pc-stat-card h4 { display: flex; justify-content: space-between; align-items: center; }
 
@@ -305,8 +322,7 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 #tab-npcs #character-profile-main-section > h3 .arrow-indicator { display: inline-block !important; }
 #tab-npcs #character-profile-main-section > h3 { cursor: pointer !important; }
 
-
-#scene-context-setup > h3 {
+#scene-context-setup > h4 { /* Target the h4 inside scene-context-setup specifically if needed */
     cursor: pointer;
     background-color: #d8d8d8;
     padding: 8px 12px;
@@ -319,7 +335,7 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
     border-radius: 3px;
     border: 1px solid #ccc;
 }
-#scene-context-setup > h3 .arrow-indicator {
+#scene-context-setup > h4 .arrow-indicator { /* Changed from h3 to h4 */
     transition: transform 0.2s ease-in-out;
     margin-left: 5px;
 }
@@ -346,5 +362,3 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
     background-color: #e2e6ea; /* Slightly different hover for distinction */
     border-color: #adb5bd;
 }
-
-

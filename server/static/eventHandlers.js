@@ -36,6 +36,9 @@ var EventHandlers = {
 
     setupCollapsibleSections: function() {
         document.querySelectorAll('#left-column .collapsible-section').forEach(section => {
+            // Do not make #scene-context-filters-direct collapsible
+            if (section.id === 'scene-context-filters-direct') return;
+
             const header = section.querySelector('h3, h4');
             if (!header) return;
 
@@ -54,23 +57,27 @@ var EventHandlers = {
                     section.classList.toggle('collapsed');
                     const isCollapsed = section.classList.contains('collapsed');
                     content.style.display = isCollapsed ? 'none' : 'block';
-                    if (arrow) arrow.textContent = isCollapsed ? ' ►' : ' ▼'; // Note: Original had space, removed for consistency
+                    if (arrow) arrow.textContent = isCollapsed ? ' ►' : ' ▼';
                 }
             });
 
             const contentToToggle = section.querySelector(':scope > .collapsible-content');
-            // Determine initial state (simplified from original for clarity, assuming default is collapsed unless specified)
             const initiallyOpenIds = ['pc-list-section-outer', 'npc-list-for-scene-section', 'all-npc-list-management-section', 'create-lore-entry-form-section'];
-            const profileSubSectionOpenIds = ['gm-notes-collapsible-section']; // Sub-sections of profile that should be open
+            const profileSubSectionOpenIds = ['gm-notes-collapsible-section']; 
 
             const isProfileSection = section.id === 'character-profile-main-section';
             const isSubSectionOfProfile = section.parentElement?.parentElement?.id === 'character-profile-main-section';
 
             if (contentToToggle) {
-                let shouldBeOpen = initiallyOpenIds.includes(section.id) || (isProfileSection && !section.classList.contains('collapsed')); // Profile itself might be open by default
+                let shouldBeOpen = initiallyOpenIds.includes(section.id) || (isProfileSection && !section.classList.contains('collapsed'));
                 if (isSubSectionOfProfile) {
                     shouldBeOpen = profileSubSectionOpenIds.includes(section.id);
                 }
+                 // Explicitly keep 'npc-list-for-scene-section' open if it's in the scene tab
+                if (section.id === 'npc-list-for-scene-section') {
+                    shouldBeOpen = true;
+                }
+
 
                 if (shouldBeOpen) {
                     section.classList.remove('collapsed');
@@ -84,7 +91,6 @@ var EventHandlers = {
             }
         });
 
-        // Delegated click handler for PC cards in dashboard
         const pcDashboardContent = Utils.getElem('pc-dashboard-content');
         if (pcDashboardContent) {
             pcDashboardContent.addEventListener('click', function(event) {
@@ -92,7 +98,7 @@ var EventHandlers = {
                 if (clickedCard) {
                     const pcIdToRender = clickedCard.dataset.pcId;
                     if (pcIdToRender) {
-                        const pcData = appState.getCharacterById(pcIdToRender); // appState is global
+                        const pcData = appState.getCharacterById(pcIdToRender);
                         if (pcData) {
                              UIRenderers.renderDetailedPcSheetUI(pcData, Utils.getElem('pc-dashboard-content'));
                         }
@@ -105,7 +111,6 @@ var EventHandlers = {
     },
 
     assignButtonEventHandlers: function() {
-        // These now directly call the namespaced functions
         const saveGmNotesBtn = Utils.getElem('save-gm-notes-btn');
         if (saveGmNotesBtn) saveGmNotesBtn.onclick = CharacterService.handleSaveGmNotes;
 
@@ -119,7 +124,7 @@ var EventHandlers = {
         if (createCharacterBtn) createCharacterBtn.onclick = CharacterService.handleCharacterCreation;
 
         const generateDialogueBtn = Utils.getElem('generate-dialogue-btn');
-        if (generateDialogueBtn) generateDialogueBtn.onclick = App.handleGenerateDialogue; // App namespace
+        if (generateDialogueBtn) generateDialogueBtn.onclick = App.handleGenerateDialogue;
 
         const createLoreBtn = Utils.getElem('create-lore-entry-form')?.querySelector('button');
         if (createLoreBtn) createLoreBtn.onclick = CharacterService.handleCreateLoreEntry;
@@ -129,9 +134,6 @@ var EventHandlers = {
 
         const deleteLoreBtn = Utils.getElem('delete-lore-btn');
         if(deleteLoreBtn) deleteLoreBtn.onclick = CharacterService.handleDeleteLoreEntry;
-
-        // For the close button in lore detail, its onclick is set in HTML to "window.closeLoreDetailViewUI()"
-        // UIRenderers.js ensures window.closeLoreDetailViewUI points to UIRenderers.closeLoreDetailViewUI
 
         const linkLoreToCharBtn = Utils.getElem('link-lore-to-char-btn');
         if (linkLoreToCharBtn) linkLoreToCharBtn.onclick = CharacterService.handleLinkLoreToCharacter;

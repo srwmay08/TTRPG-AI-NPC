@@ -7,13 +7,11 @@ var App = {
             await CharacterService.initializeAppCharacters();
 
             EventHandlers.setupResizer();
-            EventHandlers.setupCollapsibleSections(); // This sets up dashboard card clicks too
+            EventHandlers.setupCollapsibleSections(); 
             EventHandlers.assignButtonEventHandlers(); 
             this.setupTabControls(); 
             this.setupSceneContextSelector();
-            // setupDashboardClickHandlers might be redundant if setupCollapsibleSections handles it,
-            // but explicit call ensures scene view cards are also handled if their structure differs.
-            this.setupDashboardClickHandlers(); // Call to ensure all clickable cards are handled
+            this.setupDashboardClickHandlers(); 
 
             setTimeout(() => this.updateMainView(), 0); 
         } catch (e) {
@@ -47,28 +45,26 @@ var App = {
 
         if (tabName === 'tab-npcs') {
             const currentProfileId = appState.getCurrentProfileCharId();
-            // Attempt to load/re-render profile even if it was previously an error
             CharacterService.handleSelectCharacterForDetails(currentProfileId);
         }
         if (tabName === 'tab-lore' && !appState.getCurrentLoreEntryId()) {
-            if(typeof closeLoreDetailViewUI === 'function'){
+            if(typeof closeLoreDetailViewUI === 'function'){ // Ensure UIRenderers.closeLoreDetailViewUI is globally accessible
                 closeLoreDetailViewUI();
             }
         }
         if (tabName === 'tab-scene') {
-            UIRenderers.renderNpcListForContextUI(
+            UIRenderers.renderNpcListForContextUI( // Default to showing all NPCs if no filter
                 Utils.getElem('character-list-scene-tab'),
                 appState.getAllCharacters(),
                 appState.activeSceneNpcIds,
                 this.handleToggleNpcInScene, 
-                CharacterService.handleSelectCharacterForDetails, 
-                appState.getCurrentSceneContextFilter() 
+                CharacterService.handleSelectCharacterForDetails,
+                appState.getCurrentSceneContextFilter() // Pass current filter or null
             );
         }
     },
 
     setupTabControls: function() {
-        // ... (previous implementation)
         const tabLinks = document.querySelectorAll('#left-column-header .tabs .tab-link');
         if (tabLinks.length > 0) {
             const sceneTabButton = Array.from(tabLinks).find(link => {
@@ -85,7 +81,6 @@ var App = {
     },
 
     setupSceneContextSelector: function() {
-        // ... (previous implementation)
         const typeSelector = Utils.getElem('scene-context-type-filter');
         const entrySelector = Utils.getElem('scene-context-selector');
 
@@ -94,13 +89,13 @@ var App = {
                 UIRenderers.populateSceneContextSelectorUI();
                 if (entrySelector) entrySelector.value = ""; 
                 appState.setCurrentSceneContextFilter(null); 
-                 UIRenderers.renderNpcListForContextUI(
+                 UIRenderers.renderNpcListForContextUI( // Show all NPCs if type filter is cleared but specific entry not
                     Utils.getElem('character-list-scene-tab'),
                     appState.getAllCharacters(),
                     appState.activeSceneNpcIds,
                     this.handleToggleNpcInScene, 
                     CharacterService.handleSelectCharacterForDetails,
-                    null
+                    null 
                 );
             });
         }
@@ -111,7 +106,7 @@ var App = {
                 if (selectedLoreId) {
                     appState.setCurrentSceneContextFilter({ type: 'lore', id: selectedLoreId });
                 } else {
-                    appState.setCurrentSceneContextFilter(null);
+                    appState.setCurrentSceneContextFilter(null); // If "-- Select Specific Context --" is chosen
                 }
                 UIRenderers.renderNpcListForContextUI(
                     Utils.getElem('character-list-scene-tab'),
@@ -119,16 +114,22 @@ var App = {
                     appState.activeSceneNpcIds,
                     this.handleToggleNpcInScene, 
                     CharacterService.handleSelectCharacterForDetails,
-                    appState.getCurrentSceneContextFilter()
+                    appState.getCurrentSceneContextFilter() // This will be null if no specific context, showing all NPCs
                 );
             });
         }
+        // Initial render to show all NPCs if no filter is set by default
+        UIRenderers.renderNpcListForContextUI(
+            Utils.getElem('character-list-scene-tab'),
+            appState.getAllCharacters(),
+            appState.activeSceneNpcIds,
+            this.handleToggleNpcInScene,
+            CharacterService.handleSelectCharacterForDetails,
+            null
+        );
     },
 
     setupDashboardClickHandlers: function() {
-        // This function ensures click handlers are set for PC cards in *both* dashboard and scene views.
-        // Event delegation is used on parent containers.
-
         const handleCardClick = (event) => {
             const clickedCard = event.target.closest('.clickable-pc-card');
             if (clickedCard) {
@@ -136,13 +137,11 @@ var App = {
                 if (pcIdToRender) {
                     const pcData = appState.getCharacterById(pcIdToRender);
                     if (pcData) {
-                        // Determine if we should switch to dashboard view or if already there
                         const pcDashboardView = Utils.getElem('pc-dashboard-view');
                         const dialogueInterface = Utils.getElem('dialogue-interface');
                         if (pcDashboardView.style.display === 'none') {
                             if(dialogueInterface) dialogueInterface.style.display = 'none';
                             pcDashboardView.style.display = 'block';
-                            // If switching views, also hide the scene's quick PC view
                             const pcQuickViewInSceneElem = Utils.getElem('pc-quick-view-section-in-scene');
                             if(pcQuickViewInSceneElem) pcQuickViewInSceneElem.style.display = 'none';
                         }
@@ -154,7 +153,6 @@ var App = {
 
         const pcDashboardContent = Utils.getElem('pc-dashboard-content');
         if (pcDashboardContent) {
-            // Remove existing listener to avoid duplicates if this function is called multiple times
             pcDashboardContent.removeEventListener('click', handleCardClick); 
             pcDashboardContent.addEventListener('click', handleCardClick);
         }
@@ -166,28 +164,7 @@ var App = {
         }
     },
     
-    // handlePcQuickViewCardClick is now effectively merged into setupDashboardClickHandlers's logic
-    // If it were separate, it would look like this:
-    // handlePcQuickViewCardClick: function(pcId) {
-    //     const pcData = appState.getCharacterById(pcId);
-    //     if (pcData) {
-    //         const dialogueInterface = Utils.getElem('dialogue-interface');
-    //         const pcDashboardView = Utils.getElem('pc-dashboard-view');
-    //         const dashboardContent = Utils.getElem('pc-dashboard-content');
-
-    //         if (dialogueInterface) dialogueInterface.style.display = 'none';
-    //         if (pcDashboardView) pcDashboardView.style.display = 'block';
-    //         // Hide the scene's quick PC view if it was clicked
-    //         const pcQuickViewInSceneElem = Utils.getElem('pc-quick-view-section-in-scene');
-    //         if(pcQuickViewInSceneElem) pcQuickViewInSceneElem.style.display = 'none';
-
-
-    //         UIRenderers.renderDetailedPcSheetUI(pcData, dashboardContent);
-    //     }
-    // },
-
     updateMainView: function() {
-        // ... (previous implementation, ensure it calls UIRenderers.updatePcDashboardUI correctly)
         console.log("App.js: App.updateMainView called.");
         const dialogueInterfaceElem = Utils.getElem('dialogue-interface');
         const pcDashboardViewElem = Utils.getElem('pc-dashboard-view');
@@ -230,7 +207,6 @@ var App = {
     },
 
     handleToggleNpcInScene: async function(npcIdStr, npcName) {
-        // ... (previous implementation, ensure calls to UIRenderers, App, CharacterService are correct)
         const multiNpcContainer = Utils.getElem('multi-npc-dialogue-container');
         if (!multiNpcContainer) {
             console.error("Multi-NPC dialogue container not found.");
@@ -285,7 +261,6 @@ var App = {
     },
 
     triggerNpcInteraction: async function(npcIdStr, npcName, payload, isGreeting = false, thinkingMessageId = null) {
-        // ... (previous implementation seems okay)
         const transcriptArea = Utils.getElem(`transcript-${npcIdStr}`);
         if (!transcriptArea) {
             console.error(`Transcript area for NPC ID ${npcIdStr} not found.`);
@@ -320,7 +295,6 @@ var App = {
     },
 
     handleGenerateDialogue: async function() {
-        // ... (previous implementation seems okay)
         const playerUtterance = Utils.getElem('player-utterance').value.trim();
         const sceneContext = Utils.getElem('scene-context').value.trim();
         const speakingPcSelect = Utils.getElem('speaking-pc-select');
@@ -379,19 +353,17 @@ var App = {
     },
 
     handleTogglePcSelection: function(pcIdStr) {
-        // ... (previous implementation seems okay, ensure handleSaveFactionStanding is global or App.handleSaveFactionStanding)
         appState.toggleActivePc(pcIdStr);
         UIRenderers.renderPcListUI(Utils.getElem('active-pc-list'), Utils.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, App.handleTogglePcSelection);
         App.updateMainView();
 
         const currentProfileChar = appState.getCurrentProfileChar();
         if (currentProfileChar && currentProfileChar.character_type === 'NPC') {
-            UIRenderers.renderNpcFactionStandingsUI(currentProfileChar, appState.activePcIds, appState.getAllCharacters(), Utils.getElem('npc-faction-standings-content'), handleSaveFactionStanding); // handleSaveFactionStanding from window
+            UIRenderers.renderNpcFactionStandingsUI(currentProfileChar, appState.activePcIds, appState.getAllCharacters(), Utils.getElem('npc-faction-standings-content'), handleSaveFactionStanding);
         }
     },
 
     handleBackToDashboardOverview: function() {
-        // ... (previous implementation seems okay)
         const dashboardContent = Utils.getElem('pc-dashboard-content');
         if (dashboardContent) {
             const detailedSheet = dashboardContent.querySelector('.detailed-pc-sheet');
@@ -404,19 +376,23 @@ var App = {
     },
 
     toggleAbilityExpansion: function(ablKey) {
-        // ... (previous implementation seems okay)
         const currentAbility = appState.getExpandedAbility();
         if (currentAbility === ablKey) {
             appState.setExpandedAbility(null);
+             if (ablKey === 'STR') appState.setSkillSortKey(null); // Clear STR sort if collapsing STR
         } else {
             appState.setExpandedAbility(ablKey);
             appState.setExpandedSkill(null); 
+            if (ablKey === 'STR') { // If expanding STR, set sort key to STR
+                appState.setSkillSortKey('STR'); // Using 'STR' as a special key for strength sorting
+            } else {
+                appState.setSkillSortKey(null); // Clear sort for other abilities
+            }
         }
         UIRenderers.updatePcDashboardUI(Utils.getElem('pc-dashboard-content'), appState.getAllCharacters(), appState.activePcIds, appState.getExpandedAbility(), appState.getExpandedSkill(), appState.getSkillSortKey());
     },
 
     toggleSkillExpansion: function(skillKey) {
-        // ... (previous implementation seems okay)
         const currentSkill = appState.getExpandedSkill();
         if (currentSkill === skillKey) {
             appState.setExpandedSkill(null);
@@ -430,7 +406,6 @@ var App = {
     },
 
     addSuggestedMemoryAsActual: async function(npcId, memoryContent) {
-        // ... (previous implementation, ensure handleDeleteMemory is global or App.handleDeleteMemory)
         if (!npcId || !memoryContent) return;
         const character = appState.getCharacterById(npcId);
         if (!character || character.character_type !== 'NPC') {
@@ -445,7 +420,7 @@ var App = {
                 charToUpdate.memories = response.updated_memories;
                 appState.updateCharacterInList(charToUpdate);
                 if (appState.getCurrentProfileCharId() === npcId) {
-                    UIRenderers.renderMemoriesUI(charToUpdate.memories, Utils.getElem('character-memories-list'), handleDeleteMemory); // handleDeleteMemory from window
+                    UIRenderers.renderMemoriesUI(charToUpdate.memories, Utils.getElem('character-memories-list'), handleDeleteMemory);
                 }
             }
             alert(`Suggested memory added to ${character.name}.`);
@@ -456,7 +431,6 @@ var App = {
     },
 
     acceptFactionStandingChange: async function(npcIdToUpdate, pcTargetId, newStanding) {
-        // ... (previous implementation, ensure handleSaveFactionStanding is global or App.handleSaveFactionStanding)
         if (!npcIdToUpdate || !pcTargetId || !newStanding) {
             alert("Missing information to update faction standing.");
             return;
@@ -469,13 +443,10 @@ var App = {
         }
 
         if (confirm(`Change ${npc.name}'s standing towards ${pc.name} to ${newStanding}?`)) {
-            await handleSaveFactionStanding(npcIdToUpdate, pcTargetId, newStanding); // handleSaveFactionStanding from window
+            await handleSaveFactionStanding(npcIdToUpdate, pcTargetId, newStanding);
         }
     },
 
-    // These are assigned from CharacterService for direct calls if needed,
-    // but eventHandlers.js should be calling CharacterService.method directly.
-    // This is more of a fallback or for potential direct HTML calls to App.method.
     handleSaveGmNotes: CharacterService.handleSaveGmNotes,
     handleAddMemory: CharacterService.handleAddMemory,
     handleDeleteMemory: CharacterService.handleDeleteMemory,
@@ -491,10 +462,8 @@ var App = {
     handleUnlinkLoreFromCharacter: CharacterService.handleUnlinkLoreFromCharacter
 };
 
-// Ensure 'this' context for initializeApp when called by DOMContentLoaded
 document.addEventListener('DOMContentLoaded', App.initializeApp.bind(App));
 
-// Expose to window ONLY those functions directly called by HTML onclick attributes
 window.openTab = App.openTab;
 window.handleToggleNpcInScene = App.handleToggleNpcInScene;
 window.handleGenerateDialogue = App.handleGenerateDialogue; 
@@ -504,7 +473,3 @@ window.toggleAbilityExpansion = App.toggleAbilityExpansion;
 window.toggleSkillExpansion = App.toggleSkillExpansion; 
 window.addSuggestedMemoryAsActual = App.addSuggestedMemoryAsActual; 
 window.acceptFactionStandingChange = App.acceptFactionStandingChange;
-
-// Functions from CharacterService are re-exported globally in characterService.js
-// for callbacks. If HTML directly calls window.handleSomeCharacterServiceMethod(),
-// those explicit assignments in characterService.js will handle it.
