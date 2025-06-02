@@ -11,15 +11,24 @@ window.createPcQuickViewSectionHTML = function(isForDashboard) {
 
 window.generatePcQuickViewCardHTML = function(pc, isClickableForDetailedView = false) {
     if (!pc) return '';
-    // Ensure defaults (condensed for brevity, ensure full structure is present)
     pc.vtt_data = pc.vtt_data || { abilities: {}, attributes: { hp: {}, ac: {}, movement: {}, init: {}, spell: {} }, details: {}, skills: {}, traits: { languages: {}, armorProf: {}, weaponProf: {}} };
+    pc.vtt_data.abilities = pc.vtt_data.abilities || {};
+    pc.vtt_data.attributes = pc.vtt_data.attributes || { hp: {}, ac: {}, movement: {}, init: {}, spell: {} };
+    pc.vtt_data.attributes.hp = pc.vtt_data.attributes.hp || {};
+    pc.vtt_data.attributes.ac = pc.vtt_data.attributes.ac || {};
+    pc.vtt_data.attributes.movement = pc.vtt_data.attributes.movement || {};
+    pc.vtt_data.attributes.init = pc.vtt_data.attributes.init || {};
+    pc.vtt_data.attributes.spell = pc.vtt_data.attributes.spell || {};
+    pc.vtt_data.details = pc.vtt_data.details || {};
+    pc.vtt_data.skills = pc.vtt_data.skills || {};
+    pc.vtt_data.traits = pc.vtt_data.traits || { languages: {}, armorProf: {}, weaponProf: {}};
     pc.items = pc.items || [];
     pc.system = pc.system || {};
 
 
     const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || pc.vtt_data?.details?.level || 1;
     if (typeof pc.calculatedProfBonus === 'undefined') {
-        pc.calculatedProfBonus = window.getProficiencyBonus(pcLevel); 
+        pc.calculatedProfBonus = window.getProficiencyBonus(pcLevel); // From dndCalculations.js
     }
 
     let cardClasses = 'pc-stat-card';
@@ -35,7 +44,7 @@ window.generatePcQuickViewCardHTML = function(pc, isClickableForDetailedView = f
     const hpCurrent = pc.vtt_data.attributes.hp?.value ?? 'N/A';
     const hpMax = pc.vtt_data.attributes.hp?.max ?? pc.system?.attributes?.hp?.max ?? 'N/A';
     cardHTML += `<p><strong>HP:</strong> ${hpCurrent} / ${hpMax}</p>`;
-    
+
     let acDisplay = pc.vtt_flags?.ddbimporter?.overrideAC?.flat ?? pc.vtt_data.attributes.ac?.value ?? pc.vtt_data.attributes.ac?.flat;
     if (acDisplay === undefined || acDisplay === null) {
         const equippedArmor = pc.items?.find(item => item.type === 'equipment' && item.system?.equipped && typeof item.system?.armor?.value !== 'undefined');
@@ -82,7 +91,7 @@ window.generatePcQuickViewCardHTML = function(pc, isClickableForDetailedView = f
 };
 
 
-window.renderNpcListForSceneUI = function(listContainerElement, allCharacters, activeNpcIds, onCheckboxChange, onNameClick) {
+window.renderNpcListForSceneUI = function(listContainerElement, allCharacters, activeNpcIds, onCheckboxChange, onNameClick, contextFilter = null) {
     if (!listContainerElement) { console.error("renderNpcListForSceneUI: listContainerElement not found"); return; }
     let ul = listContainerElement.querySelector('ul');
     if (!ul) {
@@ -90,13 +99,30 @@ window.renderNpcListForSceneUI = function(listContainerElement, allCharacters, a
         listContainerElement.appendChild(ul);
     }
     ul.innerHTML = '';
-    const npcs = allCharacters.filter(char => char.character_type === 'NPC').sort((a, b) => a.name.localeCompare(b.name));
+    
+    let npcsToDisplay = allCharacters.filter(char => char.character_type === 'NPC');
 
-    if (npcs.length === 0) {
-        ul.innerHTML = '<li><p><em>No NPCs defined yet.</em></p></li>';
+    if (contextFilter && contextFilter.type === 'lore' && contextFilter.id) {
+        console.log(`Filtering NPCs for lore ID: ${contextFilter.id}`);
+        npcsToDisplay = npcsToDisplay.filter(npc => {
+            const isLinked = npc.linked_lore_ids && npc.linked_lore_ids.includes(contextFilter.id);
+            // if(isLinked) console.log(`NPC ${npc.name} is linked.`);
+            return isLinked;
+        });
+    }
+
+    npcsToDisplay.sort((a, b) => a.name.localeCompare(b.name));
+
+    if (npcsToDisplay.length === 0) {
+        if (contextFilter && contextFilter.id) {
+            ul.innerHTML = '<li><p><em>No NPCs linked to this context.</em></p></li>';
+        } else {
+            ul.innerHTML = '<li><p><em>No NPCs defined yet or matching filter.</em></p></li>';
+        }
         return;
     }
-    npcs.forEach(char => {
+
+    npcsToDisplay.forEach(char => {
         const charIdStr = String(char._id);
         const li = document.createElement('li');
         li.dataset.charId = charIdStr;
@@ -104,11 +130,18 @@ window.renderNpcListForSceneUI = function(listContainerElement, allCharacters, a
         checkbox.type = 'checkbox';
         checkbox.id = `npc-scene-checkbox-${charIdStr}`;
         checkbox.checked = activeNpcIds.has(charIdStr);
-        checkbox.onchange = () => onCheckboxChange(charIdStr, char.name);
+        checkbox.onchange = () => onCheckboxChange(charIdStr, char.name); 
+        
         const nameSpan = document.createElement('span');
         nameSpan.textContent = char.name;
         nameSpan.className = 'npc-name-clickable';
-        nameSpan.onclick = async () => { await onNameClick(charIdStr); };
+        nameSpan.onclick = async () => { 
+            await window.handleSelectCharacterForDetails(charIdStr); 
+            const profileTabButton = document.querySelector('.tab-link[onclick*="tab-character-profile"]');
+            if(profileTabButton && !profileTabButton.classList.contains('active')) { // Only click if not already active
+                profileTabButton.click();
+            }
+        };
         li.appendChild(checkbox);
         li.appendChild(nameSpan);
         if (activeNpcIds.has(charIdStr)) li.classList.add('active-in-scene');
@@ -222,7 +255,6 @@ window.renderAiSuggestionsContent = function(aiResult, forNpcId) {
     suggestionsContainerNpc.innerHTML = '';
     let contentGeneratedForNpc = false;
 
-    // Memories
     const memoriesListNpc = document.createElement('div');
     memoriesListNpc.id = `suggested-memories-list-npc-${forNpcId}`;
     memoriesListNpc.className = 'ai-suggestion-category';
@@ -234,7 +266,6 @@ window.renderAiSuggestionsContent = function(aiResult, forNpcId) {
     } else { memoriesListNpc.innerHTML = '<h5>Suggested Memories:</h5>'; }
     suggestionsContainerNpc.appendChild(memoriesListNpc);
 
-    // Topics
     const topicsListNpc = document.createElement('div');
     topicsListNpc.id = `suggested-topics-list-npc-${forNpcId}`;
     topicsListNpc.className = 'ai-suggestion-category';
@@ -244,7 +275,6 @@ window.renderAiSuggestionsContent = function(aiResult, forNpcId) {
     } else { topicsListNpc.innerHTML = '<h5>Suggested Follow-up Topics:</h5>'; }
     suggestionsContainerNpc.appendChild(topicsListNpc);
 
-    // NPC Actions
     const actionsListNpc = document.createElement('div');
     actionsListNpc.id = `suggested-npc-actions-list-npc-${forNpcId}`;
     actionsListNpc.className = 'ai-suggestion-category';
@@ -254,7 +284,6 @@ window.renderAiSuggestionsContent = function(aiResult, forNpcId) {
     } else { actionsListNpc.innerHTML = '<h5>Suggested NPC Actions/Thoughts:</h5>';}
     suggestionsContainerNpc.appendChild(actionsListNpc);
 
-    // Player Checks
     const checksListNpc = document.createElement('div');
     checksListNpc.id = `suggested-player-checks-list-npc-${forNpcId}`;
     checksListNpc.className = 'ai-suggestion-category';
@@ -264,7 +293,6 @@ window.renderAiSuggestionsContent = function(aiResult, forNpcId) {
     } else { checksListNpc.innerHTML = '<h5>Suggested Player Checks:</h5>';}
     suggestionsContainerNpc.appendChild(checksListNpc);
     
-    // Faction Standing Change
     const standingChangesNpc = document.createElement('div');
     standingChangesNpc.id = `suggested-faction-standing-changes-npc-${forNpcId}`;
     standingChangesNpc.className = 'ai-suggestion-category';
@@ -283,7 +311,6 @@ window.renderAiSuggestionsContent = function(aiResult, forNpcId) {
          standingChangesNpc.innerHTML = `<h5>Suggested Faction Standing Change:</h5>`;
     }
     suggestionsContainerNpc.appendChild(standingChangesNpc);
-
     suggestionsContainerNpc.style.display = contentGeneratedForNpc ? 'block' : 'none';
 
     const globalSuggestionsArea = window.getElem('ai-suggestions');
@@ -372,16 +399,16 @@ window.renderCharacterProfileUI = function(character, elements) {
     const associatedHistoryListElem = window.getElem(elements.associatedHistoryList);
     const historyContentDisplayElem = window.getElem(elements.historyContentDisplay);
     const associateHistoryBtnElem = window.getElem(elements.associateHistoryBtn);
-    const characterLoreLinksSectionElem = window.getElem(elements.characterLoreLinksSection);
-    const associatedLoreListForCharacterElem = window.getElem(elements.associatedLoreListForCharacter);
-    const linkLoreToCharBtnElem = window.getElem(elements.linkLoreToCharBtn);
+    const characterLoreLinksSectionElem = window.getElem(elements.characterLoreLinksSection); 
+    const associatedLoreListForCharacterElem = window.getElem(elements.associatedLoreListForCharacter); 
+    const linkLoreToCharBtnElem = window.getElem(elements.linkLoreToCharBtn); 
 
 
     if (!character) {
-        if (detailsCharNameElem) window.updateText(elements.detailsCharName, 'None');
-        if (profileCharTypeElem) window.updateText(elements.profileCharType, '');
-        if (profileDescriptionElem) window.updateText(elements.profileDescription, '');
-        if (profilePersonalityElem) window.updateText(elements.profilePersonality, '');
+        if (detailsCharNameElem) window.updateText(elements.detailsCharName, 'None Selected');
+        if (profileCharTypeElem) window.updateText(elements.profileCharType, 'N/A');
+        if (profileDescriptionElem) window.updateText(elements.profileDescription, 'Select a character from the "NPCs in Scene" list to view their profile.');
+        if (profilePersonalityElem) window.updateText(elements.profilePersonality, 'N/A');
         if (gmNotesTextareaElem) gmNotesTextareaElem.value = '';
         if (saveGmNotesBtnElem) window.disableBtn(elements.saveGmNotesBtn, true);
 
@@ -389,7 +416,7 @@ window.renderCharacterProfileUI = function(character, elements) {
         if (npcFactionStandingsContentElem) npcFactionStandingsContentElem.innerHTML = "<p><em>Select an NPC to view/edit standings.</em></p>";
         if (npcFactionStandingsSectionElem) npcFactionStandingsSectionElem.style.display = 'none';
         
-        if (characterHistorySectionElem) characterHistorySectionElem.style.display = 'block'; 
+        if (characterHistorySectionElem) characterHistorySectionElem.style.display = 'none'; 
         if (associatedHistoryListElem) associatedHistoryListElem.innerHTML = '<li><em>Select a character.</em></li>';
         if (historyContentDisplayElem) historyContentDisplayElem.textContent = 'Select a character to view history.';
         if (associateHistoryBtnElem) window.disableBtn(elements.associateHistoryBtn, true);
@@ -404,11 +431,10 @@ window.renderCharacterProfileUI = function(character, elements) {
         return;
     }
 
-    // Ensure defaults
     character.personality_traits = character.personality_traits || [];
     character.memories = character.memories || [];
     character.associated_history_files = character.associated_history_files || [];
-    character.linked_lore_ids = character.linked_lore_ids || [];
+    character.linked_lore_ids = character.linked_lore_ids || []; 
     character.pc_faction_standings = character.pc_faction_standings || {};
 
 
@@ -436,7 +462,7 @@ window.renderCharacterProfileUI = function(character, elements) {
              window.renderNpcFactionStandingsUI(character, appState.activePcIds, appState.getAllCharacters(), npcFactionStandingsContentElem, elements.factionChangeCallback());
         }
         if (addMemoryBtnElem) window.disableBtn(elements.addMemoryBtn, false);
-    } else { // Is PC
+    } else { 
         if (characterMemoriesListElem) characterMemoriesListElem.innerHTML = '<p><em>Memories are for NPCs only.</em></p>';
         if (addMemoryBtnElem) window.disableBtn(elements.addMemoryBtn, true);
         if (npcFactionStandingsContentElem) npcFactionStandingsContentElem.innerHTML = '<p><em>Faction standings are for NPCs.</em></p>';
@@ -448,11 +474,11 @@ window.renderCharacterProfileUI = function(character, elements) {
     }
     if (associateHistoryBtnElem) window.disableBtn(elements.associateHistoryBtn, false);
     
-    // Render Associated Lore
     window.renderAssociatedLoreForCharacterUI(character, elements.unlinkLoreFromCharacterCallback());
     window.populateLoreEntrySelectForCharacterLinkingUI(character.linked_lore_ids);
     if (linkLoreToCharBtnElem) window.disableBtn(elements.linkLoreToCharBtn, false);
 };
+
 
 
 window.renderMemoriesUI = function(memories, listElement, deleteCallback) {
@@ -495,20 +521,25 @@ window.renderAssociatedHistoryFilesUI = function(character, listElement, content
                                        (character?.associated_history_files?.length > 0 ? "Content loading or is empty." : "No history files associated to display content.");
 };
 
-// --- New Lore UI Rendering Functions ---
+// --- Lore UI Rendering Functions ---
 window.populateLoreTypeDropdownUI = function() {
     const selectElement = window.getElem('new-lore-type');
     if (!selectElement) {
         console.warn("populateLoreTypeDropdownUI: 'new-lore-type' select element not found.");
         return;
     }
-    selectElement.innerHTML = ''; // Clear existing options
-    LORE_TYPES.forEach(type => { // LORE_TYPES from config.js
-        const option = document.createElement('option');
-        option.value = type;
-        option.textContent = type;
-        selectElement.appendChild(option);
-    });
+    selectElement.innerHTML = ''; 
+    if (typeof LORE_TYPES !== 'undefined' && Array.isArray(LORE_TYPES)) {
+        LORE_TYPES.forEach(type => { 
+            const option = document.createElement('option');
+            option.value = type;
+            option.textContent = type;
+            selectElement.appendChild(option);
+        });
+    } else {
+        console.error("LORE_TYPES is not defined or not an array in config.js");
+        selectElement.innerHTML = '<option value="">Error: Types not loaded</option>';
+    }
 };
 
 window.renderLoreEntryListUI = function(loreEntries) {
@@ -517,22 +548,21 @@ window.renderLoreEntryListUI = function(loreEntries) {
         console.warn("renderLoreEntryListUI: 'lore-entry-list' ul element not found.");
         return;
     }
-    listContainer.innerHTML = ''; // Clear existing
+    listContainer.innerHTML = ''; 
     if (!loreEntries || loreEntries.length === 0) {
-        listContainer.innerHTML = '<li><em>No lore entries defined yet. Create one above!</em></li>';
+        listContainer.innerHTML = '<li><em>No lore entries defined yet. Create one in the "Create New Lore Entry" section.</em></li>';
         return;
     }
-    // Sort lore entries by name for consistent display
     const sortedLoreEntries = [...loreEntries].sort((a, b) => a.name.localeCompare(b.name));
 
     sortedLoreEntries.forEach(entry => {
         const li = document.createElement('li');
-        li.dataset.loreId = entry.lore_id; // Use lore_id from MongoDB
+        li.dataset.loreId = entry.lore_id; 
         
         const nameSpan = document.createElement('span');
         nameSpan.textContent = `${entry.name} (${entry.lore_type})`;
-        nameSpan.className = 'lore-entry-name-clickable'; // Add class for styling/selection
-        nameSpan.onclick = () => window.handleSelectLoreEntryForDetails(entry.lore_id); // Implemented in characterService.js
+        nameSpan.className = 'lore-entry-name-clickable'; 
+        nameSpan.onclick = () => window.handleSelectLoreEntryForDetails(entry.lore_id); 
         
         li.appendChild(nameSpan);
         listContainer.appendChild(li);
@@ -547,7 +577,7 @@ window.renderLoreEntryDetailUI = function(loreEntry) {
         return;
     }
     window.updateText('details-lore-name', loreEntry.name);
-    window.updateText('details-lore-type', loreEntry.lore_type); // Make sure lore_type is directly on the object
+    window.updateText('details-lore-type', loreEntry.lore_type); 
     window.updateText('details-lore-description', loreEntry.description);
     
     const keyFactsList = window.getElem('details-lore-key-facts-list');
@@ -574,7 +604,7 @@ window.closeLoreDetailViewUI = function() {
     if (detailSection) {
         detailSection.style.display = 'none';
     }
-    appState.setCurrentLoreEntryId(null); // Clear current lore ID in appState
+    appState.setCurrentLoreEntryId(null); 
 };
 
 window.populateLoreEntrySelectForCharacterLinkingUI = function(alreadyLinkedIds = []) {
@@ -585,23 +615,25 @@ window.populateLoreEntrySelectForCharacterLinkingUI = function(alreadyLinkedIds 
     }
 
     const currentCharacter = appState.getCurrentProfileChar();
+    const linkButton = window.getElem('link-lore-to-char-btn');
+
     if (!currentCharacter) {
         selectElement.innerHTML = '<option value="">-- Select a character first --</option>';
         selectElement.disabled = true;
-        window.disableBtn('link-lore-to-char-btn', true);
+        if(linkButton) window.disableBtn('link-lore-to-char-btn', true);
         return;
     }
     selectElement.disabled = false;
-    window.disableBtn('link-lore-to-char-btn', false);
+    if(linkButton) window.disableBtn('link-lore-to-char-btn', false);
 
-    const currentValue = selectElement.value; // Preserve selection if possible
+    const currentValue = selectElement.value; 
     selectElement.innerHTML = '<option value="">-- Select lore to link --</option>';
     
     const allLore = appState.getAllLoreEntries();
     const linkedIdSet = new Set(alreadyLinkedIds || []);
 
     allLore.sort((a,b)=> a.name.localeCompare(b.name)).forEach(lore => {
-        if (!linkedIdSet.has(lore.lore_id)) { // Only show unlinked lore
+        if (!linkedIdSet.has(lore.lore_id)) { 
             const option = document.createElement('option');
             option.value = lore.lore_id;
             option.textContent = `${lore.name} (${lore.lore_type})`;
@@ -609,12 +641,10 @@ window.populateLoreEntrySelectForCharacterLinkingUI = function(alreadyLinkedIds 
         }
     });
 
-    // Try to restore previous selection if it's still valid
     if (allLore.some(l => l.lore_id === currentValue) && !linkedIdSet.has(currentValue)) {
         selectElement.value = currentValue;
     }
 };
-
 
 window.renderAssociatedLoreForCharacterUI = function(character, unlinkCallback) {
     const listElement = window.getElem(window.profileElementIds.associatedLoreListForCharacter);
@@ -626,10 +656,10 @@ window.renderAssociatedLoreForCharacterUI = function(character, unlinkCallback) 
 
     if (character && character.linked_lore_ids && character.linked_lore_ids.length > 0) {
         character.linked_lore_ids.forEach(loreId => {
-            const loreEntry = appState.getLoreEntryById(loreId); // Get full lore entry from state
+            const loreEntry = appState.getLoreEntryById(loreId); 
             if (loreEntry) {
                 const li = document.createElement('li');
-                li.className = 'associated-lore-item'; // For styling
+                li.className = 'associated-lore-item'; 
                 li.innerHTML = `
                     <span>${loreEntry.name} (${loreEntry.lore_type})</span>
                     <button data-lore-id="${loreId}" class="unlink-lore-btn">Unlink</button>
@@ -637,9 +667,8 @@ window.renderAssociatedLoreForCharacterUI = function(character, unlinkCallback) 
                 li.querySelector('button').onclick = () => unlinkCallback(loreId);
                 listElement.appendChild(li);
             } else {
-                // Fallback if lore entry details aren't in appState (should be rare if appState is synced)
                 const li = document.createElement('li');
-                li.textContent = `Linked Lore ID: ${loreId} (Details not found)`;
+                li.textContent = `Linked Lore ID: ${loreId} (Details not found - try refreshing lore list)`;
                 listElement.appendChild(li);
             }
         });
@@ -647,6 +676,35 @@ window.renderAssociatedLoreForCharacterUI = function(character, unlinkCallback) 
         listElement.innerHTML = '<li><em>No lore entries associated with this character.</em></li>';
     }
 };
+
+window.populateSceneContextSelectorUI = function() {
+    const selector = window.getElem('scene-context-selector');
+    if (!selector) {
+        console.warn("populateSceneContextSelectorUI: Scene context selector 'scene-context-selector' not found.");
+        return;
+    }
+    const currentValue = selector.value; // Preserve selection if possible
+    selector.innerHTML = '<option value="">-- Select Context (All NPCs) --</option>';
+    
+    const allLore = appState.getAllLoreEntries();
+    // Assuming LORE_TYPES is globally available from config.js
+    const relevantLoreTypes = [LORE_TYPES[0], LORE_TYPES[1]]; // "Location", "Organization/Faction"
+
+    allLore
+        .filter(lore => relevantLoreTypes.includes(lore.lore_type))
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .forEach(lore => {
+            const option = document.createElement('option');
+            option.value = lore.lore_id; // Use the actual lore_id
+            option.textContent = `${lore.name} (${lore.lore_type})`;
+            selector.appendChild(option);
+        });
+    
+    if (allLore.some(l => l.lore_id === currentValue)) { // Preserve selection if still valid
+        selector.value = currentValue;
+    }
+};
+
 
 window.renderPcQuickViewInSceneUI = function(wrapperElement, activePcsData) {
     if (!wrapperElement) { console.error("renderPcQuickViewInSceneUI: wrapperElement not found"); return; }
@@ -790,9 +848,15 @@ window.updatePcDashboardUI = function(dashboardContentElement, allCharacters, ac
 };
 
 window.populateExpandedAbilityDetailsUI = function(ablKey, expansionDiv, selectedPcsInput) {
-    if (!expansionDiv) { console.error("populateExpandedAbilityDetailsUI: expansionDiv is null for", ablKey); return; }
-    if (!selectedPcsInput || selectedPcsInput.length === 0) { expansionDiv.innerHTML = '<p><em>Select PCs to view ability details.</em></p>'; return; }
-    
+    console.log("uiRenderers.js: EXECUTING window.populateExpandedAbilityDetailsUI for", ablKey); 
+    if (!expansionDiv) {
+        console.error("populateExpandedAbilityDetailsUI: expansionDiv is null for", ablKey);
+        return;
+    }
+    if (!selectedPcsInput || selectedPcsInput.length === 0) {
+        expansionDiv.innerHTML = '<p><em>Select PCs to view ability details.</em></p>';
+        return;
+    }
     expansionDiv.innerHTML = `<h5>Derived Stats for ${ablKey}</h5>`;
     let derivedTable = `<table class="derived-stats-table">`;
     derivedTable += `<tr><th>Stat</th>${selectedPcsInput.map(p => `<th>${p.name.substring(0,10)+(p.name.length > 10 ? '...' : '')}</th>`).join('')}</tr>`;
@@ -827,9 +891,15 @@ window.populateExpandedAbilityDetailsUI = function(ablKey, expansionDiv, selecte
 };
 
 window.populateExpandedSkillDetailsUI = function(skillKey, expansionDiv, selectedPcs) {
-    if (!expansionDiv) { console.error("populateExpandedSkillDetailsUI: expansionDiv is null for", skillKey); return; }
-    if (!selectedPcs || selectedPcs.length === 0) { expansionDiv.innerHTML = '<p><em>Select PCs to view skill details.</em></p>'; return;}
-    
+    console.log("uiRenderers.js: EXECUTING window.populateExpandedSkillDetailsUI for", skillKey); 
+    if (!expansionDiv) {
+        console.error("populateExpandedSkillDetailsUI: expansionDiv is null for", skillKey);
+        return;
+    }
+    if (!selectedPcs || selectedPcs.length === 0) {
+        expansionDiv.innerHTML = '<p><em>Select PCs to view skill details.</em></p>';
+        return;
+    }
     const skillFullName = SKILL_NAME_MAP[skillKey]?.replace(/\s\(...\)/, '') || skillKey.toUpperCase();
     let contentHTML = `<h5>${skillFullName} Skill Modifiers & Rules</h5><div class="skill-bar-chart-container">`;
     const skillDataForGraph = selectedPcs.map(pc => {
@@ -865,8 +935,8 @@ window.populateExpandedSkillDetailsUI = function(skillKey, expansionDiv, selecte
     });
     contentHTML += `</div><table class="rules-explanation-table"><tr><td>`;
     switch (skillKey) {
-        case 'acr': contentHTML += "Your Dexterity (Acrobatics) check covers your attempt to stay on your feet in a tricky situation..."; break;
-        // ... (all other skill descriptions from PHB or similar source) ...
+        case 'acr': contentHTML += "Your Dexterity (Acrobatics) check covers your attempt to stay on your feet..."; break;
+        // ... (all other skill descriptions) ...
         default: contentHTML += `General information about the ${skillFullName} skill.`; break;
     }
     contentHTML += "</td></tr></table>";
@@ -881,7 +951,7 @@ window.renderDetailedPcSheetUI = function(pcData, dashboardContentElement) {
         return;
     }
     if (!dashboardContentElement) { console.error("'pc-dashboard-content' not found for detailed sheet."); return; }
-    dashboardContentElement.innerHTML = ''; // Clear previous content (e.g., overview)
+    dashboardContentElement.innerHTML = ''; 
 
     let html = `<div class="detailed-pc-sheet" data-pc-id="${pcData._id}">`;
     html += `<span class="close-detailed-pc-sheet-btn" onclick="window.handleBackToDashboardOverview()" title="Close Detailed View">&times;</span>`;
@@ -905,15 +975,14 @@ window.renderDetailedPcSheetUI = function(pcData, dashboardContentElement) {
 
     html += `<div class="pc-sheet-columns">`;
     html += `<div class="pc-sheet-column pc-sheet-column-left">`;
-    // ... (Combat Stats, Weapons & Attacks, Ability Scores & Saves - Ensure full implementation) ...
-    html += `</div>`; // End pc-sheet-column-left
-
+    // ... (Combat Stats, Weapons & Attacks, Ability Scores & Saves - Full implementation needed here) ...
+    html += `</div>`; 
     html += `<div class="pc-sheet-column pc-sheet-column-right">`;
-    // ... (Skills table - Ensure full implementation) ...
-    html += `</div>`; // End pc-sheet-column-right
-    html += `</div>`; // End pc-sheet-columns
+    // ... (Skills table - Full implementation needed here) ...
+    html += `</div>`; 
+    html += `</div>`;
 
-    const collapsibleSectionsDataDetailed = [ /* ... Full section data as previously defined ... */ ];
+    const collapsibleSectionsDataDetailed = [ /* ... Full collapsible sections data as before ... */ ];
     collapsibleSectionsDataDetailed.forEach(sectionData => {
         html += `<div class="pc-section collapsible-section collapsed">
                     <h4 style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
@@ -922,10 +991,9 @@ window.renderDetailedPcSheetUI = function(pcData, dashboardContentElement) {
                     <div class="collapsible-content" style="display: none;">${sectionData.contentFn()}</div>
                  </div>`;
     });
-    html += `</div>`; // End detailed-pc-sheet
+    html += `</div>`;
     dashboardContentElement.innerHTML = html;
 
-    // Re-attach collapsible listeners for the detailed sheet
     dashboardContentElement.querySelectorAll('.detailed-pc-sheet .collapsible-section h4').forEach(header => {
         header.addEventListener('click', () => {
             const section = header.parentElement;
@@ -943,12 +1011,11 @@ window.renderDetailedPcSheetUI = function(pcData, dashboardContentElement) {
     });
 };
 
-
 window.updateMainViewUI = function(dialogueInterfaceElem, pcDashboardViewElem, pcQuickViewInSceneElem, activeNpcCount, showPcDashboard) {
     console.log("uiRenderers.js: EXECUTING window.updateMainViewUI. Active NPCs:", activeNpcCount, "Show PC Dashboard:", showPcDashboard);
 
     if (!dialogueInterfaceElem || !pcDashboardViewElem || !pcQuickViewInSceneElem) {
-        console.error("updateMainViewUI: One or more critical main view elements are missing from the DOM! Check HTML IDs: 'dialogue-interface', 'pc-dashboard-view', 'pc-quick-view-section-in-scene'");
+        console.error("updateMainViewUI: One or more critical main view elements are missing from the DOM!");
         return; 
     }
 

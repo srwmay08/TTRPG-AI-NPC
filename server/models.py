@@ -34,7 +34,7 @@ class LoreEntryType(str, Enum):
 
 class LoreEntry(BaseModel):
     """Defines the structure for a world lore entry."""
-    lore_id: str = Field(default_factory=lambda: str(ObjectId()), description="Unique ID for the lore entry (MongoDB ObjectId as string).") # CHANGED
+    lore_id: str = Field(default_factory=lambda: str(ObjectId()), description="Unique ID for the lore entry (MongoDB ObjectId as string).")
     name: str = Field(..., min_length=1, description="The name or title of the lore entry.")
     lore_type: LoreEntryType = Field(default=LoreEntryType.MISC, description="The category of the lore entry.")
     description: str = Field(..., description="A general description of the lore entry.")
