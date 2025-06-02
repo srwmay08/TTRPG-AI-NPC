@@ -18,42 +18,65 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log("app.js: DOMContentLoaded finished.");
 });
 
+
 window.updateMainView = function() {
-    console.log("updateMainView called"); // Add a log to see when it's called
+    console.log("app.js: window.updateMainView called.");
+
     const dialogueInterfaceElem = window.getElem('dialogue-interface');
     const pcDashboardViewElem = window.getElem('pc-dashboard-view');
     const pcQuickViewInSceneElem = window.getElem('pc-quick-view-section-in-scene');
 
+    // This check is crucial. If these elements aren't found, the UI can't be updated.
     if (!dialogueInterfaceElem || !pcDashboardViewElem || !pcQuickViewInSceneElem) {
-        console.error("updateMainView: Critical UI element(s) missing. dialogueInterface:", dialogueInterfaceElem, "pcDashboardView:", pcDashboardViewElem, "pcQuickViewInScene:", pcQuickViewInSceneElem);
-        return; // Exit if main containers aren't found
+        console.error("app.js/updateMainView: Critical UI container element(s) missing from DOM! Cannot update main view. Check HTML IDs.");
+        if (!dialogueInterfaceElem) console.error("Missing: dialogue-interface element.");
+        if (!pcDashboardViewElem) console.error("Missing: pc-dashboard-view element.");
+        if (!pcQuickViewInSceneElem) console.error("Missing: pc-quick-view-section-in-scene element.");
+        return; // Stop if main containers don't exist
     }
 
-    // ... (rest of the function as provided before)
-    const activeNpcCount = appState.getActiveNpcCount();
+    const activeNpcCount = appState.getActiveNpcCount(); // Assumes appState is global
     const showPcDashboard = appState.getActivePcCount() > 0;
 
-    window.updateMainViewUI(dialogueInterfaceElem, pcDashboardViewElem, pcQuickViewInSceneElem, activeNpcCount, showPcDashboard);
+    // Call the UI rendering function (expected to be in uiRenderers.js and on window)
+    if (typeof window.updateMainViewUI === 'function') {
+        window.updateMainViewUI(dialogueInterfaceElem, pcDashboardViewElem, pcQuickViewInSceneElem, activeNpcCount, showPcDashboard);
+    } else {
+        console.error("app.js/updateMainView: FATAL ERROR - window.updateMainViewUI is not defined or not a function!");
+        // Display an error to the user on the page itself
+        const body = document.querySelector('body');
+        if (body) body.innerHTML = "<h1>Critical JavaScript Error: UI Rendering Function Missing. Check console.</h1>";
+        return; // Cannot proceed
+    }
 
+
+    // Handle PC Quick View in Scene specifically
     if (activeNpcCount > 0 && appState.getActivePcCount() > 0) {
         const activePcsData = appState.getAllCharacters().filter(char => appState.hasActivePc(String(char._id)));
-        window.renderPcQuickViewInSceneUI(pcQuickViewInSceneElem, activePcsData);
-    } else {
-        if (pcQuickViewInSceneElem) {
-            pcQuickViewInSceneElem.style.display = 'none';
-            pcQuickViewInSceneElem.innerHTML = '';
+        if (typeof window.renderPcQuickViewInSceneUI === 'function') {
+            window.renderPcQuickViewInSceneUI(pcQuickViewInSceneElem, activePcsData);
+        } else {
+            console.error("app.js/updateMainView: window.renderPcQuickViewInSceneUI is not defined!");
         }
+    } else {
+        // If no NPCs or no PCs, ensure the quick view is cleared and hidden
+        pcQuickViewInSceneElem.style.display = 'none';
+        pcQuickViewInSceneElem.innerHTML = '';
     }
     
-    // Conditional disableBtn
-    const generateBtn = window.getElem('generate-dialogue-btn');
-    if (generateBtn) {
-        window.disableBtn('generate-dialogue-btn', appState.getActiveNpcCount() === 0);
+    // Disable/Enable the "Generate Dialogue" button
+    const generateDialogueButton = window.getElem('generate-dialogue-btn');
+    if (generateDialogueButton) {
+        window.disableBtn('generate-dialogue-btn', activeNpcCount === 0);
     } else {
-        // This warning might still appear on the very first load if dialogue-interface is hidden
-        // console.warn("generate-dialogue-btn not found during updateMainView, this might be okay if dialogue interface is hidden.");
+        // This might log if the dialogue interface is hidden initially, which can be normal.
+        // console.warn("app.js/updateMainView: 'generate-dialogue-btn' not found. This may be okay if dialogue interface is not visible.");
     }
+    console.log("app.js: window.updateMainView finished.");
 };
+
+// ... (rest of your app.js code, ensuring other functions like handleToggleNpcInScene, handleTogglePcSelection, etc.
+//      are also defined on window if they are called from UI renderers or HTML onclicks)
 
 window.handleToggleNpcInScene = async function(npcIdStr, npcName) {
     const multiNpcContainer = window.getElem('multi-npc-dialogue-container');

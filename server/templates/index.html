@@ -103,6 +103,12 @@
         <div id="dialogue-interface"> <h2>Scene Interaction</h2>
             
             <div id="pc-quick-view-section-in-scene" style="margin-bottom: 15px; display: none;"></div>
+            
+            <hr>
+            <div id="multi-npc-dialogue-container">
+                <p class="scene-event">Select NPCs to add them to the scene.</p>
+            </div>
+            <hr>
             <div id="scene-setup">
                 <label for="scene-context">Dynamic Scene Context:</label>
                 <textarea id="scene-context" rows="4" placeholder="Describe the current environment, mood, ongoing events..."></textarea>
@@ -112,11 +118,6 @@
                     <option value="">-- DM/Scene Event --</option>
                 </select>
             </div>
-            <hr>
-            <div id="multi-npc-dialogue-container">
-                <p class="scene-event">Select NPCs to add them to the scene.</p>
-            </div>
-            <hr>
             <div id="dialogue-input-area">
                 <label for="player-utterance">Player Says / Scene Event:</label>
                 <textarea id="player-utterance" rows="2" placeholder="Enter player dialogue or describe a scene event..."></textarea>
@@ -124,8 +125,8 @@
             </div>
             <div id="ai-suggestions" style="display:none;">
                 <h4>AI Suggestions (Last Interaction):</h4>
-                <div id="suggested-memories-list" class="ai-suggestion-category"><h6>Suggested Memories:</h6></div>
-                <div id="suggested-topics-list" class="ai-suggestion-category"><h6>Suggested Follow-up Topics:</h6></div>
+                <div id="suggested-memories-list" class="ai-suggestion-category"><h5>Suggested Memories:</h5></div>
+                <div id="suggested-topics-list" class="ai-suggestion-category"><h5>Suggested Follow-up Topics:</h5></div>
                 <div id="suggested-npc-actions-list" class="ai-suggestion-category"><h5>Suggested NPC Actions/Thoughts:</h5></div>
                 <div id="suggested-player-checks-list" class="ai-suggestion-category"><h5>Suggested Player Checks:</h5></div>
                 <div id="suggested-faction-standing-changes" class="ai-suggestion-category"><h5>Suggested Faction Standing Change:</h5></div>

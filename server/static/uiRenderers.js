@@ -178,8 +178,8 @@ window.createNpcDialogueAreaUI = function(npcIdStr, npcName, containerElement) {
     suggestionsDiv.className = 'ai-suggestions-for-npc';
     suggestionsDiv.style.display = 'none';
     suggestionsDiv.innerHTML = `
-        <div id="suggested-memories-list-npc-${npcIdStr}" class="ai-suggestion-category"><h6>Suggested Memories:</h6></div>
-        <div id="suggested-topics-list-npc-${npcIdStr}" class="ai-suggestion-category"><h6>Suggested Follow-up Topics:</h6></div>
+        <div id="suggested-memories-list-npc-${npcIdStr}" class="ai-suggestion-category"><h5>Suggested Memories:</h5></div>
+        <div id="suggested-topics-list-npc-${npcIdStr}" class="ai-suggestion-category"><h5>Suggested Follow-up Topics:</h5></div>
         <div id="suggested-npc-actions-list-npc-${npcIdStr}" class="ai-suggestion-category"><h5>Suggested NPC Actions/Thoughts:</h5></div>
         <div id="suggested-player-checks-list-npc-${npcIdStr}" class="ai-suggestion-category"><h5>Suggested Player Checks:</h5></div>
         <div id="suggested-faction-standing-changes-npc-${npcIdStr}" class="ai-suggestion-category"><h5>Suggested Faction Standing Change:</h5></div>`;
@@ -235,12 +235,12 @@ window.renderAiSuggestionsContent = function(aiResult, forNpcId) {
     memoriesListNpc.id = `suggested-memories-list-npc-${forNpcId}`;
     memoriesListNpc.className = 'ai-suggestion-category';
     if (aiResult.new_memory_suggestions && aiResult.new_memory_suggestions.length > 0) {
-        memoriesListNpc.innerHTML = '<h6>Suggested Memories:</h6>' + aiResult.new_memory_suggestions.map(mem =>
+        memoriesListNpc.innerHTML = '<h5>Suggested Memories:</h5>' + aiResult.new_memory_suggestions.map(mem =>
             `<div class="suggested-item">${mem} <button onclick="window.addSuggestedMemoryAsActual('${forNpcId}', '${mem.replace(/'/g, "\\'")}')">Add</button></div>`
         ).join('');
         contentGeneratedForNpc = true;
     } else {
-        memoriesListNpc.innerHTML = '<h6>Suggested Memories:</h6>';
+        memoriesListNpc.innerHTML = '<h5>Suggested Memories:</h5>';
     }
     suggestionsContainerNpc.appendChild(memoriesListNpc);
 
@@ -248,10 +248,10 @@ window.renderAiSuggestionsContent = function(aiResult, forNpcId) {
     topicsListNpc.id = `suggested-topics-list-npc-${forNpcId}`;
     topicsListNpc.className = 'ai-suggestion-category';
     if (aiResult.generated_topics && aiResult.generated_topics.length > 0) {
-        topicsListNpc.innerHTML = '<h6>Suggested Follow-up Topics:</h6>' + aiResult.generated_topics.map(topic => `<div class="suggested-item">${topic}</div>`).join('');
+        topicsListNpc.innerHTML = '<h5>Suggested Follow-up Topics:</h5>' + aiResult.generated_topics.map(topic => `<div class="suggested-item">${topic}</div>`).join('');
         contentGeneratedForNpc = true;
     } else {
-        topicsListNpc.innerHTML = '<h6>Suggested Follow-up Topics:</h6>';
+        topicsListNpc.innerHTML = '<h5>Suggested Follow-up Topics:</h5>';
     }
     suggestionsContainerNpc.appendChild(topicsListNpc);
 
@@ -456,8 +456,8 @@ window.renderCharacterProfileUI = function(character, elements) {
         if (npcFactionStandingsContentElem) {
             // The callback elements.factionChangeCallback() should resolve to window.handleSaveFactionStanding
             // Ensure appState is globally available
-            window.renderNpcFactionStandingsUI(character, appState.activePcIds, appState.getAllCharacters(), npcFactionStandingsContentElem, elements.factionChangeCallback());
-        }
+             window.renderNpcFactionStandingsUI(character, appState.activePcIds, appState.getAllCharacters(), npcFactionStandingsContentElem, elements.factionChangeCallback());
+            }
         if (addMemoryBtnElem) window.disableBtn(elements.addMemoryBtn, false);
     } else { // Is PC
         if (characterMemoriesListElem) characterMemoriesListElem.innerHTML = '<p><em>Memories are for NPCs only.</em></p>';
@@ -472,6 +472,8 @@ window.renderCharacterProfileUI = function(character, elements) {
     }
     if (associateHistoryBtnElem) window.disableBtn(elements.associateHistoryBtn, false);
 };
+
+
 
 window.renderMemoriesUI = function(memories, listElement, deleteCallback) {
     if (!listElement) return;
@@ -654,6 +656,167 @@ window.updatePcDashboardUI = function(dashboardContentElement, allCharacters, ac
         skillExpansionContainer.appendChild(expansionDiv);
     }
 };
+
+window.populateExpandedAbilityDetailsUI = function(ablKey, expansionDiv, selectedPcsInput) {
+    console.log("uiRenderers.js: EXECUTING window.populateExpandedAbilityDetailsUI for", ablKey); // Add this log
+    if (!expansionDiv) {
+        console.error("populateExpandedAbilityDetailsUI: expansionDiv is null for", ablKey);
+        return;
+    }
+    if (!selectedPcsInput || selectedPcsInput.length === 0) {
+        expansionDiv.innerHTML = '<p><em>Select PCs to view ability details.</em></p>';
+        return;
+    }
+    expansionDiv.innerHTML = `<h5>Derived Stats for ${ablKey}</h5>`;
+    let derivedTable = `<table class="derived-stats-table">`;
+    derivedTable += `<tr><th>Stat</th>${selectedPcsInput.map(p => `<th>${p.name.substring(0,10)+(p.name.length > 10 ? '...' : '')}</th>`).join('')}</tr>`;
+
+    const ablKeyLower = ablKey.toLowerCase();
+    // Ensure dndCalculations functions are called via window
+    if (ablKeyLower === 'str') {
+        derivedTable += `<tr><td>Carrying Capacity</td>${selectedPcsInput.map(p => `<td>${window.carryingCapacity(p.vtt_data?.abilities?.str?.value)} lbs</td>`).join('')}</tr>`;
+        derivedTable += `<tr><td>Push/Drag/Lift</td>${selectedPcsInput.map(p => `<td>${window.pushDragLift(p.vtt_data?.abilities?.str?.value)} lbs</td>`).join('')}</tr>`;
+        derivedTable += `<tr><td>Long Jump (Run)</td>${selectedPcsInput.map(p => `<td>${window.longJump(p.vtt_data?.abilities?.str?.value, true)} ft</td>`).join('')}</tr>`;
+        derivedTable += `<tr><td>High Jump (Run)</td>${selectedPcsInput.map(p => `<td>${window.highJump(p.vtt_data?.abilities?.str?.value, true)} ft</td>`).join('')}</tr>`;
+    } else if (ablKeyLower === 'dex') {
+        derivedTable += `<tr><td>Initiative Bonus</td>${selectedPcsInput.map(p => `<td>${window.initiative(p.vtt_data?.abilities?.dex?.value)}</td>`).join('')}</tr>`;
+    } else if (ablKeyLower === 'con') {
+        derivedTable += `<tr><td>Hold Breath</td>${selectedPcsInput.map(p => `<td>${window.holdBreath(p.vtt_data?.abilities?.con?.value)}</td>`).join('')}</tr>`;
+    }
+    derivedTable += `</table>`;
+    expansionDiv.innerHTML += derivedTable;
+
+    expansionDiv.innerHTML += `<div class="ability-bar-chart-container"><h6>${ablKey} Score Comparison</h6>`;
+    const abilityScores = selectedPcsInput.map(pc => ({ name: pc.name, score: pc.vtt_data?.abilities?.[ablKeyLower]?.value || 10 }));
+    const allScores = abilityScores.map(d => d.score);
+    // Ensure dataMin and dataMax handle empty arrays gracefully if allScores could be empty
+    const dataMin = allScores.length > 0 ? Math.min(0, ...allScores) : 0; 
+    const dataMax = allScores.length > 0 ? Math.max(20, ...allScores) : 20;
+    const visualRange = dataMax - dataMin;
+
+    abilityScores.sort((a,b) => b.score - a.score).forEach(data => {
+        let barWidthPercent = visualRange !== 0 ? ((data.score - dataMin) / visualRange) * 100 : 50;
+        barWidthPercent = Math.max(1, Math.min(100, barWidthPercent)); // Ensure bar has some width
+        expansionDiv.innerHTML += `<div class="pc-bar-row"><div class="stat-comparison-pc-name" title="${data.name}">${data.name.substring(0,15)+(data.name.length > 15 ? '...' : '')}</div><div class="stat-bar-wrapper" style="--zero-offset: 0%;"><div class="stat-bar positive" style="left: 0%; width: ${barWidthPercent}%; text-align:center;">${data.score}</div></div></div>`;
+    });
+    expansionDiv.innerHTML += `</div>`;
+};
+
+window.populateExpandedSkillDetailsUI = function(skillKey, expansionDiv, selectedPcs) {
+    console.log("uiRenderers.js: EXECUTING window.populateExpandedSkillDetailsUI for", skillKey); // Add this log
+    if (!expansionDiv) {
+        console.error("populateExpandedSkillDetailsUI: expansionDiv is null for", skillKey);
+        return;
+    }
+    if (!selectedPcs || selectedPcs.length === 0) {
+        expansionDiv.innerHTML = '<p><em>Select PCs to view skill details.</em></p>';
+        return;
+    }
+    // Ensure SKILL_NAME_MAP from config.js and calculateSkillBonus from dndCalculations.js are globally accessible
+    const skillFullName = SKILL_NAME_MAP[skillKey]?.replace(/\s\(...\)/, '') || skillKey.toUpperCase();
+    let contentHTML = `<h5>${skillFullName} Skill Modifiers & Rules</h5><div class="skill-bar-chart-container">`;
+    const skillDataForGraph = selectedPcs.map(pc => {
+        const skillVttData = pc.vtt_data?.skills?.[skillKey];
+        const defaultAbility = SKILL_NAME_MAP[skillKey]?.match(/\(([^)]+)\)/)?.[1]?.toLowerCase() || 'int';
+        const baseAbilityKey = skillVttData?.ability || defaultAbility;
+        const baseAbilityScore = pc.vtt_data?.abilities?.[baseAbilityKey]?.value || 10;
+        const bonus = window.calculateSkillBonus(baseAbilityScore, skillVttData?.value || 0, pc.calculatedProfBonus);
+        return { name: pc.name, modifier: bonus };
+    }).sort((a,b) => b.modifier - a.modifier);
+
+    const allModifiers = skillDataForGraph.map(d => d.modifier);
+    const dataMinMod = allModifiers.length > 0 ? Math.min(0, ...allModifiers) : 0;
+    const dataMaxMod = allModifiers.length > 0 ? Math.max(0, ...allModifiers) : 0;
+    const visualMin = Math.min(-2, dataMinMod -1); const visualMax = Math.max(5, dataMaxMod + 1);
+    const visualRange = visualMax - visualMin; const zeroPositionPercent = visualRange !== 0 ? ((0 - visualMin) / visualRange) * 100 : 50;
+
+    skillDataForGraph.forEach(data => {
+        let barWidthPercent = 0; let barLeftPercent = zeroPositionPercent; let barClass = 'stat-bar';
+        if (visualRange !== 0) {
+            if (data.modifier >= 0) {
+                barClass += ' positive'; barWidthPercent = (data.modifier / visualRange) * 100;
+            } else {
+                barClass += ' negative'; barWidthPercent = (Math.abs(data.modifier) / visualRange) * 100;
+                barLeftPercent = zeroPositionPercent - barWidthPercent;
+            }
+        } else { // visualRange is 0, means all modifiers are likely 0 or min=max
+            barWidthPercent = data.modifier === 0 ? 0.5 : 50; // Give a tiny bar for 0 for visibility
+            if(data.modifier < 0) barLeftPercent = 0; else barLeftPercent = zeroPositionPercent;
+        }
+        barWidthPercent = Math.max(0.5, barWidthPercent); // Ensure minimum width
+        contentHTML += `<div class="pc-bar-row"><div class="stat-comparison-pc-name" title="${data.name}">${data.name.substring(0,15)+(data.name.length > 15 ? '...' : '')}</div><div class="stat-bar-wrapper" style="--zero-offset: ${zeroPositionPercent}%;"><div class="${barClass}" style="left: ${barLeftPercent}%; width: ${barWidthPercent}%;">${data.modifier >= 0 ? '+' : ''}${data.modifier}</div></div></div>`;
+    });
+    contentHTML += `</div><table class="rules-explanation-table"><tr><td>`;
+    // Full switch statement for skill descriptions (ensure this is complete)
+    switch (skillKey) {
+        case 'acr': contentHTML += "Your Dexterity (Acrobatics) check covers your attempt to stay on your feet in a tricky situation, such as when you’re trying to run across a sheet of ice, balance on a tightrope, or stay upright on a rocking ship’s deck. The GM might also call for a Dexterity (Acrobatics) check to see if you can perform acrobatic stunts, including dives, rolls, somersaults, and flips."; break;
+        case 'ath': contentHTML += "Your Strength (Athletics) check covers difficult situations you encounter while climbing, jumping, or swimming. Examples include: attempting to climb a sheer or slippery cliff, trying to jump an unusually long distance, or struggling to swim in treacherous currents."; break;
+        case 'slt': contentHTML += "Whenever you attempt an act of legerdemain or manual trickery, such as planting something on someone else or concealing an object on your person, make a Dexterity (Sleight of Hand) check. The GM might also call for a Dexterity (Sleight of Hand) check to determine whether you can lift a coin purse off another person or slip something out of another person’s pocket."; break;
+        case 'ste': contentHTML += "Make a Dexterity (Stealth) check when you attempt to conceal yourself from enemies, slink past guards, slip away without being noticed, or sneak up on someone without being seen or heard."; break;
+        case 'arc': contentHTML += "Your Intelligence (Arcana) check measures your ability to recall lore about spells, magic items, eldritch symbols, magical traditions, the planes of existence, and the inhabitants of those planes."; break;
+        case 'his': contentHTML += "Your Intelligence (History) check measures your ability to recall lore about historical events, legendary people, ancient kingdoms, past disputes, recent wars, and lost civilizations."; break;
+        case 'inv': contentHTML += "When you look around for clues and make deductions based on those clues, you make an Intelligence (Investigation) check. You might deduce the location of a hidden object, discern from the appearance of a wound what kind of weapon dealt it, or determine the weakest point in a tunnel that could cause it to collapse."; break;
+        case 'nat': contentHTML += "Your Intelligence (Nature) check measures your ability to recall lore about terrain, plants and animals, the weather, and natural cycles."; break;
+        case 'rel': contentHTML += "Your Intelligence (Religion) check measures your ability to recall lore about deities, rites and prayers, religious hierarchies, holy symbols, and the practices of secret cults."; break;
+        case 'ani': contentHTML += "When there is any question whether you can calm down a domesticated animal, keep a mount from getting spooked, or intuit an animal’s intentions, the GM might call for a Wisdom (Animal Handling) check. You also make a Wisdom (Animal Handling) check to control your mount when you attempt a risky maneuver."; break;
+        case 'ins': contentHTML += "Your Wisdom (Insight) check decides whether you can determine the true intentions of a creature, such as when searching out a lie or predicting someone’s next move. Doing so involves gleaning clues from body language, speech habits, and changes in mannerisms."; break;
+        case 'med': contentHTML += "A Wisdom (Medicine) check lets you try to stabilize a dying companion or diagnose an illness."; break;
+        case 'prc': contentHTML += "Your Wisdom (Perception) check lets you spot, hear, or otherwise detect the presence of something. It measures your general awareness of your surroundings and the keenness of your senses."; break;
+        case 'sur': contentHTML += "The GM might ask you to make a Wisdom (Survival) check to follow tracks, hunt wild game, guide your group through frozen wastelands, identify signs that owlbears live nearby, predict the weather, or avoid quicksand and other natural hazards."; break;
+        case 'dec': contentHTML += "Your Charisma (Deception) check determines whether you can convincingly hide the truth, either verbally or through your actions. This deception can encompass everything from misleading others through ambiguity to telling outright lies."; break;
+        case 'itm': contentHTML += "When you attempt to influence someone through overt threats, hostile actions, and physical violence, the GM might ask you to make a Charisma (Intimidation) check."; break;
+        case 'prf': contentHTML += "Your Charisma (Performance) check determines how well you can delight an audience with music, dance, acting, storytelling, or some other form of entertainment."; break;
+        case 'per': contentHTML += "When you attempt to influence someone or a group of people with tact, social graces, or good nature, the GM might ask you to make a Charisma (Persuasion) check."; break;
+        default: contentHTML += `General information about the ${skillFullName} skill.`; break;
+    }
+    contentHTML += "</td></tr></table>";
+    expansionDiv.innerHTML = contentHTML;
+};
+
+// Ensure this function definition is ALSO explicitly on window
+window.renderNpcFactionStandingsUI = function(npcCharacter, activePcIdsSet, allCharactersArray, contentElement, onStandingChangeCallback) {
+    // ... (Full function code as provided in my last response, ensure it's correct and complete)
+    if (!contentElement) { console.error("renderNpcFactionStandingsUI: contentElement not found"); return; }
+    if (!npcCharacter || npcCharacter.character_type !== 'NPC') {
+        contentElement.innerHTML = "<p><em>Faction standings are for NPCs. Ensure an NPC is selected.</em></p>";
+        return;
+    }
+    contentElement.innerHTML = '';
+    const activePcs = allCharactersArray.filter(char => char.character_type === 'PC' && activePcIdsSet.has(String(char._id)));
+    if (activePcs.length === 0) {
+        contentElement.innerHTML = "<p><em>No PCs selected in the left panel to show standings towards. Add PCs via the main list.</em></p>";
+        return;
+    }
+    activePcs.forEach(pc => {
+        const pcIdStr = String(pc._id);
+        const standingEntryDiv = document.createElement('div');
+        standingEntryDiv.className = 'faction-standing-entry';
+        const label = document.createElement('label');
+        label.htmlFor = `standing-select-${npcCharacter._id}-${pcIdStr}`;
+        label.textContent = `${pc.name}:`;
+        label.style.marginRight = "10px";
+        const select = document.createElement('select');
+        select.id = `standing-select-${npcCharacter._id}-${pcIdStr}`;
+        select.dataset.pcId = pcIdStr;
+        select.style.width = "150px";
+        FACTION_STANDING_SLIDER_ORDER.forEach(levelKey => {
+            const option = document.createElement('option');
+            option.value = levelKey;
+            option.textContent = levelKey;
+            select.appendChild(option);
+        });
+        const currentStandingObj = npcCharacter.pc_faction_standings ? npcCharacter.pc_faction_standings[pcIdStr] : null;
+        const currentStandingValue = (typeof currentStandingObj === 'object' && currentStandingObj !== null && typeof currentStandingObj.value !== 'undefined') ? currentStandingObj.value : currentStandingObj;
+        select.value = currentStandingValue || FACTION_STANDING_LEVELS.INDIFFERENT;
+        select.addEventListener('change', (event) => {
+            onStandingChangeCallback(npcCharacter._id, pcIdStr, event.target.value);
+        });
+        standingEntryDiv.appendChild(label);
+        standingEntryDiv.appendChild(select);
+        contentElement.appendChild(standingEntryDiv);
+    });
+};
+
 
 window.renderDetailedPcSheetUI = function(pcData, dashboardContentElement) {
     // (Full definition as provided in my previous detailed response, including collapsible sections)
@@ -966,4 +1129,54 @@ window.renderDetailedPcSheetUI = function(pcData, dashboardContentElement) {
     });
 };
 
-console.log("uiRenderers.js: Parsing FINISHED");
+// static/uiRenderers.js
+
+// Ensure this function is defined, for example, before other functions that might call it within this file,
+// or simply ensure it's correctly on the window object when uiRenderers.js finishes parsing.
+
+window.updateMainViewUI = function(dialogueInterfaceElem, pcDashboardViewElem, pcQuickViewInSceneElem, activeNpcCount, showPcDashboard) {
+    console.log("uiRenderers.js: EXECUTING window.updateMainViewUI. Active NPCs:", activeNpcCount, "Show PC Dashboard:", showPcDashboard);
+
+    if (!dialogueInterfaceElem || !pcDashboardViewElem || !pcQuickViewInSceneElem) {
+        console.error("updateMainViewUI: One or more critical main view elements are missing from the DOM! Check HTML IDs: 'dialogue-interface', 'pc-dashboard-view', 'pc-quick-view-section-in-scene'");
+        // Optionally, try to create placeholders or log which specific element is missing
+        if (!dialogueInterfaceElem) console.error("Missing: dialogue-interface");
+        if (!pcDashboardViewElem) console.error("Missing: pc-dashboard-view");
+        if (!pcQuickViewInSceneElem) console.error("Missing: pc-quick-view-section-in-scene");
+        return; // Cannot proceed if these main containers are missing
+    }
+
+    if (activeNpcCount > 0) {
+        dialogueInterfaceElem.style.display = 'flex'; // Show dialogue interface
+        pcDashboardViewElem.style.display = 'none';  // Hide PC dashboard
+        // The pcQuickViewInSceneElem visibility and content is handled by window.renderPcQuickViewInSceneUI,
+        // which is called from window.updateMainView in app.js
+    } else {
+        dialogueInterfaceElem.style.display = 'none';   // Hide dialogue interface
+        pcDashboardViewElem.style.display = 'block'; // Show PC dashboard
+        
+        // When no NPCs are active, PC quick view in scene should also be hidden and cleared
+        pcQuickViewInSceneElem.style.display = 'none';
+        pcQuickViewInSceneElem.innerHTML = '';
+
+        const dashboardContent = window.getElem('pc-dashboard-content'); // ID for the content area within pc-dashboard-view
+        if (dashboardContent) {
+            // Only update dashboard overview if a detailed PC sheet isn't already being shown
+            if (!dashboardContent.querySelector('.detailed-pc-sheet')) {
+                if (showPcDashboard) {
+                    // This function is also expected to be on window, defined in uiRenderers.js
+                    window.updatePcDashboardUI(dashboardContent, appState.getAllCharacters(), appState.activePcIds, appState.getExpandedAbility(), appState.getExpandedSkill(), appState.getSkillSortKey());
+                } else {
+                    dashboardContent.innerHTML = `<p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>`;
+                }
+            }
+        } else {
+            console.error("updateMainViewUI: 'pc-dashboard-content' element not found within 'pc-dashboard-view'.");
+        }
+    }
+};
+
+// Ensure other functions like window.updatePcDashboardUI, window.renderPcQuickViewInSceneUI, etc.,
+// are also fully defined in this file and attached to 'window'.
+// Make sure this is the LAST console log in this file if you want to confirm full parsing.
+console.log("uiRenderers.js: All functions, including window.updateMainViewUI, should be defined now. Parsing FINISHED.");
