@@ -79,7 +79,13 @@ const appState = {
                             char.system?.details?.level || // From FVTT 'system'
                             char.vtt_data?.details?.level || // Fallback to 'vtt_data.details'
                             1;
-            char.calculatedProfBonus = window.getProficiencyBonus(pcLevel);
+            // Corrected call to DNDCalculations namespace
+            if (typeof DNDCalculations !== 'undefined' && DNDCalculations.getProficiencyBonus) {
+                char.calculatedProfBonus = DNDCalculations.getProficiencyBonus(pcLevel);
+            } else {
+                console.error("DNDCalculations.getProficiencyBonus is not available. Check script load order.");
+                char.calculatedProfBonus = 2; // Fallback proficiency bonus
+            }
         }
         return char;
     },
@@ -133,7 +139,14 @@ const appState = {
         this.allLoreEntries = loreEntries.map(entry => {
             if (entry.lore_id && typeof entry.lore_id === 'object' && entry.lore_id.$oid) {
                 entry.lore_id = entry.lore_id.$oid;
+            } else if (entry._id && typeof entry._id === 'object' && entry._id.$oid) { // Handle if _id is present
+                entry.lore_id = entry._id.$oid; // Use _id as lore_id if lore_id is missing
+                // delete entry._id; // Optionally delete _id if lore_id is now the primary identifier
+            } else if (entry._id && typeof entry._id === 'string') {
+                 entry.lore_id = entry._id; // if _id is already a string
             }
+
+
             entry.key_facts = entry.key_facts || [];
             entry.tags = entry.tags || [];
             entry.linked_character_ids = entry.linked_character_ids || [];
@@ -144,10 +157,11 @@ const appState = {
     getAllLoreEntries() { return this.allLoreEntries; },
     getLoreEntryById(id) {
         if (!id) return null;
-        return this.allLoreEntries.find(entry => String(entry.lore_id) === String(id));
+        return this.allLoreEntries.find(entry => String(entry.lore_id) === String(id) || String(entry._id?.$oid) === String(id) || String(entry._id) === String(id));
     },
     updateLoreEntryInList(updatedEntry) {
-        const index = this.allLoreEntries.findIndex(e => String(e.lore_id) === String(updatedEntry.lore_id));
+        const idToMatch = String(updatedEntry.lore_id || updatedEntry._id?.$oid || updatedEntry._id);
+        const index = this.allLoreEntries.findIndex(e => String(e.lore_id || e._id?.$oid || e._id) === idToMatch);
         if (index > -1) {
             this.allLoreEntries[index] = updatedEntry;
         } else {
@@ -155,9 +169,13 @@ const appState = {
         }
     },
     removeLoreEntryFromList(loreId) {
-        this.allLoreEntries = this.allLoreEntries.filter(entry => String(entry.lore_id) !== String(loreId));
+        this.allLoreEntries = this.allLoreEntries.filter(entry => String(entry.lore_id || entry._id?.$oid || entry._id) !== String(loreId));
     },
     setCurrentLoreEntryId(id) { this.currentLoreEntryId = id ? String(id) : null; },
     getCurrentLoreEntryId() { return this.currentLoreEntryId; },
-    getCurrentLoreEntry() { return this.getLoreEntryById(this.currentLoreEntryId); }
+    getCurrentLoreEntry() { return this.getLoreEntryById(this.currentLoreEntryId); },
+
+    // Scene Context Filter
+    setCurrentSceneContextFilter(filter) { this.currentSceneContextFilter = filter; },
+    getCurrentSceneContextFilter() { return this.currentSceneContextFilter; }
 };
