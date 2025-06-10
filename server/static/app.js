@@ -179,7 +179,8 @@ var App = {
         const isDetailedSheetVisible = dashboardContent && dashboardContent.querySelector('.detailed-pc-sheet');
 
         if (activeNpcCount > 0 && !isDetailedSheetVisible) {
-            dialogueInterfaceElem.style.display = 'flex';
+            // THIS IS THE CHANGE: 'flex' becomes 'block'
+            dialogueInterfaceElem.style.display = 'block';
             pcDashboardViewElem.style.display = 'none';
             const activePcsData = appState.getAllCharacters().filter(char => appState.hasActivePc(String(char._id)));
             UIRenderers.renderPcQuickViewInSceneUI(pcQuickViewInSceneElem, activePcsData);

@@ -4,9 +4,10 @@ console.log("uiRenderers.js: Parsing STARTED");
 
 var UIRenderers = {
     createPcQuickViewSectionHTML: function(isForDashboard) {
-        const titleText = PC_QUICK_VIEW_BASE_TITLE; // Global constant from config.js
+        // MODIFICATION: This function will now ONLY return the H4 title element.
+        const titleText = PC_QUICK_VIEW_BASE_TITLE;
         const fullTitle = isForDashboard ? `${titleText} (Click card for details)` : titleText;
-        return `<h4>${fullTitle}</h4><div class="pc-dashboard-grid">`;
+        return `<h4>${fullTitle}</h4>`;
     },
 
     generatePcQuickViewCardHTML: function(pc, isClickableForDetailedView = false) {
@@ -671,22 +672,27 @@ var UIRenderers = {
             wrapperElement.style.display = 'none';
             return;
         }
-        let contentHTML = this.createPcQuickViewSectionHTML(false);
+
+        // MODIFICATION: Build the title and card grid as separate sibling elements.
+        let titleHTML = this.createPcQuickViewSectionHTML(false);
+        let cardsHTML = '';
         activePcsData.sort((a, b) => a.name.localeCompare(b.name)).forEach(pc => {
             if (typeof pc.calculatedProfBonus === 'undefined') {
                 const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || pc.vtt_data?.details?.level || 1;
                 pc.calculatedProfBonus = DNDCalculations.getProficiencyBonus(pcLevel);
              }
-            contentHTML += this.generatePcQuickViewCardHTML(pc, true);
+            cardsHTML += this.generatePcQuickViewCardHTML(pc, true);
         });
-        contentHTML += `</div>`;
-        wrapperElement.innerHTML = contentHTML;
-        wrapperElement.style.display = 'flex';
+        
+        // Place the title OUTSIDE and BEFORE the card grid container.
+        wrapperElement.innerHTML = titleHTML + `<div class="pc-dashboard-grid">${cardsHTML}</div>`;
+        wrapperElement.style.display = 'block'; // The container should be a simple block.
     },
 
-    updatePcDashboardUI: function(dashboardContentElement, allCharacters, activePcIds, currentlyExpandedAbility, currentlyExpandedSkill, skillSortKey) {
+updatePcDashboardUI: function(dashboardContentElement, allCharacters, activePcIds, currentlyExpandedAbility, currentlyExpandedSkill, skillSortKey) {
         if (!dashboardContentElement) { console.error("UIRenderers.updatePcDashboardUI: 'pc-dashboard-content' element not found."); return; }
-        dashboardContentElement.innerHTML = '';
+
+        let finalHTML = ''; // We will build the entire dashboard HTML here.
 
         const selectedPcs = allCharacters.filter(char => activePcIds.has(String(char._id)) && char.character_type === 'PC' && (char.vtt_data || char.system));
 
@@ -700,25 +706,30 @@ var UIRenderers = {
              sortedSelectedPcs.sort((a,b) => {
                 const scoreA = (a.vtt_data?.abilities?.str?.value ?? a.system?.abilities?.str?.value) || 10;
                 const scoreB = (b.vtt_data?.abilities?.str?.value ?? b.system?.abilities?.str?.value) || 10;
-                return scoreB - scoreA; // Sort descending by Strength
+                return scoreB - scoreA;
             });
         } else {
-            sortedSelectedPcs.sort((a, b) => a.name.localeCompare(b.name)); // Default sort by name
+            sortedSelectedPcs.sort((a, b) => a.name.localeCompare(b.name));
         }
-
 
         sortedSelectedPcs.forEach(pc => {
             const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || pc.vtt_data?.details?.level || 1;
             pc.calculatedProfBonus = DNDCalculations.getProficiencyBonus(pcLevel);
         });
 
-        let quickViewHTML = this.createPcQuickViewSectionHTML(true);
-        sortedSelectedPcs.forEach(pc => { // Use the potentially sorted list
-            quickViewHTML += this.generatePcQuickViewCardHTML(pc, true);
-        });
-        quickViewHTML += `</div>`;
-        dashboardContentElement.innerHTML += quickViewHTML;
+        // --- NEW HTML STRUCTURE ---
+        // 1. Add the H4 title directly.
+        finalHTML += this.createPcQuickViewSectionHTML(true);
 
+        // 2. Build the cards and wrap them in the grid container.
+        let cardsHTML = '';
+        sortedSelectedPcs.forEach(pc => {
+            cardsHTML += this.generatePcQuickViewCardHTML(pc, true);
+        });
+        finalHTML += `<div class="pc-dashboard-grid">${cardsHTML}</div>`;
+        // --- END NEW STRUCTURE ---
+
+        // 3. Build the rest of the tables.
         const abilitiesForTable = ABILITY_KEYS_ORDER.map(k => k.toUpperCase());
         let mainStatsTableHTML = `<h4>Ability Scores Overview</h4><div class="table-wrapper"><table id="main-stats-table"><thead><tr><th>Character</th>`;
         abilitiesForTable.forEach(ablKey => {
@@ -727,7 +738,7 @@ var UIRenderers = {
             mainStatsTableHTML += `<th class="clickable-ability-header" data-ability="${ablKey}" onclick="toggleAbilityExpansion('${ablKey}')">${ablKey} <span class="arrow-indicator">${arrow}</span></th>`;
         });
         mainStatsTableHTML += `</tr></thead><tbody>`;
-        sortedSelectedPcs.forEach(pc => { // Use the potentially sorted list
+        sortedSelectedPcs.forEach(pc => {
             mainStatsTableHTML += `<tr><td>${pc.name}</td>`;
             ABILITY_KEYS_ORDER.forEach(ablKey => {
                 const score = (pc.vtt_data?.abilities?.[ablKey]?.value ?? pc.system?.abilities?.[ablKey]?.value) || 10;
@@ -737,32 +748,11 @@ var UIRenderers = {
             mainStatsTableHTML += `</tr>`;
         });
         mainStatsTableHTML += `</tbody></table></div>`;
-        dashboardContentElement.innerHTML += mainStatsTableHTML;
-
-        const abilityExpansionContainer = document.createElement('div');
-        abilityExpansionContainer.id = 'expanded-ability-details-sections';
-        dashboardContentElement.appendChild(abilityExpansionContainer);
-        abilitiesForTable.forEach(ablKey => {
-            const expansionDiv = document.createElement('div');
-            expansionDiv.id = `expanded-${ablKey}`;
-            expansionDiv.className = 'expanded-ability-content';
-            expansionDiv.style.display = (currentlyExpandedAbility === ablKey) ? 'block' : 'none';
-            if (currentlyExpandedAbility === ablKey && selectedPcs.length > 0) {
-                this.populateExpandedAbilityDetailsUI(ablKey, expansionDiv, sortedSelectedPcs); // Pass sorted list
-            }
-            abilityExpansionContainer.appendChild(expansionDiv);
-        });
+        finalHTML += mainStatsTableHTML;
 
         let skillsTableHTML = `<h4>Skills Overview</h4><div class="table-wrapper"><table id="skills-overview-table"><thead><tr><th>Character</th>`;
-        for (const skillKey in SKILL_NAME_MAP) {
-            const skillFullName = SKILL_NAME_MAP[skillKey].replace(/\s\(...\)/, '');
-            const isExpanded = currentlyExpandedSkill === skillKey;
-            const arrow = isExpanded ? '▼' : '►';
-            skillsTableHTML += `<th class="clickable-skill-header" data-skill-key="${skillKey}" onclick="toggleSkillExpansion('${skillKey}')">${skillFullName} <span class="arrow-indicator">${arrow}</span></th>`;
-        }
-        skillsTableHTML += `</tr></thead><tbody>`;
-        let pcsForSkillTable = [...selectedPcs]; // Use a copy of the already name-sorted or strength-sorted list
-        if (skillSortKey && skillSortKey !== 'STR') { // Only re-sort if skillSortKey is active and not STR (which is handled above)
+        let pcsForSkillTable = [...sortedSelectedPcs]; 
+        if (skillSortKey && skillSortKey !== 'STR') {
             pcsForSkillTable.sort((a,b) => {
                 const skillAData = a.vtt_data?.skills?.[skillSortKey] ?? a.system?.skills?.[skillSortKey];
                 const skillBData = b.vtt_data?.skills?.[skillSortKey] ?? b.system?.skills?.[skillSortKey];
@@ -783,10 +773,17 @@ var UIRenderers = {
                 );
                 return valB - valA;
             });
-        } else if (!skillSortKey && currentlyExpandedAbility !== 'STR') { // Default sort by name if no skill sort and not STR sorted
+        } else if (!skillSortKey && currentlyExpandedAbility !== 'STR') {
              pcsForSkillTable.sort((a,b) => a.name.localeCompare(b.name));
         }
 
+        for (const skillKey in SKILL_NAME_MAP) {
+            const skillFullName = SKILL_NAME_MAP[skillKey].replace(/\s\(...\)/, '');
+            const isExpanded = currentlyExpandedSkill === skillKey;
+            const arrow = isExpanded ? '▼' : '►';
+            skillsTableHTML += `<th class="clickable-skill-header" data-skill-key="${skillKey}" onclick="toggleSkillExpansion('${skillKey}')">${skillFullName} <span class="arrow-indicator">${arrow}</span></th>`;
+        }
+        skillsTableHTML += `</tr></thead><tbody>`;
 
         pcsForSkillTable.forEach(pc => {
             skillsTableHTML += `<tr><td>${pc.name}</td>`;
@@ -808,7 +805,24 @@ var UIRenderers = {
             skillsTableHTML += `</tr>`;
         });
         skillsTableHTML += `</tbody></table></div>`;
-        dashboardContentElement.innerHTML += skillsTableHTML;
+        finalHTML += skillsTableHTML;
+
+        dashboardContentElement.innerHTML = finalHTML;
+
+        // 4. Append dynamic expansion containers last.
+        const abilityExpansionContainer = document.createElement('div');
+        abilityExpansionContainer.id = 'expanded-ability-details-sections';
+        dashboardContentElement.appendChild(abilityExpansionContainer);
+        abilitiesForTable.forEach(ablKey => {
+            const expansionDiv = document.createElement('div');
+            expansionDiv.id = `expanded-${ablKey}`;
+            expansionDiv.className = 'expanded-ability-content';
+            expansionDiv.style.display = (currentlyExpandedAbility === ablKey) ? 'block' : 'none';
+            if (currentlyExpandedAbility === ablKey && selectedPcs.length > 0) {
+                this.populateExpandedAbilityDetailsUI(ablKey, expansionDiv, sortedSelectedPcs);
+            }
+            abilityExpansionContainer.appendChild(expansionDiv);
+        });
 
         const skillExpansionContainer = document.createElement('div');
         skillExpansionContainer.id = 'expanded-skill-details-sections';
@@ -819,7 +833,7 @@ var UIRenderers = {
             expansionDiv.className = 'expanded-skill-content';
             expansionDiv.style.display = (currentlyExpandedSkill === skillKey) ? 'block' : 'none';
             if (currentlyExpandedSkill === skillKey && selectedPcs.length > 0) {
-                this.populateExpandedSkillDetailsUI(skillKey, expansionDiv, pcsForSkillTable); // Use the potentially skill-sorted list
+                this.populateExpandedSkillDetailsUI(skillKey, expansionDiv, pcsForSkillTable);
             }
             skillExpansionContainer.appendChild(expansionDiv);
         }
@@ -1082,7 +1096,8 @@ var UIRenderers = {
         const isDetailedSheetVisible = dashboardContent && dashboardContent.querySelector('.detailed-pc-sheet');
 
         if (activeNpcCount > 0 && !isDetailedSheetVisible) {
-            dialogueInterfaceElem.style.display = 'flex';
+            // THIS IS THE CHANGE: 'flex' becomes 'block'
+            dialogueInterfaceElem.style.display = 'block';
             pcDashboardViewElem.style.display = 'none';
             const activePcsData = appState.getAllCharacters().filter(char => appState.hasActivePc(String(char._id)));
             this.renderPcQuickViewInSceneUI(pcQuickViewInSceneElem, activePcsData);

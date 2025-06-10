@@ -192,10 +192,20 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 .character-list li .npc-name-clickable, .character-list li .lore-entry-name-clickable { flex-grow: 1; cursor: pointer; }
 .character-list li .npc-name-clickable:hover, .character-list li .lore-entry-name-clickable:hover { text-decoration: underline; color: #0056b3;}
 
+#dialogue-interface { display: none; }
 
-#dialogue-interface { display: none; flex-grow: 1; flex-direction: column; }
 #multi-npc-dialogue-container { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: row; overflow-x: auto; gap: 15px; min-width: calc(25%);} /* Changed overflow-x to auto */
-.npc-dialogue-area { border: 1px solid #ddd; padding: 10px; border-radius: 5px; background-color: #f9f9f9;}
+
+.npc-dialogue-area {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    flex: 1 1 auto; /* ADD THIS to allow the item to grow and shrink */
+    min-width: 100%; /* ADD THIS to ensure a minimum sensible width */
+}
+.npc-dialogue-area h3 { margin-top: 0; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #eee;}
+
 .npc-dialogue-area h3 { margin-top: 0; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #eee;}
 .npc-transcript { min-height: 100px; max-height: 250px; overflow-y: auto; border: 1px solid #eee; padding: 8px; background-color: #fff; margin-bottom: 10px;}
 
@@ -212,12 +222,13 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 /* Unified style for PC card grids */
 .pc-dashboard-grid {
     display: flex;
-    flex-wrap: wrap; /* Changed from nowrap to wrap for consistency */
-    gap: 10px; /* Consistent gap */
+    flex-wrap: wrap;
+    gap: 10px;
     margin-top: 10px;
     margin-bottom: 20px;
-    padding-bottom: 5px; 
+    padding-bottom: 5px;
 }
+
 .pc-stat-card { border: 1px solid #ddd; border-radius: 4px; padding: 10px; background-color: #f9f9f9; flex: 1 1 200px; min-width: 180px; box-sizing: border-box; }
 .pc-stat-card h4 { margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 8px; font-size: 1.1em; }
 .pc-stat-card p { margin: 4px 0; font-size: 0.9em; }
@@ -280,15 +291,24 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 .close-detailed-pc-sheet-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; font-weight: bold; color: #777; cursor: pointer; line-height: 1; padding: 0 5px; z-index: 10;}
 .close-detailed-pc-sheet-btn:hover { color: #333; }
 
-/* PC Quick View in Scene specific styling */
-#pc-quick-view-section-in-scene {
+.pc-quick-view-wrapper {
     display: flex;
-    flex-wrap: wrap; /* Changed from nowrap for consistency */
+    flex-wrap: wrap;
     gap: 10px;
+    width: 100%;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+}
+
+/* Add a border specifically to the scene interaction version */
+#pc-quick-view-section-in-scene {
     margin-bottom: 15px;
     padding-bottom: 10px;
     border-bottom: 1px solid #eee;
 }
+#history-content-display { margin-top: 10px; padding: 10px; border: 1px solid #ddd; background-color: #f9f9f9; max-height: 200px; overflow-y: auto; white-space: pre-wrap; font-family: 'Courier New', Courier, monospace; font-size: 0.9em;}
+
+
 #pc-quick-view-section-in-scene .pc-stat-card h4 { display: flex; justify-content: space-between; align-items: center; }
 
 
