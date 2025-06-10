@@ -243,39 +243,13 @@ var UIRenderers = {
             <div id="suggested-faction-standing-changes-npc-${npcIdStr}" class="ai-suggestion-category"><h5>Suggested Faction Standing Change:</h5></div>`;
         areaDiv.appendChild(suggestionsDiv);
         containerElement.appendChild(areaDiv);
-        this.adjustNpcDialogueAreaWidthsUI(containerElement);
     },
 
     removeNpcDialogueAreaUI: function(npcIdStr, containerElement) {
         const areaDiv = Utils.getElem(`npc-area-${npcIdStr}`);
         if (areaDiv) areaDiv.remove();
-        this.adjustNpcDialogueAreaWidthsUI(containerElement);
         if (appState.getActiveNpcCount() === 0 && containerElement && !containerElement.querySelector('p.scene-event')) {
             containerElement.innerHTML = '<p class="scene-event">Select NPCs from the SCENE tab to add them to the interaction.</p>';
-        }
-    },
-
-    adjustNpcDialogueAreaWidthsUI: function(containerElement) {
-        if (!containerElement) return;
-        const dialogueAreas = containerElement.querySelectorAll('.npc-dialogue-area');
-        const numAreas = dialogueAreas.length;
-        if (numAreas === 0) return;
-        const minIndividualWidth = 250;
-        const containerWidth = containerElement.clientWidth;
-        let flexBasisPercent = 100 / numAreas;
-
-        if (numAreas * minIndividualWidth > containerWidth) {
-            dialogueAreas.forEach(area => {
-                area.style.minWidth = `${minIndividualWidth}px`;
-                area.style.flex = `0 0 ${minIndividualWidth}px`;
-            });
-        } else {
-            dialogueAreas.forEach(area => {
-                area.style.minWidth = `${minIndividualWidth}px`;
-                area.style.flexBasis = `${flexBasisPercent}%`;
-                area.style.flexGrow = `1`;
-                area.style.flex = `1 1 ${flexBasisPercent}%`;
-            });
         }
     },
 

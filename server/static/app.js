@@ -249,7 +249,9 @@ var App = {
             multiNpcContainer.innerHTML = '<p class="scene-event">Select NPCs from the SCENE tab to add them to the interaction.</p>';
         }
 
-        UIRenderers.adjustNpcDialogueAreaWidthsUI(multiNpcContainer);
+        // DELETE OR COMMENT OUT THE LINE BELOW
+        // UIRenderers.adjustNpcDialogueAreaWidthsUI(multiNpcContainer);
+
         UIRenderers.renderNpcListForContextUI(
             Utils.getElem('character-list-scene-tab'),
             appState.getAllCharacters(),

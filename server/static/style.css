@@ -194,16 +194,24 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 
 #dialogue-interface { display: none; }
 
-#multi-npc-dialogue-container { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: row; overflow-x: auto; gap: 15px; min-width: calc(25%);} /* Changed overflow-x to auto */
-
+#multi-npc-dialogue-container {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    overflow-x: auto; /* Allows horizontal scrolling if many NPCs are present */
+    padding-bottom: 10px; /* Gives space for the scrollbar if it appears */
+}
 .npc-dialogue-area {
     border: 1px solid #ddd;
     padding: 10px;
     border-radius: 5px;
     background-color: #f9f9f9;
-    flex: 1 1 auto; /* ADD THIS to allow the item to grow and shrink */
-    min-width: 100%; /* ADD THIS to ensure a minimum sensible width */
+    flex-shrink: 0;         /* Prevents items from shrinking below their base size */
+    flex-grow: 1;           /* Allows items to grow to fill empty space */
+    flex-basis: 350px;      /* Sets a default "ideal" width for each box */
+    min-height: 200px;      /* Ensures the box has some default height */
 }
+
 .npc-dialogue-area h3 { margin-top: 0; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #eee;}
 
 .npc-dialogue-area h3 { margin-top: 0; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #eee;}
