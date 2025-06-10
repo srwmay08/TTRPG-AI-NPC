@@ -1,0 +1,51 @@
+{
+    "name": "Dunkart Longdawn",
+    "character_type": "NPC",
+    "description": "A stoic and disciplined templar of the Order of the Aster. Dunkart is built like a fortress wall, with a stern expression to match. He is Solarath's current partner, providing a grounded, by-the-book counterpoint to his companion's methods. His faith is in the law of the Order and the weight of his maul.",
+    "race": "Human",
+    "class": "Paladin (Oath of the Crown)",
+    "alignment": "Lawful Neutral",
+    "age": "Late 30s",
+    "personality_traits": [
+      "Disciplined and unwavering",
+      "Follows the rules to the letter",
+      "Slow to trust, but fiercely loyal once earned",
+      "Believes in action over words"
+    ],
+    "ideals": [
+      "Law: 'The Code is our shield. Without it, we are no better than what we hunt.'",
+      "Duty: 'My post is here. I will not abandon it.'",
+      "Order: 'Chaos is the enemy. We are the line that holds it back.'"
+    ],
+    "bonds": [
+      "His partner, Solarath.",
+      "The Order of the Aster and his oath as a templar.",
+      "His consecrated heavy armor and maul."
+    ],
+    "flaws": [
+      "Inflexible and resistant to unorthodox solutions.",
+      "Can be judgmental of those who don't share his discipline.",
+      "His strict adherence to the law can sometimes conflict with true justice."
+    ],
+    "backstory": "Dunkart was recruited into the Order of the Aster for his unyielding resolve and physical prowess. He excelled in his training, embracing the rigid structure and clear purpose the Order provided. He has served dutifully for two decades, earning a reputation as a reliable, if unimaginative, templar. He was recently partnered with Solarath, a pairing that High Dawnknight Regheriad likely hoped would temper both of them.",
+    "motivations": [
+      "To uphold the laws of the land and the code of his Order.",
+      "To prove himself a worthy templar in the eyes of his superiors.",
+      "To ensure his partner, Solarath, doesn't get them both killed."
+    ],
+    "knowledge": [
+      "Expertise in the Order's laws, tactics, and history.",
+      "How to track and fight the monstrous creatures the Order hunts.",
+      "An encyclopedic knowledge of his Order's specific martial forms."
+    ],
+    "speech_patterns": "Blunt and concise. Does not waste words.",
+    "mannerisms": "Stands at attention, even when 'at ease'. Hand rests on the pommel of his maul. Nods sharply instead of saying 'yes'.",
+    "relationships": [
+      {"name": "Solarath", "relationship": "Partner/Mentor", "status": "Alive"},
+      {"name": "Ser Tlinthar Regheriad", "relationship": "Superior Officer", "status": "Alive"}
+    ],
+    "gm_notes": "Dunkart is a classic Lawful 'tank' NPC. He can serve as a foil to more chaotic party members or as a steadfast ally in a fight. He could create conflict by insisting on following the law even when it's inconvenient or morally ambiguous for the party.",
+    "associated_history_files": [
+      "Order_of_the_Aster.txt", "Templar_Codex.txt"
+    ]
+  }

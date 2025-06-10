@@ -1,0 +1,52 @@
+{
+    "name": "Adrem De la Cour",
+    "character_type": "NPC",
+    "description": "A man of sharp intellect and quiet resolve, Adrem was a respected field agent for the Harpers. He possesses the thoughtful eyes of a scholar and the weary posture of a man who has seen too much. His current whereabouts are unknown, a mystery that haunts his son, Cade.",
+    "race": "Human",
+    "class": "Rogue (Inquisitive) / Ranger (Gloom Stalker)",
+    "alignment": "Chaotic Good",
+    "age": "Early 40s (if alive)",
+    "personality_traits": [
+      "Methodical and patient",
+      "Believes in the power of information",
+      "Carries a quiet sadness",
+      "Fiercely protective of his ideals and family"
+    ],
+    "ideals": [
+      "Knowledge: 'The truth is a light that can scatter any shadow.'",
+      "Freedom: 'Tyrants thrive in ignorance. We must arm the people with knowledge.'",
+      "Responsibility: 'We who know the dangers have a duty to face them.'"
+    ],
+    "bonds": [
+      "His son, Cade De la Cour, whom he secretly trained in the basics of observation.",
+      "His wife, Lyra, his partner in both life and work.",
+      "The principles of the Harpers, even if he grew disillusioned with their methods."
+    ],
+    "flaws": [
+      "Prone to taking dangerous risks for what he believes is the greater good.",
+      "His work often forced him to keep secrets from those he loved most.",
+      "Can be distrustful of authority and organizations."
+    ],
+    "backstory": "Adrem, along with his wife Lyra, was a dedicated member of the Harpers, a clandestine organization fighting for good across the realms. He specialized in intelligence gathering and rooting out corruption. He was part of a mission led by a fellow Harper, Syldan's father, which ended in disaster. He and Lyra vanished shortly after, leaving their young son Cade behind. The nature of that final mission and his disappearance are intrinsically linked.",
+    "motivations": [
+      "To uncover a conspiracy that threatens the Sword Coast.",
+      "To protect his family from the fallout of his dangerous work.",
+      "To return to his son, Cade."
+    ],
+    "knowledge": [
+      "Deep understanding of the secret societies and political underbelly of major cities.",
+      "The specific details of the disastrous final mission he undertook.",
+      "Survival and tracking skills honed by years as a ranger."
+    ],
+    "speech_patterns": "Speaks in a calm, measured tone. Often uses metaphors related to light and shadow.",
+    "mannerisms": "Taps his chin when in deep thought. Constantly scans his surroundings, a habit he can't break.",
+    "relationships": [
+      {"name": "Cade De la Cour", "relationship": "Son", "status": "Alive"},
+      {"name": "Lyra De la Cour", "relationship": "Wife and Partner", "status": "Missing"},
+      {"name": "Syldan's Father", "relationship": "Former Mission Commander", "status": "Deceased"}
+    ],
+    "gm_notes": "Adrem is a central figure in Cade's backstory. His return could be a major campaign event, or finding clues about his fate could be a primary quest driver. He might not be the same man Cade remembers.",
+    "associated_history_files": [
+      "The_Harpers.txt", "Mission_Report_A37.txt", "Cade_De_la_Cour.txt"
+    ]
+  }

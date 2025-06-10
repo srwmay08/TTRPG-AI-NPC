@@ -1,0 +1,50 @@
+{
+    "name": "Clarc",
+    "character_type": "NPC",
+    "description": "Clarc is a young Aarakocra monk, his feathers still showing some of the down of a fledgling. He is the apprentice of the surly githzerai master, Dumak, and his natural curiosity and aerial grace are a stark contrast to his master's earthbound seriousness. He is nimble, inquisitive, and eager to please.",
+    "race": "Aarakocra",
+    "class": "Monk",
+    "alignment": "Neutral Good",
+    "age": "Teens",
+    "personality_traits": [
+      "Inquisitive and curious",
+      "Agile and quick",
+      "A bit naive and impressionable",
+      "Deeply devoted to his master, Dumak"
+    ],
+    "ideals": [
+      "Freedom: 'The sky has no walls. Why should we?'",
+      "Learning: 'Master Dumak knows so much. I want to learn it all.'",
+      "Loyalty: 'My flock is my master. I will not fail him.'"
+    ],
+    "bonds": [
+      "His master and mentor, Dumak the Blademonk.",
+      "The monastery, his adopted home.",
+      "The feeling of the wind beneath his wings."
+    ],
+    "flaws": [
+      "His curiosity can get him into trouble.",
+      "Can be easily intimidated by loud, angry people.",
+      "Takes his master's pronouncements as absolute gospel, even when Dumak is being sarcastic."
+    ],
+    "backstory": "Clarc's flock was scattered by a storm, and he was found, injured and alone, by the monks of the monastery. The surly githzerai swordmaster, Dumak, took an uncharacteristic interest in the young bird-man and took him on as his apprentice. Under Dumak's tutelage, Clarc is learning a unique blend of Aarakocra aerial mobility and the githzerai's precise martial discipline.",
+    "motivations": [
+      "To master the teachings of Dumak.",
+      "To explore the world beyond the monastery's walls.",
+      "To one day find what happened to his flock."
+    ],
+    "knowledge": [
+      "The layout of the monastery and the surrounding skies.",
+      "The basic tenets of Dumak's sword-and-mind philosophy.",
+      "How to catch thermals to ride the wind for hours."
+    ],
+    "speech_patterns": "A chirping, quick-paced voice. Often asks questions.",
+    "mannerisms": "Tilts his head to listen. Ruffles his feathers when agitated or excited. Mimics his master's stances, but with a lighter, bouncier quality.",
+    "relationships": [
+      {"name": "Dumak the Blademonk", "relationship": "Master / Mentor", "status": "Alive"}
+    ],
+    "gm_notes": "Clarc can be a scout or a guide for the party around the monastery. He might ask the party for help with a task he's afraid to ask his master about. His innocence can provide a good contrast to the more jaded members of the monastery, and protecting him might be a way to get on Dumak's good side.",
+    "associated_history_files": [
+      "The_Monastery_of_the_Eternal_Sun.txt", "Dumak_the_Blademonk.txt"
+    ]
+}

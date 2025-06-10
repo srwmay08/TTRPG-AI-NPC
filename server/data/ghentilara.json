@@ -1,0 +1,52 @@
+{
+    "name": "Ghentilara, High Radiance of the Spires of the Morning",
+    "character_type": "NPC",
+    "description": "Ghentilara is the supreme leader of the Spires of the Morning, the great temple-cathedral to Lathander. She is a woman of advanced years, yet her eyes shine with the light of the dawn and her voice commands absolute authority. She is serene, wise, and possesses a will as strong as the temple's marble foundations. As Kalen's superior, she guides him with a steady, and demanding, hand.",
+    "race": "Human",
+    "class": "Cleric (Life Domain)",
+    "alignment": "Lawful Good",
+    "age": "Late 70s",
+    "personality_traits": [
+      "Serene and composed",
+      "Immensely wise and perceptive",
+      "Unyielding in her faith and principles",
+      "A demanding but fair leader"
+    ],
+    "ideals": [
+      "Rebirth: 'Every soul is a new dawn waiting to break. We are here to herald it.'",
+      "Beauty: 'Art, creation, and kindness are the highest forms of prayer.'",
+      "Vigilance: 'We are the light on the horizon, the first defense against the coming night.'"
+    ],
+    "bonds": [
+      "The Spires of the Morning and the faith of Lathander.",
+      "The clergy and paladins under her command, including Kalen.",
+      "A secret responsibility to guard against a specific, ancient darkness."
+    ],
+    "flaws": [
+      "Can seem detached and distant due to her immense responsibilities.",
+      "Her expectations are incredibly high, and she does not suffer failure lightly.",
+      "Sees the world through the lens of grand prophecy, sometimes missing the smaller details."
+    ],
+    "backstory": "Ghentilara has dedicated her entire life to the service of the Morninglord. She rose through the ranks of the clergy through her powerful faith, her peerless wisdom, and her ability to inspire those around her. As High Radiance, she is one of the most powerful religious figures in the region. She oversaw the identification of Kalen's birth as the 'Sign of Celestial Breath' and has taken a personal interest in his development. She is also known for her generosity, such as providing magically-infused hot spring water to a local monastery.",
+    "motivations": [
+      "To ensure the faith of Lathander remains a powerful force for good in the world.",
+      "To guide Kalen towards his prophetic destiny.",
+      "To prepare the world for a prophesied dawn, and guard against the darkness that precedes it."
+    ],
+    "knowledge": [
+      "An exhaustive understanding of Lathander's dogma and prophecies.",
+      "Powerful divine magic and knowledge of sacred artifacts.",
+      "The political and spiritual landscape of the entire region."
+    ],
+    "speech_patterns": "Speaks calmly and poetically, with a voice that inspires hope and commands respect.",
+    "mannerisms": "Hands clasped before her. A serene, knowing smile. Gazes at the eastern horizon when contemplating.",
+    "relationships": [
+      {"name": "Kalen Thevren", "relationship": "Subordinate / Ward", "status": "Alive"},
+      {"name": "Ser Tlinthar Regheriad", "relationship": "Ally / Head of an Allied Order", "status": "Alive"},
+      {"name": "Abbot Alger", "relationship": "Recipient of Aid", "status": "Alive"}
+    ],
+    "gm_notes": "Ghentilara is a major NPC who acts as a quest-giver, patron, and source of high-level information and aid. She operates on a grand scale, concerned with prophecies and threats to the entire realm. Her quests will be of great importance.",
+    "associated_history_files": [
+      "The_Spires_of_the_Morning.txt", "Prophecy_of_Celestial_Breath.txt", "Kalen_Thevren_Bio.txt"
+    ]
+  }

@@ -1,0 +1,53 @@
+{
+    "name": "Dumak the Blademonk",
+    "character_type": "NPC",
+    "description": "A githzerai swordmaster who has found a strange sense of peace in the quiet monastery. Dumak is surly, taciturn, and prefers the solitude of night. He is a master of a unique form of swordplay that is as much a mental discipline as a physical one. Despite his gruff exterior, he has a deep, unspoken fondness for his young aarakocra apprentice, Clarc.",
+    "race": "Githzerai",
+    "class": "Monk (Way of the Kensei)",
+    "alignment": "Neutral Good",
+    "age": "Unknown",
+    "personality_traits": [
+      "Surly and taciturn",
+      "Intensely focused and disciplined",
+      "Nocturnal",
+      "Secretly has a soft spot for his apprentice"
+    ],
+    "ideals": [
+      "Perfection: 'The blade is an extension of the mind. A flawed thought leads to a flawed strike.'",
+      "Clarity: 'The chaos of the multiverse is a distraction. Here, there is focus.'",
+      "Control: 'Master your thoughts, and you master your body.'"
+    ],
+    "bonds": [
+      "His apprentice, Clarc.",
+      "His collection of perfectly balanced swords.",
+      "The silence of his meditation chamber.",
+      "An old vow he has never spoken of."
+    ],
+    "flaws": [
+      "Has absolutely no social graces.",
+      "Is dismissive of those he deems 'undisciplined'.",
+      "His focus on perfection can make him a harsh and unforgiving teacher."
+    ],
+    "backstory": "Dumak is a refugee from the endless chaos of Limbo and the eternal war of the gith. He fled his people's endless struggle, seeking a place of order where he could perfect his mind and his art. He found it in the remote monastery of Amaunator. The Abbot, recognizing his skill and inner turmoil, gave him sanctuary. Dumak keeps to himself, practicing his forms by moonlight, until he took the young aarakocra Clarc under his wing, a decision that surprised everyone, including himself.",
+    "motivations": [
+      "To achieve a perfect state of mental and physical discipline.",
+      "To protect his apprentice, Clarc, from the dangers of the world.",
+      "To keep the ghosts of his past from finding him."
+    ],
+    "knowledge": [
+      "Mastery of the Kensei monastic tradition.",
+      "The philosophy and mental exercises of the githzerai.",
+      "A deep understanding of extraplanar threats, particularly the githyanki and creatures of Limbo."
+    ],
+    "speech_patterns": "Speaks in short, clipped sentences. Often communicates with a grunt or a nod.",
+    "mannerisms": "Meditates for hours, perfectly still. Cleans his blade obsessively. His movements are precise and economical, with no wasted motion.",
+    "relationships": [
+      {"name": "Clarc", "relationship": "Apprentice", "status": "Alive"},
+      {"name": "Abbot Alger", "relationship": "Abbot / Provider of Sanctuary", "status": "Alive"}
+    ],
+    "gm_notes": "Dumak is a potential high-level trainer for monk or fighter characters. He is difficult to approach, but earning his respect would be a significant achievement. Quests involving him might relate to his gith past, or he might ask the party to discreetly help or test his apprentice, Clarc.",
+    "associated_history_files": [
+      "The_Monastery_of_the_Eternal_Sun.txt", "Gith_History.txt", "Clarc.txt"
+    ],
+    "linked_lore_ids": ["60d5ecb3a0f3e8a2d6f3b9ba", "60d5ecb3a0f3e8a2d6f3b9b9", "60d5ecb3a0f3e8a2d6f3b9d2", "60d5ecb3a0f3e8a2d6f3b9b8", "60d5ecb3a0f3e8a2d6f3b9b7", "60d5ecb3a0f3e8a2d6f3b9b6", "60d5ecb3a0f3e8a2d6f3b9b5", "60d5ecb3a0f3e8a2d6f3b9b4", "60d5ecb3a0f3e8a2d6f3b9d2"]
+  }

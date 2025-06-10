@@ -1,0 +1,53 @@
+{
+    "name": "Burgo",
+    "character_type": "NPC",
+    "description": "A cheerful and hardworking dwarf in the employ of the Crommer family. Burgo is a skilled metalworker, but his true passion and hidden talent lies in the culinary arts. His delicious meals are the talk of the workshop. He is a friendly soul, a close coworker to Moriah Kiah, and a reliable source of workshop gossip.",
+    "race": "Dwarf",
+    "class": "Expert (Artisan / Cook)",
+    "alignment": "Neutral Good",
+    "age": "80",
+    "personality_traits": [
+      "Jovial and good-natured",
+      "A bit of a gossip",
+      "Takes immense pride in both his smithing and his cooking",
+      "Hardworking and reliable"
+    ],
+    "ideals": [
+      "Fellowship: 'Nothing builds bonds like a hot forge and a hot meal.'",
+      "Joy: 'What's the point of hard work if you can't enjoy the fruits of it?'",
+      "Quality: 'Whether it's an alloy or a stew, use the best ingredients.'"
+    ],
+    "bonds": [
+      "His friendship with Moriah Kiah.",
+      "His loyalty to the Crommer family.",
+      "His secret recipe book.",
+      "The communal forge and kitchen of the workshop."
+    ],
+    "flaws": [
+      "Can't keep a secret to save his life.",
+      "His love of food makes him easily bribed with exotic ingredients.",
+      "Can be distracted from his smithing by a new recipe idea."
+    ],
+    "backstory": "Burgo comes from a long line of miners and smiths, but he always found the camp kitchen more interesting than the mine face. He joined the Crommer Brassworks as a journeyman smith, and his solid work ethic earned him a permanent spot. However, his habit of experimenting with lunch for the workshop staff quickly made him locally famous for his cooking. He formed a fast friendship with the human artisan Moriah, sharing stories and jokes over the forge.",
+    "motivations": [
+      "To perfect his mushroom and stout pie recipe.",
+      "To be the best smith he can be, while also being the best cook.",
+      "To see his friends and coworkers happy and well-fed."
+    ],
+    "knowledge": [
+      "Proficient in smithing and metalworking.",
+      "Expert-level cooking skills, especially dwarven cuisine.",
+      "Nearly all of the workshop's gossip and rumors."
+    ],
+    "speech_patterns": "A booming, cheerful voice. Laughs often. Describes everything with food metaphors.",
+    "mannerisms": "Rubs his belly when thinking. Wipes his hands on his apron. Always seems to be chewing on something.",
+    "relationships": [
+      {"name": "Moriah Kiah", "relationship": "Friend and Coworker", "status": "Alive"},
+      {"name": "Brigit Crommer", "relationship": "Employer", "status": "Alive"},
+      {"name": "Duth III Crommer", "relationship": "Employer", "status": "Alive"}
+    ],
+    "gm_notes": "Burgo is a great 'low-level' information source. He's friendly, approachable, and knows what's going on within the Crommer estate and the local artisan community. He might offer quests related to finding rare ingredients or protecting a food shipment.",
+    "associated_history_files": [
+      "The_Crommer_Clan.txt", "Burgo's_Recipes.txt"
+    ]
+  }

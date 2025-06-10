@@ -1,0 +1,50 @@
+{
+    "name": "Barren Dolf",
+    "character_type": "NPC",
+    "description": "The proprietor of the Niktogauss delivery service, Barren is a gruff, no-nonsense man whose hardened exterior was earned from a lifetime on the unforgiving streets. He is stout, with a network of wrinkles around his eyes and a voice that sounds like grinding stones. He has a soft spot for the street kids he employs, though he'd never admit it.",
+    "race": "Human",
+    "class": "Commoner (formerly Rogue)",
+    "alignment": "Neutral",
+    "age": "Late 50s",
+    "personality_traits": [
+      "Cynical and pragmatic",
+      "Fair, in his own gruff way",
+      "Secretly compassionate",
+      "Nostalgic for his younger, wilder days"
+    ],
+    "ideals": [
+      "Business: 'A coin earned is a coin deserved. No more, no less.'",
+      "Survival: 'The city doesn't care if you live or die. You gotta make it care.'",
+      "Aspiration: 'Keep your head down, do the work, and you might just make it to tomorrow.'"
+    ],
+    "bonds": [
+      "The Niktogauss delivery service, his life's work.",
+      "The network of street urchins and runners he employs, including Cade.",
+      "A faded tattoo from a gang he left long ago."
+    ],
+    "flaws": [
+      "Distrustful of anyone who hasn't earned their calluses.",
+      "Resistant to change and new ways of doing things.",
+      "His pragmatism can sometimes border on callousness."
+    ],
+    "backstory": "Barren Dolf wasn't always a business owner. In his youth, he was a runner and low-level rogue, learning the hard way that a quiet life is a long life. He scraped together enough coin to start the Niktogauss service, a name he picked because it sounded impressive and nobody knew what it meant. He provides a semi-legitimate enterprise for kids on the street, giving them a chance he never really had. He eventually sold the service to the bard Threestrings.",
+    "motivations": [
+      "To keep his business afloat and his runners safe.",
+      "To maintain his small pocket of influence in the city's street-level economy.",
+      "To see the kids he hires, like Cade, make something of themselves."
+    ],
+    "knowledge": [
+      "An encyclopedic knowledge of the city's shortcuts, back alleys, and rooftops.",
+      "The gossip and rumors that travel through the network of city runners.",
+      "How to spot trouble from a mile away."
+    ],
+    "speech_patterns": "Short, clipped sentences. Liberal use of street slang.",
+    "mannerisms": "Squints when assessing someone. Constantly wiping his hands on a rag tucked into his belt.",
+    "relationships": [
+      {"name": "Cade De la Cour", "relationship": "Former Employee", "status": "Alive"}
+    ],
+    "gm_notes": "Barren can be a source of local quests, information, or a safe contact for the party in the city. He values loyalty and payment in equal measure. He knows more about the city's criminal element than he lets on.",
+    "associated_history_files": [
+      "Niktogauss_Ledger.txt", "City_Gangs.txt"
+    ]
+  }

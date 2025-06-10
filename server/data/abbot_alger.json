@@ -1,0 +1,54 @@
+{
+    "name": "Abbot Alger of Amaunator",
+    "character_type": "NPC",
+    "description": "The leader of a remote monastery dedicated to Amaunator, the god of sun and law. Abbot Alger is an approachable and surprisingly warm man for a follower of such a stern deity. He is a skilled martial artist, and his movements are imbued with a radiant energy. He is known for his wisdom, his leadership, and the faint golden light that seems to shimmer at the edge of his vision.",
+    "race": "Human",
+    "class": "Monk (Way of the Sun Soul) / Cleric",
+    "alignment": "Lawful Good",
+    "age": "60s",
+    "personality_traits": [
+      "Approachable and warm",
+      "Disciplined but not rigid",
+      "A patient and insightful teacher",
+      "Possesses a quiet, unshakable confidence"
+    ],
+    "ideals": [
+      "Law: 'The law is a light that shows the path. It should guide, not blind.'",
+      "Truth: 'Deceit and shadow wither in the light of absolute truth.'",
+      "Endurance: 'As the sun endures the night to rise again, so must we endure hardship.'"
+    ],
+    "bonds": [
+      "The monastery and the monks under his care.",
+      "The teachings of Amaunator.",
+      "A vow to protect a sacred hot spring beneath the monastery."
+    ],
+    "flaws": [
+      "Can be too trusting of those who claim to seek redemption.",
+      "His adherence to a strict daily regimen can make him inflexible to sudden crises.",
+      "Sometimes struggles to reconcile the harsh judgment of his god with his own compassionate nature."
+    ],
+    "backstory": "Alger came to the monastery as a young man seeking order and purpose. He found both in the teachings of Amaunator and the disciplined practice of martial arts. He rose through the ranks, his wisdom and skill earning him the respect of his peers. As Abbot, he leads the monastery with a balanced hand, tempering the strictures of law with genuine compassion. He is grateful to the High Priestess Ghentilara for providing the monastery with a supply of magically-warmed water for their sacred springs.",
+    "motivations": [
+      "To guide the monks under his charge towards enlightenment.",
+      "To maintain the monastery as a beacon of law and light in the wilderness.",
+      "To see the long-eclipsed sun of Amaunator's faith rise in prominence once more."
+    ],
+    "knowledge": [
+      "Mastery of the 'Sun Soul' monastic tradition.",
+      "The extensive legal codes and theological doctrines of Amaunator's faith.",
+      "Knowledge of the monastery's secret history and the properties of its sacred spring."
+    ],
+    "speech_patterns": "Speaks in a calm, measured voice. His words are simple, but carry depth and meaning.",
+    "mannerisms": "His movements are fluid and deliberate. He often watches the sun. A faint golden light occasionally gleams in his eyes when he speaks on matters of faith.",
+    "relationships": [
+      {"name": "High Priestess Ghentilara", "relationship": "Benefactor", "status": "Alive"},
+      {"name": "Dumak the Blademonk", "relationship": "Monastery Member", "status": "Alive"},
+      {"name": "Ilathenra Moonkissed", "relationship": "Monastery Member", "status": "Alive"},
+      {"name": "Lessemas of Lathander", "relationship": "Monastery Member", "status": "Alive"}
+    ],
+    "gm_notes": "Abbot Alger can be a source of sanctuary, healing, and wisdom. He can offer quests related to defending the monastery, retrieving a lost text of law, or investigating a corruption of the land. He is a powerful ally if the party proves themselves to be on the side of justice.",
+    "associated_history_files": [
+      "The_Monastery_of_the_Eternal_Sun.txt", "Faith_of_Amaunator.txt"
+    ],
+    "linked_lore_ids": ["60d5ecb3a0f3e8a2d6f3b9ba", "60d5ecb3a0f3e8a2d6f3b9b9", "60d5ecb3a0f3e8a2d6f3b9d2", "60d5ecb3a0f3e8a2d6f3b9b8", "60d5ecb3a0f3e8a2d6f3b9b7", "60d5ecb3a0f3e8a2d6f3b9b6", "60d5ecb3a0f3e8a2d6f3b9b5", "60d5ecb3a0f3e8a2d6f3b9b4", "60d5ecb3a0f3e8a2d6f3b9d2"]
+  }

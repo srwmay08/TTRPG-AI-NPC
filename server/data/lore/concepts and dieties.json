@@ -1,0 +1,349 @@
+[
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9a2",
+        "name": "Célarunic",
+        "lore_type": "Concept/Deity",
+        "description": "Célarunic is the native language of the character Cade. It is a unique dialect that blends elements of regional languages with specific slang and terminology developed within Cade's original community. The linguistic roots of Célarunic are currently unknown to most scholars in Faerûn, making it a subject of interest for linguists and those studying isolated cultures.",
+        "key_facts": [
+            "Native language spoken by Cade.",
+            "A unique and rare dialect with unknown origins.",
+            "Combines elements of other languages with unique slang."
+        ],
+        "tags": ["célarunic", "language", "cade", "rare dialect"],
+        "gm_notes": "A speaker of this language would be exceptionally rare. Cade may be the only individual in the current setting who speaks it, making written or spoken messages in Célarunic a private form of communication for him."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9a3",
+        "name": "Giant's Blood",
+        "lore_type": "Concept/Deity",
+        "description": "Giant's Blood refers to the altered physiological state of Cade, resulting from arcane experiments conducted on him by Storm Giants. This substance, now a permanent part of his circulatory system, grants him a measure of giant-like resilience and strength. However, it may also carry unforeseen side effects or a latent connection to the giants who altered him.",
+        "key_facts": [
+            "A substance integrated into Cade's bloodstream.",
+            "The result of magical experiments by Storm Giants.",
+            "Grants Cade enhanced strength and resilience.",
+            "May have unknown long-term effects or create a magical connection to giants."
+        ],
+        "tags": ["giants blood", "cade", "storm giant", "magical experiment", "physiology"],
+        "gm_notes": "This could manifest as a form of natural damage resistance or advantage on Strength-based checks. It could also make Cade detectable by giants or those sensitive to giant magic."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9a4",
+        "name": "Hypohallucinogenics",
+        "lore_type": "Concept/Deity",
+        "description": "Hypohallucinogenics are a theorized psychological and magical condition that can affect magic-users who repeatedly overuse their innate abilities without proper grounding or material components. It is believed to be a potential side effect for those who do not use a focusing agent like Niktogauss. The symptoms manifest as sensory distortions, vivid waking dreams, and a blurring of the lines between reality and illusion.",
+        "key_facts": [
+            "A potential side effect of magical overuse.",
+            "Associated with magic-users who do not use focusing agents like Niktogauss.",
+            "Symptoms include hallucinations and distorted perception of reality."
+        ],
+        "tags": ["hypohallucinogenics", "magic", "affliction", "side effect", "niktogauss"],
+        "gm_notes": "This could be represented mechanically by random Wisdom saving throws after casting spells of a certain level or higher. Failure could result in short-term madness effects or temporary disadvantages on perception checks."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9a5",
+        "name": "Lathander (Kiah Family)",
+        "lore_type": "Concept/Deity",
+        "description": "Lathander, known as the Morninglord, is the deity of dawn, renewal, and creativity. He is prominently worshipped by the family of Moriah Kiah. This worship instills in the family a focus on new beginnings, hope, and the art of creation. Their faith is a guiding principle in their daily lives and crafts, viewing each sunrise as a promise of renewal and a chance to bring new beauty into the world.",
+        "key_facts": [
+            "Worshipped by the family of Moriah Kiah.",
+            "God of dawn, renewal, hope, and creativity.",
+            "Faith emphasizes new beginnings and the act of creation."
+        ],
+        "tags": ["lathander", "morninglord", "moriah kiah", "deity", "faith", "renewal"],
+        "gm_notes": "Members of the Kiah family might be found performing prayers at sunrise. Their connection to Lathander could grant them inspiration in creative endeavors or a resiliently hopeful outlook."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9a6",
+        "name": "Mysterious Black Smoke",
+        "lore_type": "Concept/Deity",
+        "description": "The magic wielded by Cade manifests not as typical arcane energy, but as wisps and plumes of mysterious black smoke. This unusual form is a direct result of the N'guraleth shard embedded within him. It is a tell-tale sign of a mortal who is in the process of becoming a Vessel for the dark god Vusog, The Devourer. The smoke itself is tangible and cold, smelling faintly of ash and ozone.",
+        "key_facts": [
+            "The unique form Cade's magic takes.",
+            "A physical sign of the N'guraleth shard's presence within a mortal.",
+            "Indicates that the mortal is becoming a Vessel for the god Vusog.",
+            "The smoke is cold to the touch and has a distinct ashen smell."
+        ],
+        "tags": ["black smoke", "cade", "vusog", "nguraleth shard", "vessel", "divine magic"],
+        "gm_notes": "This visual effect makes Cade's magic immediately recognizable and potentially alarming to those knowledgeable in divine or forbidden lore. It might cause fear or suspicion in onlookers."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9a7",
+        "name": "The Vessel of Vusog",
+        "lore_type": "Concept/Deity",
+        "description": "The Vessel is a mortal being specifically chosen to house the divine essence of Vusog, the Devourer. This transformation is initiated by implanting the mortal with the N'guraleth shard. The Vessel's own magical abilities begin to mutate, manifesting as black smoke. Ultimately, the mortal faces one of two fates: their body and soul are consumed from within, leaving an empty husk, or they successfully merge with the god's essence, becoming Vusog's physical avatar in the mortal plane.",
+        "key_facts": [
+            "A mortal chosen to house the essence of the god Vusog.",
+            "The transformation is triggered by the N'guraleth shard.",
+            "The Vessel's magic manifests as black smoke.",
+            "The process culminates in the mortal being consumed or becoming Vusog's avatar."
+        ],
+        "tags": ["vessel", "vusog", "nguraleth shard", "divine", "avatar", "transformation"],
+        "gm_notes": "Cade, as a potential Vessel, is a living crucible for a divine being. This could lead to internal conflict, prophetic visions, or attempts by Vusog's followers to either protect or manipulate him to ensure the god's rebirth."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9a8",
+        "name": "Tymora",
+        "lore_type": "Concept/Deity",
+        "description": "Tymora, often called Lady Luck, is the goddess of good fortune, skill, and victory. She is revered by those who take risks and rely on a combination of skill and luck to succeed. Linchaser, the owner of the Golden Horn tavern, is a devout worshipper of Tymora. This faith is reflected in the tavern's atmosphere, which often attracts gamblers, adventurers, and those seeking a fortunate turn of events. Shrines to Tymora often feature a spinning coin or a depiction of a smiling, confident woman.",
+        "key_facts": [
+            "The goddess of good fortune and skill.",
+            "Worshipped by Linchaser, owner of the Golden Horn.",
+            "Her followers believe in taking bold actions to make their own luck.",
+            "Popular among adventurers, gamblers, and risk-takers."
+        ],
+        "tags": ["tymora", "lady luck", "deity", "faith", "good fortune", "linchaser"],
+        "gm_notes": "A character might curry favor with Linchaser by showing respect to Tymora. The Golden Horn could be a place where games of chance are common, and displays of daring are applauded."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9a9",
+        "name": "Vusog (The Devourer)",
+        "lore_type": "Concept/Deity",
+        "description": "Vusog, also known as the Devourer, is a malevolent deity of feasts, death, and grim finality. His ascension to godhood was achieved by the horrific act of consuming another divine being during the cosmic event known as the Godfeast. Vusog is worshipped by a nihilistic cult called the Emissaries of the New World, who believe that all of existence must eventually be consumed. They seek to bring about Vusog's arrival on the mortal plane by preparing a suitable Vessel.",
+        "key_facts": [
+            "A god of feasts, death, and finality.",
+            "Ascended to godhood by consuming another god.",
+            "Worshipped by the Emissaries of the New World.",
+            "His followers aim to bring him into the world through a mortal Vessel."
+        ],
+        "tags": ["vusog", "the devourer", "deity", "godfeast", "emissaries of the new world", "evil god"],
+        "gm_notes": "Vusog represents a cosmic, consuming threat. His followers are likely to be secretive, ruthless, and dedicated to their goal. They might hunt Cade to either protect him or to accelerate the transformation into Vusog's avatar."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9aa",
+        "name": "Waukeen",
+        "lore_type": "Concept/Deity",
+        "description": "Waukeen, the Merchant's Friend, is the goddess of trade, wealth, and commerce. Her ethos is the 'golden rule'—not the ethical maxim, but the principle that wealth and commerce are the lubricants of civilization. Dame Wynda, the co-owner of the Golden Horn, is a faithful follower. This is evident in the tavern's efficient management, fair prices (for a profit), and the connections it fosters among merchants, guilds, and entrepreneurs.",
+        "key_facts": [
+            "The goddess of trade, wealth, and commerce.",
+            "Worshipped by Dame Wynda, co-owner of the Golden Horn.",
+            "Her faith promotes the growth of civilization through business and negotiation.",
+            "Worshipped by merchants, traders, and the wealthy."
+        ],
+        "tags": ["waukeen", "merchant's friend", "deity", "faith", "commerce", "dame wynda"],
+        "gm_notes": "Dame Wynda's business acumen is a reflection of her faith. She might be a source for contracts, trade goods, or information related to the city's economic landscape. Disruption of trade is anathema to her and her goddess."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9ab",
+        "name": "The Stitch (Title/Role)",
+        "lore_type": "Concept/Deity",
+        "description": "The Stitch is both a nickname for the character Havik and a metaphor for his role within his community. He acts as a protector and an emotional 'stitcher,' mending the frayed edges of broken lives and holding his companions together through turmoil. This role is not one of formal authority but is born from his empathetic nature and his desire to shield others from the chaos that often follows him, partly due to his own volatile magic.",
+        "key_facts": [
+            "A nickname and role held by Havik.",
+            "Acts as a protector and emotional anchor for his group.",
+            "Mends 'broken' lives and holds his community together.",
+            "An informal role based on empathy and responsibility."
+        ],
+        "tags": ["the stitch", "havik", "title", "role", "protector"],
+        "gm_notes": "This defines Havik's core motivation. He is driven to protect the people he cares about, and threats to them are the surest way to get his attention. This role may put him under considerable emotional strain."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9ac",
+        "name": "Wild Magic Sorcery (Havik)",
+        "lore_type": "Concept/Deity",
+        "description": "Havik's magical abilities stem from the unpredictable forces of Wild Magic. This power is innate and uncontrollable, leading to chaotic and often surprising magical effects. While he can attempt to cast specific spells, the outcome is never certain, and may be accompanied by unintended consequences such as summoning frogs, causing harmless glitter explosions, or involuntarily casting a different spell altogether. This makes him a powerful but dangerous ally and a constant source of chaos.",
+        "key_facts": [
+            "Havik's source of magical power.",
+            "Innate, chaotic, and uncontrollable.",
+            "Spellcasting can result in unpredictable surges of magic.",
+            "Side effects can range from harmless and comical to genuinely dangerous."
+        ],
+        "tags": ["wild magic", "sorcery", "havik", "chaos magic", "uncontrollable power"],
+        "gm_notes": "This can be represented by rolling on a Wild Magic Surge table whenever Havik casts a spell of 1st level or higher. The results can drive the narrative in unexpected and exciting directions."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9ad",
+        "name": "Lathander (The Morninglord)",
+        "lore_type": "Concept/Deity",
+        "description": "Lathander, the Morninglord, is the god of the dawn, renewal, hope, and rebirth. He is a deity of beginnings and creative energy, his dogma encouraging acts of kindness, the destruction of evil, and the fostering of new ideas and artistic expression. Kalen's devotion to Lathander provides him with a source of unwavering hope and a belief in the possibility of redemption and a new day, even in the face of the bleakest darkness.",
+        "key_facts": [
+            "God of dawn, renewal, hope, and rebirth.",
+            "Kalen's patron deity.",
+            "His teachings focus on destroying evil and fostering hope.",
+            "He is a symbol of new beginnings and unwavering optimism."
+        ],
+        "tags": ["lathander", "morninglord", "deity", "kalen", "hope", "rebirth"],
+        "gm_notes": "Kalen's faith is his shield against despair. He would be driven to aid those who have lost hope and would find sources of natural beauty, like a sunrise, to be spiritually rejuvenating."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9ae",
+        "name": "Oath of Vengeance",
+        "lore_type": "Concept/Deity",
+        "description": "Kalen has taken a sacred Oath of Vengeance, a binding paladin vow that commits him to punishing a specific evil. This oath was sworn in response to a great personal loss—the death of his mentor at the hands of undead creatures. The oath compels Kalen to hunt down those who create and command the undead, viewing them as the ultimate transgressors. His methods are direct and uncompromising; he is the light that scours the darkness.",
+        "key_facts": [
+            "A sacred paladin oath taken by Kalen.",
+            "Sworn in response to his mentor's death by undead.",
+            "Focuses on relentlessly hunting and punishing a specific evil.",
+            "Tenets include fighting the greater evil and showing no mercy to the wicked."
+        ],
+        "tags": ["oath of vengeance", "paladin", "kalen", "undead", "sacred vow"],
+        "gm_notes": "This oath is the driving force behind Kalen's actions. He may be forced to choose between the tenets of his oath (punishing the wicked) and other moral considerations, such as showing mercy or protecting innocents at all costs."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9af",
+        "name": "Undeath as Blasphemy",
+        "lore_type": "Concept/Deity",
+        "description": "In Kalen's worldview, shaped by his faith in Lathander and his Oath of Vengeance, the creation and existence of undead is the ultimate form of blasphemy. He sees necromancy as a profane act that violates the natural cycle of life and death, a cycle which is sacred to the Morninglord. To Kalen, an undead creature is a perversion of the divine order, a soul trapped in a decaying prison, and its existence is an insult that must be erased.",
+        "key_facts": [
+            "A core belief held by Kalen.",
+            "Views necromancy and undeath as a violation of the natural and divine order.",
+            "Considers undead creatures a perversion of the sacred cycle of life and death.",
+            "This belief fuels his drive to destroy all undead."
+        ],
+        "tags": ["undeath", "blasphemy", "kalen", "lathander", "necromancy", "doctrine"],
+        "gm_notes": "This absolute stance allows for no nuance in Kalen's mind. He will not parley with intelligent undead and may come into conflict with characters who see a distinction between sentient undead and mindless monsters."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9b0",
+        "name": "Dwarven Prophecy (Chosen by the Flame-Father)",
+        "lore_type": "Concept/Deity",
+        "description": "An ancient dwarven prophecy foretold the coming of a smith who would be 'Chosen by the Flame-Father,' Moradin. This prophecy spoke of a dwarf whose skill and spirit would be so aligned with the Forge-Father that they could create artifacts of immense power and significance. Moriah's birth and prodigious talent at the forge have led her clan to believe that she is the fulfillment of this prophecy, placing a great weight of expectation upon her shoulders.",
+        "key_facts": [
+            "An ancient prophecy among the dwarves.",
+            "Foretold the arrival of a 'Chosen by the Flame-Father' (Moradin).",
+            "Moriah is believed to be the fulfillment of this prophecy.",
+            "The Chosen is destined to be a legendary smith."
+        ],
+        "tags": ["dwarven prophecy", "moriah", "moradin", "chosen one", "smithing"],
+        "gm_notes": "This prophecy is the source of both Moriah's pride and her anxiety. Others might seek to use her for their own ends, believing she can craft legendary items. She may also be tested by agents of Moradin to prove her worthiness."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9b1",
+        "name": "Fliorgry",
+        "lore_type": "Concept/Deity",
+        "description": "Fliorgry is a specific and beautiful style of decorative inlay work used in dwarven smithing. It involves embedding delicate, flowing patterns of precious metals like silver and gold into a darker base metal, typically steel or iron. Moriah is particularly passionate about this art form, viewing it as a way to bring beauty and grace to the strength and utility of dwarven craft. It is a highly specialized skill requiring immense patience and a master's touch.",
+        "key_facts": [
+            "A beautiful and specific style of inlay in smithing.",
+            "Involves embedding precious metals into a base metal.",
+            "Moriah is a passionate practitioner of this art form.",
+            "Known for its flowing, delicate patterns."
+        ],
+        "tags": ["fliorgry", "smithing", "dwarven craft", "artistry", "moriah", "inlay"],
+        "gm_notes": "A piece crafted with Fliorgry would be a masterwork item, valuable for both its quality and its beauty. Moriah might gift such items to those she deeply respects or take on commissions for nobles and wealthy patrons."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9b2",
+        "name": "Lathander (Crommer Worship)",
+        "lore_type": "Concept/Deity",
+        "description": "Alongside their deep reverence for the dwarven pantheon, the Crommer clan also pays homage to Lathander. This is somewhat unusual for dwarves, but they see a parallel between the Morninglord's domain of creation and renewal and Moradin's mastery of the forge. The Crommers specifically wish to honor Lathander through the crafting of great ritual bells, whose chimes would ring in the dawn, symbolizing new beginnings and hope, forged through dwarven skill.",
+        "key_facts": [
+            "A secondary deity worshipped by the Crommer clan.",
+            "They see a connection between Lathander's portfolio and Moradin's.",
+            "The Crommers plan to create ritual bells to honor him.",
+            "This worship blends human and dwarven traditions."
+        ],
+        "tags": ["lathander", "crommer", "deity", "faith", "ritual bells", "moradin"],
+        "gm_notes": "This dual faith could make the Crommers more open-minded and diplomatic in their dealings with humans compared to more traditionalist dwarven clans. Their plan to forge the bells could be a major undertaking and a potential quest."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9b3",
+        "name": "Moradin",
+        "lore_type": "Concept/Deity",
+        "description": "Moradin, known as the Forge-Father or the All-Father, is the chief deity of the dwarven pantheon. He is the god of creation, smithing, and protection. As a cleric of Moradin, Moriah is dedicated to his principles of hard work, community, and the pursuit of perfecting one's craft. He is honored not just through prayer, but through the act of smithing itself. The prophecy marking Moriah as his 'Chosen' makes her connection to him profoundly personal and direct.",
+        "key_facts": [
+            "The head of the dwarven pantheon of gods.",
+            "God of smithing, creation, and protection.",
+            "Moriah is his cleric and prophesied 'Chosen'.",
+            "He is honored through dedicated craftwork and the defense of dwarven principles."
+        ],
+        "tags": ["moradin", "forge-father", "deity", "dwarven", "moriah", "smithing", "cleric"],
+        "gm_notes": "Moriah can be a direct conduit for Moradin's will. She may receive visions at the forge or be granted divine power to protect her people and her creations."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9b4",
+        "name": "Apocryphal Fourth Sun (Sun-in-Darkness)",
+        "lore_type": "Concept/Deity",
+        "description": "The Apocryphal Fourth Sun, or the Sun-in-Darkness, is a mystic belief held by some within the monastery of the Sun Soul. It is not part of the mainstream doctrine of the Three Suns. This belief posits the existence of a fourth aspect of the sun: the light that shines within the deepest darkness, a symbol of hope and resilience when all seems lost. The layout of certain contemplative gardens in the monastery subtly suggests this hidden, esoteric concept.",
+        "key_facts": [
+            "An esoteric belief related to the Sun Soul philosophy.",
+            "Suggests a fourth aspect of the sun, the 'Sun-in-Darkness'.",
+            "Symbolizes hope and inner light in times of utter despair.",
+            "Hinted at through the symbolic layout of monastery gardens."
+        ],
+        "tags": ["fourth sun", "sun-in-darkness", "mysticism", "sun soul", "esoteric"],
+        "gm_notes": "This belief could be a secret known only to the most senior or enlightened monks of the order. It could represent a source of hidden power or a philosophical path for a character facing a profound personal crisis."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9b5",
+        "name": "Aumanator",
+        "lore_type": "Concept/Deity",
+        "description": "Aumanator, the Keeper of the Eternal Sun, is a powerful lawful sun god, once the chief solar deity of Netheril. In the context of the Three Suns philosophy, he represents the sun at its noon peak—a symbol of eternal law, order, and righteous judgment. He is viewed as the elder and fatherly figure among the solar triad, embodying vigilance and the absolute, uncompromising power of the sun's full light.",
+        "key_facts": [
+            "A lawful good god of the sun.",
+            "Represents the 'Noon' aspect in the Three Suns philosophy.",
+            "Seen as an elder, fatherly figure symbolizing law and judgment.",
+            "Formerly the chief solar deity of the Netherese empire."
+        ],
+        "tags": ["aumanator", "deity", "sun god", "three suns", "law", "netheril"],
+        "gm_notes": "Worshippers focusing on Aumanator would be rigid, lawful, and dedicated to justice. They would be uncompromising in their fight against chaos and darkness."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9b6",
+        "name": "Lathander (Three Suns)",
+        "lore_type": "Concept/Deity",
+        "description": "Within the monastic tradition of the Three Suns, Lathander represents the Dawn, the youthful and creative aspect of the sun. He embodies hope, new beginnings, and the creative spark that brings beauty into the world. His energy is that of potential and renewal. Monks who align with Lathander focus on inspiration, artistry, and the optimistic belief that each day offers a chance to begin anew.",
+        "key_facts": [
+            "Represents the 'Dawn' aspect in the Three Suns philosophy.",
+            "Viewed as a youthful god of renewal and creativity.",
+            "Symbolizes hope, potential, and new beginnings.",
+            "His followers blend martial practice with artistic expression."
+        ],
+        "tags": ["lathander", "deity", "sun god", "three suns", "dawn", "creativity"],
+        "gm_notes": "This facet of Lathander's worship is less about overt proselytizing and more about internal creation and the beauty of movement. A monk following this path would see their martial arts as a form of creative expression."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9b7",
+        "name": "Radiant Light / Inner Sun Soul",
+        "lore_type": "Concept/Deity",
+        "description": "The concept of the Radiant Light or the Inner Sun Soul is central to the Sun Soul monastic discipline. It is the belief that every living being possesses a spark of the sun's divine energy within them. Through rigorous discipline, meditation, and martial practice, a monk can learn to access and cultivate this inner light, eventually manifesting it as bursts of searing divine energy, protective wards of light, and a spirit that is resilient to darkness and despair.",
+        "key_facts": [
+            "A core concept of the Sun Soul monastic tradition.",
+            "The belief that a spark of divine solar energy exists within all living things.",
+            "Can be cultivated through discipline, meditation, and martial arts.",
+            "Allows a monk to manifest their inner light as magical power."
+        ],
+        "tags": ["inner sun", "sun soul", "philosophy", "monk", "divine energy", "radiant light"],
+        "gm_notes": "This is the in-world explanation for the powers of a Sun Soul monk. A monk's journey is about fanning this inner spark into a blazing sun. This philosophy emphasizes self-improvement and enlightenment over worship of an external deity."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9b8",
+        "name": "Selûne",
+        "lore_type": "Concept/Deity",
+        "description": "Selûne, Our Lady of Silver, is the goddess of the moon, stars, and navigation. In the context of the Three Suns monastery, she is associated with Ilathenra and represents the 'Sun at Night' or the reflected light of the moon. She is a protector of the lost and weary, a beacon of hope in the darkness. Her presence in the triad provides balance to the fiery nature of the sun, representing calmness, serenity, and the guiding light that can be found even in the darkest of nights.",
+        "key_facts": [
+            "Goddess of the moon, stars, and protectors.",
+            "Represents the 'Sun at Night' or moon aspect in the Three Suns concept.",
+            "Associated with the character Ilathenra.",
+            "Provides a balance of serenity and guidance against the sun's fire."
+        ],
+        "tags": ["selûne", "deity", "moon goddess", "three suns", "ilathenra", "protection"],
+        "gm_notes": "Monks aligned with Selûne's aspect would be more defensive and protective. They would be calm, observant, and act as guides for those who have lost their way, both literally and spiritually."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9b9",
+        "name": "Sun Soul Style",
+        "lore_type": "Concept/Deity",
+        "description": "The Sun Soul Style is the martial and philosophical discipline taught at its namesake monastery. It is a form of monasticism that blends unarmed combat with the ability to channel one's inner spiritual energy, or 'Inner Sun,' into blasts of radiant light. The style is not merely a fighting technique but a complete way of life, emphasizing meditation, self-discipline, and the quest for personal enlightenment by nurturing the divine spark within.",
+        "key_facts": [
+            "A monastic martial and philosophical discipline.",
+            "Combines unarmed combat with channeling inner radiant energy.",
+            "A comprehensive lifestyle focused on discipline and enlightenment.",
+            "Practitioners are known as Monks of the Order of the Sun Soul."
+        ],
+        "tags": ["sun soul", "monastic tradition", "martial arts", "philosophy", "inner light"],
+        "gm_notes": "Characters trained in this style would have access to the abilities of the Sun Soul monastic tradition. They would likely be disciplined individuals, focused on self-improvement and using their radiant powers to combat darkness."
+    },
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9ba",
+        "name": "Three Suns",
+        "lore_type": "Concept/Deity",
+        "description": "The Three Suns is a symbolic and philosophical concept at the heart of the Sun Soul monastery's teachings. It represents the three aspects of the sun's daily journey: Dawn (Lathander), Noon (Aumanator), and Night (Selûne, as the moon reflecting the sun's light). Each aspect represents a different facet of the path to enlightenment: creativity and new beginnings, righteous law and order, and serene guidance in darkness. Monks may choose to focus on one aspect or seek to find balance between all three.",
+        "key_facts": [
+            "A central symbolic concept for the Sun Soul Order.",
+            "Represents the sun at Dawn, Noon, and Night.",
+            "The aspects are associated with Lathander, Aumanator, and Selûne respectively.",
+            "Forms the philosophical foundation for the monastery's teachings."
+        ],
+        "tags": ["three suns", "sun soul", "philosophy", "symbolism", "lathander", "aumanator", "selune"],
+        "gm_notes": "This triad allows for a variety of character concepts within the same monastic order. A party of Sun Soul monks might each align with a different aspect, creating a balanced and thematically rich group."
+    }
+]

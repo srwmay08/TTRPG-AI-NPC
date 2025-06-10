@@ -1,0 +1,55 @@
+{
+    "name": "Linchaser",
+    "character_type": "NPC",
+    "description": "A cleric of Tymora with a twinkle in his eye and a lucky coin he's always flipping. Linchaser is the co-owner of the Golden Horn, and he embodies his faith: he's a cheerful optimist, a believer in second chances, and a consummate risk-taker. He sees the hand of Lady Luck in every roll of the dice and every turn of the cards.",
+    "race": "Half-Elf",
+    "class": "Cleric (Trickery Domain)",
+    "alignment": "Chaotic Good",
+    "age": "Late 70s (appears younger)",
+    "personality_traits": [
+      "Eternally optimistic",
+      "Loves games of chance and skill",
+      "Generous with his winnings",
+      "Has a calming, reassuring presence"
+    ],
+    "ideals": [
+      "Fortune: 'You can't win if you don't play. Lady Luck favors the bold.'",
+      "Freedom: 'Don't let fear dictate your choices. Take a chance.'",
+      "Charity: 'A shared blessing is a double blessing. Spread the luck around.'"
+    ],
+    "bonds": [
+      "His wife, Dame Wynda, whose structured world he loves to gently disrupt.",
+      "The Golden Horn, which he views as a grand temple to Lady Luck.",
+      "Anyone down on their luck who just needs one good turn."
+    ],
+    "flaws": [
+      "Can be too willing to risk it all on a long shot.",
+      "His easy-going nature can be mistaken for carelessness.",
+      "Has a hard time saying no to a challenge or a bet."
+    ],
+    "backstory": "Linchaser has always had an uncanny knack for being in the right place at the right time. Attributing his fortune to the goddess Tymora, he devoted his life to her service. He traveled widely, leaving a trail of strange stories and lucky breaks in his wake. He eventually met and fell in love with Dame Wynda, a paladin of Waukeen. Their faiths, one of luck and one of trade, seemed a perfect match. They pooled their resources to create the Golden Horn Gambling House, a place where fortune could be courted under the watchful eye of fair practice.",
+    "motivations": [
+      "To create the most exciting and fair gambling house in the world.",
+      "To help people change their fortunes for the better.",
+      "To enjoy the thrill of life and all its uncertainties."
+    ],
+    "knowledge": [
+      "Expert in dozens of games of chance and the mathematics of probability.",
+      "A feel for the 'luck' of a room or a person.",
+      "The holy rites and beliefs of the church of Tymora."
+    ],
+    "speech_patterns": "Warm, friendly, and encouraging. Uses gambling metaphors.",
+    "mannerisms": "Constantly flipping a silver coin. Winks frequently. Leans in conspiratorially when sharing advice.",
+    "relationships": [
+      {"name": "Dame Wynda", "relationship": "Wife and Business Partner", "status": "Alive"},
+      {"name": "Threestrings", "relationship": "Performer", "status": "Alive"},
+      {"name": "Cade De la Cour", "relationship": "Security", "status": "Alive"},
+      {"name": "Havik the Stitch", "relationship": "Security", "status": "Alive"},
+      {"name": "Teela", "relationship": "Bartender", "status": "Alive"},
+      {"name": "Benathan", "relationship": "Food and Beverage Manager", "status": "Alive"}
+    ],
+    "gm_notes": "Linchaser can provide divine magic, especially illusions and blessings of luck. He's a source of high-stakes, game-oriented quests. He might stake the party in a high-risk venture if he believes they're a good bet.",
+    "associated_history_files": [
+      "The_Golden_Horn.txt", "Faiths_of_Tymora.txt"
+    ]
+  }

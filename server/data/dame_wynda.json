@@ -1,0 +1,55 @@
+{
+    "name": "Dame Wynda",
+    "character_type": "NPC",
+    "description": "Dame Wynda is a formidable presence, a paladin of Waukeen whose faith in the divine power of commerce is as strong as her sword arm. Co-owner of the Golden Horn, she is shrewd, impeccably dressed, and carries an aura of divine authority. She ensures that all deals are fair, and all debts are paid.",
+    "race": "Human",
+    "class": "Paladin (Oath of Devotion)",
+    "alignment": "Lawful Good",
+    "age": "Early 40s",
+    "personality_traits": [
+      "Incorruptible and honest",
+      "Charismatic and persuasive",
+      "Devout in her worship of Waukeen",
+      "Sees profit as a sign of divine favor"
+    ],
+    "ideals": [
+      "Honesty: 'A contract is a sacred text. A handshake is a holy vow.'",
+      "Community: 'Prosperity should be a tide that lifts all ships, not just the yachts.'",
+      "Justice: 'Those who cheat the system cheat the gods, and must answer for it.'"
+    ],
+    "bonds": [
+      "Her husband, Linchaser, whose faith in luck complements her faith in deals.",
+      "The Golden Horn Gambling House, a temple to her goddess in its own right.",
+      "The merchant community of the city, which she fiercely protects."
+    ],
+    "flaws": [
+      "Can be rigid and inflexible when it comes to rules and contracts.",
+      "Sometimes has difficulty understanding motivations not tied to wealth or enterprise.",
+      "Her devotion can make her seem aloof or judgmental."
+    ],
+    "backstory": "Born into a merchant family, Wynda saw the hand of Waukeen, the goddess of trade, in every transaction. She pledged herself to the goddess's service, becoming a paladin who protects the sanctity of commerce. She met Linchaser, a cleric of the goddess of luck, and saw a divine partnership. Together, they founded the Golden Horn, a place that embodies their two faiths: a place of chance, overseen by the principles of fair trade.",
+    "motivations": [
+      "To grow the influence and prosperity of the Golden Horn.",
+      "To root out corruption and unfair practices in the city's markets.",
+      "To serve as a shining example of Waukeen's principles."
+    ],
+    "knowledge": [
+      "Expertise in finance, contracts, and appraisal.",
+      "A deep understanding of the city's economic and political landscape.",
+      "The tenets and secret rites of the church of Waukeen."
+    ],
+    "speech_patterns": "Clear, confident, and articulate. Uses commercial metaphors frequently.",
+    "mannerisms": "Meets everyone's gaze directly. Taps her finger to count off points in an argument.",
+    "relationships": [
+      {"name": "Linchaser", "relationship": "Husband and Business Partner", "status": "Alive"},
+      {"name": "Threestrings", "relationship": "Performer", "status": "Alive"},
+      {"name": "Cade De la Cour", "relationship": "Security", "status": "Alive"},
+      {"name": "Havik the Stitch", "relationship": "Security", "status": "Alive"},
+      {"name": "Teela", "relationship": "Bartender", "status": "Alive"},
+      {"name": "Benathan", "relationship": "Food and Beverage Manager", "status": "Alive"}
+    ],
+    "gm_notes": "Dame Wynda can be a powerful ally or a strict adversary. She can fund expeditions, offer high-stakes quests related to economic espionage or sabotage, or act as a judge in disputes. She always keeps her word.",
+    "associated_history_files": [
+      "The_Golden_Horn.txt", "Church_of_Waukeen.txt"
+    ]
+  }

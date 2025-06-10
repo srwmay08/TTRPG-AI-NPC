@@ -45,6 +45,7 @@
         {"name": "Ser Tlinthar Regheriad", "relationship": "High Dawnknight, The Order of the Aster", "status": "Alive"},
         {"name": "Ser Brenlin Vos", "relationship": "Mentor-Knight", "status": "Missing in action"},
         {"name": "Moriah Kiah", "relationship": "Friend (PC)", "status": "Alive"},
-        {"name": "Havik the Stitch", "relationship": "Friend (PC)", "status": "Alive"}
+        {"name": "Havik the Stitch", "relationship": "Friend (PC)", "status": "Alive"},
+        {"name": "Dunkart Longdawn", "relationship": "Partner/Rookie", "status": "Alive"}
     ]
 }

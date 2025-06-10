@@ -1,0 +1,51 @@
+{
+    "name": "Lessemas of Lathander",
+    "character_type": "NPC",
+    "description": "Lessemas is a half-elven novice monk whose striking, classical beauty causes a constant, low-level stir in the disciplined environment of the monastery. He is a recent arrival, sent from the Spires of the Morning to learn contemplation and martial form. He is genuinely devout and contemplative, often frustrated that his appearance distracts others from his spiritual pursuits.",
+    "race": "Half-Elf",
+    "class": "Monk / Acolyte",
+    "alignment": "Neutral Good",
+    "age": "20s",
+    "personality_traits": [
+      "Contemplative and thoughtful",
+      "Earnest in his faith",
+      "Uncomfortable with the attention his looks bring",
+      "Kind and gentle-spirited"
+    ],
+    "ideals": [
+      "Inner Beauty: 'The beauty of the soul is what truly matters to the Morninglord.'",
+      "Renewal: 'Each sunrise is a chance to start anew, to be better than yesterday.'",
+      "Serenity: 'I seek the quiet mind that comes from true devotion.'"
+    ],
+    "bonds": [
+      "His faith in Lathander.",
+      "The Spires of the Morning, his home temple.",
+      "A desire to be seen for his devotion, not his face."
+    ],
+    "flaws": [
+      "Socially awkward and easily flustered.",
+      "Naive about the world and the intentions of others.",
+      "His frustration with the constant attention can sometimes make him seem sullen or arrogant."
+    ],
+    "backstory": "Lessemas was an acolyte at the Spires of the Morning, the grand temple to Lathander. His devotion was pure, but his distracting beauty was causing disruptions among the other acolytes and petitioners. Hoping that a period of disciplined contemplation far from the city would help him focus, High Priestess Ghentilara sent him to the remote monastery of Amaunator to study. He is trying his best to fit in, but even among the stoic monks, his looks cause a certain amount of distraction.",
+    "motivations": [
+      "To deepen his connection to Lathander through contemplation.",
+      "To learn the monastic disciplines to better focus his mind.",
+      "To prove that he is more than just a handsome face."
+    ],
+    "knowledge": [
+      "The teachings and rites of Lathander.",
+      "The basics of the monastery's daily routines.",
+      "How to avoid eye contact with people."
+    ],
+    "speech_patterns": "Soft-spoken and polite. Tends to stammer when flustered.",
+    "mannerisms": "Tends to look at the ground when speaking to people. Spends a lot of time tending the monastery gardens. His movements are careful and deliberate, as if he is afraid of breaking something.",
+    "relationships": [
+      {"name": "High Priestess Ghentilara", "relationship": "Superior", "status": "Alive"},
+      {"name": "Abbot Alger", "relationship": "Host / Teacher", "status": "Alive"}
+    ],
+    "gm_notes": "Lessemas is a social NPC who can be used for lighter, more roleplay-focused encounters. He might be the target of an admirer's unwanted affections, or he might have inadvertently learned something important because someone was distracted and spoke too freely around him. He is fundamentally good and will help the party if he can.",
+    "associated_history_files": [
+      "The_Monastery_of_the_Sun.txt", "The_Spires_of_the_Morning.txt"
+    ]
+  }

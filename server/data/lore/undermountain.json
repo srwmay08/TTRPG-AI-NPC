@@ -1,0 +1,13 @@
+{
+    "lore_id": "60d5ecb3a0f3e8a2d6f3b9a1",
+    "name": "The Crommer Clan Saga",
+    "lore_type": "Historical Event",
+    "description": "The rich history of the Crommer clan, their rise in Waterdeep, and their dedication to Moradin and the forge.",
+    "key_facts": [
+        "Established the Crommer Brassworks focusing on piping and fixtures.",
+        "Known for crafting the sacred Horns of Moradin.",
+        "Influential in Waterdeep's merchant and artisan guilds."
+    ],
+    "tags": ["crommer", "dwarven history", "waterdeep", "moradin", "brassworks"],
+    "gm_notes": "This lore is known to members of the Crommer family and close associates."
+}

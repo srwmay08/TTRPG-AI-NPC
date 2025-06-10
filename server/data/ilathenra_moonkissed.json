@@ -1,0 +1,51 @@
+{
+    "name": "Ilathenra Moonkissed",
+    "character_type": "NPC",
+    "description": "An aasimar martial artist of breathtaking grace, Ilathenra has taken a vow of silence. She communicates through a complex series of hand gestures and the raw emotion in her luminous eyes. She believes she is descended from a celestial who served Selûne, the moon goddess, and awaits the day when the goddess will speak to her directly and break her silence.",
+    "race": "Aasimar (Protector)",
+    "class": "Monk (Way of the Drunken Master - reflavored as 'Flowing Moon')",
+    "alignment": "Chaotic Good",
+    "age": "Unknown",
+    "personality_traits": [
+      "Serene and graceful",
+      "Intensely spiritual and devout",
+      "Expressive without words",
+      "Moves with an unpredictable, flowing grace"
+    ],
+    "ideals": [
+      "Communion: 'The voice I await is the only one that matters.'",
+      "Freedom: 'Like the moon, my path is my own. I will not be bound by rigid forms.'",
+      "Beauty: 'There is a dance in every motion, a poem in every form. I seek to perfect it.'"
+    ],
+    "bonds": [
+      "Her faith in Selûne.",
+      "Her vow of silence.",
+      "The moon, which she watches every night."
+    ],
+    "flaws": [
+      "Her inability to speak can lead to critical misunderstandings.",
+      "Can be seen as aloof or disconnected from the world.",
+      "Her personal quest for communion can make her ignore more immediate problems."
+    ],
+    "backstory": "Ilathenra arrived at the monastery as a silent pilgrim. Her celestial heritage was obvious, as was her incredible martial talent. Her style was unlike the rigid forms of the other monks, flowing and unpredictable like moonlight on water. She made it known through gestures that she was on a spiritual quest, believing herself to be a descendant of one of Selûne's celestial servants. She took a vow of silence, to better hear the voice of her divine ancestor. The Abbot allowed her to stay, respecting her devotion.",
+    "motivations": [
+      "To receive a message from Selûne.",
+      "To achieve a state of physical and spiritual grace that honors her goddess.",
+      "To protect the innocent under the watchful eye of the moon."
+    ],
+    "knowledge": [
+      "A unique, flowing martial arts style.",
+      "The cycles of the moon and Selûnite astrology.",
+      "How to communicate complex ideas without speaking."
+    ],
+    "speech_patterns": "Silent. Communicates through an elegant, self-devised sign language and expressive eyes.",
+    "mannerisms": "Her movements are a constant, slow, graceful dance. She often gazes up at the sky, day or night. Her celestial light manifests faintly when she is emotional.",
+    "relationships": [
+      {"name": "Selûne", "relationship": "Goddess / Ancestor", "status": "Divine"},
+      {"name": "Abbot Alger", "relationship": "Host", "status": "Alive"}
+    ],
+    "gm_notes": "Ilathenra is a mystery. Is her belief true? Will Selûne ever speak to her? She can be a source of quests related to the moon, lycanthropes, or the goddess Selûne. Communicating with her could be a fun roleplaying challenge for the party.",
+    "associated_history_files": [
+      "The_Monastery_of_the_Eternal_Sun.txt", "The_Church_of_Selune.txt"
+    ]
+  }
