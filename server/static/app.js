@@ -13,6 +13,13 @@ var App = {
             this.setupSceneContextSelector();
             this.setupDashboardClickHandlers(); 
 
+            const dprInput = Utils.getElem('dpr-ac-input');
+            if (dprInput) {
+                dprInput.addEventListener('change', () => {
+                    this.updateMainView();
+                });
+            }
+
             setTimeout(() => this.updateMainView(), 0); 
         } catch (e) {
             console.error("App.js: Error during initial app setup:", e);

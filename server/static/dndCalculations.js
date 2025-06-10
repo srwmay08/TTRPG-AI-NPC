@@ -1,6 +1,17 @@
 // static/dndCalculations.js
-// Responsibility: All D&D 5e specific calculation logic.
 
+const MONSTER_STATS_BY_CR = {
+    0: 13, 0.125: 13, 0.25: 13, 0.5: 13, 1: 13, 2: 13, 3: 13, 4: 14, 5: 15,
+    6: 15, 7: 15, 8: 16, 9: 16, 10: 17, 11: 17, 12: 17, 13: 18, 14: 18,
+    15: 18, 16: 18, 17: 19, 18: 19, 19: 19, 20: 19, 21: 20, 22: 20, 23: 20,
+    24: 21, 25: 21, 26: 21, 27: 22, 28: 22, 29: 22, 30: 22
+};
+
+const DIE_AVERAGES = {
+    'd4': 2.5, 'd6': 3.5, 'd8': 4.5, 'd10': 5.5, 'd12': 6.5, 'd20': 10.5
+};
+
+// Responsibility: All D&D 5e specific calculation logic.
 var DNDCalculations = {
     getAbilityModifier: function(score) {
         return Math.floor(((score || 10) - 10) / 2);
@@ -138,13 +149,12 @@ var DNDCalculations = {
         return null;
     },
 
-    spellSaveDC: function(pcData) { // Accepts pcData object
+    spellSaveDC: function(pcData) {
         if (!pcData || !pcData.vtt_data || !pcData.vtt_data.abilities) return 'N/A';
         const spellcastingAbilityKey = this.getSpellcastingAbilityKeyForPC(pcData);
         if (!spellcastingAbilityKey) return 'N/A (No Casting Ability)';
 
         const abilityScore = pcData.vtt_data.abilities[spellcastingAbilityKey]?.value || 10;
-        // Ensure calculatedProfBonus is available or calculate it
         const proficiencyBonus = pcData.calculatedProfBonus != null ? pcData.calculatedProfBonus :
             this.getProficiencyBonus(pcData.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pcData.system?.details?.level || pcData.vtt_data?.details?.level || 1);
 
@@ -223,7 +233,95 @@ var DNDCalculations = {
         }
         console.warn("DNDCalculations.calculateDisplayAC: AC calculation falling back to basic unarmored for PC:", pcData.name);
         return 10 + dexMod + shieldBonus;
-    }
-};
+    }, // <<< THIS COMMA IS THE FIX
 
+    getAverageDamage: function(diceString) {
+        if (!diceString || typeof diceString !== 'string') return 0;
+        let totalAverage = 0;
+        const parts = diceString.split('+').map(part => part.trim());
+        for (const part of parts) {
+            const match = part.toLowerCase().match(/(\d+)d(\d+)/);
+            if (match) {
+                const numDice = parseInt(match[1]);
+                const dieType = `d${match[2]}`;
+                totalAverage += numDice * (DIE_AVERAGES[dieType] || 0);
+            }
+        }
+        return totalAverage;
+    },
+
+calculateDPR: function(pcData, attackItem, targetAC) {
+        if (!pcData || !attackItem || !attackItem.system) return { name: attackItem.name, dpr: 'N/A', dprAdv: 'N/A' };
+
+        const pcLevel = pcData.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pcData.system?.details?.level || 1;
+        const profBonus = DNDCalculations.getProficiencyBonus(pcLevel);
+        const abilities = pcData.system.abilities;
+
+        let abilityMod = 0;
+        let attackBonus = 0;
+        let baseDamageDice = [];
+        let bonusDamage = 0;
+
+        if (attackItem.type === 'weapon' && attackItem.system?.damage?.base?.denomination) {
+            const weaponData = attackItem.system;
+            const abilityKey = weaponData.ability || (weaponData.properties?.includes('fin') ? 'dex' : 'str');
+            abilityMod = DNDCalculations.getAbilityModifier(abilities[abilityKey]?.value || 10);
+            attackBonus = abilityMod + profBonus;
+            bonusDamage = abilityMod;
+            baseDamageDice.push(`${weaponData.damage.base.number || 1}d${weaponData.damage.base.denomination}`);
+        
+        } else if (attackItem.type === 'spell' && attackItem.system?.damage?.parts?.length > 0) {
+            const spellData = attackItem.system;
+            const abilityKey = spellData.ability || pcData.system.attributes.spellcasting || 'int';
+            abilityMod = DNDCalculations.getAbilityModifier(abilities[abilityKey]?.value || 10);
+            
+            if (spellData.actionType === 'rsak' || spellData.actionType === 'msak') {
+                 attackBonus = abilityMod + profBonus;
+            } else {
+                attackBonus = -99; // Assume saving throw spell
+            }
+           
+            bonusDamage = 0;
+            const damagePart = spellData.damage.parts[0];
+            // Look for damage formula in 'formula' or 'number' property
+            const damageFormula = damagePart.formula || damagePart.number;
+            if(damageFormula && typeof damageFormula === 'string') {
+                baseDamageDice.push(damageFormula);
+            }
+        } else {
+             return { name: attackItem.name, dpr: 'N/A', dprAdv: 'N/A' };
+        }
+        
+        const rogueClass = pcData.items.find(i => i.type === 'class' && i.name.toLowerCase() === 'rogue');
+        if (rogueClass && (attackItem.system.properties?.includes('fin') || attackItem.system.properties?.includes('rge'))) {
+            const sneakAttackDice = Math.ceil(rogueClass.system.levels / 2);
+            baseDamageDice.push(`${sneakAttackDice}d6`);
+        }
+
+        const M = targetAC; // Use the passed-in Target AC
+        const A = attackBonus;
+        const C = 0.05;
+        const D = baseDamageDice.reduce((total, dice) => total + this.getAverageDamage(dice), 0);
+        const B = bonusDamage;
+
+        if (D === 0 && B === 0) return { name: attackItem.name, dpr: 'N/A', dprAdv: 'N/A' };
+
+        const baseHitChance = (A === -99) ? 1.0 : (21 - (M - A)) / 20;
+        const H = (A === -99) ? 1.0 : Math.max(0.05, Math.min(0.95, baseHitChance));
+        
+        const missChance = 1 - H;
+        const HA = 1 - (missChance * missChance);
+        
+        const CA = 1 - Math.pow(1 - C, 2);
+
+        const dprNormal = (A === -99) ? (D + B) : (C * D) + (H * (D + B));
+        const dprAdvantage = (A === -99) ? (D + B) : (CA * D) + (HA * (D + B));
+
+        return {
+            name: attackItem.name,
+            dpr: dprNormal.toFixed(2),
+            dprAdv: dprAdvantage.toFixed(2)
+        };
+    }
+}
 console.log("dndCalculations.js: All D&D calculation functions loaded into DNDCalculations namespace.");
