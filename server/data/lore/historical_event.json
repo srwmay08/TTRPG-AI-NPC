@@ -139,7 +139,7 @@
         "tags": ["ilathenra", "selûne", "divine calling", "backstory", "sun soul", "divine mission"],
         "gm_notes": "Ilathenra's divine mission is a powerful plot driver. Selûne could communicate with her through dreams or omens, guiding her actions. The mission likely involves combating the forces of Shar, Selûne's dark twin, or protecting a specific person, place, or artifact."
     },
-        {
+    {
         "lore_id": "60d5ecb3a0f3e8a2d6f3b9d2",
         "name": "Urgent: Mass Disappearances",
         "lore_type": "Historical Event",
@@ -168,3 +168,4 @@
     ],
     "gm_notes": "This event presents a major crisis for Waterdeep. The artifact is a potent plot device, potentially a prison or a portal to another plane. The djinni Sogesonoy's motives are unknown. Lord Lohrmahr's bounty focuses on high-profile individuals, creating tension regarding the fate of common citizens and Watch members. Captain Statget's report can serve as an excellent in-game handout to kickstart an investigation or rescue mission. The destination of the bottle, the djinni's current whereabouts, and the method of rescue are all open questions for an adventure."
 }
+]
