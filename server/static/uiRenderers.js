@@ -256,41 +256,8 @@ var UIRenderers = {
         });
     },
 
-    renderRoundCalculatorUI: function(allCharacters, activePcIds) {
-        const selectedPcs = allCharacters.filter(char => activePcIds.has(String(char._id)));
-        let roundTotalDpr = 0;
-
-        selectedPcs.forEach(pc => {
-            const pcId = String(pc._id);
-            if (appState.selectedAttacks[pcId]) {
-                appState.selectedAttacks[pcId].forEach(attackName => {
-                    const attackItem = pc.items.find(item => item.name === attackName) || 
-                                       (attackName === 'Unarmed Strike' ? { name: "Unarmed Strike", type: "weapon", system: { damage: { base: { denomination: '4', number: 1}}, properties: ['fin']} } : null);
-
-                    if (attackItem) {
-                        const dprResults = DNDCalculations.calculateDPR(pc, attackItem, appState.targetAC);
-                        roundTotalDpr += parseFloat(dprResults.dpr) || 0;
-                    }
-                });
-            }
-        });
-
-        const estimatedHP = Math.round(roundTotalDpr * appState.estimatedRounds);
-
-        return `
-            <div id="round-calculator-section">
-                <h4>Round Damage Calculator</h4>
-                <div class="round-calculator-controls">
-                    <label for="round-count-input">Number of Rounds to Sustain Damage:</label>
-                    <input type="number" id="round-count-input" value="${appState.estimatedRounds}" min="1" max="20">
-                </div>
-                <div class="round-calculator-results">
-                    <p><strong>Selected Party DPR (per round):</strong> <span id="round-total-dpr">${roundTotalDpr.toFixed(2)}</span></p>
-                    <p><strong>Estimated Monster HP (to survive ${appState.estimatedRounds} rounds):</strong> <span id="estimated-monster-hp">${estimatedHP}</span></p>
-                </div>
-            </div>`;
-    },
-
+    // --- CHANGED START ---
+    // Refactored to render the new combined controls and summary bar.
     updatePcDashboardUI: function(dashboardContentElement, allCharacters, activePcIds, currentlyExpandedAbility) {
         if (!dashboardContentElement) {
             console.error("UIRenderers.updatePcDashboardUI: 'pc-dashboard-content' element not found.");
@@ -349,17 +316,42 @@ var UIRenderers = {
         finalHTML += mainStatsTableHTML;
         
         const targetAC = appState.targetAC;
+        let roundTotalDpr = 0;
+        let estimatedHP = 0;
+
+        selectedPcs.forEach(pc => {
+            const pcId = String(pc._id);
+            if (appState.selectedAttacks[pcId]) {
+                appState.selectedAttacks[pcId].forEach(attackName => {
+                    const attackItem = pc.items.find(item => item.name === attackName) || 
+                                       (attackName === 'Unarmed Strike' ? { name: "Unarmed Strike", type: "weapon", system: { damage: { base: { denomination: '4', number: 1}}, properties: ['fin']} } : null);
+
+                    if (attackItem) {
+                        const dprResults = DNDCalculations.calculateDPR(pc, attackItem, appState.targetAC);
+                        roundTotalDpr += parseFloat(dprResults.dpr) || 0;
+                    }
+                });
+            }
+        });
+        estimatedHP = Math.round(roundTotalDpr * appState.estimatedRounds);
 
         finalHTML += `
-            <div class="dpr-header">
-                <h4>Damage Per Round (DPR) vs. Target AC</h4>
-                <div class="dpr-ac-control">
+            <div class="dpr-controls-summary">
+                <div class="dpr-control-group">
                     <label for="dpr-ac-input">Target AC:</label>
                     <input type="number" id="dpr-ac-input" value="${targetAC}" min="0" max="30">
                 </div>
+                <div class="dpr-control-group">
+                    <label for="round-count-input">Rounds to Sustain:</label>
+                    <input type="number" id="round-count-input" value="${appState.estimatedRounds}" min="1" max="20">
+                </div>
+                <div class="dpr-summary-group">
+                    <p><strong>Selected DPR:</strong> <span id="round-total-dpr">${roundTotalDpr.toFixed(2)}</span></p>
+                    <p><strong>Est. HP to Survive:</strong> <span id="estimated-monster-hp">${estimatedHP}</span></p>
+                </div>
             </div>`;
         
-        let dprTableHTML = `<div class="table-wrapper"><table id="dpr-overview-table">`;
+        let dprTableHTML = `<h4>Damage Per Round (DPR)</h4><div class="table-wrapper"><table id="dpr-overview-table">`;
         dprTableHTML += `<thead><tr><th>Character</th><th>Include</th><th>Attack</th><th>DPR (Normal)</th><th>DPR (Advantage)</th></tr></thead><tbody>`;
     
         sortedSelectedPcs.forEach(pc => {
@@ -397,8 +389,6 @@ var UIRenderers = {
         dprTableHTML += `</tbody></table></div>`;
         finalHTML += dprTableHTML;
         
-        finalHTML += this.renderRoundCalculatorUI(allCharacters, activePcIds);
-
         dashboardContentElement.innerHTML = finalHTML;
         
         if (currentlyExpandedAbility) {
@@ -408,6 +398,7 @@ var UIRenderers = {
             }
         }
     },
+    // --- CHANGED END ---
 
     renderAllNpcListForManagementUI: function(listContainerElement, allCharacters, onNameClickCallback) {
         if (!listContainerElement) { console.error("UIRenderers.renderAllNpcListForManagementUI: listContainerElement not found"); return; }

@@ -24,7 +24,11 @@ var EventHandlers = {
             if (newLeftWidth < minColWidth) newLeftWidth = minColWidth;
             if (newLeftWidth > maxColWidth) newLeftWidth = maxColWidth;
             leftColumn.style.width = `${newLeftWidth}px`;
-            UIRenderers.adjustNpcDialogueAreaWidthsUI(Utils.getElem('multi-npc-dialogue-container'));
+            // --- CHANGED START ---
+            // The following function does not exist and was causing a console error.
+            // Commenting it out to resolve the error. The UI should still be responsive.
+            // UIRenderers.adjustNpcDialogueAreaWidthsUI(Utils.getElem('multi-npc-dialogue-container'));
+            // --- CHANGED END ---
         });
         document.addEventListener('mouseup', () => {
             if (isResizing) {

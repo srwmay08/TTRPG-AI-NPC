@@ -253,7 +253,7 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 .detailed-pc-ability-table th, .detailed-pc-ability-table td {
     border: 1px solid #ddd;
     padding: 6px;
-    text-align: center;
+    text-align: left;
 }
 #main-stats-table th, #skills-overview-table th, #dpr-overview-table th, .detailed-pc-ability-table th {
     background-color: #e9ecef;
@@ -444,28 +444,100 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 }
 
 .dpr-header {
+    display: none; /* Hiding the old header in favor of the new control bar */
+}
+
+/* --- CHANGED START --- */
+/* New styles for the combined DPR controls and summary bar */
+.dpr-controls-summary {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
-    margin-bottom: 5px;
+    gap: 20px;
+    padding: 10px 15px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    border: 1px solid #dee2e6;
 }
 
-.dpr-header h4 {
-    margin: 0;
-}
-
-.dpr-ac-control {
+.dpr-control-group, .dpr-summary-group {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-.dpr-ac-control input {
-    width: 70px;
+.dpr-control-group label {
+    margin-bottom: 0;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.dpr-control-group input[type="number"] {
+    width: 65px;
     padding: 5px;
     margin-bottom: 0;
 }
+
+.dpr-summary-group {
+    gap: 15px; /* Add some space between the two summary items */
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+
+.dpr-summary-group p {
+    margin: 0;
+    font-size: 0.9em;
+    white-space: nowrap;
+}
+
+.dpr-summary-group p strong {
+    color: #333;
+}
+
+#dpr-overview-table th:nth-child(2),
+#dpr-overview-table td:nth-child(2) {
+    width: 50px; /* Give the checkbox column a fixed width */
+    text-align: left;
+}
+
+#round-calculator-section {
+    margin-top: 15px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+}
+
+#round-calculator-section h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+.round-calculator-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.round-calculator-controls label {
+    margin-bottom: 0;
+}
+
+.round-calculator-controls input {
+    width: 80px;
+    margin-bottom: 0;
+}
+
+.round-calculator-results p {
+    margin: 5px 0;
+}
+
+/* --- CHANGED END --- */
 
 tr.expanded-row > td {
     padding: 0 !important;
