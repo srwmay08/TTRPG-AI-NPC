@@ -2,6 +2,95 @@
 
 console.log("uiRenderers.js: Parsing STARTED");
 
+const ABILITY_SCORE_INFO = {
+    "STR": {
+        "title": "Strength",
+        "description": "Strength measures bodily power, athletic training, and the extent to which you can exert raw physical force.",
+        "checks_title": "Strength Checks",
+        "checks_description": "A Strength check can model any attempt to lift, push, pull, or break something, to force your body through a space, or to otherwise apply brute force to a situation. The Athletics skill reflects aptitude in certain kinds of Strength checks.",
+        "skills": { "Athletics": "Your Strength (Athletics) check covers difficult situations you encounter while climbing, jumping, or swimming." },
+        "other_checks_title": "Other Strength Checks",
+        "other_checks": ["Force open a stuck, locked, or barred door", "Break free of bonds", "Push through a tunnel that is too small", "Hang on to a wagon while being dragged behind it", "Tip over a statue", "Keep a boulder from rolling"],
+        "attack_and_damage_title": "Attack Rolls and Damage",
+        "attack_and_damage": "You add your Strength modifier to your attack roll and your damage roll when attacking with a melee weapon.",
+        "lifting_and_carrying_title": "Lifting and Carrying",
+        "lifting_and_carrying": "Your carrying capacity is your Strength score multiplied by 15. You can push, drag, or lift a weight in pounds up to twice your carrying capacity (or 30 times your Strength score)."
+    },
+    "DEX": {
+        "title": "Dexterity",
+        "description": "Dexterity measures agility, reflexes, and balance.",
+        "checks_title": "Dexterity Checks",
+        "checks_description": "A Dexterity check can model any attempt to move nimbly, quickly, or quietly, or to keep from falling on tricky footing. The Acrobatics, Sleight of Hand, and Stealth skills reflect aptitude in certain kinds of Dexterity checks.",
+        "skills": {
+            "Acrobatics": "Your Dexterity (Acrobatics) check covers your attempt to stay on your feet in a tricky situation, such as when you’re trying to run across a sheet of ice or balance on a tightrope.",
+            "Sleight of Hand": "Whenever you attempt an act of legerdemain or manual trickery, such as planting something on someone else or concealing an object on your person, make a Dexterity (Sleight of Hand) check.",
+            "Stealth": "Make a Dexterity (Stealth) check when you attempt to conceal yourself from enemies, slink past guards, or sneak up on someone without being seen or heard."
+        },
+        "other_checks_title": "Other Dexterity Checks",
+        "other_checks": ["Pick a lock", "Disable a trap", "Securely tie up a prisoner", "Wriggle free of bonds", "Play a stringed instrument"],
+        "attack_and_damage_title": "Attack Rolls and Damage",
+        "attack_and_damage": "You add your Dexterity modifier to your attack roll and your damage roll when attacking with a ranged weapon or a melee weapon that has the finesse property.",
+        "armor_class_title": "Armor Class",
+        "armor_class": "Depending on the armor you wear, you might add some or all of your Dexterity modifier to your Armor Class.",
+        "initiative_title": "Initiative",
+        "initiative": "At the beginning of every combat, you roll initiative by making a Dexterity check."
+    },
+    "CON": {
+        "title": "Constitution",
+        "description": "Constitution measures health, stamina, and vital force.",
+        "checks_title": "Constitution Checks",
+        "checks_description": "Constitution checks are uncommon, and no skills apply to Constitution checks, because the endurance this ability represents is largely passive. A Constitution check can model your attempt to push beyond normal limits.",
+        "other_checks_title": "Other Constitution Checks",
+        "other_checks": ["Hold your breath", "March or labor for hours without rest", "Go without sleep", "Survive without food or water", "Quaff an entire stein of ale in one go"],
+        "hit_points_title": "Hit Points",
+        "hit_points": "Your Constitution modifier contributes to your hit points. If your Constitution modifier changes, your hit point maximum changes as well, as though you had the new modifier from 1st level."
+    },
+    "INT": {
+        "title": "Intelligence",
+        "description": "Intelligence measures mental acuity, accuracy of recall, and the ability to reason.",
+        "checks_title": "Intelligence Checks",
+        "checks_description": "An Intelligence check comes into play when you need to draw on logic, education, memory, or deductive reasoning. The Arcana, History, Investigation, Nature, and Religion skills reflect aptitude in certain kinds of Intelligence checks.",
+        "skills": {
+            "Arcana": "Measures your ability to recall lore about spells, magic items, eldritch symbols, and magical traditions.",
+            "History": "Measures your ability to recall lore about historical events, legendary people, ancient kingdoms, and lost civilizations.",
+            "Investigation": "When you look around for clues and make deductions based on those clues, you make an Intelligence (Investigation) check.",
+            "Nature": "Measures your ability to recall lore about terrain, plants and animals, the weather, and natural cycles.",
+            "Religion": "Measures your ability to recall lore about deities, rites and prayers, religious hierarchies, and holy symbols."
+        },
+        "spellcasting_ability_title": "Spellcasting Ability",
+        "spellcasting_ability": "Wizards use Intelligence as their spellcasting ability, which helps determine the saving throw DCs of spells they cast."
+    },
+    "WIS": {
+        "title": "Wisdom",
+        "description": "Wisdom reflects how attuned you are to the world around you and represents perceptiveness and intuition.",
+        "checks_title": "Wisdom Checks",
+        "checks_description": "A Wisdom check might reflect an effort to read body language, understand someone’s feelings, notice things about the environment, or care for an injured person. The Animal Handling, Insight, Medicine, Perception, and Survival skills reflect aptitude in certain kinds of Wisdom checks.",
+        "skills": {
+            "Animal Handling": "When there is any question whether you can calm down a domesticated animal, keep a mount from getting spooked, or intuit an animal’s intentions, the GM might call for a Wisdom (Animal Handling) check.",
+            "Insight": "Your Wisdom (Insight) check decides whether you can determine the true intentions of a creature, such as when searching out a lie or predicting someone’s next move.",
+            "Medicine": "A Wisdom (Medicine) check lets you try to stabilize a dying companion or diagnose an illness.",
+            "Perception": "Your Wisdom (Perception) check lets you spot, hear, or otherwise detect the presence of something. It measures your general awareness of your surroundings and the keenness of your senses.",
+            "Survival": "The GM might ask you to make a Wisdom (Survival) check to follow tracks, hunt wild game, guide your group through frozen wastelands, or identify signs that owlbears live nearby."
+        },
+        "spellcasting_ability_title": "Spellcasting Ability",
+        "spellcasting_ability": "Clerics, druids, and rangers use Wisdom as their spellcasting ability."
+    },
+    "CHA": {
+        "title": "Charisma",
+        "description": "Charisma measures your ability to interact effectively with others. It includes such factors as confidence and eloquence, and it can represent a charming or commanding personality.",
+        "checks_title": "Charisma Checks",
+        "checks_description": "A Charisma check might arise when you try to influence or entertain others, when you try to make an impression or tell a convincing lie, or when you are navigating a tricky social situation. The Deception, Intimidation, Performance, and Persuasion skills reflect aptitude in certain kinds of Charisma checks.",
+        "skills": {
+            "Deception": "Your Charisma (Deception) check determines whether you can convincingly hide the truth, either verbally or through your actions.",
+            "Intimidation": "When you attempt to influence someone through overt threats, hostile actions, and physical violence, the GM might ask you to make a Charisma (Intimidation) check.",
+            "Performance": "Your Charisma (Performance) check determines how well you can delight an audience with music, dance, acting, storytelling, or some other form of entertainment.",
+            "Persuasion": "When you attempt to influence someone or a group of people with tact, social graces, or good nature, the GM might ask you to make a Charisma (Persuasion) check."
+        },
+        "spellcasting_ability_title": "Spellcasting Ability",
+        "spellcasting_ability": "Bards, paladins, sorcerers, and warlocks use Charisma as their spellcasting ability."
+    }
+};
+
 var UIRenderers = {
     createPcQuickViewSectionHTML: function(isForDashboard) {
         const titleText = PC_QUICK_VIEW_BASE_TITLE;
@@ -48,6 +137,126 @@ var UIRenderers = {
         cardHTML += `<p><strong>Spell Atk:</strong> ${spellAtkBonusText || 'N/A'}</p>`;
         cardHTML += `</div>`;
         return cardHTML;
+    },
+
+    generateBarChartRowHTML: function(label, value, max_value, bar_max_value) {
+        const percentage = (Math.abs(value) / (bar_max_value || max_value)) * 100;
+        const bar_color = value >= 0 ? '#4caf50' : '#f44336';
+        return `
+            <div class="pc-bar-row">
+                <div class="stat-comparison-pc-name">${label}</div>
+                <div class="stat-bar-wrapper">
+                    <div class="stat-bar" style="width: ${percentage}%; background-color: ${bar_color};">${value}</div>
+                </div>
+            </div>`;
+    },
+
+    populateExpandedAbilityDetailsUI: function(abilityKey, expansionDiv, selectedPcs) {
+        if (!expansionDiv) { return; }
+        const abilityLongName = ABILITY_KEYS_ORDER.find(k => k.startsWith(abilityKey.toLowerCase().substring(0,3))).toUpperCase();
+        
+        let contentHTML = `<h5>${abilityLongName} Scores</h5>`;
+        
+        const barChartContainer = document.createElement('div');
+        barChartContainer.className = 'ability-bar-chart-container';
+        
+        const scores = selectedPcs.map(pc => (pc.system?.abilities?.[abilityKey.toLowerCase()]?.value) || 10);
+        const maxScore = Math.max(...scores, 10);
+    
+        selectedPcs.forEach(pc => {
+            const score = (pc.system?.abilities?.[abilityKey.toLowerCase()]?.value) || 10;
+            const mod = DNDCalculations.getAbilityModifier(score);
+            const label = `${pc.name}: ${score} (${mod >= 0 ? '+' : ''}${mod})`;
+            barChartContainer.innerHTML += this.generateBarChartRowHTML(label, score, maxScore, 20);
+        });
+        
+        expansionDiv.innerHTML = contentHTML;
+        expansionDiv.appendChild(barChartContainer);
+
+        // Add skills table
+        const associatedSkills = Object.keys(SKILL_NAME_MAP).filter(skill => SKILL_NAME_MAP[skill].includes(`(${abilityLongName.substring(0,3)})`));
+
+        if (associatedSkills.length > 0) {
+            let skillsTableHTML = `<h5>Associated Skills</h5><div class="table-wrapper"><table class="detailed-pc-table">`;
+            skillsTableHTML += `<thead><tr><th>Character</th>`;
+            associatedSkills.forEach(skillKey => {
+                skillsTableHTML += `<th>${SKILL_NAME_MAP[skillKey].split(' ')[0]}</th>`;
+            });
+            skillsTableHTML += `</tr></thead><tbody>`;
+
+            selectedPcs.forEach(pc => {
+                skillsTableHTML += `<tr><td>${pc.name}</td>`;
+                associatedSkills.forEach(skillKey => {
+                    const skillData = pc.system?.skills?.[skillKey];
+                    const abilityScore = pc.system?.abilities?.[abilityKey.toLowerCase()]?.value || 10;
+                    const bonus = DNDCalculations.calculateSkillBonus(abilityScore, skillData?.value || 0, pc.calculatedProfBonus);
+                    skillsTableHTML += `<td>${bonus >= 0 ? '+' : ''}${bonus}</td>`;
+                });
+                skillsTableHTML += `</tr>`;
+            });
+
+            skillsTableHTML += `</tbody></table></div>`;
+            expansionDiv.innerHTML += skillsTableHTML;
+        }
+    },
+
+    renderNpcListForContextUI: function(listContainerElement, allCharacters, activeSceneNpcIds, onToggleInSceneCallback, onNameClickCallback, sceneContextFilter) {
+        if (!listContainerElement) {
+            console.error("UIRenderers.renderNpcListForContextUI: listContainerElement not found");
+            return;
+        }
+        let ul = listContainerElement.querySelector('ul');
+        if (!ul) {
+            ul = document.createElement('ul');
+            listContainerElement.appendChild(ul);
+        }
+        ul.innerHTML = '';
+    
+        let npcsToDisplay = allCharacters.filter(char => char.character_type === 'NPC');
+    
+        if (sceneContextFilter && sceneContextFilter.id) {
+            npcsToDisplay = npcsToDisplay.filter(npc =>
+                npc.linked_lore_ids && npc.linked_lore_ids.includes(sceneContextFilter.id)
+            );
+        }
+    
+        npcsToDisplay.sort((a, b) => a.name.localeCompare(b.name));
+    
+        if (npcsToDisplay.length === 0) {
+            if (sceneContextFilter && sceneContextFilter.id) {
+                ul.innerHTML = '<li><p><em>No NPCs are linked to this specific context.</em></p></li>';
+            } else {
+                ul.innerHTML = '<li><p><em>No NPCs available.</em></p></li>';
+            }
+            return;
+        }
+    
+        npcsToDisplay.forEach(char => {
+            const charIdStr = String(char._id);
+            const li = document.createElement('li');
+            li.dataset.charId = charIdStr;
+            li.style.cursor = "pointer"; // Make the whole item appear clickable
+    
+            if (activeSceneNpcIds.has(charIdStr)) {
+                li.classList.add('active-in-scene'); // Use this class for highlighting
+            }
+    
+            const nameSpan = document.createElement('span');
+            nameSpan.textContent = char.name;
+            nameSpan.className = 'npc-name-clickable';
+            
+            // Clicking the name shows details, but doesn't bubble up to the li click
+            nameSpan.onclick = async (event) => { 
+                event.stopPropagation(); 
+                await onNameClickCallback(charIdStr); 
+            };
+            
+            // Clicking the entire LI toggles the NPC in/out of the scene
+            li.onclick = () => onToggleInSceneCallback(charIdStr, char.name);
+    
+            li.appendChild(nameSpan);
+            ul.appendChild(li);
+        });
     },
 
     updatePcDashboardUI: function(dashboardContentElement, allCharacters, activePcIds, currentlyExpandedAbility) {
@@ -117,8 +326,17 @@ var UIRenderers = {
             </div>`;
         
         const targetACInput = document.getElementById('dpr-ac-input');
-        const targetAC = targetACInput ? parseInt(targetACInput.value, 10) : 13;
+        const targetAC = appState.targetAC;
 
+        finalHTML += `
+            <div class="dpr-header">
+                <h4>Damage Per Round (DPR) vs. Target AC</h4>
+                <div class="dpr-ac-control">
+                    <label for="dpr-ac-input">Target AC:</label>
+                    <input type="number" id="dpr-ac-input" value="${targetAC}" min="0" max="30">
+                </div>
+            </div>`;
+        
         let dprTableHTML = `<div class="table-wrapper"><table id="dpr-overview-table">`;
         dprTableHTML += `<thead><tr><th>Character</th><th>Attack</th><th>DPR (Normal)</th><th>DPR (Advantage)</th></tr></thead><tbody>`;
     

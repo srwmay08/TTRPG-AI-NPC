@@ -213,7 +213,7 @@ var App = {
         console.log("App.js: App.updateMainView finished.");
     },
 
-    handleToggleNpcInScene: async function(npcIdStr, npcName) {
+handleToggleNpcInScene: async function(npcIdStr, npcName) {
         const multiNpcContainer = Utils.getElem('multi-npc-dialogue-container');
         if (!multiNpcContainer) {
             console.error("Multi-NPC dialogue container not found.");
@@ -365,7 +365,7 @@ var App = {
 
         const currentProfileChar = appState.getCurrentProfileChar();
         if (currentProfileChar && currentProfileChar.character_type === 'NPC') {
-            UIRenderers.renderNpcFactionStandingsUI(currentProfileChar, appState.activePcIds, appState.getAllCharacters(), Utils.getElem('npc-faction-standings-content'), handleSaveFactionStanding);
+            UIRenderers.renderNpcFactionStandingsUI(currentProfileChar, appState.activePcIds, appState.getAllCharacters(), Utils.getElem('npc-faction-standings-content'), CharacterService.handleSaveFactionStanding);
         }
     },
 

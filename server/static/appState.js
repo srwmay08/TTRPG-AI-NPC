@@ -13,6 +13,7 @@ const appState = {
     currentlyExpandedSkill: null,
     skillSortKey: null,
     currentSceneContextFilter: null, // Added for scene context
+    targetAC: 13, // To persist the Target AC value
 
     setAllCharacters(characters) {
         this.allCharacters = characters.map(char => this.processCharacterData(char));

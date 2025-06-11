@@ -247,7 +247,7 @@ var DNDCalculations = {
         });
         return totalAverage;
     },
-    
+
     calculateDPR: function(pcData, attackItem, targetAC) {
         if (!pcData || !attackItem || !pcData.system) return { name: attackItem.name, dpr: 'N/A', dprAdv: 'N/A' };
     
@@ -277,17 +277,16 @@ var DNDCalculations = {
             if (isMonk) {
                 baseDamageDice.push(MONK_MARTIAL_ARTS_DICE[monkLevel] || '1d4');
             } else {
-                bonusDamage = 0; // Regular unarmed strike damage is 1 + STR mod, so base damage is 1. Mod is added to damage roll later.
+                bonusDamage = 0;
                 baseDamageDice.push('1');
             }
         } else if (attackItem.type === 'weapon') {
             const weaponData = attackItem.system;
-            // FIX: Check if weaponData.type exists and is an object
             const weaponType = (weaponData.type && typeof weaponData.type === 'object') ? weaponData.type : {};
             const isMonkWeapon = isMonk && (weaponData.properties?.includes('fin') || weaponType.baseItem === 'shortsword' || weaponType.value === 'simpleM');
             
             let abilityKey = 'str';
-            if (weaponData.properties?.includes('fin')) {
+            if (weaponData.properties?.includes('fin') || weaponData.properties?.includes('rge')) { // Also check for ranged
                 abilityKey = 'dex';
             }
             if (isMonkWeapon && abilities.dex.value > abilities.str.value) {
@@ -303,6 +302,29 @@ var DNDCalculations = {
             } else {
                 return { name: attackName, dpr: 'N/A', dprAdv: 'N/A' };
             }
+        } else if (attackItem.type === 'spell' && attackItem.system?.attack?.type) {
+            const spellData = attackItem.system;
+            const spellcastingAbilityKey = this.getSpellcastingAbilityKeyForPC(pcData);
+            if (!spellcastingAbilityKey) return { name: attackName, dpr: 'N/A', dprAdv: 'N/A' };
+
+            abilityMod = this.getAbilityModifier(abilities[spellcastingAbilityKey]?.value || 10);
+            attackBonus = abilityMod + profBonus;
+            bonusDamage = 0; // Most cantrips don't add mod unless specified
+
+            const attackActivity = Object.values(spellData.activities || {}).find(act => act.type === 'attack' || act.type === 'damage');
+            const damageParts = attackActivity?.damage?.parts || spellData.damage?.parts || [];
+
+            if (damageParts.length === 0) {
+                 return { name: attackName, dpr: 'N/A', dprAdv: 'N/A' };
+            }
+
+            damageParts.forEach(part => {
+                let damageString = Array.isArray(part) ? part[0] : part.formula;
+                if(damageString) {
+                    baseDamageDice.push(damageString);
+                }
+            });
+
         } else {
              return { name: attackName, dpr: 'N/A', dprAdv: 'N/A' };
         }

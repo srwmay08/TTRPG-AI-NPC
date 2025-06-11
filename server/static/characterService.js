@@ -69,7 +69,11 @@ var CharacterService = {
         if (!charIdStr || charIdStr === "null") {
             appState.setCurrentProfileCharId(null);
             UIRenderers.renderCharacterProfileUI(null, this.profileElementIds);
-            if (characterProfileSection) characterProfileSection.classList.add('collapsed');
+            if (characterProfileSection) {
+                characterProfileSection.classList.add('collapsed');
+                const content = characterProfileSection.querySelector('.collapsible-content');
+                if(content) content.style.display = 'none';
+            }
             return;
         }
         appState.setCurrentProfileCharId(charIdStr);
@@ -78,17 +82,24 @@ var CharacterService = {
             const processedChar = appState.updateCharacterInList(selectedCharFromServer);
 
             UIRenderers.renderCharacterProfileUI(processedChar, this.profileElementIds);
-            if (characterProfileSection) characterProfileSection.classList.remove('collapsed');
+            if (characterProfileSection) {
+                characterProfileSection.classList.remove('collapsed');
+                const content = characterProfileSection.querySelector('.collapsible-content');
+                if(content) content.style.display = 'block';
+            }
 
             await this.fetchAndRenderHistoryFiles();
         } catch (error) {
             console.error("Error in handleSelectCharacterForDetails:", error);
             Utils.updateText('details-char-name', 'Error loading details');
             UIRenderers.renderCharacterProfileUI(null, this.profileElementIds);
-            if (characterProfileSection) characterProfileSection.classList.add('collapsed');
+            if (characterProfileSection) {
+                characterProfileSection.classList.add('collapsed');
+                const content = characterProfileSection.querySelector('.collapsible-content');
+                if(content) content.style.display = 'none';
+            }
         }
     },
-
     handleCharacterCreation: async function() {
         const name = Utils.getElem('new-char-name').value.trim();
         const description = Utils.getElem('new-char-description').value.trim();
