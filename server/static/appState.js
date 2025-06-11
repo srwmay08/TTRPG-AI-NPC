@@ -12,8 +12,13 @@ const appState = {
     currentlyExpandedAbility: null,
     currentlyExpandedSkill: null,
     skillSortKey: null,
-    currentSceneContextFilter: null, // Added for scene context
-    targetAC: 13, // To persist the Target AC value
+    currentSceneContextFilter: null,
+    targetAC: 13,
+    // --- CHANGED START ---
+    // Added state to track selected attacks for the round calculator.
+    selectedAttacks: {}, // E.g., { pcId: Set('attack name') }
+    estimatedRounds: 3,  // Default number of rounds for HP estimation.
+    // --- CHANGED END ---
 
     setAllCharacters(characters) {
         this.allCharacters = characters.map(char => this.processCharacterData(char));
@@ -80,7 +85,6 @@ const appState = {
                             char.system?.details?.level || // From FVTT 'system'
                             char.vtt_data?.details?.level || // Fallback to 'vtt_data.details'
                             1;
-            // Corrected call to DNDCalculations namespace
             if (typeof DNDCalculations !== 'undefined' && DNDCalculations.getProficiencyBonus) {
                 char.calculatedProfBonus = DNDCalculations.getProficiencyBonus(pcLevel);
             } else {
@@ -90,6 +94,24 @@ const appState = {
         }
         return char;
     },
+
+    // --- CHANGED START ---
+    // Added helper methods for managing attack selections for the DPR calculator.
+    isAttackSelected(pcId, attackName) {
+        return this.selectedAttacks[pcId] && this.selectedAttacks[pcId].has(attackName);
+    },
+
+    toggleAttackSelection(pcId, attackName) {
+        if (!this.selectedAttacks[pcId]) {
+            this.selectedAttacks[pcId] = new Set();
+        }
+        if (this.selectedAttacks[pcId].has(attackName)) {
+            this.selectedAttacks[pcId].delete(attackName);
+        } else {
+            this.selectedAttacks[pcId].add(attackName);
+        }
+    },
+    // --- CHANGED END ---
 
     // NPC/PC Scene Management
     addActiveNpc(id) { this.activeSceneNpcIds.add(String(id)); },

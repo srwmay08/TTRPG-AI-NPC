@@ -15,11 +15,27 @@ var App = {
 
             const dashboardView = Utils.getElem('pc-dashboard-view');
             if (dashboardView) {
-                dashboardView.addEventListener('input', (event) => {
-                    if (event.target.id === 'dpr-ac-input') {
+                // --- CHANGED START ---
+                // Replaced the simple DPR input listener with a more robust 'change' listener
+                // for the whole dashboard to handle new checkboxes and inputs.
+                dashboardView.addEventListener('change', (event) => {
+                    if (event.target.classList.contains('attack-selector')) {
+                        const pcId = event.target.dataset.pcId;
+                        const attackName = event.target.dataset.attackName;
+                        appState.toggleAttackSelection(pcId, attackName);
                         this.updateMainView();
+                    } else if (event.target.id === 'round-count-input') {
+                        appState.estimatedRounds = parseInt(event.target.value, 10) || 1;
+                        this.updateMainView();
+                    } else if (event.target.id === 'dpr-ac-input') {
+                         const newAC = parseInt(event.target.value, 10);
+                        if (!isNaN(newAC)) {
+                            appState.targetAC = newAC; // Update state
+                            this.updateMainView(); // Re-render the dashboard
+                        }
                     }
                 });
+                // --- CHANGED END ---
             }
 
             setTimeout(() => this.updateMainView(), 0); 

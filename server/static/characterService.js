@@ -22,10 +22,13 @@ var CharacterService = {
         loreEntrySelectForCharacter: 'lore-entry-select-for-character',
         linkLoreToCharBtn: 'link-lore-to-char-btn',
         associatedLoreListForCharacter: 'associated-lore-list-for-character',
+        // --- CHANGED START ---
+        // Changed to explicitly reference CharacterService to avoid 'this' context issues.
         deleteMemoryCallback: () => CharacterService.handleDeleteMemory,
         factionChangeCallback: () => CharacterService.handleSaveFactionStanding,
         dissociateHistoryCallback: () => CharacterService.handleDissociateHistoryFile,
         unlinkLoreFromCharacterCallback: () => CharacterService.handleUnlinkLoreFromCharacter
+        // --- CHANGED END ---
     },
 
     initializeAppCharacters: async function() {
@@ -37,19 +40,18 @@ var CharacterService = {
 
             UIRenderers.renderPcListUI(Utils.getElem('active-pc-list'), Utils.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, App.handleTogglePcSelection);
 
-            // THIS IS THE CORRECTED CALL
             UIRenderers.renderNpcListForContextUI(
                 Utils.getElem('character-list-scene-tab'),
                 appState.getAllCharacters(),
                 appState.activeSceneNpcIds,
                 App.handleToggleNpcInScene,
-                this.handleSelectCharacterForDetails,
+                CharacterService.handleSelectCharacterForDetails,
                 null // Start with no filter
             );
             UIRenderers.renderAllNpcListForManagementUI(
                 Utils.getElem('all-character-list-management'),
                 appState.getAllCharacters(),
-                this.handleSelectCharacterForDetails
+                CharacterService.handleSelectCharacterForDetails
             );
 
             await this.fetchAllLoreEntriesAndUpdateState();
@@ -64,11 +66,14 @@ var CharacterService = {
         }
     },
 
+    // --- CHANGED START ---
+    // Updated this function to explicitly reference CharacterService instead of 'this'.
+    // This fixes the "elements is undefined" error when called as a callback.
     handleSelectCharacterForDetails: async function(charIdStr) {
         const characterProfileSection = Utils.getElem('character-profile-main-section');
         if (!charIdStr || charIdStr === "null") {
             appState.setCurrentProfileCharId(null);
-            UIRenderers.renderCharacterProfileUI(null, this.profileElementIds);
+            UIRenderers.renderCharacterProfileUI(null, CharacterService.profileElementIds);
             if (characterProfileSection) {
                 characterProfileSection.classList.add('collapsed');
                 const content = characterProfileSection.querySelector('.collapsible-content');
@@ -81,18 +86,18 @@ var CharacterService = {
             const selectedCharFromServer = await ApiService.fetchNpcDetails(charIdStr);
             const processedChar = appState.updateCharacterInList(selectedCharFromServer);
 
-            UIRenderers.renderCharacterProfileUI(processedChar, this.profileElementIds);
+            UIRenderers.renderCharacterProfileUI(processedChar, CharacterService.profileElementIds);
             if (characterProfileSection) {
                 characterProfileSection.classList.remove('collapsed');
                 const content = characterProfileSection.querySelector('.collapsible-content');
                 if(content) content.style.display = 'block';
             }
 
-            await this.fetchAndRenderHistoryFiles();
+            await CharacterService.fetchAndRenderHistoryFiles();
         } catch (error) {
             console.error("Error in handleSelectCharacterForDetails:", error);
             Utils.updateText('details-char-name', 'Error loading details');
-            UIRenderers.renderCharacterProfileUI(null, this.profileElementIds);
+            UIRenderers.renderCharacterProfileUI(null, CharacterService.profileElementIds);
             if (characterProfileSection) {
                 characterProfileSection.classList.add('collapsed');
                 const content = characterProfileSection.querySelector('.collapsible-content');
@@ -100,6 +105,8 @@ var CharacterService = {
             }
         }
     },
+    // --- CHANGED END ---
+
     handleCharacterCreation: async function() {
         const name = Utils.getElem('new-char-name').value.trim();
         const description = Utils.getElem('new-char-description').value.trim();

@@ -173,7 +173,6 @@ var UIRenderers = {
         expansionDiv.innerHTML = contentHTML;
         expansionDiv.appendChild(barChartContainer);
 
-        // Add skills table
         const associatedSkills = Object.keys(SKILL_NAME_MAP).filter(skill => SKILL_NAME_MAP[skill].includes(`(${abilityLongName.substring(0,3)})`));
 
         if (associatedSkills.length > 0) {
@@ -235,28 +234,61 @@ var UIRenderers = {
             const charIdStr = String(char._id);
             const li = document.createElement('li');
             li.dataset.charId = charIdStr;
-            li.style.cursor = "pointer"; // Make the whole item appear clickable
+            li.style.cursor = "pointer";
     
             if (activeSceneNpcIds.has(charIdStr)) {
-                li.classList.add('active-in-scene'); // Use this class for highlighting
+                li.classList.add('active-in-scene');
             }
     
             const nameSpan = document.createElement('span');
             nameSpan.textContent = char.name;
             nameSpan.className = 'npc-name-clickable';
             
-            // Clicking the name shows details, but doesn't bubble up to the li click
             nameSpan.onclick = async (event) => { 
                 event.stopPropagation(); 
                 await onNameClickCallback(charIdStr); 
             };
             
-            // Clicking the entire LI toggles the NPC in/out of the scene
             li.onclick = () => onToggleInSceneCallback(charIdStr, char.name);
     
             li.appendChild(nameSpan);
             ul.appendChild(li);
         });
+    },
+
+    renderRoundCalculatorUI: function(allCharacters, activePcIds) {
+        const selectedPcs = allCharacters.filter(char => activePcIds.has(String(char._id)));
+        let roundTotalDpr = 0;
+
+        selectedPcs.forEach(pc => {
+            const pcId = String(pc._id);
+            if (appState.selectedAttacks[pcId]) {
+                appState.selectedAttacks[pcId].forEach(attackName => {
+                    const attackItem = pc.items.find(item => item.name === attackName) || 
+                                       (attackName === 'Unarmed Strike' ? { name: "Unarmed Strike", type: "weapon", system: { damage: { base: { denomination: '4', number: 1}}, properties: ['fin']} } : null);
+
+                    if (attackItem) {
+                        const dprResults = DNDCalculations.calculateDPR(pc, attackItem, appState.targetAC);
+                        roundTotalDpr += parseFloat(dprResults.dpr) || 0;
+                    }
+                });
+            }
+        });
+
+        const estimatedHP = Math.round(roundTotalDpr * appState.estimatedRounds);
+
+        return `
+            <div id="round-calculator-section">
+                <h4>Round Damage Calculator</h4>
+                <div class="round-calculator-controls">
+                    <label for="round-count-input">Number of Rounds to Sustain Damage:</label>
+                    <input type="number" id="round-count-input" value="${appState.estimatedRounds}" min="1" max="20">
+                </div>
+                <div class="round-calculator-results">
+                    <p><strong>Selected Party DPR (per round):</strong> <span id="round-total-dpr">${roundTotalDpr.toFixed(2)}</span></p>
+                    <p><strong>Estimated Monster HP (to survive ${appState.estimatedRounds} rounds):</strong> <span id="estimated-monster-hp">${estimatedHP}</span></p>
+                </div>
+            </div>`;
     },
 
     updatePcDashboardUI: function(dashboardContentElement, allCharacters, activePcIds, currentlyExpandedAbility) {
@@ -315,17 +347,7 @@ var UIRenderers = {
         }
         mainStatsTableHTML += `</tbody></table></div>`;
         finalHTML += mainStatsTableHTML;
-
-        finalHTML += `
-            <div class="dpr-header">
-                <h4>Damage Per Round (DPR) vs. Target AC</h4>
-                <div class="dpr-ac-control">
-                    <label for="dpr-ac-input">Target AC:</label>
-                    <input type="number" id="dpr-ac-input" value="13" min="0" max="30">
-                </div>
-            </div>`;
         
-        const targetACInput = document.getElementById('dpr-ac-input');
         const targetAC = appState.targetAC;
 
         finalHTML += `
@@ -338,7 +360,7 @@ var UIRenderers = {
             </div>`;
         
         let dprTableHTML = `<div class="table-wrapper"><table id="dpr-overview-table">`;
-        dprTableHTML += `<thead><tr><th>Character</th><th>Attack</th><th>DPR (Normal)</th><th>DPR (Advantage)</th></tr></thead><tbody>`;
+        dprTableHTML += `<thead><tr><th>Character</th><th>Include</th><th>Attack</th><th>DPR (Normal)</th><th>DPR (Advantage)</th></tr></thead><tbody>`;
     
         sortedSelectedPcs.forEach(pc => {
             let attackItems = pc.items.filter(item => {
@@ -358,24 +380,27 @@ var UIRenderers = {
             if (validAttackItems.length > 0) {
                  validAttackItems.forEach((item, index) => {
                     const dprResults = DNDCalculations.calculateDPR(pc, item, targetAC);
+                    const isChecked = appState.isAttackSelected(String(pc._id), item.name);
                     dprTableHTML += `<tr>`;
                     if (index === 0) {
                         dprTableHTML += `<td rowspan="${validAttackItems.length}">${pc.name}</td>`;
                     }
+                    dprTableHTML += `<td><input type="checkbox" class="attack-selector" data-pc-id="${pc._id}" data-attack-name="${Utils.escapeHtml(item.name)}" ${isChecked ? 'checked' : ''}></td>`;
                     dprTableHTML += `<td>${dprResults.name}</td><td>${dprResults.dpr}</td><td>${dprResults.dprAdv}</td>`;
                     dprTableHTML += `</tr>`;
                 });
             } else {
-                dprTableHTML += `<tr><td>${pc.name}</td><td colspan="3">No applicable attacks found</td></tr>`;
+                dprTableHTML += `<tr><td>${pc.name}</td><td colspan="4">No applicable attacks found</td></tr>`;
             }
         });
     
         dprTableHTML += `</tbody></table></div>`;
         finalHTML += dprTableHTML;
+        
+        finalHTML += this.renderRoundCalculatorUI(allCharacters, activePcIds);
 
         dashboardContentElement.innerHTML = finalHTML;
         
-        // Populate the expanded section if it exists in the DOM now
         if (currentlyExpandedAbility) {
             const expansionDiv = Utils.getElem('expanded-ability-details');
             if (expansionDiv) {
@@ -446,61 +471,6 @@ var UIRenderers = {
             }
         });
         pcListDiv.appendChild(ul);
-    },
-
-    renderNpcListForContextUI: function(listContainerElement, allCharacters, activeSceneNpcIds, onToggleInSceneCallback, onNameClickCallback, sceneContextFilter) {
-        if (!listContainerElement) {
-            console.error("UIRenderers.renderNpcListForContextUI: listContainerElement not found");
-            return;
-        }
-        let ul = listContainerElement.querySelector('ul');
-        if (!ul) {
-            ul = document.createElement('ul');
-            listContainerElement.appendChild(ul);
-        }
-        ul.innerHTML = '';
-    
-        let npcsToDisplay = allCharacters.filter(char => char.character_type === 'NPC');
-    
-        if (sceneContextFilter && sceneContextFilter.id) {
-            npcsToDisplay = npcsToDisplay.filter(npc =>
-                npc.linked_lore_ids && npc.linked_lore_ids.includes(sceneContextFilter.id)
-            );
-        }
-    
-        npcsToDisplay.sort((a, b) => a.name.localeCompare(b.name));
-    
-        if (npcsToDisplay.length === 0) {
-            if (sceneContextFilter && sceneContextFilter.id) {
-                ul.innerHTML = '<li><p><em>No NPCs are linked to this specific context.</em></p></li>';
-            } else {
-                ul.innerHTML = '<li><p><em>No NPCs available.</em></p></li>';
-            }
-            return;
-        }
-    
-        npcsToDisplay.forEach(char => {
-            const charIdStr = String(char._id);
-            const li = document.createElement('li');
-            li.dataset.charId = charIdStr;
-            if (activeSceneNpcIds.has(charIdStr)) {
-                li.classList.add('active-in-scene');
-            }
-    
-            const nameSpan = document.createElement('span');
-            nameSpan.textContent = char.name;
-            nameSpan.className = 'npc-name-clickable';
-            nameSpan.onclick = async () => { await onNameClickCallback(charIdStr); };
-    
-            const toggleBtn = document.createElement('button');
-            const isInScene = activeSceneNpcIds.has(charIdStr);
-            toggleBtn.textContent = isInScene ? 'Remove' : 'Add';
-            toggleBtn.onclick = () => onToggleInSceneCallback(charIdStr, char.name);
-    
-            li.appendChild(nameSpan);
-            li.appendChild(toggleBtn);
-            ul.appendChild(li);
-        });
     },
 
     createNpcDialogueAreaUI: function(npcIdStr, npcName, containerElement) {
