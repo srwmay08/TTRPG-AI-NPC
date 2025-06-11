@@ -191,6 +191,8 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 .character-list li.selected { background-color: #d1e7fd; font-weight: bold; }
 .character-list li .npc-name-clickable, .character-list li .lore-entry-name-clickable { flex-grow: 1; cursor: pointer; }
 .character-list li .npc-name-clickable:hover, .character-list li .lore-entry-name-clickable:hover { text-decoration: underline; color: #0056b3;}
+#character-list-scene-tab li { cursor: pointer; } /* Make scene NPCs clickable */
+
 
 #dialogue-interface { display: none; }
 
@@ -198,18 +200,18 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
     display: flex;
     flex-direction: row;
     gap: 15px;
-    overflow-x: auto; /* Allows horizontal scrolling if many NPCs are present */
-    padding-bottom: 10px; /* Gives space for the scrollbar if it appears */
+    overflow-x: auto;
+    padding-bottom: 10px;
 }
 .npc-dialogue-area {
     border: 1px solid #ddd;
     padding: 10px;
     border-radius: 5px;
     background-color: #f9f9f9;
-    flex-shrink: 0;         /* Prevents items from shrinking below their base size */
-    flex-grow: 1;           /* Allows items to grow to fill empty space */
-    flex-basis: 350px;      /* Sets a default "ideal" width for each box */
-    min-height: 200px;      /* Ensures the box has some default height */
+    flex-shrink: 0;
+    flex-grow: 1;
+    flex-basis: 350px;
+    min-height: 200px;
 }
 
 .npc-dialogue-area h3 { margin-top: 0; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #eee;}
@@ -227,7 +229,7 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 .clickable-suggestion { cursor: pointer; text-decoration: underline; color: blue; }
 
 #pc-dashboard-view { display: block; flex-grow: 1; overflow-y: auto; }
-/* Unified style for PC card grids */
+
 .pc-dashboard-grid {
     display: flex;
     flex-wrap: wrap;
@@ -259,7 +261,7 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
     background-color: #e9ecef;
     font-weight: bold;
 }
-#main-stats-table td:first-child, #skills-overview-table td:first-child {
+#main-stats-table td:first-child, #skills-overview-table td:first-child, #dpr-overview-table td:first-child {
     text-align: left;
     font-weight: bold;
 }
@@ -270,7 +272,6 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 .expanded-ability-content, .expanded-skill-content { border: 1px solid #ccc; padding: 15px; margin-top: 0px; margin-bottom: 10px; background-color: #f8f9fa; border-top: none; }
 .expanded-ability-content h5, .expanded-skill-content h5 { margin-top:10px; margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 3px;}
 
-/* --- REPLACE THE RULES BELOW --- */
 .ability-bar-chart-container, .skill-bar-chart-container {
     margin-bottom: 15px;
     padding: 10px;
@@ -317,7 +318,6 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
     text-align: left;
     transition: width 0.3s ease-in-out;
 }
-/* --- END OF REPLACEMENT --- */
 
 .derived-stats-table { width: 100%; border-collapse: collapse; font-size: 0.9em; margin-top:5px; margin-bottom: 15px; }
 .derived-stats-table th, .derived-stats-table td { border: 1px solid #ddd; padding: 5px; text-align: left; }
@@ -363,7 +363,6 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
     padding-bottom: 10px;
 }
 
-/* Add a border specifically to the scene interaction version */
 #pc-quick-view-section-in-scene {
     margin-bottom: 15px;
     padding-bottom: 10px;
@@ -405,7 +404,7 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 #tab-npcs #character-profile-main-section > h3 .arrow-indicator { display: inline-block !important; }
 #tab-npcs #character-profile-main-section > h3 { cursor: pointer !important; }
 
-#scene-context-setup > h4 { /* Target the h4 inside scene-context-setup specifically if needed */
+#scene-context-setup > h4 {
     cursor: pointer;
     background-color: #d8d8d8;
     padding: 8px 12px;
@@ -418,7 +417,7 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
     border-radius: 3px;
     border: 1px solid #ccc;
 }
-#scene-context-setup > h4 .arrow-indicator { /* Changed from h3 to h4 */
+#scene-context-setup > h4 .arrow-indicator {
     transition: transform 0.2s ease-in-out;
     margin-left: 5px;
 }
@@ -437,18 +436,13 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
     overflow-y: auto;
 }
 
-/* Ensure all clickable cards have pointer */
 .clickable-pc-card {
     cursor: pointer;
 }
 .clickable-pc-card:hover {
-    background-color: #e2e6ea; /* Slightly different hover for distinction */
+    background-color: #e2e6ea;
     border-color: #adb5bd;
 }
-
-/* In server/static/style.css */
-
-/* ... (at the end of the file) ... */
 
 .dpr-header {
     display: flex;
@@ -471,5 +465,5 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 .dpr-ac-control input {
     width: 70px;
     padding: 5px;
-    margin-bottom: 0; /* Override default margin */
+    margin-bottom: 0;
 }

@@ -2,7 +2,6 @@
 // Responsibility: Logic related to fetching, processing, and managing character data.
 
 var CharacterService = {
-    // Moved element IDs into the namespace for better organization
     profileElementIds: {
         detailsCharName: 'details-char-name',
         profileCharType: 'profile-char-type',
@@ -23,7 +22,6 @@ var CharacterService = {
         loreEntrySelectForCharacter: 'lore-entry-select-for-character',
         linkLoreToCharBtn: 'link-lore-to-char-btn',
         associatedLoreListForCharacter: 'associated-lore-list-for-character',
-        // Callbacks now correctly reference the CharacterService object
         deleteMemoryCallback: () => CharacterService.handleDeleteMemory,
         factionChangeCallback: () => CharacterService.handleSaveFactionStanding,
         dissociateHistoryCallback: () => CharacterService.handleDissociateHistoryFile,
@@ -33,12 +31,10 @@ var CharacterService = {
     initializeAppCharacters: async function() {
         console.log("Fetching characters via characterService...");
         try {
-            // Using ApiService namespace
             const charactersFromServer = await ApiService.fetchCharactersFromServer();
             appState.setAllCharacters(charactersFromServer);
             console.log("Characters fetched and processed:", appState.getAllCharacters().length);
 
-            // Using UIRenderers and App namespaces
             UIRenderers.renderPcListUI(Utils.getElem('active-pc-list'), Utils.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, App.handleTogglePcSelection);
 
             UIRenderers.renderNpcListForContextUI(
@@ -46,13 +42,13 @@ var CharacterService = {
                 appState.getAllCharacters(),
                 appState.activeSceneNpcIds,
                 App.handleToggleNpcInScene,
-                this.handleSelectCharacterForDetails, // Use 'this' for internal calls
+                this.handleSelectCharacterForDetails,
                 null
             );
             UIRenderers.renderAllNpcListForManagementUI(
                 Utils.getElem('all-character-list-management'),
                 appState.getAllCharacters(),
-                this.handleSelectCharacterForDetails // Use 'this' for internal calls
+                this.handleSelectCharacterForDetails
             );
 
             await this.fetchAllLoreEntriesAndUpdateState();
@@ -71,7 +67,7 @@ var CharacterService = {
         const characterProfileSection = Utils.getElem('character-profile-main-section');
         if (!charIdStr || charIdStr === "null") {
             appState.setCurrentProfileCharId(null);
-            UIRenderers.renderCharacterProfileUI(null, this.profileElementIds);
+            UIRenderers.renderCharacterProfileUI(null, CharacterService.profileElementIds);
             if (characterProfileSection) characterProfileSection.classList.add('collapsed');
             return;
         }
@@ -80,14 +76,14 @@ var CharacterService = {
             const selectedCharFromServer = await ApiService.fetchNpcDetails(charIdStr);
             const processedChar = appState.updateCharacterInList(selectedCharFromServer);
 
-            UIRenderers.renderCharacterProfileUI(processedChar, this.profileElementIds);
+            UIRenderers.renderCharacterProfileUI(processedChar, CharacterService.profileElementIds);
             if (characterProfileSection) characterProfileSection.classList.remove('collapsed');
 
             await this.fetchAndRenderHistoryFiles();
         } catch (error) {
             console.error("Error in handleSelectCharacterForDetails:", error);
             Utils.updateText('details-char-name', 'Error loading details');
-            UIRenderers.renderCharacterProfileUI(null, this.profileElementIds);
+            UIRenderers.renderCharacterProfileUI(null, CharacterService.profileElementIds);
             if (characterProfileSection) characterProfileSection.classList.add('collapsed');
         }
     },

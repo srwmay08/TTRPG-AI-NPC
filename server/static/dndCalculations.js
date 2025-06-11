@@ -11,6 +11,14 @@ const DIE_AVERAGES = {
     'd4': 2.5, 'd6': 3.5, 'd8': 4.5, 'd10': 5.5, 'd12': 6.5, 'd20': 10.5
 };
 
+const MONK_MARTIAL_ARTS_DICE = {
+    1: '1d4', 2: '1d4', 3: '1d4', 4: '1d4',
+    5: '1d6', 6: '1d6', 7: '1d6', 8: '1d6', 9: '1d6', 10: '1d6',
+    11: '1d8', 12: '1d8', 13: '1d8', 14: '1d8', 15: '1d8', 16: '1d8',
+    17: '1d10', 18: '1d10', 19: '1d10', 20: '1d10'
+};
+
+
 var DNDCalculations = {
     getAbilityModifier: function(score) {
         return Math.floor(((score || 10) - 10) / 2);
@@ -149,26 +157,28 @@ var DNDCalculations = {
     },
 
     spellSaveDC: function(pcData) {
-        if (!pcData || !pcData.vtt_data || !pcData.vtt_data.abilities) return 'N/A';
+        const system = pcData.system || pcData.vtt_data;
+        if (!pcData || !system || !system.abilities) return 'N/A';
         const spellcastingAbilityKey = this.getSpellcastingAbilityKeyForPC(pcData);
         if (!spellcastingAbilityKey) return 'N/A (No Casting Ability)';
 
-        const abilityScore = pcData.vtt_data.abilities[spellcastingAbilityKey]?.value || 10;
+        const abilityScore = system.abilities[spellcastingAbilityKey]?.value || 10;
         const proficiencyBonus = pcData.calculatedProfBonus != null ? pcData.calculatedProfBonus :
-            this.getProficiencyBonus(pcData.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pcData.system?.details?.level || pcData.vtt_data?.details?.level || 1);
+            this.getProficiencyBonus(pcData.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || system?.details?.level || 1);
 
         if (typeof proficiencyBonus !== 'number') return 'N/A (Proficiency Error)';
         return 8 + this.getAbilityModifier(abilityScore) + proficiencyBonus;
     },
 
     spellAttackBonus: function(pcData) {
-        if (!pcData || !pcData.vtt_data || !pcData.vtt_data.abilities) return 'N/A';
+        const system = pcData.system || pcData.vtt_data;
+        if (!pcData || !system || !system.abilities) return 'N/A';
         const spellcastingAbilityKey = this.getSpellcastingAbilityKeyForPC(pcData);
         if (!spellcastingAbilityKey) return 'N/A (No Casting Ability)';
 
-        const abilityScore = pcData.vtt_data.abilities[spellcastingAbilityKey]?.value || 10;
+        const abilityScore = system.abilities[spellcastingAbilityKey]?.value || 10;
         const proficiencyBonus = pcData.calculatedProfBonus != null ? pcData.calculatedProfBonus :
-            this.getProficiencyBonus(pcData.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pcData.system?.details?.level || pcData.vtt_data?.details?.level || 1);
+            this.getProficiencyBonus(pcData.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || system?.details?.level || 1);
         
         if (typeof proficiencyBonus !== 'number') return 'N/A (Proficiency Error)';
         return this.getAbilityModifier(abilityScore) + proficiencyBonus;
@@ -177,15 +187,63 @@ var DNDCalculations = {
     getShieldBonus: function(pcData) {
         if (pcData && pcData.items) {
             const equippedShield = pcData.items.find(item =>
-                item.type === 'equipment' &&
                 item.system?.equipped &&
-                item.system?.armor?.type === 'shield'
+                (item.system?.armor?.type === 'shield' || item.type?.value === 'shield')
             );
             if (equippedShield && equippedShield.system?.armor) {
                 return equippedShield.system.armor.value || 0;
             }
         }
         return 0;
+    },
+    
+    calculateDisplayAC: function(pcData) {
+        const system = pcData.system || pcData.vtt_data;
+        if (!pcData || !system) { return 'N/A'; }
+    
+        if (system.attributes?.ac?.flat) {
+            return system.attributes.ac.flat;
+        }
+    
+        const abilities = system.abilities || {};
+        const items = pcData.items || [];
+    
+        const dexMod = this.getAbilityModifier(abilities.dex?.value || 10);
+        const conMod = this.getAbilityModifier(abilities.con?.value || 10);
+        const wisMod = this.getAbilityModifier(abilities.wis?.value || 10);
+    
+        let ac = 10 + dexMod;
+    
+        const equippedArmor = items.find(item =>
+            item.system?.equipped &&
+            item.type === 'equipment' &&
+            ['light', 'medium', 'heavy'].includes(item.system?.armor?.type)
+        );
+    
+        if (equippedArmor) {
+            const armorData = equippedArmor.system.armor;
+            const armorType = armorData.type;
+            let baseAC = armorData.value || 0;
+    
+            if (armorType === 'light') {
+                ac = baseAC + dexMod;
+            } else if (armorType === 'medium') {
+                ac = baseAC + Math.min(dexMod, 2);
+            } else if (armorType === 'heavy') {
+                ac = baseAC;
+            }
+        } else {
+            const classNames = this.getCharacterClassNames(pcData);
+            if (classNames.includes('barbarian')) {
+                ac = 10 + dexMod + conMod;
+            } else if (classNames.includes('monk')) {
+                ac = 10 + dexMod + wisMod;
+            }
+        }
+    
+        ac += this.getShieldBonus(pcData);
+    
+        return ac;
     },
 
     calculateDPR: function(pcData, attackItem, targetAC) {
@@ -283,6 +341,25 @@ var DNDCalculations = {
             dpr: dprNormal.toFixed(2),
             dprAdv: dprAdvantage.toFixed(2)
         };
+    },
+
+    getAverageDamage: function(diceString) {
+        if (!diceString || typeof diceString !== 'string') return 0;
+        
+        if (!diceString.includes('d')) {
+            const constantDamage = parseInt(diceString, 10);
+            return isNaN(constantDamage) ? 0 : constantDamage;
+        }
+        
+        const parts = diceString.toLowerCase().split('d');
+        if (parts.length !== 2) return 0;
+        
+        const numDice = parseInt(parts[0], 10);
+        const dieType = `d${parts[1]}`;
+        
+        if (isNaN(numDice) || !DIE_AVERAGES[dieType]) return 0;
+        
+        return numDice * DIE_AVERAGES[dieType];
     }
 };
 

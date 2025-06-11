@@ -13,19 +13,14 @@ var App = {
             this.setupSceneContextSelector();
             this.setupDashboardClickHandlers();
 
-            // --- NEW: DELEGATED EVENT LISTENER FOR DPR CONTROLS ---
             const dashboardView = Utils.getElem('pc-dashboard-view');
             if (dashboardView) {
-                // Listen for an 'input' event on the parent container
                 dashboardView.addEventListener('input', (event) => {
-                    // If the event came from our specific AC input field
                     if (event.target.id === 'dpr-ac-input') {
-                        // Trigger a redraw of the main view
                         this.updateMainView();
                     }
                 });
             }
-            // --- END NEW LISTENER ---
 
             setTimeout(() => this.updateMainView(), 0); 
         } catch (e) {
@@ -62,18 +57,18 @@ var App = {
             CharacterService.handleSelectCharacterForDetails(currentProfileId);
         }
         if (tabName === 'tab-lore' && !appState.getCurrentLoreEntryId()) {
-            if(typeof closeLoreDetailViewUI === 'function'){ // Ensure UIRenderers.closeLoreDetailViewUI is globally accessible
+            if(typeof closeLoreDetailViewUI === 'function'){
                 closeLoreDetailViewUI();
             }
         }
         if (tabName === 'tab-scene') {
-            UIRenderers.renderNpcListForContextUI( // Default to showing all NPCs if no filter
+            UIRenderers.renderNpcListForContextUI(
                 Utils.getElem('character-list-scene-tab'),
                 appState.getAllCharacters(),
                 appState.activeSceneNpcIds,
                 this.handleToggleNpcInScene, 
                 CharacterService.handleSelectCharacterForDetails,
-                appState.getCurrentSceneContextFilter() // Pass current filter or null
+                appState.getCurrentSceneContextFilter()
             );
         }
     },
@@ -103,7 +98,7 @@ var App = {
                 UIRenderers.populateSceneContextSelectorUI();
                 if (entrySelector) entrySelector.value = ""; 
                 appState.setCurrentSceneContextFilter(null); 
-                 UIRenderers.renderNpcListForContextUI( // Show all NPCs if type filter is cleared but specific entry not
+                 UIRenderers.renderNpcListForContextUI(
                     Utils.getElem('character-list-scene-tab'),
                     appState.getAllCharacters(),
                     appState.activeSceneNpcIds,
@@ -120,7 +115,7 @@ var App = {
                 if (selectedLoreId) {
                     appState.setCurrentSceneContextFilter({ type: 'lore', id: selectedLoreId });
                 } else {
-                    appState.setCurrentSceneContextFilter(null); // If "-- Select Specific Context --" is chosen
+                    appState.setCurrentSceneContextFilter(null);
                 }
                 UIRenderers.renderNpcListForContextUI(
                     Utils.getElem('character-list-scene-tab'),
@@ -128,11 +123,10 @@ var App = {
                     appState.activeSceneNpcIds,
                     this.handleToggleNpcInScene, 
                     CharacterService.handleSelectCharacterForDetails,
-                    appState.getCurrentSceneContextFilter() // This will be null if no specific context, showing all NPCs
+                    appState.getCurrentSceneContextFilter()
                 );
             });
         }
-        // Initial render to show all NPCs if no filter is set by default
         UIRenderers.renderNpcListForContextUI(
             Utils.getElem('character-list-scene-tab'),
             appState.getAllCharacters(),
@@ -193,7 +187,6 @@ var App = {
         const isDetailedSheetVisible = dashboardContent && dashboardContent.querySelector('.detailed-pc-sheet');
 
         if (activeNpcCount > 0 && !isDetailedSheetVisible) {
-            // THIS IS THE CHANGE: 'flex' becomes 'block'
             dialogueInterfaceElem.style.display = 'block';
             pcDashboardViewElem.style.display = 'none';
             const activePcsData = appState.getAllCharacters().filter(char => appState.hasActivePc(String(char._id)));
@@ -215,6 +208,8 @@ var App = {
                 UIRenderers.updatePcDashboardUI(dashboardContent, appState.getAllCharacters(), appState.activePcIds, appState.getExpandedAbility(), appState.getExpandedSkill(), appState.getSkillSortKey());
             } else {
                 if(dashboardContent) dashboardContent.innerHTML = `<p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>`;
+                const dprControls = Utils.getElem('dpr-controls');
+                if (dprControls) dprControls.style.display = 'none';
             }
         }
         Utils.disableBtn('generate-dialogue-btn', activeNpcCount === 0);
@@ -262,9 +257,6 @@ var App = {
         } else if (appState.getActiveNpcCount() === 0 && !placeholderEvent) {
             multiNpcContainer.innerHTML = '<p class="scene-event">Select NPCs from the SCENE tab to add them to the interaction.</p>';
         }
-
-        // DELETE OR COMMENT OUT THE LINE BELOW
-        // UIRenderers.adjustNpcDialogueAreaWidthsUI(multiNpcContainer);
 
         UIRenderers.renderNpcListForContextUI(
             Utils.getElem('character-list-scene-tab'),
@@ -376,7 +368,7 @@ var App = {
 
         const currentProfileChar = appState.getCurrentProfileChar();
         if (currentProfileChar && currentProfileChar.character_type === 'NPC') {
-            UIRenderers.renderNpcFactionStandingsUI(currentProfileChar, appState.activePcIds, appState.getAllCharacters(), Utils.getElem('npc-faction-standings-content'), handleSaveFactionStanding);
+            UIRenderers.renderNpcFactionStandingsUI(currentProfileChar, appState.activePcIds, appState.getAllCharacters(), Utils.getElem('npc-faction-standings-content'), CharacterService.handleSaveFactionStanding);
         }
     },
 
@@ -396,14 +388,14 @@ var App = {
         const currentAbility = appState.getExpandedAbility();
         if (currentAbility === ablKey) {
             appState.setExpandedAbility(null);
-             if (ablKey === 'STR') appState.setSkillSortKey(null); // Clear STR sort if collapsing STR
+             if (ablKey === 'STR') appState.setSkillSortKey(null);
         } else {
             appState.setExpandedAbility(ablKey);
             appState.setExpandedSkill(null); 
-            if (ablKey === 'STR') { // If expanding STR, set sort key to STR
-                appState.setSkillSortKey('STR'); // Using 'STR' as a special key for strength sorting
+            if (ablKey === 'STR') {
+                appState.setSkillSortKey('STR');
             } else {
-                appState.setSkillSortKey(null); // Clear sort for other abilities
+                appState.setSkillSortKey(null);
             }
         }
         UIRenderers.updatePcDashboardUI(Utils.getElem('pc-dashboard-content'), appState.getAllCharacters(), appState.activePcIds, appState.getExpandedAbility(), appState.getExpandedSkill(), appState.getSkillSortKey());
@@ -460,7 +452,7 @@ var App = {
         }
 
         if (confirm(`Change ${npc.name}'s standing towards ${pc.name} to ${newStanding}?`)) {
-            await handleSaveFactionStanding(npcIdToUpdate, pcTargetId, newStanding);
+            await CharacterService.handleSaveFactionStanding(npcIdToUpdate, pcTargetId, newStanding);
         }
     },
 

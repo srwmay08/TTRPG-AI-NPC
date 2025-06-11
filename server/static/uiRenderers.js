@@ -12,14 +12,14 @@ var UIRenderers = {
     generatePcQuickViewCardHTML: function(pc, isClickableForDetailedView = false) {
         if (!pc) return '';
         
-        pc.system = pc.system || {};
-        pc.system.abilities = pc.system.abilities || {};
-        pc.system.attributes = pc.system.attributes || {};
-        pc.system.attributes.hp = pc.system.attributes.hp || {};
-        pc.system.attributes.movement = pc.system.attributes.movement || {};
+        const system = pc.system || pc.vtt_data || {};
+        system.abilities = system.abilities || {};
+        system.attributes = system.attributes || {};
+        system.attributes.hp = system.attributes.hp || {};
+        system.attributes.movement = system.attributes.movement || {};
 
         if (typeof pc.calculatedProfBonus === 'undefined') {
-            const pcLevel = pc.system?.details?.level || 1;
+            const pcLevel = system.details?.level || 1;
             pc.calculatedProfBonus = DNDCalculations.getProficiencyBonus(pcLevel);
         }
 
@@ -31,15 +31,15 @@ var UIRenderers = {
         let cardHTML = `<div class="${cardClasses}" data-pc-id="${String(pc._id)}">`;
         cardHTML += `<h4>${pc.name}</h4>`;
 
-        const hpCurrent = pc.system.attributes.hp?.value ?? 'N/A';
-        const hpMax = pc.system.attributes.hp?.max ?? 'N/A';
+        const hpCurrent = system.attributes.hp?.value ?? 'N/A';
+        const hpMax = system.attributes.hp?.max ?? 'N/A';
         cardHTML += `<p><strong>HP:</strong> ${hpCurrent} / ${hpMax}</p>`;
         const acDisplayValue = DNDCalculations.calculateDisplayAC(pc);
         cardHTML += `<p><strong>AC:</strong> ${acDisplayValue}</p>`;
         cardHTML += `<p><strong>Prof. Bonus:</strong> +${pc.calculatedProfBonus}</p>`;
-        const initiativeBonus = DNDCalculations.getAbilityModifier(pc.system.abilities?.dex?.value || 10);
+        const initiativeBonus = DNDCalculations.getAbilityModifier(system.abilities?.dex?.value || 10);
         cardHTML += `<p><strong>Initiative:</strong> ${initiativeBonus >= 0 ? '+' : ''}${initiativeBonus}</p>`;
-        cardHTML += `<p><strong>Speed:</strong> ${pc.system.attributes.movement?.walk || 30} ft</p>`;
+        cardHTML += `<p><strong>Speed:</strong> ${system.attributes.movement?.walk || 30} ft</p>`;
         const spellDcText = DNDCalculations.spellSaveDC(pc);
         cardHTML += `<p><strong>Spell DC:</strong> ${spellDcText}</p>`;
         const spellAtkBonusText = DNDCalculations.spellAttackBonus(pc);
@@ -49,24 +49,20 @@ var UIRenderers = {
     },
 
     updatePcDashboardUI: function(dashboardContentElement, allCharacters, activePcIds, currentlyExpandedAbility) {
-        if (!dashboardContentElement) {
-            console.error("UIRenderers.updatePcDashboardUI: 'pc-dashboard-content' element not found.");
-            return;
-        }
-
+        const dprControls = Utils.getElem('dpr-controls');
         const selectedPcs = allCharacters.filter(char => activePcIds.has(String(char._id)) && char.character_type === 'PC');
 
-        const dprControls = document.getElementById('dpr-controls');
         if (selectedPcs.length === 0) {
-            dashboardContentElement.innerHTML = `<p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>`;
+            if(dashboardContentElement) dashboardContentElement.innerHTML = `<p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>`;
             if (dprControls) dprControls.style.display = 'none';
             return;
         }
         
-        if (dprControls) dprControls.style.display = 'flex';
+        if (dprControls) dprControls.style.display = 'block';
         
         const targetACInput = document.getElementById('dpr-ac-input');
-        const targetAC = targetACInput ? parseInt(targetACInput.value, 10) : 13;
+        const targetAC = targetACInput ? parseInt(targetACInput.value, 10) : 15;
+        if(targetACInput) targetACInput.value = targetAC;
 
         let sortedSelectedPcs = [...selectedPcs];
         if (currentlyExpandedAbility) {
@@ -108,10 +104,8 @@ var UIRenderers = {
         });
         mainStatsTableHTML += `</tbody></table></div>`;
         finalHTML += mainStatsTableHTML;
-
-        // Note: DPR controls are now static in index.html, this function just shows them.
         
-        let dprTableHTML = `<h4>Damage Per Round (DPR) Overview</h4><div class="table-wrapper"><table id="dpr-overview-table">`;
+        let dprTableHTML = `<div class="table-wrapper"><table id="dpr-overview-table">`;
         dprTableHTML += `<thead><tr><th>Character</th><th>Attack</th><th>DPR (Normal)</th><th>DPR (Advantage)</th></tr></thead><tbody>`;
     
         sortedSelectedPcs.forEach(pc => {
@@ -160,6 +154,58 @@ var UIRenderers = {
         finalHTML += dprTableHTML;
 
         dashboardContentElement.innerHTML = finalHTML;
+    },
+
+    renderNpcListForContextUI: function(listContainerElement, allCharacters, activeSceneNpcIds, onToggleInSceneCallback, onNameClickCallback, contextFilter) {
+        if (!listContainerElement) {
+            console.error("renderNpcListForContextUI: listContainerElement not found");
+            return;
+        }
+
+        let ul = listContainerElement.querySelector('ul');
+        if (!ul) {
+            ul = document.createElement('ul');
+            listContainerElement.appendChild(ul);
+        }
+        ul.innerHTML = '';
+
+        let npcsToDisplay = allCharacters.filter(char => char.character_type === 'NPC');
+
+        if (contextFilter && contextFilter.type === 'lore' && contextFilter.id) {
+            npcsToDisplay = npcsToDisplay.filter(npc =>
+                npc.linked_lore_ids && npc.linked_lore_ids.includes(String(contextFilter.id))
+            );
+        }
+
+        npcsToDisplay.sort((a, b) => a.name.localeCompare(b.name));
+
+        if (npcsToDisplay.length === 0) {
+            ul.innerHTML = '<li><p><em>No relevant NPCs found for this context.</em></p></li>';
+            return;
+        }
+
+        npcsToDisplay.forEach(char => {
+            const charIdStr = String(char._id);
+            const li = document.createElement('li');
+            li.dataset.charId = charIdStr;
+            li.style.cursor = "pointer";
+            li.onclick = () => onToggleInSceneCallback(charIdStr, char.name);
+
+            if (activeSceneNpcIds.has(charIdStr)) {
+                li.classList.add('active-in-scene');
+            }
+
+            const nameSpan = document.createElement('span');
+            nameSpan.textContent = char.name;
+            nameSpan.className = 'npc-name-clickable';
+            nameSpan.onclick = (event) => {
+                event.stopPropagation(); // Prevent the li's onclick from firing
+                onNameClickCallback(charIdStr);
+            };
+
+            li.appendChild(nameSpan);
+            ul.appendChild(li);
+        });
     },
 
     renderAllNpcListForManagementUI: function(listContainerElement, allCharacters, onNameClickCallback) {
