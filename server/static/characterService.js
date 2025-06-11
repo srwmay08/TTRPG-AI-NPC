@@ -37,13 +37,14 @@ var CharacterService = {
 
             UIRenderers.renderPcListUI(Utils.getElem('active-pc-list'), Utils.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, App.handleTogglePcSelection);
 
+            // THIS IS THE CORRECTED CALL
             UIRenderers.renderNpcListForContextUI(
                 Utils.getElem('character-list-scene-tab'),
                 appState.getAllCharacters(),
                 appState.activeSceneNpcIds,
                 App.handleToggleNpcInScene,
                 this.handleSelectCharacterForDetails,
-                null
+                null // Start with no filter
             );
             UIRenderers.renderAllNpcListForManagementUI(
                 Utils.getElem('all-character-list-management'),
@@ -67,7 +68,7 @@ var CharacterService = {
         const characterProfileSection = Utils.getElem('character-profile-main-section');
         if (!charIdStr || charIdStr === "null") {
             appState.setCurrentProfileCharId(null);
-            UIRenderers.renderCharacterProfileUI(null, CharacterService.profileElementIds);
+            UIRenderers.renderCharacterProfileUI(null, this.profileElementIds);
             if (characterProfileSection) characterProfileSection.classList.add('collapsed');
             return;
         }
@@ -76,14 +77,14 @@ var CharacterService = {
             const selectedCharFromServer = await ApiService.fetchNpcDetails(charIdStr);
             const processedChar = appState.updateCharacterInList(selectedCharFromServer);
 
-            UIRenderers.renderCharacterProfileUI(processedChar, CharacterService.profileElementIds);
+            UIRenderers.renderCharacterProfileUI(processedChar, this.profileElementIds);
             if (characterProfileSection) characterProfileSection.classList.remove('collapsed');
 
             await this.fetchAndRenderHistoryFiles();
         } catch (error) {
             console.error("Error in handleSelectCharacterForDetails:", error);
             Utils.updateText('details-char-name', 'Error loading details');
-            UIRenderers.renderCharacterProfileUI(null, CharacterService.profileElementIds);
+            UIRenderers.renderCharacterProfileUI(null, this.profileElementIds);
             if (characterProfileSection) characterProfileSection.classList.add('collapsed');
         }
     },
