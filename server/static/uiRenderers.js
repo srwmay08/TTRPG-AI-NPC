@@ -4,7 +4,6 @@ console.log("uiRenderers.js: Parsing STARTED");
 
 var UIRenderers = {
     createPcQuickViewSectionHTML: function(isForDashboard) {
-        // MODIFIED: This function now ONLY return the H4 title element.
         const titleText = PC_QUICK_VIEW_BASE_TITLE;
         const fullTitle = isForDashboard ? `${titleText} (Click card for details)` : titleText;
         return `<h4>${fullTitle}</h4>`;
@@ -12,7 +11,7 @@ var UIRenderers = {
 
     generatePcQuickViewCardHTML: function(pc, isClickableForDetailedView = false) {
         if (!pc) return '';
-        // Ensure defaults for pc.vtt_data and its nested properties
+        
         pc.vtt_data = pc.vtt_data || {};
         pc.vtt_data.abilities = pc.vtt_data.abilities || {};
         pc.vtt_data.attributes = pc.vtt_data.attributes || {};
@@ -20,15 +19,15 @@ var UIRenderers = {
         pc.vtt_data.attributes.ac = pc.vtt_data.attributes.ac || {};
         pc.vtt_data.attributes.movement = pc.vtt_data.attributes.movement || {};
         pc.vtt_data.attributes.init = pc.vtt_data.attributes.init || {};
-        pc.vtt_data.attributes.spell = pc.vtt_data.attributes.spell || {}; // Ensure spell attribute exists
+        pc.vtt_data.attributes.spell = pc.vtt_data.attributes.spell || {};
         pc.vtt_data.details = pc.vtt_data.details || {};
         pc.vtt_data.skills = pc.vtt_data.skills || {};
         pc.vtt_data.traits = pc.vtt_data.traits || { languages: {}, armorProf: {}, weaponProf: {}};
         pc.items = pc.items || [];
-        pc.system = pc.system || {}; // Ensure 'system' (full FVTT data) is initialized
+        pc.system = pc.system || {};
 
-        const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || pc.vtt_data?.details?.level || 1;
         if (typeof pc.calculatedProfBonus === 'undefined') {
+            const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || pc.vtt_data?.details?.level || 1;
             pc.calculatedProfBonus = DNDCalculations.getProficiencyBonus(pcLevel);
         }
 
@@ -40,6 +39,7 @@ var UIRenderers = {
         }
 
         let cardHTML = `<div class="${cardClasses}" ${dataAttributes}>`;
+        // MODIFICATION: Removed Level display
         cardHTML += `<h4>${pc.name}</h4>`;
 
         const hpCurrent = pc.vtt_data.attributes.hp?.value ?? pc.system?.attributes?.hp?.value ?? 'N/A';
@@ -62,12 +62,11 @@ var UIRenderers = {
             initiativeBonus = parseInt(pc.vtt_data.attributes.init?.bonus ?? pc.system?.attributes?.init?.bonus) || 0;
         }
         const initBonusFromAttributes = parseInt(pc.vtt_data.attributes.init?.bonus ?? pc.system?.attributes?.init?.bonus);
-        if (!isNaN(initBonusFromAttributes) && typeof abilityValueForInit === 'undefined') { // if only bonus is defined, use it
+        if (!isNaN(initBonusFromAttributes) && typeof abilityValueForInit === 'undefined') {
              initiativeBonus = initBonusFromAttributes;
-        } else if (!isNaN(initBonusFromAttributes) && typeof abilityValueForInit !== 'undefined'){ // if both are defined, add them
+        } else if (!isNaN(initBonusFromAttributes) && typeof abilityValueForInit !== 'undefined'){
             initiativeBonus += initBonusFromAttributes;
         }
-
 
         cardHTML += `<p><strong>Initiative:</strong> ${initiativeBonus >= 0 ? '+' : ''}${initiativeBonus}</p>`;
         cardHTML += `<p><strong>Speed:</strong> ${pc.vtt_data.attributes.movement?.walk || pc.system?.attributes?.movement?.walk || 0} ft</p>`;
@@ -84,10 +83,9 @@ var UIRenderers = {
         
         let spellAtkBonusText = DNDCalculations.spellAttackBonus(pc);
         if (spellAtkBonusText === 'N/A (No Casting Ability)' || spellAtkBonusText === 'N/A (Proficiency Error)') {
-            spellAtkBonusText = "N/A"; // Or try to get from attributes if available, similar to DC
+            spellAtkBonusText = "N/A";
         }
         cardHTML += `<p><strong>Spell Atk:</strong> +${spellAtkBonusText}</p>`;
-
 
         cardHTML += `</div>`;
         return cardHTML;
@@ -657,29 +655,28 @@ var UIRenderers = {
         wrapperElement.style.display = 'block';
     },
 
-    updatePcDashboardUI: function(dashboardContentElement, allCharacters, activePcIds, currentlyExpandedAbility, currentlyExpandedSkill, skillSortKey) {
+updatePcDashboardUI: function(dashboardContentElement, allCharacters, activePcIds, currentlyExpandedAbility, currentlyExpandedSkill, skillSortKey) {
         if (!dashboardContentElement) { console.error("UIRenderers.updatePcDashboardUI: 'pc-dashboard-content' element not found."); return; }
-    
-        let finalHTML = '';
     
         const selectedPcs = allCharacters.filter(char => activePcIds.has(String(char._id)) && char.character_type === 'PC' && (char.vtt_data || char.system));
     
-        const dprControls = document.getElementById('dpr-controls');
         if (selectedPcs.length === 0) {
             dashboardContentElement.innerHTML = `<p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>`;
-            if (dprControls) dprControls.style.display = 'none';
+            document.getElementById('dpr-controls').style.display = 'none';
             return;
         }
-
-        if (dprControls) dprControls.style.display = 'block';
-        const targetAC = parseInt(document.getElementById('dpr-ac-input').value) || 13;
         
+        document.getElementById('dpr-controls').style.display = 'flex';
+        
+        const targetACInput = document.getElementById('dpr-ac-input');
+        const targetAC = targetACInput ? parseInt(targetACInput.value, 10) : 13;
+    
         let sortedSelectedPcs = [...selectedPcs];
         if (currentlyExpandedAbility) {
             const ablKey = currentlyExpandedAbility.toLowerCase();
             sortedSelectedPcs.sort((a,b) => {
-                const scoreA = (a.vtt_data?.abilities?.[ablKey]?.value ?? a.system?.abilities?.[ablKey]?.value) || 10;
-                const scoreB = (b.vtt_data?.abilities?.[ablKey]?.value ?? b.system?.abilities?.[ablKey]?.value) || 10;
+                const scoreA = (a.system?.abilities?.[ablKey]?.value) || 10;
+                const scoreB = (b.system?.abilities?.[ablKey]?.value) || 10;
                 return scoreB - scoreA;
             });
         } else {
@@ -687,9 +684,11 @@ var UIRenderers = {
         }
     
         sortedSelectedPcs.forEach(pc => {
-            const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || pc.vtt_data?.details?.level || 1;
+            const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || 1;
             pc.calculatedProfBonus = DNDCalculations.getProficiencyBonus(pcLevel);
         });
+        
+        let finalHTML = '';
     
         finalHTML += this.createPcQuickViewSectionHTML(true);
         let cardsHTML = '';
@@ -718,26 +717,51 @@ var UIRenderers = {
         mainStatsTableHTML += `</tbody></table></div>`;
         finalHTML += mainStatsTableHTML;
     
-        let dprTableHTML = `<h4>Damage Per Round (DPR) Overview</h4><div class="table-wrapper"><table id="dpr-overview-table">`;
+        finalHTML += `
+            <div class="dpr-header">
+                <h4>Damage Per Round (DPR) Overview</h4>
+                <div class="dpr-ac-control">
+                    <label for="dpr-ac-input">Target AC:</label>
+                    <input type="number" id="dpr-ac-input" value="${targetAC}">
+                </div>
+            </div>`;
+    
+        let dprTableHTML = `<div class="table-wrapper"><table id="dpr-overview-table">`;
         dprTableHTML += `<thead><tr><th>Character</th><th>Attack</th><th>DPR (Normal)</th><th>DPR (Advantage)</th></tr></thead><tbody>`;
     
         sortedSelectedPcs.forEach(pc => {
-            const equippedItems = pc.items.filter(item => 
-                (item.type === 'weapon' && item.system?.equipped && item.system?.damage?.base?.denomination) || 
-                (item.type === 'spell' && item.system?.damage?.parts?.length > 0)
-            );
-            if (equippedItems.length > 0) {
-                 equippedItems.forEach((item, index) => {
+            // --- THIS IS THE CORRECTED FILTER LOGIC ---
+            const attackItems = pc.items.filter(item => {
+                if (item.type === 'weapon' && item.system?.equipped && item.system?.damage?.base?.denomination) {
+                    return true;
+                }
+                if (item.type === 'spell' && item.system?.activities) {
+                    for (const key in item.system.activities) {
+                        const activity = item.system.activities[key];
+                        if (activity?.damage?.parts?.length > 0) {
+                            const damagePart = activity.damage.parts[0];
+                            const damageFormula = damagePart.formula || damagePart.number;
+                            if ( (damagePart.number && damagePart.denomination) || (damageFormula && typeof damageFormula === 'string' && damageFormula.includes('d')) ) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                return false;
+            });
+
+            if (attackItems.length > 0) {
+                 attackItems.forEach((item, index) => {
                     const dprResults = DNDCalculations.calculateDPR(pc, item, targetAC);
                     dprTableHTML += `<tr>`;
                     if (index === 0) {
-                        dprTableHTML += `<td rowspan="${equippedItems.length}">${pc.name}</td>`;
+                        dprTableHTML += `<td rowspan="${attackItems.length}">${pc.name}</td>`;
                     }
                     dprTableHTML += `<td>${dprResults.name}</td><td>${dprResults.dpr}</td><td>${dprResults.dprAdv}</td>`;
                     dprTableHTML += `</tr>`;
                 });
             } else {
-                dprTableHTML += `<tr><td>${pc.name}</td><td colspan="3">No equipped damaging attacks found</td></tr>`;
+                dprTableHTML += `<tr><td>${pc.name}</td><td colspan="3">No applicable attacks found</td></tr>`;
             }
         });
     
@@ -761,9 +785,7 @@ var UIRenderers = {
         });
     },
 
-
     populateExpandedAbilityDetailsUI: function(ablKey, expansionDiv, selectedPcsInput) {
-        console.log("UIRenderers.populateExpandedAbilityDetailsUI for", ablKey);
         if (!expansionDiv) { console.error("populateExpandedAbilityDetailsUI: expansionDiv is null for", ablKey); return; }
         
         let sortedPcs = [...selectedPcsInput];
@@ -855,7 +877,6 @@ var UIRenderers = {
     },
 
     populateExpandedSkillDetailsUI: function(skillKey, expansionDiv, selectedPcs) {
-        console.log("UIRenderers.populateExpandedSkillDetailsUI for", skillKey);
         if (!expansionDiv) { console.error("populateExpandedSkillDetailsUI: expansionDiv is null for", skillKey); return; }
         const skillFullName = SKILL_NAME_MAP[skillKey] || skillKey;
         expansionDiv.innerHTML = `<h5>${skillFullName} Bonus Details & Comparisons</h5>`;

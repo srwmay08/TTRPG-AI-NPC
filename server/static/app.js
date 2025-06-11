@@ -11,14 +11,21 @@ var App = {
             EventHandlers.assignButtonEventHandlers(); 
             this.setupTabControls(); 
             this.setupSceneContextSelector();
-            this.setupDashboardClickHandlers(); 
+            this.setupDashboardClickHandlers();
 
-            const dprInput = Utils.getElem('dpr-ac-input');
-            if (dprInput) {
-                dprInput.addEventListener('change', () => {
-                    this.updateMainView();
+            // --- NEW: DELEGATED EVENT LISTENER FOR DPR CONTROLS ---
+            const dashboardView = Utils.getElem('pc-dashboard-view');
+            if (dashboardView) {
+                // Listen for an 'input' event on the parent container
+                dashboardView.addEventListener('input', (event) => {
+                    // If the event came from our specific AC input field
+                    if (event.target.id === 'dpr-ac-input') {
+                        // Trigger a redraw of the main view
+                        this.updateMainView();
+                    }
                 });
             }
+            // --- END NEW LISTENER ---
 
             setTimeout(() => this.updateMainView(), 0); 
         } catch (e) {

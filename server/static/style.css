@@ -242,12 +242,27 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 .pc-stat-card p { margin: 4px 0; font-size: 0.9em; }
 
 .table-wrapper { overflow-x: auto; width: 100%; margin-bottom: 15px; }
-#main-stats-table, #skills-overview-table, .detailed-pc-ability-table { min-width: 100%; border-collapse: collapse; font-size: 0.9em; }
+#main-stats-table, #skills-overview-table, #dpr-overview-table, .detailed-pc-ability-table {
+    min-width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em;
+}
 #main-stats-table th, #main-stats-table td,
 #skills-overview-table th, #skills-overview-table td,
-.detailed-pc-ability-table th, .detailed-pc-ability-table td { border: 1px solid #ddd; padding: 6px; text-align: center; }
-#main-stats-table th, #skills-overview-table th, .detailed-pc-ability-table th { background-color: #e9ecef; font-weight: bold; }
-#main-stats-table td:first-child, #skills-overview-table td:first-child { text-align: left; font-weight: bold; }
+#dpr-overview-table th, #dpr-overview-table td,
+.detailed-pc-ability-table th, .detailed-pc-ability-table td {
+    border: 1px solid #ddd;
+    padding: 6px;
+    text-align: center;
+}
+#main-stats-table th, #skills-overview-table th, #dpr-overview-table th, .detailed-pc-ability-table th {
+    background-color: #e9ecef;
+    font-weight: bold;
+}
+#main-stats-table td:first-child, #skills-overview-table td:first-child {
+    text-align: left;
+    font-weight: bold;
+}
 
 .clickable-ability-header, .clickable-skill-header { cursor: pointer; color: #0056b3; text-decoration: underline;}
 .clickable-ability-header span.arrow-indicator, .clickable-skill-header span.arrow-indicator { font-size: 0.8em; margin-left: 3px;}
@@ -429,4 +444,32 @@ label { display: block; margin-bottom: 5px; font-weight: bold; }
 .clickable-pc-card:hover {
     background-color: #e2e6ea; /* Slightly different hover for distinction */
     border-color: #adb5bd;
+}
+
+/* In server/static/style.css */
+
+/* ... (at the end of the file) ... */
+
+.dpr-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.dpr-header h4 {
+    margin: 0;
+}
+
+.dpr-ac-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dpr-ac-control input {
+    width: 70px;
+    padding: 5px;
+    margin-bottom: 0; /* Override default margin */
 }
