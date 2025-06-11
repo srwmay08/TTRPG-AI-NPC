@@ -191,7 +191,6 @@ var App = {
             pcDashboardViewElem.style.display = 'none';
             const activePcsData = appState.getAllCharacters().filter(char => appState.hasActivePc(String(char._id)));
             UIRenderers.renderPcQuickViewInSceneUI(pcQuickViewInSceneElem, activePcsData);
-
         } else if (isDetailedSheetVisible) {
             dialogueInterfaceElem.style.display = 'none';
             pcDashboardViewElem.style.display = 'block';
@@ -205,11 +204,9 @@ var App = {
             pcQuickViewInSceneElem.innerHTML = '';
 
             if (appState.getActivePcCount() > 0) {
-                UIRenderers.updatePcDashboardUI(dashboardContent, appState.getAllCharacters(), appState.activePcIds, appState.getExpandedAbility(), appState.getExpandedSkill(), appState.getSkillSortKey());
+                UIRenderers.updatePcDashboardUI(dashboardContent, appState.getAllCharacters(), appState.activePcIds, appState.getExpandedAbility());
             } else {
                 if(dashboardContent) dashboardContent.innerHTML = `<p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>`;
-                const dprControls = Utils.getElem('dpr-controls');
-                if (dprControls) dprControls.style.display = 'none';
             }
         }
         Utils.disableBtn('generate-dialogue-btn', activeNpcCount === 0);
@@ -368,7 +365,7 @@ var App = {
 
         const currentProfileChar = appState.getCurrentProfileChar();
         if (currentProfileChar && currentProfileChar.character_type === 'NPC') {
-            UIRenderers.renderNpcFactionStandingsUI(currentProfileChar, appState.activePcIds, appState.getAllCharacters(), Utils.getElem('npc-faction-standings-content'), CharacterService.handleSaveFactionStanding);
+            UIRenderers.renderNpcFactionStandingsUI(currentProfileChar, appState.activePcIds, appState.getAllCharacters(), Utils.getElem('npc-faction-standings-content'), handleSaveFactionStanding);
         }
     },
 
@@ -379,39 +376,13 @@ var App = {
             if (detailedSheet) detailedSheet.remove();
         }
         appState.setExpandedAbility(null);
-        appState.setExpandedSkill(null);
-        appState.setSkillSortKey(null);
         App.updateMainView();
     },
 
     toggleAbilityExpansion: function(ablKey) {
         const currentAbility = appState.getExpandedAbility();
-        if (currentAbility === ablKey) {
-            appState.setExpandedAbility(null);
-             if (ablKey === 'STR') appState.setSkillSortKey(null);
-        } else {
-            appState.setExpandedAbility(ablKey);
-            appState.setExpandedSkill(null); 
-            if (ablKey === 'STR') {
-                appState.setSkillSortKey('STR');
-            } else {
-                appState.setSkillSortKey(null);
-            }
-        }
-        UIRenderers.updatePcDashboardUI(Utils.getElem('pc-dashboard-content'), appState.getAllCharacters(), appState.activePcIds, appState.getExpandedAbility(), appState.getExpandedSkill(), appState.getSkillSortKey());
-    },
-
-    toggleSkillExpansion: function(skillKey) {
-        const currentSkill = appState.getExpandedSkill();
-        if (currentSkill === skillKey) {
-            appState.setExpandedSkill(null);
-            appState.setSkillSortKey(null);
-        } else {
-            appState.setExpandedSkill(skillKey);
-            appState.setSkillSortKey(skillKey); 
-            appState.setExpandedAbility(null); 
-        }
-        UIRenderers.updatePcDashboardUI(Utils.getElem('pc-dashboard-content'), appState.getAllCharacters(), appState.activePcIds, appState.getExpandedAbility(), appState.getExpandedSkill(), appState.getSkillSortKey());
+        appState.setExpandedAbility(currentAbility === ablKey ? null : ablKey);
+        UIRenderers.updatePcDashboardUI(Utils.getElem('pc-dashboard-content'), appState.getAllCharacters(), appState.activePcIds, appState.getExpandedAbility());
     },
 
     addSuggestedMemoryAsActual: async function(npcId, memoryContent) {
@@ -452,7 +423,7 @@ var App = {
         }
 
         if (confirm(`Change ${npc.name}'s standing towards ${pc.name} to ${newStanding}?`)) {
-            await CharacterService.handleSaveFactionStanding(npcIdToUpdate, pcTargetId, newStanding);
+            await handleSaveFactionStanding(npcIdToUpdate, pcTargetId, newStanding);
         }
     },
 
@@ -479,6 +450,5 @@ window.handleGenerateDialogue = App.handleGenerateDialogue;
 window.handleTogglePcSelection = App.handleTogglePcSelection; 
 window.handleBackToDashboardOverview = App.handleBackToDashboardOverview; 
 window.toggleAbilityExpansion = App.toggleAbilityExpansion; 
-window.toggleSkillExpansion = App.toggleSkillExpansion; 
 window.addSuggestedMemoryAsActual = App.addSuggestedMemoryAsActual; 
 window.acceptFactionStandingChange = App.acceptFactionStandingChange;

@@ -11,6 +11,14 @@ const DIE_AVERAGES = {
     'd4': 2.5, 'd6': 3.5, 'd8': 4.5, 'd10': 5.5, 'd12': 6.5, 'd20': 10.5
 };
 
+const MONK_MARTIAL_ARTS_DICE = {
+    1: '1d4', 2: '1d4', 3: '1d4', 4: '1d4', 
+    5: '1d6', 6: '1d6', 7: '1d6', 8: '1d6', 9: '1d6', 10: '1d6',
+    11: '1d8', 12: '1d8', 13: '1d8', 14: '1d8', 15: '1d8', 16: '1d8',
+    17: '1d10', 18: '1d10', 19: '1d10', 20: '1d10'
+};
+
+
 var DNDCalculations = {
     getAbilityModifier: function(score) {
         return Math.floor(((score || 10) - 10) / 2);
@@ -41,7 +49,9 @@ var DNDCalculations = {
 
     holdBreath: function(conScore) {
         conScore = conScore || 10;
-        return Math.max(1 + this.getAbilityModifier(conScore), 0.5) + " minutes";
+        const mod = this.getAbilityModifier(conScore);
+        const minutes = Math.max(1, 1 + mod);
+        return `${minutes} minute${minutes === 1 ? '' : 's'}`;
     },
 
     savingThrowBonus: function(abilityScore, proficientInSave = false, proficiencyBonus = 0) {
@@ -113,11 +123,9 @@ var DNDCalculations = {
 
     getCharacterClassNames: function(pcData) {
         const classNames = new Set();
-        // 1. Check the primary class_str property (from our JSON definitions)
         if (pcData && pcData.class_str) {
             classNames.add(pcData.class_str.toLowerCase().split('(')[0].trim());
         }
-        // 2. Check items array for class items (from VTT imports)
         if (pcData && pcData.items) {
             pcData.items.forEach(item => {
                 if (item.type === 'class' && item.name) {
@@ -125,7 +133,6 @@ var DNDCalculations = {
                 }
             });
         }
-        // 3. Fallbacks for other possible data structures
         if (classNames.size === 0 && pcData && pcData.vtt_data?.details?.originalClass) {
             classNames.add(pcData.vtt_data.details.originalClass.toLowerCase());
         }
@@ -151,18 +158,19 @@ var DNDCalculations = {
                 }
             }
         }
-        return null; // Return null if no spellcasting class found
+        const rogueClass = pcData.items?.find(i => i.type === 'class' && i.name.toLowerCase() === 'rogue');
+        const arcaneTrickster = rogueClass?.system?.subclass === 'arcane-trickster'; // Example path
+        if (arcaneTrickster) return 'int';
+
+        return null;
     },
 
     spellSaveDC: function(pcData) {
-        if (!pcData || !(pcData.vtt_data?.abilities || pcData.system?.abilities)) return 'N/A';
+        const abilities = pcData.system?.abilities || pcData.vtt_data?.abilities;
+        if (!pcData || !abilities) return 'N/A';
         const spellcastingAbilityKey = this.getSpellcastingAbilityKeyForPC(pcData);
-        if (!spellcastingAbilityKey) {
-             // For non-casters or if ability can't be determined
-            return 'N/A';
-        }
+        if (!spellcastingAbilityKey) return 'N/A';
 
-        const abilities = pcData.system?.abilities || pcData.vtt_data.abilities;
         const abilityScore = abilities[spellcastingAbilityKey]?.value || 10;
         const proficiencyBonus = pcData.calculatedProfBonus ?? 2;
 
@@ -171,13 +179,11 @@ var DNDCalculations = {
     },
 
     spellAttackBonus: function(pcData) {
-        if (!pcData || !(pcData.vtt_data?.abilities || pcData.system?.abilities)) return 'N/A';
+        const abilities = pcData.system?.abilities || pcData.vtt_data?.abilities;
+        if (!pcData || !abilities) return 'N/A';
         const spellcastingAbilityKey = this.getSpellcastingAbilityKeyForPC(pcData);
-        if (!spellcastingAbilityKey) {
-            return 'N/A';
-        }
+        if (!spellcastingAbilityKey) return 'N/A';
         
-        const abilities = pcData.system?.abilities || pcData.vtt_data.abilities;
         const abilityScore = abilities[spellcastingAbilityKey]?.value || 10;
         const proficiencyBonus = pcData.calculatedProfBonus ?? 2;
         
@@ -200,24 +206,25 @@ var DNDCalculations = {
     },
     
     calculateDisplayAC: function(pcData) {
+        const system = pcData.system || pcData.vtt_data || {};
+        if (!system.abilities) return 'N/A';
         const armor = pcData.items.find(i => i.system?.equipped && i.type === 'equipment' && i.system?.armor?.value);
         if (armor) {
             let ac = armor.system.armor.value;
-            if (armor.system.armor.dex !== null) {
-                const dexMod = this.getAbilityModifier(pcData.system.abilities.dex.value);
+            if (armor.system.armor.dex !== null && armor.system.armor.dex !== undefined) {
+                const dexMod = this.getAbilityModifier(system.abilities.dex.value);
                 ac += Math.min(dexMod, armor.system.armor.dex);
             }
             const shieldBonus = this.getShieldBonus(pcData);
             return ac + shieldBonus;
         }
-        // Unarmored
-        const dexMod = this.getAbilityModifier(pcData.system.abilities.dex.value);
+        const dexMod = this.getAbilityModifier(system.abilities.dex.value);
         let baseAc = 10 + dexMod;
         const classNames = this.getCharacterClassNames(pcData);
         if (classNames.includes('monk')) {
-            baseAc = 10 + dexMod + this.getAbilityModifier(pcData.system.abilities.wis.value);
+            baseAc = 10 + dexMod + this.getAbilityModifier(system.abilities.wis.value);
         } else if (classNames.includes('barbarian')) {
-            baseAc = 10 + dexMod + this.getAbilityModifier(pcData.system.abilities.con.value);
+            baseAc = 10 + dexMod + this.getAbilityModifier(system.abilities.con.value);
         }
         const shieldBonus = this.getShieldBonus(pcData);
         return baseAc + shieldBonus;
@@ -225,7 +232,7 @@ var DNDCalculations = {
 
     getAverageDamage: function(diceString) {
         if (!diceString || typeof diceString !== 'string') return 0;
-        const parts = diceString.split('+').map(part => part.trim());
+        const parts = diceString.toLowerCase().split('+').map(part => part.trim());
         let totalAverage = 0;
         parts.forEach(part => {
             if (part.includes('d')) {
@@ -240,81 +247,88 @@ var DNDCalculations = {
         });
         return totalAverage;
     },
-
+    
     calculateDPR: function(pcData, attackItem, targetAC) {
         if (!pcData || !attackItem || !pcData.system) return { name: attackItem.name, dpr: 'N/A', dprAdv: 'N/A' };
-
+    
         const pcLevel = pcData.system?.details?.level || 1;
         const profBonus = this.getProficiencyBonus(pcLevel);
         const abilities = pcData.system.abilities;
-
+    
         let abilityMod = 0;
         let attackBonus = 0;
         let baseDamageDice = [];
         let bonusDamage = 0;
         let attackName = attackItem.name;
-        
-        const isMonk = this.getCharacterClassNames(pcData).includes('monk');
-
-        // Logic for different attack types
-        if (attackItem.type === 'weapon') {
-            const weaponData = attackItem.system;
-            const isMonkWeapon = isMonk && (weaponData.properties?.includes('fin') || weaponData.type.baseItem === 'shortsword' || weaponData.type.value === 'simpleM');
-            
+    
+        const monkClass = pcData.items.find(i => i.type === 'class' && i.name.toLowerCase() === 'monk');
+        const isMonk = !!monkClass;
+        const monkLevel = isMonk ? monkClass.system.levels : 0;
+    
+        if (attackItem.name === 'Unarmed Strike') {
             let abilityKey = 'str';
-            if(weaponData.properties?.includes('fin')) {
+            if (isMonk) {
                 abilityKey = abilities.dex.value > abilities.str.value ? 'dex' : 'str';
             }
-            if(isMonkWeapon) {
-                 abilityKey = abilities.dex.value > abilities.str.value ? 'dex' : 'str';
-            }
-
             abilityMod = this.getAbilityModifier(abilities[abilityKey]?.value || 10);
             attackBonus = abilityMod + profBonus;
             bonusDamage = abilityMod;
-
-            let damageDie = `${weaponData.damage?.base?.number || 1}d${weaponData.damage?.base?.denomination}`;
-            if(isMonkWeapon) {
-                const monkLevel = pcData.items.find(i => i.type === 'class' && i.name.toLowerCase() === 'monk')?.system.levels || 1;
-                const martialArtsDie = (monkLevel >= 17) ? '1d10' : (monkLevel >= 11) ? '1d8' : (monkLevel >= 5) ? '1d6' : '1d4';
-                if(this.getAverageDamage(martialArtsDie) > this.getAverageDamage(damageDie)) {
-                    damageDie = martialArtsDie;
-                }
+    
+            if (isMonk) {
+                baseDamageDice.push(MONK_MARTIAL_ARTS_DICE[monkLevel] || '1d4');
+            } else {
+                bonusDamage = 0; // Regular unarmed strike damage is 1 + STR mod, so base damage is 1. Mod is added to damage roll later.
+                baseDamageDice.push('1');
             }
-             baseDamageDice.push(damageDie);
-
-        } else if (attackItem.type === 'spell' && attackItem.system?.activities) {
-            // Spell logic remains complex, simplified for now
-            return { name: attackName, dpr: 'Spell (TBD)', dprAdv: 'Spell (TBD)' };
+        } else if (attackItem.type === 'weapon') {
+            const weaponData = attackItem.system;
+            // FIX: Check if weaponData.type exists and is an object
+            const weaponType = (weaponData.type && typeof weaponData.type === 'object') ? weaponData.type : {};
+            const isMonkWeapon = isMonk && (weaponData.properties?.includes('fin') || weaponType.baseItem === 'shortsword' || weaponType.value === 'simpleM');
+            
+            let abilityKey = 'str';
+            if (weaponData.properties?.includes('fin')) {
+                abilityKey = 'dex';
+            }
+            if (isMonkWeapon && abilities.dex.value > abilities.str.value) {
+                abilityKey = 'dex';
+            }
+    
+            abilityMod = this.getAbilityModifier(abilities[abilityKey]?.value || 10);
+            attackBonus = abilityMod + profBonus;
+            bonusDamage = abilityMod;
+    
+            if (weaponData.damage?.base?.denomination) {
+                baseDamageDice.push(`${weaponData.damage.base.number || 1}d${weaponData.damage.base.denomination}`);
+            } else {
+                return { name: attackName, dpr: 'N/A', dprAdv: 'N/A' };
+            }
         } else {
              return { name: attackName, dpr: 'N/A', dprAdv: 'N/A' };
         }
         
-        const isRogue = this.getCharacterClassNames(pcData).includes('rogue');
-        if (isRogue && (attackItem.system?.properties?.includes('fin') || attackItem.system?.properties?.includes('rge'))) {
-            const rogueLevel = pcData.items.find(i => i.type === 'class' && i.name.toLowerCase() === 'rogue')?.system.levels || 1;
-            const sneakAttackDice = Math.ceil(rogueLevel / 2);
+        const rogueClass = pcData.items.find(i => i.type === 'class' && i.name.toLowerCase() === 'rogue');
+        if (rogueClass && (attackItem.system?.properties?.includes('fin') || attackItem.system?.properties?.includes('rge'))) {
+            const sneakAttackDice = Math.ceil(rogueClass.system.levels / 2);
             baseDamageDice.push(`${sneakAttackDice}d6`);
         }
-
+    
         const M = targetAC;
         const A = attackBonus;
-        const C = 0.05;
+        const C = 0.05; // Crit chance
         const D = baseDamageDice.reduce((total, dice) => total + this.getAverageDamage(dice), 0);
         const B = bonusDamage;
-
-        if (D === 0 && B === 0) return { name: attackName, dpr: 'N/A', dprAdv: 'N/A' };
-
+    
         const baseHitChance = (21 - (M - A)) / 20;
         const H = Math.max(0.05, Math.min(0.95, baseHitChance));
         
         const missChance = 1 - H;
-        const HA = 1 - (missChance * missChance);
-        const CA = 1 - Math.pow(1 - C, 2);
-
+        const HA = 1 - (missChance * missChance); // Hit chance with advantage
+        const CA = 1 - Math.pow(1 - C, 2); // Crit chance with advantage
+    
         const dprNormal = (C * D) + (H * (D + B));
         const dprAdvantage = (CA * D) + (HA * (D + B));
-
+    
         return {
             name: attackName,
             dpr: dprNormal.toFixed(2),
