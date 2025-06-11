@@ -12,142 +12,154 @@ var UIRenderers = {
     generatePcQuickViewCardHTML: function(pc, isClickableForDetailedView = false) {
         if (!pc) return '';
         
-        pc.vtt_data = pc.vtt_data || {};
-        pc.vtt_data.abilities = pc.vtt_data.abilities || {};
-        pc.vtt_data.attributes = pc.vtt_data.attributes || {};
-        pc.vtt_data.attributes.hp = pc.vtt_data.attributes.hp || {};
-        pc.vtt_data.attributes.ac = pc.vtt_data.attributes.ac || {};
-        pc.vtt_data.attributes.movement = pc.vtt_data.attributes.movement || {};
-        pc.vtt_data.attributes.init = pc.vtt_data.attributes.init || {};
-        pc.vtt_data.attributes.spell = pc.vtt_data.attributes.spell || {};
-        pc.vtt_data.details = pc.vtt_data.details || {};
-        pc.vtt_data.skills = pc.vtt_data.skills || {};
-        pc.vtt_data.traits = pc.vtt_data.traits || { languages: {}, armorProf: {}, weaponProf: {}};
-        pc.items = pc.items || [];
         pc.system = pc.system || {};
+        pc.system.abilities = pc.system.abilities || {};
+        pc.system.attributes = pc.system.attributes || {};
+        pc.system.attributes.hp = pc.system.attributes.hp || {};
+        pc.system.attributes.movement = pc.system.attributes.movement || {};
 
         if (typeof pc.calculatedProfBonus === 'undefined') {
-            const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || pc.vtt_data?.details?.level || 1;
+            const pcLevel = pc.system?.details?.level || 1;
             pc.calculatedProfBonus = DNDCalculations.getProficiencyBonus(pcLevel);
         }
 
         let cardClasses = 'pc-stat-card';
-        let dataAttributes = '';
-        if (isClickableForDetailedView || pc.character_type === 'PC') {
+        if (isClickableForDetailedView) {
             cardClasses += ' clickable-pc-card';
-            dataAttributes = `data-pc-id="${String(pc._id)}"`;
         }
 
-        let cardHTML = `<div class="${cardClasses}" ${dataAttributes}>`;
-        // MODIFICATION: Removed Level display
+        let cardHTML = `<div class="${cardClasses}" data-pc-id="${String(pc._id)}">`;
         cardHTML += `<h4>${pc.name}</h4>`;
 
-        const hpCurrent = pc.vtt_data.attributes.hp?.value ?? pc.system?.attributes?.hp?.value ?? 'N/A';
-        const hpMax = pc.vtt_data.attributes.hp?.max ?? pc.system?.attributes?.hp?.max ?? 'N/A';
+        const hpCurrent = pc.system.attributes.hp?.value ?? 'N/A';
+        const hpMax = pc.system.attributes.hp?.max ?? 'N/A';
         cardHTML += `<p><strong>HP:</strong> ${hpCurrent} / ${hpMax}</p>`;
-
         const acDisplayValue = DNDCalculations.calculateDisplayAC(pc);
         cardHTML += `<p><strong>AC:</strong> ${acDisplayValue}</p>`;
-
         cardHTML += `<p><strong>Prof. Bonus:</strong> +${pc.calculatedProfBonus}</p>`;
-
-        let initiativeBonus = 'N/A';
-        const initAbilityKey = pc.vtt_data.attributes.init?.ability || pc.system?.attributes?.init?.ability || 'dex';
-        const abilitiesSourceForInit = pc.vtt_data.abilities[initAbilityKey] ? pc.vtt_data.abilities : (pc.system?.abilities || {});
-        const abilityValueForInit = abilitiesSourceForInit[initAbilityKey]?.value;
-
-        if (typeof abilityValueForInit !== 'undefined') {
-            initiativeBonus = DNDCalculations.getAbilityModifier(abilityValueForInit);
-        } else if (typeof (pc.vtt_data.attributes.init?.bonus ?? pc.system?.attributes?.init?.bonus) !== 'undefined' && (pc.vtt_data.attributes.init?.bonus ?? pc.system?.attributes?.init?.bonus) !== "") {
-            initiativeBonus = parseInt(pc.vtt_data.attributes.init?.bonus ?? pc.system?.attributes?.init?.bonus) || 0;
-        }
-        const initBonusFromAttributes = parseInt(pc.vtt_data.attributes.init?.bonus ?? pc.system?.attributes?.init?.bonus);
-        if (!isNaN(initBonusFromAttributes) && typeof abilityValueForInit === 'undefined') {
-             initiativeBonus = initBonusFromAttributes;
-        } else if (!isNaN(initBonusFromAttributes) && typeof abilityValueForInit !== 'undefined'){
-            initiativeBonus += initBonusFromAttributes;
-        }
-
+        const initiativeBonus = DNDCalculations.getAbilityModifier(pc.system.abilities?.dex?.value || 10);
         cardHTML += `<p><strong>Initiative:</strong> ${initiativeBonus >= 0 ? '+' : ''}${initiativeBonus}</p>`;
-        cardHTML += `<p><strong>Speed:</strong> ${pc.vtt_data.attributes.movement?.walk || pc.system?.attributes?.movement?.walk || 0} ft</p>`;
-        
-        let spellDcText = DNDCalculations.spellSaveDC(pc);
-         if (spellDcText === 'N/A (No Casting Ability)' || spellDcText === 'N/A (Proficiency Error)') {
-             if (pc.vtt_data.attributes.spell?.dc ?? pc.system?.attributes?.spell?.dc) {
-                 spellDcText = pc.vtt_data.attributes.spell?.dc ?? pc.system?.attributes?.spell?.dc;
-             } else {
-                 spellDcText = "N/A";
-             }
-        }
+        cardHTML += `<p><strong>Speed:</strong> ${pc.system.attributes.movement?.walk || 30} ft</p>`;
+        const spellDcText = DNDCalculations.spellSaveDC(pc);
         cardHTML += `<p><strong>Spell DC:</strong> ${spellDcText}</p>`;
-        
-        let spellAtkBonusText = DNDCalculations.spellAttackBonus(pc);
-        if (spellAtkBonusText === 'N/A (No Casting Ability)' || spellAtkBonusText === 'N/A (Proficiency Error)') {
-            spellAtkBonusText = "N/A";
-        }
+        const spellAtkBonusText = DNDCalculations.spellAttackBonus(pc);
         cardHTML += `<p><strong>Spell Atk:</strong> +${spellAtkBonusText}</p>`;
-
         cardHTML += `</div>`;
         return cardHTML;
     },
 
-    renderNpcListForContextUI: function(listContainerElement, allCharacters, activeNpcIds, onCheckboxChangeCallback, onNameClickCallback, contextFilter = null) {
-        if (!listContainerElement) { console.error("UIRenderers.renderNpcListForContextUI: listContainerElement not found"); return; }
-        let ul = listContainerElement.querySelector('ul');
-        if (!ul) {
-            ul = document.createElement('ul');
-            listContainerElement.appendChild(ul);
-        }
-        ul.innerHTML = '';
-
-        let npcsToDisplay = allCharacters.filter(char => char.character_type === 'NPC');
-
-        if (contextFilter && contextFilter.type === 'lore' && contextFilter.id) {
-            npcsToDisplay = npcsToDisplay.filter(npc => {
-                const linkedIds = (npc.linked_lore_ids || []).map(id => String(id));
-                return linkedIds.includes(String(contextFilter.id));
-            });
-        }
-
-        npcsToDisplay.sort((a, b) => a.name.localeCompare(b.name));
-
-        if (npcsToDisplay.length === 0) {
-            ul.innerHTML = (contextFilter && contextFilter.id) ?
-                '<li><p><em>No NPCs linked to this specific context. Link NPCs in the NPCs Tab.</em></p></li>' :
-                '<li><p><em>No NPCs to display. Create NPCs in the NPCs Tab or clear context filters.</em></p></li>';
+    updatePcDashboardUI: function(dashboardContentElement, allCharacters, activePcIds, currentlyExpandedAbility) {
+        if (!dashboardContentElement) {
+            console.error("UIRenderers.updatePcDashboardUI: 'pc-dashboard-content' element not found.");
             return;
         }
 
-        npcsToDisplay.forEach(char => {
-            const charIdStr = String(char._id);
-            const li = document.createElement('li');
-            li.dataset.charId = charIdStr;
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.id = `npc-scene-context-checkbox-${charIdStr}`;
-            checkbox.checked = activeNpcIds.has(charIdStr);
-            checkbox.onchange = () => onCheckboxChangeCallback(charIdStr, char.name);
+        const selectedPcs = allCharacters.filter(char => activePcIds.has(String(char._id)) && char.character_type === 'PC');
 
-            const nameSpan = document.createElement('span');
-            nameSpan.textContent = char.name;
-            nameSpan.className = 'npc-name-clickable';
-            nameSpan.onclick = async () => {
-                await CharacterService.handleSelectCharacterForDetails(charIdStr);
-                const npcTabButton = document.querySelector('.tab-link[onclick*="tab-npcs"]');
-                if(npcTabButton && !npcTabButton.classList.contains('active')) {
-                    App.openTab(null, 'tab-npcs');
-                } else if (npcTabButton && npcTabButton.classList.contains('active')) {
-                    const characterProfileSection = Utils.getElem('character-profile-main-section');
-                    if (characterProfileSection && characterProfileSection.classList.contains('collapsed')) {
-                        characterProfileSection.querySelector('h3').click();
+        const dprControls = document.getElementById('dpr-controls');
+        if (selectedPcs.length === 0) {
+            dashboardContentElement.innerHTML = `<p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>`;
+            if (dprControls) dprControls.style.display = 'none';
+            return;
+        }
+        
+        if (dprControls) dprControls.style.display = 'flex';
+        
+        const targetACInput = document.getElementById('dpr-ac-input');
+        const targetAC = targetACInput ? parseInt(targetACInput.value, 10) : 13;
+
+        let sortedSelectedPcs = [...selectedPcs];
+        if (currentlyExpandedAbility) {
+            const ablKey = currentlyExpandedAbility.toLowerCase();
+            sortedSelectedPcs.sort((a, b) => {
+                const scoreA = (a.system?.abilities?.[ablKey]?.value) || 10;
+                const scoreB = (b.system?.abilities?.[ablKey]?.value) || 10;
+                return scoreB - scoreA;
+            });
+        } else {
+            sortedSelectedPcs.sort((a, b) => a.name.localeCompare(b.name));
+        }
+    
+        let finalHTML = '';
+    
+        finalHTML += this.createPcQuickViewSectionHTML(true);
+        let cardsHTML = '';
+        sortedSelectedPcs.forEach(pc => {
+            cardsHTML += this.generatePcQuickViewCardHTML(pc, true);
+        });
+        finalHTML += `<div class="pc-dashboard-grid">${cardsHTML}</div>`;
+        
+        const abilitiesForTable = ABILITY_KEYS_ORDER.map(k => k.toUpperCase());
+        let mainStatsTableHTML = `<h4>Ability Scores Overview</h4><div class="table-wrapper"><table id="main-stats-table"><thead><tr><th>Character</th>`;
+        abilitiesForTable.forEach(ablKey => {
+            const isExpanded = currentlyExpandedAbility === ablKey;
+            const arrow = isExpanded ? '▼' : '►';
+            mainStatsTableHTML += `<th class="clickable-ability-header" data-ability="${ablKey}" onclick="App.toggleAbilityExpansion('${ablKey}')">${ablKey} <span class="arrow-indicator">${arrow}</span></th>`;
+        });
+        mainStatsTableHTML += `</tr></thead><tbody>`;
+        sortedSelectedPcs.forEach(pc => {
+            mainStatsTableHTML += `<tr><td>${pc.name}</td>`;
+            ABILITY_KEYS_ORDER.forEach(ablKey => {
+                const score = (pc.system?.abilities?.[ablKey]?.value) || 10;
+                const mod = DNDCalculations.getAbilityModifier(score);
+                mainStatsTableHTML += `<td>${score} (${mod >= 0 ? '+' : ''}${mod})</td>`;
+            });
+            mainStatsTableHTML += `</tr>`;
+        });
+        mainStatsTableHTML += `</tbody></table></div>`;
+        finalHTML += mainStatsTableHTML;
+
+        // Note: DPR controls are now static in index.html, this function just shows them.
+        
+        let dprTableHTML = `<h4>Damage Per Round (DPR) Overview</h4><div class="table-wrapper"><table id="dpr-overview-table">`;
+        dprTableHTML += `<thead><tr><th>Character</th><th>Attack</th><th>DPR (Normal)</th><th>DPR (Advantage)</th></tr></thead><tbody>`;
+    
+        sortedSelectedPcs.forEach(pc => {
+            let attackItems = pc.items.filter(item => {
+                if (item.type === 'weapon' && item.system?.damage?.base?.denomination) {
+                    return true;
+                }
+                if (item.type === 'spell' && item.system?.activities) {
+                    for (const key in item.system.activities) {
+                        const activity = item.system.activities[key];
+                        if (activity?.damage?.parts?.length > 0) {
+                            const damagePart = activity.damage.parts[0];
+                            const damageFormula = damagePart.formula || damagePart.number;
+                            if ((damagePart.number && damagePart.denomination) || (damageFormula && typeof damageFormula === 'string' && damageFormula.includes('d'))) {
+                                return true;
+                            }
+                        }
                     }
                 }
-            };
-            li.appendChild(checkbox);
-            li.appendChild(nameSpan);
-            if (activeNpcIds.has(charIdStr)) li.classList.add('active-in-scene');
-            ul.appendChild(li);
+                return false;
+            });
+            
+            attackItems.unshift({ name: "Unarmed Strike", type: "weapon" });
+
+            const validAttackItems = attackItems.filter(item => {
+                const dprResults = DNDCalculations.calculateDPR(pc, item, targetAC);
+                return dprResults.dpr !== 'N/A';
+            });
+
+            if (validAttackItems.length > 0) {
+                 validAttackItems.forEach((item, index) => {
+                    const dprResults = DNDCalculations.calculateDPR(pc, item, targetAC);
+                    dprTableHTML += `<tr>`;
+                    if (index === 0) {
+                        dprTableHTML += `<td rowspan="${validAttackItems.length}">${pc.name}</td>`;
+                    }
+                    dprTableHTML += `<td>${dprResults.name}</td><td>${dprResults.dpr}</td><td>${dprResults.dprAdv}</td>`;
+                    dprTableHTML += `</tr>`;
+                });
+            } else {
+                dprTableHTML += `<tr><td>${pc.name}</td><td colspan="3">No applicable attacks found</td></tr>`;
+            }
         });
+    
+        dprTableHTML += `</tbody></table></div>`;
+        finalHTML += dprTableHTML;
+
+        dashboardContentElement.innerHTML = finalHTML;
     },
 
     renderAllNpcListForManagementUI: function(listContainerElement, allCharacters, onNameClickCallback) {
@@ -655,135 +667,7 @@ var UIRenderers = {
         wrapperElement.style.display = 'block';
     },
 
-updatePcDashboardUI: function(dashboardContentElement, allCharacters, activePcIds, currentlyExpandedAbility, currentlyExpandedSkill, skillSortKey) {
-        if (!dashboardContentElement) { console.error("UIRenderers.updatePcDashboardUI: 'pc-dashboard-content' element not found."); return; }
-    
-        const selectedPcs = allCharacters.filter(char => activePcIds.has(String(char._id)) && char.character_type === 'PC' && (char.vtt_data || char.system));
-    
-        if (selectedPcs.length === 0) {
-            dashboardContentElement.innerHTML = `<p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>`;
-            document.getElementById('dpr-controls').style.display = 'none';
-            return;
-        }
-        
-        document.getElementById('dpr-controls').style.display = 'flex';
-        
-        const targetACInput = document.getElementById('dpr-ac-input');
-        const targetAC = targetACInput ? parseInt(targetACInput.value, 10) : 13;
-    
-        let sortedSelectedPcs = [...selectedPcs];
-        if (currentlyExpandedAbility) {
-            const ablKey = currentlyExpandedAbility.toLowerCase();
-            sortedSelectedPcs.sort((a,b) => {
-                const scoreA = (a.system?.abilities?.[ablKey]?.value) || 10;
-                const scoreB = (b.system?.abilities?.[ablKey]?.value) || 10;
-                return scoreB - scoreA;
-            });
-        } else {
-            sortedSelectedPcs.sort((a, b) => a.name.localeCompare(b.name));
-        }
-    
-        sortedSelectedPcs.forEach(pc => {
-            const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || 1;
-            pc.calculatedProfBonus = DNDCalculations.getProficiencyBonus(pcLevel);
-        });
-        
-        let finalHTML = '';
-    
-        finalHTML += this.createPcQuickViewSectionHTML(true);
-        let cardsHTML = '';
-        sortedSelectedPcs.forEach(pc => {
-            cardsHTML += this.generatePcQuickViewCardHTML(pc, true);
-        });
-        finalHTML += `<div class="pc-dashboard-grid">${cardsHTML}</div>`;
-        
-        const abilitiesForTable = ABILITY_KEYS_ORDER.map(k => k.toUpperCase());
-        let mainStatsTableHTML = `<h4>Ability Scores Overview</h4><div class="table-wrapper"><table id="main-stats-table"><thead><tr><th>Character</th>`;
-        abilitiesForTable.forEach(ablKey => {
-            const isExpanded = currentlyExpandedAbility === ablKey;
-            const arrow = isExpanded ? '▼' : '►';
-            mainStatsTableHTML += `<th class="clickable-ability-header" data-ability="${ablKey}" onclick="toggleAbilityExpansion('${ablKey}')">${ablKey} <span class="arrow-indicator">${arrow}</span></th>`;
-        });
-        mainStatsTableHTML += `</tr></thead><tbody>`;
-        sortedSelectedPcs.forEach(pc => {
-            mainStatsTableHTML += `<tr><td>${pc.name}</td>`;
-            ABILITY_KEYS_ORDER.forEach(ablKey => {
-                const score = (pc.vtt_data?.abilities?.[ablKey]?.value ?? pc.system?.abilities?.[ablKey]?.value) || 10;
-                const mod = DNDCalculations.getAbilityModifier(score);
-                mainStatsTableHTML += `<td>${score} (${mod >= 0 ? '+' : ''}${mod})</td>`;
-            });
-            mainStatsTableHTML += `</tr>`;
-        });
-        mainStatsTableHTML += `</tbody></table></div>`;
-        finalHTML += mainStatsTableHTML;
-    
-        finalHTML += `
-            <div class="dpr-header">
-                <h4>Damage Per Round (DPR) Overview</h4>
-                <div class="dpr-ac-control">
-                    <label for="dpr-ac-input">Target AC:</label>
-                    <input type="number" id="dpr-ac-input" value="${targetAC}">
-                </div>
-            </div>`;
-    
-        let dprTableHTML = `<div class="table-wrapper"><table id="dpr-overview-table">`;
-        dprTableHTML += `<thead><tr><th>Character</th><th>Attack</th><th>DPR (Normal)</th><th>DPR (Advantage)</th></tr></thead><tbody>`;
-    
-        sortedSelectedPcs.forEach(pc => {
-            // --- THIS IS THE CORRECTED FILTER LOGIC ---
-            const attackItems = pc.items.filter(item => {
-                if (item.type === 'weapon' && item.system?.equipped && item.system?.damage?.base?.denomination) {
-                    return true;
-                }
-                if (item.type === 'spell' && item.system?.activities) {
-                    for (const key in item.system.activities) {
-                        const activity = item.system.activities[key];
-                        if (activity?.damage?.parts?.length > 0) {
-                            const damagePart = activity.damage.parts[0];
-                            const damageFormula = damagePart.formula || damagePart.number;
-                            if ( (damagePart.number && damagePart.denomination) || (damageFormula && typeof damageFormula === 'string' && damageFormula.includes('d')) ) {
-                                return true;
-                            }
-                        }
-                    }
-                }
-                return false;
-            });
 
-            if (attackItems.length > 0) {
-                 attackItems.forEach((item, index) => {
-                    const dprResults = DNDCalculations.calculateDPR(pc, item, targetAC);
-                    dprTableHTML += `<tr>`;
-                    if (index === 0) {
-                        dprTableHTML += `<td rowspan="${attackItems.length}">${pc.name}</td>`;
-                    }
-                    dprTableHTML += `<td>${dprResults.name}</td><td>${dprResults.dpr}</td><td>${dprResults.dprAdv}</td>`;
-                    dprTableHTML += `</tr>`;
-                });
-            } else {
-                dprTableHTML += `<tr><td>${pc.name}</td><td colspan="3">No applicable attacks found</td></tr>`;
-            }
-        });
-    
-        dprTableHTML += `</tbody></table></div>`;
-        finalHTML += dprTableHTML;
-
-        dashboardContentElement.innerHTML = finalHTML;
-        
-        const abilityExpansionContainer = document.createElement('div');
-        abilityExpansionContainer.id = 'expanded-ability-details-sections';
-        dashboardContentElement.appendChild(abilityExpansionContainer);
-        abilitiesForTable.forEach(ablKey => {
-            const expansionDiv = document.createElement('div');
-            expansionDiv.id = `expanded-${ablKey}`;
-            expansionDiv.className = 'expanded-ability-content';
-            expansionDiv.style.display = (currentlyExpandedAbility === ablKey) ? 'block' : 'none';
-            if (currentlyExpandedAbility === ablKey && selectedPcs.length > 0) {
-                this.populateExpandedAbilityDetailsUI(ablKey, expansionDiv, sortedSelectedPcs);
-            }
-            abilityExpansionContainer.appendChild(expansionDiv);
-        });
-    },
 
     populateExpandedAbilityDetailsUI: function(ablKey, expansionDiv, selectedPcsInput) {
         if (!expansionDiv) { console.error("populateExpandedAbilityDetailsUI: expansionDiv is null for", ablKey); return; }
