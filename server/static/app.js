@@ -118,7 +118,7 @@ var App = {
                     Utils.getElem('character-list-scene-tab'),
                     appState.getAllCharacters(),
                     appState.activeSceneNpcIds,
-                    this.handleToggleNpcInScene, 
+                    App.handleToggleNpcInScene, 
                     CharacterService.handleSelectCharacterForDetails,
                     null 
                 );
@@ -137,7 +137,7 @@ var App = {
                     Utils.getElem('character-list-scene-tab'),
                     appState.getAllCharacters(),
                     appState.activeSceneNpcIds,
-                    this.handleToggleNpcInScene, 
+                    App.handleToggleNpcInScene, 
                     CharacterService.handleSelectCharacterForDetails,
                     appState.getCurrentSceneContextFilter()
                 );
@@ -147,7 +147,7 @@ var App = {
             Utils.getElem('character-list-scene-tab'),
             appState.getAllCharacters(),
             appState.activeSceneNpcIds,
-            this.handleToggleNpcInScene,
+            App.handleToggleNpcInScene,
             CharacterService.handleSelectCharacterForDetails,
             null
         );

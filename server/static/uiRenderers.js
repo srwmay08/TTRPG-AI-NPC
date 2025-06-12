@@ -151,6 +151,8 @@ var UIRenderers = {
             </div>`;
     },
 
+    // --- CHANGED START ---
+    // This function was updated to remove the redundant stat display from the bar chart label.
     populateExpandedAbilityDetailsUI: function(abilityKey, expansionDiv, selectedPcs) {
         if (!expansionDiv) { return; }
         const abilityLongName = ABILITY_KEYS_ORDER.find(k => k.startsWith(abilityKey.toLowerCase().substring(0,3))).toUpperCase();
@@ -165,8 +167,7 @@ var UIRenderers = {
     
         selectedPcs.forEach(pc => {
             const score = (pc.system?.abilities?.[abilityKey.toLowerCase()]?.value) || 10;
-            const mod = DNDCalculations.getAbilityModifier(score);
-            const label = `${pc.name}: ${score} (${mod >= 0 ? '+' : ''}${mod})`;
+            const label = pc.name;
             barChartContainer.innerHTML += this.generateBarChartRowHTML(label, score, maxScore, 20);
         });
         
@@ -198,7 +199,11 @@ var UIRenderers = {
             expansionDiv.innerHTML += skillsTableHTML;
         }
     },
+    // --- CHANGED END ---
 
+    // --- CHANGED START ---
+    // This function was updated with a more robust click handler to differentiate between
+    // adding an NPC to a scene and viewing their details.
     renderNpcListForContextUI: function(listContainerElement, allCharacters, activeSceneNpcIds, onToggleInSceneCallback, onNameClickCallback, sceneContextFilter) {
         if (!listContainerElement) {
             console.error("UIRenderers.renderNpcListForContextUI: listContainerElement not found");
@@ -244,20 +249,24 @@ var UIRenderers = {
             nameSpan.textContent = char.name;
             nameSpan.className = 'npc-name-clickable';
             
-            nameSpan.onclick = async (event) => { 
-                event.stopPropagation(); 
-                await onNameClickCallback(charIdStr); 
+            // A single, smarter click handler on the list item
+            li.onclick = async (event) => {
+                // If the user clicked specifically on the name, show details.
+                if (event.target.classList.contains('npc-name-clickable')) {
+                    event.stopPropagation(); // prevent the toggle from firing as well
+                    await onNameClickCallback(charIdStr);
+                } else {
+                    // Otherwise, the click was on the list item in general, so toggle scene status.
+                    await onToggleInSceneCallback(charIdStr, char.name);
+                }
             };
-            
-            li.onclick = () => onToggleInSceneCallback(charIdStr, char.name);
     
             li.appendChild(nameSpan);
             ul.appendChild(li);
         });
     },
+    // --- CHANGED END ---
 
-    // --- CHANGED START ---
-    // Refactored to render the new combined controls and summary bar.
     updatePcDashboardUI: function(dashboardContentElement, allCharacters, activePcIds, currentlyExpandedAbility) {
         if (!dashboardContentElement) {
             console.error("UIRenderers.updatePcDashboardUI: 'pc-dashboard-content' element not found.");
@@ -398,7 +407,6 @@ var UIRenderers = {
             }
         }
     },
-    // --- CHANGED END ---
 
     renderAllNpcListForManagementUI: function(listContainerElement, allCharacters, onNameClickCallback) {
         if (!listContainerElement) { console.error("UIRenderers.renderAllNpcListForManagementUI: listContainerElement not found"); return; }
