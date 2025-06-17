@@ -47,6 +47,32 @@ var App = {
         console.log("App.js: DOMContentLoaded finished.");
     },
 
+    cycleCannedResponse: function(direction) {
+        const keys = Object.keys(appState.cannedResponsesForProfiledChar);
+        if (keys.length === 0) return;
+
+        let newIndex = appState.currentCannedResponseIndex + direction;
+
+        if (newIndex < 0) newIndex = 0;
+        if (newIndex >= keys.length) newIndex = keys.length - 1;
+
+        appState.currentCannedResponseIndex = newIndex;
+        UIRenderers.renderCannedResponsesUI(appState.cannedResponsesForProfiledChar);
+    },
+
+    sendCannedResponseToChat: function() {
+        const keys = Object.keys(appState.cannedResponsesForProfiledChar);
+        if (keys.length === 0) return;
+
+        const currentKey = keys[appState.currentCannedResponseIndex];
+        const currentResponse = appState.cannedResponsesForProfiledChar[currentKey];
+        
+        const playerUtteranceElem = Utils.getElem('player-utterance');
+        if (playerUtteranceElem) {
+            playerUtteranceElem.value = currentResponse;
+        }
+    },
+
     openTab: function(event, tabName) { 
         const tabLinks = document.querySelectorAll('#left-column-header .tabs .tab-link');
         const tabContents = document.querySelectorAll('#left-column-content .tab-content');
@@ -468,3 +494,5 @@ window.handleBackToDashboardOverview = App.handleBackToDashboardOverview;
 window.toggleAbilityExpansion = App.toggleAbilityExpansion; 
 window.addSuggestedMemoryAsActual = App.addSuggestedMemoryAsActual; 
 window.acceptFactionStandingChange = App.acceptFactionStandingChange;
+window.cycleCannedResponse = App.cycleCannedResponse;
+window.sendCannedResponseToChat = App.sendCannedResponseToChat;

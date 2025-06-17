@@ -1006,6 +1006,34 @@ var UIRenderers = {
         dashboardContentElement.innerHTML = sheetHTML;
     },
 
+    renderCannedResponsesUI: function(cannedResponses) {
+        const display = Utils.getElem('canned-response-display');
+        const prevBtn = Utils.getElem('prev-canned-btn');
+        const nextBtn = Utils.getElem('next-canned-btn');
+        const sendBtn = Utils.getElem('send-canned-btn');
+
+        const keys = Object.keys(cannedResponses);
+
+        if (!display || !prevBtn || !nextBtn || !sendBtn) return;
+
+        if (keys.length === 0) {
+            display.innerHTML = '<p><em>No canned responses for this NPC.</em></p>';
+            Utils.disableBtn('prev-canned-btn', true);
+            Utils.disableBtn('next-canned-btn', true);
+            Utils.disableBtn('send-canned-btn', true);
+            return;
+        }
+
+        const currentKey = keys[appState.currentCannedResponseIndex];
+        const currentResponse = cannedResponses[currentKey];
+
+        display.innerHTML = `<p><strong>${currentKey}:</strong> ${Utils.escapeHtml(currentResponse)}</p>`;
+
+        Utils.disableBtn('send-canned-btn', false);
+        Utils.disableBtn('prev-canned-btn', appState.currentCannedResponseIndex === 0);
+        Utils.disableBtn('next-canned-btn', appState.currentCannedResponseIndex >= keys.length - 1);
+    },
+
     updateMainViewUI: function(dialogueInterfaceElem, pcDashboardViewElem, pcQuickViewInSceneElem, activeNpcCount, showPcDashboard) {
         if (!dialogueInterfaceElem || !pcDashboardViewElem || !pcQuickViewInSceneElem) { return; }
         const dashboardContent = Utils.getElem('pc-dashboard-content');
@@ -1036,6 +1064,8 @@ var UIRenderers = {
             }
         }
         Utils.disableBtn('generate-dialogue-btn', activeNpcCount === 0);
+
+        
     }
 };
 

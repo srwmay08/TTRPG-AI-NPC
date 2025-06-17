@@ -18,6 +18,9 @@ const appState = {
     // Added state to track selected attacks for the round calculator.
     selectedAttacks: {}, // E.g., { pcId: Set('attack name') }
     estimatedRounds: 3,  // Default number of rounds for HP estimation.
+
+    cannedResponsesForProfiledChar: {},
+    currentCannedResponseIndex: 0,
     // --- CHANGED END ---
 
     setAllCharacters(characters) {

@@ -28,20 +28,11 @@
     "He gets others into trouble more often than he gets himself out of it.",
     "His ego can make him blind to obvious dangers or social cues."
   ],
-  "canned_conversations": [
-    {
-      "topic": "introduction",
-      "dialogue": "Volothamp Geddarm, chronicler, wizard, and celebrity, at your service. I trust you've noted the violence in our fair city these past tendays. I haven't seen so much blood since my last visit to Baldur's Gate! But now I fear I have misplaced a friend amid this odious malevolence. My friend's name is Floon Blagmaar. He's got more beauty than brains, and I worry he took a bad way home a couple nights ago and was kidnapped-or worse. If you agree to track him down with all due haste, I can offer you ten dragons apiece now, and I can give you each ten times that when you find Floon. May I prevail upon you in my hour of need?"
-    },
-    {
-      "topic": "about_floon",
-      "dialogue": "Floon? A wonderful fellow! A bit of a dandy, I'll admit. We were enjoying a fine evening at the Skewered Dragon, a tavern of perhaps... questionable repute, but the ale is cheap! I left to meet with another associate, and that's the last I saw of him."
-    },
-    {
-        "topic": "about_the_reward",
-        "dialogue": "Yes, yes, ten gold pieces—dragons, as we call them in the city—for each of you now, for expenses. And one hundred more each upon Floon's safe return! A small price to pay for a friend's life, wouldn't you agree?"
-    }
-  ],
+  "canned_conversations": {
+    "introduction": "Volothamp Geddarm, chronicler, wizard, and celebrity, at your service. I trust you've noted the violence in our fair city these past tendays. I haven't seen so much blood since my last visit to Baldur's Gate! But now I fear I have misplaced a friend amid this odious malevolence. My friend's name is Floon Blagmaar. He's got more beauty than brains, and I worry he took a bad way home a couple nights ago and was kidnapped-or worse. If you agree to track him down with all due haste, I can offer you ten dragons apiece now, and I can give you each ten times that when you find Floon. May I prevail upon you in my hour of need?",
+    "about_floon": "Floon? A wonderful fellow! A bit of a dandy, I'll admit. We were enjoying a fine evening at the Skewered Dragon, a tavern of perhaps... questionable repute, but the ale is cheap! I left to meet with another associate, and that's the last I saw of him.",
+    "about_the_reward": "Yes, yes, ten gold pieces—dragons, as we call them in the city—for each of you now, for expenses. And one hundred more each upon Floon's safe return! A small price to pay for a friend's life, wouldn't you agree?"
+  },
   "backstory": "Volothamp Geddarm has traveled the length and breadth of Faerûn, documenting its most dangerous creatures and locales. His most famous work, 'Volo's Guide to Monsters,' is a bestseller, though many scholars question its accuracy. He has an uncanny knack for being in the right place at the wrong time, often finding himself entangled in major events far beyond his control. He's currently in Waterdeep promoting his latest book, 'Volo's Guide to Spirits and Specters,' while simultaneously getting embroiled in the city's gang war.",
   "motivations": [
     "To ensure the safe return of his friend, Floon Blagmaar.",

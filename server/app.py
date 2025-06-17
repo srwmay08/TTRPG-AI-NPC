@@ -26,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PRIMARY_DATA_DIR = os.path.join(BASE_DIR, 'data')
 VTT_IMPORT_DIR = os.path.join(PRIMARY_DATA_DIR, 'vtt_imports')
 HISTORY_DATA_DIR = os.path.join(PRIMARY_DATA_DIR, 'history')
-LORE_DATA_DIR = os.path.join(PRIMARY_DATA_DIR, 'lore') # <-- New Lore Directory
+LORE_DATA_DIR = os.path.join(PRIMARY_DATA_DIR, 'lore')
 
 npc_profile_for_ai: Optional[NPCProfile] = None
 
@@ -528,7 +528,7 @@ def parse_ai_suggestions(full_ai_output: str, speaking_pc_id: Optional[str]) -> 
     justification_str = "Not specified"
     suggestion_pc_key_for_parsing = speaking_pc_id if speaking_pc_id and speaking_pc_id.strip() != "" else "PLAYER"
     lines = full_ai_output.splitlines()
-    suggestion_keywords = ["NPC_ACTION:", "PLAYER_CHECK:", f"STANDING_CHANGE_SUGGESTION_FOR_{suggestion_pc_key_for_parsing}:", "JUSTIFICATION:"]
+    suggestion_keywords = ["NPC_ACTION:", "PLAYER_CHECK:", "GENERATED_TOPICS:", f"STANDING_CHANGE_SUGGESTION_FOR_{suggestion_pc_key_for_parsing}:", "JUSTIFICATION:"]
     first_suggestion_line_index = -1
     for i, line in enumerate(lines):
         stripped_line = line.strip()
@@ -545,6 +545,7 @@ def parse_ai_suggestions(full_ai_output: str, speaking_pc_id: Optional[str]) -> 
         stripped_line = line.strip()
         if stripped_line.startswith("NPC_ACTION:"): npc_action_str = stripped_line.replace("NPC_ACTION:", "").strip()
         elif stripped_line.startswith("PLAYER_CHECK:"): player_check_str = stripped_line.replace("PLAYER_CHECK:", "").strip()
+        elif stripped_line.startswith("GENERATED_TOPICS:"): generated_topics_str = stripped_line.replace("GENERATED_TOPICS:", "").strip()
         elif stripped_line.startswith(f"STANDING_CHANGE_SUGGESTION_FOR_{suggestion_pc_key_for_parsing}:"):
             raw_standing_val = stripped_line.replace(f"STANDING_CHANGE_SUGGESTION_FOR_{suggestion_pc_key_for_parsing}:", "").strip()
             new_standing_str = raw_standing_val.replace('[', '').replace(']', '').replace('"', '').replace("'", "").strip()
@@ -596,7 +597,8 @@ def generate_dialogue_for_npc_api(npc_id_str: str):
     except ValidationError as e:
         return jsonify({"error": "Dialogue request invalid", "details": e.errors()}), 400
     detailed_history_for_ai = npc_data_with_history.get('combined_history_content', '')
-    linked_lore_summary_for_ai = get_linked_lore_summary_for_npc(npc_data_with_history) 
+    linked_lore_summary_for_ai = get_linked_lore_summary_for_npc(npc_data_with_history)
+    canned_conversations_for_ai = npc_data_with_history.get('canned_conversations', {})
     current_pc_standing_val = None
     speaking_pc_name_for_ai = "the player"
     actual_speaking_pc_id = dialogue_req_data.speaking_pc_id if dialogue_req_data.speaking_pc_id and dialogue_req_data.speaking_pc_id.strip() != "" else None
@@ -620,7 +622,9 @@ def generate_dialogue_for_npc_api(npc_id_str: str):
             current_pc_standing=current_pc_standing_val,
             speaking_pc_name=speaking_pc_name_for_ai,
             world_lore_summary=linked_lore_summary_for_ai, 
-            detailed_character_history=detailed_history_for_ai
+            detailed_character_history=detailed_history_for_ai,
+            canned_conversations=canned_conversations_for_ai
+
         )
     except Exception as e:
         print(f"Error calling AI service for {npc_profile_for_ai.name}: {e}")

@@ -81,6 +81,9 @@ class NPCProfile(BaseModel):
     memories: List[MemoryItem] = Field(default_factory=list, description="Character's persistent memories.")
 
     gm_notes: Optional[str] = Field(default=None, description="Private GM notes for this character.")
+    
+    # ADD THIS LINE
+    canned_conversations: Optional[Dict[str, str]] = Field(default_factory=dict, description="A dictionary of specific topics and the exact dialogue the NPC should give for them.")
 
     # vtt_data stores the 'system' object from FVTT
     vtt_data: Optional[Dict[str, Any]] = Field(default_factory=dict, description="Data imported from VTT character sheets (usually the 'system' object).")
@@ -99,7 +102,7 @@ class NPCProfile(BaseModel):
         description="NPC's standing towards each PC. Key: PC ID (str), Value: Standing Level Enum."
     )
     
-    @field_validator('vtt_data', 'vtt_flags', 'system', 'pc_faction_standings', mode='before')
+    @field_validator('vtt_data', 'vtt_flags', 'system', 'pc_faction_standings', 'canned_conversations', mode='before') # ADD 'canned_conversations' TO THIS VALIDATOR
     def ensure_dict(cls, value):
         if value is None:
             return {}
@@ -120,6 +123,10 @@ class NPCProfile(BaseModel):
                 "character_type": "NPC",
                 "description": "A laid-back human bard from Waterdeep.",
                 "linked_lore_ids": ["507f1f77bcf86cd799439011", "507f191e810c19729de860ea"],
+                 "canned_conversations": {
+                    "Floon": "Ah, Floon! A friend of mine. Last I saw him, he was headed to the Skewered Dragon. I'm dreadfully worried.",
+                    "Zhentarim": "The Black Network? Shady business. Best to steer clear unless you've got a taste for trouble."
+                }
             }
         }
 

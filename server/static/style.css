@@ -608,4 +608,47 @@ tr.expanded-row > td {
     background-color: #fdfdfd;
     min-width: 160px;
 }
+/* Responsive suggestions area layout */
+#ai-suggestions {
+    display: inline-flex; /* CHANGED FROM flex TO inline-flex */
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+#ai-suggestions .ai-suggestion-category {
+    flex: 1 1 200px; /* Adjusted flex-basis */
+    border: 1px solid #e0e0e0;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #fdfdfd;
+    min-width: 180px;
+}
+
+/* New styles for Canned Responses */
+#canned-responses-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#canned-response-display {
+    padding: 8px;
+    background-color: #e9ecef;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    font-style: italic;
+    min-height: 40px;
+}
+
+#canned-response-controls {
+    display: flex;
+    gap: 5px;
+}
+
+#canned-response-controls button {
+    flex-grow: 1;
+    font-size: 0.9em;
+    padding: 4px 8px;
+}
 /* --- CHANGED END --- */

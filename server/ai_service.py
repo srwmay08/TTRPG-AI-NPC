@@ -89,7 +89,8 @@ class AIService:
                               current_pc_standing: Optional[FactionStandingLevel] = None,
                               speaking_pc_name: Optional[str] = "the player",
                               world_lore_summary: Optional[str] = None,
-                              detailed_character_history: Optional[str] = None) -> str:
+                              detailed_character_history: Optional[str] = None,
+                              canned_conversations: Optional[Dict[str, str]] = None) -> str:
         if self.model is None:
             print("AI Service Error: Model is not available for dialogue generation.")
             return "Error: AI model not available. Please check configuration and GEMINI_API_KEY."
@@ -123,6 +124,12 @@ class AIService:
             else:
                  prompt_parts.append(f"\n(No specific detailed history or linked world lore beyond your general background is provided for this interaction.)")
 
+            if canned_conversations:
+                prompt_parts.append("\n--- Pre-defined Conversation Topics ---")
+                prompt_parts.append("If the player's utterance is a direct match or clear inquiry about one of the following topics, you MUST use the provided response verbatim. This is a directive.")
+                for topic, response in canned_conversations.items():
+                    prompt_parts.append(f"Topic Keyword: '{topic}'")
+                    prompt_parts.append(f"Your Canned Response: \"{response}\"")
 
             if npc.motivations:
                 prompt_parts.append(f"\nYour Motivations: {', '.join(npc.motivations)}")
@@ -178,6 +185,7 @@ class AIService:
             prompt_parts.append(f"After your dialogue, provide the following in the exact format below (use 'None' if not applicable):")
             prompt_parts.append(f"NPC_ACTION: [Suggest a brief non-verbal action {npc.name} might take or an internal decision, e.g., 'Scratches chin thoughtfully', 'Decides to offer a quest if they seem trustworthy', 'Glances towards the door.']")
             prompt_parts.append(f"PLAYER_CHECK: [Suggest one skill check a player might reasonably attempt in response, e.g., 'Insight to detect deception', 'Persuasion to ask for a discount', 'History to recall the mentioned battle.']")
+            prompt_parts.append(f"GENERATED_TOPICS: [Suggest two brief follow-up questions the player could ask you, based on what you said. Example: 'Ask about my lost friend; Ask why the Zhentarim are involved']")
             prompt_parts.append(f"STANDING_CHANGE_SUGGESTION_FOR_{dialogue_request.speaking_pc_id if dialogue_request.speaking_pc_id else 'PLAYER'}: [Suggest a new standing level ({', '.join([s.value for s in FactionStandingLevel])}) for {speaking_pc_name} OR 'No change']")
             prompt_parts.append(f"JUSTIFICATION: [Briefly explain why the standing should change or why it remains the same, based on the interaction]")
 
@@ -193,7 +201,7 @@ class AIService:
                 block_reason_msg = response.prompt_feedback.block_reason_message or response.prompt_feedback.block_reason
                 detailed_error = f"AI generation blocked for {npc.name}. Reason: {block_reason_msg}."
                 print(detailed_error)
-                return f"({npc.name} hesitates, unable to speak on that matter due to certain restrictions. [{block_reason_msg}])\nNPC_ACTION: None\nPLAYER_CHECK: None\nSTANDING_CHANGE_SUGGESTION_FOR_{dialogue_request.speaking_pc_id if dialogue_request.speaking_pc_id else 'PLAYER'}: No change\nJUSTIFICATION: AI content blocked."
+                return f"({npc.name} hesitates, unable to speak on that matter due to certain restrictions. [{block_reason_msg}])\nNPC_ACTION: None\nPLAYER_CHECK: None\nGENERATED_TOPICS: None\nSTANDING_CHANGE_SUGGESTION_FOR_{dialogue_request.speaking_pc_id if dialogue_request.speaking_pc_id else 'PLAYER'}: No change\nJUSTIFICATION: AI content blocked."
 
             if response.candidates and response.candidates[0].content and response.candidates[0].content.parts:
                 full_ai_output = "".join(part.text for part in response.candidates[0].content.parts if hasattr(part, 'text')).strip()
@@ -201,12 +209,12 @@ class AIService:
             else:
                 error_message = f"AI did not generate a response for {npc.name}. Candidates: {response.candidates}"
                 print(f"Warning: {error_message}")
-                return f"({npc.name} seems lost in thought and doesn't respond.)\nNPC_ACTION: None\nPLAYER_CHECK: None\nSTANDING_CHANGE_SUGGESTION_FOR_{dialogue_request.speaking_pc_id if dialogue_request.speaking_pc_id else 'PLAYER'}: No change\nJUSTIFICATION: No response generated."
+                return f"({npc.name} seems lost in thought and doesn't respond.)\nNPC_ACTION: None\nPLAYER_CHECK: None\nGENERATED_TOPICS: None\nSTANDING_CHANGE_SUGGESTION_FOR_{dialogue_request.speaking_pc_id if dialogue_request.speaking_pc_id else 'PLAYER'}: No change\nJUSTIFICATION: No response generated."
 
         except Exception as e:
             error_details = f"Error during AI dialogue generation for {npc.name}: {e}"
             print(error_details)
             traceback.print_exc()
-            return f"Error: Exception during AI dialogue generation - {type(e).__name__}. Check server logs.\nNPC_ACTION: None\nPLAYER_CHECK: None\nSTANDING_CHANGE_SUGGESTION_FOR_{dialogue_request.speaking_pc_id if dialogue_request.speaking_pc_id else 'PLAYER'}: No change\nJUSTIFICATION: Internal server error."
+            return f"Error: Exception during AI dialogue generation - {type(e).__name__}. Check server logs.\nNPC_ACTION: None\nPLAYER_CHECK: None\nGENERATED_TOPICS: None\nSTANDING_CHANGE_SUGGESTION_FOR_{dialogue_request.speaking_pc_id if dialogue_request.speaking_pc_id else 'PLAYER'}: No change\nJUSTIFICATION: Internal server error."
 
 ai_service_instance = AIService()
