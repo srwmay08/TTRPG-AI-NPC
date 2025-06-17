@@ -8,6 +8,7 @@ const appState = {
     allLoreEntries: [],
     dialogueHistories: {},
     currentProfileCharId: null,
+    lastAiResultForProfiledChar: null,
     currentLoreEntryId: null,
     currentlyExpandedAbility: null,
     currentlyExpandedSkill: null,

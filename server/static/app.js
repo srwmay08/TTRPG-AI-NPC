@@ -309,6 +309,7 @@ var App = {
             if (interactingChar) {
                 appState.setCannedResponsesForProfiledChar(interactingChar.canned_conversations || {});
             }
+            appState.lastAiResultForProfiledChar = result;
 
             UIRenderers.renderSuggestionsArea(result, npcIdStr);
         } catch (error) {
@@ -457,21 +458,42 @@ var App = {
         if (newIndex >= keys.length) newIndex = keys.length - 1;
 
         appState.currentCannedResponseIndex = newIndex;
-        UIRenderers.renderSuggestionsArea(null); // Re-render the whole suggestions area
+        UIRenderers.renderSuggestionsArea(appState.lastAiResultForProfiledChar, appState.getCurrentProfileCharId());
     },
 
     sendCannedResponseToChat: function() {
+        // 1. Get the profiled character and the response text
+        const profiledCharId = appState.getCurrentProfileCharId();
+        if (!profiledCharId) return;
+        const profiledChar = appState.getCharacterById(profiledCharId);
+        if (!profiledChar) return;
+
         const keys = Object.keys(appState.cannedResponsesForProfiledChar);
         if (keys.length === 0) return;
 
         const currentKey = keys[appState.currentCannedResponseIndex];
-        const currentResponse = appState.cannedResponsesForProfiledChar[currentKey];
-        
-        const playerUtteranceElem = Utils.getElem('player-utterance');
-        if (playerUtteranceElem) {
-            playerUtteranceElem.value = currentResponse;
-            playerUtteranceElem.focus();
+        const cannedResponseText = appState.cannedResponsesForProfiledChar[currentKey];
+        if (!cannedResponseText) return;
+
+        // 2. Check if there are any NPCs in the scene to hear the response
+        const activeNpcIds = appState.getActiveNpcIds();
+        if (activeNpcIds.length === 0) {
+            alert("There are no NPCs in the scene to hear this response.");
+            return;
         }
+
+        // 3. Format the message as if the NPC said it
+        const messageToPost = `${profiledChar.name}: ${cannedResponseText}`;
+
+        // 4. Post the message to all active NPC transcripts and update their histories
+        activeNpcIds.forEach(npcId => {
+            const transcriptArea = Utils.getElem(`transcript-${npcId}`);
+            if (transcriptArea) {
+                UIRenderers.appendMessageToTranscriptUI(transcriptArea, messageToPost, 'dialogue-entry npc-response');
+            }
+            // Add to this NPC's history for context in future AI calls
+            appState.addDialogueToHistory(npcId, messageToPost);
+        });
     },
     
     sendTopicToChat: function(topic) {
