@@ -308,6 +308,7 @@ def get_all_npcs_api():
             char_doc.setdefault('items', [])
             char_doc.setdefault('system', {}) 
             char_doc.setdefault('pc_faction_standings', {})
+            char_doc.setdefault('canned_conversations', {})
             characters_list.append(char_doc)
         return jsonify(characters_list), 200
     except Exception as e:
@@ -333,6 +334,7 @@ def get_npc_api(npc_id_str: str):
     npc_data.setdefault('items', [])
     npc_data.setdefault('system', {}) 
     npc_data.setdefault('pc_faction_standings', {})
+    npc_data.setdefault('canned_conversations', {})
     npc_data_with_history = load_history_content_for_npc(npc_data)
     return jsonify(parse_json(npc_data_with_history)), 200
 

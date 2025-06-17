@@ -608,30 +608,30 @@ tr.expanded-row > td {
     background-color: #fdfdfd;
     min-width: 160px;
 }
+/* ... at the end of the file ... */
+
+/* --- CHANGED START --- */
 /* Responsive suggestions area layout */
 #ai-suggestions {
-    display: inline-flex; /* CHANGED FROM flex TO inline-flex */
+    display: flex; /* CHANGED TO FLEX for better container behavior */
     flex-wrap: wrap;
     gap: 10px;
     margin-top: 10px;
 }
 
 #ai-suggestions .ai-suggestion-category {
-    flex: 1 1 200px; /* Adjusted flex-basis */
+    flex: 1 1 200px;
     border: 1px solid #e0e0e0;
     padding: 8px;
     border-radius: 4px;
     background-color: #fdfdfd;
     min-width: 180px;
+    display: flex; /* Added for internal alignment */
+    flex-direction: column; /* Added for internal alignment */
+    gap: 5px; /* Added for spacing */
 }
 
 /* New styles for Canned Responses */
-#canned-responses-list {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
 #canned-response-display {
     padding: 8px;
     background-color: #e9ecef;
@@ -639,6 +639,7 @@ tr.expanded-row > td {
     border-radius: 4px;
     font-style: italic;
     min-height: 40px;
+    flex-grow: 1; /* Allows it to take available space */
 }
 
 #canned-response-controls {
@@ -650,5 +651,15 @@ tr.expanded-row > td {
     flex-grow: 1;
     font-size: 0.9em;
     padding: 4px 8px;
+    margin-top: 0; /* Override default button margin */
+}
+
+.suggested-item.clickable-suggestion {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #0056b3;
+}
+.suggested-item.clickable-suggestion:hover {
+    color: #007bff;
 }
 /* --- CHANGED END --- */

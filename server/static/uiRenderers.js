@@ -539,9 +539,13 @@ var UIRenderers = {
         topicsListNpc.id = `suggested-topics-list-npc-${forNpcId}`;
         topicsListNpc.className = 'ai-suggestion-category';
         if (aiResult.generated_topics && aiResult.generated_topics.length > 0) {
-            topicsListNpc.innerHTML = '<h5>Suggested Follow-up Topics:</h5>' + aiResult.generated_topics.map(topic => `<div class="suggested-item">${Utils.escapeHtml(topic)}</div>`).join('');
+            topicsListNpc.innerHTML = '<h5>Suggested Follow-up Topics:</h5>' + aiResult.generated_topics.map(topic => 
+                `<div class="suggested-item clickable-suggestion" onclick="App.sendTopicToChat('${Utils.escapeHtml(topic).replace(/'/g, "\\'")}')">${Utils.escapeHtml(topic)}</div>`
+            ).join('');
             contentGeneratedForNpc = true;
-        } else { topicsListNpc.innerHTML = '<h5>Suggested Follow-up Topics:</h5><p><em>None</em></p>'; }
+        } else { 
+            topicsListNpc.innerHTML = '<h5>Suggested Follow-up Topics:</h5><p><em>None</em></p>'; 
+        }
         suggestionsContainerNpc.appendChild(topicsListNpc);
 
         const actionsListNpc = document.createElement('div');
@@ -585,34 +589,45 @@ var UIRenderers = {
         const globalSuggestionsArea = Utils.getElem('ai-suggestions');
         if (globalSuggestionsArea) {
             if (appState.getActiveNpcCount() > 0 && contentGeneratedForNpc && appState.getCurrentProfileCharId() === forNpcId) {
-                globalSuggestionsArea.style.display = 'block';
+                globalSuggestionsArea.style.display = 'flex'; // Use flex to match the new CSS
                 Utils.getElem('suggested-memories-list').innerHTML = memoriesListNpc.innerHTML;
                 Utils.getElem('suggested-topics-list').innerHTML = topicsListNpc.innerHTML;
                 Utils.getElem('suggested-npc-actions-list').innerHTML = actionsListNpc.innerHTML;
                 Utils.getElem('suggested-player-checks-list').innerHTML = checksListNpc.innerHTML;
                 Utils.getElem('suggested-faction-standing-changes').innerHTML = standingChangesNpc.innerHTML;
+            } else if (!appState.hasActiveNpc(appState.getCurrentProfileCharId())) {
+                 // Don't hide it if there's no active interaction but a profile is selected
+                 // The canned responses should still be visible.
             } else {
-                globalSuggestionsArea.style.display = 'none';
+                 globalSuggestionsArea.style.display = 'none';
             }
         }
     },
+
     renderCannedResponsesUI: function(cannedResponses) {
         const display = Utils.getElem('canned-response-display');
         const prevBtn = Utils.getElem('prev-canned-btn');
         const nextBtn = Utils.getElem('next-canned-btn');
         const sendBtn = Utils.getElem('send-canned-btn');
         const container = Utils.getElem('canned-responses-list');
+        const globalSuggestionsArea = Utils.getElem('ai-suggestions');
 
         if (!display || !prevBtn || !nextBtn || !sendBtn || !container) return;
 
         const keys = Object.keys(cannedResponses);
 
         if (keys.length === 0) {
-            container.style.display = 'none'; // Hide the section if no canned responses
+            container.style.display = 'none';
+            // If no other suggestions are showing, hide the whole bar
+            if (globalSuggestionsArea.querySelectorAll('.ai-suggestion-category[style*="display: block"]').length === 0) {
+                 globalSuggestionsArea.style.display = 'none';
+            }
             return;
         }
         
+        globalSuggestionsArea.style.display = 'flex'; // Make sure the parent is visible
         container.style.display = 'flex'; // Show the section
+        
         const currentKey = keys[appState.currentCannedResponseIndex];
         const currentResponse = cannedResponses[currentKey];
 
@@ -622,7 +637,7 @@ var UIRenderers = {
         Utils.disableBtn('prev-canned-btn', appState.currentCannedResponseIndex === 0);
         Utils.disableBtn('next-canned-btn', appState.currentCannedResponseIndex >= keys.length - 1);
     },
-    
+
     renderNpcFactionStandingsUI: function(npcCharacter, activePcIdsSet, allCharactersArray, contentElement, onStandingChangeCallback) {
         if (!contentElement) { console.error("UIRenderers.renderNpcFactionStandingsUI: contentElement not found"); return; }
         if (!npcCharacter || npcCharacter.character_type !== 'NPC') {
