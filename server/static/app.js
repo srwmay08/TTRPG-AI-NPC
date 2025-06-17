@@ -70,6 +70,15 @@ var App = {
         const playerUtteranceElem = Utils.getElem('player-utterance');
         if (playerUtteranceElem) {
             playerUtteranceElem.value = currentResponse;
+            playerUtteranceElem.focus();
+        }
+    },
+    
+    sendTopicToChat: function(topic) {
+        const playerUtteranceElem = Utils.getElem('player-utterance');
+        if (playerUtteranceElem) {
+            playerUtteranceElem.value = topic;
+            playerUtteranceElem.focus();
         }
     },
 
@@ -496,3 +505,4 @@ window.addSuggestedMemoryAsActual = App.addSuggestedMemoryAsActual;
 window.acceptFactionStandingChange = App.acceptFactionStandingChange;
 window.cycleCannedResponse = App.cycleCannedResponse;
 window.sendCannedResponseToChat = App.sendCannedResponseToChat;
+window.sendTopicToChat = App.sendTopicToChat; 

@@ -85,10 +85,14 @@ var CharacterService = {
         try {
             const selectedCharFromServer = await ApiService.fetchNpcDetails(charIdStr);
             const processedChar = appState.updateCharacterInList(selectedCharFromServer);
-
+            
+            // --- POPULATE AND RENDER CANNED RESPONSES ---
             appState.cannedResponsesForProfiledChar = processedChar.canned_conversations || {};
             appState.currentCannedResponseIndex = 0;
             UIRenderers.renderCannedResponsesUI(appState.cannedResponsesForProfiledChar);
+            // --- END OF CHANGE ---
+
+            UIRenderers.renderCharacterProfileUI(processedChar, CharacterService.profileElementIds);
             if (characterProfileSection) {
                 characterProfileSection.classList.remove('collapsed');
                 const content = characterProfileSection.querySelector('.collapsible-content');

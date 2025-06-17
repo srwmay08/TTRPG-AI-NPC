@@ -596,7 +596,33 @@ var UIRenderers = {
             }
         }
     },
+    renderCannedResponsesUI: function(cannedResponses) {
+        const display = Utils.getElem('canned-response-display');
+        const prevBtn = Utils.getElem('prev-canned-btn');
+        const nextBtn = Utils.getElem('next-canned-btn');
+        const sendBtn = Utils.getElem('send-canned-btn');
+        const container = Utils.getElem('canned-responses-list');
 
+        if (!display || !prevBtn || !nextBtn || !sendBtn || !container) return;
+
+        const keys = Object.keys(cannedResponses);
+
+        if (keys.length === 0) {
+            container.style.display = 'none'; // Hide the section if no canned responses
+            return;
+        }
+        
+        container.style.display = 'flex'; // Show the section
+        const currentKey = keys[appState.currentCannedResponseIndex];
+        const currentResponse = cannedResponses[currentKey];
+
+        display.innerHTML = `<p><strong>${currentKey}:</strong> ${Utils.escapeHtml(currentResponse)}</p>`;
+
+        Utils.disableBtn('send-canned-btn', false);
+        Utils.disableBtn('prev-canned-btn', appState.currentCannedResponseIndex === 0);
+        Utils.disableBtn('next-canned-btn', appState.currentCannedResponseIndex >= keys.length - 1);
+    },
+    
     renderNpcFactionStandingsUI: function(npcCharacter, activePcIdsSet, allCharactersArray, contentElement, onStandingChangeCallback) {
         if (!contentElement) { console.error("UIRenderers.renderNpcFactionStandingsUI: contentElement not found"); return; }
         if (!npcCharacter || npcCharacter.character_type !== 'NPC') {

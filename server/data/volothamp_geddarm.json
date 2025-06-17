@@ -1,56 +1,42 @@
 {
-  "name": "Volothamp Geddarm",
-  "character_type": "NPC",
-  "description": "A flamboyant and famous world traveler, author of 'Volo's Guide to Monsters,' and self-proclaimed expert on all things fantastical. He is often seen in the taprooms of Waterdeep, seeking patrons for his latest endeavor or sharing grandiose tales of his travels.",
-  "race": "Human",
-  "class": "Wizard (though rarely uses magic)",
-  "alignment": "Chaotic Good",
-  "age": "Middle-aged",
-  "personality_traits": [
-    "Flamboyant and theatrical",
-    "Overconfident in his knowledge and abilities",
-    "Name-dropper of famous and powerful people",
-    "Genuinely curious and good-hearted, despite his ego",
-    "Prone to exaggeration"
-  ],
-  "ideals": [
-    "Fame: 'A name is only as good as the stories attached to it, and my stories are the best!'",
-    "Discovery: 'There's always another corner of the world to see, another monster to catalog, another story to tell.'",
-    "Friendship: 'One's colleagues and companions are the truest measure of wealth.'"
-  ],
-  "bonds": [
-    "His reputation and the 'Volo's Guide' series are paramount to him.",
-    "He feels a sense of responsibility for his friends, like Floon Blagmaar.",
-    "The city of Waterdeep, which he considers his adopted home."
-  ],
-  "flaws": [
-    "His information is often inaccurate or embellished.",
-    "He gets others into trouble more often than he gets himself out of it.",
-    "His ego can make him blind to obvious dangers or social cues."
-  ],
-  "canned_conversations": {
-    "introduction": "Volothamp Geddarm, chronicler, wizard, and celebrity, at your service. I trust you've noted the violence in our fair city these past tendays. I haven't seen so much blood since my last visit to Baldur's Gate! But now I fear I have misplaced a friend amid this odious malevolence. My friend's name is Floon Blagmaar. He's got more beauty than brains, and I worry he took a bad way home a couple nights ago and was kidnapped-or worse. If you agree to track him down with all due haste, I can offer you ten dragons apiece now, and I can give you each ten times that when you find Floon. May I prevail upon you in my hour of need?",
-    "about_floon": "Floon? A wonderful fellow! A bit of a dandy, I'll admit. We were enjoying a fine evening at the Skewered Dragon, a tavern of perhaps... questionable repute, but the ale is cheap! I left to meet with another associate, and that's the last I saw of him.",
-    "about_the_reward": "Yes, yes, ten gold pieces—dragons, as we call them in the city—for each of you now, for expenses. And one hundred more each upon Floon's safe return! A small price to pay for a friend's life, wouldn't you agree?"
-  },
-  "backstory": "Volothamp Geddarm has traveled the length and breadth of Faerûn, documenting its most dangerous creatures and locales. His most famous work, 'Volo's Guide to Monsters,' is a bestseller, though many scholars question its accuracy. He has an uncanny knack for being in the right place at the wrong time, often finding himself entangled in major events far beyond his control. He's currently in Waterdeep promoting his latest book, 'Volo's Guide to Spirits and Specters,' while simultaneously getting embroiled in the city's gang war.",
-  "motivations": [
-    "To ensure the safe return of his friend, Floon Blagmaar.",
-    "To maintain his celebrity status in Waterdeep.",
-    "To gather material for his next best-selling guide."
-  ],
-  "knowledge": [
-    "A vast, though often unreliable, collection of lore about monsters.",
-    "Gossip and rumors from across Waterdeep and the Sword Coast.",
-    "The names and locations of many taverns, both high-end and low-end.",
-    "Can identify most noble houses and their sigils."
-  ],
-  "speech_patterns": "Speaks in long, flowery sentences. Uses grandiose words and dramatic pauses for effect. Refers to himself in the third person on occasion.",
-  "mannerisms": "Gestures broadly with his hands while speaking. Constantly adjusts his flamboyant hat and robes. Winks knowingly, as if sharing a grand secret.",
-  "relationships": [
-    {"name": "Floon Blagmaar", "relationship": "Friend / Damsel in Distress", "status": "Missing"},
-    {"name": "Durnan", "relationship": "Tavern Proprietor (Yawning Portal)", "status": "Alive"},
-    {"name": "Renaer Neverember", "relationship": "Acquaintance / Floon's Friend", "status": "Alive"}
-  ],
-  "gm_notes": "Volo is the quest giver for the start of the adventure. He is well-intentioned but not a reliable source of information. The money he offers is real, and he will pay it. He's a great tool for delivering plot hooks, red herrings, and comic relief."
+    "name": "Volothamp Geddarm",
+    "character_type": "NPC",
+    "description": "A flamboyant and famous world traveler, author of 'Volo's Guide to Monsters,' and self-proclaimed expert on all things fantastical. He is often seen in the taprooms of Waterdeep, seeking patrons for his latest endeavor or sharing grandiose tales of his travels.",
+    "race": "Human",
+    "class": "Wizard (though rarely uses magic)",
+    "alignment": "Chaotic Good",
+    "age": "Middle-aged",
+    "personality_traits": [
+      "Flamboyant and theatrical",
+      "Overconfident in his knowledge and abilities",
+      "Name-dropper of famous and powerful people",
+      "Genuinely curious and good-hearted, despite his ego",
+      "Prone to exaggeration"
+    ],
+    "ideals": [
+      "Adventure: 'What is life but a grand adventure? One must seize it with both hands!'",
+      "Fame: 'A story untold is a legacy lost. Volo is here to ensure no great tale fades to dust.'",
+      "Knowledge: 'There is no beast too bizarre, no ruin too remote, that it cannot be documented! For the right price, of course.'"
+    ],
+    "bonds": [
+      "His reputation, which is his most prized possession.",
+      "His friend Floon Blagmaar, whose disappearance is a rare personal crisis.",
+      "His unfinished manuscript for 'Volo's Guide to Spirits and Specters.'"
+    ],
+    "flaws": [
+      "Tends to get others into trouble more often than himself.",
+      "His 'facts' are often embellished to the point of falsehood.",
+      "Utterly clueless about his own safety."
+    ],
+    "motivations": [
+        "To ensure the safe return of his friend, Floon Blagmaar.",
+        "To maintain his celebrity status in Waterdeep.",
+        "To gather material for his next best-selling guide."
+    ],
+    "canned_conversations": {
+        "introduction": "Volothamp Geddarm, chronicler, wizard, and celebrity, at your service. I trust you've noted the violence in our fair city these past tendays. I haven't seen so much blood since my last visit to Baldur's Gate! But now I fear I have misplaced a friend amid this odious malevolence. My friend's name is Floon Blagmaar. He's got more beauty than brains, and I worry he took a bad way home a couple nights ago and was kidnapped-or worse. If you agree to track him down with all due haste, I can offer you ten dragons apiece now, and I can give you each ten times that when you find Floon. May I prevail upon you in my hour of need?",
+        "about_floon": "Floon? A wonderful fellow! A bit of a dandy, I'll admit. We were enjoying a fine evening at the Skewered Dragon, a tavern of perhaps... questionable repute, but the ale is cheap! I left to meet with another associate, and that's the last I saw of him.",
+        "about_the_reward": "Yes, yes, ten gold pieces—dragons, as we call them in the city—for each of you now, for expenses. And one hundred more each upon Floon's safe return! A small price to pay for a friend's life, wouldn't you agree?"
+    },
+    "associated_history_files": ["Volo_and_Floon.txt"]
 }
