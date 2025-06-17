@@ -524,6 +524,82 @@ def parse_ai_suggestions(full_ai_output: str, speaking_pc_id: Optional[str]) -> 
     npc_name_fallback = "NPC"
     dialogue_parts = []
     suggestion_lines = []
+    
+    # Initialize lists for multi-value fields
+    npc_actions_list = []
+    player_checks_list = []
+    generated_topics_list = []
+
+    new_standing_str = "No change"
+    justification_str = "Not specified"
+    suggestion_pc_key_for_parsing = speaking_pc_id if speaking_pc_id and speaking_pc_id.strip() != "" else "PLAYER"
+    
+    lines = full_ai_output.splitlines()
+    suggestion_keywords = ["NPC_ACTION:", "PLAYER_CHECK:", "GENERATED_TOPICS:", f"STANDING_CHANGE_SUGGESTION_FOR_{suggestion_pc_key_for_parsing}:", "JUSTIFICATION:"]
+    
+    first_suggestion_line_index = -1
+    for i, line in enumerate(lines):
+        stripped_line = line.strip()
+        if any(stripped_line.startswith(kw) for kw in suggestion_keywords):
+            first_suggestion_line_index = i
+            break
+    
+    if first_suggestion_line_index != -1:
+        dialogue_parts = lines[:first_suggestion_line_index]
+        suggestion_lines = lines[first_suggestion_line_index:]
+    else: 
+        dialogue_parts = lines
+        suggestion_lines = []
+
+    for line in suggestion_lines:
+        stripped_line = line.strip()
+        if stripped_line.startswith("NPC_ACTION:"):
+            actions_str = stripped_line.replace("NPC_ACTION:", "").strip()
+            if actions_str.lower() != 'none':
+                npc_actions_list = [action.strip() for action in actions_str.split(';') if action.strip()]
+        elif stripped_line.startswith("PLAYER_CHECK:"):
+            checks_str = stripped_line.replace("PLAYER_CHECK:", "").strip()
+            if checks_str.lower() != 'none':
+                player_checks_list = [check.strip() for check in checks_str.split(';') if check.strip()]
+        elif stripped_line.startswith("GENERATED_TOPICS:"):
+            topics_str = stripped_line.replace("GENERATED_TOPICS:", "").strip()
+            if topics_str.lower() != 'none':
+                generated_topics_list = [topic.strip() for topic in topics_str.split(';') if topic.strip()]
+        elif stripped_line.startswith(f"STANDING_CHANGE_SUGGESTION_FOR_{suggestion_pc_key_for_parsing}:"):
+            raw_standing_val = stripped_line.replace(f"STANDING_CHANGE_SUGGESTION_FOR_{suggestion_pc_key_for_parsing}:", "").strip()
+            new_standing_str = raw_standing_val.replace('[', '').replace(']', '').replace('"', '').replace("'", "").strip()
+        elif stripped_line.startswith("JUSTIFICATION:"):
+            justification_str = stripped_line.replace("JUSTIFICATION:", "").strip()
+            
+    npc_dialogue_final = "\n".join(dialogue_parts).strip()
+    if not npc_dialogue_final and (npc_actions_list or player_checks_list or new_standing_str != "No change"):
+        npc_dialogue_final = f"({npc_name_fallback} considers the situation...)"
+
+    parsed_new_standing_enum = None
+    if new_standing_str and new_standing_str.lower() not in ["no change", "none", ""]:
+        try:
+            matched_level = next((level_enum for level_enum in FactionStandingLevel if level_enum.value.lower() == new_standing_str.lower()), None)
+            if matched_level:
+                parsed_new_standing_enum = matched_level
+            else:
+                print(f"Warning: AI suggested an unrecognized standing level: '{new_standing_str}' for PC '{suggestion_pc_key_for_parsing}'")
+                justification_str += f" (AI suggested unrecognized standing: {new_standing_str})"
+        except Exception as e_standing:
+            print(f"Error converting AI standing '{new_standing_str}' to enum: {e_standing}")
+            justification_str += f" (Error processing AI standing: {new_standing_str})"
+            
+    return {
+        "dialogue": npc_dialogue_final if npc_dialogue_final else "(No dialogue response)",
+        "npc_action": npc_actions_list,
+        "player_check": player_checks_list,
+        "generated_topics": generated_topics_list,
+        "new_standing": parsed_new_standing_enum,
+        "new_standing_str_for_response": new_standing_str, 
+        "justification": justification_str
+    }
+    npc_name_fallback = "NPC"
+    dialogue_parts = []
+    suggestion_lines = []
     npc_action_str = "None"
     player_check_str = "None"
     new_standing_str = "No change"

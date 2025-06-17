@@ -303,6 +303,13 @@ var App = {
             UIRenderers.appendMessageToTranscriptUI(transcriptArea, `${npcName}: ${result.npc_dialogue}`, 'dialogue-entry npc-response');
             appState.addDialogueToHistory(npcIdStr, `${npcName}: ${result.npc_dialogue}`);
             
+            // Set this NPC as the one we're seeing suggestions for.
+            appState.setCurrentProfileCharId(npcIdStr); 
+            const interactingChar = appState.getCharacterById(npcIdStr);
+            if (interactingChar) {
+                appState.setCannedResponsesForProfiledChar(interactingChar.canned_conversations || {});
+            }
+
             UIRenderers.renderSuggestionsArea(result, npcIdStr);
         } catch (error) {
             console.error(`Error generating dialogue for ${npcName}:`, error);

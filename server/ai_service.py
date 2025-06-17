@@ -181,11 +181,11 @@ class AIService:
                 main_instruction = f"Describe what you, {npc.name}, say or do in this situation. Be concise and in character. Your response should be primarily your spoken dialogue. Do not break character. Consider all provided context, especially any linked lore and your history."
             prompt_parts.append(main_instruction)
 
-            prompt_parts.append("\n--- Additional Suggestions (Strict Format Expected) ---")
-            prompt_parts.append(f"After your dialogue, provide the following in the exact format below (use 'None' if not applicable):")
-            prompt_parts.append(f"NPC_ACTION: [Suggest a brief non-verbal action {npc.name} might take or an internal decision, e.g., 'Scratches chin thoughtfully', 'Decides to offer a quest if they seem trustworthy', 'Glances towards the door.']")
+            prompt_parts.append("\n--- Additional Suggestions (Required Output) ---")
+            prompt_parts.append(f"After your dialogue, you MUST provide the following suggestions in the exact format below. Do not omit any section. Use 'None' if not applicable.")
+            prompt_parts.append(f"NPC_ACTION: [Suggest three brief, distinct non-verbal actions or internal thoughts for {npc.name}, separated by semicolons. Example: Scratches chin thoughtfully; Decides to offer a quest if they seem trustworthy; Glances towards the door]")
             prompt_parts.append(f"PLAYER_CHECK: [Suggest one skill check a player might reasonably attempt in response, e.g., 'Insight to detect deception', 'Persuasion to ask for a discount', 'History to recall the mentioned battle.']")
-            prompt_parts.append(f"GENERATED_TOPICS: [Suggest two brief follow-up questions the player could ask you, based on what you said. Example: 'Ask about my lost friend; Ask why the Zhentarim are involved']")
+            prompt_parts.append(f"GENERATED_TOPICS: [Suggest two brief, interesting follow-up questions the player could ask you, based on what you said, separated by a semicolon. Example: Ask about my lost friend; Ask why the Zhentarim are involved]")
             prompt_parts.append(f"STANDING_CHANGE_SUGGESTION_FOR_{dialogue_request.speaking_pc_id if dialogue_request.speaking_pc_id else 'PLAYER'}: [Suggest a new standing level ({', '.join([s.value for s in FactionStandingLevel])}) for {speaking_pc_name} OR 'No change']")
             prompt_parts.append(f"JUSTIFICATION: [Briefly explain why the standing should change or why it remains the same, based on the interaction]")
 
