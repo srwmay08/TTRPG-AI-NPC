@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bugbear Banter GM Interface</title>
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
@@ -231,14 +231,14 @@
         </div>
     </div>
 
-    <script src="../static/config.js"></script>
-    <script src="../static/utils.js"></script>
-    <script src="../static/dndCalculations.js"></script>
-    <script src="../static/apiService.js"></script>
-    <script src="../static/appState.js"></script>
-    <script src="../static/uiRenderers.js"></script>
-    <script src="../static/characterService.js"></script>
-    <script src="../static/eventHandlers.js"></script>
-    <script src="../static/app.js"></script>
+    <script src="{{ url_for('static', filename='config.js') }}"></script>
+    <script src="{{ url_for('static', filename='utils.js') }}"></script>
+    <script src="{{ url_for('static', filename='dndCalculations.js') }}"></script>
+    <script src="{{ url_for('static', filename='apiService.js') }}"></script>
+    <script src="{{ url_for('static', filename='appState.js') }}"></script>
+    <script src="{{ url_for('static', filename='uiRenderers.js') }}"></script>
+    <script src="{{ url_for('static', filename='characterService.js') }}"></script>
+    <script src="{{ url_for('static', filename='eventHandlers.js') }}"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>

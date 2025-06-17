@@ -82,7 +82,6 @@ class NPCProfile(BaseModel):
 
     gm_notes: Optional[str] = Field(default=None, description="Private GM notes for this character.")
     
-    # ADD THIS LINE
     canned_conversations: Optional[Dict[str, str]] = Field(default_factory=dict, description="A dictionary of specific topics and the exact dialogue the NPC should give for them.")
 
     # vtt_data stores the 'system' object from FVTT
@@ -102,7 +101,7 @@ class NPCProfile(BaseModel):
         description="NPC's standing towards each PC. Key: PC ID (str), Value: Standing Level Enum."
     )
     
-    @field_validator('vtt_data', 'vtt_flags', 'system', 'pc_faction_standings', 'canned_conversations', mode='before') # ADD 'canned_conversations' TO THIS VALIDATOR
+    @field_validator('vtt_data', 'vtt_flags', 'system', 'pc_faction_standings', 'canned_conversations', mode='before')
     def ensure_dict(cls, value):
         if value is None:
             return {}

@@ -70,7 +70,7 @@ var CharacterService = {
             appState.setCurrentProfileCharId(null);
             appState.clearCannedResponses();
             UIRenderers.renderCharacterProfileUI(null, CharacterService.profileElementIds);
-            UIRenderers.renderSuggestions(null); // Clear and hide suggestions
+            UIRenderers.renderSuggestionsArea(null); // Clear and hide suggestions properly
             if (characterProfileSection) {
                 characterProfileSection.classList.add('collapsed');
                 const content = characterProfileSection.querySelector('.collapsible-content');
@@ -88,7 +88,7 @@ var CharacterService = {
             appState.setCannedResponsesForProfiledChar(processedChar.canned_conversations || {});
             
             UIRenderers.renderCharacterProfileUI(processedChar, CharacterService.profileElementIds);
-            UIRenderers.renderSuggestions(null); // Render suggestions area, showing canned responses if available
+            UIRenderers.renderSuggestionsArea(null, charIdStr); 
 
             if (characterProfileSection) {
                 characterProfileSection.classList.remove('collapsed');
@@ -102,7 +102,7 @@ var CharacterService = {
             Utils.updateText('details-char-name', 'Error loading details');
             UIRenderers.renderCharacterProfileUI(null, CharacterService.profileElementIds);
             appState.clearCannedResponses();
-            UIRenderers.renderSuggestions(null);
+            UIRenderers.renderSuggestionsArea(null);
             if (characterProfileSection) {
                 characterProfileSection.classList.add('collapsed');
                 const content = characterProfileSection.querySelector('.collapsible-content');

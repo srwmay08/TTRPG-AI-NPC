@@ -423,84 +423,85 @@ var UIRenderers = {
     renderSuggestionsArea: function(aiResult, forNpcId) {
         const globalSuggestionsArea = Utils.getElem('ai-suggestions');
         if (!globalSuggestionsArea) return;
-
+    
         let hasContentToDisplay = false;
-
-        // Part 1: Render Canned Responses for the currently profiled character
-        const cannedResponses = appState.cannedResponsesForProfiledChar || {};
+        const profiledCharId = appState.getCurrentProfileCharId();
+    
+        // Part 1: Always check for and render Canned Responses for the currently profiled character
         const cannedContainer = Utils.getElem('canned-responses-list');
         const cannedDisplay = Utils.getElem('canned-response-display');
         const prevBtn = Utils.getElem('prev-canned-btn');
         const nextBtn = Utils.getElem('next-canned-btn');
         const sendBtn = Utils.getElem('send-canned-btn');
-        
+    
+        const cannedResponses = appState.cannedResponsesForProfiledChar || {};
+        const keys = Object.keys(cannedResponses);
+    
         if (cannedContainer && cannedDisplay && prevBtn && nextBtn && sendBtn) {
-            const keys = Object.keys(cannedResponses);
             if (keys.length > 0) {
                 hasContentToDisplay = true;
                 cannedContainer.style.display = 'flex';
                 const currentKey = keys[appState.currentCannedResponseIndex];
                 const currentResponse = cannedResponses[currentKey] || "Response not found.";
                 cannedDisplay.innerHTML = `<p><strong>${Utils.escapeHtml(currentKey)}:</strong> ${Utils.escapeHtml(currentResponse)}</p>`;
-                Utils.disableBtn('send-canned-btn', false);
-                Utils.disableBtn('prev-canned-btn', appState.currentCannedResponseIndex <= 0);
-                Utils.disableBtn('next-canned-btn', appState.currentCannedResponseIndex >= keys.length - 1);
+                Utils.disableBtn(sendBtn.id, false);
+                Utils.disableBtn(prevBtn.id, appState.currentCannedResponseIndex <= 0);
+                Utils.disableBtn(nextBtn.id, appState.currentCannedResponseIndex >= keys.length - 1);
             } else {
                 cannedContainer.style.display = 'none';
             }
         }
-
-        // Part 2: Render AI Suggestions if they exist for the interacting character
-        const profiledCharId = appState.getCurrentProfileCharId();
-        if (aiResult && forNpcId && forNpcId === profiledCharId) {
-            const suggestionTypes = {
-                'memories': { title: 'Suggested Memories', data: aiResult.new_memory_suggestions, render: item => `${Utils.escapeHtml(item)} <button onclick="App.addSuggestedMemoryAsActual('${forNpcId}', '${Utils.escapeHtml(item).replace(/'/g, "\\'")}')">Add</button>` },
-                'topics': { title: 'Suggested Conversation Topics', data: aiResult.generated_topics, render: item => `<div class="clickable-suggestion" onclick="App.sendTopicToChat('${Utils.escapeHtml(item).replace(/'/g, "\\'")}')">${Utils.escapeHtml(item)}</div>` },
-                'npc-actions': { title: 'Suggested NPC Actions/Thoughts', data: aiResult.suggested_npc_actions, render: item => Utils.escapeHtml(item) },
-                'player-checks': { title: 'Suggested Player Checks', data: aiResult.suggested_player_checks, render: item => Utils.escapeHtml(item) }
-            };
-
-            for (const [key, config] of Object.entries(suggestionTypes)) {
-                const listDiv = Utils.getElem(`suggested-${key}-list`);
-                if (listDiv) {
+    
+        // Part 2: Render or clear dynamic AI suggestions
+        const suggestionTypes = {
+            'memories': { title: 'Suggested Memories', data: aiResult?.new_memory_suggestions, render: item => `${Utils.escapeHtml(item)} <button onclick="App.addSuggestedMemoryAsActual('${forNpcId}', '${Utils.escapeHtml(item).replace(/'/g, "\\'")}')">Add</button>` },
+            'topics': { title: 'Suggested Conversation Topics', data: aiResult?.generated_topics, render: item => `<div class="clickable-suggestion" onclick="App.sendTopicToChat('${Utils.escapeHtml(item).replace(/'/g, "\\'")}')">${Utils.escapeHtml(item)}</div>` },
+            'npc-actions': { title: 'Suggested NPC Actions/Thoughts', data: aiResult?.suggested_npc_actions, render: item => Utils.escapeHtml(item) },
+            'player-checks': { title: 'Suggested Player Checks', data: aiResult?.suggested_player_checks, render: item => Utils.escapeHtml(item) }
+        };
+    
+        // This loop handles both rendering new suggestions and clearing old ones if aiResult is null
+        for (const [key, config] of Object.entries(suggestionTypes)) {
+            const listDiv = Utils.getElem(`suggested-${key}-list`);
+            if (listDiv) {
+                // Only show this section if we are rendering for the currently profiled NPC
+                if (aiResult && forNpcId && forNpcId === profiledCharId) {
                     listDiv.style.display = 'flex';
+                    hasContentToDisplay = true;
                     if (config.data && config.data.length > 0) {
                         listDiv.innerHTML = `<h5>${config.title}</h5>` + config.data.map(item => `<div class="suggested-item">${config.render(item)}</div>`).join('');
-                        hasContentToDisplay = true;
                     } else {
                         listDiv.innerHTML = `<h5>${config.title}</h5><p><em>None</em></p>`;
                     }
+                } else {
+                    listDiv.style.display = 'none'; // Hide if not the profiled NPC or no AI result
                 }
             }
-
-            const standingChangesDiv = Utils.getElem('suggested-faction-standing-changes');
-            if (standingChangesDiv) {
+        }
+    
+        const standingChangesDiv = Utils.getElem('suggested-faction-standing-changes');
+        if (standingChangesDiv) {
+            if (aiResult && forNpcId && forNpcId === profiledCharId) {
                 standingChangesDiv.style.display = 'flex';
+                hasContentToDisplay = true;
                 if (aiResult.suggested_new_standing && aiResult.suggested_standing_pc_id) {
                     const pcForStanding = appState.getCharacterById(aiResult.suggested_standing_pc_id);
                     const pcNameForStanding = pcForStanding ? pcForStanding.name : "the speaker";
                     const standingValue = (typeof aiResult.suggested_new_standing === 'object' && aiResult.suggested_new_standing !== null) ? aiResult.suggested_new_standing.value : aiResult.suggested_new_standing;
-                    standingChangesDiv.innerHTML = `<h5>Suggested Faction Standing Change:</h5>
+                    standingChangesDiv.innerHTML = `<h5>Suggested Standing Change:</h5>
                         <div class="suggested-item">
                             Towards ${Utils.escapeHtml(pcNameForStanding)}: ${Utils.escapeHtml(standingValue)}
                             (Justification: ${Utils.escapeHtml(aiResult.standing_change_justification || 'None')})
                             <button onclick="App.acceptFactionStandingChange('${forNpcId}', '${aiResult.suggested_standing_pc_id}', '${Utils.escapeHtml(standingValue)}')">Accept</button>
                         </div>`;
-                    hasContentToDisplay = true;
                 } else {
-                     standingChangesDiv.innerHTML = `<h5>Suggested Faction Standing Change:</h5><p><em>None</em></p>`;
+                    standingChangesDiv.innerHTML = `<h5>Suggested Standing Change:</h5><p><em>None</em></p>`;
                 }
+            } else {
+                standingChangesDiv.style.display = 'none';
             }
-
-        } else { // Clear previous AI suggestions if there's no new result for the profiled character
-             ['memories', 'topics', 'npc-actions', 'player-checks', 'faction-standing-changes'].forEach(suggType => {
-                const targetDiv = Utils.getElem(`suggested-${suggType}-list`);
-                if(targetDiv) {
-                    targetDiv.innerHTML = `<h5>${targetDiv.querySelector('h5')?.textContent || 'Suggestions'}</h5><p><em>None</em></p>`;
-                }
-             });
         }
-
+    
         // Final visibility check for the main container
         globalSuggestionsArea.style.display = hasContentToDisplay ? 'flex' : 'none';
     },
