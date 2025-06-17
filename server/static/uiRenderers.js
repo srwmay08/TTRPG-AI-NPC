@@ -3,92 +3,12 @@
 console.log("uiRenderers.js: Parsing STARTED");
 
 const ABILITY_SCORE_INFO = {
-    "STR": {
-        "title": "Strength",
-        "description": "Strength measures bodily power, athletic training, and the extent to which you can exert raw physical force.",
-        "checks_title": "Strength Checks",
-        "checks_description": "A Strength check can model any attempt to lift, push, pull, or break something, to force your body through a space, or to otherwise apply brute force to a situation. The Athletics skill reflects aptitude in certain kinds of Strength checks.",
-        "skills": { "Athletics": "Your Strength (Athletics) check covers difficult situations you encounter while climbing, jumping, or swimming." },
-        "other_checks_title": "Other Strength Checks",
-        "other_checks": ["Force open a stuck, locked, or barred door", "Break free of bonds", "Push through a tunnel that is too small", "Hang on to a wagon while being dragged behind it", "Tip over a statue", "Keep a boulder from rolling"],
-        "attack_and_damage_title": "Attack Rolls and Damage",
-        "attack_and_damage": "You add your Strength modifier to your attack roll and your damage roll when attacking with a melee weapon.",
-        "lifting_and_carrying_title": "Lifting and Carrying",
-        "lifting_and_carrying": "Your carrying capacity is your Strength score multiplied by 15. You can push, drag, or lift a weight in pounds up to twice your carrying capacity (or 30 times your Strength score)."
-    },
-    "DEX": {
-        "title": "Dexterity",
-        "description": "Dexterity measures agility, reflexes, and balance.",
-        "checks_title": "Dexterity Checks",
-        "checks_description": "A Dexterity check can model any attempt to move nimbly, quickly, or quietly, or to keep from falling on tricky footing. The Acrobatics, Sleight of Hand, and Stealth skills reflect aptitude in certain kinds of Dexterity checks.",
-        "skills": {
-            "Acrobatics": "Your Dexterity (Acrobatics) check covers your attempt to stay on your feet in a tricky situation, such as when you’re trying to run across a sheet of ice or balance on a tightrope.",
-            "Sleight of Hand": "Whenever you attempt an act of legerdemain or manual trickery, such as planting something on someone else or concealing an object on your person, make a Dexterity (Sleight of Hand) check.",
-            "Stealth": "Make a Dexterity (Stealth) check when you attempt to conceal yourself from enemies, slink past guards, or sneak up on someone without being seen or heard."
-        },
-        "other_checks_title": "Other Dexterity Checks",
-        "other_checks": ["Pick a lock", "Disable a trap", "Securely tie up a prisoner", "Wriggle free of bonds", "Play a stringed instrument"],
-        "attack_and_damage_title": "Attack Rolls and Damage",
-        "attack_and_damage": "You add your Dexterity modifier to your attack roll and your damage roll when attacking with a ranged weapon or a melee weapon that has the finesse property.",
-        "armor_class_title": "Armor Class",
-        "armor_class": "Depending on the armor you wear, you might add some or all of your Dexterity modifier to your Armor Class.",
-        "initiative_title": "Initiative",
-        "initiative": "At the beginning of every combat, you roll initiative by making a Dexterity check."
-    },
-    "CON": {
-        "title": "Constitution",
-        "description": "Constitution measures health, stamina, and vital force.",
-        "checks_title": "Constitution Checks",
-        "checks_description": "Constitution checks are uncommon, and no skills apply to Constitution checks, because the endurance this ability represents is largely passive. A Constitution check can model your attempt to push beyond normal limits.",
-        "other_checks_title": "Other Constitution Checks",
-        "other_checks": ["Hold your breath", "March or labor for hours without rest", "Go without sleep", "Survive without food or water", "Quaff an entire stein of ale in one go"],
-        "hit_points_title": "Hit Points",
-        "hit_points": "Your Constitution modifier contributes to your hit points. If your Constitution modifier changes, your hit point maximum changes as well, as though you had the new modifier from 1st level."
-    },
-    "INT": {
-        "title": "Intelligence",
-        "description": "Intelligence measures mental acuity, accuracy of recall, and the ability to reason.",
-        "checks_title": "Intelligence Checks",
-        "checks_description": "An Intelligence check comes into play when you need to draw on logic, education, memory, or deductive reasoning. The Arcana, History, Investigation, Nature, and Religion skills reflect aptitude in certain kinds of Intelligence checks.",
-        "skills": {
-            "Arcana": "Measures your ability to recall lore about spells, magic items, eldritch symbols, and magical traditions.",
-            "History": "Measures your ability to recall lore about historical events, legendary people, ancient kingdoms, and lost civilizations.",
-            "Investigation": "When you look around for clues and make deductions based on those clues, you make an Intelligence (Investigation) check.",
-            "Nature": "Measures your ability to recall lore about terrain, plants and animals, the weather, and natural cycles.",
-            "Religion": "Measures your ability to recall lore about deities, rites and prayers, religious hierarchies, and holy symbols."
-        },
-        "spellcasting_ability_title": "Spellcasting Ability",
-        "spellcasting_ability": "Wizards use Intelligence as their spellcasting ability, which helps determine the saving throw DCs of spells they cast."
-    },
-    "WIS": {
-        "title": "Wisdom",
-        "description": "Wisdom reflects how attuned you are to the world around you and represents perceptiveness and intuition.",
-        "checks_title": "Wisdom Checks",
-        "checks_description": "A Wisdom check might reflect an effort to read body language, understand someone’s feelings, notice things about the environment, or care for an injured person. The Animal Handling, Insight, Medicine, Perception, and Survival skills reflect aptitude in certain kinds of Wisdom checks.",
-        "skills": {
-            "Animal Handling": "When there is any question whether you can calm down a domesticated animal, keep a mount from getting spooked, or intuit an animal’s intentions, the GM might call for a Wisdom (Animal Handling) check.",
-            "Insight": "Your Wisdom (Insight) check decides whether you can determine the true intentions of a creature, such as when searching out a lie or predicting someone’s next move.",
-            "Medicine": "A Wisdom (Medicine) check lets you try to stabilize a dying companion or diagnose an illness.",
-            "Perception": "Your Wisdom (Perception) check lets you spot, hear, or otherwise detect the presence of something. It measures your general awareness of your surroundings and the keenness of your senses.",
-            "Survival": "The GM might ask you to make a Wisdom (Survival) check to follow tracks, hunt wild game, guide your group through frozen wastelands, or identify signs that owlbears live nearby."
-        },
-        "spellcasting_ability_title": "Spellcasting Ability",
-        "spellcasting_ability": "Clerics, druids, and rangers use Wisdom as their spellcasting ability."
-    },
-    "CHA": {
-        "title": "Charisma",
-        "description": "Charisma measures your ability to interact effectively with others. It includes such factors as confidence and eloquence, and it can represent a charming or commanding personality.",
-        "checks_title": "Charisma Checks",
-        "checks_description": "A Charisma check might arise when you try to influence or entertain others, when you try to make an impression or tell a convincing lie, or when you are navigating a tricky social situation. The Deception, Intimidation, Performance, and Persuasion skills reflect aptitude in certain kinds of Charisma checks.",
-        "skills": {
-            "Deception": "Your Charisma (Deception) check determines whether you can convincingly hide the truth, either verbally or through your actions.",
-            "Intimidation": "When you attempt to influence someone through overt threats, hostile actions, and physical violence, the GM might ask you to make a Charisma (Intimidation) check.",
-            "Performance": "Your Charisma (Performance) check determines how well you can delight an audience with music, dance, acting, storytelling, or some other form of entertainment.",
-            "Persuasion": "When you attempt to influence someone or a group of people with tact, social graces, or good nature, the GM might ask you to make a Charisma (Persuasion) check."
-        },
-        "spellcasting_ability_title": "Spellcasting Ability",
-        "spellcasting_ability": "Bards, paladins, sorcerers, and warlocks use Charisma as their spellcasting ability."
-    }
+    "STR": { "title": "Strength", "description": "Strength measures bodily power, athletic training, and the extent to which you can exert raw physical force.", "checks_title": "Strength Checks", "checks_description": "A Strength check can model any attempt to lift, push, pull, or break something, to force your body through a space, or to otherwise apply brute force to a situation. The Athletics skill reflects aptitude in certain kinds of Strength checks.", "skills": { "Athletics": "Your Strength (Athletics) check covers difficult situations you encounter while climbing, jumping, or swimming." }, "other_checks_title": "Other Strength Checks", "other_checks": ["Force open a stuck, locked, or barred door", "Break free of bonds", "Push through a tunnel that is too small", "Hang on to a wagon while being dragged behind it", "Tip over a statue", "Keep a boulder from rolling"], "attack_and_damage_title": "Attack Rolls and Damage", "attack_and_damage": "You add your Strength modifier to your attack roll and your damage roll when attacking with a melee weapon.", "lifting_and_carrying_title": "Lifting and Carrying", "lifting_and_carrying": "Your carrying capacity is your Strength score multiplied by 15. You can push, drag, or lift a weight in pounds up to twice your carrying capacity (or 30 times your Strength score)." },
+    "DEX": { "title": "Dexterity", "description": "Dexterity measures agility, reflexes, and balance.", "checks_title": "Dexterity Checks", "checks_description": "A Dexterity check can model any attempt to move nimbly, quickly, or quietly, or to keep from falling on tricky footing. The Acrobatics, Sleight of Hand, and Stealth skills reflect aptitude in certain kinds of Dexterity checks.", "skills": { "Acrobatics": "Your Dexterity (Acrobatics) check covers your attempt to stay on your feet in a tricky situation, such as when you’re trying to run across a sheet of ice or balance on a tightrope.", "Sleight of Hand": "Whenever you attempt an act of legerdemain or manual trickery, such as planting something on someone else or concealing an object on your person, make a Dexterity (Sleight of Hand) check.", "Stealth": "Make a Dexterity (Stealth) check when you attempt to conceal yourself from enemies, slink past guards, or sneak up on someone without being seen or heard." }, "other_checks_title": "Other Dexterity Checks", "other_checks": ["Pick a lock", "Disable a trap", "Securely tie up a prisoner", "Wriggle free of bonds", "Play a stringed instrument"], "attack_and_damage_title": "Attack Rolls and Damage", "attack_and_damage": "You add your Dexterity modifier to your attack roll and your damage roll when attacking with a ranged weapon or a melee weapon that has the finesse property.", "armor_class_title": "Armor Class", "armor_class": "Depending on the armor you wear, you might add some or all of your Dexterity modifier to your Armor Class.", "initiative_title": "Initiative", "initiative": "At the beginning of every combat, you roll initiative by making a Dexterity check." },
+    "CON": { "title": "Constitution", "description": "Constitution measures health, stamina, and vital force.", "checks_title": "Constitution Checks", "checks_description": "Constitution checks are uncommon, and no skills apply to Constitution checks, because the endurance this ability represents is largely passive. A Constitution check can model your attempt to push beyond normal limits.", "other_checks_title": "Other Constitution Checks", "other_checks": ["Hold your breath", "March or labor for hours without rest", "Go without sleep", "Survive without food or water", "Quaff an entire stein of ale in one go"], "hit_points_title": "Hit Points", "hit_points": "Your Constitution modifier contributes to your hit points. If your Constitution modifier changes, your hit point maximum changes as well, as though you had the new modifier from 1st level." },
+    "INT": { "title": "Intelligence", "description": "Intelligence measures mental acuity, accuracy of recall, and the ability to reason.", "checks_title": "Intelligence Checks", "checks_description": "An Intelligence check comes into play when you need to draw on logic, education, memory, or deductive reasoning. The Arcana, History, Investigation, Nature, and Religion skills reflect aptitude in certain kinds of Intelligence checks.", "skills": { "Arcana": "Measures your ability to recall lore about spells, magic items, eldritch symbols, and magical traditions.", "History": "Measures your ability to recall lore about historical events, legendary people, ancient kingdoms, and lost civilizations.", "Investigation": "When you look around for clues and make deductions based on those clues, you make an Intelligence (Investigation) check.", "Nature": "Measures your ability to recall lore about terrain, plants and animals, the weather, and natural cycles.", "Religion": "Measures your ability to recall lore about deities, rites and prayers, religious hierarchies, and holy symbols." }, "spellcasting_ability_title": "Spellcasting Ability", "spellcasting_ability": "Wizards use Intelligence as their spellcasting ability, which helps determine the saving throw DCs of spells they cast." },
+    "WIS": { "title": "Wisdom", "description": "Wisdom reflects how attuned you are to the world around you and represents perceptiveness and intuition.", "checks_title": "Wisdom Checks", "checks_description": "A Wisdom check might reflect an effort to read body language, understand someone’s feelings, notice things about the environment, or care for an injured person. The Animal Handling, Insight, Medicine, Perception, and Survival skills reflect aptitude in certain kinds of Wisdom checks.", "skills": { "Animal Handling": "When there is any question whether you can calm down a domesticated animal, keep a mount from getting spooked, or intuit an animal’s intentions, the GM might call for a Wisdom (Animal Handling) check.", "Insight": "Your Wisdom (Insight) check decides whether you can determine the true intentions of a creature, such as when searching out a lie or predicting someone’s next move.", "Medicine": "A Wisdom (Medicine) check lets you try to stabilize a dying companion or diagnose an illness.", "Perception": "Your Wisdom (Perception) check lets you spot, hear, or otherwise detect the presence of something. It measures your general awareness of your surroundings and the keenness of your senses.", "Survival": "The GM might ask you to make a Wisdom (Survival) check to follow tracks, hunt wild game, guide your group through frozen wastelands, or identify signs that owlbears live nearby." }, "spellcasting_ability_title": "Spellcasting Ability", "spellcasting_ability": "Clerics, druids, and rangers use Wisdom as their spellcasting ability." },
+    "CHA": { "title": "Charisma", "description": "Charisma measures your ability to interact effectively with others. It includes such factors as confidence and eloquence, and it can represent a charming or commanding personality.", "checks_title": "Charisma Checks", "checks_description": "A Charisma check might arise when you try to influence or entertain others, when you try to make an impression or tell a convincing lie, or when you are navigating a tricky social situation. The Deception, Intimidation, Performance, and Persuasion skills reflect aptitude in certain kinds of Charisma checks.", "skills": { "Deception": "Your Charisma (Deception) check determines whether you can convincingly hide the truth, either verbally or through your actions.", "Intimidation": "When you attempt to influence someone through overt threats, hostile actions, and physical violence, the GM might ask you to make a Charisma (Intimidation) check.", "Performance": "Your Charisma (Performance) check determines how well you can delight an audience with music, dance, acting, storytelling, or some other form of entertainment.", "Persuasion": "When you attempt to influence someone or a group of people with tact, social graces, or good nature, the GM might ask you to make a Charisma (Persuasion) check." }, "spellcasting_ability_title": "Spellcasting Ability", "spellcasting_ability": "Bards, paladins, sorcerers, and warlocks use Charisma as their spellcasting ability." }
 };
 
 var UIRenderers = {
@@ -151,8 +71,6 @@ var UIRenderers = {
             </div>`;
     },
 
-    // --- CHANGED START ---
-    // This function was updated to remove the redundant stat display from the bar chart label.
     populateExpandedAbilityDetailsUI: function(abilityKey, expansionDiv, selectedPcs) {
         if (!expansionDiv) { return; }
         const abilityLongName = ABILITY_KEYS_ORDER.find(k => k.startsWith(abilityKey.toLowerCase().substring(0,3))).toUpperCase();
@@ -199,11 +117,7 @@ var UIRenderers = {
             expansionDiv.innerHTML += skillsTableHTML;
         }
     },
-    // --- CHANGED END ---
-
-    // --- CHANGED START ---
-    // This function was updated with a more robust click handler to differentiate between
-    // adding an NPC to a scene and viewing their details.
+    
     renderNpcListForContextUI: function(listContainerElement, allCharacters, activeSceneNpcIds, onToggleInSceneCallback, onNameClickCallback, sceneContextFilter) {
         if (!listContainerElement) {
             console.error("UIRenderers.renderNpcListForContextUI: listContainerElement not found");
@@ -249,14 +163,11 @@ var UIRenderers = {
             nameSpan.textContent = char.name;
             nameSpan.className = 'npc-name-clickable';
             
-            // A single, smarter click handler on the list item
             li.onclick = async (event) => {
-                // If the user clicked specifically on the name, show details.
                 if (event.target.classList.contains('npc-name-clickable')) {
-                    event.stopPropagation(); // prevent the toggle from firing as well
+                    event.stopPropagation();
                     await onNameClickCallback(charIdStr);
                 } else {
-                    // Otherwise, the click was on the list item in general, so toggle scene status.
                     await onToggleInSceneCallback(charIdStr, char.name);
                 }
             };
@@ -265,7 +176,6 @@ var UIRenderers = {
             ul.appendChild(li);
         });
     },
-    // --- CHANGED END ---
 
     updatePcDashboardUI: function(dashboardContentElement, allCharacters, activePcIds, currentlyExpandedAbility) {
         if (!dashboardContentElement) {
@@ -489,12 +399,6 @@ var UIRenderers = {
         suggestionsDiv.id = `ai-suggestions-${npcIdStr}`;
         suggestionsDiv.className = 'ai-suggestions-for-npc';
         suggestionsDiv.style.display = 'none';
-        suggestionsDiv.innerHTML = `
-            <div id="suggested-memories-list-npc-${npcIdStr}" class="ai-suggestion-category"><h5>Suggested Memories:</h5></div>
-            <div id="suggested-topics-list-npc-${npcIdStr}" class="ai-suggestion-category"><h5>Suggested Follow-up Topics:</h5></div>
-            <div id="suggested-npc-actions-list-npc-${npcIdStr}" class="ai-suggestion-category"><h5>Suggested NPC Actions/Thoughts:</h5></div>
-            <div id="suggested-player-checks-list-npc-${npcIdStr}" class="ai-suggestion-category"><h5>Suggested Player Checks:</h5></div>
-            <div id="suggested-faction-standing-changes-npc-${npcIdStr}" class="ai-suggestion-category"><h5>Suggested Faction Standing Change:</h5></div>`;
         areaDiv.appendChild(suggestionsDiv);
         containerElement.appendChild(areaDiv);
     },
@@ -516,126 +420,89 @@ var UIRenderers = {
         transcriptArea.scrollTop = transcriptArea.scrollHeight;
     },
 
-    renderAiSuggestionsContent: function(aiResult, forNpcId) {
-        const suggestionsContainerNpc = Utils.getElem(`ai-suggestions-${forNpcId}`);
-        if (!suggestionsContainerNpc) return;
-        suggestionsContainerNpc.innerHTML = '';
-        let contentGeneratedForNpc = false;
-
-        const memoriesListNpc = document.createElement('div');
-        memoriesListNpc.id = `suggested-memories-list-npc-${forNpcId}`;
-        memoriesListNpc.className = 'ai-suggestion-category';
-        if (aiResult.new_memory_suggestions && aiResult.new_memory_suggestions.length > 0) {
-            memoriesListNpc.innerHTML = '<h5>Suggested Memories:</h5>' + aiResult.new_memory_suggestions.map(mem =>
-                `<div class="suggested-item">${Utils.escapeHtml(mem)} <button onclick="addSuggestedMemoryAsActual('${forNpcId}', '${Utils.escapeHtml(mem).replace(/'/g, "\\'")}')">Add</button></div>`
-            ).join('');
-            contentGeneratedForNpc = true;
-        } else {
-            memoriesListNpc.innerHTML = '<h5>Suggested Memories:</h5><p><em>None</em></p>';
-        }
-        suggestionsContainerNpc.appendChild(memoriesListNpc);
-
-        const topicsListNpc = document.createElement('div');
-        topicsListNpc.id = `suggested-topics-list-npc-${forNpcId}`;
-        topicsListNpc.className = 'ai-suggestion-category';
-        if (aiResult.generated_topics && aiResult.generated_topics.length > 0) {
-            topicsListNpc.innerHTML = '<h5>Suggested Follow-up Topics:</h5>' + aiResult.generated_topics.map(topic => 
-                `<div class="suggested-item clickable-suggestion" onclick="App.sendTopicToChat('${Utils.escapeHtml(topic).replace(/'/g, "\\'")}')">${Utils.escapeHtml(topic)}</div>`
-            ).join('');
-            contentGeneratedForNpc = true;
-        } else { 
-            topicsListNpc.innerHTML = '<h5>Suggested Follow-up Topics:</h5><p><em>None</em></p>'; 
-        }
-        suggestionsContainerNpc.appendChild(topicsListNpc);
-
-        const actionsListNpc = document.createElement('div');
-        actionsListNpc.id = `suggested-npc-actions-list-npc-${forNpcId}`;
-        actionsListNpc.className = 'ai-suggestion-category';
-        if (aiResult.suggested_npc_actions && aiResult.suggested_npc_actions.length > 0) {
-            actionsListNpc.innerHTML = '<h5>Suggested NPC Actions/Thoughts:</h5>' + aiResult.suggested_npc_actions.map(action => `<div class="suggested-item">${Utils.escapeHtml(action)}</div>`).join('');
-            contentGeneratedForNpc = true;
-        } else { actionsListNpc.innerHTML = '<h5>Suggested NPC Actions/Thoughts:</h5><p><em>None</em></p>';}
-        suggestionsContainerNpc.appendChild(actionsListNpc);
-
-        const checksListNpc = document.createElement('div');
-        checksListNpc.id = `suggested-player-checks-list-npc-${forNpcId}`;
-        checksListNpc.className = 'ai-suggestion-category';
-        if (aiResult.suggested_player_checks && aiResult.suggested_player_checks.length > 0) {
-            checksListNpc.innerHTML = '<h5>Suggested Player Checks:</h5>' + aiResult.suggested_player_checks.map(check => `<div class="suggested-item">${Utils.escapeHtml(check)}</div>`).join('');
-            contentGeneratedForNpc = true;
-        } else { checksListNpc.innerHTML = '<h5>Suggested Player Checks:</h5><p><em>None</em></p>';}
-        suggestionsContainerNpc.appendChild(checksListNpc);
-
-        const standingChangesNpc = document.createElement('div');
-        standingChangesNpc.id = `suggested-faction-standing-changes-npc-${forNpcId}`;
-        standingChangesNpc.className = 'ai-suggestion-category';
-         if (aiResult.suggested_new_standing && aiResult.suggested_standing_pc_id) {
-            const pcForStanding = appState.getCharacterById(aiResult.suggested_standing_pc_id);
-            const pcNameForStanding = pcForStanding ? pcForStanding.name : aiResult.suggested_standing_pc_id;
-            const standingValue = (typeof aiResult.suggested_new_standing === 'object' && aiResult.suggested_new_standing !== null) ? aiResult.suggested_new_standing.value : aiResult.suggested_new_standing;
-            standingChangesNpc.innerHTML = `<h5>Suggested Faction Standing Change:</h5>
-                <div class="suggested-item">
-                    Towards ${Utils.escapeHtml(pcNameForStanding)}: ${Utils.escapeHtml(standingValue)}
-                    (Justification: ${Utils.escapeHtml(aiResult.standing_change_justification || 'None')})
-                    <button onclick="acceptFactionStandingChange('${forNpcId}', '${aiResult.suggested_standing_pc_id}', '${Utils.escapeHtml(standingValue)}')">Accept</button>
-                </div>`;
-            contentGeneratedForNpc = true;
-        } else {
-             standingChangesNpc.innerHTML = `<h5>Suggested Faction Standing Change:</h5><p><em>None</em></p>`;
-        }
-        suggestionsContainerNpc.appendChild(standingChangesNpc);
-        suggestionsContainerNpc.style.display = contentGeneratedForNpc ? 'block' : 'none';
-
+    renderSuggestionsArea: function(aiResult, forNpcId) {
         const globalSuggestionsArea = Utils.getElem('ai-suggestions');
-        if (globalSuggestionsArea) {
-            if (appState.getActiveNpcCount() > 0 && contentGeneratedForNpc && appState.getCurrentProfileCharId() === forNpcId) {
-                globalSuggestionsArea.style.display = 'flex'; // Use flex to match the new CSS
-                Utils.getElem('suggested-memories-list').innerHTML = memoriesListNpc.innerHTML;
-                Utils.getElem('suggested-topics-list').innerHTML = topicsListNpc.innerHTML;
-                Utils.getElem('suggested-npc-actions-list').innerHTML = actionsListNpc.innerHTML;
-                Utils.getElem('suggested-player-checks-list').innerHTML = checksListNpc.innerHTML;
-                Utils.getElem('suggested-faction-standing-changes').innerHTML = standingChangesNpc.innerHTML;
-            } else if (!appState.hasActiveNpc(appState.getCurrentProfileCharId())) {
-                 // Don't hide it if there's no active interaction but a profile is selected
-                 // The canned responses should still be visible.
-            } else {
-                 globalSuggestionsArea.style.display = 'none';
-            }
-        }
-    },
+        if (!globalSuggestionsArea) return;
 
-    renderCannedResponsesUI: function(cannedResponses) {
-        const display = Utils.getElem('canned-response-display');
+        let hasContentToDisplay = false;
+
+        // Part 1: Render Canned Responses for the currently profiled character
+        const cannedResponses = appState.cannedResponsesForProfiledChar || {};
+        const cannedContainer = Utils.getElem('canned-responses-list');
+        const cannedDisplay = Utils.getElem('canned-response-display');
         const prevBtn = Utils.getElem('prev-canned-btn');
         const nextBtn = Utils.getElem('next-canned-btn');
         const sendBtn = Utils.getElem('send-canned-btn');
-        const container = Utils.getElem('canned-responses-list');
-        const globalSuggestionsArea = Utils.getElem('ai-suggestions');
-
-        if (!display || !prevBtn || !nextBtn || !sendBtn || !container) return;
-
-        const keys = Object.keys(cannedResponses);
-
-        if (keys.length === 0) {
-            container.style.display = 'none';
-            // If no other suggestions are showing, hide the whole bar
-            if (globalSuggestionsArea.querySelectorAll('.ai-suggestion-category[style*="display: block"]').length === 0) {
-                 globalSuggestionsArea.style.display = 'none';
+        
+        if (cannedContainer && cannedDisplay && prevBtn && nextBtn && sendBtn) {
+            const keys = Object.keys(cannedResponses);
+            if (keys.length > 0) {
+                hasContentToDisplay = true;
+                cannedContainer.style.display = 'flex';
+                const currentKey = keys[appState.currentCannedResponseIndex];
+                const currentResponse = cannedResponses[currentKey] || "Response not found.";
+                cannedDisplay.innerHTML = `<p><strong>${Utils.escapeHtml(currentKey)}:</strong> ${Utils.escapeHtml(currentResponse)}</p>`;
+                Utils.disableBtn('send-canned-btn', false);
+                Utils.disableBtn('prev-canned-btn', appState.currentCannedResponseIndex <= 0);
+                Utils.disableBtn('next-canned-btn', appState.currentCannedResponseIndex >= keys.length - 1);
+            } else {
+                cannedContainer.style.display = 'none';
             }
-            return;
         }
-        
-        globalSuggestionsArea.style.display = 'flex'; // Make sure the parent is visible
-        container.style.display = 'flex'; // Show the section
-        
-        const currentKey = keys[appState.currentCannedResponseIndex];
-        const currentResponse = cannedResponses[currentKey];
 
-        display.innerHTML = `<p><strong>${currentKey}:</strong> ${Utils.escapeHtml(currentResponse)}</p>`;
+        // Part 2: Render AI Suggestions if they exist for the interacting character
+        const profiledCharId = appState.getCurrentProfileCharId();
+        if (aiResult && forNpcId && forNpcId === profiledCharId) {
+            const suggestionTypes = {
+                'memories': { title: 'Suggested Memories', data: aiResult.new_memory_suggestions, render: item => `${Utils.escapeHtml(item)} <button onclick="App.addSuggestedMemoryAsActual('${forNpcId}', '${Utils.escapeHtml(item).replace(/'/g, "\\'")}')">Add</button>` },
+                'topics': { title: 'Suggested Conversation Topics', data: aiResult.generated_topics, render: item => `<div class="clickable-suggestion" onclick="App.sendTopicToChat('${Utils.escapeHtml(item).replace(/'/g, "\\'")}')">${Utils.escapeHtml(item)}</div>` },
+                'npc-actions': { title: 'Suggested NPC Actions/Thoughts', data: aiResult.suggested_npc_actions, render: item => Utils.escapeHtml(item) },
+                'player-checks': { title: 'Suggested Player Checks', data: aiResult.suggested_player_checks, render: item => Utils.escapeHtml(item) }
+            };
 
-        Utils.disableBtn('send-canned-btn', false);
-        Utils.disableBtn('prev-canned-btn', appState.currentCannedResponseIndex === 0);
-        Utils.disableBtn('next-canned-btn', appState.currentCannedResponseIndex >= keys.length - 1);
+            for (const [key, config] of Object.entries(suggestionTypes)) {
+                const listDiv = Utils.getElem(`suggested-${key}-list`);
+                if (listDiv) {
+                    listDiv.style.display = 'flex';
+                    if (config.data && config.data.length > 0) {
+                        listDiv.innerHTML = `<h5>${config.title}</h5>` + config.data.map(item => `<div class="suggested-item">${config.render(item)}</div>`).join('');
+                        hasContentToDisplay = true;
+                    } else {
+                        listDiv.innerHTML = `<h5>${config.title}</h5><p><em>None</em></p>`;
+                    }
+                }
+            }
+
+            const standingChangesDiv = Utils.getElem('suggested-faction-standing-changes');
+            if (standingChangesDiv) {
+                standingChangesDiv.style.display = 'flex';
+                if (aiResult.suggested_new_standing && aiResult.suggested_standing_pc_id) {
+                    const pcForStanding = appState.getCharacterById(aiResult.suggested_standing_pc_id);
+                    const pcNameForStanding = pcForStanding ? pcForStanding.name : "the speaker";
+                    const standingValue = (typeof aiResult.suggested_new_standing === 'object' && aiResult.suggested_new_standing !== null) ? aiResult.suggested_new_standing.value : aiResult.suggested_new_standing;
+                    standingChangesDiv.innerHTML = `<h5>Suggested Faction Standing Change:</h5>
+                        <div class="suggested-item">
+                            Towards ${Utils.escapeHtml(pcNameForStanding)}: ${Utils.escapeHtml(standingValue)}
+                            (Justification: ${Utils.escapeHtml(aiResult.standing_change_justification || 'None')})
+                            <button onclick="App.acceptFactionStandingChange('${forNpcId}', '${aiResult.suggested_standing_pc_id}', '${Utils.escapeHtml(standingValue)}')">Accept</button>
+                        </div>`;
+                    hasContentToDisplay = true;
+                } else {
+                     standingChangesDiv.innerHTML = `<h5>Suggested Faction Standing Change:</h5><p><em>None</em></p>`;
+                }
+            }
+
+        } else { // Clear previous AI suggestions if there's no new result for the profiled character
+             ['memories', 'topics', 'npc-actions', 'player-checks', 'faction-standing-changes'].forEach(suggType => {
+                const targetDiv = Utils.getElem(`suggested-${suggType}-list`);
+                if(targetDiv) {
+                    targetDiv.innerHTML = `<h5>${targetDiv.querySelector('h5')?.textContent || 'Suggestions'}</h5><p><em>None</em></p>`;
+                }
+             });
+        }
+
+        // Final visibility check for the main container
+        globalSuggestionsArea.style.display = hasContentToDisplay ? 'flex' : 'none';
     },
 
     renderNpcFactionStandingsUI: function(npcCharacter, activePcIdsSet, allCharactersArray, contentElement, onStandingChangeCallback) {
@@ -1047,34 +914,6 @@ var UIRenderers = {
         dashboardContentElement.innerHTML = sheetHTML;
     },
 
-    renderCannedResponsesUI: function(cannedResponses) {
-        const display = Utils.getElem('canned-response-display');
-        const prevBtn = Utils.getElem('prev-canned-btn');
-        const nextBtn = Utils.getElem('next-canned-btn');
-        const sendBtn = Utils.getElem('send-canned-btn');
-
-        const keys = Object.keys(cannedResponses);
-
-        if (!display || !prevBtn || !nextBtn || !sendBtn) return;
-
-        if (keys.length === 0) {
-            display.innerHTML = '<p><em>No canned responses for this NPC.</em></p>';
-            Utils.disableBtn('prev-canned-btn', true);
-            Utils.disableBtn('next-canned-btn', true);
-            Utils.disableBtn('send-canned-btn', true);
-            return;
-        }
-
-        const currentKey = keys[appState.currentCannedResponseIndex];
-        const currentResponse = cannedResponses[currentKey];
-
-        display.innerHTML = `<p><strong>${currentKey}:</strong> ${Utils.escapeHtml(currentResponse)}</p>`;
-
-        Utils.disableBtn('send-canned-btn', false);
-        Utils.disableBtn('prev-canned-btn', appState.currentCannedResponseIndex === 0);
-        Utils.disableBtn('next-canned-btn', appState.currentCannedResponseIndex >= keys.length - 1);
-    },
-
     updateMainViewUI: function(dialogueInterfaceElem, pcDashboardViewElem, pcQuickViewInSceneElem, activeNpcCount, showPcDashboard) {
         if (!dialogueInterfaceElem || !pcDashboardViewElem || !pcQuickViewInSceneElem) { return; }
         const dashboardContent = Utils.getElem('pc-dashboard-content');
@@ -1105,8 +944,6 @@ var UIRenderers = {
             }
         }
         Utils.disableBtn('generate-dialogue-btn', activeNpcCount === 0);
-
-        
     }
 };
 

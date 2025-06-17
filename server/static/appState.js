@@ -14,14 +14,10 @@ const appState = {
     skillSortKey: null,
     currentSceneContextFilter: null,
     targetAC: 13,
-    // --- CHANGED START ---
-    // Added state to track selected attacks for the round calculator.
-    selectedAttacks: {}, // E.g., { pcId: Set('attack name') }
-    estimatedRounds: 3,  // Default number of rounds for HP estimation.
-
+    selectedAttacks: {},
+    estimatedRounds: 3,
     cannedResponsesForProfiledChar: {},
     currentCannedResponseIndex: 0,
-    // --- CHANGED END ---
 
     setAllCharacters(characters) {
         this.allCharacters = characters.map(char => this.processCharacterData(char));
@@ -82,6 +78,8 @@ const appState = {
         char.flaws = char.flaws || [];
         char.motivations = char.motivations || [];
         char.pc_faction_standings = char.pc_faction_standings || {};
+        char.canned_conversations = char.canned_conversations || {};
+
 
         if (char.character_type === 'PC') {
             const pcLevel = char.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels ||
@@ -98,8 +96,6 @@ const appState = {
         return char;
     },
 
-    // --- CHANGED START ---
-    // Added helper methods for managing attack selections for the DPR calculator.
     isAttackSelected(pcId, attackName) {
         return this.selectedAttacks[pcId] && this.selectedAttacks[pcId].has(attackName);
     },
@@ -114,9 +110,7 @@ const appState = {
             this.selectedAttacks[pcId].add(attackName);
         }
     },
-    // --- CHANGED END ---
-
-    // NPC/PC Scene Management
+    
     addActiveNpc(id) { this.activeSceneNpcIds.add(String(id)); },
     removeActiveNpc(id) { this.activeSceneNpcIds.delete(String(id)); },
     hasActiveNpc(id) { return this.activeSceneNpcIds.has(String(id)); },
@@ -134,7 +128,6 @@ const appState = {
     getActivePcCount() { return this.activePcIds.size; },
     getActivePcIds() { return Array.from(this.activePcIds); },
 
-    // Dialogue History
     initDialogueHistory(npcId) { this.dialogueHistories[String(npcId)] = []; },
     addDialogueToHistory(npcId, message) {
         const idStr = String(npcId);
@@ -147,27 +140,32 @@ const appState = {
         return (this.dialogueHistories[String(npcId)] || []).slice(-count);
     },
 
-    // Character Profile
     setCurrentProfileCharId(id) { this.currentProfileCharId = id ? String(id) : null; },
     getCurrentProfileCharId() { return this.currentProfileCharId; },
     getCurrentProfileChar() { return this.getCharacterById(this.currentProfileCharId); },
 
-    // PC Dashboard UI State
     setExpandedAbility(abilityKey) { this.currentlyExpandedAbility = abilityKey; },
     getExpandedAbility() { return this.currentlyExpandedAbility; },
     setExpandedSkill(skillKey) { this.currentlyExpandedSkill = skillKey; },
     getExpandedSkill() { return this.currentlyExpandedSkill; },
     setSkillSortKey(key) { this.skillSortKey = key; },
     getSkillSortKey() { return this.skillSortKey; },
+    
+    setCannedResponsesForProfiledChar(responses) {
+        this.cannedResponsesForProfiledChar = responses;
+        this.currentCannedResponseIndex = 0;
+    },
+    clearCannedResponses() {
+        this.cannedResponsesForProfiledChar = {};
+        this.currentCannedResponseIndex = 0;
+    },
 
-    // Lore Management State
     setAllLoreEntries(loreEntries) {
         this.allLoreEntries = loreEntries.map(entry => {
             if (entry.lore_id && typeof entry.lore_id === 'object' && entry.lore_id.$oid) {
                 entry.lore_id = entry.lore_id.$oid;
             } else if (entry._id && typeof entry._id === 'object' && entry._id.$oid) { // Handle if _id is present
                 entry.lore_id = entry._id.$oid; // Use _id as lore_id if lore_id is missing
-                // delete entry._id; // Optionally delete _id if lore_id is now the primary identifier
             } else if (entry._id && typeof entry._id === 'string') {
                  entry.lore_id = entry._id; // if _id is already a string
             }
@@ -201,7 +199,6 @@ const appState = {
     getCurrentLoreEntryId() { return this.currentLoreEntryId; },
     getCurrentLoreEntry() { return this.getLoreEntryById(this.currentLoreEntryId); },
 
-    // Scene Context Filter
     setCurrentSceneContextFilter(filter) { this.currentSceneContextFilter = filter; },
     getCurrentSceneContextFilter() { return this.currentSceneContextFilter; }
 };

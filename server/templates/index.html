@@ -31,7 +31,7 @@
                     <div>
                         <label for="scene-context-type-filter">Filter by Lore Type:</label>
                         <select id="scene-context-type-filter">
-                            <option value="">-- All Relevant Types --</option>
+                            <option value="">-- All Relevant Lore Types --</option>
                         </select>
                     </div>
                     <div>
@@ -206,31 +206,27 @@
             </div>
             <hr>
             <div id="ai-suggestions" style="display:none;">
-    <h4>AI Suggestions (Last Interaction - Profiled NPC):</h4>
-    <div id="suggested-memories-list" class="ai-suggestion-category"><h5>Suggested Memories:</h5></div>
-    <div id="suggested-topics-list" class="ai-suggestion-category"><h5>Suggested Conversation Topics:</h5></div>
-    <div id="suggested-npc-actions-list" class="ai-suggestion-category"><h5>Suggested NPC Actions/Thoughts:</h5></div>
-    <div id="suggested-player-checks-list" class="ai-suggestion-category"><h5>Suggested Player Checks:</h5></div>
-    <div id="suggested-faction-standing-changes" class="ai-suggestion-category"><h5>Suggested Faction Standing Change:</h5></div>
-    
-    <div id="canned-responses-list" class="ai-suggestion-category">
-        <h5>Canned Responses</h5>
-        <div id="canned-response-display"><p><em>No canned responses for this NPC.</em></p></div>
-        <div id="canned-response-controls">
-            <button id="prev-canned-btn" onclick="App.cycleCannedResponse(-1)" disabled>&lt; Prev</button>
-            <button id="send-canned-btn" onclick="App.sendCannedResponseToChat()" disabled>Send to Chat</button>
-            <button id="next-canned-btn" onclick="App.cycleCannedResponse(1)" disabled>&gt; Next</button>
-        </div>
-    </div>
-</div>
+                <h4>AI Suggestions (Last Interaction - Profiled NPC)</h4>
+                <div id="suggested-memories-list" class="ai-suggestion-category"><h5>Suggested Memories:</h5></div>
+                <div id="suggested-topics-list" class="ai-suggestion-category"><h5>Suggested Conversation Topics:</h5></div>
+                <div id="suggested-npc-actions-list" class="ai-suggestion-category"><h5>Suggested NPC Actions/Thoughts:</h5></div>
+                <div id="suggested-player-checks-list" class="ai-suggestion-category"><h5>Suggested Player Checks:</h5></div>
+                <div id="suggested-faction-standing-changes" class="ai-suggestion-category"><h5>Suggested Faction Standing Change:</h5></div>
+                <div id="canned-responses-list" class="ai-suggestion-category">
+                    <h5>Canned Responses</h5>
+                    <div id="canned-response-display"><p><em>No canned responses for this NPC.</em></p></div>
+                    <div id="canned-response-controls">
+                        <button id="prev-canned-btn" onclick="App.cycleCannedResponse(-1)" disabled>&lt; Prev</button>
+                        <button id="send-canned-btn" onclick="App.sendCannedResponseToChat()" disabled>Send to Chat</button>
+                        <button id="next-canned-btn" onclick="App.cycleCannedResponse(1)" disabled>&gt; Next</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="pc-dashboard-view">
             <h2>Player Character Dashboard</h2>
-            <div id="pc-dashboard-view">
             <div id="pc-dashboard-content">
-        <p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>
-    </div>
-</div>
+                <p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>
             </div>
         </div>
     </div>
@@ -244,5 +240,5 @@
     <script src="../static/characterService.js"></script>
     <script src="../static/eventHandlers.js"></script>
     <script src="../static/app.js"></script>
-    </body>
+</body>
 </html>

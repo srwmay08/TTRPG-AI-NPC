@@ -15,9 +15,6 @@ var App = {
 
             const dashboardView = Utils.getElem('pc-dashboard-view');
             if (dashboardView) {
-                // --- CHANGED START ---
-                // Replaced the simple DPR input listener with a more robust 'change' listener
-                // for the whole dashboard to handle new checkboxes and inputs.
                 dashboardView.addEventListener('change', (event) => {
                     if (event.target.classList.contains('attack-selector')) {
                         const pcId = event.target.dataset.pcId;
@@ -30,12 +27,11 @@ var App = {
                     } else if (event.target.id === 'dpr-ac-input') {
                          const newAC = parseInt(event.target.value, 10);
                         if (!isNaN(newAC)) {
-                            appState.targetAC = newAC; // Update state
-                            this.updateMainView(); // Re-render the dashboard
+                            appState.targetAC = newAC;
+                            this.updateMainView();
                         }
                     }
                 });
-                // --- CHANGED END ---
             }
 
             setTimeout(() => this.updateMainView(), 0); 
@@ -45,41 +41,6 @@ var App = {
             if (body) body.innerHTML = `<h1>Critical Error Initializing Application: ${e.message}. Please check console.</h1><pre>${e.stack}</pre>`;
         }
         console.log("App.js: DOMContentLoaded finished.");
-    },
-
-    cycleCannedResponse: function(direction) {
-        const keys = Object.keys(appState.cannedResponsesForProfiledChar);
-        if (keys.length === 0) return;
-
-        let newIndex = appState.currentCannedResponseIndex + direction;
-
-        if (newIndex < 0) newIndex = 0;
-        if (newIndex >= keys.length) newIndex = keys.length - 1;
-
-        appState.currentCannedResponseIndex = newIndex;
-        UIRenderers.renderCannedResponsesUI(appState.cannedResponsesForProfiledChar);
-    },
-
-    sendCannedResponseToChat: function() {
-        const keys = Object.keys(appState.cannedResponsesForProfiledChar);
-        if (keys.length === 0) return;
-
-        const currentKey = keys[appState.currentCannedResponseIndex];
-        const currentResponse = appState.cannedResponsesForProfiledChar[currentKey];
-        
-        const playerUtteranceElem = Utils.getElem('player-utterance');
-        if (playerUtteranceElem) {
-            playerUtteranceElem.value = currentResponse;
-            playerUtteranceElem.focus();
-        }
-    },
-    
-    sendTopicToChat: function(topic) {
-        const playerUtteranceElem = Utils.getElem('player-utterance');
-        if (playerUtteranceElem) {
-            playerUtteranceElem.value = topic;
-            playerUtteranceElem.focus();
-        }
     },
 
     openTab: function(event, tabName) { 
@@ -264,7 +225,7 @@ var App = {
         console.log("App.js: App.updateMainView finished.");
     },
 
-handleToggleNpcInScene: async function(npcIdStr, npcName) {
+    handleToggleNpcInScene: async function(npcIdStr, npcName) {
         const multiNpcContainer = Utils.getElem('multi-npc-dialogue-container');
         if (!multiNpcContainer) {
             console.error("Multi-NPC dialogue container not found.");
@@ -341,7 +302,8 @@ handleToggleNpcInScene: async function(npcIdStr, npcName) {
 
             UIRenderers.appendMessageToTranscriptUI(transcriptArea, `${npcName}: ${result.npc_dialogue}`, 'dialogue-entry npc-response');
             appState.addDialogueToHistory(npcIdStr, `${npcName}: ${result.npc_dialogue}`);
-            UIRenderers.renderAiSuggestionsContent(result, npcIdStr);
+            
+            UIRenderers.renderSuggestionsArea(result, npcIdStr);
         } catch (error) {
             console.error(`Error generating dialogue for ${npcName}:`, error);
             if(thinkingMessageElement && thinkingMessageElement.parentNode) thinkingMessageElement.remove();
@@ -451,7 +413,7 @@ handleToggleNpcInScene: async function(npcIdStr, npcName) {
                 charToUpdate.memories = response.updated_memories;
                 appState.updateCharacterInList(charToUpdate);
                 if (appState.getCurrentProfileCharId() === npcId) {
-                    UIRenderers.renderMemoriesUI(charToUpdate.memories, Utils.getElem('character-memories-list'), handleDeleteMemory);
+                    UIRenderers.renderMemoriesUI(charToUpdate.memories, Utils.getElem('character-memories-list'), CharacterService.handleDeleteMemory);
                 }
             }
             alert(`Suggested memory added to ${character.name}.`);
@@ -474,7 +436,42 @@ handleToggleNpcInScene: async function(npcIdStr, npcName) {
         }
 
         if (confirm(`Change ${npc.name}'s standing towards ${pc.name} to ${newStanding}?`)) {
-            await handleSaveFactionStanding(npcIdToUpdate, pcTargetId, newStanding);
+            await CharacterService.handleSaveFactionStanding(npcIdToUpdate, pcTargetId, newStanding);
+        }
+    },
+
+    cycleCannedResponse: function(direction) {
+        const keys = Object.keys(appState.cannedResponsesForProfiledChar);
+        if (keys.length === 0) return;
+
+        let newIndex = appState.currentCannedResponseIndex + direction;
+
+        if (newIndex < 0) newIndex = 0;
+        if (newIndex >= keys.length) newIndex = keys.length - 1;
+
+        appState.currentCannedResponseIndex = newIndex;
+        UIRenderers.renderSuggestionsArea(null); // Re-render the whole suggestions area
+    },
+
+    sendCannedResponseToChat: function() {
+        const keys = Object.keys(appState.cannedResponsesForProfiledChar);
+        if (keys.length === 0) return;
+
+        const currentKey = keys[appState.currentCannedResponseIndex];
+        const currentResponse = appState.cannedResponsesForProfiledChar[currentKey];
+        
+        const playerUtteranceElem = Utils.getElem('player-utterance');
+        if (playerUtteranceElem) {
+            playerUtteranceElem.value = currentResponse;
+            playerUtteranceElem.focus();
+        }
+    },
+    
+    sendTopicToChat: function(topic) {
+        const playerUtteranceElem = Utils.getElem('player-utterance');
+        if (playerUtteranceElem) {
+            playerUtteranceElem.value = topic;
+            playerUtteranceElem.focus();
         }
     },
 
@@ -505,4 +502,4 @@ window.addSuggestedMemoryAsActual = App.addSuggestedMemoryAsActual;
 window.acceptFactionStandingChange = App.acceptFactionStandingChange;
 window.cycleCannedResponse = App.cycleCannedResponse;
 window.sendCannedResponseToChat = App.sendCannedResponseToChat;
-window.sendTopicToChat = App.sendTopicToChat; 
+window.sendTopicToChat = App.sendTopicToChat;
