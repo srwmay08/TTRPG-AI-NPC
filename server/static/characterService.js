@@ -70,7 +70,7 @@ var CharacterService = {
             appState.setCurrentProfileCharId(null);
             appState.clearCannedResponses();
             UIRenderers.renderCharacterProfileUI(null, CharacterService.profileElementIds);
-            UIRenderers.renderSuggestionsArea(null); // Clear and hide suggestions properly
+            UIRenderers.renderSuggestionsArea(null); // Clear and hide suggestions
             if (characterProfileSection) {
                 characterProfileSection.classList.add('collapsed');
                 const content = characterProfileSection.querySelector('.collapsible-content');
@@ -88,7 +88,7 @@ var CharacterService = {
             appState.setCannedResponsesForProfiledChar(processedChar.canned_conversations || {});
             
             UIRenderers.renderCharacterProfileUI(processedChar, CharacterService.profileElementIds);
-            UIRenderers.renderSuggestionsArea(null, charIdStr); 
+            UIRenderers.renderSuggestionsArea(null, charIdStr); // Render suggestions area, showing canned responses if available
 
             if (characterProfileSection) {
                 characterProfileSection.classList.remove('collapsed');
