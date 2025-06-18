@@ -34,5 +34,6 @@
         "introduction": "'What do you want? Don't waste my time staring. If you aren't drinking, you're loitering.'",
         "ask_about_floon_initial": "'I see a hundred faces a night. Nobles, bums, they all look the same after a few ales. Can't say I recall 'em.'",
         "ask_about_floon_bribed": "'(Maeve pockets the coin with a grunt) Aye, I remember the pretty boys. A fop and a noble brat. Had some Zhentarim boys watchin' 'em. Real serious types. If you're lookin' for 'em, try the warehouse on Candle Lane with the black snake painted on the door. Now get out of my sight before they see us talkin'.'"
-    }
+    },
+"linked_lore_by_name": ["The Skewered Dragon"]
 }

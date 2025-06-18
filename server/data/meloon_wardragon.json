@@ -33,8 +33,9 @@
         "To live a life worthy of the stories told about him."
     ],
     "canned_conversations": {
-        "greeting": "(He raises his mug with a wide grin) Hail, adventurers! Heroes, am I right? Maybe one day you'll join Force Grey. Can I buy you an ale?",
+        "introduction": "(He raises his mug with a wide grin) Hail, adventurers! Heroes, am I right? Maybe one day you'll join Force Grey. Can I buy you an ale?",
         "ask_about_his_adventures": "Just back from the Rat Hills, cleared out a whole nest of wererats! Nasty business, but the ale tastes all the better for it!",
         "ask_about_force_grey": "The finest fighting force in the city! When the Watch can't handle it, they call us. It's an honor to serve."
-    }
+    },
+    "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"]
 }

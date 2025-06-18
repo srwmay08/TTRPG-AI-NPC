@@ -33,8 +33,9 @@
         "To spread the faith of Waukeen by demonstrating the blessings of good commerce."
     ],
     "canned_conversations": {
-        "greeting": "By the Coinmaiden's golden eyes! The wonders of Waterdeep are some thing to behold, I tell you. I've never seen so much money in my life!",
+        "introduction": "By the Coinmaiden's golden eyes! The wonders of Waterdeep are some thing to behold, I tell you. I've never seen so much money in my life!",
         "ask_about_her_goddess": "Waukeen blesses the fair deal and the bold merchant. To turn a profit is to offer her praise!",
         "ask_about_her_journey": "I've come all this way from Port Nyanzaru. The trade opportunities here are endless! Do you have anything to sell, by any chance?"
-    }
+    },
+    "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"]
 }

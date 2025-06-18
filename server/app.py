@@ -134,7 +134,6 @@ def sync_data_from_files():
                             print(f"[Data Sync] Skipping item in lore file {filename}: item is not a JSON object.")
                             continue
                         try:
-                            # Use a temporary payload to avoid modifying the original
                             temp_payload = lore_data_item.copy()
                             if 'lore_id' in temp_payload:
                                 del temp_payload['lore_id']
@@ -181,12 +180,19 @@ def sync_data_from_files():
             if filename.endswith('.json'):
                 primary_file_path = os.path.join(PRIMARY_DATA_DIR, filename)
                 try:
+                    # NEW DEBUG LINE - THIS IS THE KEY CHANGE
+                    print(f"[DEBUG] Attempting to process character file: {filename}")
                     with open(primary_file_path, 'r', encoding='utf-8') as f:
                         primary_char_data = json.load(f)
+                    
                     char_name_temp = primary_char_data.get("name")
                     if not char_name_temp:
                         print(f"[Data Sync] Skipping character file {filename}: missing 'name' field.")
                         continue
+                    
+                    # More debugging to see what keys are loaded
+                    if 'linked_lore_by_name' in primary_char_data:
+                         print(f"    [DEBUG] SUCCESS: Found 'linked_lore_by_name' for {char_name_temp} in {filename}.")
                     
                     combined_data = primary_char_data.copy()
                     

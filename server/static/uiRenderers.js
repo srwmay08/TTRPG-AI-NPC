@@ -493,10 +493,26 @@ var UIRenderers = {
         const sendBtn = Utils.getElem('send-canned-btn');
         
         if (cannedContainer && cannedDisplay && prevBtn && nextBtn && sendBtn) {
-            const keys = Object.keys(cannedResponses);
+            let keys = Object.keys(cannedResponses);
+
+            // Sort keys to prioritize 'introduction'
+            if (keys.length > 0) {
+                keys.sort((a, b) => {
+                    if (a.toLowerCase() === 'introduction') return -1; // a comes first
+                    if (b.toLowerCase() === 'introduction') return 1;  // b comes first
+                    return a.localeCompare(b); // Alphabetical for others
+                });
+            }
+            
             if (keys.length > 0) {
                 hasContentToDisplay = true;
                 cannedContainer.style.display = 'flex'; // Show if content exists
+                
+                // Ensure current index is valid after sorting
+                if(appState.currentCannedResponseIndex >= keys.length) {
+                    appState.currentCannedResponseIndex = 0;
+                }
+
                 const currentKey = keys[appState.currentCannedResponseIndex];
                 const currentResponse = cannedResponses[currentKey] || "Response not found.";
                 cannedDisplay.innerHTML = `<p><strong>${Utils.escapeHtml(currentKey)}:</strong> ${Utils.escapeHtml(currentResponse)}</p>`;

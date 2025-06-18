@@ -33,8 +33,9 @@
         "To fulfill her obligations to her employers in the Zhentarim."
     ],
     "canned_conversations": {
-        "greeting": "(Looks you up and down with a smirk) You look like you could use some muscle. Or maybe you just want to arm wrestle? Hope you're stronger than you look.",
+        "introduction": "(Looks you up and down with a smirk) You look like you could use some muscle. Or maybe you just want to arm wrestle? Hope you're stronger than you look.",
         "ask_about_work": "I fight for coin. Got a job? State your terms. Don't waste my time.",
         "lose_an_arm_wrestle": "Hah! Not bad. You're stronger than you look. I'll give you that."
-    }
+    },
+    "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"]
 }

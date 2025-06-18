@@ -38,5 +38,6 @@
         "about_floon": "Floon? A wonderful fellow! A bit of a dandy, I'll admit. We were enjoying a fine evening at the Skewered Dragon, a tavern of perhaps... questionable repute, but the ale is cheap! I left to meet with another associate, and that's the last I saw of him.",
         "about_the_reward": "Yes, yes, ten gold pieces—dragons, as we call them in the city—for each of you now, for expenses. And one hundred more each upon Floon's safe return! A small price to pay for a friend's life, wouldn't you agree?"
     },
-    "associated_history_files": ["Volo_and_Floon.txt"]
+    "associated_history_files": ["Volo_and_Floon.txt"],
+    "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"]
 }
