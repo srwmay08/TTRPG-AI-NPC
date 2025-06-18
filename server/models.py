@@ -84,17 +84,15 @@ class NPCProfile(BaseModel):
     
     canned_conversations: Optional[Dict[str, str]] = Field(default_factory=dict, description="A dictionary of specific topics and the exact dialogue the NPC should give for them.")
 
-    # vtt_data stores the 'system' object from FVTT
     vtt_data: Optional[Dict[str, Any]] = Field(default_factory=dict, description="Data imported from VTT character sheets (usually the 'system' object).")
     vtt_flags: Optional[Dict[str, Any]] = Field(default_factory=dict, description="Top-level 'flags' object imported from VTT character sheets.")
     img: Optional[str] = Field(default=None, description="Path to character image, potentially from VTT data.")
     items: Optional[List[Dict[str, Any]]] = Field(default_factory=list, description="Character items (weapons, armor, inventory) from VTT data.")
-    # system stores the entire FVTT JSON object if needed for deeper parsing later
     system: Optional[Dict[str, Any]] = Field(default_factory=dict, description="Full system object from VTT if needed for complex lookups.")
 
 
     associated_history_files: List[str] = Field(default_factory=list, description="List of filenames of associated detailed history .txt files.")
-    linked_lore_ids: List[str] = Field(default_factory=list, description="IDs of structured lore entries relevant to this character.")
+    linked_lore_by_name: Optional[List[str]] = Field(default_factory=list, description="Names of structured lore entries relevant to this character.")
 
     pc_faction_standings: Dict[str, FactionStandingLevel] = Field(
         default_factory=dict,
@@ -107,7 +105,7 @@ class NPCProfile(BaseModel):
             return {}
         return value
 
-    @field_validator('items', 'ideals', 'bonds', 'flaws', 'relationships', 'personality_traits', 'motivations', 'knowledge', 'memories', 'associated_history_files', 'linked_lore_ids', mode='before')
+    @field_validator('items', 'ideals', 'bonds', 'flaws', 'relationships', 'personality_traits', 'motivations', 'knowledge', 'memories', 'associated_history_files', 'linked_lore_by_name', mode='before')
     def ensure_list(cls, value):
         if value is None:
             return []
@@ -121,7 +119,7 @@ class NPCProfile(BaseModel):
                 "name": "Mattrim 'Threestrings' Mereg",
                 "character_type": "NPC",
                 "description": "A laid-back human bard from Waterdeep.",
-                "linked_lore_ids": ["507f1f77bcf86cd799439011", "507f191e810c19729de860ea"],
+                "linked_lore_by_name": ["The Yawning Portal", "Undermountain"],
                  "canned_conversations": {
                     "Floon": "Ah, Floon! A friend of mine. Last I saw him, he was headed to the Skewered Dragon. I'm dreadfully worried.",
                     "Zhentarim": "The Black Network? Shady business. Best to steer clear unless you've got a taste for trouble."

@@ -34,5 +34,6 @@
         "introduction": "'(She glances up from her ledger, eyes narrowed) Bet or buzz off. My time is valuable.'",
         "placing_a_bet": "'(She scribbles in her book without making eye contact) Name of the lizard, amount of the wager. Don't be shy.'",
         "ask_about_the_zhentarim_followers": "'(She looks around nervously) Look, people follow people out of here all the time. But the five men who left after the noble? Zhentarim. Heard one of 'em, Grum, boasting about how they were going to 'snatch a big fish' that night. That's all I know. Don't use my name.'"
-    }
+    },
+    "linked_lore_by_name": ["The Skewered Dragon"]
 }
