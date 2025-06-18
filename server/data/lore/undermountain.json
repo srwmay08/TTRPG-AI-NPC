@@ -1,18 +1,18 @@
-[{
-    "lore_id": "60d5ecb3a0f3e8a2d6f3b9a1",
-    "name": "The Crommer Clan Saga",
-    "lore_type": "Historical Event",
-    "description": "The rich history of the Crommer clan, their rise in Waterdeep, and their dedication to Moradin and the forge.",
-    "key_facts": [
-        "Established the Crommer Brassworks focusing on piping and fixtures.",
-        "Known for crafting the sacred Horns of Moradin.",
-        "Influential in Waterdeep's merchant and artisan guilds."
-    ],
-    "tags": ["crommer", "dwarven history", "waterdeep", "moradin", "brassworks"],
-    "gm_notes": "This lore is known to members of the Crommer family and close associates."
-},
-{
-        "lore_id": "undermountain_history_001",
+[
+    {
+        "lore_id": "60d5ecb3a0f3e8a2d6f3b9a1",
+        "name": "The Crommer Clan Saga",
+        "lore_type": "Historical Event",
+        "description": "The rich history of the Crommer clan, their rise in Waterdeep, and their dedication to Moradin and the forge.",
+        "key_facts": [
+            "Established the Crommer Brassworks focusing on piping and fixtures.",
+            "Known for crafting the sacred Horns of Moradin.",
+            "Influential in Waterdeep's merchant and artisan guilds."
+        ],
+        "tags": ["crommer", "dwarven history", "waterdeep", "moradin", "brassworks"],
+        "gm_notes": "This lore is known to members of the Crommer family and close associates."
+    },
+    {
         "name": "The Arrival of Halaster Blackcloak",
         "lore_type": "Historical Event",
         "description": "Over a thousand years ago, the wizard Halaster Blackcloak, whose origins are debated to be from the ancient human kingdoms of Netheril or the Cradlelands, came to the mountain that would one day be known as Mount Waterdeep.  He arrived with seven apprentices and used summoned creatures from other planes to build his tower, ringed by a stone rampart.  Over time, his dealings with these otherworldly servitors made him grim, reclusive, and prone to sudden rages. He began extensive excavations beneath his tower, eventually abandoning the surface entirely to dwell in the depths. ",
@@ -26,7 +26,6 @@
         "gm_notes": "This establishes the primary antagonist and creator of the dungeon. Halaster's paranoia, madness, and obsession with collecting monsters are key themes. His seven apprentices can be used as legendary figures, potential lich-like foes, or sources of lost lore and powerful magic."
     },
     {
-        "lore_id": "undermountain_history_002",
         "name": "The Underhalls of the Melairkyn Dwarves",
         "lore_type": "Historical Event",
         "description": "While excavating, Halaster's minions broke into the Underhalls, the ancient delvings of the Melairkyn dwarf clan. These great halls were built to guard two exhausted mithril-mines known as 'The Seadeeps'.  The Melairkyn clan had long since vanished, scattered by duergar and drow who came to inhabit the halls. By the time Halaster arrived, the duergar had moved on after the mithril was depleted, and most of the drow had been slaughtered in ancient wars with surface elves. ",
@@ -40,7 +39,6 @@
         "gm_notes": "This establishes the layered history of the dungeon. Player characters might find ancient dwarven architecture, forgotten traps, and the ghosts of the Melairkyn. The prior presence of drow and duergar offers hooks for old rivalries and factions that may still have a presence in the deeper levels."
     },
     {
-        "lore_id": "undermountain_history_003",
         "name": "Halaster's Hunt",
         "lore_type": "Historical Event",
         "description": "Upon discovering the remaining drow in the Underhalls, Halaster began a series of increasingly violent expeditions against them, a period that became known as 'Halaster's Hunt.' This brutal campaign eradicated the last organized drow presence from the upper levels. His apprentices' diaries suggest that some captured drow were magically transformed and enslaved, becoming grotesque servants for the Mad Mage. ",
@@ -53,7 +51,6 @@
         "gm_notes": "This event explains the presence of strange, magically altered creatures in Undermountain. It also provides a strong reason for any lingering drow hatred for Halaster. Player characters might encounter descendants of these transformed drow or find artifacts from these ancient battles."
     },
     {
-        "lore_id": "undermountain_history_004",
         "name": "The Descent of the Seven",
         "lore_type": "Historical Event",
         "description": "After Halaster fully abandoned his surface tower, his apprentices found it filled with deadly traps baited with powerful magic, hinting that 'true power' awaited them below.  One by one, they descended into Undermountain. Halaster tested them with his guardians and traps, leading to the deaths of two apprentices. The others either perished, went insane, or were enlisted to help expand the dungeon's security.  The only known survivor to escape was Jhesiyra Kestellharp, who fled to Myth Drannor and whose writings are the primary source of knowledge about the Mad Mage. ",
@@ -68,7 +65,6 @@
         "gm_notes": "The fates of the apprentices (such as Arcturia, Muiral, and Trobriand) provide powerful, high-level NPC villains or patrons. Each could have their own unique, themed section of the dungeon reflecting their madness and magical specialties. Finding a lost apprentice's journal, sanctum, or a *horned ring* is a great adventure hook."
     },
     {
-        "lore_id": "undermountain_history_005",
         "name": "The Founding of the Yawning Portal",
         "lore_type": "Historical Event",
         "description": "Durnan was one of the first adventurers to enter Undermountain and return to the surface alive and wealthy. He used his newfound riches to tear down the remnants of Halaster's shattered tower and build an inn on the site.  This inn, The Yawning Portal, became the most famous and accessible entry point to the dungeon. Durnan made a good living provisioning adventurers and established the practice of having priests of Tymora on hand to heal returning delvers for a fee. ",
@@ -82,7 +78,6 @@
         "gm_notes": "The Yawning Portal is the quintessential starting point for an Undermountain campaign. Durnan, secretly a Lord of Waterdeep, is a key NPC and a powerful source of information, quests, or trouble.  The inn itself is a hive of rumors and adventure hooks."
     },
     {
-        "lore_id": "undermountain_history_006",
         "name": "The Citadel of the Bloody Hand",
         "lore_type": "Historical Event",
         "description": "For a time, the Thieves' Guild of Waterdeep maintained a secret citadel within an upper level of Undermountain.  Named 'The Citadel of the Bloody Hand' after its Guildmaster, the base was heavily trapped and guarded against the monsters of the dungeon. The Guild was eventually driven out of Waterdeep, and the fate of their citadel is uncertain. It is believed to now be controlled by the City Guard. ",
@@ -96,7 +91,6 @@
         "gm_notes": "This lore provides a potential adventure location. Characters might be hired to infiltrate the former citadel, now a Guard outpost, or they might discover that a remnant of the Thieves' Guild is trying to reclaim it. The area would be filled with clever, non-magical traps and secret passages."
     },
     {
-        "lore_id": "undermountain_history_007",
         "name": "The Rise of Skullport",
         "lore_type": "Historical Event",
         "description": "Deep within Undermountain, the entirely lawless trading-community of Skullport was established.  The port is connected to the South Seacaves via a massive sling-hoist that can lift seagoing ships, allowing unscrupulous merchants to smuggle goods and conduct trade with drow and other denizens of the Underdark. The Lords of Waterdeep are aware of Skullport but largely turn a blind eye, as it provides a convenient route to rid the city of troublesome individuals and cargo. ",
@@ -110,7 +104,6 @@
         "gm_notes": "Skullport is a fantastic urban adventure location within the dungeon. It can serve as a neutral ground, a den of villainy, a source for illegal goods and dark quests, or a major obstacle for the players. The city's lawlessness allows for all manner of intrigue and danger."
     },
     {
-        "lore_id": "undermountain_history_008",
         "name": "The Tomb of Lord Hund Hiilgauntlet",
         "lore_type": "Historical Event",
         "description": "Hund Hiilgauntlet was an eccentric noble who dabbled in necromancy.  Forbidden from building his desired tomb in the City of the Dead, he learned of a two-way gate into Undermountain from the Eltorchul noble family. He used it to build his tomb, creating undead guardians from his workers and the Eltorchul noble who showed him the gate.  In retaliation, the Eltorchul brothers destroyed the gate, trapping Hund underground, and plundered his villa. Unbeknownst to them, Hund had already arranged to become a mummy and now lurks in his deep tomb, delighting in the suffering of intruders. ",

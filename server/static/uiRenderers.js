@@ -319,33 +319,33 @@ var UIRenderers = {
     },
 
     renderAllNpcListForManagementUI: function(listContainerElement, allCharacters, onNameClickCallback) {
-        if (!listContainerElement) { console.error("UIRenderers.renderAllNpcListForManagementUI: listContainerElement not found"); return; }
-        let ul = listContainerElement.querySelector('ul');
-        if (!ul) {
-            ul = document.createElement('ul');
-            listContainerElement.appendChild(ul);
-        }
-        ul.innerHTML = '';
-        const npcs = allCharacters.filter(char => char.character_type === 'NPC').sort((a, b) => a.name.localeCompare(b.name));
+    if (!listContainerElement) { console.error("UIRenderers.renderAllNpcListForManagementUI: listContainerElement not found"); return; }
+    let ul = listContainerElement.querySelector('ul');
+    if (!ul) {
+        ul = document.createElement('ul');
+        listContainerElement.appendChild(ul);
+    }
+    ul.innerHTML = '';
+    const npcs = allCharacters.filter(char => char.character_type === 'NPC').sort((a, b) => a.name.localeCompare(b.name));
 
-        if (npcs.length === 0) {
-            ul.innerHTML = '<li><p><em>No NPCs created yet. Use the "Create New Character" form below.</em></p></li>';
-            return;
-        }
-        npcs.forEach(char => {
-            const charIdStr = String(char._id);
-            const li = document.createElement('li');
-            li.dataset.charId = charIdStr;
+    if (npcs.length === 0) {
+        ul.innerHTML = '<li><p><em>No NPCs created yet. Use the "Create New Character" form below.</em></p></li>';
+        return;
+    }
+    npcs.forEach(char => {
+        const charIdStr = String(char._id);
+        const li = document.createElement('li');
+        li.dataset.charId = charIdStr;
 
-            const nameSpan = document.createElement('span');
-            nameSpan.textContent = char.name;
-            nameSpan.className = 'npc-name-clickable';
-            nameSpan.onclick = async () => { await onNameClickCallback(charIdStr); };
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = char.name;
+        nameSpan.className = 'npc-name-clickable';
+        nameSpan.onclick = onNameClickCallback;
 
-            li.appendChild(nameSpan);
-            ul.appendChild(li);
-        });
-    },
+        li.appendChild(nameSpan);
+        ul.appendChild(li);
+    });
+},
 
     renderPcListUI: function(pcListDiv, speakingPcSelect, allCharacters, activePcIds, onPcItemClickCallback, activeNpcIdsSet) {
         if (!pcListDiv) { console.error("UIRenderers.renderPcListUI: pcListDiv not found"); return;}

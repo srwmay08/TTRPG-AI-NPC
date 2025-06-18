@@ -203,34 +203,29 @@ def sync_data_from_files():
                             file_provided_lore_id_str = lore_data_item.get('lore_id')
                             target_object_id = None
 
-                            if file_provided_lore_id_str:
-                                try:
-                                    target_object_id = ObjectId(file_provided_lore_id_str)
-                                    existing_lore_in_db = lore_collection.find_one({"_id": target_object_id})
-                                except Exception:
-                                    print(f"[Data Sync] Warning: Invalid lore_id '{file_provided_lore_id_str}' in {filename}. Will try to match by name or insert new.")
-                                    existing_lore_in_db = lore_collection.find_one({"name": validated_lore.name})
-                                    if existing_lore_in_db:
-                                         target_object_id = existing_lore_in_db['_id'] # Use ID of name-matched doc
-                            else: # No lore_id in file, try by name
+                            if file_provided_lore_id_str and ObjectId.is_valid(file_provided_lore_id_str):
+                                # The ID from the file is a valid ObjectId, so we use it as the primary key.
+                                target_object_id = ObjectId(file_provided_lore_id_str)
+                                existing_lore_in_db = lore_collection.find_one({"_id": target_object_id})
+                            else:
+                                # The ID is not a valid ObjectId or doesn't exist, so we fall back to using the name as the key.
+                                if file_provided_lore_id_str:
+                                     print(f"[Data Sync] Info: '{file_provided_lore_id_str}' in {filename} is not a valid MongoDB ObjectId. Using 'name' field for matching.")
                                 existing_lore_in_db = lore_collection.find_one({"name": validated_lore.name})
-                                if existing_lore_in_db:
-                                    target_object_id = existing_lore_in_db['_id']
 
+                            mongo_doc_payload = validated_lore.model_dump(exclude_none=True)
 
                             if existing_lore_in_db:
+                                # We found a match, so update it.
                                 lore_collection.update_one({"_id": existing_lore_in_db['_id']}, {"$set": mongo_doc_payload})
                                 lore_updated_count += 1
                             else:
-                                # Prepare full doc for insert, ensuring _id is ObjectId
-                                doc_to_insert = validated_lore.model_dump(exclude_none=True)
-                                if file_provided_lore_id_str and target_object_id: # Valid ID from file, but no existing doc
-                                     doc_to_insert['_id'] = target_object_id
-                                else: # No ID from file or it was invalid; use Pydantic's default (new) lore_id for _id
-                                     doc_to_insert['_id'] = ObjectId(doc_to_insert['lore_id'])
-                                doc_to_insert.pop('lore_id') # Remove string lore_id field, keep _id as ObjectId
-                                
-                                lore_collection.insert_one(doc_to_insert)
+                                # No match found, so insert a new document.
+                                # Pydantic's default_factory will create a new valid ObjectId string in 'lore_id'
+                                new_id = ObjectId()
+                                mongo_doc_payload["_id"] = new_id
+                                mongo_doc_payload["lore_id"] = str(new_id)
+                                lore_collection.insert_one(mongo_doc_payload)
                                 lore_new_count += 1
                             lore_synced_count += 1
 
@@ -593,59 +588,6 @@ def parse_ai_suggestions(full_ai_output: str, speaking_pc_id: Optional[str]) -> 
         "npc_action": npc_actions_list,
         "player_check": player_checks_list,
         "generated_topics": generated_topics_list,
-        "new_standing": parsed_new_standing_enum,
-        "new_standing_str_for_response": new_standing_str, 
-        "justification": justification_str
-    }
-    npc_name_fallback = "NPC"
-    dialogue_parts = []
-    suggestion_lines = []
-    npc_action_str = "None"
-    player_check_str = "None"
-    new_standing_str = "No change"
-    justification_str = "Not specified"
-    suggestion_pc_key_for_parsing = speaking_pc_id if speaking_pc_id and speaking_pc_id.strip() != "" else "PLAYER"
-    lines = full_ai_output.splitlines()
-    suggestion_keywords = ["NPC_ACTION:", "PLAYER_CHECK:", "GENERATED_TOPICS:", f"STANDING_CHANGE_SUGGESTION_FOR_{suggestion_pc_key_for_parsing}:", "JUSTIFICATION:"]
-    first_suggestion_line_index = -1
-    for i, line in enumerate(lines):
-        stripped_line = line.strip()
-        if any(stripped_line.startswith(kw) for kw in suggestion_keywords):
-            first_suggestion_line_index = i
-            break
-    if first_suggestion_line_index != -1:
-        dialogue_parts = lines[:first_suggestion_line_index]
-        suggestion_lines = lines[first_suggestion_line_index:]
-    else: 
-        dialogue_parts = lines
-        suggestion_lines = []
-    for line in suggestion_lines:
-        stripped_line = line.strip()
-        if stripped_line.startswith("NPC_ACTION:"): npc_action_str = stripped_line.replace("NPC_ACTION:", "").strip()
-        elif stripped_line.startswith("PLAYER_CHECK:"): player_check_str = stripped_line.replace("PLAYER_CHECK:", "").strip()
-        elif stripped_line.startswith("GENERATED_TOPICS:"): generated_topics_str = stripped_line.replace("GENERATED_TOPICS:", "").strip()
-        elif stripped_line.startswith(f"STANDING_CHANGE_SUGGESTION_FOR_{suggestion_pc_key_for_parsing}:"):
-            raw_standing_val = stripped_line.replace(f"STANDING_CHANGE_SUGGESTION_FOR_{suggestion_pc_key_for_parsing}:", "").strip()
-            new_standing_str = raw_standing_val.replace('[', '').replace(']', '').replace('"', '').replace("'", "").strip()
-        elif stripped_line.startswith("JUSTIFICATION:"): justification_str = stripped_line.replace("JUSTIFICATION:", "").strip()
-    npc_dialogue_final = "\n".join(dialogue_parts).strip()
-    if not npc_dialogue_final and (npc_action_str != "None" or player_check_str != "None" or new_standing_str != "No change"):
-        npc_dialogue_final = f"({npc_name_fallback} considers the situation...)" 
-    parsed_new_standing_enum = None
-    if new_standing_str and new_standing_str.lower() not in ["no change", "none", ""]:
-        try:
-            matched_level = next((level_enum for level_enum in FactionStandingLevel if level_enum.value.lower() == new_standing_str.lower()), None)
-            if matched_level: parsed_new_standing_enum = matched_level
-            else:
-                print(f"Warning: AI suggested an unrecognized standing level: '{new_standing_str}' for PC '{suggestion_pc_key_for_parsing}'")
-                justification_str += f" (AI suggested unrecognized standing: {new_standing_str})"
-        except Exception as e_standing:
-             print(f"Error converting AI standing '{new_standing_str}' to enum: {e_standing}")
-             justification_str += f" (Error processing AI standing: {new_standing_str})"
-    return {
-        "dialogue": npc_dialogue_final if npc_dialogue_final else "(No dialogue response)",
-        "npc_action": [npc_action_str] if npc_action_str and npc_action_str.lower() != "none" else [],
-        "player_check": [player_check_str] if player_check_str and player_check_str.lower() != "none" else [],
         "new_standing": parsed_new_standing_enum,
         "new_standing_str_for_response": new_standing_str, 
         "justification": justification_str
