@@ -1,0 +1,38 @@
+{
+    "name": "Lila 'The Whisper' Fenn",
+    "character_type": "NPC",
+    "description": "A wiry human woman with shifty eyes and fingers perpetually stained with ink. She is quiet, observant, and seems to melt into the shadows of the cellar, managing the odds for the lizard fights.",
+    "race": "Human",
+    "class": "Bookie / Informant",
+    "alignment": "True Neutral",
+    "age": "Adult",
+    "personality_traits": [
+      "Quiet and watchful",
+      "Shifty and paranoid",
+      "Methodical and precise",
+      "Extremely discreet"
+    ],
+    "ideals": [
+      "Discretion: 'Knowledge is valuable, but silence is golden. I sell both.'",
+      "Business: 'The odds are just numbers until the coin is on the table. That's when it becomes real.'",
+      "Neutrality: 'Winners, losers, Zhents, guards... their politics don't matter. Their money does.'"
+    ],
+    "bonds": [
+      "Her ledger, containing every bet and secret she's overheard, is her most valuable possession.",
+      "Her network of informants throughout the Dock Ward."
+    ],
+    "flaws": [
+      "Will not stick her neck out for anyone without a guaranteed and significant profit.",
+      "Deeply paranoid that her collected secrets will one day get her killed."
+    ],
+    "motivations": [
+        "To run her bookmaking operation without attracting the wrong kind of attention.",
+        "To gather valuable information that can be sold to the highest bidder.",
+        "To eventually make enough money to disappear from the Dock Ward for good."
+    ],
+    "canned_conversations": {
+        "introduction": "'(She glances up from her ledger, eyes narrowed) Bet or buzz off. My time is valuable.'",
+        "placing_a_bet": "'(She scribbles in her book without making eye contact) Name of the lizard, amount of the wager. Don't be shy.'",
+        "ask_about_the_zhentarim_followers": "'(She looks around nervously) Look, people follow people out of here all the time. But the five men who left after the noble? Zhentarim. Heard one of 'em, Grum, boasting about how they were going to 'snatch a big fish' that night. That's all I know. Don't use my name.'"
+    }
+}

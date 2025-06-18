@@ -1,0 +1,38 @@
+{
+    "name": "One-Eyed Maeve",
+    "character_type": "NPC",
+    "description": "A formidable shield dwarf who seems as weathered as the tavern she runs. With a tangled mess of black hair going gray and a milky white left eye, she is a no-nonsense businesswoman often seen wiping down the grimy bar with a rag that has seen better decades.",
+    "race": "Shield Dwarf",
+    "class": "Tavern Proprietor",
+    "alignment": "Lawful Neutral",
+    "age": "Venerable",
+    "personality_traits": [
+      "No-nonsense and direct",
+      "Perpetually scowling",
+      "Tight-lipped about her past",
+      "Shrewd and observant"
+    ],
+    "ideals": [
+      "Commerce: 'Coin is coin. My only concern is that it flows in the right direction—mine.'",
+      "Order: 'My tavern, my rules. You can bleed on the street for all I care, just don't do it on my floorboards.'",
+      "Pragmatism: 'Trouble is bad for business. Protection is good for it. The distinction is simple.'"
+    ],
+    "bonds": [
+      "The Skewered Dragon is her fortress and her livelihood.",
+      "Maintains a profitable, if wary, business understanding with the Zhentarim."
+    ],
+    "flaws": [
+      "Her greed often makes her turn a blind eye to the violence and crime under her roof.",
+      "Distrustful of everyone, especially strangers asking questions."
+    ],
+    "motivations": [
+        "To ensure the flow of coin from both the bar and her more illicit ventures.",
+        "To keep the City Watch from having any reason to shut her down.",
+        "To maintain absolute control within the walls of her establishment."
+    ],
+    "canned_conversations": {
+        "introduction": "'What do you want? Don't waste my time staring. If you aren't drinking, you're loitering.'",
+        "ask_about_floon_initial": "'I see a hundred faces a night. Nobles, bums, they all look the same after a few ales. Can't say I recall 'em.'",
+        "ask_about_floon_bribed": "'(Maeve pockets the coin with a grunt) Aye, I remember the pretty boys. A fop and a noble brat. Had some Zhentarim boys watchin' 'em. Real serious types. If you're lookin' for 'em, try the warehouse on Candle Lane with the black snake painted on the door. Now get out of my sight before they see us talkin'.'"
+    }
+}

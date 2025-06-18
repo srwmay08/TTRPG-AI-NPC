@@ -225,7 +225,7 @@ var App = {
         console.log("App.js: App.updateMainView finished.");
     },
 
-    handleToggleNpcInScene: async function(npcIdStr, npcName) {
+        handleToggleNpcInScene: async function(npcIdStr, npcName) {
         const multiNpcContainer = Utils.getElem('multi-npc-dialogue-container');
         if (!multiNpcContainer) {
             console.error("Multi-NPC dialogue container not found.");
@@ -233,33 +233,39 @@ var App = {
         }
 
         const isAdding = !appState.hasActiveNpc(npcIdStr);
-        const speakingPcSelect = Utils.getElem('speaking-pc-select');
-        const currentSpeakingPcId = speakingPcSelect ? speakingPcSelect.value : null;
-
+        
         if (isAdding) {
             appState.addActiveNpc(npcIdStr);
             UIRenderers.createNpcDialogueAreaUI(npcIdStr, npcName, multiNpcContainer);
             appState.initDialogueHistory(npcIdStr);
             const toggledNpc = appState.getCharacterById(npcIdStr);
 
-            if (toggledNpc && (appState.getActivePcCount() > 0 || (currentSpeakingPcId !== null && currentSpeakingPcId === ""))) {
-                 const sceneContext = Utils.getElem('scene-context').value.trim();
-                 const activePcNames = appState.getActivePcIds().map(pcId => appState.getCharacterById(pcId)?.name || "a PC");
-                 const greetingPayload = {
+            if (toggledNpc) {
+                const introduction = toggledNpc.canned_conversations?.introduction;
+                const speakingPcSelect = Utils.getElem('speaking-pc-select');
+                const currentSpeakingPcId = speakingPcSelect ? speakingPcSelect.value : null;
+                const sceneContext = Utils.getElem('scene-context').value.trim();
+                const activePcNames = appState.getActivePcIds().map(pcId => appState.getCharacterById(pcId)?.name || "a PC");
+                
+                const greetingPayload = {
                     scene_context: sceneContext || `${activePcNames.join(', ')} ${activePcNames.length > 1 ? 'are' : 'is'} present.`,
                     player_utterance: `(System Directive: You are ${toggledNpc.name}. You have just become aware of ${activePcNames.join(', ')} in the scene. Greet them or offer an initial reaction in character.)`,
                     active_pcs: activePcNames,
                     speaking_pc_id: currentSpeakingPcId,
                     recent_dialogue_history: []
                 };
-                setTimeout(() => App.triggerNpcInteraction(npcIdStr, toggledNpc.name, greetingPayload, true, `thinking-${npcIdStr}-greeting`), 100);
+                // Call the interaction but pass the canned intro as an override.
+                // The AI will generate suggestions based on the intro, but we will use the intro text for the dialogue.
+                setTimeout(() => App.triggerNpcInteraction(npcIdStr, toggledNpc.name, greetingPayload, true, `thinking-${npcIdStr}-greeting`, introduction), 100);
             }
         } else {
+            // Logic for removing an NPC from the scene
             appState.removeActiveNpc(npcIdStr);
             UIRenderers.removeNpcDialogueAreaUI(npcIdStr, multiNpcContainer);
             appState.deleteDialogueHistory(npcIdStr);
         }
 
+        // Common UI updates for both adding and removing
         const placeholderEvent = multiNpcContainer.querySelector('p.scene-event');
         if (appState.getActiveNpcCount() > 0 && placeholderEvent) {
             placeholderEvent.remove();
@@ -278,7 +284,7 @@ var App = {
         App.updateMainView();
     },
 
-    triggerNpcInteraction: async function(npcIdStr, npcName, payload, isGreeting = false, thinkingMessageId = null) {
+    triggerNpcInteraction: async function(npcIdStr, npcName, payload, isGreeting = false, thinkingMessageId = null, overrideDialogue = null) {
         const transcriptArea = Utils.getElem(`transcript-${npcIdStr}`);
         if (!transcriptArea) {
             console.error(`Transcript area for NPC ID ${npcIdStr} not found.`);
@@ -300,8 +306,18 @@ var App = {
             const result = await ApiService.generateNpcDialogue(npcIdStr, payload);
             if(thinkingMessageElement && thinkingMessageElement.parentNode) thinkingMessageElement.remove();
 
-            UIRenderers.appendMessageToTranscriptUI(transcriptArea, `${npcName}: ${result.npc_dialogue}`, 'dialogue-entry npc-response');
-            appState.addDialogueToHistory(npcIdStr, `${npcName}: ${result.npc_dialogue}`);
+            const dialogueToPost = overrideDialogue !== null ? overrideDialogue : result.npc_dialogue;
+            const messageToPost = `${npcName}: ${dialogueToPost}`;
+
+            // Post to this NPC's transcript and all other active NPCs' transcripts
+            const allActiveNpcIds = appState.getActiveNpcIds();
+            allActiveNpcIds.forEach(id => {
+                const currentTranscriptArea = Utils.getElem(`transcript-${id}`);
+                if (currentTranscriptArea) {
+                    UIRenderers.appendMessageToTranscriptUI(currentTranscriptArea, messageToPost, 'dialogue-entry npc-response');
+                }
+                appState.addDialogueToHistory(id, messageToPost);
+            });
             
             // Set this NPC as the one we're seeing suggestions for.
             appState.setCurrentProfileCharId(npcIdStr); 

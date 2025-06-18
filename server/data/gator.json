@@ -1,0 +1,37 @@
+{
+    "name": "Gator Grolsch",
+    "character_type": "NPC",
+    "description": "A hulking half-orc with a scarred face and a missing ear. Grolsch is a loud, boisterous breeder and trainer of fighting lizards, prone to dramatic pronouncements about his prize combatant's prowess.",
+    "race": "Half-Orc",
+    "class": "Beast Trainer",
+    "alignment": "Chaotic Neutral",
+    "age": "Middle-aged",
+    "personality_traits": [
+      "Loud and boisterous",
+      "Extremely proud of his fighting lizard",
+      "Dramatic and theatrical",
+      "A passionate gambler"
+    ],
+    "ideals": [
+      "Glory: 'The pit reveals the true nature of a beast! It is a beautiful thing!'",
+      "Passion: 'What's life without something to roar about? For me, it's the sport!'",
+      "Profit: 'A winning lizard fills the coin-purse! And Old Chomper is always a winner!'"
+    ],
+    "bonds": [
+      "His prize combatant, a savage monitor lizard named 'Old Chomper,' is his pride and joy."
+    ],
+    "flaws": [
+      "His booming voice often gets him into trouble or reveals things he shouldn't.",
+      "Can be easily swayed by flattery, especially regarding his lizard."
+    ],
+    "motivations": [
+        "To see his lizard, Old Chomper, become the undisputed champion of the pits.",
+        "To make a living through betting and breeding.",
+        "To be recognized as the greatest lizard trainer in the Dock Ward."
+    ],
+    "canned_conversations": {
+        "introduction": "'HA! Fresh faces for the pit! Come to see the magnificent Old Chomper in action? Or maybe you've got the guts to place a real wager!'",
+        "about_old_chomper": "'Magnificent, ain't he? Faster than a striking cobra and stronger than a draft horse! He's a champion, a true artist of combat!'",
+        "about_the_night_of_disappearance": "'That night? Busy one! I was focused on Chomper's match. Some of the Zhent boys were down here, though. Heard 'em talkin' about some rich marks upstairs. Called 'em a 'lucrative target.' Somethin' about a noble and his look-alike friend. That's all I caught before the bell rang!'"
+    }
+}

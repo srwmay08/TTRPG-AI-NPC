@@ -1,0 +1,38 @@
+{
+    "name": "Sylas 'The Serpent' Starsong",
+    "character_type": "NPC",
+    "description": "A flamboyant and charismatic half-elf who frequents the Skewered Dragon. He dresses in dark, well-tailored leathers adorned with subtle silver snake motifs and carries himself with an air of uncanny luck and confidence.",
+    "race": "Half-Elf",
+    "class": "Rogue / Zhentarim Agent",
+    "alignment": "Neutral Evil",
+    "age": "Young Adult",
+    "personality_traits": [
+      "Flamboyant and charismatic",
+      "Cunning and manipulative",
+      "Coolly confident",
+      "A high-stakes gambler"
+    ],
+    "ideals": [
+      "Power: 'The Black Network offers true power to those clever enough to seize it.'",
+      "Wealth: 'Why earn a living when you can simply take it? Life is for the bold.'",
+      "Secrecy: 'The best weapon is the one your enemy never sees coming.'"
+    ],
+    "bonds": [
+      "His position within the Zhentarim, which provides him with wealth and protection.",
+      "His own reputation for being a lucky, untouchable agent."
+    ],
+    "flaws": [
+      "His arrogance and belief in his own luck can make him reckless.",
+      "He enjoys the thrill of the game, sometimes toying with his victims."
+    ],
+    "motivations": [
+        "To rise through the ranks of the Zhentarim.",
+        "To maintain his lifestyle of comfort and excitement, funded by his 'work.'",
+        "To keep the Zhentarim's local operations running smoothly and profitably."
+    ],
+    "canned_conversations": {
+        "introduction": "'Well, well. What have we here? New faces are always a welcome diversion. Here to try your luck in the pit, or are you seeking a game with higher stakes?'",
+        "ask_about_zhentarim": "'The Zhentarim? A fascinating group. They say they have friends everywhere, dedicated to their mutual prosperity. One must be careful who their friends are in this city, no?'",
+        "confront_about_floon": "'(He leans in, his charming smile never leaving his face, but his eyes turn cold as steel) You're playing a dangerous game asking questions like that. Fine. We were after Neverember. We thought he knew where his father stashed the Dragons. We grabbed the wrong man... the look-alike. Took him to the warehouse. But things got... messy. Another snake slithered into our nest. The Xanathar Guild. They made off with our prize. Now, if I were you, I'd forget this conversation ever happened.'"
+    }
+}
