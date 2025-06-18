@@ -1,4 +1,4 @@
-// static/app.js
+// server/static/app.js
 
 var App = {
     initializeApp: async function() {
@@ -225,7 +225,7 @@ var App = {
         console.log("App.js: App.updateMainView finished.");
     },
 
-        handleToggleNpcInScene: async function(npcIdStr, npcName) {
+    handleToggleNpcInScene: async function(npcIdStr, npcName) {
         const multiNpcContainer = Utils.getElem('multi-npc-dialogue-container');
         if (!multiNpcContainer) {
             console.error("Multi-NPC dialogue container not found.");
@@ -233,39 +233,33 @@ var App = {
         }
 
         const isAdding = !appState.hasActiveNpc(npcIdStr);
-        
+        const speakingPcSelect = Utils.getElem('speaking-pc-select');
+        const currentSpeakingPcId = speakingPcSelect ? speakingPcSelect.value : null;
+
         if (isAdding) {
             appState.addActiveNpc(npcIdStr);
             UIRenderers.createNpcDialogueAreaUI(npcIdStr, npcName, multiNpcContainer);
             appState.initDialogueHistory(npcIdStr);
             const toggledNpc = appState.getCharacterById(npcIdStr);
 
-            if (toggledNpc) {
-                const introduction = toggledNpc.canned_conversations?.introduction;
-                const speakingPcSelect = Utils.getElem('speaking-pc-select');
-                const currentSpeakingPcId = speakingPcSelect ? speakingPcSelect.value : null;
-                const sceneContext = Utils.getElem('scene-context').value.trim();
-                const activePcNames = appState.getActivePcIds().map(pcId => appState.getCharacterById(pcId)?.name || "a PC");
-                
-                const greetingPayload = {
+            if (toggledNpc && (appState.getActivePcCount() > 0 || (currentSpeakingPcId !== null && currentSpeakingPcId === ""))) {
+                 const sceneContext = Utils.getElem('scene-context').value.trim();
+                 const activePcNames = appState.getActivePcIds().map(pcId => appState.getCharacterById(pcId)?.name || "a PC");
+                 const greetingPayload = {
                     scene_context: sceneContext || `${activePcNames.join(', ')} ${activePcNames.length > 1 ? 'are' : 'is'} present.`,
                     player_utterance: `(System Directive: You are ${toggledNpc.name}. You have just become aware of ${activePcNames.join(', ')} in the scene. Greet them or offer an initial reaction in character.)`,
                     active_pcs: activePcNames,
                     speaking_pc_id: currentSpeakingPcId,
                     recent_dialogue_history: []
                 };
-                // Call the interaction but pass the canned intro as an override.
-                // The AI will generate suggestions based on the intro, but we will use the intro text for the dialogue.
-                setTimeout(() => App.triggerNpcInteraction(npcIdStr, toggledNpc.name, greetingPayload, true, `thinking-${npcIdStr}-greeting`, introduction), 100);
+                setTimeout(() => App.triggerNpcInteraction(npcIdStr, toggledNpc.name, greetingPayload, true, `thinking-${npcIdStr}-greeting`), 100);
             }
         } else {
-            // Logic for removing an NPC from the scene
             appState.removeActiveNpc(npcIdStr);
             UIRenderers.removeNpcDialogueAreaUI(npcIdStr, multiNpcContainer);
             appState.deleteDialogueHistory(npcIdStr);
         }
 
-        // Common UI updates for both adding and removing
         const placeholderEvent = multiNpcContainer.querySelector('p.scene-event');
         if (appState.getActiveNpcCount() > 0 && placeholderEvent) {
             placeholderEvent.remove();
@@ -284,7 +278,7 @@ var App = {
         App.updateMainView();
     },
 
-    triggerNpcInteraction: async function(npcIdStr, npcName, payload, isGreeting = false, thinkingMessageId = null, overrideDialogue = null) {
+    triggerNpcInteraction: async function(npcIdStr, npcName, payload, isGreeting = false, thinkingMessageId = null) {
         const transcriptArea = Utils.getElem(`transcript-${npcIdStr}`);
         if (!transcriptArea) {
             console.error(`Transcript area for NPC ID ${npcIdStr} not found.`);
@@ -306,18 +300,8 @@ var App = {
             const result = await ApiService.generateNpcDialogue(npcIdStr, payload);
             if(thinkingMessageElement && thinkingMessageElement.parentNode) thinkingMessageElement.remove();
 
-            const dialogueToPost = overrideDialogue !== null ? overrideDialogue : result.npc_dialogue;
-            const messageToPost = `${npcName}: ${dialogueToPost}`;
-
-            // Post to this NPC's transcript and all other active NPCs' transcripts
-            const allActiveNpcIds = appState.getActiveNpcIds();
-            allActiveNpcIds.forEach(id => {
-                const currentTranscriptArea = Utils.getElem(`transcript-${id}`);
-                if (currentTranscriptArea) {
-                    UIRenderers.appendMessageToTranscriptUI(currentTranscriptArea, messageToPost, 'dialogue-entry npc-response');
-                }
-                appState.addDialogueToHistory(id, messageToPost);
-            });
+            UIRenderers.appendMessageToTranscriptUI(transcriptArea, `${npcName}: ${result.npc_dialogue}`, 'dialogue-entry npc-response');
+            appState.addDialogueToHistory(npcIdStr, `${npcName}: ${result.npc_dialogue}`);
             
             // Set this NPC as the one we're seeing suggestions for.
             appState.setCurrentProfileCharId(npcIdStr); 
@@ -342,13 +326,20 @@ var App = {
         const sceneContext = Utils.getElem('scene-context').value.trim();
         const speakingPcSelect = Utils.getElem('speaking-pc-select');
         const speakingPcId = speakingPcSelect ? speakingPcSelect.value : null;
-
-        if (!playerUtterance && !sceneContext.trim() && playerUtterance !== "") { 
-            alert("Please enter player dialogue or ensure scene context is descriptive.");
+    
+        // --- FIX START ---
+        // The original condition was logically flawed and would not correctly prevent
+        // empty submissions. This new condition checks if the player utterance is empty.
+        // It prevents the function from proceeding and sending requests to the AI
+        // if the user simply adds an NPC, which could cause the confusing behavior.
+        if (!playerUtterance) {
+            alert("Please enter player dialogue to send to the NPCs.");
             return;
         }
+        // --- FIX END ---
+    
         Utils.disableBtn('generate-dialogue-btn', true);
-
+    
         const activePcsNames = appState.getActivePcIds().map(id => appState.getCharacterById(id)?.name).filter(name => name);
         let speakerDisplayName = "Player";
         if (speakingPcId && speakingPcId !== "") {
@@ -357,7 +348,7 @@ var App = {
         } else if (speakingPcId === "") {
             speakerDisplayName = "DM/Scene Event";
         }
-
+    
         appState.getActiveNpcIds().forEach(npcId => {
             const transcriptArea = Utils.getElem(`transcript-${npcId}`);
             if (transcriptArea && playerUtterance) { 
@@ -374,11 +365,11 @@ var App = {
                 transcriptArea.scrollTop = transcriptArea.scrollHeight;
             }
         });
-
+    
         const dialoguePromises = appState.getActiveNpcIds().map(npcId => {
             const npc = appState.getCharacterById(npcId);
             if (!npc) return Promise.resolve(); 
-
+    
             const payload = {
                 scene_context: sceneContext,
                 player_utterance: playerUtterance,
@@ -388,9 +379,9 @@ var App = {
             };
             return App.triggerNpcInteraction(npcId, npc.name, payload, false, `thinking-${npcId}-main`);
         });
-
+    
         await Promise.all(dialoguePromises);
-
+    
         if (playerUtterance) Utils.getElem('player-utterance').value = ''; 
         Utils.disableBtn('generate-dialogue-btn', false);
     },
@@ -477,12 +468,9 @@ var App = {
         UIRenderers.renderSuggestionsArea(appState.lastAiResultForProfiledChar, appState.getCurrentProfileCharId());
     },
 
-    sendCannedResponseToChat: function() {
-        // 1. Get the profiled character and the response text
+    useCannedResponse: function() {
         const profiledCharId = appState.getCurrentProfileCharId();
         if (!profiledCharId) return;
-        const profiledChar = appState.getCharacterById(profiledCharId);
-        if (!profiledChar) return;
 
         const keys = Object.keys(appState.cannedResponsesForProfiledChar);
         if (keys.length === 0) return;
@@ -491,25 +479,17 @@ var App = {
         const cannedResponseText = appState.cannedResponsesForProfiledChar[currentKey];
         if (!cannedResponseText) return;
 
-        // 2. Check if there are any NPCs in the scene to hear the response
-        const activeNpcIds = appState.getActiveNpcIds();
-        if (activeNpcIds.length === 0) {
-            alert("There are no NPCs in the scene to hear this response.");
-            return;
+        const playerUtteranceElem = Utils.getElem('player-utterance');
+        if (playerUtteranceElem) {
+            playerUtteranceElem.value = cannedResponseText;
+            playerUtteranceElem.focus();
         }
 
-        // 3. Format the message as if the NPC said it
-        const messageToPost = `${profiledChar.name}: ${cannedResponseText}`;
-
-        // 4. Post the message to all active NPC transcripts and update their histories
-        activeNpcIds.forEach(npcId => {
-            const transcriptArea = Utils.getElem(`transcript-${npcId}`);
-            if (transcriptArea) {
-                UIRenderers.appendMessageToTranscriptUI(transcriptArea, messageToPost, 'dialogue-entry npc-response');
-            }
-            // Add to this NPC's history for context in future AI calls
-            appState.addDialogueToHistory(npcId, messageToPost);
-        });
+        const speakingPcSelect = Utils.getElem('speaking-pc-select');
+        if(speakingPcSelect){
+             // When using a canned response, it's from the NPC, so switch context to DM/Scene Event
+            speakingPcSelect.value = "";
+        }
     },
     
     sendTopicToChat: function(topic) {
@@ -546,5 +526,5 @@ window.toggleAbilityExpansion = App.toggleAbilityExpansion;
 window.addSuggestedMemoryAsActual = App.addSuggestedMemoryAsActual; 
 window.acceptFactionStandingChange = App.acceptFactionStandingChange;
 window.cycleCannedResponse = App.cycleCannedResponse;
-window.sendCannedResponseToChat = App.sendCannedResponseToChat;
+window.useCannedResponse = App.useCannedResponse;
 window.sendTopicToChat = App.sendTopicToChat;

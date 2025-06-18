@@ -1,0 +1,15 @@
+[
+    {
+        "name": "The Skewered Dragon",
+        "lore_type": "Location",
+        "description": "A ruinous-looking tavern in the Dock Ward of Waterdeep, situated on an alley between Net Street and Fillet Lane. It is known as a dive bar frequented by dockworkers and other rough sorts. A ship's anchor is lodged in its roof, and its front windows are smashed. It secretly hosts an underground lizard fighting ring in its basement.",
+        "key_facts": [
+            "Located in the Dock Ward.",
+            "Known as a dangerous dive bar.",
+            "Zhentarim agents are known to frequent the tavern.",
+            "Features a secret, illegal lizard fighting ring in the basement."
+        ],
+        "tags": ["tavern", "waterdeep", "dock ward", "zhentarim", "fighting ring", "skewered dragon"],
+        "gm_notes": "Proprietor is 'One-Eyed' Maeve, a shield dwarf. Key patrons of the fighting pit include Gator Grolsch, Lila 'The Whisper' Fenn, and a Zhentarim agent named Sylas 'The Viper' Vane."
+    }
+]
