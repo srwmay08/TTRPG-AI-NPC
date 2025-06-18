@@ -1,4 +1,4 @@
-{
+[{
     "name": "The Yawning Portal",
     "lore_type": "Location",
     "description": "A famous and raucous tavern and inn in Waterdeep, known as a primary and public entry point to the vast dungeon of Undermountain. The taproom is defined by a 40-foot-diameter well that drops into the dungeon's first level. The establishment is a gathering place for grizzled adventurers, gamblers, and those seeking to make a name for themselves. The proprietor, a grim ex-adventurer named Durnan, keeps the peace with a ready greatsword.",
@@ -77,3 +77,4 @@
     "tags": ["hideout", "xanathar guild", "sewers", "waterdeep", "mind flayer", "nihiloor", "grum'shar"],
     "gm_notes": "This is the climax of the introductory quest. The fight with Grum'shar and the escape of the mind flayer Nihiloor are key events. Rescuing Floon from this location completes Volo's quest and leads to the party receiving Trollskull Manor as a reward. The portal to Xanathar's lair is a major plot hook for later in the campaign."
 }
+]

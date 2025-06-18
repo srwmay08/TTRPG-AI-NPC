@@ -110,71 +110,11 @@ def sync_data_from_files():
     print(f"  Characters from: '{PRIMARY_DATA_DIR}', VTT Imports from: '{VTT_IMPORT_DIR}', History from: '{HISTORY_DATA_DIR}'")
     print(f"  Lore from: '{LORE_DATA_DIR}'")
 
-
-    # --- Character Data Synchronization ---
-    if not os.path.isdir(PRIMARY_DATA_DIR):
-        print(f"[Data Sync] Warning: Primary character data directory '{PRIMARY_DATA_DIR}' not found. Skipping character sync.")
-    else:
-        characters_collection = mongo_db.npcs
-        char_synced_count = 0
-        char_updated_count = 0
-        char_new_count = 0
-        print(f"[Data Sync] Syncing character data...")
-        for filename in os.listdir(PRIMARY_DATA_DIR):
-            if filename.endswith('.json'):
-                primary_file_path = os.path.join(PRIMARY_DATA_DIR, filename)
-                try:
-                    with open(primary_file_path, 'r', encoding='utf-8') as f:
-                        primary_char_data = json.load(f)
-                    char_name_temp = primary_char_data.get("name")
-                    if not char_name_temp:
-                        print(f"[Data Sync] Skipping character file {filename}: missing 'name' field.")
-                        continue
-                    primary_char_data.setdefault('pc_faction_standings', {})
-                    primary_char_data.setdefault('linked_lore_ids', [])
-                    combined_data = primary_char_data.copy()
-                    fvtt_file_path = find_fvtt_file(char_name_temp, VTT_IMPORT_DIR)
-                    if fvtt_file_path:
-                        with open(fvtt_file_path, 'r', encoding='utf-8') as f_vtt:
-                            fvtt_json_data = json.load(f_vtt)
-                        if 'system' in fvtt_json_data: combined_data['vtt_data'] = fvtt_json_data['system']
-                        if 'flags' in fvtt_json_data: combined_data['vtt_flags'] = fvtt_json_data['flags']
-                        if 'img' in fvtt_json_data and fvtt_json_data['img']: combined_data['img'] = fvtt_json_data['img']
-                        if 'items' in fvtt_json_data: combined_data['items'] = fvtt_json_data['items']
-                        if 'system' in fvtt_json_data: combined_data['system'] = fvtt_json_data['system']
-                    combined_data.setdefault('associated_history_files', [])
-                    potential_history_filename = f"{char_name_temp}.txt"
-                    history_file_path_abs = os.path.join(HISTORY_DATA_DIR, secure_filename(potential_history_filename))
-                    if os.path.exists(history_file_path_abs) and os.path.isfile(history_file_path_abs):
-                        if potential_history_filename not in combined_data['associated_history_files']:
-                            combined_data['associated_history_files'].append(potential_history_filename)
-                    validated_profile = NPCProfile(**combined_data)
-                    mongo_doc = validated_profile.model_dump(mode='json', by_alias=True, exclude_none=True)
-                    existing_char_in_db = characters_collection.find_one({"name": char_name_temp})
-                    if existing_char_in_db:
-                        update_payload = {k: v for k, v in mongo_doc.items() if k != '_id'}
-                        if 'pc_faction_standings' not in update_payload:
-                            update_payload['pc_faction_standings'] = existing_char_in_db.get('pc_faction_standings', {})
-                        if 'linked_lore_ids' not in update_payload:
-                            update_payload['linked_lore_ids'] = existing_char_in_db.get('linked_lore_ids', [])
-                        characters_collection.update_one({"_id": existing_char_in_db['_id']}, {"$set": update_payload})
-                        char_updated_count += 1
-                    else:
-                        characters_collection.insert_one(mongo_doc)
-                        char_new_count += 1
-                    char_synced_count +=1
-                except ValidationError as e:
-                    print(f"[Data Sync] Error: Character validation failed for {filename}. Details: {e.errors()}")
-                except Exception as e:
-                    print(f"[Data Sync] Error: Unexpected error with character file {filename}: {e}")
-                    traceback.print_exc()
-        print(f"[Data Sync] Character sync finished. Processed: {char_synced_count} | New: {char_new_count} | Updated: {char_updated_count}")
-
-    # --- Lore Data Synchronization (New Section) ---
+    # --- Lore Data Synchronization (FIRST PASS) ---
+    lore_collection = mongo_db.lore_entries
     if not os.path.isdir(LORE_DATA_DIR):
         print(f"[Data Sync] Warning: Lore data directory '{LORE_DATA_DIR}' not found. Skipping lore sync.")
     else:
-        lore_collection = mongo_db.lore_entries
         lore_synced_count = 0
         lore_updated_count = 0
         lore_new_count = 0
@@ -199,59 +139,113 @@ def sync_data_from_files():
                             validated_lore = LoreEntry(**lore_data_item)
                             mongo_doc_payload = validated_lore.model_dump(exclude_none=True, exclude={'lore_id'})
 
-                            existing_lore_in_db = None
-                            file_provided_lore_id_str = lore_data_item.get('lore_id')
-                            target_object_id = None
-
-                            if file_provided_lore_id_str and ObjectId.is_valid(file_provided_lore_id_str):
-                                # The ID from the file is a valid ObjectId, so we use it as the primary key.
-                                target_object_id = ObjectId(file_provided_lore_id_str)
-                                existing_lore_in_db = lore_collection.find_one({"_id": target_object_id})
-                            else:
-                                # The ID is not a valid ObjectId or doesn't exist, so we fall back to using the name as the key.
-                                if file_provided_lore_id_str:
-                                     print(f"[Data Sync] Info: '{file_provided_lore_id_str}' in {filename} is not a valid MongoDB ObjectId. Using 'name' field for matching.")
-                                existing_lore_in_db = lore_collection.find_one({"name": validated_lore.name})
-
-                            mongo_doc_payload = validated_lore.model_dump(exclude_none=True)
+                            existing_lore_in_db = lore_collection.find_one({"name": validated_lore.name})
 
                             if existing_lore_in_db:
-                                # We found a match, so update it.
                                 lore_collection.update_one({"_id": existing_lore_in_db['_id']}, {"$set": mongo_doc_payload})
                                 lore_updated_count += 1
                             else:
-                                # No match found, so insert a new document.
-                                # Pydantic's default_factory will create a new valid ObjectId string in 'lore_id'
                                 new_id = ObjectId()
                                 mongo_doc_payload["_id"] = new_id
                                 mongo_doc_payload["lore_id"] = str(new_id)
                                 lore_collection.insert_one(mongo_doc_payload)
                                 lore_new_count += 1
                             lore_synced_count += 1
-
                         except ValidationError as e_val:
                             print(f"[Data Sync] Error: Lore validation failed for item in {filename}. Details: {e_val.errors()}")
                         except Exception as e_item_sync:
                             print(f"[Data Sync] Error: Unexpected error with lore item in {filename}: {e_item_sync}")
                             traceback.print_exc()
                 except json.JSONDecodeError:
-                    print(f"[Data Sync] Error: Could not decode JSON from lore file {filename}.")
+                    print(f"[Data Sync] Error: Could not decode JSON from lore file {filename}. It may be empty or malformed.")
+                    continue
                 except Exception as e_file_sync:
-                    print(f"[Data Sync] Error processing lore file {filename}: {e_file_sync}")
+                    print(f"Error processing lore file {filename}: {e_file_sync}")
                     traceback.print_exc()
         print(f"[Data Sync] Lore sync finished. Processed: {lore_synced_count} | New: {lore_new_count} | Updated: {lore_updated_count}")
+
+    # --- Character Data Synchronization (SECOND PASS) ---
+    if not os.path.isdir(PRIMARY_DATA_DIR):
+        print(f"[Data Sync] Warning: Primary character data directory '{PRIMARY_DATA_DIR}' not found. Skipping character sync.")
+    else:
+        characters_collection = mongo_db.npcs
+        char_synced_count = 0
+        char_updated_count = 0
+        char_new_count = 0
+        print(f"[Data Sync] Syncing character data...")
+        for filename in os.listdir(PRIMARY_DATA_DIR):
+            if filename.endswith('.json'):
+                primary_file_path = os.path.join(PRIMARY_DATA_DIR, filename)
+                try:
+                    with open(primary_file_path, 'r', encoding='utf-8') as f:
+                        primary_char_data = json.load(f)
+                    char_name_temp = primary_char_data.get("name")
+                    if not char_name_temp:
+                        print(f"[Data Sync] Skipping character file {filename}: missing 'name' field.")
+                        continue
+                    
+                    combined_data = primary_char_data.copy()
+                    
+                    # Resolve lore names to IDs
+                    if 'linked_lore_by_name' in combined_data and isinstance(combined_data['linked_lore_by_name'], list):
+                        resolved_lore_ids = []
+                        for lore_name in combined_data['linked_lore_by_name']:
+                            lore_entry = lore_collection.find_one({"name": lore_name})
+                            if lore_entry:
+                                resolved_lore_ids.append(str(lore_entry['_id']))
+                            else:
+                                print(f"[Data Sync] Warning: Could not find lore entry named '{lore_name}' to link to character '{char_name_temp}'.")
+                        combined_data['linked_lore_ids'] = resolved_lore_ids
+                    
+                    fvtt_file_path = find_fvtt_file(char_name_temp, VTT_IMPORT_DIR)
+                    if fvtt_file_path:
+                        with open(fvtt_file_path, 'r', encoding='utf-8') as f_vtt:
+                            fvtt_json_data = json.load(f_vtt)
+                        if 'system' in fvtt_json_data: combined_data['vtt_data'] = fvtt_json_data['system']
+                        if 'flags' in fvtt_json_data: combined_data['vtt_flags'] = fvtt_json_data['flags']
+                        if 'img' in fvtt_json_data and fvtt_json_data['img']: combined_data['img'] = fvtt_json_data['img']
+                        if 'items' in fvtt_json_data: combined_data['items'] = fvtt_json_data['items']
+                        if 'system' in fvtt_json_data: combined_data['system'] = fvtt_json_data['system']
+                    
+                    combined_data.setdefault('associated_history_files', [])
+                    potential_history_filename = f"{char_name_temp}.txt"
+                    history_file_path_abs = os.path.join(HISTORY_DATA_DIR, secure_filename(potential_history_filename))
+                    if os.path.exists(history_file_path_abs) and os.path.isfile(history_file_path_abs):
+                        if potential_history_filename not in combined_data['associated_history_files']:
+                            combined_data['associated_history_files'].append(potential_history_filename)
+                    
+                    validated_profile = NPCProfile(**combined_data)
+                    mongo_doc = validated_profile.model_dump(mode='json', by_alias=True, exclude_none=True)
+                    
+                    existing_char_in_db = characters_collection.find_one({"name": char_name_temp})
+                    if existing_char_in_db:
+                        update_payload = {k: v for k, v in mongo_doc.items() if k != '_id'}
+                        if 'pc_faction_standings' not in update_payload:
+                            update_payload['pc_faction_standings'] = existing_char_in_db.get('pc_faction_standings', {})
+                        characters_collection.update_one({"_id": existing_char_in_db['_id']}, {"$set": update_payload})
+                        char_updated_count += 1
+                    else:
+                        characters_collection.insert_one(mongo_doc)
+                        char_new_count += 1
+                    char_synced_count +=1
+                except json.JSONDecodeError:
+                    print(f"[Data Sync] Error: Could not decode JSON from character file {filename}. It may be empty or malformed.")
+                    continue
+                except ValidationError as e:
+                    print(f"[Data Sync] Error: Character validation failed for {filename}. Details: {e.errors()}")
+                except Exception as e:
+                    print(f"[Data Sync] Error: Unexpected error with character file {filename}: {e}")
+                    traceback.print_exc()
+        print(f"[Data Sync] Character sync finished. Processed: {char_synced_count} | New: {char_new_count} | Updated: {char_updated_count}")
     
     print("-" * 50 + "\n")
-
 
 # --- App Routes & Other Logic ---
 @app.route('/')
 def serve_index():
     return render_template('index.html')
 
-# ... (rest of your existing Flask routes for /api/npcs, /api/history_files, dialogue, lore_entries, etc.) ...
-# Ensure all your existing API endpoints remain here. The changes above are only for the sync_data_from_files function
-# and directory definitions.
+# ... (The rest of your Flask routes remain the same) ...
 
 # --- CHARACTER (NPC/PC) ENDPOINTS ---
 @app.route('/api/npcs', methods=['POST'])

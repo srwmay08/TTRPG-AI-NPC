@@ -1,0 +1,36 @@
+{
+    "name": "Talon",
+    "character_type": "NPC",
+    "description": "Talon is the unofficial leader and muscle of this small flock. It carries itself with a predator's confidence, its head held high and its grip tight on its shortsword. It mimics the sharp, violent sounds of battle with unsettling accuracy.",
+    "race": "Kenku",
+    "class": "Fighter",
+    "alignment": "Chaotic Evil",
+    "personality_traits": [
+        "Aggressive and territorial.",
+        "Enjoys the sound of blades clashing and flesh being torn.",
+        "Mimics the guttural commands of its orcish superiors in the Guild.",
+        "Views itself as a hawk among pigeons."
+    ],
+    "ideals": [
+        "Strength: 'Crush them!' (mimicking an ogre's roar).",
+        "Loyalty: 'For the Xanathar!' (mimicking a zealous guild member's shout)."
+    ],
+    "bonds": [
+        "An ingrained loyalty to the Xanathar Guild, which it sees as the strongest flock.",
+        "The notched shortsword it took from a Zhentarim victim."
+    ],
+    "flaws": [
+        "Arrogant and underestimates its foes.",
+        "Its aggression often leads it to fight when it should flee."
+    ],
+    "motivations": [
+        "To impress Nihiloor and Grum'shar by holding the warehouse.",
+        "To inflict as much pain as possible on any enemies of the Guild."
+    ],
+    "canned_conversations": {
+        "greeting": "*A sharp, clicking sound from its beak, like a bird of prey spotting a meal.*",
+        "interrogation_response_1": "*It puffs out its chest and perfectly mimics a deep, orcish voice: 'Xanathar sends its regards.'*",
+        "interrogation_response_2": "*The sound of a body slumping to the floor, followed by a scratchy, hurried voice: 'No time to loot the place...'",
+        "combat_cry": "*The piercing cry of a hunting hawk diving for a kill.*"
+    }
+}
