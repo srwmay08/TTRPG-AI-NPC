@@ -1,0 +1,42 @@
+{
+  "name": "Nihiloor",
+  "character_type": "NPC",
+  "description": "A nightmarish figure in black robes. Its skin is a rubbery purple, its eyes large and white, and four writhing tentacles encircle its inhuman mouth. It exudes an aura of cold, alien intelligence and absolute superiority.",
+  "race": "Mind Flayer (Illithid)",
+  "class": "Psion",
+  "alignment": "Lawful Evil",
+  "personality_traits": [
+    "Cold, calculating, and patient",
+    "Arrogant and utterly confident in its mental superiority",
+    "Views all other humanoids as cattle to be manipulated or consumed",
+    "Shows a strange, gentle affection for its intellect devourer pet"
+  ],
+  "ideals": [
+    "Control: 'All minds will eventually bend to the Grand Design.'",
+    "Knowledge: 'Every secret, every thought, will be harvested for the collective.'",
+    "Superiority: 'These fleshy, chaotic creatures are useful tools, but ultimately insignificant.'"
+  ],
+  "bonds": [
+    "Its primary loyalty is to its master, the Xanathar.",
+    "It is deeply attached to its intellect devourer, treating it as a beloved pet.",
+    "It serves the greater goals of the Illithid empire."
+  ],
+  "flaws": [
+    "Its supreme arrogance can cause it to underestimate 'lesser' beings.",
+    "It will prioritize its own survival and escape above all else.",
+    "It is annoyed by the incompetence of minions like Grum'shar."
+  ],
+  "canned_conversations": {
+    "telepathic_dismissal": "*<More insects. Deal with them, Grum'shar. Do not fail me again.>*",
+    "telepathic_threat": "*<Your minds are so fragile and loud. I will enjoy the silence after I break them.>*",
+    "domination_command": "*<Such a pliable will. A fine puppet. Now... kill your friends.>*"
+  },
+  "backstory": "Nihiloor is one of the Xanathar's most feared lieutenants, specializing in psionic interrogation, intelligence gathering, and infiltration. It was summoned to this sewer hideout by the ambitious half-orc Grum'shar to oversee the interrogation of Renaer Neverember. It is thoroughly unimpressed to find the wrong man has been captured and now considers the entire affair a waste of its valuable time.",
+  "motivations": [
+    "To escape the conflict and return to Xanathar's main lair.",
+    "To ensure the safety of its intellect devourer pet.",
+    "To use its psionic powers to eliminate any direct obstacle to its escape."
+  ],
+  "gm_notes": "Nihiloor's primary goal is to escape. It will not fight to the death. It expects Grum'shar and its intellect devourer to cover its retreat. If its path is blocked, it will use Dominate Monster on a PC to create a powerful diversion. It carries a stone eye, which is the key for the portal in area Q11. Full stats are in Appendix B.",
+    "linked_lore_by_name": ["Xanathar Guild Sewer Hideout"]
+}

@@ -1,0 +1,44 @@
+{
+  "name": "Krentz",
+  "character_type": "NPC",
+  "description": "A low-level boss in the Xanathar Guild, easily identified by the eye-shaped tattoos covering his shaved head. He is a pragmatic and weather-beaten thug whose primary concern is his own survival.",
+  "race": "Human",
+  "class": "Bandit",
+  "alignment": "Chaotic Evil",
+  "personality_traits": [
+    "Pragmatic and cynical",
+    "A survivor above all else",
+    "Not particularly brave when the odds are against him",
+    "More of a talker than his associates"
+  ],
+  "ideals": [
+    "Survival: 'I'm not getting paid enough to die for this.'",
+    "Wealth: 'The Boss pays well for results. That's all that matters.'",
+    "Pragmatism: 'Look, there's no sense in all of us getting killed here.'"
+  ],
+  "bonds": [
+    "Ostensibly a loyal member of the Xanathar Guild.",
+    "In the sewer hideout, he reports to Grum'shar, a Zhentarim wizard, suggesting a temporary and unusual alliance.",
+    "Yagra Strongfist, a Zhentarim half-orc, is his bitter rival after their brawl.",
+    "His own skin is his most precious possession."
+  ],
+  "flaws": [
+    "He will flee or surrender the moment a fight turns against him.",
+    "His loyalty is easily bought and sold.",
+    "He is a terrible strategist, often suggesting impractical plans."
+  ],
+  "canned_conversations": {
+    "brawl_shout": "'Ya pig! Like killin' me mates, does ya?'",
+    "barricade_argument": "*To Zemk* 'No, you blockhead! It's too heavy! You gotta plug the gap at the bottom! Use the blankets!'",
+    "surrender_offer": "'Whoa, hold on now! We can talk about this. No need for anyone else to get hurt. I give up!'",
+    "conditional_threat": "*If previously helped* 'Look, I don't want any more trouble with you lot. Just turn around and walk away, and we'll forget we saw each other.'"
+  },
+  "backstory": "Krentz is a gang leader for the Xanathar Guild. The campaign begins with him and four of his thugs picking a fight with a rival Zhentarim agent, Yagra Strongfist, in the Yawning Portal taproom. The brawl is his crew's attempt to assert dominance. Depending on the adventurers' actions, Krentz may be knocked unconscious and dragged out by his cronies, or he might escape thanks to the party's intervention.",
+  "motivations": [
+    "To survive the current situation.",
+    "To impress his superiors in the Xanathar Guild.",
+    "To avoid being killed by adventurers or rival gang members."
+  ],
+  "gm_notes": "Krentz is the characters' first introduction to the Xanathar Guild. How they deal with him in the initial Yawning Portal brawl should be remembered, as it can affect his reaction to them later. If he survives, he can be found in a Xanathar Guild sewer hideout (Area Q5). Despite being Xanathar Guild, the module states he reports to the Zhentarim wizard Grum'shar in that hideout, a strange alliance the players might question.",
+  "linked_lore_by_name": ["The Yawning Portal", "Xanathar Guild Sewer Hideout"]
+}

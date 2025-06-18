@@ -1,0 +1,64 @@
+{
+  "name": "Xoblob",
+  "character_type": "NPC",
+  "description": "A quiet, eccentric deep gnome who owns the Old Xoblob Shop. He has a strange, unblinking stare and an all-consuming obsession with the color purple, which permeates every item and surface in his cluttered shop.",
+  "race": "Deep Gnome (Svirfneblin)",
+  "class": "Shopkeeper / Spy",
+  "alignment": "Neutral Evil",
+  "age": "Unknown",
+  "personality_traits": [
+    "Monotone and unnervingly calm",
+    "Obsessed with the color purple",
+    "Possesses beholder-like mannerisms (e.g., drive to create a lair)",
+    "Seems harmless, but is observant and cunning"
+  ],
+  "ideals": [
+    "Lair: 'A perfect lair is a perfect life. Everything in its place. Everything purple.'",
+    "Observation: 'One learns more by watching than by talking.'",
+    "Order: 'The master sees all. The master knows all. I am his eye.'"
+  ],
+  "bonds": [
+    "He is secretly and unshakably loyal to the Xanathar's Thieves' Guild.",
+    "The Old Xoblob Shop is his sacred lair, and he protects it fiercely.",
+    "The stuffed beholder in his shop is an object of reverence, as it is the tool of his master."
+  ],
+  "flaws": [
+    "His obsession with purple is a glaring weakness and a massive tell.",
+    "He is outwardly emotionless, making him difficult to read or reason with.",
+    "He underestimates the capabilities of those who enter his shop, viewing them as mere customers."
+  ],
+  "canned_conversations": [
+    {
+      "topic": "introduction",
+      "dialogue": "(Xoblob stares without blinking as you enter, a faint smile on his lips) Welcome. Everything is for sale. Everything is purple."
+    },
+    {
+      "topic": "asking_about_beholder",
+      "dialogue": "It watches. It is the Old Xoblob. I am the new Xoblob. We are one. It sees everything."
+    },
+    {
+      "topic": "asking_about_local_trouble",
+      "dialogue": "Street-fights are messy. Bad for business. The Watch handles it. I saw nothing. Only purple."
+    }
+  ],
+  "backstory": "A deep gnome who survived a close encounter with a gas spore, Xoblob was psychologically scarred, leaving him with beholder-like compulsions. He wandered to Waterdeep and purchased a curiosity shop, which he found already named the 'Old Xoblob Shop' after the stuffed beholder hanging within. After failing to rename the store, he embraced the moniker and renamed himself 'Xoblob'. He was soon recruited by the Xanathar's Thieves' Guild, who found his eccentricities and prime location perfect for a spy. He now serves the beholder crime lord faithfully.",
+  "motivations": [
+    "To serve his master, the Xanathar, by spying on the Dock Ward.",
+    "To acquire more unique and valuable purple items for his shop.",
+    "To maintain the absolute, orderly, purple perfection of his lair."
+  ],
+  "knowledge": [
+    "The shop is located at the corner of Zastrow Street and Fillet Lane.",
+    "The stuffed beholder's central eye is a scrying device linked to Xanathar's lair.",
+    "He witnessed the abduction of Floon and Renaer but will deny it to anyone not affiliated with the Xanathar Guild.",
+    "He knows that Xanathar's guild is in a bloody turf war with the Zhentarim."
+  ],
+  "speech_patterns": "Speaks in a quiet, flat monotone. Uses short, simple sentences. Rarely initiates conversation.",
+  "mannerisms": "Stares intently without blinking for long periods. Constantly, subtly rearranging items to maintain a perfect purple display. Has a faint, unnerving smile that never reaches his eyes.",
+  "relationships": [
+    {"name": "The Xanathar", "relationship": "Master / Patron", "status": "Alive"},
+    {"name": "Dandalus Ruell", "relationship": "Shop's Previous Owner", "status": "Unknown"}
+  ],
+  "gm_notes": "Xoblob is a spy for the Xanathar. He will not willingly give up any information about the kidnapping of Floon. Players might notice his strange devotion to the stuffed beholder. The shop is a key location, as the scrying sensor in the beholder's eye means that Xanathar saw the entire abduction and knows the Zhentarim were responsible.",
+"linked_lore_by_name": ["Old Xoblob Shop"]
+}

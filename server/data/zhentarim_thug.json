@@ -1,0 +1,41 @@
+{
+  "name": "Zhentarim Thug",
+  "character_type": "NPC",
+  "description": "A hired tough working for the Zhentarim. They carry themselves with a swagger that suggests they're used to intimidating common folk, but their eyes betray a lack of real courage. They wear the symbol of the Black Network, a black, winged snake, tattooed or stitched somewhere on their gear.",
+  "race": "Human, Half-Orc, or similar",
+  "class": "Bandit / Thug",
+  "alignment": "Neutral Evil",
+  "personality_traits": [
+    "A bully when they have the advantage",
+    "Follows orders from their superiors",
+    "Quick to threaten, slow to act on their own",
+    "Self-preservation is their main priority"
+  ],
+  "ideals": [
+    "Power: 'In this city, you're either the boot or the bug. We're the boot.'",
+    "Wealth: 'The Black Network pays well. That's all that matters.'",
+    "Fear: 'Respect is good, but fear lasts longer.'"
+  ],
+  "bonds": [
+    "Their loyalty is to their immediate superior and their next paycheck.",
+    "They stick together with other Zhents for safety and strength in numbers."
+  ],
+  "flaws": [
+    "They are cowards when faced with a truly determined or powerful foe.",
+    "They are prone to overconfidence and underestimating opponents.",
+    "They will betray their comrades to save themselves."
+  ],
+  "canned_conversations": {
+    "threat": "'You're in the wrong place, friend. The Black Network doesn't like trespassers. Turn around before you get hurt.'",
+    "demand": "'Empty your pockets. A contribution to the Zhentarim will ensure your... continued health.'",
+    "combat_cry": "'For the Black Network!'",
+    "surrender": "'Alright, alright! I yield! Don't kill me!'"
+  },
+  "backstory": "Recruited from the streets, prisons, or disbanded mercenary companies, these thugs form the backbone of the Zhentarim's muscle in Waterdeep. They are promised wealth and power in exchange for their loyalty and willingness to engage in extortion, intimidation, and violence. Most are expendable and they know it.",
+  "motivations": [
+    "To earn coin.",
+    "To gain status within the Black Network.",
+    "To avoid getting killed on the job."
+  ],
+  "gm_notes": "Zhentarim Thugs are typically found in small groups. They fight with basic tactics, trying to swarm a single target. If their leader is defeated or they become outnumbered, they are likely to break and flee."
+}

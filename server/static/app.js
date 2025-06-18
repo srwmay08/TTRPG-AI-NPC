@@ -9,6 +9,7 @@ var App = {
 
             EventHandlers.setupResizer();
             EventHandlers.setupCollapsibleSections(); 
+            EventHandlers.assignButtonEventHandlers(); // Assigns button handlers like the one for 'Send to NPCs'
             this.setupTabControls(); 
             this.setupSceneContextSelector();
             this.setupDashboardClickHandlers();

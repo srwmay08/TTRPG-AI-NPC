@@ -1,0 +1,41 @@
+{
+  "name": "Zemk",
+  "character_type": "NPC",
+  "description": "A stout, hostile duergar with a grim expression and the lingering stench of pickled herring about him. He is stubbornly focused on his task, ignoring all outside council with single-minded intensity.",
+  "race": "Duergar (Gray Dwarf)",
+  "class": "Thug",
+  "alignment": "Lawful Evil",
+  "personality_traits": [
+    "Stubborn and single-minded",
+    "Hostile and distrustful of everyone",
+    "Fights with grim determination",
+    "Responds to most conversation with grunts"
+  ],
+  "ideals": [
+    "Duty: 'An order is an order. It will be done.'",
+    "Perfection: 'It must be done right. My way.'",
+    "Strength: 'Weakness is death. Fight or perish.'"
+  ],
+  "bonds": [
+    "He is fiercely loyal to the Xanathar Guild.",
+    "He follows the orders of his superior, Grum'shar, without question, despite the strange circumstances."
+  ],
+  "flaws": [
+    "He is incapable of retreating and will fight to the death, even against impossible odds.",
+    "He is completely inflexible, unable to adapt his plans.",
+    "His paranoia makes him hostile to potential allies."
+  ],
+  "canned_conversations": {
+    "on_arrival": "*Zemk ignores you, continuing to grunt with effort as he shoves a heavy cabinet against the door.*",
+    "barricade_argument": "*To Krentz* 'Gah! My way is better! Be quiet and help!'",
+    "combat_cry": "*A guttural roar as he hefts his weapon and charges.*"
+  },
+  "backstory": "Zemk is an enforcer for the Xanathar Guild. He has been tasked with holding this position by Grum'shar. He is currently focused on barricading a door and is annoyed by the presence of the Zhentarim thug, Krentz, whom he views as an incompetent distraction. He will fight any intruders on sight.",
+  "motivations": [
+    "To follow his orders and defend his post to the death.",
+    "To prove the superiority of the Xanathar Guild through his own strength.",
+    "To complete the barricade perfectly."
+  ],
+  "gm_notes": "Zemk is a member of the Xanathar Guild, yet he reports to Grum'shar, a Zhentarim wizard. This is highly unusual and could be a plot hook for the players to investigate. Zemk is relentlessly hostile and will fight to the death without any consideration for surrender or retreat.",
+  "linked_lore_by_name": ["Xanathar Guild Sewer Hideout"]
+}

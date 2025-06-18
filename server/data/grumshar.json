@@ -1,0 +1,42 @@
+{
+  "name": "Grum'shar",
+  "character_type": "NPC",
+  "description": "A muscular half-orc in dingy robes, Grum'shar is a low-level boss in the Xanathar Guild. He desperately seeks to climb the ranks, but his ambition is often undermined by his incompetence. Fire smolders in his fists as he tries to intimidate his captives.",
+  "race": "Half-Orc",
+  "class": "Apprentice Wizard",
+  "alignment": "Chaotic Evil",
+  "personality_traits": [
+    "Ambitious and sycophantic to superiors",
+    "Cruel and domineering towards subordinates",
+    "Quick to anger when his plans fail",
+    "Deeply insecure about his position and intelligence"
+  ],
+  "ideals": [
+    "Power: 'I will rise through the ranks, no matter who I have to step on.'",
+    "Reputation: 'The Xanathar must see my worth! I am not a failure!'",
+    "Cruelty: 'Fear is the only language these worms understand.'"
+  ],
+  "bonds": [
+    "He is utterly subservient to Nihiloor and terrified of the Xanathar.",
+    "His reputation within the guild is the most important thing to him.",
+    "He mistakenly believes interrogating Floon Blagmaar will salvage his failed mission."
+  ],
+  "flaws": [
+    "Grossly overestimates his own importance and abilities.",
+    "His ambition led him to blunder the kidnapping of Renaer Neverember.",
+    "He panics under pressure and lashes out violently to cover his mistakes."
+  ],
+  "canned_conversations": {
+    "interrogation_bravado": "*(Standing over Floon)* 'Tell me what I want to know! Where did your father hide the gold?'",
+    "pleading_with_nihiloor": "'My lord, please! Let me prove myself! I can make him talk!'",
+    "combat_with_party": "'Fools! You've ruined everything! Now you'll die!'"
+  },
+  "backstory": "A low-ranking enforcer in the Xanathar Guild, Grum'shar saw the plot to kidnap the son of Waterdeep's former Open Lord as his ticket to the big time. He organized the snatch-and-grab, but his minions captured Floon Blagmaar by mistake. Desperate to salvage the operation, he begged the mind flayer Nihiloor to witness his interrogation of the 'heir', only to have his monumental blunder exposed when the party arrives.",
+  "motivations": [
+    "To salvage his reputation in front of Nihiloor.",
+    "To avoid being punished—or eaten—by the Xanathar for his failure.",
+    "To prove he is ruthless and competent by killing any witnesses to his mistake."
+  ],
+  "gm_notes": "Grum'shar is an Apprentice Wizard with these changes: He is Chaotic Evil. He has Relentless Endurance (when reduced to 0 hp, he drops to 1 hp instead; once per long rest). He has darkvision out to 60 ft. He speaks Common and Orc. He will fight fiercely to cover Nihiloor's escape and kill the party to erase his shame.",
+    "linked_lore_by_name": ["Xanathar Guild Sewer Hideout"]
+}

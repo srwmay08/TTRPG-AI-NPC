@@ -1,0 +1,41 @@
+{
+  "name": "Quill",
+  "character_type": "NPC",
+  "description": "A quiet and unnervingly still kenku, its feathers stained with ink at the tips. It clutches a tattered journal and a piece of charcoal, its head tilting to capture every sound with an obsessive focus. It appears to be a living recorder, documenting events not with its own voice, but with the sounds of others.",
+  "race": "Kenku",
+  "class": "Rogue",
+  "alignment": "Lawful Evil",
+  "personality_traits": [
+    "Meticulous and observant",
+    "Silent and watchful, rarely moves unless necessary",
+    "Communicates with unsettlingly accurate and context-appropriate mimicry",
+    "Seems to value information and secrets above all else"
+  ],
+  "ideals": [
+    "Record: 'Leave no detail unrecorded.' (mimicking a stern, male human voice).",
+    "Order: 'Everything has its place in the telling.' (mimicking the same voice).",
+    "Loyalty: 'Serve the Black Network, and the Network serves you.' (mimicking a gruff, female dwarf voice)."
+  ],
+  "bonds": [
+    "Its journal, which is filled with a bizarre, personal shorthand of symbols representing sounds.",
+    "The Zhentarim, specifically the handler who trained it to be a scribe.",
+    "A particular sound (like the jingle of a specific person's coin purse) it is tasked with listening for."
+  ],
+  "flaws": [
+    "Becomes distressed and disoriented if it loses its journal and charcoal.",
+    "Can be distracted by a unique, complex sound it has never heard before.",
+    "Lacks creativity and can only report what it has directly heard, making it easy to fool with auditory illusions."
+  ],
+  "motivations": [
+    "To perfectly record the events surrounding the warehouse for its Zhentarim superiors.",
+    "To add new and interesting sounds to its collection.",
+    "To fulfill its orders without deviation."
+  ],
+  "canned_conversations": {
+    "observation": "*The sound of a lute string snapping, followed by a man's frustrated sigh.*",
+    "interrogation_response_1": "*It mimics a nasally voice in a harsh whisper: 'Make sure no one sees you. Take the pretty one.'*",
+    "interrogation_response_2": "*The sound of coins clinking in a purse, followed by a grunt of satisfaction and a man's voice saying, 'This'll cover it.'*",
+    "threatened": "*It perfectly mimics the City Watch alarm bell, followed by the sound of heavy, armored footsteps approaching.*"
+  },
+    "linked_lore_by_name": ["Candle Lane Warehouse"]
+}

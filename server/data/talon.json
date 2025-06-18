@@ -32,5 +32,6 @@
         "interrogation_response_1": "*It puffs out its chest and perfectly mimics a deep, orcish voice: 'Xanathar sends its regards.'*",
         "interrogation_response_2": "*The sound of a body slumping to the floor, followed by a scratchy, hurried voice: 'No time to loot the place...'",
         "combat_cry": "*The piercing cry of a hunting hawk diving for a kill.*"
-    }
+    },
+    "linked_lore_by_name": ["Candle Lane Warehouse"]
 }
