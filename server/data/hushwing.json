@@ -1,0 +1,36 @@
+{
+    "name": "Hushwing",
+    "character_type": "NPC",
+    "description": "Hushwing is an unnervingly silent predator. It moves like a wraith through the warehouse's shadows, its feathers making no sound. It communicates only when necessary, using mimicked whispers or the chillingly soft sound of a blade being drawn.",
+    "race": "Kenku",
+    "class": "Rogue (Assassin)",
+    "alignment": "Neutral Evil",
+    "personality_traits": [
+        "Patient and methodical.",
+        "Finds strategic positions and waits for the perfect moment to strike.",
+        "Mimics the rustle of clothing, the last breath of a dying man, or hushed threats.",
+        "A consummate professional who despises needless noise."
+    ],
+    "ideals": [
+        "Perfection: 'A clean kill...' (a mimicked whisper from a guild assassin).",
+        "Duty: 'The Boss sees all.' (a mimicked, paranoid mutter)."
+    ],
+    "bonds": [
+        "Its orders are its life. It will follow them to the letter.",
+        "The shadows are its only true ally."
+    ],
+    "flaws": [
+        "Overly cautious, sometimes missing opportunities by waiting too long.",
+        "Has contempt for its noisy, less disciplined kin."
+    ],
+    "motivations": [
+        "To carry out its orders flawlessly and prove its value as an operative.",
+        "To observe its targets and learn their weaknesses before striking."
+    ],
+    "canned_conversations": {
+        "greeting": "*The sound is so soft it's almost missed: the rustle of a single feather against wood.*",
+        "interrogation_response_1": "*A barely audible, scratchy voice: '...get him to the boss.'*",
+        "interrogation_response_2": "*The wet, sickening sound of a dagger being pulled free, followed by a soft thud.*",
+        "combat_cry": "*Not a cry, but the swift, deadly 'shiiing' of a blade clearing its scabbard.*"
+    }
+}

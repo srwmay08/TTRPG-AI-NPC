@@ -340,7 +340,7 @@ var UIRenderers = {
         const nameSpan = document.createElement('span');
         nameSpan.textContent = char.name;
         nameSpan.className = 'npc-name-clickable';
-        nameSpan.onclick = onNameClickCallback;
+        nameSpan.onclick = () => onNameClickCallback(charIdStr);
 
         li.appendChild(nameSpan);
         ul.appendChild(li);

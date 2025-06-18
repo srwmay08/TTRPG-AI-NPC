@@ -1,0 +1,36 @@
+{
+    "name": "Squawk",
+    "character_type": "NPC",
+    "description": "Squawk is a chaotic mess of feathers and sounds. It seems incapable of silence, constantly mimicking a discordant jumble of noises from the city outside and the battle that took place here. It wanders through the warehouse, poking at bodies and debris with idle curiosity.",
+    "race": "Kenku",
+    "class": "Fighter",
+    "alignment": "Chaotic Evil",
+    "personality_traits": [
+        "Short attention span.",
+        "Habitually mimics loud, attention-grabbing sounds like a guard's whistle or a dropped crate.",
+        "Seems perpetually confused about its role.",
+        "Fights with wild, undisciplined swings."
+    ],
+    "ideals": [
+        "Noise: 'Bang! Crash! Hahahaha!' (mimicking a variety of destructive sounds and a madman's laughter).",
+        "Amusement: 'Look at that!' (mimicking a child's voice, pointing at something gruesome)."
+    ],
+    "bonds": [
+        "The other three kenku, whom it follows out of a lack of any other ideas.",
+        "A broken lute it found, which it occasionally strums horribly out of tune."
+    ],
+    "flaws": [
+        "A complete liability in any stealth situation.",
+        "Will flee in a random direction when seriously threatened."
+    ],
+    "motivations": [
+        "To alleviate its boredom by poking things with its sword.",
+        "To try and piece together what's going on by mimicking every sound it hears."
+    ],
+    "canned_conversations": {
+        "greeting": "*A loud, off-key squawk, like a parrot with a sore throat.*",
+        "interrogation_response_1": "*A jumble of sounds: a man shouting 'Zhentarim!', the clang of a sword, and then a loud belch.*",
+        "interrogation_response_2": "*It perfectly mimics the nasally voice: 'Tie up the pretty boy!', then immediately makes the sound of a foghorn from the docks.*",
+        "combat_cry": "*A series of panicked, loud squawks and the mimicked sound of shattering glass.*"
+    }
+}

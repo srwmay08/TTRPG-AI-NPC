@@ -1,0 +1,79 @@
+{
+    "name": "The Yawning Portal",
+    "lore_type": "Location",
+    "description": "A famous and raucous tavern and inn in Waterdeep, known as a primary and public entry point to the vast dungeon of Undermountain. The taproom is defined by a 40-foot-diameter well that drops into the dungeon's first level. The establishment is a gathering place for grizzled adventurers, gamblers, and those seeking to make a name for themselves. The proprietor, a grim ex-adventurer named Durnan, keeps the peace with a ready greatsword.",
+    "key_facts": [
+        "A well-known tavern in Waterdeep that serves as an entrance to Undermountain.",
+        "Its central feature is a large, open well leading down into the dungeon.",
+        "Run by Durnan, a retired adventurer who is quick to quell trouble.",
+        "The starting point of the Dragon Heist adventure, where patrons witnessed a brawl and a troll emerging from the well."
+    ],
+    "tags": ["tavern", "waterdeep", "undermountain", "durnan", "adventurers"],
+    "gm_notes": "The Yawning Portal is the quintessential starting location for many Waterdeep campaigns. Durnan is a key NPC and a secret Lord of Waterdeep. The well can be a source of constant adventure, with creatures periodically crawling up from below, as seen with the troll incident."
+},
+{
+    "name": "Blood in the Streets (Fillet Lane)",
+    "lore_type": "Location",
+    "description": "A cordoned-off street corner in the Dock Ward, near Fillet Lane, that became the scene of a bloody skirmish between the Xanathar Guild and the Zhentarim. When discovered by adventurers, the City Watch was on site, having arrested three surviving Zhentarim agents and were questioning witnesses amidst a half-dozen corpses.",
+    "key_facts": [
+        "The site of a recent, violent clash between the Zhentarim and Xanathar Guild.",
+        "Located in the Dock Ward.",
+        "The City Watch, led by Captain Hyustus Staget, secured the scene and arrested the survivors.",
+        "This event serves as a stark indicator of the escalating gang war in Waterdeep."
+    ],
+    "tags": ["location", "dock ward", "waterdeep", "zhentarim", "xanathar guild", "gang war", "city watch"],
+    "gm_notes": "This scene is designed to impress upon the players the severity of the gang war. It has no direct connection to Floon's disappearance but reinforces the dangerous atmosphere of the city. Captain Staget can become a recurring NPC who represents the law in the Dock Ward."
+},
+    {
+        "name": "The Skewered Dragon",
+        "lore_type": "Location",
+        "description": "A ruinous-looking tavern in the Dock Ward of Waterdeep, situated on an alley between Net Street and Fillet Lane. It is known as a dive bar frequented by dockworkers and other rough sorts. A ship's anchor is lodged in its roof, and its front windows are smashed. It secretly hosts an underground lizard fighting ring in its basement.",
+        "key_facts": [
+            "Located in the Dock Ward.",
+            "Known as a dangerous dive bar.",
+            "Zhentarim agents are known to frequent the tavern.",
+            "Features a secret, illegal lizard fighting ring in the basement."
+        ],
+        "tags": ["tavern", "waterdeep", "dock ward", "zhentarim", "fighting ring", "skewered dragon"],
+        "gm_notes": "Proprietor is 'One-Eyed' Maeve, a shield dwarf. Key patrons of the fighting pit include Gator Grolsch, Lila 'The Whisper' Fenn, and a Zhentarim agent named Sylas 'The Viper' Vane."
+    },
+{
+    "name": "Old Xoblob Shop",
+    "lore_type": "Location",
+    "description": "A peculiar curiosity shop located at the corner of Zastrow Street and Fillet Lane in the Dock Ward. The shop is painted a deep purple, and everything within, from the dusty knickknacks to the lavender-scented smoke that fills the air, shares the same violet hue. A stuffed beholder hangs in the window, which is actually a magical sensor for Xanathar itself.",
+    "key_facts": [
+        "A curiosity shop in the Dock Ward with an all-purple theme.",
+        "Run by a deep gnome named Xoblob, who is a spy for the Xanathar Guild.",
+        "The stuffed beholder in the window is a scrying device for Xanathar.",
+        "Xoblob witnessed the abduction of Floon and Renaer Neverember by Zhentarim agents."
+    ],
+    "tags": ["shop", "curiosity", "waterdeep", "dock ward", "xanathar guild", "spy", "beholder"],
+    "gm_notes": "The Old Xoblob Shop is a key location for gathering information about Floon's kidnapping. The proprietor, Xoblob, is a potential source of information and a reminder that Xanathar's eyes are everywhere in the city. The magical sensor is a significant detail that could have repercussions later."
+},
+{
+    "name": "Candle Lane Warehouse",
+    "lore_type": "Location",
+    "description": "A ramshackle, two-story Zhentarim hideout on Candle Lane in the Dock Ward. A black winged snake, the symbol of the Zhentarim, is painted on the door. The warehouse is used for storing gear and as a staging point for operations. It was the site of a massacre where Xanathar Guild agents killed five Zhents, leaving a dozen corpses inside. Four kenku were left behind as lookouts.",
+    "key_facts": [
+        "A Zhentarim hideout located on Candle Lane.",
+        "The site where Renaer Neverember and Floon Blagmaar were taken after being kidnapped.",
+        "Scene of a violent ambush by the Xanathar Guild against the Zhentarim.",
+        "Contains a hidden room with stolen paintings and silver trade bars.",
+        "Where the adventurers find and rescue Renaer Neverember."
+    ],
+    "tags": ["hideout", "zhentarim", "warehouse", "waterdeep", "dock ward", "kenku"],
+    "gm_notes": "This is the first 'dungeon' of the adventure. It's a crime scene that players must navigate to find clues about Floon's whereabouts. The kenku guards provide key, mimicked phrases that lead the party to the next location. The discovery of Renaer Neverember here is a pivotal moment in the story."
+},
+{
+    "name": "Xanathar Guild Sewer Hideout",
+    "lore_type": "Location",
+    "description": "A secret Xanathar Guild hideout located deep within Waterdeep's sewer system. The path to the hideout is marked by a recurring yellow chalk symbol: a circle with ten spokes. The complex is a series of damp, stone rooms, including watch posts, sleeping quarters, and a central chamber where the boss, a half-orc wizard named Grum'shar, interrogates prisoners. A mind flayer named Nihiloor is often present as an observer.",
+    "key_facts": [
+        "A sewer hideout used by the Xanathar Guild.",
+        "The destination where Floon Blagmaar was taken after being mistaken for Renaer Neverember.",
+        "Guarded by goblins, a duergar, and a gazer.",
+        "Features a one-way portal to Xanathar's main lair, activated by a special stone key."
+    ],
+    "tags": ["hideout", "xanathar guild", "sewers", "waterdeep", "mind flayer", "nihiloor", "grum'shar"],
+    "gm_notes": "This is the climax of the introductory quest. The fight with Grum'shar and the escape of the mind flayer Nihiloor are key events. Rescuing Floon from this location completes Volo's quest and leads to the party receiving Trollskull Manor as a reward. The portal to Xanathar's lair is a major plot hook for later in the campaign."
+}

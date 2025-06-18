@@ -3,116 +3,108 @@
 
 var EventHandlers = {
     setupResizer: function() {
-        const leftColumn = Utils.getElem('left-column');
-        const resizer = Utils.getElem('resizer');
-        if (!leftColumn || !resizer) {
-            console.warn("EventHandlers.setupResizer: Resizer or left column not found.");
-            return;
-        }
+    const leftColumn = Utils.getElem('left-column');
+    const resizer = Utils.getElem('resizer');
+    if (!leftColumn || !resizer) {
+        console.warn("EventHandlers.setupResizer: Resizer or left column not found.");
+        return;
+    }
 
-        let isResizing = false;
-        resizer.addEventListener('mousedown', (e) => {
-            e.preventDefault();
-            isResizing = true;
-            document.body.style.cursor = 'col-resize';
-        });
-        document.addEventListener('mousemove', (e) => {
-            if (!isResizing) return;
-            let newLeftWidth = e.clientX;
-            const minColWidth = 300; 
-            const maxColWidth = window.innerWidth - 250; 
-            if (newLeftWidth < minColWidth) newLeftWidth = minColWidth;
-            if (newLeftWidth > maxColWidth) newLeftWidth = maxColWidth;
-            leftColumn.style.width = `${newLeftWidth}px`;
-            // --- CHANGED START ---
-            // The following function does not exist and was causing a console error.
-            // Commenting it out to resolve the error. The UI should still be responsive.
-            // UIRenderers.adjustNpcDialogueAreaWidthsUI(Utils.getElem('multi-npc-dialogue-container'));
-            // --- CHANGED END ---
-        });
-        document.addEventListener('mouseup', () => {
-            if (isResizing) {
-                isResizing = false;
-                document.body.style.cursor = 'default';
-            }
-        });
-    },
+    let isResizing = false;
+    resizer.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        isResizing = true;
+        document.body.style.cursor = 'col-resize';
+    });
+    document.addEventListener('mousemove', (e) => {
+        if (!isResizing) return;
+        let newLeftWidth = e.clientX;
+        const minColWidth = 300;
+        const maxColWidth = window.innerWidth - 250;
+        if (newLeftWidth < minColWidth) newLeftWidth = minColWidth;
+        if (newLeftWidth > maxColWidth) newLeftWidth = maxColWidth;
+        leftColumn.style.width = `${newLeftWidth}px`;
+    });
+    document.addEventListener('mouseup', () => {
+        if (isResizing) {
+            isResizing = false;
+            document.body.style.cursor = 'default';
+        }
+    });
+},
 
     setupCollapsibleSections: function() {
-        document.querySelectorAll('#left-column .collapsible-section').forEach(section => {
-            // Do not make #scene-context-filters-direct collapsible
-            if (section.id === 'scene-context-filters-direct') return;
+    document.querySelectorAll('#left-column .collapsible-section').forEach(section => {
+        // Do not make #scene-context-filters-direct collapsible
+        if (section.id === 'scene-context-filters-direct') return;
 
-            const header = section.querySelector('h3, h4');
-            if (!header) return;
+        const header = section.querySelector('h3, h4');
+        if (!header) return;
 
-            let arrow = header.querySelector('.arrow-indicator');
-            if (!arrow) {
-                arrow = document.createElement('span');
-                arrow.className = 'arrow-indicator';
-                header.appendChild(arrow);
-            }
+        let arrow = header.querySelector('.arrow-indicator');
+        if (!arrow) {
+            arrow = document.createElement('span');
+            arrow.className = 'arrow-indicator';
+            header.appendChild(arrow);
+        }
 
-            header.addEventListener('click', (e) => {
-                if (e.target.closest('input, select, button, textarea')) return;
+        header.addEventListener('click', (e) => {
+            if (e.target.closest('input, select, button, textarea')) return;
 
-                const content = section.querySelector(':scope > .collapsible-content');
-                if (content) {
-                    section.classList.toggle('collapsed');
-                    const isCollapsed = section.classList.contains('collapsed');
-                    content.style.display = isCollapsed ? 'none' : 'block';
-                    if (arrow) arrow.textContent = isCollapsed ? ' ►' : ' ▼';
-                }
-            });
-
-            const contentToToggle = section.querySelector(':scope > .collapsible-content');
-            const initiallyOpenIds = ['pc-list-section-outer', 'npc-list-for-scene-section', 'all-npc-list-management-section', 'create-lore-entry-form-section'];
-            const profileSubSectionOpenIds = ['gm-notes-collapsible-section']; 
-
-            const isProfileSection = section.id === 'character-profile-main-section';
-            const isSubSectionOfProfile = section.parentElement?.parentElement?.id === 'character-profile-main-section';
-
-            if (contentToToggle) {
-                let shouldBeOpen = initiallyOpenIds.includes(section.id) || (isProfileSection && !section.classList.contains('collapsed'));
-                if (isSubSectionOfProfile) {
-                    shouldBeOpen = profileSubSectionOpenIds.includes(section.id);
-                }
-                 // Explicitly keep 'npc-list-for-scene-section' open if it's in the scene tab
-                if (section.id === 'npc-list-for-scene-section') {
-                    shouldBeOpen = true;
-                }
-
-
-                if (shouldBeOpen) {
-                    section.classList.remove('collapsed');
-                    contentToToggle.style.display = 'block';
-                    if (arrow) arrow.textContent = ' ▼';
-                } else {
-                    section.classList.add('collapsed');
-                    contentToToggle.style.display = 'none';
-                    if (arrow) arrow.textContent = ' ►';
-                }
+            const content = section.querySelector(':scope > .collapsible-content');
+            if (content) {
+                section.classList.toggle('collapsed');
+                const isCollapsed = section.classList.contains('collapsed');
+                if (arrow) arrow.textContent = isCollapsed ? ' ►' : ' ▼';
             }
         });
 
-        const pcDashboardContent = Utils.getElem('pc-dashboard-content');
-        if (pcDashboardContent) {
-            pcDashboardContent.addEventListener('click', function(event) {
-                const clickedCard = event.target.closest('.clickable-pc-card');
-                if (clickedCard) {
-                    const pcIdToRender = clickedCard.dataset.pcId;
-                    if (pcIdToRender) {
-                        const pcData = appState.getCharacterById(pcIdToRender);
-                        if (pcData) {
-                             UIRenderers.renderDetailedPcSheetUI(pcData, Utils.getElem('pc-dashboard-content'));
-                        }
-                    } else {
-                        console.error("EventHandlers: Clicked card in dashboard, but data-pc-id missing.");
-                    }
-                }
-            });
+        const contentToToggle = section.querySelector(':scope > .collapsible-content');
+        const initiallyOpenIds = ['pc-list-section-outer', 'npc-list-for-scene-section', 'all-npc-list-management-section', 'create-lore-entry-form-section'];
+        const profileSubSectionOpenIds = ['gm-notes-collapsible-section']; 
+
+        const isProfileSection = section.id === 'character-profile-main-section';
+        const isSubSectionOfProfile = section.parentElement?.parentElement?.id === 'character-profile-main-section';
+
+        if (contentToToggle) {
+            let shouldBeOpen = initiallyOpenIds.includes(section.id) || (isProfileSection && !section.classList.contains('collapsed'));
+            if (isSubSectionOfProfile) {
+                shouldBeOpen = profileSubSectionOpenIds.includes(section.id);
+            }
+             // Explicitly keep 'npc-list-for-scene-section' open if it's in the scene tab
+            if (section.id === 'npc-list-for-scene-section') {
+                shouldBeOpen = true;
+            }
+
+
+            if (shouldBeOpen) {
+                section.classList.remove('collapsed');
+                if (arrow) arrow.textContent = ' ▼';
+            } else {
+                section.classList.add('collapsed');
+                if (arrow) arrow.textContent = ' ►';
+            }
         }
-    },
+    });
+
+    const pcDashboardContent = Utils.getElem('pc-dashboard-content');
+    if (pcDashboardContent) {
+        pcDashboardContent.addEventListener('click', function(event) {
+            const clickedCard = event.target.closest('.clickable-pc-card');
+            if (clickedCard) {
+                const pcIdToRender = clickedCard.dataset.pcId;
+                if (pcIdToRender) {
+                    const pcData = appState.getCharacterById(pcIdToRender);
+                    if (pcData) {
+                         UIRenderers.renderDetailedPcSheetUI(pcData, Utils.getElem('pc-dashboard-content'));
+                    }
+                } else {
+                    console.error("EventHandlers: Clicked card in dashboard, but data-pc-id missing.");
+                }
+            }
+        });
+    }
+},
 
     assignButtonEventHandlers: function() {
         const saveGmNotesBtn = Utils.getElem('save-gm-notes-btn');
