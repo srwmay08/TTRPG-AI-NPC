@@ -69,6 +69,7 @@ var CharacterService = {
         if (!charIdStr || charIdStr === "null") {
             appState.setCurrentProfileCharId(null);
             appState.clearCannedResponses();
+            appState.lastAiResultForProfiledChar = null;
             UIRenderers.renderCharacterProfileUI(null, CharacterService.profileElementIds);
             UIRenderers.renderSuggestionsArea(null); // Clear and hide suggestions
             if (characterProfileSection) {

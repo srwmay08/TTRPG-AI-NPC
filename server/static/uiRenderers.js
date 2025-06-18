@@ -606,6 +606,8 @@ var UIRenderers = {
         });
     },
 
+    // Function: renderCharacterProfileUI in server/static/uiRenderers.js
+
     renderCharacterProfileUI: function(character, elements) {
         const characterProfileMainSection = Utils.getElem('character-profile-main-section');
         const detailsCharNameElem = Utils.getElem(elements.detailsCharName);
@@ -654,16 +656,16 @@ var UIRenderers = {
         if (characterLoreLinksSectionElem) characterLoreLinksSectionElem.style.display = 'block';
 
         if (isNpc) {
-            if (characterMemoriesListElem) this.renderMemoriesUI(character.memories, characterMemoriesListElem, elements.deleteMemoryCallback());
-            if (npcFactionStandingsContentElem) this.renderNpcFactionStandingsUI(character, appState.activePcIds, appState.getAllCharacters(), npcFactionStandingsContentElem, elements.factionChangeCallback());
+            if (characterMemoriesListElem) this.renderMemoriesUI(character.memories, characterMemoriesListElem, CharacterService.handleDeleteMemory);
+            if (npcFactionStandingsContentElem) this.renderNpcFactionStandingsUI(character, appState.activePcIds, appState.getAllCharacters(), npcFactionStandingsContentElem, CharacterService.handleSaveFactionStanding);
             if (addMemoryBtnElem) Utils.disableBtn(elements.addMemoryBtn, false);
         } else {
             if (characterMemoriesListElem) characterMemoriesListElem.innerHTML = '<p><em>Memories are for NPCs only.</em></p>';
             if (addMemoryBtnElem) Utils.disableBtn(elements.addMemoryBtn, true);
             if (npcFactionStandingsContentElem) npcFactionStandingsContentElem.innerHTML = '<p><em>Faction standings are for NPCs.</em></p>';
         }
-        if (associatedHistoryListElem && historyContentDisplayElem) this.renderAssociatedHistoryFilesUI(character, associatedHistoryListElem, historyContentDisplayElem, elements.dissociateHistoryCallback());
-        this.renderAssociatedLoreForCharacterUI(character, elements.unlinkLoreFromCharacterCallback());
+        if (associatedHistoryListElem && historyContentDisplayElem) this.renderAssociatedHistoryFilesUI(character, associatedHistoryListElem, historyContentDisplayElem, CharacterService.handleDissociateHistoryFile);
+        this.renderAssociatedLoreForCharacterUI(character, CharacterService.handleUnlinkLoreFromCharacter);
         this.populateLoreEntrySelectForCharacterLinkingUI(character.linked_lore_ids);
         if (linkLoreToCharBtnElem) Utils.disableBtn(elements.linkLoreToCharBtn, false);
     },
