@@ -60,5 +60,5 @@
     {"name": "Dandalus Ruell", "relationship": "Shop's Previous Owner", "status": "Unknown"}
   ],
   "gm_notes": "Xoblob is a spy for the Xanathar. He will not willingly give up any information about the kidnapping of Floon. Players might notice his strange devotion to the stuffed beholder. The shop is a key location, as the scrying sensor in the beholder's eye means that Xanathar saw the entire abduction and knows the Zhentarim were responsible.",
-"linked_lore_by_name": ["Old Xoblob Shop"]
+  "linked_lore_by_name": ["Old Xoblob Shop"]
 }
