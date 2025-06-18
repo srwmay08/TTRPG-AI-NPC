@@ -1,0 +1,29 @@
+{
+        "name": "Lord Lohrmahr",
+        "character_type": "NPC",
+        "description": "A high-ranking political figure in Waterdeep, likely one of the Masked Lords, who is concerned with the diplomatic fallout of the Fey Day disappearances. He is the one who authorized the substantial reward for the rescue of the nobles.",
+        "race": "Human",
+        "class": "Noble / Lord of Waterdeep",
+        "alignment": "Lawful Neutral",
+        "age": "Unknown",
+        "personality_traits": [
+            "Pragmatic",
+            "Politically minded",
+            "Concerned with stability and commerce"
+        ],
+        "ideals": [
+            "Order: 'A diplomatic incident could lead to war. It must be avoided at all costs.'",
+            "Wealth: 'The city's prosperity depends on the confidence of our allies and trade partners.'"
+        ],
+        "bonds": [
+            "The political and economic stability of Waterdeep."
+        ],
+        "flaws": [
+            "Values political assets over the lives of common citizens and guards."
+        ],
+        "motivations": [
+            "To prevent a war or trade embargo resulting from the disappearances.",
+            "To resolve the crisis as quickly and quietly as possible."
+        ],
+        "linked_lore_by_name": ["Castle Waterdeep Ballroom"]
+    }

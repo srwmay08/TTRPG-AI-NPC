@@ -1,0 +1,76 @@
+[
+    {
+        "name": "Castle Waterdeep Ballroom",
+        "lore_type": "Location",
+        "description": "A grand, opulent ballroom within Castle Waterdeep. Normally a site of noble revelry, it has been transformed into a silent, eerie crime scene following the Fey Day incident. The room is vast, quiet, and occupied only by a few tense City Watch guards.",
+        "key_facts": [
+            "Site of the mass disappearances during a Fey Day masked ball.",
+            "A djinni named Sogesonoy was the cause, using a magical golden bottle to abduct guests.",
+            "The magical bottle was left behind on a small table, humming with power.",
+            "The room was sealed after the incident, with both the Castle Guard's captain and the city's primary magical experts among the missing."
+        ],
+        "tags": ["castle waterdeep", "ballroom", "crime scene", "djinni", "fey day", "sogesonoy"],
+        "gm_notes": "The atmosphere is tense and somber. Captain Hyustus Statget of the Dock Ward precinct has been called in to lead the investigation due to the loss of the Castle Guard's own captain. The list of missing includes not only nobles and dignitaries but 26 members of the City Watch, including Sergeant Mila Bruce and Corporal Finn."
+    },
+    {
+        "name": "The Golden Horn Gambling Hall",
+        "lore_type": "Location",
+        "description": "A gambling hall where the PCs Cade and Havik work as 'white hat' security. It is co-owned by Dame Wynda and Linchaser. The rooftop serves as a meeting point for Havik and his network of urchin informants.",
+        "key_facts": [
+            "Employs Cade and Havik as security.",
+            "A network of orphan children, led by a mute orc girl, act as informants for Havik from the rooftops.",
+            "Another employee, Benethan, is openly distrustful of Cade and Havik."
+        ],
+        "tags": ["gambling hall", "waterdeep", "pc home base", "havik", "cade"],
+        "gm_notes": "The Dame at the counter warned the PCs that things get 'real crazy' on Fey Day after sundown, hinting at the establishment's lively and potentially dangerous nightlife. This is a great place for urban intrigue and introducing contacts from the city's underbelly."
+    },
+    {
+        "name": "Temple of Moradin (Crommer Estate)",
+        "lore_type": "Location",
+        "description": "A subterranean forge-temple located beneath the Crommer Estate. The air is filled with the heat and familiar smells of soot and hot metal. The forge itself is an exquisite Gnomish-engineered marvel that pumps molten rock and metal on command.",
+        "key_facts": [
+            "The personal forge and place of worship for the Crommer family and their staff, like Moriah Kiah.",
+            "Features advanced Gnomish mechanisms for metalworking.",
+            "The main forge has a heavy southern door that leads to the rest of the estate."
+        ],
+        "tags": ["dwarven", "temple", "forge", "crommer", "moradin", "gnomish"],
+        "gm_notes": "This is a secure location, heavily tied to the Crommer family's power and faith. It's where Moriah Kiah intended to begin his masterwork before being summoned to the castle."
+    },
+    {
+        "name": "The Spires of the Morning",
+        "lore_type": "Location",
+        "description": "The grand temple-cathedral dedicated to Lathander in Waterdeep. It is a place of serenity and charity, where priests serve breakfast to the city's poor and elderly. The offices of the High Radiance, Ghentilara, are located within.",
+        "key_facts": [
+            "A major temple to Lathander.",
+            "Sir Kalen Solarath and Sir Dunkart Longdawn are stationed here as members of the Order of the Aster.",
+            "Run by High Radiance Ghentilara, who dispatches agents on matters of importance to the church and city."
+        ],
+        "tags": ["temple", "waterdeep", "lathander", "order of the aster", "kalen", "ghentilara"],
+        "gm_notes": "A center for good-aligned quests and a potential source of healing and information. The 'rat pox' outbreak mentioned is a potential unresolved plot hook."
+    },
+    {
+        "name": "Monastery of the Sun",
+        "lore_type": "Location",
+        "description": "A disciplined and serene monastery dedicated to the philosophy of the Three Suns (Lathander, Aumanator, Selûne). Key locations include a sparring salle, a well-kept armory, and a disorienting 'mirrored room' used for focusing inner energy.",
+        "key_facts": [
+            "Home to Abbot Alger, the Githzerai swordmaster Dumac, and the monk Sudara.",
+            "Teaches the Sun Soul style of martial arts.",
+            "Contains an esoteric belief in a 'Fourth Sun'—a light that shines in darkness—symbolized by a secret compartment in a gifted blade."
+        ],
+        "tags": ["monastery", "sun soul", "lathander", "selune", "aumanator", "sudara"],
+        "gm_notes": "The concept of the Fourth Sun is a major personal quest hook for Sudara. The monastery is a source of wisdom, unique martial training, and potential mystical threats."
+    },
+    {
+        "name": "The Djinni's Bottle (Tower Prison)",
+        "lore_type": "Location",
+        "description": "A pocket dimension or demiplane within the golden bottle, which appears as a tower on a platform of blue stone in a cosmic void. The rooftop is a chaotic menagerie of animals, who are actually transformed mortals. Lower levels contain the djinni's personal chambers and a kitchen.",
+        "key_facts": [
+            "Acts as a prison for all who touch the golden bottle.",
+            "Mortals entering are transformed into animals.",
+            "The djinni, Sogesonoy, can magically compel the transformed creatures to do her bidding.",
+            "A floating island, the roost of giant eagles, is visible in the distance and is the key to escaping."
+        ],
+        "tags": ["demiplane", "prison", "djinni", "polymorph", "sogesonoy"],
+        "gm_notes": "The disembodied voice of a game show host suggests the captures are part of a 'Grand Game' for some unknown entity's amusement. This implies a power even greater than the djinni is at play."
+    }
+]

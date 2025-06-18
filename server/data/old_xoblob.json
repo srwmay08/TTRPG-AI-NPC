@@ -27,20 +27,11 @@
     "He is outwardly emotionless, making him difficult to read or reason with.",
     "He underestimates the capabilities of those who enter his shop, viewing them as mere customers."
   ],
-  "canned_conversations": [
-    {
-      "topic": "introduction",
-      "dialogue": "(Xoblob stares without blinking as you enter, a faint smile on his lips) Welcome. Everything is for sale. Everything is purple."
-    },
-    {
-      "topic": "asking_about_beholder",
-      "dialogue": "It watches. It is the Old Xoblob. I am the new Xoblob. We are one. It sees everything."
-    },
-    {
-      "topic": "asking_about_local_trouble",
-      "dialogue": "Street-fights are messy. Bad for business. The Watch handles it. I saw nothing. Only purple."
-    }
-  ],
+  "canned_conversations": {
+    "introduction": "(Xoblob stares without blinking as you enter, a faint smile on his lips) Welcome. Everything is for sale. Everything is purple.",
+    "asking_about_beholder": "It watches. It is the Old Xoblob. I am the new Xoblob. We are one. It sees everything.",
+    "asking_about_local_trouble": "Street-fights are messy. Bad for business. The Watch handles it. I saw nothing. Only purple."
+  },
   "backstory": "A deep gnome who survived a close encounter with a gas spore, Xoblob was psychologically scarred, leaving him with beholder-like compulsions. He wandered to Waterdeep and purchased a curiosity shop, which he found already named the 'Old Xoblob Shop' after the stuffed beholder hanging within. After failing to rename the store, he embraced the moniker and renamed himself 'Xoblob'. He was soon recruited by the Xanathar's Thieves' Guild, who found his eccentricities and prime location perfect for a spy. He now serves the beholder crime lord faithfully.",
   "motivations": [
     "To serve his master, the Xanathar, by spying on the Dock Ward.",

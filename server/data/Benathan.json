@@ -1,0 +1,28 @@
+{
+        "name": "Benethan",
+        "character_type": "NPC",
+        "description": "An employee at the Golden Horn Gambling Hall who holds Cade and Havik in open contempt, watching them with a perpetually dirty look.",
+        "race": "Human",
+        "class": "Commoner / Casino Floor Staff",
+        "alignment": "Lawful Neutral",
+        "age": "30s",
+        "personality_traits": [
+            "Distrustful",
+            "Judgmental",
+            "Keeps to himself"
+        ],
+        "ideals": [
+            "Order: 'People like that don't belong in a respectable establishment.'"
+        ],
+        "bonds": [
+            "The Golden Horn Gambling Hall. "
+        ],
+        "flaws": [
+            "His open distrust creates a tense work environment.",
+            "Likely makes assumptions about people based on their past. "
+        ],
+        "motivations": [
+            "To do his job and keep trouble out of the Golden Horn."
+        ],
+        "linked_lore_by_name": ["The Golden Horn Gambling Hall"]
+    },

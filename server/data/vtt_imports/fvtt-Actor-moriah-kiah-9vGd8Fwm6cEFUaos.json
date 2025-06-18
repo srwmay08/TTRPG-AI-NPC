@@ -59,7 +59,7 @@
         }
       },
       "con": {
-        "value": 16,
+        "value": 18,
         "proficient": 0,
         "max": null,
         "bonuses": {
@@ -105,7 +105,7 @@
         }
       },
       "wis": {
-        "value": 18,
+        "value": 19,
         "proficient": 1,
         "max": null,
         "bonuses": {
@@ -437,6 +437,18 @@
         "bonuses": {
           "check": ""
         }
+      },
+      "mason": {
+        "value": 1,
+        "ability": "str",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "bonuses": {
+          "check": ""
+        }
       }
     },
     "spells": {
@@ -533,11 +545,14 @@
         "value": null
       },
       "hp": {
-        "value": 11,
+        "value": 23,
         "max": null,
         "temp": null,
         "tempmax": 0,
-        "bonuses": {}
+        "bonuses": {
+          "overall": "",
+          "level": ""
+        }
       },
       "death": {
         "roll": {
@@ -566,7 +581,7 @@
       "ideal": "“I was chosen for a reason. My deeds will ring like steel in the halls of the gods.” (Lawful)",
       "bond": "“My forge was built atop the ashes of my ancestors—I will not abandon it.”",
       "flaw": "“I can’t admit fear or doubt—not while others expect me to lead.”",
-      "race": "GZxbAMbiV8J0J12x",
+      "race": "KROcWzc5pAR3DM39",
       "background": "RIQXrhqJcsMou7Sx",
       "originalClass": "z4d3yhlPhQaW1YSC",
       "xp": {
@@ -626,7 +641,11 @@
       },
       "weaponProf": {
         "value": [
-          "sim"
+          "sim",
+          "handaxe",
+          "lighthammer",
+          "battleaxe",
+          "warhammer"
         ],
         "custom": "",
         "mastery": {
@@ -667,7 +686,23 @@
         "label": ""
       }
     },
-    "favorites": []
+    "favorites": [
+      {
+        "type": "item",
+        "id": ".Item.9zJ9m6XeNLcCGQDh",
+        "sort": 100000
+      },
+      {
+        "type": "item",
+        "id": ".Item.9YPna2AJ0OqwL2iG",
+        "sort": 200000
+      },
+      {
+        "type": "item",
+        "id": ".Item.5i45PoeDwQPNZPBi",
+        "sort": 300000
+      }
+    ]
   },
   "prototypeToken": {
     "name": "Ortiz Alehammer",
@@ -777,13 +812,14 @@
           "revision": 1
         },
         "identifier": "cleric",
-        "levels": 1,
+        "levels": 2,
         "advancement": [
           {
             "type": "HitPoints",
             "configuration": {},
             "value": {
-              "1": "max"
+              "1": "max",
+              "2": 7
             },
             "title": "Hit Points",
             "icon": "systems/dnd5e/icons/svg/hit-points.svg",
@@ -942,7 +978,12 @@
                 }
               }
             },
-            "value": {},
+            "value": {
+              "added": {
+                "FgnUVjWhae76DSCx": "Compendium.dnd5e.classfeatures.Item.YpiLQEKGalROn7iJ",
+                "jNVuQ4YNzARCqzZy": "Compendium.dnd5e.classfeatures.Item.r91UIgwFdHwkXdia"
+              }
+            },
             "level": 2,
             "title": "Features",
             "_id": "PpE7QUl3ZRdIwbSW"
@@ -1386,7 +1427,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1747872698635,
-        "modifiedTime": 1747872698635,
+        "modifiedTime": 1749090663084,
         "lastModifiedBy": "1QSOLJA3oFr0LiZA"
       }
     },
@@ -1462,158 +1503,6 @@
       }
     },
     {
-      "_id": "GZxbAMbiV8J0J12x",
-      "name": "Dwarf",
-      "type": "race",
-      "system": {
-        "description": {
-          "value": "<div>\n\t\t\t\t<table class=\"w-100 summary stripe-even\">\n\t\t\t\t<tbody><tr>\n\t\t\t\t\t<th class=\"ve-col-4 ve-text-center\">Ability Scores</th>\n\t\t\t\t\t<th class=\"ve-col-4 ve-text-center\">Size</th>\n\t\t\t\t\t<th class=\"ve-col-4 ve-text-center\">Speed</th>\n\t\t\t\t</tr>\n\t\t\t\t<tr>\n\t\t\t\t\t<td class=\"ve-text-center\"></td>\n\t\t\t\t\t<td class=\"ve-text-center\">Medium</td>\n\t\t\t\t\t<td class=\"ve-text-center\">30 ft. </td>\n\t\t\t\t</tr>\n\t\t\t</tbody></table>\n\t\t\t\t<div class=\"mt-2\"><p>@UUID[Actor.9vGd8Fwm6cEFUaos.Item.WkFTRnHx7x7Spn1O]{Darkvision}</p><p>@UUID[Actor.9vGd8Fwm6cEFUaos.Item.rfBfqTOnuF820ZC7]{Dwarven Resilience}</p><p>@UUID[Actor.9vGd8Fwm6cEFUaos.Item.lT5pjyp4VmONP2R2]{Dwarven Toughness}</p><p>@UUID[Actor.9vGd8Fwm6cEFUaos.Item.F7JP8vNKUa6id2gl]{Stonecunning}</p></div>\n\t\t\t\t<hr class=\"hr-1\" /><div class=\"rd__b  rd__b--1\"><div class=\"rd__b  rd__b--2\"><p>Dwarves were raised from the earth in the elder days by a deity of the forge. Called by various names on different worlds—Moradin, Reorx, and others—that god gave dwarves an affinity for stone and metal and for living underground. The god also made them resilient like the mountains, with a life span of about 350 years.</p><p>Squat and often bearded, the original dwarves carved cities and strongholds into mountainsides and under the earth. Their oldest legends tell of conflicts with the monsters of mountaintops and the Underdark, whether those monsters were towering giants or subterranean horrors. Inspired by those tales, dwarves of any culture often sing of valorous deeds—especially of the little overcoming the mighty.</p><p>On some worlds in the multiverse, the first settlements of dwarves were built in hills or mountains, and the families who trace their ancestry to those settlements call themselves hill dwarves or mountain dwarves, respectively. The Greyhawk and Dragonlance settings have such communities.</p></div></div>\n\t\t\t</div>",
-          "chat": ""
-        },
-        "source": {
-          "custom": "",
-          "book": "PHB 2024",
-          "page": "188",
-          "license": "",
-          "rules": "2024",
-          "revision": 1
-        },
-        "movement": {
-          "burrow": null,
-          "climb": null,
-          "fly": null,
-          "swim": null,
-          "walk": 30,
-          "units": "ft",
-          "hover": false
-        },
-        "type": {
-          "value": "humanoid",
-          "subtype": "dwarf",
-          "custom": ""
-        },
-        "senses": {
-          "darkvision": 120,
-          "blindsight": null,
-          "truesight": null,
-          "tremorsense": null,
-          "units": "ft",
-          "special": ""
-        },
-        "advancement": [
-          {
-            "_id": "21J5c41QUcb8B8ta",
-            "type": "Size",
-            "configuration": {
-              "sizes": [
-                "med"
-              ]
-            },
-            "value": {
-              "size": "med"
-            },
-            "level": 0,
-            "title": ""
-          },
-          {
-            "_id": "OPAWcAM2AgtqUgKo",
-            "type": "Trait",
-            "configuration": {
-              "mode": "default",
-              "allowReplacements": false,
-              "grants": [],
-              "choices": []
-            },
-            "level": 0,
-            "title": "Damage Resistances",
-            "value": {
-              "chosen": [
-                "dr:poison"
-              ]
-            }
-          },
-          {
-            "_id": "fflQIBxa7df2ezmv",
-            "type": "ItemGrant",
-            "level": 0,
-            "title": "Features",
-            "icon": "https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/races/XPHB/Dwarf.webp",
-            "configuration": {
-              "items": [
-                {
-                  "uuid": ".WkFTRnHx7x7Spn1O",
-                  "optional": false
-                },
-                {
-                  "uuid": ".rfBfqTOnuF820ZC7",
-                  "optional": false
-                },
-                {
-                  "uuid": ".lT5pjyp4VmONP2R2",
-                  "optional": false
-                },
-                {
-                  "uuid": ".F7JP8vNKUa6id2gl",
-                  "optional": false
-                }
-              ],
-              "optional": false,
-              "spell": {
-                "ability": [
-                  ""
-                ],
-                "preparation": "",
-                "uses": {
-                  "max": "",
-                  "per": "",
-                  "requireSlot": false
-                }
-              }
-            },
-            "value": {
-              "added": {
-                "WkFTRnHx7x7Spn1O": ".WkFTRnHx7x7Spn1O",
-                "rfBfqTOnuF820ZC7": ".rfBfqTOnuF820ZC7",
-                "lT5pjyp4VmONP2R2": ".lT5pjyp4VmONP2R2",
-                "F7JP8vNKUa6id2gl": ".F7JP8vNKUa6id2gl"
-              }
-            }
-          }
-        ],
-        "identifier": "dwarf"
-      },
-      "effects": [],
-      "flags": {
-        "plutonium": {
-          "page": "races.html",
-          "source": "XPHB",
-          "hash": "dwarf_xphb",
-          "propDroppable": "race",
-          "isDirectImport": true
-        },
-        "scene-packer": {
-          "hash": "4ca480e65ea94fc66fbb4d8e2a3d367d563b5dd6"
-        }
-      },
-      "img": "https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/races/XPHB/Dwarf.webp",
-      "ownership": {
-        "default": 0,
-        "1QSOLJA3oFr0LiZA": 3
-      },
-      "_stats": {
-        "compendiumSource": null,
-        "duplicateSource": null,
-        "coreVersion": "12.331",
-        "systemId": "dnd5e",
-        "systemVersion": "4.3.9",
-        "createdTime": 1747873367485,
-        "modifiedTime": 1747873367631,
-        "lastModifiedBy": "1QSOLJA3oFr0LiZA"
-      },
-      "folder": null,
-      "sort": 0
-    },
-    {
       "_id": "WkFTRnHx7x7Spn1O",
       "name": "Darkvision",
       "type": "feat",
@@ -1668,7 +1557,11 @@
         },
         "dnd5e": {
           "sourceId": ".WkFTRnHx7x7Spn1O",
-          "advancementOrigin": "GZxbAMbiV8J0J12x.fflQIBxa7df2ezmv"
+          "advancementOrigin": "GZxbAMbiV8J0J12x.fflQIBxa7df2ezmv",
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
         }
       },
       "effects": [],
@@ -1679,7 +1572,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1747873367485,
-        "modifiedTime": 1747873367988,
+        "modifiedTime": 1749075478473,
         "lastModifiedBy": "1QSOLJA3oFr0LiZA"
       },
       "folder": null,
@@ -1740,7 +1633,11 @@
         },
         "dnd5e": {
           "sourceId": ".rfBfqTOnuF820ZC7",
-          "advancementOrigin": "GZxbAMbiV8J0J12x.fflQIBxa7df2ezmv"
+          "advancementOrigin": "GZxbAMbiV8J0J12x.fflQIBxa7df2ezmv",
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
         }
       },
       "effects": [],
@@ -1751,7 +1648,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1747873367485,
-        "modifiedTime": 1747873367988,
+        "modifiedTime": 1749075478473,
         "lastModifiedBy": "1QSOLJA3oFr0LiZA"
       },
       "folder": null,
@@ -1812,7 +1709,11 @@
         },
         "dnd5e": {
           "sourceId": ".lT5pjyp4VmONP2R2",
-          "advancementOrigin": "GZxbAMbiV8J0J12x.fflQIBxa7df2ezmv"
+          "advancementOrigin": "GZxbAMbiV8J0J12x.fflQIBxa7df2ezmv",
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
         }
       },
       "effects": [],
@@ -1823,7 +1724,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1747873367485,
-        "modifiedTime": 1747873367988,
+        "modifiedTime": 1749075478473,
         "lastModifiedBy": "1QSOLJA3oFr0LiZA"
       },
       "folder": null,
@@ -1943,7 +1844,11 @@
         },
         "dnd5e": {
           "sourceId": ".F7JP8vNKUa6id2gl",
-          "advancementOrigin": "GZxbAMbiV8J0J12x.fflQIBxa7df2ezmv"
+          "advancementOrigin": "GZxbAMbiV8J0J12x.fflQIBxa7df2ezmv",
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
         }
       },
       "effects": [],
@@ -1954,7 +1859,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1747873367485,
-        "modifiedTime": 1747873367988,
+        "modifiedTime": 1749075478473,
         "lastModifiedBy": "1QSOLJA3oFr0LiZA"
       },
       "folder": null,
@@ -2145,7 +2050,11 @@
         },
         "dnd5e": {
           "sourceId": ".2124rbZGhlUXgcj0",
-          "advancementOrigin": "RIQXrhqJcsMou7Sx.gJbHVGeYAdiWuyib"
+          "advancementOrigin": "RIQXrhqJcsMou7Sx.gJbHVGeYAdiWuyib",
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
         }
       },
       "effects": [],
@@ -2156,7 +2065,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1747873459780,
-        "modifiedTime": 1747873460681,
+        "modifiedTime": 1749075478473,
         "lastModifiedBy": "1QSOLJA3oFr0LiZA"
       },
       "folder": null,
@@ -2392,6 +2301,12 @@
         },
         "scene-packer": {
           "hash": "492e92d3d31b46e3dc96c8f5c2bf697a936dea94"
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
         }
       },
       "effects": [],
@@ -2402,7 +2317,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1747873906770,
-        "modifiedTime": 1747873906770,
+        "modifiedTime": 1749075478473,
         "lastModifiedBy": "1QSOLJA3oFr0LiZA"
       },
       "folder": null,
@@ -2553,6 +2468,12 @@
         },
         "scene-packer": {
           "hash": "6e79503161a4662de6eebe4a6471bf84335be63d"
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
         }
       },
       "effects": [],
@@ -2563,7 +2484,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1747873912909,
-        "modifiedTime": 1747873918863,
+        "modifiedTime": 1749075478473,
         "lastModifiedBy": "1QSOLJA3oFr0LiZA"
       },
       "folder": null,
@@ -2765,6 +2686,12 @@
         },
         "scene-packer": {
           "hash": "7a175eb5e9157dd3cf04c0c65b0952ef640bd58a"
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
         }
       },
       "effects": [],
@@ -2775,7 +2702,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1747873913658,
-        "modifiedTime": 1747873913658,
+        "modifiedTime": 1749075478473,
         "lastModifiedBy": "1QSOLJA3oFr0LiZA"
       },
       "folder": null,
@@ -2955,6 +2882,17 @@
         },
         "scene-packer": {
           "hash": "a8a5be83257a8d7080440d6a767c37b829d83039"
+        },
+        "dnd5e": {
+          "last": {
+            "b9Mvd9rwUJ1JWwey": {
+              "attackMode": "oneHanded"
+            }
+          },
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
         }
       },
       "effects": [],
@@ -2965,7 +2903,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1747873917025,
-        "modifiedTime": 1747873917025,
+        "modifiedTime": 1749075478473,
         "lastModifiedBy": "1QSOLJA3oFr0LiZA"
       },
       "folder": null,
@@ -3269,6 +3207,12 @@
         },
         "scene-packer": {
           "hash": "76149058c80cc9eec3f244fb68c56ee03168c388"
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
         }
       },
       "effects": [],
@@ -3279,7 +3223,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1747873918418,
-        "modifiedTime": 1747873918418,
+        "modifiedTime": 1749075478473,
         "lastModifiedBy": "1QSOLJA3oFr0LiZA"
       },
       "folder": null,
@@ -3498,6 +3442,12 @@
         },
         "scene-packer": {
           "hash": "f8ccca70ddef57cf3c587d174befb1447d0ab62c"
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
         }
       },
       "effects": [],
@@ -3508,7 +3458,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1747873919900,
-        "modifiedTime": 1747873919900,
+        "modifiedTime": 1749075478473,
         "lastModifiedBy": "1QSOLJA3oFr0LiZA"
       },
       "folder": null,
@@ -4156,6 +4106,12 @@
         "scene-packer": {
           "sourceId": "Item.SpareTheDyingIII",
           "hash": "61513239b8db13156ddb7f5e360540dd6152a475"
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
         }
       },
       "img": "icons/magic/life/heart-cross-strong-blue.webp",
@@ -4167,7 +4123,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1747874115999,
-        "modifiedTime": 1747874115999,
+        "modifiedTime": 1749075478473,
         "lastModifiedBy": "1QSOLJA3oFr0LiZA"
       },
       "_id": "xw8s5lSh3pjpvvpn",
@@ -4408,6 +4364,19 @@
         "scene-packer": {
           "sourceId": "Item.CENBG6umHrLXTEww",
           "hash": "e6f2a7334fc35fd4a731bd7cf82cb85734abec04"
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          },
+          "last": {
+            "Iui8GUIK1UQTNQl0": {
+              "damageType": {
+                "0": "necrotic"
+              }
+            }
+          }
         }
       },
       "effects": [],
@@ -4419,7 +4388,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1747874676066,
-        "modifiedTime": 1747874676066,
+        "modifiedTime": 1749075956603,
         "lastModifiedBy": "1QSOLJA3oFr0LiZA"
       },
       "_id": "5i45PoeDwQPNZPBi",
@@ -4530,6 +4499,12 @@
         },
         "scene-packer": {
           "hash": "9b3f2badd41f3cca618a16a751b04b6c61052695"
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
         }
       },
       "effects": [],
@@ -4540,7 +4515,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1747875464667,
-        "modifiedTime": 1747875464667,
+        "modifiedTime": 1749075478473,
         "lastModifiedBy": "1QSOLJA3oFr0LiZA"
       },
       "folder": null,
@@ -4626,6 +4601,12 @@
       "flags": {
         "scene-packer": {
           "hash": "eb51b9bbe6a68318481f8ef9f3e326ac24c99dd8"
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
         }
       },
       "_stats": {
@@ -4635,7 +4616,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1747875788052,
-        "modifiedTime": 1747875837065,
+        "modifiedTime": 1749075478473,
         "lastModifiedBy": "1QSOLJA3oFr0LiZA"
       }
     },
@@ -4717,6 +4698,12 @@
       "flags": {
         "scene-packer": {
           "hash": "b3101f1de1589a9430d5440eefcdaab187cc783f"
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
         }
       },
       "_stats": {
@@ -4726,7 +4713,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1747875799235,
-        "modifiedTime": 1747875834220,
+        "modifiedTime": 1749075478473,
         "lastModifiedBy": "1QSOLJA3oFr0LiZA"
       }
     },
@@ -4960,6 +4947,12 @@
         },
         "scene-packer": {
           "hash": "187e21844f02778b49edb5ce6f18dfe6cc9c725b"
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
         }
       },
       "effects": [],
@@ -4970,7 +4963,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1747876458637,
-        "modifiedTime": 1747876458637,
+        "modifiedTime": 1749075478473,
         "lastModifiedBy": "1QSOLJA3oFr0LiZA"
       },
       "folder": null,
@@ -5087,6 +5080,12 @@
         },
         "scene-packer": {
           "hash": "92200c014c2f329c562b622f1b30be757d9e61dc"
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
         }
       },
       "effects": [],
@@ -5097,7 +5096,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1747876605626,
-        "modifiedTime": 1747876605626,
+        "modifiedTime": 1749075478473,
         "lastModifiedBy": "1QSOLJA3oFr0LiZA"
       },
       "folder": null,
@@ -5255,6 +5254,12 @@
       "flags": {
         "scene-packer": {
           "hash": "f9aa19411db303af6234fbd8e20256aa3d76c9b1"
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
         }
       },
       "_stats": {
@@ -5264,7 +5269,674 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1747877290152,
-        "modifiedTime": 1747877290152,
+        "modifiedTime": 1749075478473,
+        "lastModifiedBy": "1QSOLJA3oFr0LiZA"
+      }
+    },
+    {
+      "_id": "KROcWzc5pAR3DM39",
+      "name": "Hill Dwarf",
+      "type": "race",
+      "img": "icons/environment/wilderness/cave-entrance-rocky.webp",
+      "system": {
+        "description": {
+          "value": "<p><em>Your dwarf character has an assortment of inborn abilities, part and parcel of dwarven nature.</em></p><p><strong>Ability Score Increase.</strong> Your Constitution score increases by 2.</p><p><strong>Age.</strong> Dwarves mature at the same rate as humans, but they're considered young until they reach the age of 50. On average, they live about 350 years.</p><p><strong>Alignment.</strong> Most dwarves are lawful, believing firmly in the benefits of a well-ordered society. They tend toward good as well, with a strong sense of fair play and a belief that everyone deserves to share in the benefits of a just order.</p><p><strong>Size.</strong> Dwarves stand between 4 and 5 feet tall and average about 150 pounds. Your size is Medium.</p><p><strong>Speed.</strong> Your base walking speed is 25 feet. Your speed is not reduced by wearing heavy armor.</p><p><strong>Darkvision.</strong> Accustomed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.</p><p><strong>Dwarven Resilience.</strong> You have advantage on saving throws against poison, and you have resistance against poison damage.</p><p><strong>Dwarven Combat Training.</strong> You have proficiency with the battleaxe, handaxe, light hammer, and warhammer.</p><p><strong>Tool Proficiency.</strong> You gain proficiency with the artisan's tools of your choice: smith's tools, brewer's supplies, or mason's tools.</p><p><strong>Stonecunning.</strong> Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus.</p><p><strong>Languages.</strong> You can speak, read, and write Common and Dwarvish. Dwarvish is full of hard consonants and guttural sounds, and those characteristics spill over into whatever other language a dwarf might speak.</p><h5>Hill Dwarf</h5><p>As a hill dwarf, you have keen senses, deep intuition, and remarkable resilience.</p><p><strong>Ability Score Increase.</strong> Your Wisdom score increases by 1.</p><p><strong>Dwarven Toughness.</strong> Your hit point maximum increases by 1, and it increases by 1 every time you gain a level.</p><section class=\"secret\" id=\"secret-bkbaaEWqAGbU8ZgK\"><p><strong>Foundry Note</strong></p><p>Dwarven Toughness should be configured by adding 1 to the \"Per Level\" bonus in HP configuration on your character sheet (accessible using the cog next to your character's hit points).</p></section>",
+          "chat": ""
+        },
+        "source": {
+          "custom": "",
+          "book": "SRD 5.1",
+          "page": "",
+          "license": "CC-BY-4.0",
+          "rules": "2014",
+          "revision": 1
+        },
+        "identifier": "hill-dwarf",
+        "advancement": [
+          {
+            "_id": "tNfLTuoHfvAxg2FC",
+            "type": "ItemGrant",
+            "configuration": {
+              "items": [
+                {
+                  "uuid": "Compendium.dnd5e.races.ufysTkqet2Ctmtyi",
+                  "optional": false
+                },
+                {
+                  "uuid": "Compendium.dnd5e.races.mQPZDRbUhgYTbXKa",
+                  "optional": false
+                }
+              ],
+              "optional": false,
+              "spell": {
+                "ability": [],
+                "preparation": "",
+                "uses": {
+                  "max": "",
+                  "per": "",
+                  "requireSlot": false
+                }
+              }
+            },
+            "value": {
+              "added": {
+                "4qZO7nckEhyEksMg": "Compendium.dnd5e.races.Item.ufysTkqet2Ctmtyi",
+                "u6r6gLWmwgy5mk6Y": "Compendium.dnd5e.races.Item.mQPZDRbUhgYTbXKa"
+              }
+            },
+            "level": 0,
+            "title": ""
+          },
+          {
+            "_id": "Z9hvZFkWUNvowbQX",
+            "type": "AbilityScoreImprovement",
+            "configuration": {
+              "points": 0,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 2,
+                "int": 0,
+                "wis": 1,
+                "cha": 0
+              },
+              "cap": 2,
+              "locked": []
+            },
+            "value": {
+              "type": "asi",
+              "assignments": {
+                "con": 2,
+                "wis": 1
+              }
+            },
+            "level": 0,
+            "title": ""
+          },
+          {
+            "_id": "kdMPoRp3j1uOHQom",
+            "type": "Size",
+            "configuration": {
+              "sizes": [
+                "med"
+              ]
+            },
+            "value": {
+              "size": "med"
+            },
+            "level": 1,
+            "title": "",
+            "hint": "Dwarves stand between 4 and 5 feet tall and average about 150 pounds. Your size is Medium."
+          },
+          {
+            "_id": "rmcKuRQ2Laloq1xp",
+            "type": "Trait",
+            "configuration": {
+              "mode": "default",
+              "allowReplacements": false,
+              "grants": [
+                "languages:standard:common",
+                "languages:standard:dwarvish"
+              ],
+              "choices": []
+            },
+            "level": 0,
+            "title": "",
+            "value": {
+              "chosen": []
+            }
+          },
+          {
+            "_id": "5zWGcz9uAerx3Dh5",
+            "type": "Trait",
+            "configuration": {
+              "mode": "default",
+              "allowReplacements": false,
+              "grants": [
+                "dr:poison"
+              ],
+              "choices": []
+            },
+            "level": 0,
+            "title": "Dwarven Resilience",
+            "value": {
+              "chosen": []
+            }
+          },
+          {
+            "_id": "J0UGmCyMy6thWDeU",
+            "type": "Trait",
+            "configuration": {
+              "mode": "default",
+              "allowReplacements": false,
+              "grants": [
+                "weapon:sim:handaxe",
+                "weapon:sim:lighthammer",
+                "weapon:mar:battleaxe",
+                "weapon:mar:warhammer"
+              ],
+              "choices": []
+            },
+            "level": 0,
+            "title": "Dwarven Combat Training",
+            "value": {
+              "chosen": [
+                "weapon:sim:handaxe",
+                "weapon:sim:lighthammer",
+                "weapon:mar:battleaxe",
+                "weapon:mar:warhammer"
+              ]
+            }
+          },
+          {
+            "_id": "9CYW7Bj53L9G8Zsw",
+            "type": "Trait",
+            "configuration": {
+              "mode": "default",
+              "allowReplacements": false,
+              "grants": [],
+              "choices": [
+                {
+                  "count": 1,
+                  "pool": [
+                    "tool:art:brewer",
+                    "tool:art:mason",
+                    "tool:art:smith"
+                  ]
+                }
+              ]
+            },
+            "level": 0,
+            "title": "",
+            "value": {
+              "chosen": [
+                "tool:art:mason"
+              ]
+            }
+          }
+        ],
+        "senses": {
+          "darkvision": 60,
+          "blindsight": null,
+          "tremorsense": null,
+          "truesight": null,
+          "units": "ft",
+          "special": ""
+        },
+        "movement": {
+          "walk": 25,
+          "burrow": null,
+          "climb": null,
+          "fly": null,
+          "swim": null,
+          "units": "ft",
+          "hover": false
+        },
+        "type": {
+          "subtype": "dwarf",
+          "value": "humanoid",
+          "custom": ""
+        }
+      },
+      "effects": [],
+      "ownership": {
+        "default": 0,
+        "1QSOLJA3oFr0LiZA": 3
+      },
+      "flags": {
+        "scene-packer": {
+          "hash": "990768b5f2f748c5d9b8b5ba1653a6ae6df55636"
+        }
+      },
+      "_stats": {
+        "duplicateSource": null,
+        "compendiumSource": "Compendium.dnd5e.races.Item.UQiRQUTBcsz8gZU1",
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1749075478388,
+        "modifiedTime": 1749075478388,
+        "lastModifiedBy": "1QSOLJA3oFr0LiZA"
+      },
+      "sort": 0,
+      "folder": "H2wvPtn11yEFSd64"
+    },
+    {
+      "_id": "4qZO7nckEhyEksMg",
+      "name": "Dwarven Resilience",
+      "ownership": {
+        "default": 0,
+        "1QSOLJA3oFr0LiZA": 3
+      },
+      "type": "feat",
+      "system": {
+        "description": {
+          "value": "<p>You have advantage on saving throws against poison, and you have resistance against poison damage.</p>",
+          "chat": ""
+        },
+        "source": {
+          "custom": "",
+          "book": "SRD 5.1",
+          "page": "",
+          "license": "CC-BY-4.0",
+          "rules": "2014",
+          "revision": 1
+        },
+        "uses": {
+          "max": "",
+          "spent": 0,
+          "recovery": []
+        },
+        "type": {
+          "value": "race",
+          "subtype": ""
+        },
+        "requirements": "Dwarf",
+        "properties": [],
+        "activities": {},
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        },
+        "identifier": "dwarven-resilience",
+        "advancement": [],
+        "cover": null,
+        "crewed": false
+      },
+      "flags": {
+        "dnd5e": {
+          "sourceId": "Compendium.dnd5e.races.Item.ufysTkqet2Ctmtyi",
+          "advancementOrigin": "KROcWzc5pAR3DM39.tNfLTuoHfvAxg2FC",
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
+        },
+        "scene-packer": {
+          "hash": "b4107311ae9686afb730f8bcf7b229df1c57ad85"
+        }
+      },
+      "img": "icons/creatures/abilities/stinger-poison-green.webp",
+      "effects": [],
+      "folder": "bYq316CbmhMdFGG4",
+      "sort": 0,
+      "_stats": {
+        "duplicateSource": null,
+        "compendiumSource": "Compendium.dnd5e.races.Item.ufysTkqet2Ctmtyi",
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1749075478388,
+        "modifiedTime": 1749090663084,
+        "lastModifiedBy": "1QSOLJA3oFr0LiZA"
+      }
+    },
+    {
+      "_id": "u6r6gLWmwgy5mk6Y",
+      "name": "Stonecunning",
+      "ownership": {
+        "default": 0,
+        "1QSOLJA3oFr0LiZA": 3
+      },
+      "type": "feat",
+      "system": {
+        "description": {
+          "value": "<p>Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus.</p>",
+          "chat": ""
+        },
+        "source": {
+          "custom": "",
+          "book": "SRD 5.1",
+          "page": "",
+          "license": "CC-BY-4.0",
+          "rules": "2014",
+          "revision": 1
+        },
+        "uses": {
+          "max": "",
+          "spent": 0,
+          "recovery": []
+        },
+        "type": {
+          "value": "race",
+          "subtype": ""
+        },
+        "requirements": "Dwarf",
+        "properties": [],
+        "activities": {},
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        },
+        "identifier": "stonecunning",
+        "advancement": [],
+        "cover": null,
+        "crewed": false
+      },
+      "flags": {
+        "dnd5e": {
+          "sourceId": "Compendium.dnd5e.races.Item.mQPZDRbUhgYTbXKa",
+          "advancementOrigin": "KROcWzc5pAR3DM39.tNfLTuoHfvAxg2FC",
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
+        },
+        "scene-packer": {
+          "hash": "a99544d608cef6cd7d2b8322f8c94947ff878db5"
+        }
+      },
+      "img": "icons/commodities/tech/cog-bronze.webp",
+      "effects": [],
+      "folder": "bYq316CbmhMdFGG4",
+      "sort": 0,
+      "_stats": {
+        "duplicateSource": null,
+        "compendiumSource": "Compendium.dnd5e.races.Item.mQPZDRbUhgYTbXKa",
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1749075478388,
+        "modifiedTime": 1749090663084,
+        "lastModifiedBy": "1QSOLJA3oFr0LiZA"
+      }
+    },
+    {
+      "_id": "FgnUVjWhae76DSCx",
+      "name": "Channel Divinity",
+      "ownership": {
+        "default": 0,
+        "1QSOLJA3oFr0LiZA": 3
+      },
+      "type": "feat",
+      "system": {
+        "description": {
+          "value": "<p>At 2nd level, you gain the ability to channel divine energy directly from your deity, using that energy to fuel magical effects. You start with two such effects: Turn Undead and an effect determined by your domain. Some domains grant you additional effects as you advance in levels, as noted in the domain description.</p><p>When you use your Channel Divinity, you choose which effect to create. You must then finish a short or long rest to use your Channel Divinity again. Some Channel Divinity effects require saving throws. When you use such an effect from this class, the DC equals your cleric spell save DC.</p><p>Beginning at 6th level, you can use your Channel Divinity twice between rests, and beginning at 18th level, you can use it three times between rests. When you finish a short or long rest, you regain your expended uses.</p><section class=\"secret foundry-note\" id=\"secret-AZYZtT1NonF68bPW\"><p><strong>Foundry Note</strong></p><p>Use this to track all the various uses of Channel Divinity for the cleric.</p></section>",
+          "chat": ""
+        },
+        "source": {
+          "custom": "",
+          "book": "SRD 5.1",
+          "page": "",
+          "license": "CC-BY-4.0",
+          "rules": "2014",
+          "revision": 1
+        },
+        "uses": {
+          "max": "@scale.cleric.channel-divinity",
+          "recovery": [
+            {
+              "period": "sr",
+              "type": "recoverAll"
+            }
+          ],
+          "spent": 0
+        },
+        "type": {
+          "value": "class",
+          "subtype": ""
+        },
+        "requirements": "Cleric 2",
+        "properties": [],
+        "activities": {
+          "dnd5eactivity000": {
+            "_id": "dnd5eactivity000",
+            "type": "utility",
+            "activation": {
+              "type": "special",
+              "value": null,
+              "condition": "",
+              "override": false
+            },
+            "consumption": {
+              "targets": [
+                {
+                  "type": "itemUses",
+                  "target": "",
+                  "value": "1",
+                  "scaling": {
+                    "mode": "",
+                    "formula": ""
+                  }
+                }
+              ],
+              "scaling": {
+                "allowed": false,
+                "max": ""
+              },
+              "spellSlot": true
+            },
+            "description": {
+              "chatFlavor": ""
+            },
+            "duration": {
+              "concentration": false,
+              "value": "",
+              "units": "",
+              "special": "",
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "units": "",
+              "special": "",
+              "override": false
+            },
+            "target": {
+              "template": {
+                "count": "",
+                "contiguous": false,
+                "type": "",
+                "size": "",
+                "width": "",
+                "height": "",
+                "units": ""
+              },
+              "affects": {
+                "count": "",
+                "type": "",
+                "choice": false,
+                "special": ""
+              },
+              "prompt": true,
+              "override": false
+            },
+            "roll": {
+              "formula": "",
+              "name": "",
+              "prompt": false,
+              "visible": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "sort": 0
+          }
+        },
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        },
+        "identifier": "channel-divinity",
+        "advancement": [],
+        "cover": null,
+        "crewed": false
+      },
+      "flags": {
+        "dnd5e": {
+          "sourceId": "Compendium.dnd5e.classfeatures.Item.YpiLQEKGalROn7iJ",
+          "advancementOrigin": "z4d3yhlPhQaW1YSC.PpE7QUl3ZRdIwbSW"
+        },
+        "scene-packer": {
+          "hash": "e64edd598dcd7aaedcdc492098b58db8188a88a9"
+        }
+      },
+      "img": "icons/magic/lightning/bolt-strike-smoke-yellow.webp",
+      "effects": [],
+      "folder": "hraxTGrJtk9MmXqT",
+      "sort": 0,
+      "_stats": {
+        "duplicateSource": null,
+        "compendiumSource": "Compendium.dnd5e.classfeatures.Item.YpiLQEKGalROn7iJ",
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1749090662982,
+        "modifiedTime": 1749090662982,
+        "lastModifiedBy": "1QSOLJA3oFr0LiZA"
+      }
+    },
+    {
+      "_id": "jNVuQ4YNzARCqzZy",
+      "name": "Channel Divinity: Turn Undead",
+      "ownership": {
+        "default": 0,
+        "1QSOLJA3oFr0LiZA": 3
+      },
+      "type": "feat",
+      "system": {
+        "description": {
+          "value": "<p>As an action, you present your holy symbol and speak a prayer censuring the undead.</p><p>Each undead that can see or hear you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage.</p><p>A turned creature must spend its turns trying to move as far away from you as it can, and it can't willingly move to a space within 30 feet of you. It also can't take reactions.</p><p>For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there's nowhere to move, the creature can use the Dodge action.</p>",
+          "chat": ""
+        },
+        "source": {
+          "custom": "",
+          "book": "SRD 5.1",
+          "page": "",
+          "license": "CC-BY-4.0",
+          "rules": "2014",
+          "revision": 1
+        },
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "type": {
+          "value": "class",
+          "subtype": "channelDivinity"
+        },
+        "requirements": "Cleric 2",
+        "properties": [],
+        "activities": {
+          "dnd5eactivity000": {
+            "_id": "dnd5eactivity000",
+            "type": "save",
+            "activation": {
+              "type": "action",
+              "value": 1,
+              "condition": "Targets must be able to see or hear you.",
+              "override": false
+            },
+            "consumption": {
+              "targets": [
+                {
+                  "type": "itemUses",
+                  "target": "Compendium.dnd5e.classfeatures.Item.YpiLQEKGalROn7iJ",
+                  "value": "1",
+                  "scaling": {
+                    "mode": "",
+                    "formula": ""
+                  }
+                }
+              ],
+              "scaling": {
+                "allowed": false,
+                "max": ""
+              },
+              "spellSlot": true
+            },
+            "description": {
+              "chatFlavor": ""
+            },
+            "duration": {
+              "concentration": false,
+              "value": "1",
+              "units": "minute",
+              "special": "",
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "value": "30",
+              "units": "ft",
+              "special": "",
+              "override": false
+            },
+            "target": {
+              "template": {
+                "count": "",
+                "contiguous": false,
+                "type": "",
+                "size": "",
+                "width": "",
+                "height": "",
+                "units": ""
+              },
+              "affects": {
+                "count": "",
+                "type": "",
+                "choice": false,
+                "special": ""
+              },
+              "prompt": true,
+              "override": false
+            },
+            "damage": {
+              "onSave": "half",
+              "parts": []
+            },
+            "save": {
+              "ability": [
+                "wis"
+              ],
+              "dc": {
+                "calculation": "wis",
+                "formula": ""
+              }
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "sort": 0
+          }
+        },
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        },
+        "identifier": "channel-divinity-turn-undead",
+        "advancement": [],
+        "cover": null,
+        "crewed": false
+      },
+      "flags": {
+        "dnd5e": {
+          "sourceId": "Compendium.dnd5e.classfeatures.Item.r91UIgwFdHwkXdia",
+          "advancementOrigin": "z4d3yhlPhQaW1YSC.PpE7QUl3ZRdIwbSW"
+        },
+        "scene-packer": {
+          "hash": "670bf4d04766e902f4973fe5b343d929cad5d338"
+        }
+      },
+      "img": "icons/magic/fire/flame-burning-creature-skeleton.webp",
+      "effects": [],
+      "folder": "hraxTGrJtk9MmXqT",
+      "sort": 0,
+      "_stats": {
+        "duplicateSource": null,
+        "compendiumSource": "Compendium.dnd5e.classfeatures.Item.r91UIgwFdHwkXdia",
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1749090662982,
+        "modifiedTime": 1749090662982,
         "lastModifiedBy": "1QSOLJA3oFr0LiZA"
       }
     }
@@ -5291,7 +5963,7 @@
     "systemId": "dnd5e",
     "systemVersion": "4.3.9",
     "createdTime": 1747849650664,
-    "modifiedTime": 1748301810105,
+    "modifiedTime": 1749090864554,
     "lastModifiedBy": "1QSOLJA3oFr0LiZA"
   }
 }

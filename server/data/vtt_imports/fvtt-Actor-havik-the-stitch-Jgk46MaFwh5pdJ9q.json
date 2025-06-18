@@ -441,7 +441,7 @@
     },
     "spells": {
       "spell1": {
-        "value": 0,
+        "value": 1,
         "override": null
       },
       "spell2": {
@@ -533,8 +533,8 @@
         "value": null
       },
       "hp": {
-        "value": 10,
-        "max": null,
+        "value": 18,
+        "max": 18,
         "temp": null,
         "tempmax": null,
         "bonuses": {
@@ -573,7 +573,7 @@
       "background": "5xXWQuK92ZzQGI9O",
       "originalClass": "mUpyvjKx0Cg6xKHV",
       "xp": {
-        "value": 0
+        "value": 300
       },
       "appearance": "Gender: Male\nEyes: Amber\nHeight: 3'7\nHair: Wiry black tufts, mostly shaved on the sides. \nSkin: Green",
       "trait": "I hide scraps of food and trinkets away in my pockets.\nI ask a lot of questions.",
@@ -1049,8 +1049,8 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1748098605621,
-        "modifiedTime": 1748098784636,
-        "lastModifiedBy": "rghJZLG3THgT7m0a"
+        "modifiedTime": 1749055541544,
+        "lastModifiedBy": "jgtY5oRityaFBJYM"
       }
     },
     {
@@ -9270,18 +9270,8 @@
           "revision": 1
         },
         "identifier": "sorcerer",
-        "levels": 1,
+        "levels": 2,
         "advancement": [
-          {
-            "type": "HitPoints",
-            "configuration": {},
-            "value": {
-              "1": "max"
-            },
-            "title": "Hit Points",
-            "icon": "systems/dnd5e/icons/svg/hit-points.svg",
-            "_id": "XFeJBDjRoDLHPuR5"
-          },
           {
             "_id": "BfjnJtYtVOv4PVHu",
             "type": "Trait",
@@ -9414,7 +9404,13 @@
                 }
               }
             },
-            "value": {},
+            "value": {
+              "added": {
+                "mRBODIlZcfZ4Ficd": ".mRBODIlZcfZ4Ficd",
+                "eSO5tsE9mwfBeIjF": ".eSO5tsE9mwfBeIjF",
+                "F4GHz4KhlOt3VPBo": ".F4GHz4KhlOt3VPBo"
+              }
+            },
             "level": 2,
             "title": "Features",
             "_id": "vEbnPhd3OW2Z5RH8"
@@ -9737,6 +9733,17 @@
             },
             "level": 1,
             "title": "Sorcerous Origin"
+          },
+          {
+            "type": "HitPoints",
+            "configuration": {},
+            "value": {
+              "1": "max",
+              "2": 1
+            },
+            "title": "Hit Points",
+            "icon": "systems/dnd5e/icons/svg/hit-points.svg",
+            "_id": "XFeJBDjRoDLHPuR5"
           }
         ],
         "spellcasting": {
@@ -9873,6 +9880,83 @@
       "flags": {
         "scene-packer": {
           "hash": "0e3c96c7ad7bd96792f5c59c8e11add88a0b3d5f"
+        },
+        "plutonium": {
+          "page": "classes.html",
+          "source": "XPHB",
+          "hash": "sorcerer_xphb",
+          "propDroppable": "class",
+          "filterValues": {
+            "Source": {
+              "TCE": 1,
+              "PHB": 1,
+              "XGE": 1,
+              "SCAG": 1,
+              "BGG": 1,
+              "TDCSR": 0,
+              "XPHB": 1,
+              "VRGR": 1,
+              "PSA": 0,
+              "DMG": 1,
+              "EGW": 0,
+              "FTD": 1,
+              "UATheMysticClass": 0,
+              "DSotDQ": 1,
+              "PSK": 0,
+              "_isActive": true,
+              "_totals": {
+                "ignore": 5,
+                "yes": 10,
+                "no": 0
+              },
+              "_combineBlue": "or",
+              "_combineRed": "or"
+            },
+            "Primary Ability": {
+              "str": 0,
+              "dex": 0,
+              "con": 0,
+              "int": 0,
+              "wis": 0,
+              "cha": 0,
+              "_isActive": false,
+              "_totals": {
+                "ignore": 6,
+                "yes": 0,
+                "no": 0
+              },
+              "_combineBlue": "or",
+              "_combineRed": "or"
+            },
+            "Miscellaneous": {
+              "Reprinted": 2,
+              "Sidekick": 2,
+              "Legacy": 0,
+              "Has Info": 0,
+              "Has Images": 0,
+              "SRD 5": {
+                "1": 0,
+                "2": 0
+              },
+              "Basic Rules (2024)": 0,
+              "Basic Rules (2014)": 0,
+              "_isActive": true,
+              "_totals": {
+                "ignore": 7,
+                "yes": 0,
+                "no": 2
+              },
+              "_combineBlue": "or",
+              "_combineRed": "or"
+            },
+            "Other/Text Options": {
+              "isDisplayClassIfSubclassActive": false,
+              "isClassFeatureVariant": true,
+              "_isActive": false
+            }
+          },
+          "isPrimaryClass": true,
+          "isDirectImport": true
         }
       },
       "_stats": {
@@ -9882,8 +9966,8 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1748098784406,
-        "modifiedTime": 1748098784406,
-        "lastModifiedBy": "rghJZLG3THgT7m0a"
+        "modifiedTime": 1749090713410,
+        "lastModifiedBy": "jgtY5oRityaFBJYM"
       },
       "sort": 0
     },
@@ -10499,6 +10583,363 @@
         "lastModifiedBy": "jgtY5oRityaFBJYM"
       },
       "sort": 0
+    },
+    {
+      "_id": "mRBODIlZcfZ4Ficd",
+      "name": "Font of Magic",
+      "type": "feat",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "140",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--1\"><p>You can tap into the wellspring of magic within yourself. This wellspring is represented by Sorcery Points, which allow you to create a variety of magical effects.</p><p>You have 2 Sorcery Points, and you gain more as you reach higher levels, as shown in the Sorcery Points column of the Sorcerer Features table. You can't have more Sorcery Points than the number shown in the table for your level. You regain all expended Sorcery Points when you finish a @variantrule[Long Rest|XPHB].</p><p>You can use your Sorcery Points to fuel the options below, along with other features, such as Metamagic, that use those points.</p><div class=\"rd__b  rd__b--2\"><div data-roll-name-ancestor=\"Converting Spell Slots to Sorcery Points\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"1\"> <span class=\"entry-title-inner\">Converting Spell Slots to Sorcery Points.</span></span> You can expend a spell slot to gain a number of Sorcery Points equal to the slot's level (no action required).</p></div><div data-roll-name-ancestor=\"Creating Spell Slots\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"2\"> <span class=\"entry-title-inner\">Creating Spell Slots.</span></span> As a @variantrule[Bonus Action|XPHB], you can transform unexpended Sorcery Points into one spell slot. The Creating Spell Slots table shows the cost of creating a spell slot of a given level, and it lists the minimum Sorcerer level you must be to create a slot. You can create a spell slot no higher than level 5.</p><p>Any spell slot you create with this feature vanishes when you finish a @variantrule[Long Rest|XPHB].</p><table class=\"w-100 rd__table  stripe-odd-table\" data-roll-name-ancestor=\"Creating Spell Slots\"><caption>Creating Spell Slots</caption><thead><tr><th class=\"rd__th ve-col-3 ve-text-center \" data-rd-isroller=\"false\">Spell Slot Level</th><th class=\"rd__th ve-col-3 ve-text-center \" data-rd-isroller=\"false\">Sorcery Point Cost</th><th class=\"rd__th ve-col-3 ve-text-center \" data-rd-isroller=\"false\">Min. Sorcerer Level</th></tr></thead><tbody><tr><td class=\"rd__th ve-col-3 ve-text-center \">1</td><td class=\"rd__th ve-col-3 ve-text-center \">2</td><td class=\"rd__th ve-col-3 ve-text-center \">2</td></tr><tr><td class=\"rd__th ve-col-3 ve-text-center \">2</td><td class=\"rd__th ve-col-3 ve-text-center \">3</td><td class=\"rd__th ve-col-3 ve-text-center \">3</td></tr><tr><td class=\"rd__th ve-col-3 ve-text-center \">3</td><td class=\"rd__th ve-col-3 ve-text-center \">5</td><td class=\"rd__th ve-col-3 ve-text-center \">5</td></tr><tr><td class=\"rd__th ve-col-3 ve-text-center \">4</td><td class=\"rd__th ve-col-3 ve-text-center \">6</td><td class=\"rd__th ve-col-3 ve-text-center \">7</td></tr><tr><td class=\"rd__th ve-col-3 ve-text-center \">5</td><td class=\"rd__th ve-col-3 ve-text-center \">7</td><td class=\"rd__th ve-col-3 ve-text-center \">9</td></tr></tbody></table></div></div></div>",
+          "chat": ""
+        },
+        "requirements": "Sorcerer 2",
+        "uses": {
+          "max": "",
+          "recovery": [
+            {
+              "period": "lr",
+              "type": "recoverAll"
+            }
+          ],
+          "spent": 0
+        },
+        "type": {
+          "value": "class",
+          "subtype": ""
+        },
+        "properties": [],
+        "advancement": [],
+        "activities": {
+          "dnd5eactivity000": {
+            "name": "Regain Spell Slot",
+            "type": "utility",
+            "img": "systems/dnd5e/icons/svg/damage/force.svg",
+            "activation": {
+              "type": "bonus",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": true,
+                "max": "5"
+              },
+              "targets": [
+                {
+                  "type": "itemUses",
+                  "value": "1 + @scaling + floor(@scaling / 3)",
+                  "target": "[object Object]",
+                  "scaling": {}
+                },
+                {
+                  "type": "spellSlots",
+                  "value": "-1",
+                  "target": "1",
+                  "scaling": {
+                    "mode": "level"
+                  }
+                }
+              ],
+              "spellSlot": true
+            },
+            "_id": "dnd5eactivity000",
+            "target": {
+              "prompt": true,
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false
+            },
+            "sort": 0,
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "roll": {
+              "prompt": false,
+              "visible": false
+            }
+          },
+          "dnd5eactivity001": {
+            "name": "Regain Sorcery Points",
+            "type": "utility",
+            "img": "systems/dnd5e/icons/svg/activity/heal.svg",
+            "activation": {
+              "type": "",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": true,
+                "max": "9"
+              },
+              "targets": [
+                {
+                  "type": "spellSlots",
+                  "value": "1",
+                  "target": "1",
+                  "scaling": {
+                    "mode": "level"
+                  }
+                },
+                {
+                  "type": "itemUses",
+                  "value": "0 - @scaling",
+                  "scaling": {
+                    "mode": "amount"
+                  },
+                  "target": "[object Object]"
+                }
+              ],
+              "spellSlot": true
+            },
+            "_id": "dnd5eactivity001",
+            "target": {
+              "prompt": true,
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false
+            },
+            "sort": 0,
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "roll": {
+              "prompt": false,
+              "visible": false
+            }
+          }
+        },
+        "identifier": "font-of-magic",
+        "cover": null,
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "jgtY5oRityaFBJYM": 3
+      },
+      "img": "icons/magic/fire/projectile-meteor-salvo-heavy-pink.webp",
+      "flags": {
+        "plutonium": {
+          "page": "classFeature",
+          "source": "XPHB",
+          "hash": "font%20of%20magic_sorcerer_xphb_2_xphb"
+        },
+        "scene-packer": {
+          "hash": "cebd58f8fddb78426d336082c5f0b4b13a2fb15e"
+        },
+        "dnd5e": {
+          "sourceId": ".mRBODIlZcfZ4Ficd",
+          "advancementOrigin": "mUpyvjKx0Cg6xKHV.vEbnPhd3OW2Z5RH8"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1749090704235,
+        "modifiedTime": 1749090713519,
+        "lastModifiedBy": "jgtY5oRityaFBJYM"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "eSO5tsE9mwfBeIjF",
+      "name": "Sorcery Points",
+      "type": "feat",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "140",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--1\"><p>You have 2 Sorcery Points, and you gain more as you reach higher levels, as shown in the Sorcery Points column of the Sorcerer Features table. You can't have more Sorcery Points than the number shown in the table for your level. You regain all expended Sorcery Points when you finish a @variantrule[Long Rest|XPHB].</p></div>",
+          "chat": ""
+        },
+        "requirements": "Sorcerer 2",
+        "uses": {
+          "max": "@scale.sorcerer.points",
+          "recovery": [
+            {
+              "period": "lr",
+              "type": "recoverAll"
+            }
+          ],
+          "spent": 0
+        },
+        "type": {
+          "value": "class",
+          "subtype": ""
+        },
+        "properties": [],
+        "advancement": [],
+        "activities": {},
+        "identifier": "sorcery-points",
+        "cover": null,
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "jgtY5oRityaFBJYM": 3
+      },
+      "img": "modules/plutonium/media/icon/class/phb-sorcerer.webp",
+      "flags": {
+        "plutonium": {
+          "page": "classFeature",
+          "source": "XPHB",
+          "hash": "sorcery%20points_sorcerer_xphb_2_xphb"
+        },
+        "scene-packer": {
+          "hash": "04229f0bb2ec081c80531a1a163acf4663d0412c"
+        },
+        "dnd5e": {
+          "sourceId": ".eSO5tsE9mwfBeIjF",
+          "advancementOrigin": "mUpyvjKx0Cg6xKHV.vEbnPhd3OW2Z5RH8"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1749090704586,
+        "modifiedTime": 1749090713519,
+        "lastModifiedBy": "jgtY5oRityaFBJYM"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "F4GHz4KhlOt3VPBo",
+      "name": "Metamagic",
+      "type": "feat",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "141",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--1\"><p>Because your magic flows from within, you can alter your spells to suit your needs; you gain two Metamagic options of your choice from \"<a href=\"https://5e.tools/optionalfeatures.html#blankhash,flstfeature%20type:mm=1,flstsource:xphb=1\">Metamagic Options</a>\" later in this class's description. You use the chosen options to temporarily modify spells you cast. To use an option, you must spend the number of Sorcery Points that it costs.</p><p>You can use only one Metamagic option on a spell when you cast it unless otherwise noted in one of those options.</p><p>Whenever you gain a Sorcerer level, you can replace one of your Metamagic options with one you don't know. You gain two more options at Sorcerer level 10 and two more at Sorcerer level 17.</p></div>",
+          "chat": ""
+        },
+        "requirements": "Sorcerer 2",
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "type": {
+          "value": "class",
+          "subtype": ""
+        },
+        "properties": [],
+        "advancement": [],
+        "activities": {},
+        "identifier": "metamagic",
+        "cover": null,
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "jgtY5oRityaFBJYM": 3
+      },
+      "img": "icons/magic/symbols/runes-star-blue.webp",
+      "flags": {
+        "plutonium": {
+          "page": "classFeature",
+          "source": "XPHB",
+          "hash": "metamagic_sorcerer_xphb_2_xphb"
+        },
+        "scene-packer": {
+          "hash": "4e232f2216acdba69ad2714add62eae66032b583"
+        },
+        "dnd5e": {
+          "sourceId": ".F4GHz4KhlOt3VPBo",
+          "advancementOrigin": "mUpyvjKx0Cg6xKHV.vEbnPhd3OW2Z5RH8"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1749090704703,
+        "modifiedTime": 1749090713519,
+        "lastModifiedBy": "jgtY5oRityaFBJYM"
+      },
+      "folder": null,
+      "sort": 0
     }
   ],
   "effects": [],
@@ -10693,7 +11134,7 @@
     "systemId": "dnd5e",
     "systemVersion": "4.3.9",
     "createdTime": 1747849667537,
-    "modifiedTime": 1748101004218,
-    "lastModifiedBy": "jgtY5oRityaFBJYM"
+    "modifiedTime": 1749090838180,
+    "lastModifiedBy": "rghJZLG3THgT7m0a"
   }
 }

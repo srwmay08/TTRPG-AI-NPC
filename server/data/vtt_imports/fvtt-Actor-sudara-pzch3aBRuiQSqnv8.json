@@ -533,7 +533,7 @@
         "value": null
       },
       "hp": {
-        "value": 11,
+        "value": 17,
         "max": null,
         "temp": null,
         "tempmax": 0,
@@ -570,7 +570,7 @@
       "background": "V9trClmxogmGfcsJ",
       "originalClass": "6Ypc3rk9bGHwgSm5",
       "xp": {
-        "value": 0
+        "value": 300
       },
       "appearance": "",
       "trait": "I am utterly serene, even in the face of disaster.",
@@ -741,7 +741,7 @@
     },
     "sight": {
       "enabled": true,
-      "range": 0,
+      "range": 30,
       "angle": 360,
       "visionMode": "basic",
       "color": null,
@@ -760,13 +760,21 @@
         "ring": null,
         "background": null
       },
-      "effects": 1,
+      "effects": 0,
       "subject": {
         "scale": 1,
         "texture": null
       }
     },
-    "flags": {},
+    "flags": {
+      "tagger": {},
+      "monks-enhanced-journal": {
+        "chatbubble": ""
+      },
+      "monks-tokenbar": {
+        "include": "default"
+      }
+    },
     "randomImg": false
   },
   "items": [
@@ -1231,7 +1239,7 @@
           "rules": "2024",
           "revision": 1
         },
-        "levels": 1,
+        "levels": 2,
         "hd": {
           "denomination": "d8",
           "spent": 0,
@@ -1250,14 +1258,6 @@
         },
         "wealth": "50",
         "advancement": [
-          {
-            "type": "HitPoints",
-            "value": {
-              "1": "max"
-            },
-            "_id": "GQLLqOUZvqA4Jmkk",
-            "configuration": {}
-          },
           {
             "_id": "qoU5I7fwg2T0rpRx",
             "type": "Trait",
@@ -1524,6 +1524,77 @@
                 "Erkn5YFehbm8tHBS": ".Erkn5YFehbm8tHBS"
               }
             }
+          },
+          {
+            "type": "HitPoints",
+            "value": {
+              "1": "max",
+              "2": 3
+            },
+            "_id": "GQLLqOUZvqA4Jmkk",
+            "configuration": {}
+          },
+          {
+            "_id": "4cGDaVFBUgO5PxG8",
+            "type": "ItemGrant",
+            "level": 2,
+            "title": "Features",
+            "icon": "modules/plutonium/media/icon/class/phb-monk.webp",
+            "configuration": {
+              "items": [
+                {
+                  "uuid": ".gMnGxXeX0j3LxPjw",
+                  "optional": false
+                },
+                {
+                  "uuid": ".ITcMHEDZDeZ7xToe",
+                  "optional": false
+                },
+                {
+                  "uuid": ".3GnmQliNXsfqGAeu",
+                  "optional": false
+                },
+                {
+                  "uuid": ".mhf6VbQ7gOAu5y48",
+                  "optional": false
+                },
+                {
+                  "uuid": ".RkfhRwZWDchwNavP",
+                  "optional": false
+                },
+                {
+                  "uuid": ".DCvGbaPLwcj7ic0C",
+                  "optional": false
+                },
+                {
+                  "uuid": ".VIkty8sHNEWXiiOO",
+                  "optional": false
+                }
+              ],
+              "optional": false,
+              "spell": {
+                "ability": [
+                  ""
+                ],
+                "preparation": "",
+                "uses": {
+                  "max": "",
+                  "per": "",
+                  "requireSlot": false
+                }
+              }
+            },
+            "value": {
+              "added": {
+                "gMnGxXeX0j3LxPjw": ".gMnGxXeX0j3LxPjw",
+                "ITcMHEDZDeZ7xToe": ".ITcMHEDZDeZ7xToe",
+                "3GnmQliNXsfqGAeu": ".3GnmQliNXsfqGAeu",
+                "mhf6VbQ7gOAu5y48": ".mhf6VbQ7gOAu5y48",
+                "RkfhRwZWDchwNavP": ".RkfhRwZWDchwNavP",
+                "DCvGbaPLwcj7ic0C": ".DCvGbaPLwcj7ic0C",
+                "VIkty8sHNEWXiiOO": ".VIkty8sHNEWXiiOO"
+              }
+            }
           }
         ],
         "startingEquipment": []
@@ -1623,7 +1694,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1747877636472,
-        "modifiedTime": 1747877637899,
+        "modifiedTime": 1749090603514,
         "lastModifiedBy": "FxqYCeMZg67kzgwA"
       },
       "folder": null,
@@ -4194,7 +4265,7 @@
         },
         "identifier": "healers-kit",
         "attuned": false,
-        "equipped": false
+        "equipped": true
       },
       "effects": [],
       "folder": "UnUwTG4YIgd0kaUJ",
@@ -4215,7 +4286,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1748097847686,
-        "modifiedTime": 1748098032438,
+        "modifiedTime": 1749077992066,
         "lastModifiedBy": "FxqYCeMZg67kzgwA"
       }
     },
@@ -4451,7 +4522,7 @@
         },
         "identifier": "caltrops",
         "attuned": false,
-        "equipped": false
+        "equipped": true
       },
       "effects": [],
       "folder": "UnUwTG4YIgd0kaUJ",
@@ -4472,7 +4543,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1748097912338,
-        "modifiedTime": 1748097923076,
+        "modifiedTime": 1749077994765,
         "lastModifiedBy": "FxqYCeMZg67kzgwA"
       }
     },
@@ -4621,7 +4692,7 @@
         },
         "identifier": "ball-bearings",
         "attuned": false,
-        "equipped": false
+        "equipped": true
       },
       "effects": [],
       "folder": "UnUwTG4YIgd0kaUJ",
@@ -4642,7 +4713,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1748097932845,
-        "modifiedTime": 1748097932845,
+        "modifiedTime": 1749077993345,
         "lastModifiedBy": "FxqYCeMZg67kzgwA"
       }
     },
@@ -5473,7 +5544,7 @@
         "chatFlavor": "",
         "bonus": "",
         "attuned": false,
-        "equipped": false
+        "equipped": true
       },
       "img": "icons/containers/bags/pouch-leather-green.webp",
       "ownership": {
@@ -5499,7 +5570,1022 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1748107578581,
-        "modifiedTime": 1748107578581,
+        "modifiedTime": 1749077995905,
+        "lastModifiedBy": "FxqYCeMZg67kzgwA"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "name": "Focus Point",
+      "type": "feat",
+      "system": {
+        "uses": {
+          "max": "@scale.monk.focus",
+          "recovery": [
+            {
+              "period": "sr",
+              "type": "recoverAll"
+            }
+          ],
+          "spent": 0
+        },
+        "activities": {
+          "dnd5eactivity000": {
+            "_id": "z7e9Roi6ug7biBCS",
+            "type": "utility",
+            "activation": {
+              "type": "action",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "roll": {
+              "prompt": false,
+              "visible": false
+            },
+            "sort": 0
+          }
+        },
+        "description": {
+          "value": "",
+          "chat": ""
+        },
+        "identifier": "focus-point",
+        "source": {
+          "revision": 1,
+          "rules": "2024"
+        },
+        "advancement": [],
+        "cover": null,
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        },
+        "properties": [],
+        "requirements": "",
+        "type": {
+          "value": "",
+          "subtype": ""
+        }
+      },
+      "img": "systems/dnd5e/icons/svg/items/feature.svg",
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1749090600116,
+        "modifiedTime": 1749090603743,
+        "lastModifiedBy": "FxqYCeMZg67kzgwA"
+      },
+      "_id": "RkfhRwZWDchwNavP",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "FxqYCeMZg67kzgwA": 3
+      },
+      "flags": {
+        "scene-packer": {
+          "hash": "8be7401c40b18618644d496f94f72335b5ee31f8"
+        },
+        "dnd5e": {
+          "sourceId": ".RkfhRwZWDchwNavP",
+          "advancementOrigin": "6Ypc3rk9bGHwgSm5.4cGDaVFBUgO5PxG8"
+        }
+      }
+    },
+    {
+      "_id": "gMnGxXeX0j3LxPjw",
+      "name": "Monk's Focus",
+      "type": "feat",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "101",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--1\"><p>Your focus and martial training allow you to harness a well of extraordinary energy within yourself. This energy is represented by Focus Points. Your Monk level determines the number of points you have, as shown in the Focus Points column of the Monk Features table.</p><p>You can expend these points to enhance or fuel certain Monk features. You start knowing three such features: Flurry of Blows, Patient Defense, and Step of the Wind, each of which is detailed below.</p><p>When you expend a Focus Point, it is unavailable until you finish a @variantrule[Short Rest|XPHB|Short] or @variantrule[Long Rest|XPHB], at the end of which you regain all your expended points.</p><p>Some features that use Focus Points require your target to make a saving throw. The save DC equals 8 plus your Wisdom modifier and @variantrule[Proficiency|XPHB|Proficiency Bonus].</p><div class=\"rd__b  rd__b--2\"><p>@UUID[Actor.pzch3aBRuiQSqnv8.Item.ITcMHEDZDeZ7xToe]{Flurry of Blows}</p><p>@UUID[Actor.pzch3aBRuiQSqnv8.Item.3GnmQliNXsfqGAeu]{Patient Defense}</p><p>@UUID[Actor.pzch3aBRuiQSqnv8.Item.mhf6VbQ7gOAu5y48]{Step of the Wind}</p></div></div>",
+          "chat": ""
+        },
+        "requirements": "Monk 2",
+        "uses": {
+          "max": "1",
+          "recovery": [
+            {
+              "period": "sr",
+              "type": "recoverAll"
+            }
+          ],
+          "spent": 0
+        },
+        "type": {
+          "value": "class",
+          "subtype": ""
+        },
+        "properties": [],
+        "advancement": [],
+        "activities": {},
+        "identifier": "monks-focus",
+        "cover": null,
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "FxqYCeMZg67kzgwA": 3
+      },
+      "img": "modules/plutonium/media/icon/class/phb-monk.webp",
+      "flags": {
+        "plutonium": {
+          "page": "classFeature",
+          "source": "XPHB",
+          "hash": "monk's%20focus_monk_xphb_2_xphb"
+        },
+        "scene-packer": {
+          "hash": "2afa7c91654197fc07df044cce9cad871974fc99"
+        },
+        "dnd5e": {
+          "sourceId": ".gMnGxXeX0j3LxPjw",
+          "advancementOrigin": "6Ypc3rk9bGHwgSm5.4cGDaVFBUgO5PxG8"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1749090600958,
+        "modifiedTime": 1749090603743,
+        "lastModifiedBy": "FxqYCeMZg67kzgwA"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "ITcMHEDZDeZ7xToe",
+      "name": "Flurry of Blows",
+      "type": "feat",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "101",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--1\"><p>You can expend 1 Focus Point to make two Unarmed Strikes as a @variantrule[Bonus Action|XPHB].</p></div>",
+          "chat": ""
+        },
+        "requirements": "Monk 2",
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "type": {
+          "value": "class",
+          "subtype": ""
+        },
+        "properties": [],
+        "advancement": [],
+        "activities": {
+          "dnd5eactivity000": {
+            "name": "Flurry of Blows",
+            "type": "attack",
+            "activation": {
+              "type": "bonus",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "targets": [
+                {
+                  "type": "itemUses",
+                  "value": "1",
+                  "target": "[object Object]",
+                  "scaling": {}
+                }
+              ],
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true
+            },
+            "target": {
+              "affects": {
+                "count": "1",
+                "type": "creature",
+                "choice": false
+              },
+              "prompt": true,
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "override": false
+            },
+            "attack": {
+              "type": {
+                "value": "melee",
+                "classification": "unarmed"
+              },
+              "ability": "dex",
+              "critical": {
+                "threshold": null
+              },
+              "flat": false
+            },
+            "damage": {
+              "includeBase": true,
+              "parts": [
+                {
+                  "custom": {
+                    "enabled": true,
+                    "formula": "@scale.monk.die + @mod"
+                  },
+                  "types": [
+                    "bludgeoning"
+                  ],
+                  "number": null,
+                  "denomination": null,
+                  "scaling": {
+                    "number": 1
+                  }
+                }
+              ],
+              "critical": {}
+            },
+            "_id": "dnd5eactivity000",
+            "sort": 0,
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            }
+          }
+        },
+        "identifier": "flurry-of-blows",
+        "cover": null,
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "FxqYCeMZg67kzgwA": 3
+      },
+      "img": "icons/skills/melee/unarmed-punch-fist-yellow-red.webp",
+      "flags": {
+        "plutonium": {
+          "page": "classFeature",
+          "source": "XPHB",
+          "hash": "flurry%20of%20blows_monk_xphb_2_xphb"
+        },
+        "scene-packer": {
+          "hash": "7dd967f5c432106bf40a6139b64139f210107bee"
+        },
+        "dnd5e": {
+          "sourceId": ".ITcMHEDZDeZ7xToe",
+          "advancementOrigin": "6Ypc3rk9bGHwgSm5.4cGDaVFBUgO5PxG8"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1749090601233,
+        "modifiedTime": 1749090603743,
+        "lastModifiedBy": "FxqYCeMZg67kzgwA"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "3GnmQliNXsfqGAeu",
+      "name": "Patient Defense",
+      "type": "feat",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "101",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--1\"><p>You can take the @action[Disengage|XPHB] action as a @variantrule[Bonus Action|XPHB]. Alternatively, you can expend 1 Focus Point to take both the @action[Disengage|XPHB] and the @action[Dodge|XPHB] actions as a @variantrule[Bonus Action|XPHB].</p></div>",
+          "chat": ""
+        },
+        "requirements": "Monk 2",
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "type": {
+          "value": "class",
+          "subtype": ""
+        },
+        "properties": [],
+        "advancement": [],
+        "activities": {
+          "dnd5eactivity000": {
+            "name": "Patient Defense (Focus Point)",
+            "type": "utility",
+            "img": "systems/dnd5e/icons/svg/trait-damage-resistances.svg",
+            "activation": {
+              "type": "bonus",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "targets": [
+                {
+                  "type": "itemUses",
+                  "value": "1",
+                  "target": "[object Object]",
+                  "scaling": {}
+                }
+              ],
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true
+            },
+            "target": {
+              "affects": {
+                "type": "self",
+                "choice": false
+              },
+              "prompt": true,
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "override": false
+            },
+            "effects": [
+              {
+                "_id": "patientDefense00"
+              }
+            ],
+            "_id": "dnd5eactivity000",
+            "sort": 0,
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "range": {
+              "override": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "roll": {
+              "prompt": false,
+              "visible": false
+            }
+          },
+          "dnd5eactivity001": {
+            "name": "Patient Defense",
+            "type": "utility",
+            "img": "systems/dnd5e/icons/svg/trait-damage-resistances.svg",
+            "activation": {
+              "type": "bonus",
+              "value": null,
+              "override": false
+            },
+            "target": {
+              "affects": {
+                "type": "self",
+                "choice": false
+              },
+              "prompt": true,
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "override": false
+            },
+            "effects": [
+              {
+                "_id": "patientDefense10"
+              }
+            ],
+            "_id": "dnd5eactivity001",
+            "sort": 0,
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "range": {
+              "override": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "roll": {
+              "prompt": false,
+              "visible": false
+            }
+          }
+        },
+        "identifier": "patient-defense",
+        "cover": null,
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "FxqYCeMZg67kzgwA": 3
+      },
+      "img": "icons/magic/defensive/illusion-evasion-echo-purple.webp",
+      "flags": {
+        "plutonium": {
+          "page": "classFeature",
+          "source": "XPHB",
+          "hash": "patient%20defense_monk_xphb_2_xphb"
+        },
+        "scene-packer": {
+          "hash": "e46cb83b8f8ab6d976150ed61100c50560533954"
+        },
+        "dnd5e": {
+          "sourceId": ".3GnmQliNXsfqGAeu",
+          "advancementOrigin": "6Ypc3rk9bGHwgSm5.4cGDaVFBUgO5PxG8"
+        }
+      },
+      "effects": [
+        {
+          "_id": "patientDefense00",
+          "name": "Patient Defense (Focus Point)",
+          "img": "icons/magic/defensive/illusion-evasion-echo-purple.webp",
+          "description": "",
+          "changes": [],
+          "disabled": false,
+          "duration": {
+            "turns": 1,
+            "startTime": null,
+            "seconds": null,
+            "combat": null,
+            "rounds": null,
+            "startRound": null,
+            "startTurn": null
+          },
+          "origin": "Actor.pzch3aBRuiQSqnv8.Item.3GnmQliNXsfqGAeu",
+          "transfer": false,
+          "flags": {
+            "plutonium": {
+              "dedupeId": "patient-defense-focus-point"
+            }
+          },
+          "statuses": [
+            "dodging"
+          ],
+          "type": "base",
+          "system": {},
+          "tint": "#ffffff",
+          "sort": 0,
+          "_stats": {
+            "compendiumSource": null,
+            "duplicateSource": null,
+            "coreVersion": "12.331",
+            "systemId": "dnd5e",
+            "systemVersion": "4.3.9",
+            "createdTime": null,
+            "modifiedTime": null,
+            "lastModifiedBy": null
+          }
+        },
+        {
+          "_id": "patientDefense10",
+          "name": "Disengaged",
+          "img": "icons/magic/defensive/illusion-evasion-echo-purple.webp",
+          "description": "Your movement doesn't provoke Opportunity Attacks for the rest of the current turn.",
+          "changes": [],
+          "disabled": false,
+          "duration": {
+            "turns": 1,
+            "startTime": null,
+            "seconds": null,
+            "combat": null,
+            "rounds": null,
+            "startRound": null,
+            "startTurn": null
+          },
+          "origin": "Actor.pzch3aBRuiQSqnv8.Item.3GnmQliNXsfqGAeu",
+          "transfer": false,
+          "flags": {
+            "plutonium": {
+              "dedupeId": "disengaged"
+            }
+          },
+          "type": "base",
+          "system": {},
+          "tint": "#ffffff",
+          "statuses": [],
+          "sort": 0,
+          "_stats": {
+            "compendiumSource": null,
+            "duplicateSource": null,
+            "coreVersion": "12.331",
+            "systemId": "dnd5e",
+            "systemVersion": "4.3.9",
+            "createdTime": null,
+            "modifiedTime": null,
+            "lastModifiedBy": null
+          }
+        }
+      ],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1749090601489,
+        "modifiedTime": 1749090603743,
+        "lastModifiedBy": "FxqYCeMZg67kzgwA"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "mhf6VbQ7gOAu5y48",
+      "name": "Step of the Wind",
+      "type": "feat",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "101",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--1\"><p>You can take the @action[Dash|XPHB] action as a @variantrule[Bonus Action|XPHB]. Alternatively, you can expend 1 Focus Point to take both the @action[Disengage|XPHB] and @action[Dash|XPHB] actions as a @variantrule[Bonus Action|XPHB], and your jump distance is doubled for the turn.</p></div>",
+          "chat": ""
+        },
+        "requirements": "Monk 2",
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "type": {
+          "value": "class",
+          "subtype": ""
+        },
+        "properties": [],
+        "advancement": [],
+        "activities": {
+          "dnd5eactivity000": {
+            "name": "Step of the Wind",
+            "type": "utility",
+            "activation": {
+              "type": "bonus",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "targets": [
+                {
+                  "type": "itemUses",
+                  "value": "1",
+                  "target": "[object Object]",
+                  "scaling": {}
+                }
+              ],
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true
+            },
+            "target": {
+              "affects": {
+                "type": "self",
+                "choice": false
+              },
+              "prompt": true,
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "override": false
+            },
+            "effects": [
+              {
+                "_id": "stepOfTheWind000"
+              }
+            ],
+            "_id": "dnd5eactivity000",
+            "sort": 0,
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "range": {
+              "override": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "roll": {
+              "prompt": false,
+              "visible": false
+            }
+          }
+        },
+        "identifier": "step-of-the-wind",
+        "cover": null,
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "FxqYCeMZg67kzgwA": 3
+      },
+      "img": "icons/skills/movement/feet-winged-sandals-tan.webp",
+      "flags": {
+        "plutonium": {
+          "page": "classFeature",
+          "source": "XPHB",
+          "hash": "step%20of%20the%20wind_monk_xphb_2_xphb"
+        },
+        "scene-packer": {
+          "hash": "f53255a7042f289e74b1a9b8739d4354d7c2fd26"
+        },
+        "dnd5e": {
+          "sourceId": ".mhf6VbQ7gOAu5y48",
+          "advancementOrigin": "6Ypc3rk9bGHwgSm5.4cGDaVFBUgO5PxG8"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1749090601734,
+        "modifiedTime": 1749090603743,
+        "lastModifiedBy": "FxqYCeMZg67kzgwA"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "DCvGbaPLwcj7ic0C",
+      "name": "Unarmored Movement",
+      "type": "feat",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "102",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--1\"><p>Your speed increases by 10 feet while you aren't wearing armor or wielding a @item[Shield|XPHB]. This bonus increases when you reach certain Monk levels, as shown on the Monk Features table.</p></div>",
+          "chat": ""
+        },
+        "requirements": "Monk 2",
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "type": {
+          "value": "class",
+          "subtype": ""
+        },
+        "properties": [],
+        "advancement": [],
+        "activities": {},
+        "identifier": "unarmored-movement",
+        "cover": null,
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "FxqYCeMZg67kzgwA": 3
+      },
+      "img": "icons/magic/nature/root-vine-entangle-foot-green.webp",
+      "flags": {
+        "plutonium": {
+          "page": "classFeature",
+          "source": "XPHB",
+          "hash": "unarmored%20movement_monk_xphb_2_xphb"
+        },
+        "scene-packer": {
+          "hash": "7acc6c8fcf9a809aca6d23d5baa88f6293c3dcfe"
+        },
+        "dnd5e": {
+          "sourceId": ".DCvGbaPLwcj7ic0C",
+          "advancementOrigin": "6Ypc3rk9bGHwgSm5.4cGDaVFBUgO5PxG8"
+        }
+      },
+      "effects": [
+        {
+          "_id": "cfY5Ixe4iGv3bFYb",
+          "name": "Unarmored Movement",
+          "img": "icons/magic/nature/root-vine-entangle-foot-green.webp",
+          "description": "",
+          "changes": [
+            {
+              "key": "system.attributes.movement.walk",
+              "mode": 2,
+              "value": "@scale.monk.unarmored-movement",
+              "priority": 7
+            }
+          ],
+          "disabled": false,
+          "duration": {
+            "startTime": 47090786400,
+            "seconds": null,
+            "rounds": null,
+            "turns": null,
+            "startRound": null,
+            "startTurn": null,
+            "combat": null
+          },
+          "origin": "Actor.pzch3aBRuiQSqnv8.Item.DCvGbaPLwcj7ic0C",
+          "transfer": true,
+          "flags": {
+            "plutonium": {
+              "dedupeId": "unarmored-movement"
+            }
+          },
+          "type": "base",
+          "system": {},
+          "tint": "#ffffff",
+          "statuses": [],
+          "sort": 0,
+          "_stats": {
+            "compendiumSource": null,
+            "duplicateSource": null,
+            "coreVersion": "12.331",
+            "systemId": "dnd5e",
+            "systemVersion": "4.3.9",
+            "createdTime": null,
+            "modifiedTime": null,
+            "lastModifiedBy": null
+          }
+        }
+      ],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1749090602780,
+        "modifiedTime": 1749090603743,
+        "lastModifiedBy": "FxqYCeMZg67kzgwA"
+      },
+      "folder": null,
+      "sort": 0
+    },
+    {
+      "_id": "VIkty8sHNEWXiiOO",
+      "name": "Uncanny Metabolism",
+      "type": "feat",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "102",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--1\"><p>When you roll @variantrule[Initiative|XPHB], you can regain all expended Focus Points. When you do so, roll your Martial Arts die, and regain a number of @variantrule[Hit Points|XPHB] equal to your Monk level plus the number rolled.</p><p>Once you use this feature, you can't use it again until you finish a @variantrule[Long Rest|XPHB].</p></div>",
+          "chat": ""
+        },
+        "requirements": "Monk 2",
+        "uses": {
+          "max": "1",
+          "recovery": [
+            {
+              "period": "lr",
+              "type": "recoverAll"
+            }
+          ],
+          "spent": 0
+        },
+        "type": {
+          "value": "class",
+          "subtype": ""
+        },
+        "properties": [],
+        "advancement": [],
+        "activities": {
+          "dnd5eactivity000": {
+            "name": "Uncanny Metabolism",
+            "type": "heal",
+            "activation": {
+              "type": "",
+              "condition": "When you roll initiative",
+              "value": null,
+              "override": false
+            },
+            "consumption": {
+              "targets": [
+                {
+                  "type": "itemUses",
+                  "value": "-@classes.monk.levels",
+                  "target": "[object Object]",
+                  "scaling": {}
+                },
+                {
+                  "type": "itemUses",
+                  "value": "1",
+                  "scaling": {}
+                }
+              ],
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true
+            },
+            "target": {
+              "affects": {
+                "type": "self",
+                "choice": false
+              },
+              "prompt": true,
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "override": false
+            },
+            "healing": {
+              "types": [
+                "healing"
+              ],
+              "custom": {
+                "enabled": true,
+                "formula": "@scale.monk.die + @classes.monk.levels"
+              },
+              "scaling": {
+                "number": 1
+              },
+              "number": null,
+              "denomination": null
+            },
+            "_id": "dnd5eactivity000",
+            "sort": 0,
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            }
+          }
+        },
+        "identifier": "uncanny-metabolism",
+        "cover": null,
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "FxqYCeMZg67kzgwA": 3
+      },
+      "img": "modules/plutonium/media/icon/class/phb-monk.webp",
+      "flags": {
+        "plutonium": {
+          "page": "classFeature",
+          "source": "XPHB",
+          "hash": "uncanny%20metabolism_monk_xphb_2_xphb"
+        },
+        "scene-packer": {
+          "hash": "1420ff071f761a8836266c10c26398fab7ef1e93"
+        },
+        "dnd5e": {
+          "sourceId": ".VIkty8sHNEWXiiOO",
+          "advancementOrigin": "6Ypc3rk9bGHwgSm5.4cGDaVFBUgO5PxG8"
+        }
+      },
+      "effects": [],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1749090603273,
+        "modifiedTime": 1749090603743,
         "lastModifiedBy": "FxqYCeMZg67kzgwA"
       },
       "folder": null,
@@ -5526,7 +6612,7 @@
     "systemId": "dnd5e",
     "systemVersion": "4.3.9",
     "createdTime": 1747849641864,
-    "modifiedTime": 1748139902488,
+    "modifiedTime": 1749090598107,
     "lastModifiedBy": "FxqYCeMZg67kzgwA"
   }
 }

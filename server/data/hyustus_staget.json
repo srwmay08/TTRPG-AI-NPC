@@ -1,0 +1,41 @@
+{
+    "name": "Captain Hyustus Staget",
+    "character_type": "NPC",
+    "description": "A grim, overworked captain of the Waterdeep City Watch. His weary expression and cynical tone are the result of years spent trying to maintain order in the Dock Ward amidst the escalating violence between the city's criminal gangs.",
+    "race": "Human",
+    "class": "Veteran / Guard Captain",
+    "alignment": "Lawful Neutral",
+    "age": "50s",
+    "personality_traits": [
+      "Cynical and world-weary",
+      "Dutiful and by-the-book",
+      "Impatient with meddlers and bureaucracy",
+      "Possesses a grim sense of humor"
+    ],
+    "ideals": [
+      "Order: 'The law is the only thing separating this city from a bloody cesspool.'",
+      "Duty: 'My job is to keep the peace. That's it. No glory, just work.'",
+      "Pragmatism: 'I don't care who started it. I care about who ends it.'"
+    ],
+    "bonds": [
+      "The City Watch and the men and women under his command.",
+      "The Dock Ward, his thankless precinct.",
+      "An unyielding belief in the law, even when the system fails."
+    ],
+    "flaws": [
+      "Pessimistic and assumes the worst in people.",
+      "Has little patience for adventurers and their chaotic methods.",
+      "Can be inflexible, adhering to the letter of the law over its spirit."
+    ],
+    "motivations": [
+        "To stop the Zhentarim and Xanathar Guild from tearing his ward apart.",
+        "To do his job effectively despite the lack of resources.",
+        "To get through his shift and have a quiet pint."
+    ],
+    "canned_conversations": {
+        "at_a_crime_scene": "'This is an official City Watch investigation. Move along before I decide you're obstructing justice.'",
+        "asked_about_the_gang_war": "'The Zhents and the Xanathars? They're killing each other over scraps. Good riddance, I say. But they're making a mess of my ward while they're at it.'",
+        "if_helped_by_party": "'(He grunts) You handled yourselves well enough. But stay out of Watch business. This city has enough problems without self-proclaimed heroes making things worse.'"
+    },
+    "linked_lore_by_name": ["Castle Waterdeep Ballroom", "Blood in the Streets (Fillet Lane)"]
+}

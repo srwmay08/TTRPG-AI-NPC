@@ -51,5 +51,6 @@
     "gm_notes": "Dame Wynda can be a powerful ally or a strict adversary. She can fund expeditions, offer high-stakes quests related to economic espionage or sabotage, or act as a judge in disputes. She always keeps her word.",
     "associated_history_files": [
       "The_Golden_Horn.txt", "Church_of_Waukeen.txt"
-    ]
-  }
+    ],
+        "linked_lore_by_name": ["The Golden Horn Gambling Hall"]
+    }

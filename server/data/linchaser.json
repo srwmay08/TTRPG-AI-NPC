@@ -51,5 +51,6 @@
     "gm_notes": "Linchaser can provide divine magic, especially illusions and blessings of luck. He's a source of high-stakes, game-oriented quests. He might stake the party in a high-risk venture if he believes they're a good bet.",
     "associated_history_files": [
       "The_Golden_Horn.txt", "Faiths_of_Tymora.txt"
-    ]
-  }
+    ],
+        "linked_lore_by_name": ["The Golden Horn Gambling Hall"]
+    }

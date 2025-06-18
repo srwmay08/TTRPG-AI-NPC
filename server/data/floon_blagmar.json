@@ -1,0 +1,41 @@
+{
+    "name": "Floon Blagmaar",
+    "character_type": "NPC",
+    "description": "An exceedingly handsome human noble in his early thirties, known for his charm and impeccable style. He is a good-natured fellow who enjoys the tavern scene but is famously naive, often described by his friend Volo as having 'more beauty than brains.'",
+    "race": "Human",
+    "class": "Noble / Commoner",
+    "alignment": "Neutral Good",
+    "age": "Early 30s",
+    "personality_traits": [
+      "Charming and amiable",
+      "Friendly and trusting, sometimes to a fault",
+      "Enjoys good company and fine drink",
+      "Remarkably naive and often oblivious to danger"
+    ],
+    "ideals": [
+      "Friendship: 'A good friend is worth more than a pouch of dragons.'",
+      "Pleasure: 'Why worry? Let's have another round!'",
+      "Kindness: 'There's no reason to be rude, is there?'"
+    ],
+    "bonds": [
+      "His close friend, the famous Volothamp Geddarm.",
+      "His newfound friend and savior, Renaer Neverember.",
+      "A fondness for the Skewered Dragon tavern, despite its reputation."
+    ],
+    "flaws": [
+      "His good looks often get him mistaken for more important people.",
+      "Lacks common sense and is utterly clueless about the darker side of Waterdeep.",
+      "Tends to follow others into trouble."
+    ],
+    "motivations": [
+        "To enjoy a life of leisure and comfort.",
+        "To find a good tavern with good company.",
+        "To stay out of whatever trouble he just barely escaped."
+    ],
+    "canned_conversations": {
+        "introduction_after_rescue": "(He dusts himself off, flashing a dazzling smile) 'My thanks! I thought I was a goner. I haven't the faintest idea why they grabbed me! Now, who's for a pint? I'm buying!'",
+        "about_the_kidnapping": "'It was all a terrible mistake! They kept asking me about my father and some treasure. My father was a paper merchant! I think they mistook me for this fine fellow here (gestures to Renaer).'",
+        "about_the_sewers": "'Ghastly place. Smelled awful. And the goo... so much goo. I'd rather not talk about it, if you don't mind. Let's talk about something more pleasant, like this fine ale!'"
+    },
+    "linked_lore_by_name": ["The Skewered Dragon", "Candle Lane Warehouse", "Xanathar Guild Sewer Hideout"]
+}

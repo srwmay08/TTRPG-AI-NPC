@@ -521,8 +521,8 @@
         "value": null
       },
       "hp": {
-        "value": 13,
-        "max": null,
+        "value": 23,
+        "max": 23,
         "temp": null,
         "tempmax": null,
         "bonuses": {
@@ -561,7 +561,7 @@
       "background": "xApAcfJ8KUnB2MMj",
       "originalClass": "SwzWJ4vbAsv3UzMf",
       "xp": {
-        "value": 0
+        "value": 300
       },
       "appearance": "Gender: Male\nEyes: Right (Hazel/Green) Left (Glowing Blue)\nHeight: 5'10\"\nHair: Brown\nSkin: Fair\nAge: 22\nWeight: 160",
       "trait": "I insist on being taken seriously as a full-grown adult. Nobody talks down to me!\nWhat I lack in stature compared to giants, I make up for with sheer spite.",
@@ -643,7 +643,7 @@
         "max": 2,
         "sr": false,
         "lr": false,
-        "label": "Strike of the Stoprm"
+        "label": "Strike of the Storm"
       },
       "secondary": {
         "value": null,
@@ -722,7 +722,7 @@
     },
     "sight": {
       "enabled": true,
-      "range": 0,
+      "range": 30,
       "angle": 360,
       "visionMode": "basic",
       "color": null,
@@ -777,7 +777,7 @@
           "rules": "2024",
           "revision": 1
         },
-        "levels": 1,
+        "levels": 2,
         "hd": {
           "denomination": "d8",
           "spent": 0,
@@ -795,14 +795,6 @@
         },
         "wealth": "100",
         "advancement": [
-          {
-            "type": "HitPoints",
-            "value": {
-              "1": "max"
-            },
-            "_id": "GIAbmFTx2TCmgujk",
-            "configuration": {}
-          },
           {
             "_id": "mwreWkvZevOMsk5a",
             "type": "Trait",
@@ -1048,6 +1040,47 @@
                 "oIJ5xvzEHmsmXI9j": ".oIJ5xvzEHmsmXI9j"
               }
             }
+          },
+          {
+            "type": "HitPoints",
+            "value": {
+              "1": "max",
+              "2": 1
+            },
+            "_id": "GIAbmFTx2TCmgujk",
+            "configuration": {}
+          },
+          {
+            "_id": "VsxnNUw71QDzlpmd",
+            "type": "ItemGrant",
+            "level": 2,
+            "title": "Features",
+            "icon": "modules/plutonium/media/icon/class/phb-rogue.webp",
+            "configuration": {
+              "items": [
+                {
+                  "uuid": ".zM7YbcHtrKSNK80r",
+                  "optional": false
+                }
+              ],
+              "optional": false,
+              "spell": {
+                "ability": [
+                  ""
+                ],
+                "preparation": "",
+                "uses": {
+                  "max": "",
+                  "per": "",
+                  "requireSlot": false
+                }
+              }
+            },
+            "value": {
+              "added": {
+                "zM7YbcHtrKSNK80r": ".zM7YbcHtrKSNK80r"
+              }
+            }
           }
         ],
         "startingEquipment": []
@@ -1147,179 +1180,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1748283868031,
-        "modifiedTime": 1748283870810,
-        "lastModifiedBy": "d8mHpZu9bQALnigO"
-      },
-      "folder": null,
-      "sort": 0
-    },
-    {
-      "_id": "HmjMN1CLy10fnWJ0",
-      "name": "Soulknife",
-      "type": "subclass",
-      "system": {
-        "identifier": "soulknife",
-        "classIdentifier": "rogue",
-        "description": {
-          "value": "<div class=\"mb-2 ve-flex-col\"><div><div class=\"rd__b  rd__b--1\"><div><div class=\"rd__wrp-image relative\">\n\t\t\t<a href=\"https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/classes/XPHB/Soulknife Rogue.webp\" target=\"_blank\" rel=\"noopener noreferrer\" title=\"Art credit: Yuhong Ding\">\n\t\t\t\t<img class=\"rd__image\" src=\"https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/classes/XPHB/Soulknife Rogue.webp\" />\n\t\t\t</a>\n\t\t</div><div class=\"rd__image-title\"><div class=\"rd__image-credit ve-muted\"><span class=\"glyphicon glyphicon-pencil\" title=\"Art Credit\"></span> Yuhong Ding</div></div></div></div></div><div class=\"rd__b  rd__b--0\"><div data-roll-name-ancestor=\"Soulknife\" data-source=\"XPHB\" class=\"rd__b  rd__b--1\"><h2 class=\"rd__h rd__h--1\" data-title-index=\"5\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p135\">Soulknife</span></h2> <p><i>Strike Foes with Psionic Blades</i></p><p>A Soulknife strikes with the mind, cutting through barriers both physical and psychic. These Rogues discover psionic power within themselves and channel it to do their roguish work. As a Soulknife, your psionic abilities might have haunted you since childhood, revealing their full potential only as you experienced the stress of adventure. Or you might have sought out an order of psychic adepts and spent years learning how to manifest your power.</p><div data-roll-name-ancestor=\"Level 3: Psionic Power\" data-source=\"XPHB\" class=\"rd__b  rd__b--2\"><h3 class=\"rd__h rd__h--2\" data-title-index=\"6\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p135\">Level 3: Psionic Power</span></h3> <p>You harbor a wellspring of psionic energy within yourself. It is represented by your Psionic Energy Dice, which fuel certain powers you have from this subclass. The Soulknife Energy Dice table shows the number of these dice you have when you reach certain Rogue levels, and the table shows the die size.</p><table class=\"w-100 rd__table  stripe-odd-table\" data-roll-name-ancestor=\"Soulknife Energy Dice\"><caption>Soulknife Energy Dice</caption><thead><tr><th class=\"rd__th ve-col-4 ve-text-center \" data-rd-isroller=\"false\">Rogue Level</th><th class=\"rd__th ve-col-4 ve-text-center \" data-rd-isroller=\"false\">Die Size</th><th class=\"rd__th ve-col-4 ve-text-center \" data-rd-isroller=\"false\">Number</th></tr></thead><tbody><tr><td class=\"rd__th ve-col-4 ve-text-center \">3</td><td class=\"rd__th ve-col-4 ve-text-center \">[[/r D6]]</td><td class=\"rd__th ve-col-4 ve-text-center \">4</td></tr><tr><td class=\"rd__th ve-col-4 ve-text-center \">5</td><td class=\"rd__th ve-col-4 ve-text-center \">[[/r D8]]</td><td class=\"rd__th ve-col-4 ve-text-center \">6</td></tr><tr><td class=\"rd__th ve-col-4 ve-text-center \">9</td><td class=\"rd__th ve-col-4 ve-text-center \">[[/r D8]]</td><td class=\"rd__th ve-col-4 ve-text-center \">8</td></tr><tr><td class=\"rd__th ve-col-4 ve-text-center \">11</td><td class=\"rd__th ve-col-4 ve-text-center \">[[/r D10]]</td><td class=\"rd__th ve-col-4 ve-text-center \">8</td></tr><tr><td class=\"rd__th ve-col-4 ve-text-center \">13</td><td class=\"rd__th ve-col-4 ve-text-center \">[[/r D10]]</td><td class=\"rd__th ve-col-4 ve-text-center \">10</td></tr><tr><td class=\"rd__th ve-col-4 ve-text-center \">17</td><td class=\"rd__th ve-col-4 ve-text-center \">[[/r D12]]</td><td class=\"rd__th ve-col-4 ve-text-center \">12</td></tr></tbody></table><p>Any features in this subclass that use a Psionic Energy Die use only the dice from this subclass. Some of your powers expend a Psionic Energy Die, as specified in a power's description, and you can't use a power if it requires you to use a die when your Psionic Energy Dice are all expended.</p><p>You regain one of your expended Psionic Energy Dice when you finish a @variantrule[Short Rest|XPHB], and you regain all of them when you finish a @variantrule[Long Rest|XPHB].</p><div data-roll-name-ancestor=\"Psi-Bolstered Knack\" data-source=\"XPHB\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"7\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p135\">Psi-Bolstered Knack.</span></span> If you fail an ability check using a skill or tool with which you have proficiency, you can roll one Psionic Energy Die and add the number rolled to the check, potentially turning failure into success. The die is expended only if the roll then succeeds.</p></div><div data-roll-name-ancestor=\"Psychic Whispers\" data-source=\"XPHB\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"8\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p135\">Psychic Whispers.</span></span> You can establish telepathic communication between yourself and others. As a @action[Magic|XPHB] action, choose one or more creatures you can see, up to a number of creatures equal to your @variantrule[Proficiency|XPHB|Proficiency Bonus], and then roll one Psionic Energy Die. For a number of hours equal to the number rolled, the chosen creatures can speak telepathically with you, and you can speak telepathically with them. To send or receive a message (no action required), you and the other creature must be within 1 mile of each other. A creature can end the telepathic connection at any time (no action required).</p></div><p>The first time you use this power after each @variantrule[Long Rest|XPHB], you don't expend the Psionic Energy Die. All other times you use the power, you expend the die.</p></div><div data-roll-name-ancestor=\"Level 3: Psychic Blades\" data-source=\"XPHB\" class=\"rd__b  rd__b--2\"><h3 class=\"rd__h rd__h--2\" data-title-index=\"9\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p136\">Level 3: Psychic Blades</span></h3> <p>You can manifest shimmering blades of psychic energy. Whenever you take the @action[Attack|XPHB] action or make an @action[Opportunity Attack|XPHB], you can manifest a @item[Psychic Blade|XPHB] in your free hand and make the attack with that blade. The magic blade has the following traits:</p><table class=\"rd__b-special rd__b-data  rd__b-data--stats\">\n\t\t<thead>\n\t\t\t<tr>\n\t\t\t\t<th class=\"rd__data-embed-header ve-text-left\" colspan=\"6\" data-rd-data-embed-header=\"true\">\n\t\t\t\t\t<div class=\"w-100 split-v-center\">\n\t\t\t\t\t\t<div class=\"ve-flex-v-center w-100 min-w-0\">\n\t\t\t\t\t\t\t<span class=\"rd__data-embed-name ve-hidden\">Psychic Blade</span>\n\t\t\t\t\t\t\t<span class=\"rd__data-embed-name-expanded ve-text-right pr-2 w-100 \"></span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<span class=\"rd__data-embed-toggle\">[–]</span>\n\t\t\t\t\t</div>\n\t\t\t\t</th>\n\t\t\t</tr>\n\t\t</thead><tbody data-rd-embedded-data-render-target=\"true\"><tr>\n\t\t\t<td colspan=\"6\" data-rd-tag=\"item\" data-rd-uid=\"Psychic Blade|XPHB\" data-rd-page=\"items.html\" data-rd-source=\"XPHB\" data-rd-hash=\"psychic%20blade_xphb\" data-rd-name=\"Psychic Blade\" data-rd-display-name=\"Psychic Blade\" data-rd-style data-rd-entry-data=\"{}\">\n\t\t\t\t<i>Loading @item[Psychic Blade|XPHB]...</i>\n\t\t\t\t\n\t\t\t</td>\n\t\t</tr></tbody></table><p>The blade vanishes immediately after it hits or misses its target, and it leaves no mark if it deals damage.</p><p>After you attack with the blade on your turn, you can make a melee or ranged attack with a second psychic blade as a @variantrule[Bonus Action|XPHB] on the same turn if your other hand is free to create it. The damage die of this bonus attack is [[/damage 1d4]] instead of [[/damage 1d6]].</p></div></div><div class=\"rd__b  rd__b--1\"><div data-roll-name-ancestor=\"Level 9: Soul Blades\" data-source=\"XPHB\" class=\"rd__b  rd__b--2\"><h3 class=\"rd__h rd__h--2\" data-title-index=\"10\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p136\">Level 9: Soul Blades</span></h3> <p>You can now use the following powers with your Psychic Blades.</p><div data-roll-name-ancestor=\"Homing Strikes\" data-source=\"XPHB\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"11\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p136\">Homing Strikes.</span></span> If you make an attack roll with your @item[Psychic Blade|XPHB] and miss the target, you can roll one Psionic Energy Die and add the number rolled to the attack roll. If this causes the attack to hit, the die is expended.</p></div><div data-roll-name-ancestor=\"Psychic Teleportation\" data-source=\"XPHB\" class=\"rd__b  rd__b--3\"><p><span class=\"rd__h rd__h--3\" data-title-index=\"12\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p136\">Psychic Teleportation.</span></span> As a @variantrule[Bonus Action|XPHB], you manifest a @item[Psychic Blade|XPHB], expend one Psionic Energy Die and roll it, and throw the blade at an unoccupied space you can see up to a number of feet away equal to 10 times the number rolled. You then teleport to that space, and the blade vanishes.</p></div></div></div><div class=\"rd__b  rd__b--1\"><div data-roll-name-ancestor=\"Level 13: Psychic Veil\" data-source=\"XPHB\" class=\"rd__b  rd__b--2\"><h3 class=\"rd__h rd__h--2\" data-title-index=\"13\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p136\">Level 13: Psychic Veil</span></h3> <p>You can weave a veil of psychic static to mask yourself. As a @action[Magic|XPHB] action, you gain the &amp;Reference[condition=Invisible] condition for 1 hour or until you dismiss this effect (no action required). This invisibility ends early immediately after you deal damage to a creature or you force a creature to make a saving throw.</p><p>Once you use this feature, you can't do so again until you finish a @variantrule[Long Rest|XPHB] unless you expend a Psionic Energy Die (no action required) to restore your use of it.</p></div></div><div class=\"rd__b  rd__b--1\"><div data-roll-name-ancestor=\"Level 17: Rend Mind\" data-source=\"XPHB\" class=\"rd__b  rd__b--2\"><h3 class=\"rd__h rd__h--2\" data-title-index=\"14\"> <span class=\"entry-title-inner help-subtle\" title=\"Source: Player’s Handbook (2024), p136\">Level 17: Rend Mind</span></h3> <p>You can sweep your Psychic Blades through a creature's mind. When you use your Psychic Blades to deal Sneak Attack damage to a creature, you can force that target to make a Wisdom saving throw (DC <span class=\"rd__dc\">8</span> plus your Dexterity modifier and @variantrule[Proficiency|XPHB|Proficiency Bonus]). If the save fails, the target has the &amp;Reference[condition=Stunned] condition for 1 minute. The &amp;Reference[condition=Stunned] target repeats the save at the end of each of its turns, ending the effect on itself on a success.</p><p>Once you use this feature, you can't do so again until you finish a @variantrule[Long Rest|XPHB] unless you expend three Psionic Energy Dice (no action required) to restore your use of it.</p></div></div></div></div>",
-          "chat": ""
-        },
-        "source": {
-          "custom": "",
-          "book": "PHB 2024",
-          "page": "135",
-          "license": "",
-          "rules": "2024",
-          "revision": 1
-        },
-        "spellcasting": {
-          "progression": "none",
-          "preparation": {}
-        },
-        "advancement": [
-          {
-            "type": "ScaleValue",
-            "configuration": {
-              "identifier": "die",
-              "type": "dice",
-              "scale": {
-                "3": {
-                  "number": 4,
-                  "faces": 6,
-                  "modifiers": []
-                },
-                "5": {
-                  "number": 6,
-                  "faces": 8,
-                  "modifiers": []
-                },
-                "9": {
-                  "number": 8,
-                  "faces": 8,
-                  "modifiers": []
-                },
-                "11": {
-                  "number": 8,
-                  "faces": 10,
-                  "modifiers": []
-                },
-                "13": {
-                  "number": 10,
-                  "faces": 10,
-                  "modifiers": []
-                },
-                "17": {
-                  "number": 12,
-                  "faces": 12,
-                  "modifiers": []
-                }
-              },
-              "distance": {
-                "units": ""
-              }
-            },
-            "title": "Psionic Power",
-            "_id": "Fa9g1Ptm0xz9YnBp",
-            "value": {}
-          }
-        ]
-      },
-      "ownership": {
-        "default": 0,
-        "d8mHpZu9bQALnigO": 3
-      },
-      "flags": {
-        "plutonium": {
-          "page": "classes.html",
-          "source": "XPHB",
-          "hash": "rogue_xphb,state:sub_soulknife_xphb=b1",
-          "propDroppable": "subclass",
-          "filterValues": {
-            "Source": {
-              "TCE": 1,
-              "PHB": 1,
-              "XGE": 1,
-              "SCAG": 1,
-              "BGG": 1,
-              "TDCSR": 0,
-              "XPHB": 1,
-              "VRGR": 1,
-              "PSA": 0,
-              "DMG": 1,
-              "EGW": 0,
-              "FTD": 1,
-              "UATheMysticClass": 0,
-              "DSotDQ": 1,
-              "PSK": 0,
-              "_isActive": true,
-              "_totals": {
-                "ignore": 5,
-                "yes": 10,
-                "no": 0
-              },
-              "_combineBlue": "or",
-              "_combineRed": "or"
-            },
-            "Primary Ability": {
-              "str": 0,
-              "dex": 0,
-              "con": 0,
-              "int": 0,
-              "wis": 0,
-              "cha": 0,
-              "_isActive": false,
-              "_totals": {
-                "ignore": 6,
-                "yes": 0,
-                "no": 0
-              },
-              "_combineBlue": "or",
-              "_combineRed": "or"
-            },
-            "Miscellaneous": {
-              "Reprinted": 2,
-              "Sidekick": 2,
-              "Legacy": 0,
-              "Has Info": 0,
-              "Has Images": 0,
-              "SRD 5": {
-                "1": 0,
-                "2": 0
-              },
-              "Basic Rules (2024)": 0,
-              "Basic Rules (2014)": 0,
-              "_isActive": true,
-              "_totals": {
-                "ignore": 7,
-                "yes": 0,
-                "no": 2
-              },
-              "_combineBlue": "or",
-              "_combineRed": "or"
-            },
-            "Other/Text Options": {
-              "isDisplayClassIfSubclassActive": false,
-              "isClassFeatureVariant": true,
-              "_isActive": false
-            }
-          },
-          "isPrimaryClass": true,
-          "isDirectImport": true
-        },
-        "scene-packer": {
-          "hash": "b2e2f3669c78b13abbdc37a1295170c97172cdd7"
-        }
-      },
-      "effects": [],
-      "img": "https://raw.githubusercontent.com/5etools-mirror-2/5etools-img/main/classes/XPHB/Soulknife%20Rogue.webp",
-      "_stats": {
-        "compendiumSource": null,
-        "duplicateSource": null,
-        "coreVersion": "12.331",
-        "systemId": "dnd5e",
-        "systemVersion": "4.3.9",
-        "createdTime": 1748283868157,
-        "modifiedTime": 1748283868157,
+        "modifiedTime": 1749090718712,
         "lastModifiedBy": "d8mHpZu9bQALnigO"
       },
       "folder": null,
@@ -2017,6 +1878,11 @@
           "riders": {
             "activity": [],
             "effect": []
+          },
+          "last": {
+            "EahfXRqYhhV4Yhk8": {
+              "mastery": "nick"
+            }
           }
         }
       },
@@ -2028,8 +1894,8 @@
         "systemId": "dnd5e",
         "systemVersion": "4.3.9",
         "createdTime": 1748284366672,
-        "modifiedTime": 1748284628202,
-        "lastModifiedBy": "d8mHpZu9bQALnigO"
+        "modifiedTime": 1749296199188,
+        "lastModifiedBy": "rghJZLG3THgT7m0a"
       },
       "folder": null,
       "sort": 0
@@ -4191,6 +4057,267 @@
       },
       "folder": null,
       "sort": 0
+    },
+    {
+      "_id": "zM7YbcHtrKSNK80r",
+      "name": "Cunning Action",
+      "type": "feat",
+      "system": {
+        "source": {
+          "custom": "",
+          "book": "PHB 2024",
+          "page": "129",
+          "license": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "description": {
+          "value": "<div class=\"rd__b  rd__b--1\"><p>Your quick thinking and agility allow you to move and act quickly. On your turn, you can take one of the following actions as a @variantrule[Bonus Action|XPHB]: @action[Dash|XPHB], @action[Disengage|XPHB], or @action[Hide|XPHB].</p></div>",
+          "chat": ""
+        },
+        "requirements": "Rogue 2",
+        "uses": {
+          "max": "",
+          "recovery": [],
+          "spent": 0
+        },
+        "type": {
+          "value": "class",
+          "subtype": ""
+        },
+        "properties": [],
+        "advancement": [],
+        "activities": {
+          "dnd5eactivity000": {
+            "name": "Dash",
+            "type": "utility",
+            "activation": {
+              "type": "bonus",
+              "value": null,
+              "override": false
+            },
+            "_id": "dnd5eactivity000",
+            "target": {
+              "prompt": true,
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false
+            },
+            "sort": 0,
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "roll": {
+              "prompt": false,
+              "visible": false
+            }
+          },
+          "dnd5eactivity001": {
+            "name": "Disengage",
+            "type": "utility",
+            "activation": {
+              "type": "bonus",
+              "value": null,
+              "override": false
+            },
+            "_id": "dnd5eactivity001",
+            "target": {
+              "prompt": true,
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false
+            },
+            "sort": 0,
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "override": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "roll": {
+              "prompt": false,
+              "visible": false
+            }
+          },
+          "dnd5eactivity002": {
+            "name": "Hide",
+            "type": "utility",
+            "activation": {
+              "type": "bonus",
+              "value": null,
+              "override": false
+            },
+            "target": {
+              "affects": {
+                "type": "self",
+                "choice": false
+              },
+              "prompt": true,
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "override": false
+            },
+            "effects": [
+              {
+                "_id": "cunningAction000"
+              }
+            ],
+            "_id": "dnd5eactivity002",
+            "sort": 0,
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "range": {
+              "override": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "roll": {
+              "prompt": false,
+              "visible": false
+            }
+          }
+        },
+        "identifier": "cunning-action",
+        "cover": null,
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "level": null,
+          "repeatable": false
+        }
+      },
+      "ownership": {
+        "default": 0,
+        "d8mHpZu9bQALnigO": 3
+      },
+      "img": "icons/magic/control/hypnosis-mesmerism-watch.webp",
+      "flags": {
+        "plutonium": {
+          "page": "classFeature",
+          "source": "XPHB",
+          "hash": "cunning%20action_rogue_xphb_2_xphb"
+        },
+        "scene-packer": {
+          "hash": "3c3d1595a7220ec25a3816b288eeaaeb1f69528e"
+        },
+        "dnd5e": {
+          "sourceId": ".zM7YbcHtrKSNK80r",
+          "advancementOrigin": "SwzWJ4vbAsv3UzMf.VsxnNUw71QDzlpmd"
+        }
+      },
+      "effects": [
+        {
+          "_id": "cunningAction000",
+          "name": "Hiding",
+          "img": "icons/magic/control/hypnosis-mesmerism-watch.webp",
+          "description": "",
+          "changes": [],
+          "disabled": false,
+          "duration": {
+            "startTime": null,
+            "seconds": null,
+            "rounds": null,
+            "turns": null,
+            "startRound": null,
+            "startTurn": null,
+            "combat": null
+          },
+          "origin": "Actor.KT3pPkr0TFADTqBt.Item.zM7YbcHtrKSNK80r",
+          "transfer": false,
+          "flags": {
+            "plutonium": {
+              "dedupeId": "hiding"
+            }
+          },
+          "statuses": [
+            "hiding"
+          ],
+          "type": "base",
+          "system": {},
+          "tint": "#ffffff",
+          "sort": 0,
+          "_stats": {
+            "compendiumSource": null,
+            "duplicateSource": null,
+            "coreVersion": "12.331",
+            "systemId": "dnd5e",
+            "systemVersion": "4.3.9",
+            "createdTime": null,
+            "modifiedTime": null,
+            "lastModifiedBy": null
+          }
+        }
+      ],
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.3.9",
+        "createdTime": 1749090718598,
+        "modifiedTime": 1749090718788,
+        "lastModifiedBy": "d8mHpZu9bQALnigO"
+      },
+      "folder": null,
+      "sort": 0
     }
   ],
   "effects": [],
@@ -4480,7 +4607,7 @@
       "onUseMacroName": "[postActiveEffects]"
     },
     "core": {
-      "sheetClass": "dnd5e.ActorSheet5eCharacter"
+      "sheetClass": "dnd5e.ActorSheet5eCharacter2"
     },
     "exportSource": {
       "world": "waterdeep-a-grand-game",
@@ -4494,7 +4621,7 @@
     "systemId": "dnd5e",
     "systemVersion": "4.3.9",
     "createdTime": 1747849674428,
-    "modifiedTime": 1748285561340,
-    "lastModifiedBy": "d8mHpZu9bQALnigO"
+    "modifiedTime": 1749090815338,
+    "lastModifiedBy": "rghJZLG3THgT7m0a"
   }
 }
