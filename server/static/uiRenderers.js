@@ -606,70 +606,69 @@ var UIRenderers = {
         });
     },
 
-    // Function: renderCharacterProfileUI in server/static/uiRenderers.js
+// Function: renderCharacterProfileUI in server/static/uiRenderers.js
 
-    renderCharacterProfileUI: function(character, elements) {
-        const characterProfileMainSection = Utils.getElem('character-profile-main-section');
-        const detailsCharNameElem = Utils.getElem(elements.detailsCharName);
+renderCharacterProfileUI: function(character, elements) {
+    const characterProfileMainSection = Utils.getElem('character-profile-main-section');
+    const detailsCharNameElem = Utils.getElem(elements.detailsCharName);
 
-        if (!character) {
-            if(characterProfileMainSection) characterProfileMainSection.style.display = 'none';
-            if (detailsCharNameElem) Utils.updateText(elements.detailsCharName, 'None Selected');
-            return;
-        }
+    if (!character) {
+        if(characterProfileMainSection) characterProfileMainSection.style.display = 'none';
+        if (detailsCharNameElem) Utils.updateText(elements.detailsCharName, 'None Selected');
+        return;
+    }
 
-        if(characterProfileMainSection) characterProfileMainSection.style.display = 'block';
+    if(characterProfileMainSection) characterProfileMainSection.style.display = 'block';
 
-        const profileCharTypeElem = Utils.getElem(elements.profileCharType);
-        const profileDescriptionElem = Utils.getElem(elements.profileDescription);
-        const profilePersonalityElem = Utils.getElem(elements.profilePersonality);
-        const gmNotesTextareaElem = Utils.getElem(elements.gmNotesTextarea);
-        const saveGmNotesBtnElem = Utils.getElem(elements.saveGmNotesBtn);
-        const npcMemoriesSectionElem = Utils.getElem(elements.npcMemoriesSection);
-        const characterMemoriesListElem = Utils.getElem(elements.characterMemoriesList);
-        const addMemoryBtnElem = Utils.getElem(elements.addMemoryBtn);
-        const npcFactionStandingsSectionElem = Utils.getElem(elements.npcFactionStandingsSection);
-        const npcFactionStandingsContentElem = Utils.getElem(elements.npcFactionStandingsContent);
-        const characterHistorySectionElem = Utils.getElem(elements.characterHistorySection);
-        const associatedHistoryListElem = Utils.getElem(elements.associatedHistoryList);
-        const historyContentDisplayElem = Utils.getElem(elements.historyContentDisplay);
-        const characterLoreLinksSectionElem = Utils.getElem(elements.characterLoreLinksSection);
-        const linkLoreToCharBtnElem = Utils.getElem(elements.linkLoreToCharBtn);
+    const profileCharTypeElem = Utils.getElem(elements.profileCharType);
+    const profileDescriptionElem = Utils.getElem(elements.profileDescription);
+    const profilePersonalityElem = Utils.getElem(elements.profilePersonality);
+    const gmNotesTextareaElem = Utils.getElem(elements.gmNotesTextarea);
+    const saveGmNotesBtnElem = Utils.getElem(elements.saveGmNotesBtn);
+    const npcMemoriesSectionElem = Utils.getElem(elements.npcMemoriesSection);
+    const characterMemoriesListElem = Utils.getElem(elements.characterMemoriesList);
+    const addMemoryBtnElem = Utils.getElem(elements.addMemoryBtn);
+    const npcFactionStandingsSectionElem = Utils.getElem(elements.npcFactionStandingsSection);
+    const npcFactionStandingsContentElem = Utils.getElem(elements.npcFactionStandingsContent);
+    const characterHistorySectionElem = Utils.getElem(elements.characterHistorySection);
+    const associatedHistoryListElem = Utils.getElem(elements.associatedHistoryList);
+    const historyContentDisplayElem = Utils.getElem(elements.historyContentDisplay);
+    const characterLoreLinksSectionElem = Utils.getElem(elements.characterLoreLinksSection);
+    const linkLoreToCharBtnElem = Utils.getElem(elements.linkLoreToCharBtn);
 
-        character.personality_traits = character.personality_traits || [];
-        character.memories = character.memories || [];
-        character.associated_history_files = character.associated_history_files || [];
-        character.linked_lore_ids = character.linked_lore_ids || [];
-        character.pc_faction_standings = character.pc_faction_standings || {};
+    character.personality_traits = character.personality_traits || [];
+    character.memories = character.memories || [];
+    character.associated_history_files = character.associated_history_files || [];
+    character.linked_lore_ids = character.linked_lore_ids || [];
+    character.pc_faction_standings = character.pc_faction_standings || {};
 
-        if (detailsCharNameElem) Utils.updateText(elements.detailsCharName, character.name || "N/A");
-        if (profileCharTypeElem) Utils.updateText(elements.profileCharType, character.character_type || "N/A");
-        if (profileDescriptionElem) Utils.updateText(elements.profileDescription, character.description || "N/A");
-        if (profilePersonalityElem) Utils.updateText(elements.profilePersonality, character.personality_traits.join(', ') || "N/A");
-        if (gmNotesTextareaElem) gmNotesTextareaElem.value = character.gm_notes || '';
-        if (saveGmNotesBtnElem) Utils.disableBtn(elements.saveGmNotesBtn, false);
+    if (detailsCharNameElem) Utils.updateText(elements.detailsCharName, character.name || "N/A");
+    if (profileCharTypeElem) Utils.updateText(elements.profileCharType, character.character_type || "N/A");
+    if (profileDescriptionElem) Utils.updateText(elements.profileDescription, character.description || "N/A");
+    if (profilePersonalityElem) Utils.updateText(elements.profilePersonality, character.personality_traits.join(', ') || "N/A");
+    if (gmNotesTextareaElem) gmNotesTextareaElem.value = character.gm_notes || '';
+    if (saveGmNotesBtnElem) Utils.disableBtn(elements.saveGmNotesBtn, false);
 
-        const isNpc = character.character_type === 'NPC';
-        if (npcMemoriesSectionElem) npcMemoriesSectionElem.style.display = isNpc ? 'block' : 'none';
-        if (npcFactionStandingsSectionElem) npcFactionStandingsSectionElem.style.display = isNpc ? 'block' : 'none';
-        if (characterHistorySectionElem) characterHistorySectionElem.style.display = 'block';
-        if (characterLoreLinksSectionElem) characterLoreLinksSectionElem.style.display = 'block';
+    const isNpc = character.character_type === 'NPC';
+    if (npcMemoriesSectionElem) npcMemoriesSectionElem.style.display = isNpc ? 'block' : 'none';
+    if (npcFactionStandingsSectionElem) npcFactionStandingsSectionElem.style.display = isNpc ? 'block' : 'none';
+    if (characterHistorySectionElem) characterHistorySectionElem.style.display = 'block';
+    if (characterLoreLinksSectionElem) characterLoreLinksSectionElem.style.display = 'block';
 
-        if (isNpc) {
-            if (characterMemoriesListElem) this.renderMemoriesUI(character.memories, characterMemoriesListElem, CharacterService.handleDeleteMemory);
-            if (npcFactionStandingsContentElem) this.renderNpcFactionStandingsUI(character, appState.activePcIds, appState.getAllCharacters(), npcFactionStandingsContentElem, CharacterService.handleSaveFactionStanding);
-            if (addMemoryBtnElem) Utils.disableBtn(elements.addMemoryBtn, false);
-        } else {
-            if (characterMemoriesListElem) characterMemoriesListElem.innerHTML = '<p><em>Memories are for NPCs only.</em></p>';
-            if (addMemoryBtnElem) Utils.disableBtn(elements.addMemoryBtn, true);
-            if (npcFactionStandingsContentElem) npcFactionStandingsContentElem.innerHTML = '<p><em>Faction standings are for NPCs.</em></p>';
-        }
-        if (associatedHistoryListElem && historyContentDisplayElem) this.renderAssociatedHistoryFilesUI(character, associatedHistoryListElem, historyContentDisplayElem, CharacterService.handleDissociateHistoryFile);
-        this.renderAssociatedLoreForCharacterUI(character, CharacterService.handleUnlinkLoreFromCharacter);
-        this.populateLoreEntrySelectForCharacterLinkingUI(character.linked_lore_ids);
-        if (linkLoreToCharBtnElem) Utils.disableBtn(elements.linkLoreToCharBtn, false);
-    },
-
+    if (isNpc) {
+        if (characterMemoriesListElem) this.renderMemoriesUI(character.memories, characterMemoriesListElem, CharacterService.handleDeleteMemory);
+        if (npcFactionStandingsContentElem) this.renderNpcFactionStandingsUI(character, appState.activePcIds, appState.getAllCharacters(), npcFactionStandingsContentElem, CharacterService.handleSaveFactionStanding);
+        if (addMemoryBtnElem) Utils.disableBtn(elements.addMemoryBtn, false);
+    } else {
+        if (characterMemoriesListElem) characterMemoriesListElem.innerHTML = '<p><em>Memories are for NPCs only.</em></p>';
+        if (addMemoryBtnElem) Utils.disableBtn(elements.addMemoryBtn, true);
+        if (npcFactionStandingsContentElem) npcFactionStandingsContentElem.innerHTML = '<p><em>Faction standings are for NPCs.</em></p>';
+    }
+    if (associatedHistoryListElem && historyContentDisplayElem) this.renderAssociatedHistoryFilesUI(character, associatedHistoryListElem, historyContentDisplayElem, CharacterService.handleDissociateHistoryFile);
+    this.renderAssociatedLoreForCharacterUI(character, CharacterService.handleUnlinkLoreFromCharacter);
+    this.populateLoreEntrySelectForCharacterLinkingUI(character.linked_lore_ids);
+    if (linkLoreToCharBtnElem) Utils.disableBtn(elements.linkLoreToCharBtn, false);
+},
     renderMemoriesUI: function(memories, listElement, deleteCallback) {
         if (!listElement) return;
         listElement.innerHTML = '';

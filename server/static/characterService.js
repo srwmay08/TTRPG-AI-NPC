@@ -21,12 +21,9 @@ var CharacterService = {
         characterLoreLinksSection: 'character-lore-links-section',
         loreEntrySelectForCharacter: 'lore-entry-select-for-character',
         linkLoreToCharBtn: 'link-lore-to-char-btn',
-        associatedLoreListForCharacter: 'associated-lore-list-for-character',
-        deleteMemoryCallback: () => CharacterService.handleDeleteMemory,
-        factionChangeCallback: () => CharacterService.handleSaveFactionStanding,
-        dissociateHistoryCallback: () => CharacterService.handleDissociateHistoryFile,
-        unlinkLoreFromCharacterCallback: () => CharacterService.handleUnlinkLoreFromCharacter
+        associatedLoreListForCharacter: 'associated-lore-list-for-character'
     },
+    //... (rest of the file)
 
     initializeAppCharacters: async function() {
         console.log("Fetching characters via characterService...");
