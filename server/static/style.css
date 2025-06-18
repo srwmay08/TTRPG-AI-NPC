@@ -705,3 +705,14 @@ tr.expanded-row > td {
     flex-direction: column; 
     gap: 5px; 
 }
+
+
+.npc-description-prologue {
+    font-style: italic;
+    font-size: 0.9em;
+    color: #555;
+    background-color: #f0f0f0;
+    padding: 8px;
+    border-bottom: 1px dashed #ccc;
+    margin: -10px -10px 10px -10px; /* Adjust padding to span the width */
+}

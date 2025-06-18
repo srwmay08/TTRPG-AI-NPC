@@ -1,0 +1,40 @@
+{
+    "name": "Jalester Silvermane",
+    "character_type": "NPC",
+    "description": "A handsome man who seems to be just another patron nursing a drink. In truth, Jalester is a secret agent of Laeral Silverhand, the Open Lord of Waterdeep. He is a watchful guardian of the city, keeping an eye on the Yawning Portal's clientele for threats to the city.",
+    "race": "Human",
+    "class": "Patron / Spy (Fighter)",
+    "alignment": "Lawful Good",
+    "age": "40s",
+    "personality_traits": [
+      "Observant and quiet",
+      "Patient",
+      "Wary and slow to trust",
+      "Secretly very capable and brave"
+    ],
+    "ideals": [
+      "Vigilance: 'The price of peace is eternal watchfulness.'",
+      "Duty: 'The safety of Waterdeep is my highest calling.'",
+      "Subtlety: 'The best work is done when no one knows you've done anything at all.'"
+    ],
+    "bonds": [
+      "His loyalty to Laeral Silverhand is absolute.",
+      "The city of Waterdeep and its people.",
+      "The other secret agents of the Lords' Alliance."
+    ],
+    "flaws": [
+      "Can be overly secretive, even with potential allies.",
+      "His constant vigilance can make him seem paranoid.",
+      "Carries the weight of his responsibilities heavily."
+    ],
+    "motivations": [
+        "To uncover plots against Waterdeep.",
+        "To identify and recruit potential assets for the Lords' Alliance.",
+        "To enjoy a quiet drink when he's not saving the city."
+    ],
+    "canned_conversations": {
+        "greeting": "(He glances up, gives a slight, almost imperceptible nod, and returns to his drink.)",
+        "start_conversation": "Wanna know what's going on in our fine city? Grab a stool. Stay a while.",
+        "ask_what_he_does": "Me? I'm just a man enjoying an ale. Nothing more to it."
+    }
+}

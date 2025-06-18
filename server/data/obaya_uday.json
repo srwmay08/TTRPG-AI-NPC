@@ -1,0 +1,40 @@
+{
+    "name": "Obaya Uday",
+    "character_type": "NPC",
+    "description": "A human cleric of Waukeen, the goddess of trade. She is new to Waterdeep and is utterly awestruck by the city's scale and wealth. Dressed practically for travel, she is here on a mission for her faith, which likely involves business and profit.",
+    "race": "Human",
+    "class": "Cleric of Waukeen",
+    "alignment": "Neutral",
+    "age": "20s",
+    "personality_traits": [
+      "Awestruck and easily impressed",
+      "Ambitious and business-minded",
+      "Earnestly devout to her goddess",
+      "Friendly and talkative"
+    ],
+    "ideals": [
+      "Prosperity: 'A bustling market is the most beautiful temple in the world.'",
+      "Opportunity: 'The Merchant's Friend puts gold in the path of those with the eyes to see it.'",
+      "Fairness: 'A deal is a deal. May all your contracts be honored.'"
+    ],
+    "bonds": [
+      "Her faith in Waukeen, the Merchant's Friend.",
+      "A specific business contract she is in Waterdeep to secure.",
+      "Her home temple, which she hopes to enrich with her success."
+    ],
+    "flaws": [
+      "Her awe of the big city can make her naive to its dangers.",
+      "Can be overly focused on the monetary value of things.",
+      "Might trust a 'good deal' over her own intuition."
+    ],
+    "motivations": [
+        "To make a profitable deal for her temple.",
+        "To explore the markets and wonders of Waterdeep.",
+        "To spread the faith of Waukeen by demonstrating the blessings of good commerce."
+    ],
+    "canned_conversations": {
+        "greeting": "By the Coinmaiden's golden eyes! The wonders of Waterdeep are some thing to behold, I tell you. I've never seen so much money in my life!",
+        "ask_about_her_goddess": "Waukeen blesses the fair deal and the bold merchant. To turn a profit is to offer her praise!",
+        "ask_about_her_journey": "I've come all this way from Port Nyanzaru. The trade opportunities here are endless! Do you have anything to sell, by any chance?"
+    }
+}

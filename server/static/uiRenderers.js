@@ -347,19 +347,56 @@ var UIRenderers = {
         });
     },
 
-    renderPcListUI: function(pcListDiv, speakingPcSelect, allCharacters, activePcIds, onPcItemClickCallback) {
+    renderPcListUI: function(pcListDiv, speakingPcSelect, allCharacters, activePcIds, onPcItemClickCallback, activeNpcIdsSet) {
         if (!pcListDiv) { console.error("UIRenderers.renderPcListUI: pcListDiv not found"); return;}
         pcListDiv.innerHTML = '';
         if (speakingPcSelect) {
+            const currentSpeaker = speakingPcSelect.value;
             speakingPcSelect.innerHTML = '<option value="">-- DM/Scene Event --</option>';
+
+            // Add Player Characters
+            const pcs = allCharacters.filter(char => char.character_type === 'PC').sort((a, b) => a.name.localeCompare(b.name));
+            pcs.forEach(pc => {
+                const pcIdStr = String(pc._id);
+                const option = document.createElement('option');
+                option.value = pcIdStr;
+                option.textContent = `(PC) ${pc.name}`;
+                speakingPcSelect.appendChild(option);
+            });
+
+            // Add a separator
+            if (activeNpcIdsSet && activeNpcIdsSet.size > 0 && pcs.length > 0) {
+                const separator = document.createElement('option');
+                separator.disabled = true;
+                separator.textContent = '--- NPCs in Scene ---';
+                speakingPcSelect.appendChild(separator);
+            }
+
+            // Add Active NPCs
+            if (activeNpcIdsSet) {
+                const activeNpcs = allCharacters.filter(char => activeNpcIdsSet.has(String(char._id))).sort((a, b) => a.name.localeCompare(b.name));
+                activeNpcs.forEach(npc => {
+                    const npcIdStr = String(npc._id);
+                    const option = document.createElement('option');
+                    option.value = npcIdStr;
+                    option.textContent = `(NPC) ${npc.name}`;
+                    speakingPcSelect.appendChild(option);
+                });
+            }
+            // Try to restore previous selection
+            if (Array.from(speakingPcSelect.options).some(opt => opt.value === currentSpeaker)) {
+                speakingPcSelect.value = currentSpeaker;
+            }
         }
-        const pcs = allCharacters.filter(char => char.character_type === 'PC').sort((a, b) => a.name.localeCompare(b.name));
-        if (pcs.length === 0) {
-            pcListDiv.innerHTML = '<p><em>No Player Characters defined yet. Create them in the NPCs Tab (as PC type).</em></p>';
+        
+        // This part remains the same, for rendering the PC list on the left
+        const pcsForList = allCharacters.filter(char => char.character_type === 'PC').sort((a, b) => a.name.localeCompare(b.name));
+        if (pcsForList.length === 0) {
+            pcListDiv.innerHTML = '<p><em>No Player Characters defined yet.</em></p>';
             return;
         }
         const ul = document.createElement('ul');
-        pcs.forEach(pc => {
+        pcsForList.forEach(pc => {
             const pcIdStr = String(pc._id);
             const li = document.createElement('li');
             li.style.cursor = "pointer";
@@ -368,38 +405,53 @@ var UIRenderers = {
             li.onclick = () => onPcItemClickCallback(pcIdStr);
             if (activePcIds.has(pcIdStr)) {
                 li.classList.add('selected');
-            } else {
-                li.classList.remove('selected');
             }
             ul.appendChild(li);
-            if (speakingPcSelect) {
-                const option = document.createElement('option');
-                option.value = pcIdStr;
-                option.textContent = pc.name;
-                speakingPcSelect.appendChild(option);
-            }
         });
         pcListDiv.appendChild(ul);
     },
 
-    createNpcDialogueAreaUI: function(npcIdStr, npcName, containerElement) {
-        if (!containerElement || Utils.getElem(`npc-area-${npcIdStr}`)) return;
+    createNpcDialogueAreaUI: function(npcCharacter, containerElement) {
+        if (!npcCharacter || !containerElement) return;
+
+        const npcIdStr = String(npcCharacter._id);
+        const npcName = npcCharacter.name;
+        const npcDescription = npcCharacter.description || 'No description available.';
+
+        if (Utils.getElem(`npc-area-${npcIdStr}`)) return;
+
         const areaDiv = document.createElement('div');
         areaDiv.className = 'npc-dialogue-area';
         areaDiv.id = `npc-area-${npcIdStr}`;
+
         const nameHeader = document.createElement('h3');
         nameHeader.textContent = npcName;
         areaDiv.appendChild(nameHeader);
+
         const transcriptDiv = document.createElement('div');
         transcriptDiv.className = 'npc-transcript';
         transcriptDiv.id = `transcript-${npcIdStr}`;
-        transcriptDiv.innerHTML = `<p class="scene-event">Dialogue with ${npcName} begins.</p>`;
+
+        // --- NEW: Add the description prologue ---
+        const descriptionP = document.createElement('p');
+        descriptionP.className = 'npc-description-prologue';
+        descriptionP.textContent = npcDescription;
+        transcriptDiv.appendChild(descriptionP);
+        // ---
+
+        const sceneEventP = document.createElement('p');
+        sceneEventP.className = 'scene-event';
+        sceneEventP.innerHTML = `<em>Dialogue with ${npcName} begins.</em>`;
+        transcriptDiv.appendChild(sceneEventP);
+
         areaDiv.appendChild(transcriptDiv);
+
         const suggestionsDiv = document.createElement('div');
         suggestionsDiv.id = `ai-suggestions-${npcIdStr}`;
         suggestionsDiv.className = 'ai-suggestions-for-npc';
         suggestionsDiv.style.display = 'none';
         areaDiv.appendChild(suggestionsDiv);
+        
         containerElement.appendChild(areaDiv);
     },
 
@@ -822,23 +874,23 @@ var UIRenderers = {
     },
 
     populateExpandedSkillDetailsUI: function(skillKey, expansionDiv, selectedPcs) {
-        if (!expansionDiv) { console.error("populateExpandedSkillDetailsUI: expansionDiv is null for", skillKey); return; }
-        const skillFullName = SKILL_NAME_MAP[skillKey] || skillKey;
-        expansionDiv.innerHTML = `<h5>${skillFullName} Bonus Details & Comparisons</h5>`;
+    if (!expansionDiv) { console.error("populateExpandedSkillDetailsUI: expansionDiv is null for", skillKey); return; }
+    const skillFullName = SKILL_NAME_MAP[skillKey] || skillKey;
+    expansionDiv.innerHTML = `<h5>${skillFullName} Bonus Details & Comparisons</h5>`;
 
-        const barChartContainer = document.createElement('div');
-        barChartContainer.className = 'skill-bar-chart-container';
-        expansionDiv.appendChild(barChartContainer);
+    const barChartContainer = document.createElement('div');
+    barChartContainer.className = 'skill-bar-chart-container';
+    expansionDiv.appendChild(barChartContainer);
 
-        selectedPcs.forEach(pc => {
-            const skillData = pc.system?.skills?.[skillKey];
-            const abilityKeyForSkill = skillData?.ability || SKILL_NAME_MAP[skillKey].match(/\(([^)]+)\)/)[1].toLowerCase();
-            const abilityScore = pc.system?.abilities?.[abilityKeyForSkill]?.value || 10;
-            const bonus = DNDCalculations.calculateSkillBonus(abilityScore, skillData?.value || 0, pc.calculatedProfBonus);
-            barChartContainer.innerHTML += UIRenderers.generateBarChartRowHTML(pc.name, bonus, bonus, 15);
-        });
-         expansionDiv.innerHTML += `<p><em>Passive ${skillFullName}: Calculated as 10 + Skill Bonus.</em></p>`;
-    },
+    selectedPcs.forEach(pc => {
+        const skillData = pc.system?.skills?.[skillKey];
+        const abilityKeyForSkill = skillData?.ability || SKILL_NAME_MAP[skillKey].match(/\(([^)]+)\)/)[1].toLowerCase();
+        const abilityScore = pc.system?.abilities?.[abilityKeyForSkill]?.value || 10;
+        const bonus = DNDCalculations.calculateSkillBonus(abilityScore, skillData?.value || 0, pc.calculatedProfBonus);
+        barChartContainer.innerHTML += this.generateBarChartRowHTML(pc.name, bonus, bonus, 15);
+    });
+     expansionDiv.innerHTML += `<p><em>Passive ${skillFullName}: Calculated as 10 + Skill Bonus.</em></p>`;
+},
 
     renderDetailedPcSheetUI: function(pcData, dashboardContentElement) {
         if (!pcData || pcData.character_type !== 'PC' || !(pcData.system)) {

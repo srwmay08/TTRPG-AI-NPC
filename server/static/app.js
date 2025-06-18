@@ -226,57 +226,95 @@ var App = {
     },
 
     handleToggleNpcInScene: async function(npcIdStr, npcName) {
-        const multiNpcContainer = Utils.getElem('multi-npc-dialogue-container');
-        if (!multiNpcContainer) {
-            console.error("Multi-NPC dialogue container not found.");
-            return;
-        }
+    const multiNpcContainer = Utils.getElem('multi-npc-dialogue-container');
+    if (!multiNpcContainer) {
+        console.error("Multi-NPC dialogue container not found.");
+        return;
+    }
 
-        const isAdding = !appState.hasActiveNpc(npcIdStr);
-        const speakingPcSelect = Utils.getElem('speaking-pc-select');
-        const currentSpeakingPcId = speakingPcSelect ? speakingPcSelect.value : null;
+    const isAdding = !appState.hasActiveNpc(npcIdStr);
+    const speakingPcSelect = Utils.getElem('speaking-pc-select');
+    const currentSpeakingPcId = speakingPcSelect ? speakingPcSelect.value : null;
 
-        if (isAdding) {
-            appState.addActiveNpc(npcIdStr);
-            UIRenderers.createNpcDialogueAreaUI(npcIdStr, npcName, multiNpcContainer);
-            appState.initDialogueHistory(npcIdStr);
-            const toggledNpc = appState.getCharacterById(npcIdStr);
+    if (isAdding) {
+        // Get other NPCs who are already in the scene BEFORE adding the new one
+        const otherNpcIds = appState.getActiveNpcIds();
 
-            if (toggledNpc && (appState.getActivePcCount() > 0 || (currentSpeakingPcId !== null && currentSpeakingPcId === ""))) {
-                 const sceneContext = Utils.getElem('scene-context').value.trim();
-                 const activePcNames = appState.getActivePcIds().map(pcId => appState.getCharacterById(pcId)?.name || "a PC");
-                 const greetingPayload = {
-                    scene_context: sceneContext || `${activePcNames.join(', ')} ${activePcNames.length > 1 ? 'are' : 'is'} present.`,
-                    player_utterance: `(System Directive: You are ${toggledNpc.name}. You have just become aware of ${activePcNames.join(', ')} in the scene. Greet them or offer an initial reaction in character.)`,
-                    active_pcs: activePcNames,
-                    speaking_pc_id: currentSpeakingPcId,
-                    recent_dialogue_history: []
-                };
-                setTimeout(() => App.triggerNpcInteraction(npcIdStr, toggledNpc.name, greetingPayload, true, `thinking-${npcIdStr}-greeting`), 100);
-            }
+        appState.addActiveNpc(npcIdStr);
+        UIRenderers.createNpcDialogueAreaUI(npcIdStr, npcName, multiNpcContainer);
+        appState.initDialogueHistory(npcIdStr);
+
+        const toggledNpc = appState.getCharacterById(npcIdStr);
+        const sceneContext = Utils.getElem('scene-context').value.trim();
+        const activePcNames = appState.getActivePcIds().map(pcId => appState.getCharacterById(pcId)?.name || "a PC");
+
+        // 1. Tell the NEW NPC about everyone else who is already there.
+        const otherNpcNames = otherNpcIds.map(id => appState.getCharacterById(id)?.name || "another NPC");
+        const allPresentNames = [...activePcNames, ...otherNpcNames];
+        
+        let greetingUtterance;
+        if (allPresentNames.length > 0) {
+            greetingUtterance = `(System Directive: You are ${toggledNpc.name}. You have just become aware of ${allPresentNames.join(', ')} in the scene. Greet them or offer an initial reaction in character.)`;
         } else {
-            appState.removeActiveNpc(npcIdStr);
-            UIRenderers.removeNpcDialogueAreaUI(npcIdStr, multiNpcContainer);
-            appState.deleteDialogueHistory(npcIdStr);
+            greetingUtterance = `(System Directive: You are ${toggledNpc.name}. Describe your arrival or what you are doing upon entering the scene.)`;
         }
+        
+        const greetingPayload = {
+            scene_context: sceneContext,
+            player_utterance: greetingUtterance,
+            active_pcs: activePcNames,
+            speaking_pc_id: currentSpeakingPcId,
+            recent_dialogue_history: []
+        };
+        setTimeout(() => App.triggerNpcInteraction(npcIdStr, npcName, greetingPayload, true, `thinking-${npcIdStr}-greeting`), 100);
 
-        const placeholderEvent = multiNpcContainer.querySelector('p.scene-event');
-        if (appState.getActiveNpcCount() > 0 && placeholderEvent) {
-            placeholderEvent.remove();
-        } else if (appState.getActiveNpcCount() === 0 && !placeholderEvent) {
-            multiNpcContainer.innerHTML = '<p class="scene-event">Select NPCs from the SCENE tab to add them to the interaction.</p>';
-        }
+        // 2. Tell all OTHER existing NPCs about the NEW arrival.
+        otherNpcIds.forEach(existingNpcId => {
+            const existingNpc = appState.getCharacterById(existingNpcId);
+            if (existingNpc) {
+                const reactionPayload = {
+                    scene_context: sceneContext,
+                    player_utterance: `(System Directive: ${npcName} has just entered the scene. React to their arrival in character.)`,
+                    active_pcs: activePcNames,
+                    speaking_pc_id: null, // Event is from the DM/scene
+                    recent_dialogue_history: appState.getRecentDialogueHistory(existingNpcId, 10)
+                };
+                const transcriptArea = Utils.getElem(`transcript-${existingNpcId}`);
+                if (transcriptArea) {
+                    const thinkingEntry = document.createElement('p');
+                    thinkingEntry.className = 'scene-event';
+                    thinkingEntry.id = `thinking-${existingNpcId}-reaction`;
+                    thinkingEntry.textContent = `${existingNpc.name} notices ${npcName}...`;
+                    transcriptArea.appendChild(thinkingEntry);
+                    transcriptArea.scrollTop = transcriptArea.scrollHeight;
+                }
+                setTimeout(() => App.triggerNpcInteraction(existingNpcId, existingNpc.name, reactionPayload, false, `thinking-${existingNpcId}-reaction`), 200);
+            }
+        });
 
-        UIRenderers.renderNpcListForContextUI(
-            Utils.getElem('character-list-scene-tab'),
-            appState.getAllCharacters(),
-            appState.activeSceneNpcIds,
-            App.handleToggleNpcInScene, 
-            CharacterService.handleSelectCharacterForDetails,
-            appState.getCurrentSceneContextFilter()
-        );
-        App.updateMainView();
-    },
+    } else {
+        appState.removeActiveNpc(npcIdStr);
+        UIRenderers.removeNpcDialogueAreaUI(npcIdStr, multiNpcContainer);
+        appState.deleteDialogueHistory(npcIdStr);
+    }
+
+    const placeholderEvent = multiNpcContainer.querySelector('p.scene-event');
+    if (appState.getActiveNpcCount() > 0 && placeholderEvent) {
+        placeholderEvent.remove();
+    } else if (appState.getActiveNpcCount() === 0 && !placeholderEvent) {
+        multiNpcContainer.innerHTML = '<p class="scene-event">Select NPCs from the SCENE tab to add them to the interaction.</p>';
+    }
+
+    UIRenderers.renderNpcListForContextUI(
+        Utils.getElem('character-list-scene-tab'),
+        appState.getAllCharacters(),
+        appState.activeSceneNpcIds,
+        App.handleToggleNpcInScene, 
+        CharacterService.handleSelectCharacterForDetails,
+        appState.getCurrentSceneContextFilter()
+    );
+    App.updateMainView();
+},
 
     triggerNpcInteraction: async function(npcIdStr, npcName, payload, isGreeting = false, thinkingMessageId = null) {
         const transcriptArea = Utils.getElem(`transcript-${npcIdStr}`);
@@ -322,73 +360,83 @@ var App = {
     },
 
     handleGenerateDialogue: async function() {
-        const playerUtterance = Utils.getElem('player-utterance').value.trim();
-        const sceneContext = Utils.getElem('scene-context').value.trim();
-        const speakingPcSelect = Utils.getElem('speaking-pc-select');
-        const speakingPcId = speakingPcSelect ? speakingPcSelect.value : null;
-    
-        // --- FIX START ---
-        // The original condition was logically flawed and would not correctly prevent
-        // empty submissions. This new condition checks if the player utterance is empty.
-        // It prevents the function from proceeding and sending requests to the AI
-        // if the user simply adds an NPC, which could cause the confusing behavior.
-        if (!playerUtterance) {
-            alert("Please enter player dialogue to send to the NPCs.");
-            return;
+    const playerUtterance = Utils.getElem('player-utterance').value.trim();
+    const sceneContext = Utils.getElem('scene-context').value.trim();
+    const speakingPcSelect = Utils.getElem('speaking-pc-select');
+    const speakerId = speakingPcSelect ? speakingPcSelect.value : null;
+
+    if (!playerUtterance) {
+        alert("Please enter player dialogue to send to the NPCs.");
+        return;
+    }
+    Utils.disableBtn('generate-dialogue-btn', true);
+
+    const speaker = appState.getCharacterById(speakerId);
+    const speakerDisplayName = speaker ? speaker.name : "DM/Scene Event";
+    const isSpeakerAnNpc = speaker && speaker.character_type === 'NPC';
+
+    const activeNpcIds = appState.getActiveNpcIds();
+    const activePcsNames = appState.getActivePcIds().map(id => appState.getCharacterById(id)?.name).filter(name => name);
+
+    // --- FIX: Determine who is listening ---
+    const listeningNpcIds = activeNpcIds.filter(id => id !== speakerId);
+
+    // Display the utterance in all appropriate transcripts
+    activeNpcIds.forEach(npcId => {
+        const transcriptArea = Utils.getElem(`transcript-${npcId}`);
+        if (transcriptArea) {
+            // An NPC's own speech should appear as an 'npc-response', not a 'player-utterance'
+            const messageClass = (isSpeakerAnNpc && speakerId === npcId) ? 'dialogue-entry npc-response' : 'dialogue-entry player-utterance';
+            UIRenderers.appendMessageToTranscriptUI(transcriptArea, `${speakerDisplayName}: ${playerUtterance}`, messageClass);
+            appState.addDialogueToHistory(npcId, `${speakerDisplayName}: ${playerUtterance}`);
         }
-        // --- FIX END ---
-    
-        Utils.disableBtn('generate-dialogue-btn', true);
-    
-        const activePcsNames = appState.getActivePcIds().map(id => appState.getCharacterById(id)?.name).filter(name => name);
-        let speakerDisplayName = "Player";
-        if (speakingPcId && speakingPcId !== "") {
-            const pc = appState.getCharacterById(speakingPcId);
-            if (pc) speakerDisplayName = pc.name;
-        } else if (speakingPcId === "") {
-            speakerDisplayName = "DM/Scene Event";
+    });
+
+    // Show "thinking" message only for listening NPCs
+    listeningNpcIds.forEach(npcId => {
+        const npc = appState.getCharacterById(npcId);
+        const transcriptArea = Utils.getElem(`transcript-${npcId}`);
+        if (transcriptArea && npc) {
+            const thinkingEntry = document.createElement('p');
+            thinkingEntry.className = 'scene-event';
+            thinkingEntry.id = `thinking-${npcId}-main`;
+            thinkingEntry.textContent = `${npc.name} is formulating a response...`;
+            transcriptArea.appendChild(thinkingEntry);
+            transcriptArea.scrollTop = transcriptArea.scrollHeight;
         }
-    
-        appState.getActiveNpcIds().forEach(npcId => {
-            const transcriptArea = Utils.getElem(`transcript-${npcId}`);
-            if (transcriptArea && playerUtterance) { 
-                UIRenderers.appendMessageToTranscriptUI(transcriptArea, `${speakerDisplayName}: ${playerUtterance}`, 'dialogue-entry player-utterance');
-                appState.addDialogueToHistory(npcId, `${speakerDisplayName}: ${playerUtterance}`);
-            }
-            const npc = appState.getCharacterById(npcId);
-            if (transcriptArea && npc) {
-                const thinkingEntry = document.createElement('p');
-                thinkingEntry.className = 'scene-event';
-                thinkingEntry.id = `thinking-${npcId}-main`;
-                thinkingEntry.textContent = `${npc.name} is formulating a response...`;
-                transcriptArea.appendChild(thinkingEntry);
-                transcriptArea.scrollTop = transcriptArea.scrollHeight;
-            }
-        });
-    
-        const dialoguePromises = appState.getActiveNpcIds().map(npcId => {
-            const npc = appState.getCharacterById(npcId);
-            if (!npc) return Promise.resolve(); 
-    
-            const payload = {
-                scene_context: sceneContext,
-                player_utterance: playerUtterance,
-                active_pcs: activePcsNames,
-                speaking_pc_id: speakingPcId,
-                recent_dialogue_history: appState.getRecentDialogueHistory(npcId, 10) 
-            };
-            return App.triggerNpcInteraction(npcId, npc.name, payload, false, `thinking-${npcId}-main`);
-        });
-    
-        await Promise.all(dialoguePromises);
-    
-        if (playerUtterance) Utils.getElem('player-utterance').value = ''; 
-        Utils.disableBtn('generate-dialogue-btn', false);
-    },
+    });
+
+    // --- FIX: Only listening NPCs generate a response ---
+    const dialoguePromises = listeningNpcIds.map(npcId => {
+        const npc = appState.getCharacterById(npcId);
+        if (!npc) return Promise.resolve();
+
+        const payload = {
+            scene_context: sceneContext,
+            player_utterance: playerUtterance,
+            active_pcs: activePcsNames,
+            speaking_pc_id: speakerId, // This can now be an NPC ID
+            recent_dialogue_history: appState.getRecentDialogueHistory(npcId, 10)
+        };
+        return App.triggerNpcInteraction(npcId, npc.name, payload, false, `thinking-${npcId}-main`);
+    });
+
+    await Promise.all(dialoguePromises);
+
+    if (playerUtterance) Utils.getElem('player-utterance').value = '';
+    Utils.disableBtn('generate-dialogue-btn', false);
+},
 
     handleTogglePcSelection: function(pcIdStr) {
         appState.toggleActivePc(pcIdStr);
-        UIRenderers.renderPcListUI(Utils.getElem('active-pc-list'), Utils.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, App.handleTogglePcSelection);
+        UIRenderers.renderPcListUI(
+            Utils.getElem('active-pc-list'), 
+            Utils.getElem('speaking-pc-select'), 
+            appState.getAllCharacters(), 
+            appState.activePcIds, 
+            App.handleTogglePcSelection,
+            appState.activeSceneNpcIds // Add this argument
+        );
         App.updateMainView();
 
         const currentProfileChar = appState.getCurrentProfileChar();
@@ -468,29 +516,67 @@ var App = {
         UIRenderers.renderSuggestionsArea(appState.lastAiResultForProfiledChar, appState.getCurrentProfileCharId());
     },
 
-    useCannedResponse: function() {
-        const profiledCharId = appState.getCurrentProfileCharId();
-        if (!profiledCharId) return;
+    useCannedResponse: async function() {
+    const profiledCharId = appState.getCurrentProfileCharId();
+    if (!profiledCharId) return;
 
-        const keys = Object.keys(appState.cannedResponsesForProfiledChar);
-        if (keys.length === 0) return;
+    if (!appState.hasActiveNpc(profiledCharId)) {
+        alert("The profiled NPC must be in the current scene to use a canned response.");
+        return;
+    }
 
-        const currentKey = keys[appState.currentCannedResponseIndex];
-        const cannedResponseText = appState.cannedResponsesForProfiledChar[currentKey];
-        if (!cannedResponseText) return;
+    const profiledChar = appState.getCharacterById(profiledCharId);
+    if (!profiledChar) return;
 
-        const playerUtteranceElem = Utils.getElem('player-utterance');
-        if (playerUtteranceElem) {
-            playerUtteranceElem.value = cannedResponseText;
-            playerUtteranceElem.focus();
+    const keys = Object.keys(appState.cannedResponsesForProfiledChar);
+    if (keys.length === 0) return;
+
+    const currentKey = keys[appState.currentCannedResponseIndex];
+    const cannedResponseText = appState.cannedResponsesForProfiledChar[currentKey];
+    if (!cannedResponseText) return;
+
+    // 1. Append the canned response directly to the NPC's transcript
+    const transcriptArea = Utils.getElem(`transcript-${profiledCharId}`);
+    if (transcriptArea) {
+        UIRenderers.appendMessageToTranscriptUI(transcriptArea, `${profiledChar.name}: ${cannedResponseText}`, 'dialogue-entry npc-response');
+        appState.addDialogueToHistory(profiledCharId, `${profiledChar.name}: ${cannedResponseText}`);
+    } else {
+        console.error("Could not find transcript area for active NPC:", profiledCharId);
+        return;
+    }
+
+    // 2. Trigger all other NPCs to react to the canned statement
+    const sceneContext = Utils.getElem('scene-context').value.trim();
+    const activePcNames = appState.getActivePcIds().map(id => appState.getCharacterById(id)?.name).filter(name => name);
+    const otherNpcIds = appState.getActiveNpcIds().filter(id => id !== profiledCharId);
+
+    const reactionPromises = otherNpcIds.map(otherNpcId => {
+        const otherNpc = appState.getCharacterById(otherNpcId);
+        if (otherNpc) {
+            const otherTranscriptArea = Utils.getElem(`transcript-${otherNpcId}`);
+            if (otherTranscriptArea) {
+                const thinkingEntry = document.createElement('p');
+                thinkingEntry.className = 'scene-event';
+                thinkingEntry.id = `thinking-${otherNpcId}-canned-reaction`;
+                thinkingEntry.textContent = `${otherNpc.name} is formulating a response...`;
+                otherTranscriptArea.appendChild(thinkingEntry);
+                otherTranscriptArea.scrollTop = otherTranscriptArea.scrollHeight;
+            }
+
+            const payload = {
+                scene_context: sceneContext,
+                player_utterance: `(System Directive: ${profiledChar.name} just said, "${cannedResponseText}". React to this statement in character.)`,
+                active_pcs: activePcNames,
+                speaking_pc_id: null, // NPC to NPC interaction
+                recent_dialogue_history: appState.getRecentDialogueHistory(otherNpcId, 10)
+            };
+            return App.triggerNpcInteraction(otherNpcId, otherNpc.name, payload, false, `thinking-${otherNpcId}-canned-reaction`);
         }
+        return Promise.resolve();
+    });
 
-        const speakingPcSelect = Utils.getElem('speaking-pc-select');
-        if(speakingPcSelect){
-             // When using a canned response, it's from the NPC, so switch context to DM/Scene Event
-            speakingPcSelect.value = "";
-        }
-    },
+    await Promise.all(reactionPromises);
+},
     
     sendTopicToChat: function(topic) {
         const playerUtteranceElem = Utils.getElem('player-utterance');

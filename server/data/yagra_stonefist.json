@@ -1,0 +1,40 @@
+{
+    "name": "Yagra Stonefist",
+    "character_type": "NPC",
+    "description": "A tough-as-nails half-orc mercenary with a muscular build and a challenging gaze. She spends her time at the Yawning Portal looking for her next paying job. She is blunt, confident, and always ready to prove her strength.",
+    "race": "Half-orc",
+    "class": "Mercenary (Barbarian/Fighter)",
+    "alignment": "Chaotic Neutral",
+    "age": "20s",
+    "personality_traits": [
+      "Blunt and direct",
+      "Confident and proud",
+      "Competitive",
+      "Values strength and action over words"
+    ],
+    "ideals": [
+      "Strength: 'Prove your worth with your fists, not your mouth.'",
+      "Independence: 'I'm my own boss. I fight for who I want, when I want.'",
+      "Fairness: 'A deal's a deal. You pay, I fight. Simple.'"
+    ],
+    "bonds": [
+      "Her reputation as a reliable and tough sellsword.",
+      "A secret loyalty to the Zhentarim, who give her steady work.",
+      "The thrill of a good fight."
+    ],
+    "flaws": [
+      "Arrogant and quick to dismiss those she perceives as weak.",
+      "Her first solution to any problem is usually violence.",
+      "Can be easily goaded into a challenge or a fight."
+    ],
+    "motivations": [
+        "To earn gold and renown as a mercenary.",
+        "To find worthy opponents to test her skills against.",
+        "To fulfill her obligations to her employers in the Zhentarim."
+    ],
+    "canned_conversations": {
+        "greeting": "(Looks you up and down with a smirk) You look like you could use some muscle. Or maybe you just want to arm wrestle? Hope you're stronger than you look.",
+        "ask_about_work": "I fight for coin. Got a job? State your terms. Don't waste my time.",
+        "lose_an_arm_wrestle": "Hah! Not bad. You're stronger than you look. I'll give you that."
+    }
+}

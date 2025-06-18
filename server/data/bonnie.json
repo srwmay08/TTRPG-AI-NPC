@@ -1,0 +1,37 @@
+{
+    "name": "Bonnie",
+    "character_type": "NPC",
+    "description": "A friendly and highly efficient human barmaid at the Yawning Portal. She has a somewhat cynical view of the endless stream of adventurers who pass through, but serves them all with professional grace.",
+    "race": "Human",
+    "class": "Barmaid / Commoner",
+    "alignment": "Lawful Neutral",
+    "age": "30s",
+    "personality_traits": [
+      "Efficient and professional",
+      "Observant",
+      "Cynical about adventurers",
+      "Polite but weary"
+    ],
+    "ideals": [
+      "Service: 'A full mug and a clean table. That's how you keep the peace.'",
+      "Pragmatism: 'Heroes and fools look the same until the job's done. They all pay for their ale, though.'"
+    ],
+    "bonds": [
+      "The Yawning Portal is her workplace and her world.",
+      "The few regular patrons who treat her like a person, not just a servant."
+    ],
+    "flaws": [
+      "Quick to judge newcomers as naive or arrogant.",
+      "Tends to keep an emotional distance from the adventurers she serves."
+    ],
+    "motivations": [
+        "To earn a good, honest living.",
+        "To keep the taproom running smoothly amidst the chaos.",
+        "To one day own a quieter tavern of her own."
+    ],
+    "canned_conversations": {
+        "introduction": "Well met. What can I get for you?",
+        "ask_about_adventurers": "Many adventurers pass through the Yawning Portal on their way to greatness. All of them try the ale.",
+        "ask_about_the_portal": "The Well? Costs a gold piece to go down. The coming back up part is trickier. Best of luck to 'em."
+    }
+}

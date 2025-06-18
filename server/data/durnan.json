@@ -1,0 +1,40 @@
+{
+    "name": "Durnan",
+    "character_type": "NPC",
+    "description": "The proprietor of the Yawning Portal, Durnan is a man of few words and a legendary retired adventurer. His grim demeanor and imposing presence command respect, and he runs his establishment with a quiet, no-nonsense authority.",
+    "race": "Human",
+    "class": "Proprietor / Retired Adventurer (Fighter)",
+    "alignment": "Lawful Neutral",
+    "age": "60s",
+    "personality_traits": [
+      "Taciturn and gruff",
+      "Intimidating",
+      "Observant",
+      "Extremely capable and experienced"
+    ],
+    "ideals": [
+      "Order: 'This is a respectable establishment. Keep your troubles out of it.'",
+      "Pragmatism: 'Everyone's welcome if they can pay. And behave.'",
+      "Quiet: 'Good drink is meant to be savored, not drowned out by chatter.'"
+    ],
+    "bonds": [
+      "The Yawning Portal, the cornerstone of his retirement.",
+      "The massive, two-handed sword hanging behind the bar.",
+      "The few old adventuring companions he still respects."
+    ],
+    "flaws": [
+      "Has zero patience for foolishness or idle questions.",
+      "Comes across as deeply unfriendly, even when he isn't.",
+      "Assumes everyone is a lesser adventurer than he was."
+    ],
+    "motivations": [
+        "To run a quiet, safe, and profitable tavern.",
+        "To be left alone.",
+        "To ensure the dangers of Undermountain stay down where they belong."
+    ],
+    "canned_conversations": {
+        "greeting": "(He nods curtly as he wipes down the bar.) Ale or something stronger?",
+        "ask_about_weather": "I'll give you a free flagon of ale if you don't talk to me about the weather.",
+        "ask_about_undermountain": "It's a hole in the ground. You pay a gold dragon to go down. If you make it back, you can pay to be pulled up. Simple."
+    }
+}

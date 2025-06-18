@@ -1,0 +1,40 @@
+{
+    "name": "Meloon Wardragon",
+    "character_type": "NPC",
+    "description": "A famous human adventurer and local hero, known for his grand personality and membership in the prestigious Force Grey. He is cheerful, boisterous, and always ready for a fight or a flagon of ale.",
+    "race": "Human",
+    "class": "Adventurer (Fighter)",
+    "alignment": "Chaotic Good",
+    "age": "30s",
+    "personality_traits": [
+      "Boisterous and cheerful",
+      "Heroic and brave",
+      "Overconfident",
+      "Loves camaraderie and celebration"
+    ],
+    "ideals": [
+      "Glory: 'A great deed deserves a great song!'",
+      "Strength: 'My power is a shield for those who have none.'",
+      "Friendship: 'What's a victory without friends to share it with?'"
+    ],
+    "bonds": [
+      "His membership in Force Grey.",
+      "His magical battleaxe.",
+      "His reputation as one of Waterdeep's greatest heroes."
+    ],
+    "flaws": [
+      "A bit of a show-off.",
+      "Can be reckless, trusting his strength to see him through.",
+      "Has a weakness for strong ale and pretty faces."
+    ],
+    "motivations": [
+        "To seek out adventure and test his mettle.",
+        "To protect Waterdeep from all who would harm it.",
+        "To live a life worthy of the stories told about him."
+    ],
+    "canned_conversations": {
+        "greeting": "(He raises his mug with a wide grin) Hail, adventurers! Heroes, am I right? Maybe one day you'll join Force Grey. Can I buy you an ale?",
+        "ask_about_his_adventures": "Just back from the Rat Hills, cleared out a whole nest of wererats! Nasty business, but the ale tastes all the better for it!",
+        "ask_about_force_grey": "The finest fighting force in the city! When the Watch can't handle it, they call us. It's an honor to serve."
+    }
+}
