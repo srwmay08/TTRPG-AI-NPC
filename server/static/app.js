@@ -247,30 +247,33 @@ var App = {
             appState.initDialogueHistory(npcIdStr);
             
             const intro = toggledNpc.canned_conversations?.introduction;
+            const sceneContext = Utils.getElem('scene-context').value.trim();
+            const activePcNames = appState.getActivePcIds().map(pcId => appState.getCharacterById(pcId)?.name || "a PC");
+            const speakingPcSelect = Utils.getElem('speaking-pc-select');
+            const currentSpeakingPcId = speakingPcSelect ? speakingPcSelect.value : null;
+
             if (intro) {
-                // Use the canned introduction directly
-                const transcriptArea = Utils.getElem(`transcript-${npcIdStr}`);
-                if(transcriptArea){
-                    UIRenderers.appendMessageToTranscriptUI(transcriptArea, `${toggledNpc.name}: ${intro}`, 'dialogue-entry npc-response');
-                    appState.addDialogueToHistory(npcIdStr, `${toggledNpc.name}: ${intro}`);
-                }
+                // Canned intro exists. Use it and ask AI for suggestions.
+                const payload = {
+                    scene_context: sceneContext || `${activePcNames.join(', ')} are present.`,
+                    player_utterance: `(System Directive: Canned Response Used) The response was: "${intro}"`,
+                    active_pcs: activePcNames,
+                    speaking_pc_id: currentSpeakingPcId,
+                    recent_dialogue_history: []
+                };
+                // This call will get the canned text + suggestions from the backend
+                setTimeout(() => App.triggerNpcInteraction(npcIdStr, toggledNpc.name, payload, true, `thinking-${npcIdStr}-greeting`), 100);
+
             } else {
                 // No canned intro, so generate one
-                const speakingPcSelect = Utils.getElem('speaking-pc-select');
-                const currentSpeakingPcId = speakingPcSelect ? speakingPcSelect.value : null;
-    
-                if (appState.getActivePcCount() > 0 || (currentSpeakingPcId !== null && currentSpeakingPcId === "")) {
-                    const sceneContext = Utils.getElem('scene-context').value.trim();
-                    const activePcNames = appState.getActivePcIds().map(pcId => appState.getCharacterById(pcId)?.name || "a PC");
-                    const greetingPayload = {
-                        scene_context: sceneContext || `${activePcNames.join(', ')} ${activePcNames.length > 1 ? 'are' : 'is'} present.`,
-                        player_utterance: `(System Directive: You are ${toggledNpc.name}. You have just become aware of ${activePcNames.join(', ')} in the scene. Greet them or offer an initial reaction in character.)`,
-                        active_pcs: activePcNames,
-                        speaking_pc_id: currentSpeakingPcId,
-                        recent_dialogue_history: []
-                    };
-                    setTimeout(() => App.triggerNpcInteraction(npcIdStr, toggledNpc.name, greetingPayload, true, `thinking-${npcIdStr}-greeting`), 100);
-                }
+                const greetingPayload = {
+                    scene_context: sceneContext || `${activePcNames.join(', ')} ${activePcNames.length > 1 ? 'are' : 'is'} present.`,
+                    player_utterance: `(System Directive: You are ${toggledNpc.name}. You have just become aware of ${activePcNames.join(', ')} in the scene. Greet them or offer an initial reaction in character.)`,
+                    active_pcs: activePcNames,
+                    speaking_pc_id: currentSpeakingPcId,
+                    recent_dialogue_history: []
+                };
+                setTimeout(() => App.triggerNpcInteraction(npcIdStr, toggledNpc.name, greetingPayload, true, `thinking-${npcIdStr}-greeting`), 100);
             }
         } else {
             // Logic for removing an NPC from the scene

@@ -498,17 +498,18 @@ var UIRenderers = {
             // Sort keys to prioritize 'introduction'
             if (keys.length > 0) {
                 keys.sort((a, b) => {
-                    if (a.toLowerCase() === 'introduction') return -1; // a comes first
-                    if (b.toLowerCase() === 'introduction') return 1;  // b comes first
-                    return a.localeCompare(b); // Alphabetical for others
+                    const aIsIntro = a.toLowerCase() === 'introduction';
+                    const bIsIntro = b.toLowerCase() === 'introduction';
+                    if (aIsIntro && !bIsIntro) return -1;
+                    if (!aIsIntro && bIsIntro) return 1;
+                    return a.localeCompare(b);
                 });
             }
             
             if (keys.length > 0) {
                 hasContentToDisplay = true;
-                cannedContainer.style.display = 'flex'; // Show if content exists
+                cannedContainer.style.display = 'flex';
                 
-                // Ensure current index is valid after sorting
                 if(appState.currentCannedResponseIndex >= keys.length) {
                     appState.currentCannedResponseIndex = 0;
                 }
@@ -520,11 +521,11 @@ var UIRenderers = {
                 Utils.disableBtn('prev-canned-btn', appState.currentCannedResponseIndex <= 0);
                 Utils.disableBtn('next-canned-btn', appState.currentCannedResponseIndex >= keys.length - 1);
             } else {
-                cannedContainer.style.display = 'none'; // Hide if no content
+                cannedContainer.style.display = 'none';
             }
         }
 
-        // Part 2: Render AI Suggestions if they exist for the interacting character
+        // Part 2: Render AI Suggestions
         const profiledCharId = appState.getCurrentProfileCharId();
         if (aiResult && forNpcId && forNpcId === profiledCharId) {
             const suggestionTypes = {
@@ -565,8 +566,7 @@ var UIRenderers = {
                      standingChangesDiv.style.display = 'none';
                 }
             }
-
-        } else { // Clear and HIDE previous AI suggestions if there's no new result
+        } else {
              ['memories', 'topics', 'npc-actions', 'player-checks', 'faction-standing-changes'].forEach(suggType => {
                 const targetDiv = Utils.getElem(`suggested-${suggType}-list`);
                 if(targetDiv) {
@@ -574,8 +574,6 @@ var UIRenderers = {
                 }
              });
         }
-
-        // Final visibility check for the main container
         globalSuggestionsArea.style.display = hasContentToDisplay ? 'flex' : 'none';
     },
 

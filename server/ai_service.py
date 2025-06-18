@@ -168,9 +168,16 @@ class AIService:
                 prompt_parts.append("\n".join(dialogue_request.recent_dialogue_history))
 
             prompt_parts.append("\n--- Your Task ---")
-            player_utterance_is_system_directive = dialogue_request.player_utterance and dialogue_request.player_utterance.strip().startswith("(System Directive:")
+            
+            is_canned_response_directive = dialogue_request.player_utterance and dialogue_request.player_utterance.strip().startswith("(System Directive: Canned Response Used)")
 
-            if dialogue_request.player_utterance and dialogue_request.player_utterance.strip():
+            if is_canned_response_directive:
+                canned_response_text = dialogue_request.player_utterance.split('The response was: "')[1].rsplit('"', 1)[0]
+                prompt_parts.append(f"A system event or directive has occurred.")
+                prompt_parts.append(f"Your character has already spoken the following pre-determined line: \"{canned_response_text}\"")
+                main_instruction = f"Based on what you just said, your ONLY task is to generate the suggestions that follow. Do NOT repeat or generate new dialogue. Your output MUST start with 'NPC_ACTION:' and contain all the suggestion fields."
+            elif dialogue_request.player_utterance and dialogue_request.player_utterance.strip():
+                player_utterance_is_system_directive = dialogue_request.player_utterance.strip().startswith("(System Directive:")
                 if player_utterance_is_system_directive:
                     prompt_parts.append(f"A system event or directive has occurred: \"{dialogue_request.player_utterance.strip()}\"")
                     main_instruction = f"Respond IN CHARACTER as {npc.name} to this event/directive. Your response should be ONLY your spoken dialogue or a brief description of your reaction. Do not narrate actions (unless minor parenthetical, e.g., '(chuckles)'). Do not break character. Consider all provided context, especially any linked lore and your history."
@@ -179,6 +186,7 @@ class AIService:
                     main_instruction = f"Respond IN CHARACTER as {npc.name}. Your response should be ONLY your spoken dialogue. Do not narrate actions (unless minor parenthetical, e.g., '(chuckles)'). Do not break character. Directly address {speaking_pc_name} if appropriate. Consider all provided context, especially any linked lore and your history."
             else:
                 main_instruction = f"Describe what you, {npc.name}, say or do in this situation. Be concise and in character. Your response should be primarily your spoken dialogue. Do not break character. Consider all provided context, especially any linked lore and your history."
+            
             prompt_parts.append(main_instruction)
 
             prompt_parts.append("\n--- Additional Suggestions (Required Output) ---")
@@ -205,7 +213,12 @@ class AIService:
 
             if response.candidates and response.candidates[0].content and response.candidates[0].content.parts:
                 full_ai_output = "".join(part.text for part in response.candidates[0].content.parts if hasattr(part, 'text')).strip()
-                return full_ai_output
+                
+                if is_canned_response_directive:
+                    canned_response_text = dialogue_request.player_utterance.split('The response was: "')[1].rsplit('"', 1)[0]
+                    return f"{canned_response_text}\n{full_ai_output}"
+                else:
+                    return full_ai_output
             else:
                 error_message = f"AI did not generate a response for {npc.name}. Candidates: {response.candidates}"
                 print(f"Warning: {error_message}")
