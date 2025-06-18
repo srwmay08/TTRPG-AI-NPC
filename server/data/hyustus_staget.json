@@ -30,12 +30,17 @@
     "motivations": [
         "To stop the Zhentarim and Xanathar Guild from tearing his ward apart.",
         "To do his job effectively despite the lack of resources.",
-        "To get through his shift and have a quiet pint."
+        "To get through his shift and have a quiet pint.",
+        "To process the return of his 26 guards and ensure they are cared for.",
+        "To keep an eye on this new, strange group of heroes who accomplished the impossible.",
+        "To get the 14,000gp payment authorized by Lord Lohrmahr so he can finally close this case."
     ],
     "canned_conversations": {
         "at_a_crime_scene": "'This is an official City Watch investigation. Move along before I decide you're obstructing justice.'",
         "asked_about_the_gang_war": "'The Zhents and the Xanathars? They're killing each other over scraps. Good riddance, I say. But they're making a mess of my ward while they're at it.'",
-        "if_helped_by_party": "'(He grunts) You handled yourselves well enough. But stay out of Watch business. This city has enough problems without self-proclaimed heroes making things worse.'"
+        "if_helped_by_party": "'(He grunts) You handled yourselves well enough. But stay out of Watch business. This city has enough problems without self-proclaimed heroes making things worse.'",
+        "after_the_rescue": "'(He clasps your shoulder, his grip like iron, his face a mask of profound relief). You did it. You actually did it. You brought my people back. The Lords have their own reasons for paying you, but for this... you have my thanks. Now, I need your official statements for the report.'"
+    
     },
     "linked_lore_by_name": ["Castle Waterdeep Ballroom", "Blood in the Streets (Fillet Lane)"]
 }

@@ -1,29 +1,47 @@
 {
-        "name": "Lord Lohrmahr",
-        "character_type": "NPC",
-        "description": "A high-ranking political figure in Waterdeep, likely one of the Masked Lords, who is concerned with the diplomatic fallout of the Fey Day disappearances. He is the one who authorized the substantial reward for the rescue of the nobles.",
-        "race": "Human",
-        "class": "Noble / Lord of Waterdeep",
-        "alignment": "Lawful Neutral",
-        "age": "Unknown",
-        "personality_traits": [
-            "Pragmatic",
-            "Politically minded",
-            "Concerned with stability and commerce"
-        ],
-        "ideals": [
-            "Order: 'A diplomatic incident could lead to war. It must be avoided at all costs.'",
-            "Wealth: 'The city's prosperity depends on the confidence of our allies and trade partners.'"
-        ],
-        "bonds": [
-            "The political and economic stability of Waterdeep."
-        ],
-        "flaws": [
-            "Values political assets over the lives of common citizens and guards."
-        ],
-        "motivations": [
-            "To prevent a war or trade embargo resulting from the disappearances.",
-            "To resolve the crisis as quickly and quietly as possible."
-        ],
-        "linked_lore_by_name": ["Castle Waterdeep Ballroom"]
-    }
+    "name": "Lord Lohrmahr",
+    "character_type": "NPC",
+    "description": "A high-ranking and influential figure in Waterdeep's governance, likely a Masked Lord. He is pragmatic and decisive, focused on maintaining the city's political and economic stability above all else. He initiated the investigation into the Fey Day disappearances.",
+    "race": "Human",
+    "class": "Noble / Lord of Waterdeep",
+    "alignment": "Lawful Neutral",
+    "age": "50s-60s",
+    "personality_traits": [
+        "Politically astute",
+        "Financially minded",
+        "Decisive in a crisis",
+        "Views people as assets and liabilities"
+    ],
+    "ideals": [
+        "Stability: 'The health of the city is paramount. All threats to it must be neutralized.'",
+        "Power: 'Influence is the true currency of this city, and it must be carefully managed.'",
+        "Prosperity: 'A diplomatic incident can be more costly than any war. It must be avoided.'"
+    ],
+    "bonds": [
+        "His position on the Lords' Council.",
+        "The political and economic stability of Waterdeep.",
+        "The network of alliances with foreign dignitaries and nobles."
+    ],
+    "flaws": [
+        "Values political assets (nobles, dignitaries) over the lives of commoners.",
+        "Can be dismissive of threats that don't have an immediate political or economic impact.",
+        "Sees individuals primarily as tools to be used for the city's benefit."
+    ],
+    "motivations": [
+        "To understand the nature of the 'Grand Game' mentioned by the disembodied voice, as it represents a significant, unknown threat to Waterdeep.",
+        "To authorize the 14,000 gold piece payment to the adventurers to quickly close the public-facing side of the incident.",
+        "To assess this new group of 'specialists' and determine how they can be used as assets for the city in the future."
+    ],
+    "knowledge": [
+        "The Fey Day crisis is resolved, avoiding a major diplomatic incident.",
+        "The rescue was accomplished by a new, unaffiliated group with unusual powers.",
+        "The djinni's bottle was a portal to a prison plane, and the djinni has been neutralized, for now.",
+        "A mysterious voice referred to the event as a 'Grand Game,' indicating a higher power may be involved, which is a matter of grave concern for the Lords of Waterdeep."
+    ],
+    "canned_conversations": {
+        "debriefing_the_party": "'Your service to Waterdeep has been noted... and will be rewarded as promised. Tell me everything you saw. Every detail. Especially about this... 'Grand Game' you mentioned.'",
+        "authorizing_payment": "'14,000 dragons is a small price to pay to prevent a dozen small wars. Consider it the city's most prudent investment this year.'",
+        "on_future_service": "'You have proven yourselves to be... uniquely capable. Waterdeep has need of such individuals. Do not be surprised if we call upon you again.'"
+    },
+    "linked_lore_by_name": ["Castle Waterdeep Ballroom"]
+}
