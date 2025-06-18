@@ -48,80 +48,38 @@ def find_fvtt_file(character_name, vtt_import_dir_abs):
             return os.path.join(vtt_import_dir_abs, filename)
     return None
 
-def sync_data_from_files():
-    if mongo_db is None:
-        print("[Data Sync] Skipping: Database not available.")
-        return
-
-    print("\n" + "-"*50)
-    print(f"[Data Sync] Starting data synchronization...")
-    
-    lore_collection = mongo_db.lore_entries
-    characters_collection = mongo_db.npcs
-
-    # --- Lore Data Synchronization ---
-    if os.path.isdir(LORE_DATA_DIR):
-        print(f"[Data Sync] Syncing lore data...")
-        for filename in os.listdir(LORE_DATA_DIR):
-            if filename.endswith('.json'):
-                filepath = os.path.join(LORE_DATA_DIR, filename)
-                try:
-                    with open(filepath, 'r', encoding='utf-8') as f:
-                        data_from_file = json.load(f)
-                    lore_items_in_file = [data_from_file] if isinstance(data_from_file, dict) else data_from_file
-                    for lore_data_item in lore_items_in_file:
-                        if not isinstance(lore_data_item, dict): continue
-                        validated_lore = LoreEntry(**lore_data_item)
-                        mongo_doc_payload = validated_lore.model_dump(exclude_none=True)
-                        mongo_doc_payload['_id'] = ObjectId(validated_lore.lore_id)
-                        lore_collection.update_one({"name": validated_lore.name}, {"$set": mongo_doc_payload}, upsert=True)
-                except Exception as e:
-                    print(f"[Data Sync] Error processing lore file {filename}: {e}")
-    
-    # --- Character Data Synchronization ---
-    if os.path.isdir(PRIMARY_DATA_DIR):
-        print(f"[Data Sync] Syncing character data...")
-        for filename in os.listdir(PRIMARY_DATA_DIR):
-            if filename.endswith('.json'):
-                primary_file_path = os.path.join(PRIMARY_DATA_DIR, filename)
-                try:
-                    with open(primary_file_path, 'r', encoding='utf-8') as f:
-                        char_data = json.load(f)
-                    char_name = char_data.get("name")
-                    if not char_name: continue
-
-                    char_data.setdefault('linked_lore_by_name', [])
-                    
-                    fvtt_file_path = find_fvtt_file(char_name, VTT_IMPORT_DIR)
-                    if fvtt_file_path:
-                        with open(fvtt_file_path, 'r', encoding='utf-8') as f_vtt:
-                            fvtt_data = json.load(f_vtt)
-                        char_data.update({
-                            'vtt_data': fvtt_data.get('system', {}), 'vtt_flags': fvtt_data.get('flags', {}),
-                            'img': fvtt_data.get('img'), 'items': fvtt_data.get('items', []),
-                            'system': fvtt_data.get('system', {})
-                        })
-                    
-                    validated_profile = NPCProfile(**char_data)
-                    mongo_doc = validated_profile.model_dump(by_alias=True, exclude_none=True)
-                    
-                    characters_collection.update_one({"name": char_name}, {"$set": mongo_doc}, upsert=True)
-                except Exception as e:
-                    print(f"[Data Sync] Error processing character file {filename}: {e}")
-    
-    print("-" * 50 + "\n")
-
-# ... (the rest of the file remains the same, but I will check the API endpoints for the field name change)
-
 def load_history_content_for_npc(npc_doc: Dict[str, Any]) -> Dict[str, Any]:
     npc_doc.setdefault('pc_faction_standings', {})
-    npc_doc.setdefault('linked_lore_by_name', []) # Changed from linked_lore_ids
+    npc_doc.setdefault('linked_lore_by_name', []) 
     history_contents_loaded = {}
-    # ... (rest of function is the same)
+    combined_content_parts = []
+
+    abs_history_data_dir = os.path.abspath(HISTORY_DATA_DIR)
+
+    if 'associated_history_files' in npc_doc and npc_doc['associated_history_files']:
+        for history_filename in npc_doc['associated_history_files']:
+            if not history_filename or not isinstance(history_filename, str):
+                print(f"Warning: Invalid history filename found for NPC {npc_doc.get('name', 'Unknown')}: {history_filename}")
+                continue
+            safe_history_filename = secure_filename(history_filename)
+            file_path = os.path.join(abs_history_data_dir, safe_history_filename)
+            if os.path.exists(file_path) and os.path.isfile(file_path):
+                try:
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        content = f.read()
+                        history_contents_loaded[history_filename] = content
+                        combined_content_parts.append(f"--- From History File: {history_filename} ---\n{content}\n")
+                except Exception as e:
+                    print(f"Error reading history file {safe_history_filename} for NPC {npc_doc.get('name', 'Unknown')}: {e}")
+                    history_contents_loaded[history_filename] = f"[Error loading content for {safe_history_filename}]"
+            else:
+                print(f"Warning: History file '{safe_history_filename}' not found at '{file_path}' for NPC {npc_doc.get('name', 'Unknown')}.")
+                history_contents_loaded[history_filename] = "[File not found]"
+    npc_doc['history_contents_loaded'] = history_contents_loaded
+    npc_doc['combined_history_content'] = "\n".join(combined_content_parts).strip() if combined_content_parts else "No history file content loaded."
     return npc_doc
 
 def get_linked_lore_summary_for_npc(npc_doc: Dict[str, Any]) -> str:
-    # This function is now more complex as it needs to look up by name
     if mongo_db is None or 'linked_lore_by_name' not in npc_doc or not npc_doc['linked_lore_by_name']:
         return "No specific linked lore."
     lore_summaries = []
@@ -140,6 +98,149 @@ def get_linked_lore_summary_for_npc(npc_doc: Dict[str, Any]) -> str:
         return "No specific linked lore found or summaries generated."
     return "\n".join(lore_summaries)
 
+def sync_data_from_files():
+    if mongo_db is None:
+        print("[Data Sync] Skipping: Database not available.")
+        return
+
+    print("\n" + "-"*50)
+    print(f"[Data Sync] Starting data synchronization...")
+    print(f"  Characters from: '{PRIMARY_DATA_DIR}', VTT Imports from: '{VTT_IMPORT_DIR}', History from: '{HISTORY_DATA_DIR}'")
+    print(f"  Lore from: '{LORE_DATA_DIR}'")
+
+    # --- Lore Data Synchronization (FIRST PASS) ---
+    lore_collection = mongo_db.lore_entries
+    if not os.path.isdir(LORE_DATA_DIR):
+        print(f"[Data Sync] Warning: Lore data directory '{LORE_DATA_DIR}' not found. Skipping lore sync.")
+    else:
+        lore_synced_count = 0
+        lore_updated_count = 0
+        lore_new_count = 0
+        print(f"[Data Sync] Syncing lore data...")
+        for filename in os.listdir(LORE_DATA_DIR):
+            if filename.endswith('.json'):
+                filepath = os.path.join(LORE_DATA_DIR, filename)
+                try:
+                    with open(filepath, 'r', encoding='utf-8') as f:
+                        data_from_file = json.load(f)
+                    
+                    lore_items_in_file = [data_from_file] if isinstance(data_from_file, dict) else data_from_file
+                    if not isinstance(lore_items_in_file, list):
+                        print(f"[Data Sync] Skipping lore file {filename}: content is not a JSON object or list of objects.")
+                        continue
+
+                    for lore_data_item in lore_items_in_file:
+                        if not isinstance(lore_data_item, dict):
+                            print(f"[Data Sync] Skipping item in lore file {filename}: item is not a JSON object.")
+                            continue
+                        try:
+                            # Use a temporary payload to avoid modifying the original
+                            temp_payload = lore_data_item.copy()
+                            if 'lore_id' in temp_payload:
+                                del temp_payload['lore_id']
+
+                            validated_lore = LoreEntry(**temp_payload)
+                            mongo_doc_payload = validated_lore.model_dump(by_alias=True, exclude_none=True, exclude={'lore_id'})
+
+                            existing_lore_in_db = lore_collection.find_one({"name": validated_lore.name})
+
+                            if existing_lore_in_db:
+                                payload_for_update = mongo_doc_payload.copy()
+                                if '_id' in payload_for_update:
+                                    del payload_for_update['_id']
+                                lore_collection.update_one({"_id": existing_lore_in_db['_id']}, {"$set": payload_for_update})
+                                lore_updated_count += 1
+                            else:
+                                result = lore_collection.insert_one(mongo_doc_payload)
+                                lore_collection.update_one({"_id": result.inserted_id}, {"$set": {"lore_id": str(result.inserted_id)}})
+                                lore_new_count += 1
+                            lore_synced_count += 1
+                        except ValidationError as e_val:
+                            print(f"[Data Sync] Error: Lore validation failed for item in {filename}. Details: {e_val.errors()}")
+                        except Exception as e_item_sync:
+                            print(f"Error processing lore file {filename}: {e_item_sync}")
+                            traceback.print_exc()
+                except json.JSONDecodeError:
+                    print(f"[Data Sync] Error: Could not decode JSON from lore file {filename}. It may be empty or malformed.")
+                    continue
+                except Exception as e_file_sync:
+                    print(f"Error processing lore file {filename}: {e_file_sync}")
+                    traceback.print_exc()
+        print(f"[Data Sync] Lore sync finished. Processed: {lore_synced_count} | New: {lore_new_count} | Updated: {lore_updated_count}")
+
+    # --- Character Data Synchronization (SECOND PASS) ---
+    if not os.path.isdir(PRIMARY_DATA_DIR):
+        print(f"[Data Sync] Warning: Primary character data directory '{PRIMARY_DATA_DIR}' not found. Skipping character sync.")
+    else:
+        characters_collection = mongo_db.npcs
+        char_synced_count = 0
+        char_updated_count = 0
+        char_new_count = 0
+        print(f"[Data Sync] Syncing character data...")
+        for filename in os.listdir(PRIMARY_DATA_DIR):
+            if filename.endswith('.json'):
+                primary_file_path = os.path.join(PRIMARY_DATA_DIR, filename)
+                try:
+                    with open(primary_file_path, 'r', encoding='utf-8') as f:
+                        primary_char_data = json.load(f)
+                    char_name_temp = primary_char_data.get("name")
+                    if not char_name_temp:
+                        print(f"[Data Sync] Skipping character file {filename}: missing 'name' field.")
+                        continue
+                    
+                    combined_data = primary_char_data.copy()
+                    
+                    combined_data.setdefault('linked_lore_by_name', [])
+                    
+                    fvtt_file_path = find_fvtt_file(char_name_temp, VTT_IMPORT_DIR)
+                    if fvtt_file_path:
+                        with open(fvtt_file_path, 'r', encoding='utf-8') as f_vtt:
+                            fvtt_json_data = json.load(f_vtt)
+                        if 'system' in fvtt_json_data: combined_data['vtt_data'] = fvtt_json_data['system']
+                        if 'flags' in fvtt_json_data: combined_data['vtt_flags'] = fvtt_json_data['flags']
+                        if 'img' in fvtt_json_data and fvtt_json_data['img']: combined_data['img'] = fvtt_json_data['img']
+                        if 'items' in fvtt_json_data: combined_data['items'] = fvtt_json_data['items']
+                        if 'system' in fvtt_json_data: combined_data['system'] = fvtt_json_data['system']
+                    
+                    combined_data.setdefault('associated_history_files', [])
+                    potential_history_filename = f"{char_name_temp}.txt"
+                    history_file_path_abs = os.path.join(HISTORY_DATA_DIR, secure_filename(potential_history_filename))
+                    if os.path.exists(history_file_path_abs) and os.path.isfile(history_file_path_abs):
+                        if potential_history_filename not in combined_data['associated_history_files']:
+                            combined_data['associated_history_files'].append(potential_history_filename)
+                    
+                    validated_profile = NPCProfile(**combined_data)
+                    mongo_doc = validated_profile.model_dump(mode='json', by_alias=True, exclude_none=True)
+                    
+                    existing_char_in_db = characters_collection.find_one({"name": char_name_temp})
+                    if existing_char_in_db:
+                        update_payload = {k: v for k, v in mongo_doc.items() if k != '_id'}
+                        if 'pc_faction_standings' not in update_payload:
+                            update_payload['pc_faction_standings'] = existing_char_in_db.get('pc_faction_standings', {})
+                        characters_collection.update_one({"_id": existing_char_in_db['_id']}, {"$set": update_payload})
+                        char_updated_count += 1
+                    else:
+                        characters_collection.insert_one(mongo_doc)
+                        char_new_count += 1
+                    char_synced_count +=1
+                except json.JSONDecodeError:
+                    print(f"[Data Sync] Error: Could not decode JSON from character file {filename}. It may be empty or malformed.")
+                    continue
+                except ValidationError as e:
+                    print(f"[Data Sync] Error: Character validation failed for {filename}. Details: {e.errors()}")
+                except Exception as e:
+                    print(f"[Data Sync] Error: Unexpected error with character file {filename}: {e}")
+                    traceback.print_exc()
+        print(f"[Data Sync] Character sync finished. Processed: {char_synced_count} | New: {char_new_count} | Updated: {char_updated_count}")
+    
+    print("-" * 50 + "\n")
+
+# --- App Routes & Other Logic ---
+@app.route('/')
+def serve_index():
+    return render_template('index.html')
+
+# --- CHARACTER (NPC/PC) ENDPOINTS ---
 @app.route('/api/npcs', methods=['POST'])
 def create_npc_api():
     if mongo_db is None: return jsonify({"error": "Database not available"}), 503
@@ -147,13 +248,31 @@ def create_npc_api():
         data = request.get_json()
         if not data: return jsonify({"error": "Invalid JSON payload"}), 400
         data.setdefault('associated_history_files', [])
-        data.setdefault('linked_lore_by_name', []) # Changed
+        data.setdefault('linked_lore_by_name', []) 
         data.setdefault('vtt_data', {})
-        # ... (rest of setdefaults are fine)
+        data.setdefault('vtt_flags', {})
+        data.setdefault('items', [])
+        data.setdefault('system', {})
+        data.setdefault('pc_faction_standings', {})
         character_profile_data = NPCProfile(**data)
-    # ... (rest of function is fine)
-    # ...
-    return jsonify({"error": f"Could not create character: {str(e)}"}), 500
+
+        characters_collection = mongo_db.npcs
+        character_dict = character_profile_data.model_dump(mode='json', by_alias=True, exclude_none=True)
+        result = characters_collection.insert_one(character_dict)
+        created_character_from_db = characters_collection.find_one({"_id": result.inserted_id})
+        
+        if created_character_from_db:
+            created_character_from_db = load_history_content_for_npc(created_character_from_db)
+            return jsonify({"message": f"{created_character_from_db.get('character_type', 'Character')} created",
+                            "character": parse_json(created_character_from_db)}), 201
+        else:
+            return jsonify({"error": "Failed to retrieve created character from DB"}), 500
+    except ValidationError as e:
+        return jsonify({"error": "Validation Error", "details": e.errors()}), 400
+    except Exception as e:
+        print(f"Error in create_npc_api: {e}")
+        traceback.print_exc()
+        return jsonify({"error": f"Could not create character: {str(e)}"}), 500
 
 @app.route('/api/npcs', methods=['GET'])
 def get_all_npcs_api():
@@ -164,9 +283,15 @@ def get_all_npcs_api():
         for char_doc in characters_cursor:
             char_doc['_id'] = str(char_doc['_id'])
             char_doc.setdefault('associated_history_files', [])
-            char_doc.setdefault('linked_lore_by_name', []) # Changed
+            char_doc.setdefault('linked_lore_by_name', []) 
             char_doc.setdefault('combined_history_content', '')
-            # ... (rest of setdefaults are fine)
+            char_doc.setdefault('vtt_data', {})
+            char_doc.setdefault('vtt_flags', {})
+            char_doc.setdefault('img', None)
+            char_doc.setdefault('items', [])
+            char_doc.setdefault('system', {}) 
+            char_doc.setdefault('pc_faction_standings', {})
+            char_doc.setdefault('canned_conversations', {})
             characters_list.append(char_doc)
         return jsonify(characters_list), 200
     except Exception as e:
@@ -185,7 +310,7 @@ def get_npc_api(npc_id_str: str):
     if not npc_data:
         return jsonify({"error": "Character not found"}), 404
     npc_data.setdefault('associated_history_files', [])
-    npc_data.setdefault('linked_lore_ids', []) 
+    npc_data.setdefault('linked_lore_by_name', []) 
     npc_data.setdefault('vtt_data', {})
     npc_data.setdefault('vtt_flags', {})
     npc_data.setdefault('img', None)
@@ -214,13 +339,13 @@ def update_npc_api(npc_id_str: str):
         current_data_for_validation.setdefault('items', existing_npc_data.get('items', []))
         current_data_for_validation.setdefault('system', existing_npc_data.get('system', {})) 
         current_data_for_validation.setdefault('pc_faction_standings', existing_npc_data.get('pc_faction_standings', {}))
-        current_data_for_validation.setdefault('linked_lore_ids', existing_npc_data.get('linked_lore_ids', []))
+        current_data_for_validation.setdefault('linked_lore_by_name', existing_npc_data.get('linked_lore_by_name', []))
         if 'associated_history_files' in current_data_for_validation and \
            not isinstance(current_data_for_validation['associated_history_files'], list):
             current_data_for_validation['associated_history_files'] = [current_data_for_validation['associated_history_files']]
-        if 'linked_lore_ids' in current_data_for_validation and \
-           not isinstance(current_data_for_validation['linked_lore_ids'], list):
-            current_data_for_validation['linked_lore_ids'] = [current_data_for_validation['linked_lore_ids']]
+        if 'linked_lore_by_name' in current_data_for_validation and \
+           not isinstance(current_data_for_validation['linked_lore_by_name'], list):
+            current_data_for_validation['linked_lore_by_name'] = [current_data_for_validation['linked_lore_by_name']]
         validated_update_profile = NPCProfile(**current_data_for_validation)
         final_set_payload = {}
         for key, value in update_data_req.items():
@@ -530,7 +655,7 @@ def generate_dialogue_for_npc_api(npc_id_str: str):
         memory_suggestions.append(summarized_memory)
     response_data_model = DialogueResponse(
         npc_id=npc_id_str, npc_dialogue=generated_text,
-        new_memory_suggestions=memory_suggestions, generated_topics=[],
+        new_memory_suggestions=memory_suggestions, generated_topics=parsed_suggestions["generated_topics"],
         suggested_npc_actions=parsed_suggestions["npc_action"],
         suggested_player_checks=parsed_suggestions["player_check"],
         suggested_standing_pc_id=actual_speaking_pc_id if parsed_suggestions["new_standing"] else None,
@@ -585,41 +710,42 @@ def create_lore_entry_api():
     try:
         data = request.get_json()
         if not data: return jsonify({"error": "Invalid JSON payload"}), 400
-        if 'lore_id' in data:
-            try: ObjectId(data['lore_id'])
-            except: del data['lore_id']
+        
+        if 'lore_id' in data: del data['lore_id']
+        if '_id' in data: del data['_id']
+
         lore_entry_data = LoreEntry(**data)
         lore_entry_data.updated_at = datetime.utcnow()
-        lore_dict_for_db = lore_entry_data.model_dump(exclude_none=True)
-        # Convert string lore_id (which is Pydantic's default) to ObjectId for _id
-        if 'lore_id' in lore_dict_for_db:
-            try:
-                lore_dict_for_db['_id'] = ObjectId(lore_dict_for_db.pop('lore_id'))
-            except: # If lore_id from request wasn't valid ObjectId string
-                 if '_id' in lore_dict_for_db: del lore_dict_for_db['_id'] 
-                 lore_dict_for_db['_id'] = ObjectId() # Generate new one
-        elif '_id' not in lore_dict_for_db : # Ensure _id if no lore_id was there to begin with
-             lore_dict_for_db['_id'] = ObjectId()
-    except ValidationError as e:
-        return jsonify({"error": "Validation Error for LoreEntry", "details": e.errors()}), 400
-    except Exception as ex:
-        print(f"Error preparing lore entry for DB: {ex}")
-        return jsonify({"error": f"Could not prepare lore entry data: {str(ex)}"}), 500
-    try:
+        
+        lore_dict_for_db = lore_entry_data.model_dump(exclude_none=True, exclude={'lore_id'})
+        
         lore_collection = mongo_db.lore_entries
         result = lore_collection.insert_one(lore_dict_for_db)
+        
+        new_id_str = str(result.inserted_id)
+        lore_collection.update_one(
+            {"_id": result.inserted_id},
+            {"$set": {"lore_id": new_id_str}}
+        )
+
         created_lore_entry_doc = lore_collection.find_one({"_id": result.inserted_id})
+        
         parsed_entry = json.loads(json_util.dumps(created_lore_entry_doc))
         if '_id' in parsed_entry and '$oid' in parsed_entry['_id']:
             parsed_entry['lore_id'] = parsed_entry['_id']['$oid']
             del parsed_entry['_id']
         if 'lore_type' in parsed_entry and isinstance(parsed_entry.get('lore_type'), Enum):
             parsed_entry['lore_type'] = parsed_entry['lore_type'].value
+            
         return jsonify({"message": "Lore entry created", "lore_entry": parsed_entry}), 201
+
+    except ValidationError as e:
+        return jsonify({"error": "Validation Error for LoreEntry", "details": e.errors()}), 400
     except Exception as e:
-        print(f"Error in create_lore_entry_api (DB insert): {e}")
+        print(f"Error in create_lore_entry_api: {e}")
         traceback.print_exc()
         return jsonify({"error": f"Could not create lore entry in DB: {str(e)}"}), 500
+
 
 @app.route('/api/lore_entries/<lore_id_str>', methods=['PUT'])
 def update_lore_entry_api(lore_id_str: str):
@@ -675,13 +801,22 @@ def delete_lore_entry_api(lore_id_str: str):
     try:
         lore_id_obj = ObjectId(lore_id_str)
     except Exception: return jsonify({"error": "Invalid Lore ID format"}), 400
+    
+    lore_to_delete = mongo_db.lore_entries.find_one({"_id": lore_id_obj})
+    if not lore_to_delete:
+        return jsonify({"error": "Lore entry not found"}), 404
+    lore_name = lore_to_delete.get("name")
+
     result = mongo_db.lore_entries.delete_one({"_id": lore_id_obj})
     if result.deleted_count == 0:
-        return jsonify({"error": "Lore entry not found"}), 404
-    mongo_db.npcs.update_many(
-        {"linked_lore_ids": lore_id_str},
-        {"$pull": {"linked_lore_ids": lore_id_str}}
-    )
+        return jsonify({"error": "Lore entry not found during deletion"}), 404
+    
+    if lore_name:
+        mongo_db.npcs.update_many(
+            {"linked_lore_by_name": lore_name},
+            {"$pull": {"linked_lore_by_name": lore_name}}
+        )
+    
     mongo_db.lore_entries.update_many(
         {"linked_lore_entry_ids": lore_id_str},
         {"$pull": {"linked_lore_entry_ids": lore_id_str}}
@@ -689,48 +824,66 @@ def delete_lore_entry_api(lore_id_str: str):
     return jsonify({"message": "Lore entry deleted and unlinked"}), 200
 
 # --- LINKING ENDPOINTS ---
-@app.route('/api/characters/<char_id_str>/link_lore/<lore_id_str>', methods=['POST'])
-def link_lore_to_character_api(char_id_str: str, lore_id_str: str):
+@app.route('/api/characters/<char_id_str>/link_lore', methods=['POST'])
+def link_lore_to_character_api(char_id_str: str):
     if mongo_db is None: return jsonify({"error": "Database not available"}), 503
     try:
         char_id_obj = ObjectId(char_id_str)
-        lore_id_obj = ObjectId(lore_id_str) # Lore ID from path is actual _id string
     except Exception:
-        return jsonify({"error": "Invalid ID format for character or lore entry"}), 400
+        return jsonify({"error": "Invalid ID format for character"}), 400
+
+    data = request.get_json()
+    lore_id = data.get('lore_id')
+    if not lore_id:
+        return jsonify({"error": "lore_id not provided in request"}), 400
+
     char_exists = mongo_db.npcs.count_documents({"_id": char_id_obj}) > 0
-    lore_exists = mongo_db.lore_entries.count_documents({"_id": lore_id_obj}) > 0
+    lore_entry = mongo_db.lore_entries.find_one({"lore_id": lore_id})
+    
     if not char_exists: return jsonify({"error": "Character not found"}), 404
-    if not lore_exists: return jsonify({"error": "Lore entry not found"}), 404
+    if not lore_entry: return jsonify({"error": f"Lore entry with id '{lore_id}' not found"}), 404
+
+    lore_name = lore_entry.get("name")
+    
     mongo_db.npcs.update_one(
         {"_id": char_id_obj},
-        {"$addToSet": {"linked_lore_ids": lore_id_str}} # Store string _id in character's links
+        {"$addToSet": {"linked_lore_by_name": lore_name}}
     )
     mongo_db.lore_entries.update_one(
-        {"_id": lore_id_obj},
+        {"_id": lore_entry['_id']},
         {"$addToSet": {"linked_character_ids": char_id_str}}
     )
     updated_char = mongo_db.npcs.find_one({"_id": char_id_obj})
     return jsonify({"message": "Lore linked to character", "character": parse_json(updated_char)}), 200
 
-@app.route('/api/characters/<char_id_str>/unlink_lore/<lore_id_str>', methods=['POST'])
-def unlink_lore_from_character_api(char_id_str: str, lore_id_str: str):
+@app.route('/api/characters/<char_id_str>/unlink_lore', methods=['POST'])
+def unlink_lore_from_character_api(char_id_str: str):
     if mongo_db is None: return jsonify({"error": "Database not available"}), 503
     try:
         char_id_obj = ObjectId(char_id_str)
     except Exception:
         return jsonify({"error": "Invalid Character ID format"}), 400
+    
+    data = request.get_json()
+    lore_id = data.get('lore_id')
+    if not lore_id:
+        return jsonify({"error": "lore_id not provided in request"}), 400
+
+    lore_entry = mongo_db.lore_entries.find_one({"lore_id": lore_id})
+    if not lore_entry:
+        return jsonify({"error": "Lore entry not found, cannot determine name for unlinking."}), 404
+    lore_name = lore_entry.get("name")
+
     mongo_db.npcs.update_one(
         {"_id": char_id_obj},
-        {"$pull": {"linked_lore_ids": lore_id_str}}
+        {"$pull": {"linked_lore_by_name": lore_name}}
     )
-    try:
-        lore_id_obj_for_pull = ObjectId(lore_id_str)
-        mongo_db.lore_entries.update_one(
-            {"_id": lore_id_obj_for_pull},
-            {"$pull": {"linked_character_ids": char_id_str}}
-        )
-    except Exception:
-        print(f"Note: Could not convert lore_id '{lore_id_str}' to ObjectId for unlinking from lore entry, it might have been an invalid or already removed ID.")
+    
+    mongo_db.lore_entries.update_one(
+        {"_id": lore_entry['_id']},
+        {"$pull": {"linked_character_ids": char_id_str}}
+    )
+
     updated_char = mongo_db.npcs.find_one({"_id": char_id_obj})
     return jsonify({"message": "Lore unlinked from character", "character": parse_json(updated_char)}), 200
 

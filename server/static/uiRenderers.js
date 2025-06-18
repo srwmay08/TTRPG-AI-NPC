@@ -133,9 +133,15 @@ var UIRenderers = {
         let npcsToDisplay = allCharacters.filter(char => char.character_type === 'NPC');
     
         if (sceneContextFilter && sceneContextFilter.id) {
-            npcsToDisplay = npcsToDisplay.filter(npc =>
-                npc.linked_lore_ids && npc.linked_lore_ids.includes(sceneContextFilter.id)
-            );
+            const loreContextEntry = appState.getLoreEntryById(sceneContextFilter.id);
+            if (loreContextEntry) {
+                const loreName = loreContextEntry.name;
+                npcsToDisplay = npcsToDisplay.filter(npc =>
+                    npc.linked_lore_by_name && npc.linked_lore_by_name.includes(loreName)
+                );
+            } else {
+                npcsToDisplay = []; // Lore not found, show no NPCs
+            }
         }
     
         npcsToDisplay.sort((a, b) => a.name.localeCompare(b.name));
@@ -606,8 +612,6 @@ var UIRenderers = {
         });
     },
 
-// Function: renderCharacterProfileUI in server/static/uiRenderers.js
-
 renderCharacterProfileUI: function(character, elements) {
     const characterProfileMainSection = Utils.getElem('character-profile-main-section');
     const detailsCharNameElem = Utils.getElem(elements.detailsCharName);
@@ -639,7 +643,7 @@ renderCharacterProfileUI: function(character, elements) {
     character.personality_traits = character.personality_traits || [];
     character.memories = character.memories || [];
     character.associated_history_files = character.associated_history_files || [];
-    character.linked_lore_ids = character.linked_lore_ids || [];
+    character.linked_lore_by_name = character.linked_lore_by_name || [];
     character.pc_faction_standings = character.pc_faction_standings || {};
 
     if (detailsCharNameElem) Utils.updateText(elements.detailsCharName, character.name || "N/A");
@@ -666,7 +670,7 @@ renderCharacterProfileUI: function(character, elements) {
     }
     if (associatedHistoryListElem && historyContentDisplayElem) this.renderAssociatedHistoryFilesUI(character, associatedHistoryListElem, historyContentDisplayElem, CharacterService.handleDissociateHistoryFile);
     this.renderAssociatedLoreForCharacterUI(character, CharacterService.handleUnlinkLoreFromCharacter);
-    this.populateLoreEntrySelectForCharacterLinkingUI(character.linked_lore_ids);
+    this.populateLoreEntrySelectForCharacterLinkingUI(character.linked_lore_by_name);
     if (linkLoreToCharBtnElem) Utils.disableBtn(elements.linkLoreToCharBtn, false);
 },
     renderMemoriesUI: function(memories, listElement, deleteCallback) {
@@ -762,7 +766,7 @@ renderCharacterProfileUI: function(character, elements) {
         appState.setCurrentLoreEntryId(null);
     },
 
-    populateLoreEntrySelectForCharacterLinkingUI: function(alreadyLinkedIds = []) {
+    populateLoreEntrySelectForCharacterLinkingUI: function(alreadyLinkedNames = []) {
         const selectElement = Utils.getElem('lore-entry-select-for-character');
         if (!selectElement) { console.warn("UIRenderers.populateLoreEntrySelectForCharacterLinkingUI: Select element not found."); return; }
         const currentCharacter = appState.getCurrentProfileChar();
@@ -772,28 +776,36 @@ renderCharacterProfileUI: function(character, elements) {
         const currentValue = selectElement.value;
         selectElement.innerHTML = '<option value="">-- Select lore --</option>';
         const allLore = appState.getAllLoreEntries();
-        const linkedIdSet = new Set((alreadyLinkedIds || []).map(id => String(id)));
+        const linkedNameSet = new Set(alreadyLinkedNames || []);
         allLore.sort((a,b)=> a.name.localeCompare(b.name)).forEach(lore => {
             const idToUse = String(lore.lore_id || lore._id);
-            if (!linkedIdSet.has(idToUse)) {
+            if (!linkedNameSet.has(lore.name)) {
                 const option = document.createElement('option'); option.value = idToUse; option.textContent = `${lore.name} (${lore.lore_type})`; selectElement.appendChild(option);
             }
         });
-        if (allLore.some(l => String(l.lore_id || l._id) === currentValue) && !linkedIdSet.has(currentValue)) { selectElement.value = currentValue; }
+        if (allLore.some(l => String(l.lore_id || l._id) === currentValue) && !linkedNameSet.has(appState.getLoreEntryById(currentValue)?.name)) {
+            selectElement.value = currentValue; 
+        }
     },
 
     renderAssociatedLoreForCharacterUI: function(character, unlinkCallback) {
         const listElement = Utils.getElem(CharacterService.profileElementIds.associatedLoreListForCharacter);
         if (!listElement) { console.warn("UIRenderers.renderAssociatedLoreForCharacterUI: List element not found."); return; }
         listElement.innerHTML = '';
-        if (character && character.linked_lore_ids && character.linked_lore_ids.length > 0) {
-            character.linked_lore_ids.forEach(loreId => {
-                const loreEntry = appState.getLoreEntryById(String(loreId));
+        if (character && character.linked_lore_by_name && character.linked_lore_by_name.length > 0) {
+            character.linked_lore_by_name.forEach(loreName => {
+                const loreEntry = appState.getAllLoreEntries().find(l => l.name === loreName);
                 if (loreEntry) {
+                    const loreId = loreEntry.lore_id || loreEntry._id;
                     const li = document.createElement('li'); li.className = 'associated-lore-item';
                     li.innerHTML = `<span>${loreEntry.name} (${loreEntry.lore_type})</span><button data-lore-id="${loreId}" class="unlink-lore-btn">Unlink</button>`;
-                    li.querySelector('button').onclick = () => unlinkCallback(loreId); listElement.appendChild(li);
-                } else { const li = document.createElement('li'); li.textContent = `Linked Lore ID: ${loreId} (Details not found)`; listElement.appendChild(li); }
+                    li.querySelector('button').onclick = () => unlinkCallback(loreId); 
+                    listElement.appendChild(li);
+                } else { 
+                    const li = document.createElement('li'); 
+                    li.textContent = `Linked Lore: ${loreName} (Details not found)`; 
+                    listElement.appendChild(li);
+                }
             });
         } else { listElement.innerHTML = '<li><em>No lore associated.</em></li>'; }
     },

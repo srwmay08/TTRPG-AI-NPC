@@ -84,15 +84,17 @@ class NPCProfile(BaseModel):
     
     canned_conversations: Optional[Dict[str, str]] = Field(default_factory=dict, description="A dictionary of specific topics and the exact dialogue the NPC should give for them.")
 
+    # vtt_data stores the 'system' object from FVTT
     vtt_data: Optional[Dict[str, Any]] = Field(default_factory=dict, description="Data imported from VTT character sheets (usually the 'system' object).")
     vtt_flags: Optional[Dict[str, Any]] = Field(default_factory=dict, description="Top-level 'flags' object imported from VTT character sheets.")
     img: Optional[str] = Field(default=None, description="Path to character image, potentially from VTT data.")
     items: Optional[List[Dict[str, Any]]] = Field(default_factory=list, description="Character items (weapons, armor, inventory) from VTT data.")
+    # system stores the entire FVTT JSON object if needed for deeper parsing later
     system: Optional[Dict[str, Any]] = Field(default_factory=dict, description="Full system object from VTT if needed for complex lookups.")
 
 
     associated_history_files: List[str] = Field(default_factory=list, description="List of filenames of associated detailed history .txt files.")
-    linked_lore_by_name: Optional[List[str]] = Field(default_factory=list, description="Names of structured lore entries relevant to this character.")
+    linked_lore_by_name: List[str] = Field(default_factory=list, description="Names of structured lore entries relevant to this character.")
 
     pc_faction_standings: Dict[str, FactionStandingLevel] = Field(
         default_factory=dict,
