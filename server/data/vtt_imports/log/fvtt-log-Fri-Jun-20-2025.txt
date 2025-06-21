@@ -1,0 +1,3853 @@
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Healing Hands: 1/1 uses
+---------------------------
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Divine Sense: 5/1 + @abilities.cha.mod uses
+---------------------------
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Lay On Hands: 5/5 * @classes.paladin.levels uses
+---------------------------
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath equipped Battleaxe
+---------------------------
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath equipped Unarmed Strike
+---------------------------
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Potion of Healing (Greater): 1 → 1
+---------------------------
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Elixir of Health: 1 → 1
+---------------------------
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath equipped Longbow
+---------------------------
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unequipped Clothes, Traveler's
+---------------------------
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Rope, Hempen (50 feet): 1 → 1
+---------------------------
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Waterskin: 1 → 1
+---------------------------
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Tinderbox: 1 → 1
+---------------------------
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Bedroll: 1 → 1
+---------------------------
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unequipped Amulet
+---------------------------
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unequipped Amulet
+---------------------------
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath equipped Javelin
+---------------------------
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Backpack: 1 → 1
+---------------------------
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath equipped Chain Mail
+---------------------------
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unequipped Mess Kit
+---------------------------
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Torch: 10 → 10
+---------------------------
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Backpack: 1 → 1
+---------------------------
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Rations (1 day): 10 → 10
+---------------------------
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath equipped Shield
+---------------------------
+[6/4/2025, 3:57:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Lay on Hands: 5/5 * @classes.paladin.levels uses
+---------------------------
+[6/4/2025, 3:57:09 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Unarmed Strike: 1 → 1
+---------------------------
+[6/4/2025, 3:57:09 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Battleaxe: 1 → 1
+---------------------------
+[6/4/2025, 3:57:09 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Longbow: 1 → 1
+---------------------------
+[6/4/2025, 3:57:09 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Clothes, Traveler's: 1 → 1
+---------------------------
+[6/4/2025, 3:57:09 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Amulet: 1 → 1
+---------------------------
+[6/4/2025, 3:57:09 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Amulet: 1 → 1
+---------------------------
+[6/4/2025, 3:57:09 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Javelin: 5 → 5
+---------------------------
+[6/4/2025, 3:57:09 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Chain Mail: 1 → 1
+---------------------------
+[6/4/2025, 3:57:09 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Mess Kit: 1 → 1
+---------------------------
+[6/4/2025, 3:57:09 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Shield: 1 → 1
+---------------------------
+[6/4/2025, 3:57:09 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Unarmed Strike
+---------------------------
+[6/4/2025, 3:57:09 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Battleaxe
+---------------------------
+[6/4/2025, 3:57:09 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Longbow
+---------------------------
+[6/4/2025, 3:57:09 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Clothes, Traveler's
+---------------------------
+[6/4/2025, 3:57:09 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Amulet
+---------------------------
+[6/4/2025, 3:57:09 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Amulet
+---------------------------
+[6/4/2025, 3:57:09 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Javelin
+---------------------------
+[6/4/2025, 3:57:09 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Chain Mail
+---------------------------
+[6/4/2025, 3:57:09 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Mess Kit
+---------------------------
+[6/4/2025, 3:57:09 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Shield
+---------------------------
+[6/4/2025, 4:00:47 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unprepared a spell: Bless
+---------------------------
+[6/4/2025, 4:00:47 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unprepared a spell: Ceremony
+---------------------------
+[6/4/2025, 4:00:48 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unprepared a spell: Command
+---------------------------
+[6/4/2025, 4:00:49 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unprepared a spell: Compelled Duel
+---------------------------
+[6/4/2025, 4:00:49 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unprepared a spell: Cure Wounds
+---------------------------
+[6/4/2025, 4:00:50 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unprepared a spell: Detect Evil and Good
+---------------------------
+[6/4/2025, 4:00:51 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unprepared a spell: Detect Magic
+---------------------------
+[6/4/2025, 4:00:51 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unprepared a spell: Detect Poison and Disease
+---------------------------
+[6/4/2025, 4:00:53 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unprepared a spell: Divine Favor
+---------------------------
+[6/4/2025, 4:00:53 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unprepared a spell: Divine Smite
+---------------------------
+[6/4/2025, 4:00:53 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unprepared a spell: Heroism
+---------------------------
+[6/4/2025, 4:00:54 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unprepared a spell: Protection from Evil and Good
+---------------------------
+[6/4/2025, 4:00:55 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unprepared a spell: Purify Food and Drink
+---------------------------
+[6/4/2025, 4:00:55 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unprepared a spell: Searing Smite
+---------------------------
+[6/4/2025, 4:00:56 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unprepared a spell: Thunderous Smite
+---------------------------
+[6/4/2025, 4:00:57 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unprepared a spell: Shield of Faith
+---------------------------
+[6/4/2025, 4:00:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unprepared a spell: Wrathful Smite
+---------------------------
+[6/4/2025, 4:03:01 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Sheet Mode : Edit
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Healing Hands: 1/1 uses
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Divine Sense: 5/1 + @abilities.cha.mod uses
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Lay On Hands: 5/5 * @classes.paladin.levels uses
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath equipped Unarmed Strike
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath equipped Battleaxe
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Potion of Healing (Greater): 1 → 1
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath equipped Longbow
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Elixir of Health: 1 → 1
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unequipped Clothes, Traveler's
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Rope, Hempen (50 feet): 1 → 1
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Waterskin: 1 → 1
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Tinderbox: 1 → 1
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Bedroll: 1 → 1
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unequipped Amulet
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unequipped Amulet
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Backpack: 1 → 1
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath equipped Javelin
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath equipped Chain Mail
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unequipped Mess Kit
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Torch: 10 → 10
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Backpack: 1 → 1
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath equipped Shield
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Rations (1 day): 10 → 10
+---------------------------
+[6/4/2025, 4:03:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Lay on Hands: 5/5 * @classes.paladin.levels uses
+---------------------------
+[6/4/2025, 4:03:13 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Unarmed Strike: 1 → 1
+---------------------------
+[6/4/2025, 4:03:13 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Battleaxe: 1 → 1
+---------------------------
+[6/4/2025, 4:03:13 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Longbow: 1 → 1
+---------------------------
+[6/4/2025, 4:03:13 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Clothes, Traveler's: 1 → 1
+---------------------------
+[6/4/2025, 4:03:13 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Amulet: 1 → 1
+---------------------------
+[6/4/2025, 4:03:13 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Amulet: 1 → 1
+---------------------------
+[6/4/2025, 4:03:13 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Javelin: 5 → 5
+---------------------------
+[6/4/2025, 4:03:13 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Chain Mail: 1 → 1
+---------------------------
+[6/4/2025, 4:03:13 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Mess Kit: 1 → 1
+---------------------------
+[6/4/2025, 4:03:13 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Shield: 1 → 1
+---------------------------
+[6/4/2025, 4:03:14 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Unarmed Strike
+---------------------------
+[6/4/2025, 4:03:14 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Battleaxe
+---------------------------
+[6/4/2025, 4:03:14 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Longbow
+---------------------------
+[6/4/2025, 4:03:14 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Clothes, Traveler's
+---------------------------
+[6/4/2025, 4:03:14 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Amulet
+---------------------------
+[6/4/2025, 4:03:14 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Amulet
+---------------------------
+[6/4/2025, 4:03:14 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Javelin
+---------------------------
+[6/4/2025, 4:03:14 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Chain Mail
+---------------------------
+[6/4/2025, 4:03:14 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Mess Kit
+---------------------------
+[6/4/2025, 4:03:14 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Shield
+---------------------------
+[6/4/2025, 4:21:34 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Shield Master General Feat
+General Feat (Prerequisites: Level 4+, Shield Training)								You gain the following benefits. Ability Score Increase. Increase your Strength score by 1, to a maximum of 20.
+Shield Bash. If you attack a creature within 5 feet of you as part of the Attack action and hit with a Melee weapon, you can immediately bash the target with your Shield if it's equipped, forcing the target to make a Strength saving throw (DC 8 plus your Strength modifier and Proficiency Bonus). On a failed save, you either push the target 5 feet from you or cause it to have the Prone condition (your choice). You can use this benefit only once on each of your turns.
+Interpose Shield. If you're subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you can take a Reaction to take no damage if you succeed on the saving throw and are holding a Shield.
+DC 14 Strength Saving Throw Strength Saving Throw
+Trigger If you're subjected to an effect that allows you to make a Dexterity saving throw to take only half damage Shield Training Reaction Instantaneous Self
+---------------------------
+[6/4/2025, 4:49:19 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | Sheet Mode : Edit
+---------------------------
+[6/4/2025, 4:49:23 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | Sheet Mode : Play
+---------------------------
+[6/4/2025, 4:53:21 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Sheet Mode : Edit
+---------------------------
+[6/4/2025, 4:53:24 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Sheet Mode : Play
+---------------------------
+[6/4/2025, 5:33:18 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+Warhammer Martial Melee
+Mastery: Push. If you hit a creature with this weapon, you can push the creature up to 10 feet straight away from yourself if it is Large or smaller.
+Attack  Damage
+Action Instantaneous reach 5 ft Equipped Not Proficient
+---------------------------
+[6/4/2025, 5:33:43 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+Guidance Divination
+You touch one willing creature. Once before the spell ends, the target can roll a d4 and add the number rolled to one ability check of its choice. It can roll the die before or after making the ability check. The spell then ends.
+Guidance Roll
+Concentration V, S Action 1 minute Touch 1 creature
+---------------------------
+[6/4/2025, 5:34:04 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+1d20 + 3 + 0 = 17 + 3 + 0 = 20
+---------------------------
+[6/4/2025, 5:34:26 PM] Ortiz Alehammer
+{Game Time: Che 19, 1492 06:00}
+1d4 = 4 = 4
+---------------------------
+[6/4/2025, 6:15:59 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Sheet Mode : Edit
+---------------------------
+[6/4/2025, 6:17:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Stonecunning: 2/@prof uses
+---------------------------
+[6/4/2025, 6:17:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Backpack: 1 → 1
+---------------------------
+[6/4/2025, 6:17:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Healer's Kit: 2 → 2
+---------------------------
+[6/4/2025, 6:17:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Holy Water: 1 → 1
+---------------------------
+[6/4/2025, 6:17:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Mess Kit: 1 → 1
+---------------------------
+[6/4/2025, 6:17:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Rations: 20 → 20
+---------------------------
+[6/4/2025, 6:17:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Waterskin: 1 → 1
+---------------------------
+[6/4/2025, 6:17:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Smith's Tools: 1 → 1
+---------------------------
+[6/4/2025, 6:17:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah equipped Warhammer
+---------------------------
+[6/4/2025, 6:17:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Backpack: 1 → 1
+---------------------------
+[6/4/2025, 6:17:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Caltrops: 1 → 1
+---------------------------
+[6/4/2025, 6:17:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Crowbar: 1 → 1
+---------------------------
+[6/4/2025, 6:17:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Oil: 2 → 2
+---------------------------
+[6/4/2025, 6:17:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Rope: 1 → 1
+---------------------------
+[6/4/2025, 6:17:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Tinderbox: 1 → 1
+---------------------------
+[6/4/2025, 6:17:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Torch: 10 → 10
+---------------------------
+[6/4/2025, 6:17:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Waterskin: 1 → 1
+---------------------------
+[6/4/2025, 6:17:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Grappling Hook: 1 → 1
+---------------------------
+[6/4/2025, 6:17:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Bedroll: 1 → 1
+---------------------------
+[6/4/2025, 6:17:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah equipped Chain Mail
+---------------------------
+[6/4/2025, 6:17:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah equipped Shield
+---------------------------
+[6/4/2025, 6:17:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Blessing of the Forge: 1/1 uses
+---------------------------
+[6/4/2025, 6:17:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Potion of Invisibility: 1 → 1
+---------------------------
+[6/4/2025, 6:17:59 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Warhammer: 1 → 1
+---------------------------
+[6/4/2025, 6:17:59 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Chain Mail: 1 → 1
+---------------------------
+[6/4/2025, 6:17:59 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Shield: 1 → 1
+---------------------------
+[6/4/2025, 6:17:59 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah breaks attunement to an item: Warhammer
+---------------------------
+[6/4/2025, 6:18:00 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah breaks attunement to an item: Chain Mail
+---------------------------
+[6/4/2025, 6:18:00 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah breaks attunement to an item: Shield
+---------------------------
+[6/4/2025, 6:18:28 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Sheet Mode : Play
+---------------------------
+[6/4/2025, 6:24:56 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Battleaxe Martial Melee
+Proficiency with a Battleaxe allows you to add your proficiency bonus to the attack roll for any attack you make with it.This weapon has the following mastery property. To use this property, you must have a feature that lets you use it.Topple. If you hit a creature with this weapon, you can force the creature to make a Constitution saving throw (DC 8 plus the ability modifier used to make the attack roll and your Proficiency Bonus). On a failed save, the creature has the Prone condition.
+Attack  Damage
+Action 5 ft reach 5 ft Equipped Proficient
+---------------------------
+[6/4/2025, 6:25:06 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 4 + 4 + 2 = 10
+---------------------------
+[6/4/2025, 6:25:17 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+1d8 + 4 = 7 + 4 = 11
+---------------------------
+[6/4/2025, 6:25:19 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+Warhammer Martial Melee
+Mastery: Push. If you hit a creature with this weapon, you can push the creature up to 10 feet straight away from yourself if it is Large or smaller.
+Attack  Damage
+Action Instantaneous reach 5 ft Equipped Proficient
+---------------------------
+[6/4/2025, 6:25:24 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+1d20 + 3 + 2 = 5 + 3 + 2 = 10
+---------------------------
+[6/4/2025, 6:25:48 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+Toll the Dead Necromancy
+You point at one creature you can see within range, and the single chime of a dolorous bell is audible within 10 feet of the target. The target must succeed on a Wisdom saving throw or take 1d8 Necrotic damage. If the target is missing any of its Hit Points, it instead takes 1d12 Necrotic damage.
+Cantrip Upgrade. The damage increases by one die when you reach levels 5 (2d8 or 2d12 ), 11 (3d8 or 3d12 ), and 17 (4d8 or 4d12 ).
+DC 14 Wisdom Saving Throw Wisdom Saving Throw  Damage
+V, S Action Instantaneous 60 ft 1 creature
+---------------------------
+[6/4/2025, 6:25:54 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+1d8 = 2 = 2
+---------------------------
+[6/4/2025, 6:26:19 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+Guidance Divination
+You touch one willing creature. Once before the spell ends, the target can roll a d4 and add the number rolled to one ability check of its choice. It can roll the die before or after making the ability check. The spell then ends.
+Guidance Roll
+Concentration V, S Action 1 minute Touch 1 creature
+---------------------------
+[6/4/2025, 6:26:21 PM] Ortiz Alehammer
+{Game Time: Che 19, 1492 06:00}
+1d4 = 1 = 1
+---------------------------
+[6/4/2025, 6:26:33 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+11
+1d20 + 5 = 6 + 5 = 11
+---------------------------
+[6/4/2025, 6:26:57 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Light (Legacy) Cantrip • Evocation
+You touch one object that is no larger than 10 feet in any dimension. Until the spell ends, the object sheds bright light in a 20-foot radius and dim light for an additional 20 feet. The light can be colored as you like. Completely covering the object with something opaque blocks the light. The spell ends if you cast it again or dismiss it as an action.If you target an object held or worn by a hostile creature, that creature must succeed on a Dexterity saving throw to avoid the spell.
+Materialsa firefly or phosphorescent moss
+---------------------------
+[6/4/2025, 6:29:11 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Longbow Martial Ranged
+Proficiency with a Longbow allows you to add your proficiency bonus to the attack roll for any attack you make with it.This weapon has the following mastery property. To use this property, you must have a feature that lets you use it.Slow. If you hit a creature with this weapon and deal damage to it, you can reduce its Speed by 10 feet until the start of your next turn. If the creature is hit more than once by weapons that have this property, the Speed reduction doesn’t exceed 10 feet.
+Attack  Damage
+Action Turn 150/600 ft Equipped Proficient
+---------------------------
+[6/4/2025, 6:29:13 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+1d20 + 1 + 2 = 20 + 1 + 2 = 23
+---------------------------
+[6/4/2025, 6:29:22 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Longbow Martial Ranged
+Proficiency with a Longbow allows you to add your proficiency bonus to the attack roll for any attack you make with it.This weapon has the following mastery property. To use this property, you must have a feature that lets you use it.Slow. If you hit a creature with this weapon and deal damage to it, you can reduce its Speed by 10 feet until the start of your next turn. If the creature is hit more than once by weapons that have this property, the Speed reduction doesn’t exceed 10 feet.
+Attack  Damage
+Action Turn 150/600 ft Equipped Proficient
+---------------------------
+[6/4/2025, 6:30:44 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Sheet Mode : Edit
+---------------------------
+[6/4/2025, 6:32:47 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Longbow Martial Ranged
+Proficiency with a Longbow allows you to add your proficiency bonus to the attack roll for any attack you make with it.This weapon has the following mastery property. To use this property, you must have a feature that lets you use it.Slow. If you hit a creature with this weapon and deal damage to it, you can reduce its Speed by 10 feet until the start of your next turn. If the creature is hit more than once by weapons that have this property, the Speed reduction doesn’t exceed 10 feet.
+Attack  Damage
+Action Turn 150/600 ft Equipped Proficient
+---------------------------
+[6/4/2025, 6:32:52 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+1d8 + 1 = 1 + 1 = 2
+---------------------------
+[6/4/2025, 6:52:21 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Sheet Mode : Play
+---------------------------
+[6/4/2025, 6:53:38 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Sheet Mode : Edit
+---------------------------
+[6/4/2025, 6:53:50 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Sheet Mode : Play
+---------------------------
+[6/4/2025, 7:19:38 PM] sighko_
+{Game Time: Che 19, 1492 06:00}
+its in black and white again
+---------------------------
+[6/4/2025, 7:30:26 PM] ChaserXL
+{Game Time: Che 19, 1492 06:00}
+23
+1d20 + 4 = 19 + 4 = 23
+---------------------------
+[6/4/2025, 7:30:41 PM] Sun Soul Monk
+{Game Time: Che 19, 1492 06:00}
+13
+1d20 + 2 = 11 + 2 = 13
+---------------------------
+[6/4/2025, 7:30:45 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+Unarmed Strike Simple Melee
+Instead of using a weapon to make a melee attack, you can use a punch, kick, head-butt, or similar forceful blow. In game terms, this is an Unarmed Strike—a melee attack that involves you using your body to damage, grapple, or shove a target within 5 feet of you.Whenever you use your Unarmed Strike, choose one of the following options for its effect.Damage. You make an attack roll against the target. Your bonus to the roll equals your Strength modifier plus your Proficiency Bonus. On a hit, the target takes Bludgeoning damage equal to 1 plus your Strength modifier.Grapple. The target must succeed on a Strength or Dexterity saving throw (it chooses which), or it has the Grappled condition. The DC for the saving throw and any escape attempts equals 8 plus your Strength modifier and Proficiency Bonus. This grapple is possible only if the target is no more than one size larger than you and if you have a hand free to grab it.Shove. The target must succeed on a Strength or Dexterity saving throw (it chooses which), or you either push it 5 feet away or cause it to have the Prone condition. The DC for the saving throw equals 8 plus your Strength modifier and Proficiency Bonus. This shove is possible only if the target is no more than one size larger than you.
+Attack  Damage
+Action Instantaneous reach 5 ft Equipped Proficient
+---------------------------
+[6/4/2025, 7:30:47 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 2 + 4 + 2 = 8
+---------------------------
+[6/4/2025, 7:30:57 PM] Sun Soul Monk
+{Game Time: Che 19, 1492 06:00}
+Unarmed Strike Natural
+Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2 bludgeoning) damage.
+Attack  Damage
+Action Instantaneous 5 ft reach 5 ft Equipped Proficient
+---------------------------
+[6/4/2025, 7:30:58 PM] Sun Soul Monk
+{Game Time: Che 19, 1492 06:00}
+1d20 + 2 + 2 = 1 + 2 + 2 = 5
+---------------------------
+[6/4/2025, 7:31:09 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+Unarmed Strike Simple Melee
+Instead of using a weapon to make a melee attack, you can use a punch, kick, head-butt, or similar forceful blow. In game terms, this is an Unarmed Strike—a melee attack that involves you using your body to damage, grapple, or shove a target within 5 feet of you.Whenever you use your Unarmed Strike, choose one of the following options for its effect.Damage. You make an attack roll against the target. Your bonus to the roll equals your Strength modifier plus your Proficiency Bonus. On a hit, the target takes Bludgeoning damage equal to 1 plus your Strength modifier.Grapple. The target must succeed on a Strength or Dexterity saving throw (it chooses which), or it has the Grappled condition. The DC for the saving throw and any escape attempts equals 8 plus your Strength modifier and Proficiency Bonus. This grapple is possible only if the target is no more than one size larger than you and if you have a hand free to grab it.Shove. The target must succeed on a Strength or Dexterity saving throw (it chooses which), or you either push it 5 feet away or cause it to have the Prone condition. The DC for the saving throw equals 8 plus your Strength modifier and Proficiency Bonus. This shove is possible only if the target is no more than one size larger than you.
+Attack  Damage
+Action Instantaneous reach 5 ft Equipped Proficient
+---------------------------
+[6/4/2025, 7:31:11 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 2 + 4 + 2 = 8
+---------------------------
+[6/4/2025, 7:31:20 PM] Sun Soul Monk
+{Game Time: Che 19, 1492 06:00}
+Unarmed Strike Natural
+Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2 bludgeoning) damage.
+Attack  Damage
+Action Instantaneous 5 ft reach 5 ft Equipped Proficient
+---------------------------
+[6/4/2025, 7:31:21 PM] Sun Soul Monk
+{Game Time: Che 19, 1492 06:00}
+1d20 + 2 + 2 = 14 + 2 + 2 = 18
+---------------------------
+[6/4/2025, 7:31:29 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+Unarmed Strike Simple Melee
+Instead of using a weapon to make a melee attack, you can use a punch, kick, head-butt, or similar forceful blow. In game terms, this is an Unarmed Strike—a melee attack that involves you using your body to damage, grapple, or shove a target within 5 feet of you.Whenever you use your Unarmed Strike, choose one of the following options for its effect.Damage. You make an attack roll against the target. Your bonus to the roll equals your Strength modifier plus your Proficiency Bonus. On a hit, the target takes Bludgeoning damage equal to 1 plus your Strength modifier.Grapple. The target must succeed on a Strength or Dexterity saving throw (it chooses which), or it has the Grappled condition. The DC for the saving throw and any escape attempts equals 8 plus your Strength modifier and Proficiency Bonus. This grapple is possible only if the target is no more than one size larger than you and if you have a hand free to grab it.Shove. The target must succeed on a Strength or Dexterity saving throw (it chooses which), or you either push it 5 feet away or cause it to have the Prone condition. The DC for the saving throw equals 8 plus your Strength modifier and Proficiency Bonus. This shove is possible only if the target is no more than one size larger than you.
+Attack  Damage
+Action Instantaneous reach 5 ft Equipped Proficient
+---------------------------
+[6/4/2025, 7:31:31 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 15 + 4 + 2 = 21
+---------------------------
+[6/4/2025, 7:31:32 PM] Sun Soul Monk
+{Game Time: Che 19, 1492 06:00}
+Unarmed Strike Natural
+Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2 bludgeoning) damage.
+Attack  Damage
+Action Instantaneous 5 ft reach 5 ft Equipped Proficient
+---------------------------
+[6/4/2025, 7:31:42 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+1d6 + 4 = 5 + 4 = 9
+---------------------------
+[6/4/2025, 7:51:37 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Dunkart Longdawn | HP : 11 → 15
+---------------------------
+[6/4/2025, 7:51:37 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Dunkart Longdawn | Max HP : 11 → 15
+---------------------------
+[6/4/2025, 8:16:14 PM] Ortiz Alehammer
+{Game Time: Che 19, 1492 06:00}
+its in black and white again
+---------------------------
+[6/4/2025, 8:48:08 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+Guidance Divination
+You touch one willing creature. Once before the spell ends, the target can roll a d4 and add the number rolled to one ability check of its choice. It can roll the die before or after making the ability check. The spell then ends.
+Guidance Roll
+Concentration V, S Action 1 minute Touch 1 creature
+---------------------------
+[6/4/2025, 8:48:15 PM] Ortiz Alehammer
+{Game Time: Che 19, 1492 06:00}
+1d4 = 1 = 1
+---------------------------
+[6/4/2025, 8:52:52 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+4
+1d20 = 4 = 4
+---------------------------
+[6/4/2025, 8:52:55 PM] Ortiz Alehammer
+{Game Time: Che 19, 1492 06:00}
+11
+1d20 = 11 = 11
+---------------------------
+[6/4/2025, 8:53:02 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+11
+1d20 = 11 = 11
+---------------------------
+[6/4/2025, 8:53:05 PM] ChaserXL
+{Game Time: Che 19, 1492 06:00}
+3
+1d20 + 1 = 2 + 1 = 3
+---------------------------
+[6/4/2025, 8:53:15 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+13
+1d20 = 13 = 13
+---------------------------
+[6/4/2025, 8:55:10 PM] OBS
+{Game Time: Che 19, 1492 06:00}
+1
+1d4 - 1 = 2 - 1 = 1
+---------------------------
+[6/4/2025, 8:55:10 PM] OBS
+{Game Time: Che 19, 1492 06:00}
+Rat | HP : 15 → 1
+---------------------------
+[6/4/2025, 8:55:10 PM] OBS
+{Game Time: Che 19, 1492 06:00}
+Rat | Max HP : 15 → 1
+---------------------------
+[6/4/2025, 8:56:06 PM] Ortiz Alehammer
+{Game Time: Che 19, 1492 06:00}
+20
+2d20 = 20 = 20
+---------------------------
+[6/4/2025, 8:56:10 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+4
+1d20 = 4 = 4
+---------------------------
+[6/4/2025, 8:57:46 PM] OBS
+{Game Time: Che 19, 1492 06:00}
+2
+1d4 = 2 = 2
+---------------------------
+[6/4/2025, 8:57:49 PM] OBS
+{Game Time: Che 19, 1492 06:00}
+0
+1d4 - 1 = 1 - 1 = 0
+---------------------------
+[6/4/2025, 8:57:49 PM] OBS
+{Game Time: Che 19, 1492 06:00}
+Rat | HP : 15 → 1
+---------------------------
+[6/4/2025, 8:57:49 PM] OBS
+{Game Time: Che 19, 1492 06:00}
+Rat | Max HP : 15 → 1
+---------------------------
+[6/4/2025, 8:57:51 PM] OBS
+{Game Time: Che 19, 1492 06:00}
+14
+2d10 + 2 = 12 + 2 = 14
+---------------------------
+[6/4/2025, 8:57:51 PM] OBS
+{Game Time: Che 19, 1492 06:00}
+Snake | HP : 15 → 14
+---------------------------
+[6/4/2025, 8:57:51 PM] OBS
+{Game Time: Che 19, 1492 06:00}
+Snake | Max HP : 15 → 14
+---------------------------
+[6/4/2025, 9:00:33 PM] Rat
+{Game Time: Che 19, 1492 06:00}
+Druidcraft Transmutation
+Whispering to the spirits of nature, you create one of the following effects within range:You create a tiny, harmless sensory effect that predicts what the weather will be at your location for the next 24 hours. The effect might manifest as a golden orb for clear skies, a cloud for rain, falling snowflakes for snow, and so on. This effect persists for 1 round.You instantly make a flower blossom, a seed pod open, or a leaf bud bloom.You create an instantaneous, harmless sensory effect, such as falling leaves, a puff of wind, the sound of a small animal, or the faint odor of skunk. The effect must fit in a 5-foot cube.You instantly light or snuff out a candle, a torch, or a small campfire.
+V, S Action Instantaneous 30 ft
+---------------------------
+[6/4/2025, 9:01:30 PM] Cat
+{Game Time: Che 19, 1492 06:00}
+1d20 + 1 + 0 = 20 + 1 + 0 = 21
+---------------------------
+[6/4/2025, 9:01:33 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+1d20 + 3 = 15 + 3 = 18
+---------------------------
+[6/4/2025, 9:01:39 PM] Snake
+{Game Time: Che 19, 1492 06:00}
+1d20 + 0 + 0 = 1 + 0 + 0 = 1
+---------------------------
+[6/4/2025, 9:01:46 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+1d20 + 1 = 15 + 1 = 16
+---------------------------
+[6/4/2025, 9:01:46 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 18 + 4 + 2 = 24
+---------------------------
+[6/4/2025, 9:01:59 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+1d20 + 1 = 11 + 1 = 12
+---------------------------
+[6/4/2025, 9:02:41 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+3
+1d4 - 1 = 4 - 1 = 3
+---------------------------
+[6/4/2025, 9:02:42 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Rat | HP : 1 → 3
+---------------------------
+[6/4/2025, 9:02:42 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Rat | Max HP : 1 → 3
+---------------------------
+[6/4/2025, 9:02:43 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+10
+2d10 + 2 = 8 + 2 = 10
+---------------------------
+[6/4/2025, 9:02:44 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Snake | HP : 14 → 10
+---------------------------
+[6/4/2025, 9:02:44 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Snake | Max HP : 14 → 10
+---------------------------
+[6/4/2025, 9:05:29 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+2
+1d4 = 2 = 2
+---------------------------
+[6/4/2025, 9:05:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+1
+1d4 - 1 = 2 - 1 = 1
+---------------------------
+[6/4/2025, 9:05:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Rat | HP : 15 → 1
+---------------------------
+[6/4/2025, 9:05:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Rat | Max HP : 15 → 1
+---------------------------
+[6/4/2025, 9:05:33 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+11
+2d10 + 2 = 9 + 2 = 11
+---------------------------
+[6/4/2025, 9:05:33 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Snake | HP : 15 → 11
+---------------------------
+[6/4/2025, 9:05:33 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Snake | Max HP : 15 → 11
+---------------------------
+[6/4/2025, 9:05:44 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+3
+1d4 = 3 = 3
+---------------------------
+[6/4/2025, 9:05:45 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cat | HP : 2 → 3
+---------------------------
+[6/4/2025, 9:05:45 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cat | Max HP : 2 → 3
+---------------------------
+[6/4/2025, 9:06:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+12
+2d10 + 2 = 10 + 2 = 12
+---------------------------
+[6/4/2025, 9:06:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Snake | HP : 11 → 12
+---------------------------
+[6/4/2025, 9:06:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Snake | Max HP : 11 → 12
+---------------------------
+[6/4/2025, 9:06:13 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+7
+2d10 + 2 = 5 + 2 = 7
+---------------------------
+[6/4/2025, 9:06:13 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Snake | HP : 11 → 7
+---------------------------
+[6/4/2025, 9:06:13 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+16
+2d10 + 2 = 14 + 2 = 16
+---------------------------
+[6/4/2025, 9:06:13 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Snake | Max HP : 11 → 7
+---------------------------
+[6/4/2025, 9:06:13 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Snake | HP : 11 → 16
+---------------------------
+[6/4/2025, 9:06:13 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Snake | Max HP : 11 → 16
+---------------------------
+[6/4/2025, 9:06:26 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+1
+1d4 - 1 = 2 - 1 = 1
+---------------------------
+[6/4/2025, 9:06:38 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+2
+1d4 = 2 = 2
+---------------------------
+[6/4/2025, 9:08:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+1
+1d4 = 1 = 1
+---------------------------
+[6/4/2025, 9:08:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cat | HP : 2 → 1
+---------------------------
+[6/4/2025, 9:08:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cat | Max HP : 2 → 1
+---------------------------
+[6/4/2025, 9:08:59 PM] Wild Dog
+{Game Time: Che 19, 1492 06:00}
+Druidcraft Transmutation
+Whispering to the spirits of nature, you create one of the following effects within range:You create a tiny, harmless sensory effect that predicts what the weather will be at your location for the next 24 hours. The effect might manifest as a golden orb for clear skies, a cloud for rain, falling snowflakes for snow, and so on. This effect persists for 1 round.You instantly make a flower blossom, a seed pod open, or a leaf bud bloom.You create an instantaneous, harmless sensory effect, such as falling leaves, a puff of wind, the sound of a small animal, or the faint odor of skunk. The effect must fit in a 5-foot cube.You instantly light or snuff out a candle, a torch, or a small campfire.
+V, S Action Instantaneous 30 ft
+---------------------------
+[6/4/2025, 9:09:00 PM] Wild Dog
+{Game Time: Che 19, 1492 06:00}
+Druidcraft Transmutation
+Whispering to the spirits of nature, you create one of the following effects within range:You create a tiny, harmless sensory effect that predicts what the weather will be at your location for the next 24 hours. The effect might manifest as a golden orb for clear skies, a cloud for rain, falling snowflakes for snow, and so on. This effect persists for 1 round.You instantly make a flower blossom, a seed pod open, or a leaf bud bloom.You create an instantaneous, harmless sensory effect, such as falling leaves, a puff of wind, the sound of a small animal, or the faint odor of skunk. The effect must fit in a 5-foot cube.You instantly light or snuff out a candle, a torch, or a small campfire.
+V, S Action Instantaneous 30 ft
+---------------------------
+[6/4/2025, 9:09:02 PM] Wild Dog
+{Game Time: Che 19, 1492 06:00}
+Druidcraft Transmutation
+Whispering to the spirits of nature, you create one of the following effects within range:You create a tiny, harmless sensory effect that predicts what the weather will be at your location for the next 24 hours. The effect might manifest as a golden orb for clear skies, a cloud for rain, falling snowflakes for snow, and so on. This effect persists for 1 round.You instantly make a flower blossom, a seed pod open, or a leaf bud bloom.You create an instantaneous, harmless sensory effect, such as falling leaves, a puff of wind, the sound of a small animal, or the faint odor of skunk. The effect must fit in a 5-foot cube.You instantly light or snuff out a candle, a torch, or a small campfire.
+V, S Action Instantaneous 30 ft
+---------------------------
+[6/4/2025, 9:09:04 PM] Wild Dog
+{Game Time: Che 19, 1492 06:00}
+Druidcraft Transmutation
+Whispering to the spirits of nature, you create one of the following effects within range:You create a tiny, harmless sensory effect that predicts what the weather will be at your location for the next 24 hours. The effect might manifest as a golden orb for clear skies, a cloud for rain, falling snowflakes for snow, and so on. This effect persists for 1 round.You instantly make a flower blossom, a seed pod open, or a leaf bud bloom.You create an instantaneous, harmless sensory effect, such as falling leaves, a puff of wind, the sound of a small animal, or the faint odor of skunk. The effect must fit in a 5-foot cube.You instantly light or snuff out a candle, a torch, or a small campfire.
+V, S Action Instantaneous 30 ft
+---------------------------
+[6/4/2025, 9:10:04 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+4
+1d4 = 4 = 4
+---------------------------
+[6/4/2025, 9:10:05 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cat | HP : 2 → 4
+---------------------------
+[6/4/2025, 9:10:05 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cat | Max HP : 2 → 4
+---------------------------
+[6/4/2025, 9:13:00 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+12
+2d10 + 2 = 10 + 2 = 12
+---------------------------
+[6/4/2025, 9:13:00 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+13
+2d10 + 2 = 11 + 2 = 13
+---------------------------
+[6/4/2025, 9:13:00 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Snake | HP : 16 → 13
+---------------------------
+[6/4/2025, 9:13:00 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Snake | Max HP : 16 → 13
+---------------------------
+[6/4/2025, 9:19:49 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 12 + 4 + 2 = 18
+---------------------------
+[6/4/2025, 9:21:46 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+1d20 + 1 = 20 + 1 = 21
+---------------------------
+[6/4/2025, 9:25:11 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+1d20 + 2 = 12 + 2 = 14
+---------------------------
+[6/4/2025, 9:25:14 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 5 + 4 + 2 = 11
+---------------------------
+[6/4/2025, 9:25:15 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+1d20 - 1 = 9 - 1 = 8
+---------------------------
+[6/4/2025, 9:25:16 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+1d20 + 1 = 14 + 1 = 15
+---------------------------
+[6/4/2025, 9:28:21 PM] OBS
+{Game Time: Che 19, 1492 06:00}
+Giant Rat | HP : 10 → 7
+---------------------------
+[6/4/2025, 9:28:21 PM] OBS
+{Game Time: Che 19, 1492 06:00}
+Giant Rat | Max HP : 10 → 7
+---------------------------
+[6/4/2025, 9:36:30 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+1d20 + 3 = 19 + 3 = 22
+---------------------------
+[6/4/2025, 9:36:30 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 3 + 4 + 2 = 9
+---------------------------
+[6/4/2025, 9:36:32 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+1d20 + 1 + 2 = 5 + 1 + 2 = 8
+---------------------------
+[6/4/2025, 9:36:34 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+1d20 + 1 = 9 + 1 = 10
+---------------------------
+[6/4/2025, 9:36:36 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+1d20 + 1 = 18 + 1 = 19
+---------------------------
+[6/4/2025, 9:40:25 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+1d20 + 1 = 12 + 1 = 13
+---------------------------
+[6/4/2025, 9:40:25 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+1d20 + 1 = 2 + 1 = 3
+---------------------------
+[6/4/2025, 9:40:30 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 = 5 + 4 = 9
+---------------------------
+[6/4/2025, 9:41:58 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+1d20 + 0 + 2 = 11 + 0 + 2 = 13
+---------------------------
+[6/4/2025, 9:43:28 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+1d20 + 1 = 3 + 1 = 4
+---------------------------
+[6/4/2025, 9:44:56 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+1d20 + 3 + 2 = 10 + 3 + 2 = 15
+---------------------------
+[6/4/2025, 9:47:46 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 9 + 4 + 2 = 15
+---------------------------
+[6/4/2025, 9:51:03 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+1d20 - 1 = 9 - 1 = 8
+---------------------------
+[6/4/2025, 9:51:26 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+1d20 - 1 = 6 - 1 = 5
+---------------------------
+[6/4/2025, 9:52:05 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+1d20 + 1 = 20 + 1 = 21
+---------------------------
+[6/4/2025, 10:02:07 PM] ChaserXL
+{Game Time: Che 19, 1492 06:00}
+21
+2d20kh + 5 = 16 + 5 = 21
+---------------------------
+[6/4/2025, 10:02:23 PM] ChaserXL
+{Game Time: Che 19, 1492 06:00}
+21
+2d20kh + 5 = 16 + 5 = 21
+---------------------------
+[6/4/2025, 10:02:52 PM] ChaserXL
+{Game Time: Che 19, 1492 06:00}
+1
+1d6 = 1 = 1
+---------------------------
+[6/4/2025, 10:02:56 PM] ChaserXL
+{Game Time: Che 19, 1492 06:00}
+6
+1d6 = 6 = 6
+---------------------------
+[6/4/2025, 10:03:06 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Djinni | HP : 220 → 213
+---------------------------
+[6/4/2025, 10:03:52 PM] Sogesonoy
+{Game Time: Che 19, 1492 06:00}
+1d20 + 5 + 0 = 10 + 5 + 0 = 15
+---------------------------
+[6/4/2025, 10:04:19 PM] Wild Dog
+{Game Time: Che 19, 1492 06:00}
+Bite Natural
+Melee Weapon Attack: +1 to hit, reach 5 ft., one target. Hit: 1 (1d4 - 1 piercing) damage.
+Attack  Damage
+Action Instantaneous 5 ft reach 5 ft Equipped Proficient
+---------------------------
+[6/4/2025, 10:04:21 PM] Wild Dog
+{Game Time: Che 19, 1492 06:00}
+2d20kh - 1 + 2 = 13 - 1 + 2 = 14
+---------------------------
+[6/4/2025, 10:05:02 PM] Wild Dog
+{Game Time: Che 19, 1492 06:00}
+1d4 - 1 = 4 - 1 = 3
+---------------------------
+[6/4/2025, 10:05:13 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Djinni | HP : 213 → 207
+---------------------------
+[6/4/2025, 10:18:45 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Divine Sense Feature
+The presence of strong evil registers on your senses like a noxious odor, and powerful good rings like heavenly music in your ears. As an action, you can open your awareness to detect such forces. Until the end of your next turn, you know the location of any celestial, fiend, or undead within 60 feet of you that is not behind total cover. You know the type (celestial, fiend, or undead) of any being whose presence you sense, but not its identity (the vampire Count Strahd von Zarovich, for instance). Within the same radius, you also detect the presence of any place or object that has been consecrated or desecrated, as with the hallow spell.You can use this feature a number of times equal to 1 + your Charisma modifier. When you finish a long rest, you regain all expended uses.
+Consume Resource  Refund Resource
+Action Special 60 ft
+---------------------------
+[6/4/2025, 10:21:47 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+1d20 + 3 + 2 = 19 + 3 + 2 = 24
+---------------------------
+[6/4/2025, 10:23:41 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sudara | Sheet Mode : Edit
+---------------------------
+[6/4/2025, 10:23:53 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Sheet Mode : Edit
+---------------------------
+[6/4/2025, 10:23:53 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sudara | Sheet Mode : Play
+---------------------------
+[6/4/2025, 10:25:04 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | Sheet Mode : Edit
+---------------------------
+[6/4/2025, 10:26:11 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | Sheet Mode : Play
+---------------------------
+[6/4/2025, 10:26:16 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Sheet Mode : Play
+---------------------------
+[6/4/2025, 10:28:06 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | Sheet Mode : Edit
+---------------------------
+[6/4/2025, 10:28:20 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | Sheet Mode : Play
+---------------------------
+[6/4/2025, 10:28:23 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | Sheet Mode : Edit
+---------------------------
+[6/4/2025, 10:28:39 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | Sheet Mode : Play
+---------------------------
+[6/4/2025, 10:29:19 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | Sheet Mode : Edit
+---------------------------
+[6/4/2025, 10:29:57 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+6
+1d8 + 3 = 3 + 3 = 6
+---------------------------
+[6/4/2025, 10:29:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Sheet Mode : Edit
+---------------------------
+[6/4/2025, 10:30:35 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+2
+1d8 = 2 = 2
+---------------------------
+[6/4/2025, 10:30:48 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+7
+1d8 = 7 = 7
+---------------------------
+[6/4/2025, 10:30:56 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+4
+1d8 = 4 = 4
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Stonecunning: 2/@prof uses
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Backpack: 1 → 1
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Healer's Kit: 2 → 2
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Holy Water: 1 → 1
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Mess Kit: 1 → 1
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Rations: 20 → 20
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Waterskin: 1 → 1
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Smith's Tools: 1 → 1
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah equipped Warhammer
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Backpack: 1 → 1
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Caltrops: 1 → 1
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Crowbar: 1 → 1
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Oil: 2 → 2
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Rope: 1 → 1
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Tinderbox: 1 → 1
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Torch: 10 → 10
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Waterskin: 1 → 1
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Grappling Hook: 1 → 1
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Bedroll: 1 → 1
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah equipped Chain Mail
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah equipped Shield
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Blessing of the Forge: 1/1 uses
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Potion of Invisibility: 1 → 1
+---------------------------
+[6/4/2025, 10:31:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | HP : 11 → 12
+---------------------------
+[6/4/2025, 10:31:04 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Warhammer: 1 → 1
+---------------------------
+[6/4/2025, 10:31:04 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Chain Mail: 1 → 1
+---------------------------
+[6/4/2025, 10:31:04 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Shield: 1 → 1
+---------------------------
+[6/4/2025, 10:31:04 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Max HP : 12 → 23
+---------------------------
+[6/4/2025, 10:31:04 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah breaks attunement to an item: Warhammer
+---------------------------
+[6/4/2025, 10:31:04 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah breaks attunement to an item: Chain Mail
+---------------------------
+[6/4/2025, 10:31:04 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah breaks attunement to an item: Shield
+---------------------------
+[6/4/2025, 10:31:12 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+10
+1d10 = 10 = 10
+---------------------------
+[6/4/2025, 10:31:42 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Sheet Mode : Play
+---------------------------
+[6/4/2025, 10:31:42 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+Focus Point Feature
+Action Instantaneous Self
+---------------------------
+[6/4/2025, 10:31:43 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | 1st Level Spell Slots: 0/3 -> 1/3
+---------------------------
+[6/4/2025, 10:31:44 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+5
+1d6 + 4 = 1 + 4 = 5
+---------------------------
+[6/4/2025, 10:31:53 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | 1st Level Spell Slots: 1/3 -> 1/3
+---------------------------
+[6/4/2025, 10:31:58 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+4
+1d8 + 3 = 1 + 3 = 4
+---------------------------
+[6/4/2025, 10:32:34 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Sheet Mode : Edit
+---------------------------
+[6/4/2025, 10:32:37 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | HP : 17 → 19
+---------------------------
+[6/4/2025, 10:32:39 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | Sheet Mode : Edit
+---------------------------
+[6/4/2025, 10:32:44 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+4
+1d6 = 4 = 4
+---------------------------
+[6/4/2025, 10:33:10 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | HP : 19 → 20
+---------------------------
+[6/4/2025, 10:33:10 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | Max HP : 19 → 20
+---------------------------
+[6/4/2025, 10:33:35 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | HP : 20 → 23
+---------------------------
+[6/4/2025, 10:33:35 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | Max HP : 20 → 23
+---------------------------
+[6/4/2025, 10:33:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | HP : 15 → 18
+---------------------------
+[6/4/2025, 10:33:58 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | Max HP : 15 → 18
+---------------------------
+[6/4/2025, 10:34:10 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | HP : 22 → 23
+---------------------------
+[6/4/2025, 10:34:18 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Sheet Mode : Play
+---------------------------
+[6/4/2025, 10:34:22 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | 1st Level Spell Slots: 1/3 -> 1/3
+---------------------------
+[6/4/2025, 10:34:50 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | Sheet Mode : Play
+---------------------------
+[6/4/2025, 10:34:51 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Sheet Mode : Edit
+---------------------------
+[6/4/2025, 10:34:59 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | 1st Level Spell Slots: 0/2 -> 2/2
+---------------------------
+[6/4/2025, 10:39:16 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | 1st Level Spell Slots: 1/3 -> 1/3
+---------------------------
+[6/7/2025, 7:34:41 AM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+Dagger Simple Melee
+Mastery: Nick. When you make the extra attack of the Light property, you can make it as part of the Attack action instead of as a Bonus Action. You can make this extra attack only once per turn.
+Attack  Damage
+Action Instantaneous 20/60 ft reach 5 ft Equipped Proficient
+---------------------------
+[6/7/2025, 7:35:01 AM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+Dagger Simple Melee
+Mastery: Nick. When you make the extra attack of the Light property, you can make it as part of the Attack action instead of as a Bonus Action. You can make this extra attack only once per turn.
+Attack  Damage
+Action Instantaneous 20/60 ft reach 5 ft Equipped Proficient
+---------------------------
+[6/7/2025, 7:36:39 AM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 5 + 4 + 2 = 11
+---------------------------
+[6/7/2025, 7:36:45 AM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+Dagger Simple Melee
+Mastery: Nick. When you make the extra attack of the Light property, you can make it as part of the Attack action instead of as a Bonus Action. You can make this extra attack only once per turn.
+Attack  Damage
+Action Instantaneous 20/60 ft reach 5 ft Equipped Proficient
+---------------------------
+[6/7/2025, 8:05:22 AM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+Sneak Attack Feature
+You know how to strike subtly and exploit a foe's distraction. Once per turn, you can deal an extra 1d6 damage to one creature you hit with an attack roll if you have Advantage on the roll and the attack uses a Finesse or a Ranged weapon. The extra damage's type is the same as the weapon's type.You don't need Advantage on the attack roll if at least one of your allies is within 5 feet of the target, the ally doesn't have the Incapacitated condition, and you don't have Disadvantage on the attack roll.The extra damage increases as you gain Rogue levels, as shown in the Sneak Attack column of the Rogue Features table.
+Damage
+Rogue 1
+---------------------------
+[6/7/2025, 9:45:02 AM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | 1st Level Spell Slots: 1/3 -> 1/3
+---------------------------
+[6/11/2025, 4:49:43 AM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | 1st Level Spell Slots: 1/3 -> 1/3
+---------------------------
+[6/11/2025, 5:19:24 AM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | 1st Level Spell Slots: 1/3 -> 1/3
+---------------------------
+[6/11/2025, 12:08:52 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Sheet Mode : Edit
+---------------------------
+[6/11/2025, 12:10:14 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | HP : 13 → 26
+---------------------------
+[6/11/2025, 12:10:14 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Max HP : 13 → 26
+---------------------------
+[6/11/2025, 12:11:28 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Shield Shield
+Shields require the Utilize action to Don or Doff. You gain the Armor Class benefit of a Shield only if you have training with it.
+2 AC Action Self Equipped Proficient
+---------------------------
+[6/11/2025, 12:13:47 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Sheet Mode : Play
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Lay on Hands: 10/5 * @classes.paladin.levels uses
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Quiver: 1 → 1
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Healing Hands: 1/1 uses
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Lay On Hands: 10/5 * @classes.paladin.levels uses
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Divine Sense: 5/1 + @abilities.cha.mod uses
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath equipped Battleaxe
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath equipped Unarmed Strike
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Potion of Healing (Greater): 1 → 1
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Arrows: 20 → 20
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Torch: 10 → 10
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath equipped Longbow
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unequipped Clothes, Traveler's
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Elixir of Health: 1 → 1
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Waterskin: 1 → 1
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Rope, Hempen (50 feet): 1 → 1
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Tinderbox: 1 → 1
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Bedroll: 1 → 1
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath equipped Javelin
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unequipped Amulet
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Backpack: 1 → 1
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath equipped Chain Mail
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Backpack: 1 → 1
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath unequipped Mess Kit
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Rations (1 day): 10 → 10
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath equipped Shield
+---------------------------
+[6/18/2025, 5:01:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Paladin's Smite: 1/1 uses
+---------------------------
+[6/18/2025, 5:01:32 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Unarmed Strike: 1 → 1
+---------------------------
+[6/18/2025, 5:01:32 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Battleaxe: 1 → 1
+---------------------------
+[6/18/2025, 5:01:32 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Clothes, Traveler's: 1 → 1
+---------------------------
+[6/18/2025, 5:01:32 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Longbow: 1 → 1
+---------------------------
+[6/18/2025, 5:01:32 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Javelin: 5 → 5
+---------------------------
+[6/18/2025, 5:01:32 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Amulet: 1 → 1
+---------------------------
+[6/18/2025, 5:01:32 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Mess Kit: 1 → 1
+---------------------------
+[6/18/2025, 5:01:32 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Chain Mail: 1 → 1
+---------------------------
+[6/18/2025, 5:01:32 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Shield: 1 → 1
+---------------------------
+[6/18/2025, 5:01:32 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Unarmed Strike
+---------------------------
+[6/18/2025, 5:01:32 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Battleaxe
+---------------------------
+[6/18/2025, 5:01:32 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Longbow
+---------------------------
+[6/18/2025, 5:01:32 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Amulet
+---------------------------
+[6/18/2025, 5:01:32 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Clothes, Traveler's
+---------------------------
+[6/18/2025, 5:01:32 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Javelin
+---------------------------
+[6/18/2025, 5:01:33 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Chain Mail
+---------------------------
+[6/18/2025, 5:01:33 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Mess Kit
+---------------------------
+[6/18/2025, 5:01:33 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath breaks attunement to an item: Shield
+---------------------------
+[6/18/2025, 6:42:44 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | 249 gp -> 264 gp
+---------------------------
+[6/18/2025, 6:45:47 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Sheet Mode : Edit
+---------------------------
+[6/18/2025, 6:45:52 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Paladin's Smite: 1/1 uses
+---------------------------
+[6/18/2025, 6:46:28 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Paladin's Smite: 1/0 uses
+---------------------------
+[6/18/2025, 6:49:07 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Divine Smite Feature
+Starting at 2nd level, when you hit a creature with a melee weapon attack, you can expend one spell slot to deal radiant damage to the target, in addition to the weapon's damage.The extra damage is 2d8 for a 1st-level spell slot, plus 1d8 for each spell level higher than 1st, to a maximum of 5d8. The damage increases by 1d8 if the target is an undead or a fiend.
+Damage
+Paladin 2 Special Self 1 creature
+---------------------------
+[6/18/2025, 6:51:49 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Spellcasting Feature
+By 2nd level, you have learned to draw on divine magic through meditation and prayer to cast spells as a cleric does. See Spells Rules for the general rules of spellcasting and the Spells Listing for the paladin spell list.Preparing and Casting SpellsThe Paladin table shows how many spell slots you have to cast your paladin spells. To cast one of your paladin spells of 1st level or higher, you must expend a slot of the spell’s level or higher. You regain all expended spell slots when you finish a long rest.You prepare the list of paladin spells that are available for you to cast, choosing from the paladin spell list. When you do so, choose a number of paladin spells equal to your Charisma modifier + half your paladin level, rounded down (minimum of one spell). The spells must be of a level for which you have spell slots.For example, if you are a 5th-level paladin, you have four 1st-level and two 2nd-level spell slots. With a Charisma of 14, your list of prepared spells can include four spells of 1st or 2nd level, in any combination. If you prepare the 1st-level spell cure wounds, you can cast it using a 1st-level or a 2nd-level slot. Casting the spell doesn’t remove it from your list of prepared spells.You can change your list of prepared spells when you finish a long rest. Preparing a new list of paladin spells requires time spent in prayer and meditation: at least 1 minute per spell level for each spell on your list.Spellcasting AbilityCharisma is your spellcasting ability for your paladin spells, since their power derives from the strength of your convictions. You use your Charisma whenever a spell refers to your spellcasting ability. In addition, you use your Charisma modifier when setting the saving throw DC for a paladin spell you cast and when making an attack roll with one.Spell save DC = 8 + your proficiency bonus + your Charisma modifierSpell attack modifier = your proficiency bonus + your Charisma modifierSpellcasting FocusYou can use a holy symbol (see the Adventuring Gear section) as a spellcasting focus for your paladin spells.
+---------------------------
+[6/18/2025, 6:51:52 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Sheet Mode : Edit
+---------------------------
+[6/18/2025, 6:51:54 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Shield Master General Feat
+General Feat (Prerequisites: Level 4+, Shield Training)								You gain the following benefits. Ability Score Increase. Increase your Strength score by 1, to a maximum of 20.
+Shield Bash. If you attack a creature within 5 feet of you as part of the Attack action and hit with a Melee weapon, you can immediately bash the target with your Shield if it's equipped, forcing the target to make a Strength saving throw (DC 8 plus your Strength modifier and Proficiency Bonus). On a failed save, you either push the target 5 feet from you or cause it to have the Prone condition (your choice). You can use this benefit only once on each of your turns.
+Interpose Shield. If you're subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you can take a Reaction to take no damage if you succeed on the saving throw and are holding a Shield.
+DC 14 Strength Saving Throw Strength Saving Throw
+Trigger If you're subjected to an effect that allows you to make a Dexterity saving throw to take only half damage Shield Training Reaction Instantaneous Self
+---------------------------
+[6/18/2025, 6:51:56 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Shield Master General Feat
+General Feat (Prerequisites: Level 4+, Shield Training)								You gain the following benefits. Ability Score Increase. Increase your Strength score by 1, to a maximum of 20.
+Shield Bash. If you attack a creature within 5 feet of you as part of the Attack action and hit with a Melee weapon, you can immediately bash the target with your Shield if it's equipped, forcing the target to make a Strength saving throw (DC 8 plus your Strength modifier and Proficiency Bonus). On a failed save, you either push the target 5 feet from you or cause it to have the Prone condition (your choice). You can use this benefit only once on each of your turns.
+Interpose Shield. If you're subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you can take a Reaction to take no damage if you succeed on the saving throw and are holding a Shield.
+DC 14 Strength Saving Throw Strength Saving Throw
+Trigger If you're subjected to an effect that allows you to make a Dexterity saving throw to take only half damage Shield Training Reaction Instantaneous Self
+---------------------------
+[6/18/2025, 6:51:56 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Shield Master General Feat
+General Feat (Prerequisites: Level 4+, Shield Training)								You gain the following benefits. Ability Score Increase. Increase your Strength score by 1, to a maximum of 20.
+Shield Bash. If you attack a creature within 5 feet of you as part of the Attack action and hit with a Melee weapon, you can immediately bash the target with your Shield if it's equipped, forcing the target to make a Strength saving throw (DC 8 plus your Strength modifier and Proficiency Bonus). On a failed save, you either push the target 5 feet from you or cause it to have the Prone condition (your choice). You can use this benefit only once on each of your turns.
+Interpose Shield. If you're subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you can take a Reaction to take no damage if you succeed on the saving throw and are holding a Shield.
+DC 14 Strength Saving Throw Strength Saving Throw
+Trigger If you're subjected to an effect that allows you to make a Dexterity saving throw to take only half damage Shield Training Reaction Instantaneous Self
+---------------------------
+[6/18/2025, 6:52:22 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Healing Hands: 1/1 uses
+---------------------------
+[6/18/2025, 6:58:30 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Sheet Mode : Play
+---------------------------
+[6/18/2025, 7:02:56 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | 0 gp -> 1500 gp
+---------------------------
+[6/18/2025, 7:05:38 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | 0 gp -> 300 gp
+---------------------------
+[6/18/2025, 7:14:55 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+2
+1d6 = 2 = 2
+---------------------------
+[6/18/2025, 7:15:08 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+1
+1d6 = 1 = 1
+---------------------------
+[6/18/2025, 7:15:50 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+1
+1d6 = 1 = 1
+---------------------------
+[6/18/2025, 7:16:03 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+12
+2d6 = 12 = 12
+---------------------------
+[6/18/2025, 7:16:08 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+3
+1d6 = 3 = 3
+---------------------------
+[6/18/2025, 7:16:20 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+2
+1d6 = 2 = 2
+---------------------------
+[6/18/2025, 7:16:26 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+6
+1d6 = 6 = 6
+---------------------------
+[6/18/2025, 7:16:37 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+5
+1d6 = 5 = 5
+---------------------------
+[6/18/2025, 7:16:37 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+9
+1d6 + 6 = 3 + 6 = 9
+---------------------------
+[6/18/2025, 7:16:49 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+21
+1d6 + 15 = 6 + 15 = 21
+---------------------------
+[6/18/2025, 7:17:06 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+23
+1d6 + 21 = 2 + 21 = 23
+---------------------------
+[6/18/2025, 7:17:15 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+15
+1d6 + 9 = 6 + 9 = 15
+---------------------------
+[6/18/2025, 7:17:19 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+25
+1d6 + 23 = 2 + 23 = 25
+---------------------------
+[6/18/2025, 7:17:30 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+19
+1d6 + 15 = 4 + 15 = 19
+---------------------------
+[6/18/2025, 7:17:31 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+33
+2d6 + 25 = 8 + 25 = 33
+---------------------------
+[6/18/2025, 7:18:02 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+21
+1d6 + 19 = 2 + 19 = 21
+---------------------------
+[6/18/2025, 7:18:35 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | 300 gp -> 310 gp
+---------------------------
+[6/18/2025, 7:18:44 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | 310 gp -> 300 gp
+---------------------------
+[6/18/2025, 7:19:09 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sudara | 90 gp -> 390 gp
+---------------------------
+[6/18/2025, 7:19:22 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Shield Master General Feat
+General Feat (Prerequisites: Level 4+, Shield Training)You gain the following benefits.Ability Score Increase. Increase your Strength score by 1, to a maximum of 20.If you take the Attack action on your turn, you can use a bonus action to try to shove a creature within 5 feet of you with your shield. Contest, against Strength/Athletics/Acrobatics.
+Interpose Shield. If you're subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you can take a Reaction to take no damage if you succeed on the saving throw and are holding a Shield.
+Shield Training
+---------------------------
+[6/18/2025, 7:19:46 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+6
+1d6 = 6 = 6
+---------------------------
+[6/18/2025, 7:19:59 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+9
+1d6 + 6 = 3 + 6 = 9
+---------------------------
+[6/18/2025, 7:20:12 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+6
+1d6 = 6 = 6
+---------------------------
+[6/18/2025, 7:20:17 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+14
+1d6 + 9 = 5 + 9 = 14
+---------------------------
+[6/18/2025, 7:20:20 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+9
+1d6 + 6 = 3 + 6 = 9
+---------------------------
+[6/18/2025, 7:20:33 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+11
+1d6 + 9 = 2 + 9 = 11
+---------------------------
+[6/18/2025, 7:20:34 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+19
+1d6 + 14 = 5 + 14 = 19
+---------------------------
+[6/18/2025, 7:20:51 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+25
+1d6 + 19 = 6 + 19 = 25
+---------------------------
+[6/18/2025, 7:20:53 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+13
+1d6 + 11 = 2 + 11 = 13
+---------------------------
+[6/18/2025, 7:21:39 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+30
+1d6 + 25 = 5 + 25 = 30
+---------------------------
+[6/18/2025, 7:21:50 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+17
+1d6 + 13 = 4 + 13 = 17
+---------------------------
+[6/18/2025, 7:22:01 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+22
+1d6 + 17 = 5 + 17 = 22
+---------------------------
+[6/18/2025, 7:22:02 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+35
+1d6 + 30 = 5 + 30 = 35
+---------------------------
+[6/18/2025, 7:22:20 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+24
+1d6 + 22 = 2 + 22 = 24
+---------------------------
+[6/18/2025, 7:22:23 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+41
+1d6 + 35 = 6 + 35 = 41
+---------------------------
+[6/18/2025, 7:22:35 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+25
+1d6 + 24 = 1 + 24 = 25
+---------------------------
+[6/18/2025, 7:23:02 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Sheet Mode : Edit
+---------------------------
+[6/18/2025, 7:23:04 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Sheet Mode : Play
+---------------------------
+[6/18/2025, 7:23:05 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Sheet Mode : Edit
+---------------------------
+[6/18/2025, 7:23:06 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | Sheet Mode : Play
+---------------------------
+[6/18/2025, 7:23:10 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+4
+1d6 = 4 = 4
+---------------------------
+[6/18/2025, 7:23:16 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+9
+1d6 + 4 = 5 + 4 = 9
+---------------------------
+[6/18/2025, 7:23:25 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+11
+1d6 + 9 = 2 + 9 = 11
+---------------------------
+[6/18/2025, 7:23:31 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+16
+1d6 + 11 = 5 + 11 = 16
+---------------------------
+[6/18/2025, 7:23:37 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+21
+1d6 + 16 = 5 + 16 = 21
+---------------------------
+[6/18/2025, 7:23:44 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+27
+1d6 + 21 = 6 + 21 = 27
+---------------------------
+[6/18/2025, 7:23:52 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+28
+1d6 + 27 = 1 + 27 = 28
+---------------------------
+[6/18/2025, 7:25:29 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+1
+1d6 = 1 = 1
+---------------------------
+[6/18/2025, 7:26:10 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | 300 gp -> 282 gp
+---------------------------
+[6/18/2025, 7:26:32 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+6
+1d6 = 6 = 6
+---------------------------
+[6/18/2025, 7:26:30 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+1
+1d6 = 1 = 1
+---------------------------
+[6/18/2025, 7:26:43 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | 282 gp -> 272 gp
+---------------------------
+[6/18/2025, 7:27:00 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+5
+1d6 = 5 = 5
+---------------------------
+[6/18/2025, 7:27:17 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+10
+1d6 + 6 = 4 + 6 = 10
+---------------------------
+[6/18/2025, 7:27:18 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+6
+1d6 = 6 = 6
+---------------------------
+[6/18/2025, 7:27:25 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+14
+1d6 + 10 = 4 + 10 = 14
+---------------------------
+[6/18/2025, 7:27:40 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+9
+1d6 + 5 = 4 + 5 = 9
+---------------------------
+[6/18/2025, 7:27:43 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+19
+1d6 + 14 = 5 + 14 = 19
+---------------------------
+[6/18/2025, 7:27:52 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+21
+1d6 + 19 = 2 + 19 = 21
+---------------------------
+[6/18/2025, 7:27:51 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+15
+1d6 + 9 = 6 + 9 = 15
+---------------------------
+[6/18/2025, 7:28:00 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+8
+1d6 + 6 = 2 + 6 = 8
+---------------------------
+[6/18/2025, 7:28:01 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+23
+1d6 + 21 = 2 + 21 = 23
+---------------------------
+[6/18/2025, 7:28:06 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+21
+1d6 + 15 = 6 + 15 = 21
+---------------------------
+[6/18/2025, 7:28:12 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+25
+1d6 + 23 = 2 + 23 = 25
+---------------------------
+[6/18/2025, 7:28:19 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+25
+1d6 + 21 = 4 + 21 = 25
+---------------------------
+[6/18/2025, 7:28:19 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+14
+1d6 + 8 = 6 + 8 = 14
+---------------------------
+[6/18/2025, 7:28:29 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+2
+1d6 = 2 = 2
+---------------------------
+[6/18/2025, 7:28:35 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+29
+1d6 + 25 = 4 + 25 = 29
+---------------------------
+[6/18/2025, 7:28:47 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+34
+1d6 + 29 = 5 + 29 = 34
+---------------------------
+[6/18/2025, 7:29:07 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+7
+1d6 + 2 = 5 + 2 = 7
+---------------------------
+[6/18/2025, 7:29:14 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+14+
+---------------------------
+[6/18/2025, 7:29:14 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+13
+1d6 + 7 = 6 + 7 = 13
+---------------------------
+[6/18/2025, 7:29:19 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+15
+1d6 + 13 = 2 + 13 = 15
+---------------------------
+[6/18/2025, 7:29:23 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+20
+1d6 + 15 = 5 + 15 = 20
+---------------------------
+[6/18/2025, 7:29:26 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+25
+1d6 + 20 = 5 + 20 = 25
+---------------------------
+[6/18/2025, 7:29:33 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+16
+1d6 + 14 = 2 + 14 = 16
+---------------------------
+[6/18/2025, 7:29:51 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+17
+1d6 + 16 = 1 + 16 = 17
+---------------------------
+[6/18/2025, 7:30:06 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+27
+1d6 + 25 = 2 + 25 = 27
+---------------------------
+[6/18/2025, 7:30:11 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+40
+1d6 + 34 = 6 + 34 = 40
+---------------------------
+[6/18/2025, 7:30:11 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+6
+1d6 = 6 = 6
+---------------------------
+[6/18/2025, 7:30:13 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+32
+1d6 + 27 = 5 + 27 = 32
+---------------------------
+[6/18/2025, 7:30:21 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+46
+1d6 + 40 = 6 + 40 = 46
+---------------------------
+[6/18/2025, 7:30:22 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+33
+1d6 + 32 = 1 + 32 = 33
+---------------------------
+[6/18/2025, 7:30:27 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+12
+1d6 + 6 = 6 + 6 = 12
+---------------------------
+[6/18/2025, 7:30:31 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+3
+1d6 = 3 = 3
+---------------------------
+[6/18/2025, 7:30:33 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+49
+1d6 + 46 = 3 + 46 = 49
+---------------------------
+[6/18/2025, 7:30:36 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+4
+1d6 + 3 = 1 + 3 = 4
+---------------------------
+[6/18/2025, 7:30:37 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+14
+1d6 + 12 = 2 + 12 = 14
+---------------------------
+[6/18/2025, 7:30:56 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+51
+1d6 + 49 = 2 + 49 = 51
+---------------------------
+[6/18/2025, 7:31:02 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+30
+1d6 + 25 = 5 + 25 = 30
+---------------------------
+[6/18/2025, 7:31:06 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+33
+1d6 + 30 = 3 + 30 = 33
+---------------------------
+[6/18/2025, 7:31:09 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+38
+1d6 + 33 = 5 + 33 = 38
+---------------------------
+[6/18/2025, 7:31:13 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+39
+1d6 + 38 = 1 + 38 = 39
+---------------------------
+[6/18/2025, 7:31:23 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+54
+1d6 + 51 = 3 + 51 = 54
+---------------------------
+[6/18/2025, 7:31:26 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+4
+1d6 + 3 = 1 + 3 = 4
+---------------------------
+[6/18/2025, 7:31:32 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+16
+1d6 + 14 = 2 + 14 = 16
+---------------------------
+[6/18/2025, 7:31:35 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+57
+1d6 + 54 = 3 + 54 = 57
+---------------------------
+[6/18/2025, 7:31:42 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+21
+1d6 + 16 = 5 + 16 = 21
+---------------------------
+[6/18/2025, 7:31:48 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+58
+1d6 + 57 = 1 + 57 = 58
+---------------------------
+[6/18/2025, 7:31:48 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+24
+1d6 + 21 = 3 + 21 = 24
+---------------------------
+[6/18/2025, 7:31:56 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+28
+1d6 + 24 = 4 + 24 = 28
+---------------------------
+[6/18/2025, 7:32:04 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+11
+1d6 + 6 = 5 + 6 = 11
+---------------------------
+[6/18/2025, 7:33:09 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+39
+1d6 + 33 = 6 + 33 = 39
+---------------------------
+[6/18/2025, 7:33:40 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+29
+1d6 + 25 = 4 + 25 = 29
+---------------------------
+[6/18/2025, 7:33:45 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+35
+1d6 + 29 = 6 + 29 = 35
+---------------------------
+[6/18/2025, 7:33:49 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+37
+1d6 + 35 = 2 + 35 = 37
+---------------------------
+[6/18/2025, 7:33:53 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+40
+1d6 + 37 = 3 + 37 = 40
+---------------------------
+[6/18/2025, 7:33:57 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+43
+1d6 + 40 = 3 + 40 = 43
+---------------------------
+[6/18/2025, 7:34:00 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+47
+1d6 + 43 = 4 + 43 = 47
+---------------------------
+[6/18/2025, 7:34:05 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+52
+1d6 + 47 = 5 + 47 = 52
+---------------------------
+[6/18/2025, 7:34:15 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+56
+1d6 + 51 = 5 + 51 = 56
+---------------------------
+[6/18/2025, 7:34:21 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+61
+1d6 + 56 = 5 + 56 = 61
+---------------------------
+[6/18/2025, 7:34:25 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+42
+1d6 + 39 = 3 + 39 = 42
+---------------------------
+[6/18/2025, 7:34:30 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+67
+1d6 + 61 = 6 + 61 = 67
+---------------------------
+[6/18/2025, 7:34:31 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+47
+1d6 + 42 = 5 + 42 = 47
+---------------------------
+[6/18/2025, 7:34:39 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+48
+1d6 + 47 = 1 + 47 = 48
+---------------------------
+[6/18/2025, 7:34:47 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+72
+1d6 + 67 = 5 + 67 = 72
+---------------------------
+[6/18/2025, 7:34:56 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+27
+1d6 + 25 = 2 + 25 = 27
+---------------------------
+[6/18/2025, 7:35:01 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+29
+1d6 + 27 = 2 + 27 = 29
+---------------------------
+[6/18/2025, 7:35:07 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+35
+1d6 + 29 = 6 + 29 = 35
+---------------------------
+[6/18/2025, 7:35:15 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+36
+1d6 + 35 = 1 + 35 = 36
+---------------------------
+[6/18/2025, 7:35:22 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+56
+1d6 + 52 = 4 + 52 = 56
+---------------------------
+[6/18/2025, 7:35:25 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+62
+1d6 + 56 = 6 + 56 = 62
+---------------------------
+[6/18/2025, 7:35:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+65
+1d6 + 62 = 3 + 62 = 65
+---------------------------
+[6/18/2025, 7:35:35 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+67
+1d6 + 65 = 2 + 65 = 67
+---------------------------
+[6/18/2025, 7:35:38 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+73
+1d6 + 67 = 6 + 67 = 73
+---------------------------
+[6/18/2025, 7:35:42 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+76
+1d6 + 73 = 3 + 73 = 76
+---------------------------
+[6/18/2025, 7:35:45 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+77
+1d6 + 76 = 1 + 76 = 77
+---------------------------
+[6/18/2025, 7:35:54 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+45
+1d6 + 39 = 6 + 39 = 45
+---------------------------
+[6/18/2025, 7:35:57 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+77
+1d6 + 72 = 5 + 72 = 77
+---------------------------
+[6/18/2025, 7:36:04 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+49
+1d6 + 45 = 4 + 45 = 49
+---------------------------
+[6/18/2025, 7:36:12 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+54
+1d6 + 49 = 5 + 49 = 54
+---------------------------
+[6/18/2025, 7:36:14 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+82
+1d6 + 77 = 5 + 77 = 82
+---------------------------
+[6/18/2025, 7:36:21 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+58
+1d6 + 54 = 4 + 54 = 58
+---------------------------
+[6/18/2025, 7:36:24 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+87
+1d6 + 82 = 5 + 82 = 87
+---------------------------
+[6/18/2025, 7:36:28 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+63
+1d6 + 58 = 5 + 58 = 63
+---------------------------
+[6/18/2025, 7:36:32 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+92
+1d6 + 87 = 5 + 87 = 92
+---------------------------
+[6/18/2025, 7:36:35 PM] BishopMajik
+{Game Time: Che 19, 1492 06:00}
+64
+1d6 + 63 = 1 + 63 = 64
+---------------------------
+[6/18/2025, 7:36:57 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+56
+1d6 + 52 = 4 + 52 = 56
+---------------------------
+[6/18/2025, 7:37:01 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+59
+1d6 + 56 = 3 + 56 = 59
+---------------------------
+[6/18/2025, 7:37:04 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+65
+1d6 + 59 = 6 + 59 = 65
+---------------------------
+[6/18/2025, 7:37:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+69
+1d6 + 65 = 4 + 65 = 69
+---------------------------
+[6/18/2025, 7:37:11 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+74
+1d6 + 69 = 5 + 69 = 74
+---------------------------
+[6/18/2025, 7:37:16 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+78
+1d6 + 74 = 4 + 74 = 78
+---------------------------
+[6/18/2025, 7:37:20 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+84
+1d6 + 78 = 6 + 78 = 84
+---------------------------
+[6/18/2025, 7:37:25 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+90
+1d6 + 84 = 6 + 84 = 90
+---------------------------
+[6/18/2025, 7:37:29 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+96
+1d6 + 90 = 6 + 90 = 96
+---------------------------
+[6/18/2025, 7:37:33 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+99
+1d6 + 96 = 3 + 96 = 99
+---------------------------
+[6/18/2025, 7:37:43 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+101
+1d6 + 99 = 2 + 99 = 101
+---------------------------
+[6/18/2025, 7:41:04 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath takes a long rest.
+---------------------------
+[6/18/2025, 7:41:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | 1st Level Spell Slots: 2/2 -> 2/2
+---------------------------
+[6/18/2025, 7:42:10 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+Sudara takes a long rest.
+---------------------------
+[6/18/2025, 7:42:20 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | 1st Level Spell Slots: 1/3 -> 1/3
+---------------------------
+[6/18/2025, 7:42:25 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | 1st Level Spell Slots: 1/3 -> 1/3
+---------------------------
+[6/18/2025, 7:42:37 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | 1st Level Spell Slots: 0/3 -> 3/3
+---------------------------
+[6/18/2025, 7:42:39 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah takes a long rest.
+---------------------------
+[6/18/2025, 7:42:38 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | 1st Level Spell Slots: 1/3 -> 1/3
+---------------------------
+[6/18/2025, 7:44:17 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | 264 gp -> 564 gp
+---------------------------
+[6/18/2025, 7:44:19 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | 1st Level Spell Slots: 1/3 -> 1/3
+---------------------------
+[6/18/2025, 7:44:51 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | 1st Level Spell Slots: 1/3 -> 1/3
+---------------------------
+[6/18/2025, 7:45:28 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | 1st Level Spell Slots: 1/3 -> 1/3
+---------------------------
+[6/18/2025, 7:52:49 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+1d20 + 1 = 7 + 1 = 8
+---------------------------
+[6/18/2025, 7:53:27 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+1d20 + 3 + 2 = 1 + 3 + 2 = 6
+---------------------------
+[6/18/2025, 7:58:38 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | 564 gp -> 563 gp
+---------------------------
+[6/18/2025, 8:03:05 PM] Yagra Stonefist
+{Game Time: Che 19, 1492 06:00}
+14
+1d20 + 2 = 12 + 2 = 14
+---------------------------
+[6/18/2025, 8:10:59 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | 432 gp -> 428 gp
+---------------------------
+[6/18/2025, 8:12:47 PM] Four-Armed Troll
+{Game Time: Che 19, 1492 06:00}
+4
+1d20 + 1 = 3 + 1 = 4
+---------------------------
+[6/18/2025, 8:12:54 PM] Durnan
+{Game Time: Che 19, 1492 06:00}
+4
+1d20 + 2 = 2 + 2 = 4
+---------------------------
+[6/18/2025, 8:12:59 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+17
+1d20 + 3 = 14 + 3 = 17
+---------------------------
+[6/18/2025, 8:13:03 PM] ChaserXL
+{Game Time: Che 19, 1492 06:00}
+22
+1d20 + 4 = 18 + 4 = 22
+---------------------------
+[6/18/2025, 8:13:08 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+21
+1d20 + 1 = 20 + 1 = 21
+---------------------------
+[6/18/2025, 8:13:11 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+13
+1d20 + 4 = 9 + 4 = 13
+---------------------------
+[6/18/2025, 8:13:45 PM] Ortiz Alehammer
+{Game Time: Che 19, 1492 06:00}
+14
+1d20 + 4 = 10 + 4 = 14
+---------------------------
+[6/18/2025, 8:14:04 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+
+---------------------------
+[6/18/2025, 8:14:15 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+Shortbow Simple Ranged
+Mastery: Vex. If you hit a creature with this weapon and deal damage to the creature, you have Advantage on your next attack roll against that creature before the end of your next turn.
+Attack  Damage
+Action Instantaneous 80/320 ft Equipped Proficient
+---------------------------
+[6/18/2025, 8:14:21 PM] Four-Armed Troll
+{Game Time: Che 19, 1492 06:00}
+Regeneration Feature
+The troll regains 10 hit points at the start of its turn. If the troll takes acid or fire damage, this trait doesn't function at the start of the troll's next turn. The troll dies only if it starts its turn with 0 hit points and doesn't regenerate.
+Healing
+---------------------------
+[6/18/2025, 8:14:26 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+Shortbow Simple Ranged
+Mastery: Vex. If you hit a creature with this weapon and deal damage to the creature, you have Advantage on your next attack roll against that creature before the end of your next turn.
+Attack  Damage
+Action Instantaneous 80/320 ft Equipped Proficient
+---------------------------
+[6/18/2025, 8:14:28 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 13 + 4 + 2 = 19
+---------------------------
+[6/18/2025, 8:14:28 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sudara | Arrow: 50 → 49
+---------------------------
+[6/18/2025, 8:14:37 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+1d6 + 4 = 5 + 4 = 9
+---------------------------
+[6/18/2025, 8:14:41 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Four-Armed Troll | HP : 80 → 71
+---------------------------
+[6/18/2025, 8:16:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | 1st Level Spell Slots: 2/2 -> 1/2
+---------------------------
+[6/18/2025, 8:16:04 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Thunderous Smite (Legacy) 1st Level • Evocation
+The first time you hit with a melee weapon attack during this spell’s duration, your weapon rings with thunder that is audible within 300 feet of you, and the attack deals an extra 2d6 thunder damage to the target. Additionally, if the target is a creature, it must succeed on a Strength saving throw or be pushed 10 feet away from you and knocked prone.
+DC 14 Strength Saving Throw Strength Saving Throw  Damage  Consume Resource  Refund Resource
+Concentration V Bonus Action 1 minute Self Any creatures
+---------------------------
+[6/18/2025, 8:16:34 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Battleaxe Martial Melee
+Proficiency with a Battleaxe allows you to add your proficiency bonus to the attack roll for any attack you make with it.This weapon has the following mastery property. To use this property, you must have a feature that lets you use it.Topple. If you hit a creature with this weapon, you can force the creature to make a Constitution saving throw (DC 8 plus the ability modifier used to make the attack roll and your Proficiency Bonus). On a failed save, the creature has the Prone condition.
+Attack  Damage
+Action 5 ft reach 5 ft Equipped Proficient
+---------------------------
+[6/18/2025, 8:16:37 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 11 + 4 + 2 = 17
+---------------------------
+[6/18/2025, 8:16:45 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+1d8 + 2 + 4 = 5 + 2 + 4 = 11
+---------------------------
+[6/18/2025, 8:16:55 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+2d6 = 7 = 7
+---------------------------
+[6/18/2025, 8:17:04 PM] Four-Armed Troll
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 0 = 13 + 4 + 0 = 17
+---------------------------
+[6/18/2025, 8:17:12 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+Fury of the Small Feature
+When you damage a creature with an attack or a spell and the creature’s size is larger than yours, you can cause the attack or spell to deal extra damage to the creature. The extra damage equals your proficiency bonus.You can use this trait a number of times equal to your proficiency bonus, regaining all expended uses when you finish a long rest, and you can use it no more than once per turn.
+Damage  Consume Resource  Refund Resource
+Special Instantaneous 5 ft 1 creature
+---------------------------
+[6/18/2025, 8:17:16 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Four-Armed Troll | HP : 71 → 60
+---------------------------
+[6/18/2025, 8:17:23 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Four-Armed Troll | HP : 60 → 56
+---------------------------
+[6/18/2025, 8:17:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | 1st Level Spell Slots: 1/2 -> 0/2
+---------------------------
+[6/18/2025, 8:17:32 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Divine Smite 1st Level • Evocation
+The target takes an extra 2d8 Radiant damage from the attack. The damage increases by 1d8 if the target is a Fiend or an Undead.
+Using a Higher-Level Spell Slot. The damage increases by 1d8 for each spell slot level above 1.
+Damage  Place Measured Template  Consume Resource  Refund Resource
+V Bonus Action Instantaneous Self
+---------------------------
+[6/18/2025, 8:17:35 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+2d8 = 11 = 11
+---------------------------
+[6/18/2025, 8:17:46 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Four-Armed Troll | HP : 56 → 45
+---------------------------
+[6/18/2025, 8:17:51 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+BishopMajik has changed prepared spells: Spell Level: 1, Chaos Bolt For Havik the Stitch while in combat.
+---------------------------
+[6/18/2025, 8:17:51 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch prepared a spell: Chaos Bolt
+---------------------------
+[6/18/2025, 8:17:59 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | 1st Level Spell Slots: 1/3 -> 0/3
+---------------------------
+[6/18/2025, 8:18:01 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+BishopMajik has changed prepared spells: Spell Level: 1, Chaos Bolt For Havik the Stitch while in combat.
+---------------------------
+[6/18/2025, 8:18:01 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch unprepared a spell: Chaos Bolt
+---------------------------
+[6/18/2025, 8:20:04 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | 1st Level Spell Slots: 0/3 -> 1/3
+---------------------------
+[6/18/2025, 8:20:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | 1st Level Spell Slots: 1/3 -> 0/3
+---------------------------
+[6/18/2025, 8:20:49 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | 1st Level Spell Slots: 0/3 -> 1/3
+---------------------------
+[6/18/2025, 8:20:49 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | 1st Level Spell Slots: 1/3 -> 2/3
+---------------------------
+[6/18/2025, 8:20:50 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | 1st Level Spell Slots: 2/3 -> 3/3
+---------------------------
+[6/18/2025, 8:21:03 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | 1st Level Spell Slots: 3/3 -> 2/3
+---------------------------
+[6/18/2025, 8:21:04 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+Chaos Bolt 1st Level • Evocation
+You hurl an undulating, warbling mass of chaotic energy at one creature in range. Make a ranged spell attack against the target. On a hit, the target takes 2d8 + 1d6 damage. Choose one of the d8s. The number rolled on that die determines the attack's damage type, as shown below.Chaos Boltd8Damage Type1Acid2Cold3Fire4Force5Lightning6Poison7Psychic8ThunderIf you roll the same number on both d8s, the chaotic energy leaps from the target to a different creature of your choice within 30 feet of it. Make a new attack roll against the new target, and make a new damage roll, which could cause the chaotic energy to leap again.A creature can be targeted only once by each casting of this spell.
+At Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, each target takes 1d6 extra damage of the type rolled for each slot level above 1st.
+Attack  Damage  Consume Resource  Refund Resource
+V, S Action Instantaneous 120 ft 1 creature
+---------------------------
+[6/18/2025, 8:21:07 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 9 + 4 + 2 = 15
+---------------------------
+[6/18/2025, 8:21:14 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 6 + 4 + 2 = 12
+---------------------------
+[6/18/2025, 8:21:44 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+2
+1d8 = 2 = 2
+---------------------------
+[6/18/2025, 8:22:06 PM] Four-Armed Troll
+{Game Time: Che 19, 1492 06:00}
+./r 2d8+1d6
+---------------------------
+[6/18/2025, 8:22:22 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Four-Armed Troll | HP : 45 → 33
+---------------------------
+[6/18/2025, 8:22:38 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+Toll the Dead Necromancy
+You point at one creature you can see within range, and the single chime of a dolorous bell is audible within 10 feet of the target. The target must succeed on a Wisdom saving throw or take 1d8 Necrotic damage. If the target is missing any of its Hit Points, it instead takes 1d12 Necrotic damage.
+Cantrip Upgrade. The damage increases by one die when you reach levels 5 (2d8 or 2d12 ), 11 (3d8 or 3d12 ), and 17 (4d8 or 4d12 ).
+DC 14 Wisdom Saving Throw Wisdom Saving Throw  Damage
+V, S Action Instantaneous 60 ft 1 creature
+---------------------------
+[6/18/2025, 8:22:46 PM] Four-Armed Troll
+{Game Time: Che 19, 1492 06:00}
+1d20 - 1 + 0 = 3 - 1 + 0 = 2
+---------------------------
+[6/18/2025, 8:22:54 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+1d12 = 7 = 7
+---------------------------
+[6/18/2025, 8:23:04 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Four-Armed Troll | HP : 33 → 26
+---------------------------
+[6/18/2025, 8:23:36 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Sheet Mode : Edit
+---------------------------
+[6/18/2025, 8:24:38 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+Rapier Martial Melee
+Mastery: Vex. If you hit a creature with this weapon and deal damage to the creature, you have Advantage on your next attack roll against that creature before the end of your next turn.
+Attack  Damage
+Action Instantaneous reach 5 ft Equipped Proficient
+---------------------------
+[6/18/2025, 8:24:44 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+2d20kh + 4 + 2 = 16 + 4 + 2 = 22
+---------------------------
+[6/18/2025, 8:24:56 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+Rapier Martial Melee
+Mastery: Vex. If you hit a creature with this weapon and deal damage to the creature, you have Advantage on your next attack roll against that creature before the end of your next turn.
+Attack  Damage
+Action Instantaneous reach 5 ft Equipped Proficient
+---------------------------
+[6/18/2025, 8:25:05 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+1d8 + 4 = 1 + 4 = 5
+---------------------------
+[6/18/2025, 8:25:10 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+Sneak Attack Feature
+You know how to strike subtly and exploit a foe's distraction. Once per turn, you can deal an extra 1d6 damage to one creature you hit with an attack roll if you have Advantage on the roll and the attack uses a Finesse or a Ranged weapon. The extra damage's type is the same as the weapon's type.You don't need Advantage on the attack roll if at least one of your allies is within 5 feet of the target, the ally doesn't have the Incapacitated condition, and you don't have Disadvantage on the attack roll.The extra damage increases as you gain Rogue levels, as shown in the Sneak Attack column of the Rogue Features table.
+Damage
+Rogue 1
+---------------------------
+[6/18/2025, 8:25:13 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Four-Armed Troll | HP : 26 → 21
+---------------------------
+[6/18/2025, 8:25:23 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+1d6 = 4 = 4
+---------------------------
+[6/18/2025, 8:25:27 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Four-Armed Troll | HP : 21 → 17
+---------------------------
+[6/18/2025, 8:25:41 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+Strike of the Giants Feature
+Prerequisites: Martial Proficiency or Giant Foundling								You have absorbed primeval magic that gives you an echo of the might of giants. When you take this feat, choose one of the benefits listed below. Once per turn, when you hit a target with a melee weapon attack or a ranged weapon attack using a thrown weapon, you can imbue the attack with an additional effect depending on the benefit you chose: Cloud Strike. The target takes an extra 1d4 thunder damage. If the target is a creature, it must succeed on a Wisdom saving throw, or you become invisible to it until the start of your next turn or until immediately after you make an attack roll or cast a spell.
+Fire Strike. The target takes an extra 1d10 fire damage.
+Frost Strike. The target takes an extra 1d6 cold damage. If the target is a creature, it must succeed on a Constitution saving throw, or its speed is reduced to 0 until the start of your next turn.
+Hill Strike. The target takes an extra 1d6 damage of the weapon's type. If the target is a creature, it must succeed on a Strength saving throw or have the prone condition.
+Stone Strike. The target takes an extra 1d6 force damage. If the target is a creature, it must succeed on a Strength saving throw or be pushed 10 feet from you in a straight line.
+Storm Strike. The target takes an extra 1d6 lightning damage. If the target is a creature, it must succeed on a Constitution saving throw, or it has disadvantage on attack rolls until the start of your next turn.The saving throw DC for these effects equals 8 + your proficiency bonus + your Strength or Constitution modifier.You can use this feat a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.
+DC 10 Wisdom Saving Throw Wisdom Saving Throw  Damage  Consume Resource  Refund Resource
+Martial Proficiency or Giant Foundling
+---------------------------
+[6/18/2025, 8:25:51 PM] Four-Armed Troll
+{Game Time: Che 19, 1492 06:00}
+1d20 - 1 + 0 = 17 - 1 + 0 = 16
+---------------------------
+[6/18/2025, 8:26:04 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+1d6 = 6 = 6
+---------------------------
+[6/18/2025, 8:26:08 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Four-Armed Troll | HP : 17 → 11
+---------------------------
+[6/18/2025, 8:26:59 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+Dagger Simple Melee
+Mastery: Nick. When you make the extra attack of the Light property, you can make it as part of the Attack action instead of as a Bonus Action. You can make this extra attack only once per turn.
+Attack  Damage
+Action Instantaneous 20/60 ft reach 5 ft Equipped Proficient
+---------------------------
+[6/18/2025, 8:27:19 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 4 + 4 + 2 = 10
+---------------------------
+[6/18/2025, 8:28:13 PM] Four-Armed Troll
+{Game Time: Che 19, 1492 06:00}
+Bite Natural
+Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 7 (1d6 + 4 piercing) damage.
+Attack  Damage
+Action Instantaneous 5 ft reach 5 ft Not Equipped Proficient
+---------------------------
+[6/18/2025, 8:28:15 PM] Four-Armed Troll
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 3 = 7 + 4 + 3 = 14
+---------------------------
+[6/18/2025, 8:28:25 PM] Four-Armed Troll
+{Game Time: Che 19, 1492 06:00}
+Claw Natural
+Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4 slashing) damage.
+Attack  Damage
+Action Instantaneous 5 ft reach 5 ft Not Equipped Proficient
+---------------------------
+[6/18/2025, 8:28:27 PM] Four-Armed Troll
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 3 = 19 + 4 + 3 = 26
+---------------------------
+[6/18/2025, 8:28:32 PM] Four-Armed Troll
+{Game Time: Che 19, 1492 06:00}
+Claw Natural
+Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4 slashing) damage.
+Attack  Damage
+Action Instantaneous 5 ft reach 5 ft Not Equipped Proficient
+---------------------------
+[6/18/2025, 8:28:36 PM] Four-Armed Troll
+{Game Time: Che 19, 1492 06:00}
+2d6 + 4 = 8 + 4 = 12
+---------------------------
+[6/18/2025, 8:28:42 PM] Four-Armed Troll
+{Game Time: Che 19, 1492 06:00}
+Regeneration Feature
+The troll regains 10 hit points at the start of its turn. If the troll takes acid or fire damage, this trait doesn't function at the start of the troll's next turn. The troll dies only if it starts its turn with 0 hit points and doesn't regenerate.
+Healing
+---------------------------
+[6/18/2025, 8:28:51 PM] Four-Armed Troll
+{Game Time: Che 19, 1492 06:00}
+10 = 10 = 10
+---------------------------
+[6/18/2025, 8:29:03 PM] Four-Armed Troll
+{Game Time: Che 19, 1492 06:00}
+Regeneration Feature
+The troll regains 10 hit points at the start of its turn. If the troll takes acid or fire damage, this trait doesn't function at the start of the troll's next turn. The troll dies only if it starts its turn with 0 hit points and doesn't regenerate.
+Healing
+---------------------------
+[6/18/2025, 8:29:14 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Four-Armed Troll | HP : 11 → 21
+---------------------------
+[6/18/2025, 8:29:20 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+
+---------------------------
+[6/18/2025, 8:29:25 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+Shortbow Simple Ranged
+Mastery: Vex. If you hit a creature with this weapon and deal damage to the creature, you have Advantage on your next attack roll against that creature before the end of your next turn.
+Attack  Damage
+Action Instantaneous 80/320 ft Equipped Proficient
+---------------------------
+[6/18/2025, 8:29:34 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+Shortbow Simple Ranged
+Mastery: Vex. If you hit a creature with this weapon and deal damage to the creature, you have Advantage on your next attack roll against that creature before the end of your next turn.
+Attack  Damage
+Action Instantaneous 80/320 ft Equipped Proficient
+---------------------------
+[6/18/2025, 8:29:36 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 20 + 4 + 2 = 26
+---------------------------
+[6/18/2025, 8:29:36 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sudara | Arrow: 49 → 48
+---------------------------
+[6/18/2025, 8:29:53 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+1d6 + 4 = 3 + 4 = 7
+---------------------------
+[6/18/2025, 8:30:06 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Four-Armed Troll | HP : 21 → 8
+---------------------------
+[6/18/2025, 8:30:49 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Shield Master General Feat
+General Feat (Prerequisites: Level 4+, Shield Training)You gain the following benefits.Ability Score Increase. Increase your Strength score by 1, to a maximum of 20.If you take the Attack action on your turn, you can use a bonus action to try to shove a creature within 5 feet of you with your shield. Contest, against Strength/Athletics/Acrobatics.
+Interpose Shield. If you're subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you can take a Reaction to take no damage if you succeed on the saving throw and are holding a Shield.
+Shield Training
+---------------------------
+[6/18/2025, 8:30:55 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 15 + 4 + 2 = 21
+---------------------------
+[6/18/2025, 8:31:07 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+7
+1d20 + 4 = 3 + 4 = 7
+---------------------------
+[6/18/2025, 8:32:03 PM] Four-Armed Troll
+{Game Time: Che 19, 1492 06:00}
+1d20 + 1 + 0 + 0 = 19 + 1 + 0 + 0 = 20
+---------------------------
+[6/18/2025, 8:32:31 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Battleaxe Martial Melee
+Proficiency with a Battleaxe allows you to add your proficiency bonus to the attack roll for any attack you make with it.This weapon has the following mastery property. To use this property, you must have a feature that lets you use it.Topple. If you hit a creature with this weapon, you can force the creature to make a Constitution saving throw (DC 8 plus the ability modifier used to make the attack roll and your Proficiency Bonus). On a failed save, the creature has the Prone condition.
+Attack  Damage
+Action 5 ft reach 5 ft Equipped Proficient
+---------------------------
+[6/18/2025, 8:32:33 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+2d20kh + 4 + 2 = 20 + 4 + 2 = 26
+---------------------------
+[6/18/2025, 8:32:44 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+2d8 + 2 + 4 = 11 + 2 + 4 = 17
+---------------------------
+[6/18/2025, 8:33:41 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Sheet Mode : Play
+---------------------------
+[6/18/2025, 8:34:09 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+
+---------------------------
+[6/18/2025, 8:48:34 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Sheet Mode : Edit
+---------------------------
+[6/18/2025, 8:52:10 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Sheet Mode : Edit
+---------------------------
+[6/18/2025, 8:52:23 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Sheet Mode : Edit
+---------------------------
+[6/18/2025, 8:52:53 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Sheet Mode : Play
+---------------------------
+[6/18/2025, 8:55:22 PM] Volothamp "Volo" Geddarm
+{Game Time: Che 19, 1492 06:00}
+Floon
+---------------------------
+[6/18/2025, 8:58:36 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 = 5 + 4 = 9
+---------------------------
+[6/18/2025, 8:59:45 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | 563 gp -> 573 gp
+---------------------------
+[6/18/2025, 9:00:25 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+1d20 + 3 + 2 = 11 + 3 + 2 = 16
+---------------------------
+[6/18/2025, 9:09:11 PM] Mattrim "Threestrings" Mereg
+{Game Time: Che 19, 1492 06:00}
+Healing Word 1st Level • Abjuration
+A creature of your choice that you can see within range regains Hit Points equal to 2d4 plus your spellcasting ability modifier.
+Using a Higher-Level Spell Slot. The healing increases by 2d4 for each spell slot level above 1.
+Healing  Consume Resource  Refund Resource
+V Bonus Action Instantaneous 60 ft Any creatures
+---------------------------
+[6/18/2025, 9:09:13 PM] Mattrim "Threestrings" Mereg
+{Game Time: Che 19, 1492 06:00}
+2d4 + 2 = 6 + 2 = 8
+---------------------------
+[6/18/2025, 9:13:00 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | HP : 26 → 22
+---------------------------
+[6/18/2025, 9:13:01 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+DC 10 Concentration  Concentration
+---------------------------
+[6/18/2025, 9:13:20 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Lay On Hands Feature
+Your blessed touch can heal wounds. You have a pool of healing power that replenishes when you take a long rest. With that pool, you can restore a total number of hit points equal to your paladin level × 5.As an action, you can touch a creature and draw power from the pool to restore a number of hit points to that creature, up to the maximum amount remaining in your pool.Alternatively, you can expend 5 hit points from your pool of healing to cure the target of one disease or neutralize one poison affecting it. You can cure multiple diseases and neutralize multiple poisons with a single use of Lay on Hands, expending hit points separately for each one.This feature has no effect on undead and constructs.
+Healing  Consume Resource  Refund Resource
+Action Instantaneous Touch 1 creature
+---------------------------
+[6/18/2025, 9:13:27 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sir Kalen Solarath | HP : 22 → 26
+---------------------------
+[6/18/2025, 9:13:29 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | 428 gp -> 418 gp
+---------------------------
+[6/18/2025, 9:21:52 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | 272 gp -> 271 gp
+---------------------------
+[6/18/2025, 9:22:07 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | 2 sp -> 77 sp
+---------------------------
+[6/18/2025, 9:24:17 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | 418 gp -> 417 gp
+---------------------------
+[6/18/2025, 9:25:32 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+2d20kh + 0 + 2 = 11 + 0 + 2 = 13
+---------------------------
+[6/18/2025, 9:26:38 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+2d20kh + 0 + 2 = 18 + 0 + 2 = 20
+---------------------------
+[6/18/2025, 9:29:23 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+2d20kh + 4 + 2 = 20 + 4 + 2 = 26
+---------------------------
+[6/18/2025, 9:34:30 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+1d20 + 1 = 8 + 1 = 9
+---------------------------
+[6/18/2025, 9:42:33 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+Guidance Divination
+You touch one willing creature. Once before the spell ends, the target can roll a d4 and add the number rolled to one ability check of its choice. It can roll the die before or after making the ability check. The spell then ends.
+Guidance Roll
+Concentration V, S Action 1 minute Touch 1 creature
+---------------------------
+[6/18/2025, 9:42:44 PM] Ortiz Alehammer
+{Game Time: Che 19, 1492 06:00}
+1d4 = 2 = 2
+---------------------------
+[6/18/2025, 9:43:44 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+1d20 + 2 + 1 = 5 + 2 + 1 = 8
+---------------------------
+[6/18/2025, 9:45:22 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+1d20 + 1 = 4 + 1 = 5
+---------------------------
+[6/18/2025, 9:46:23 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 = 4 + 4 = 8
+---------------------------
+[6/18/2025, 9:47:00 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Safe Haven Feature
+As a faction agent, you have access to a secret network of supporters and operatives who can provide assistance on your adventures. You know a set of secret signs and passwords you can use to identify such operatives, who can provide you with access to a hidden safe house, free room and board, or assistance in finding information. These agents never risk their lives for you or risk revealing their true identities.
+Faction Agent
+---------------------------
+[6/18/2025, 9:47:35 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+Sorcerous Burst Evocation
+You cast sorcerous energy at one creature or object within range. Make a ranged attack roll against the target. On a hit, the target takes 1d8 damage of a type you choose: Acid, Cold, Fire, Lightning, Poison, Psychic, or Thunder.If you roll an 8 on a d8 for this spell, you can roll another d8, and add it to the damage. When you cast this spell, the maximum number of these d8s you can add to the spell's damage equals your spellcasting ability modifier.
+Cantrip Upgrade. The damage increases by 1d8 when you reach levels 5 (2d8 ), 11 (3d8 ), and 17 (4d8 ).
+Attack  Damage
+V, S Action Instantaneous 120 ft 1 creature or object
+---------------------------
+[6/18/2025, 9:47:50 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+1d20 + 1 + 2 = 7 + 1 + 2 = 10
+---------------------------
+[6/18/2025, 9:49:22 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+1d20 + 3 + 2 = 13 + 3 + 2 = 18
+---------------------------
+[6/18/2025, 9:52:41 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+Mage Hand Conjuration
+A spectral, floating hand appears at a point you choose within range. The hand lasts for the duration. The hand vanishes if it is ever more than 30 feet away from you or if you cast this spell again.When you cast the spell, you can use the hand to manipulate an object, open an unlocked door or container, stow or retrieve an item from an open container, or pour the contents out of a vial.As a Magic action on your later turns, you can control the hand thus again. As part of that action, you can move the hand up to 30 feet.The hand can't attack, activate magic items, or carry more than 10 pounds.
+V, S Action 1 minute 30 ft
+---------------------------
+[6/18/2025, 9:53:14 PM] Ortiz Alehammer
+{Game Time: Che 19, 1492 06:00}
+18
+1d20 + 4 = 14 + 4 = 18
+---------------------------
+[6/18/2025, 9:53:14 PM] Ortiz Alehammer
+{Game Time: Che 19, 1492 06:00}
+12
+1d20 + 4 = 8 + 4 = 12
+---------------------------
+[6/18/2025, 9:53:14 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+17
+1d20 + 4 = 13 + 4 = 17
+---------------------------
+[6/18/2025, 9:53:14 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+16
+1d20 + 4 = 12 + 4 = 16
+---------------------------
+[6/18/2025, 9:53:15 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+18
+1d20 + 1 = 17 + 1 = 18
+---------------------------
+[6/18/2025, 9:53:15 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+8
+1d20 + 1 = 7 + 1 = 8
+---------------------------
+[6/18/2025, 9:53:18 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+8
+1d20 + 3 = 5 + 3 = 8
+---------------------------
+[6/18/2025, 9:53:18 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+6
+1d20 + 3 = 3 + 3 = 6
+---------------------------
+[6/18/2025, 9:53:23 PM] ChaserXL
+{Game Time: Che 19, 1492 06:00}
+23
+1d20 + 4 = 19 + 4 = 23
+---------------------------
+[6/18/2025, 9:53:23 PM] ChaserXL
+{Game Time: Che 19, 1492 06:00}
+24
+1d20 + 4 = 20 + 4 = 24
+---------------------------
+[6/18/2025, 9:53:53 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+10
+1d20 + 3 = 7 + 3 = 10
+---------------------------
+[6/18/2025, 9:53:56 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+18
+1d20 + 3 = 15 + 3 = 18
+---------------------------
+[6/18/2025, 9:53:57 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+14
+1d20 + 3 = 11 + 3 = 14
+---------------------------
+[6/18/2025, 9:54:00 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+18
+1d20 + 3 = 15 + 3 = 18
+---------------------------
+[6/18/2025, 9:55:02 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+
+---------------------------
+[6/18/2025, 9:56:03 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+Shortbow Simple Ranged
+Mastery: Vex. If you hit a creature with this weapon and deal damage to the creature, you have Advantage on your next attack roll against that creature before the end of your next turn.
+Attack  Damage
+Action Instantaneous 80/320 ft Equipped Proficient
+---------------------------
+[6/18/2025, 9:56:05 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 1 + 4 + 2 = 7
+---------------------------
+[6/18/2025, 9:56:05 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sudara | Arrow: 48 → 47
+---------------------------
+[6/18/2025, 9:56:46 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+Shortbow Simple Ranged
+Ranged Weapon Attack: +5 to hit, range 80/320 ft., one target. Hit: 6 (1d6 + 3 piercing) damage.
+Attack  Damage
+Action Instantaneous 80/320 ft Equipped Proficient
+---------------------------
+[6/18/2025, 9:56:47 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+1d20 + 3 + 2 = 8 + 3 + 2 = 13
+---------------------------
+[6/18/2025, 9:56:57 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+Shortbow Simple Ranged
+Ranged Weapon Attack: +5 to hit, range 80/320 ft., one target. Hit: 6 (1d6 + 3 piercing) damage.
+Attack  Damage
+Action Instantaneous 80/320 ft Equipped Proficient
+---------------------------
+[6/18/2025, 9:56:58 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+1d20 + 3 + 2 = 1 + 3 + 2 = 6
+---------------------------
+[6/18/2025, 9:57:05 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+Shortbow Simple Ranged
+Ranged Weapon Attack: +5 to hit, range 80/320 ft., one target. Hit: 6 (1d6 + 3 piercing) damage.
+Attack  Damage
+Action Instantaneous 80/320 ft Equipped Proficient
+---------------------------
+[6/18/2025, 9:57:06 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+1d20 + 3 + 2 = 10 + 3 + 2 = 15
+---------------------------
+[6/18/2025, 9:58:45 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | 1st Level Spell Slots: 3/3 -> 2/3
+---------------------------
+[6/18/2025, 9:58:47 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+Bless 1st Level • Enchantment
+You bless up to three creatures of your choice within range. Whenever a target makes an attack roll or a saving throw before the spell ends, the target can roll 1d4 and add the number rolled to the attack roll or saving throw.Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, you can target one additional creature for each slot level above 1st.
+Roll  Consume Resource  Refund Resource
+Materials A sprinkling of holy water Concentration V, S, M Action 1 minute 30 ft 3 creatures
+---------------------------
+[6/18/2025, 9:59:12 PM] Ortiz Alehammer
+{Game Time: Che 19, 1492 06:00}
+1d4 = 1 = 1
+---------------------------
+[6/18/2025, 10:01:12 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Shield Master General Feat
+General Feat (Prerequisites: Level 4+, Shield Training)You gain the following benefits.Ability Score Increase. Increase your Strength score by 1, to a maximum of 20.If you take the Attack action on your turn, you can use a bonus action to try to shove a creature within 5 feet of you with your shield. Contest, against Strength/Athletics/Acrobatics.
+Interpose Shield. If you're subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you can take a Reaction to take no damage if you succeed on the saving throw and are holding a Shield.
+Shield Training
+---------------------------
+[6/18/2025, 10:01:27 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 10 + 4 + 2 = 16
+---------------------------
+[6/18/2025, 10:01:41 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+9
+1d20 + 3 = 6 + 3 = 9
+---------------------------
+[6/18/2025, 10:02:06 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Battleaxe Martial Melee
+Proficiency with a Battleaxe allows you to add your proficiency bonus to the attack roll for any attack you make with it.This weapon has the following mastery property. To use this property, you must have a feature that lets you use it.Topple. If you hit a creature with this weapon, you can force the creature to make a Constitution saving throw (DC 8 plus the ability modifier used to make the attack roll and your Proficiency Bonus). On a failed save, the creature has the Prone condition.
+Attack  Damage
+Action 5 ft reach 5 ft Equipped Proficient
+---------------------------
+[6/18/2025, 10:02:09 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+2d20kh + 4 + 2 = 16 + 4 + 2 = 22
+---------------------------
+[6/18/2025, 10:03:44 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+1d8 + 2 + 4 = 1 + 2 + 4 = 7
+---------------------------
+[6/18/2025, 10:03:50 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Kenku | HP : 19 → 12
+---------------------------
+[6/18/2025, 10:05:04 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+Rapier Martial Melee
+Mastery: Vex. If you hit a creature with this weapon and deal damage to the creature, you have Advantage on your next attack roll against that creature before the end of your next turn.
+Attack  Damage
+Action Instantaneous reach 5 ft Equipped Proficient
+---------------------------
+[6/18/2025, 10:05:09 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 5 + 4 + 2 = 11
+---------------------------
+[6/18/2025, 10:05:34 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+22
+1d20 + 3 = 19 + 3 = 22
+---------------------------
+[6/18/2025, 10:06:54 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+Shortsword Martial Melee
+Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3 piercing) damage.
+Attack  Damage
+Action Instantaneous reach 5 ft Equipped Proficient
+---------------------------
+[6/18/2025, 10:06:55 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+1d20 + 3 + 2 = 7 + 3 + 2 = 12
+---------------------------
+[6/18/2025, 10:07:07 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+Sorcerous Burst Evocation
+You cast sorcerous energy at one creature or object within range. Make a ranged attack roll against the target. On a hit, the target takes 1d8 damage of a type you choose: Acid, Cold, Fire, Lightning, Poison, Psychic, or Thunder.If you roll an 8 on a d8 for this spell, you can roll another d8, and add it to the damage. When you cast this spell, the maximum number of these d8s you can add to the spell's damage equals your spellcasting ability modifier.
+Cantrip Upgrade. The damage increases by 1d8 when you reach levels 5 (2d8 ), 11 (3d8 ), and 17 (4d8 ).
+Attack  Damage
+V, S Action Instantaneous 120 ft 1 creature or object
+---------------------------
+[6/18/2025, 10:08:04 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+True Strike Divination
+Guided by a flash of magical insight, you make one attack with the weapon used in the spell's casting. The attack uses your spellcasting ability for the attack and damage rolls instead of using Strength or Dexterity. If the attack deals damage, it can be Radiant damage or the weapon's normal damage type (your choice).
+Cantrip Upgrade. Whether you deal Radiant damage or the weapon's normal damage type, the attack deals extra Radiant damage when you reach levels 5 (1d6 ), 11 (2d6 ), and 17 (3d6 ).
+Damage  Place Measured Template
+Materials a weapon with which you have proficiency and that is worth 1+ CP S, M Action Instantaneous Self
+---------------------------
+[6/18/2025, 10:08:08 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+1d6 = 6 = 6
+---------------------------
+[6/18/2025, 10:09:40 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+19
+1d20 + 4 = 15 + 4 = 19
+---------------------------
+[6/18/2025, 10:10:07 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+1d6 = 3 = 3
+---------------------------
+[6/18/2025, 10:10:12 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Kenku | HP : 12 → 9
+---------------------------
+[6/18/2025, 10:10:16 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Kenku | HP : 9 → 5
+---------------------------
+[6/18/2025, 10:10:29 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+Fury of the Small Feature
+When you damage a creature with an attack or a spell and the creature’s size is larger than yours, you can cause the attack or spell to deal extra damage to the creature. The extra damage equals your proficiency bonus.You can use this trait a number of times equal to your proficiency bonus, regaining all expended uses when you finish a long rest, and you can use it no more than once per turn.
+Damage  Consume Resource  Refund Resource
+Special Instantaneous 5 ft 1 creature
+---------------------------
+[6/18/2025, 10:10:37 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+2 = 2 = 2
+---------------------------
+[6/18/2025, 10:10:40 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Kenku | HP : 5 → 3
+---------------------------
+[6/18/2025, 10:11:26 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+
+---------------------------
+[6/18/2025, 10:11:39 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+Shortbow Simple Ranged
+Mastery: Vex. If you hit a creature with this weapon and deal damage to the creature, you have Advantage on your next attack roll against that creature before the end of your next turn.
+Attack  Damage
+Action Instantaneous 80/320 ft Equipped Proficient
+---------------------------
+[6/18/2025, 10:11:46 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+1d20 + 1d4 + 4 + 2 = 4 + 2 + 4 + 2 = 12
+---------------------------
+[6/18/2025, 10:11:46 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sudara | Arrow: 47 → 46
+---------------------------
+[6/18/2025, 10:12:19 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+Shortsword Martial Melee
+Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3 piercing) damage.
+Attack  Damage
+Action Instantaneous reach 5 ft Equipped Proficient
+---------------------------
+[6/18/2025, 10:12:20 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+1d20 + 3 + 2 = 14 + 3 + 2 = 19
+---------------------------
+[6/18/2025, 10:12:27 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+1d6 + 3 = 2 + 3 = 5
+---------------------------
+[6/18/2025, 10:12:40 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | HP : 23 → 18
+---------------------------
+[6/18/2025, 10:12:48 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+Shortbow Simple Ranged
+Ranged Weapon Attack: +5 to hit, range 80/320 ft., one target. Hit: 6 (1d6 + 3 piercing) damage.
+Attack  Damage
+Action Instantaneous 80/320 ft Equipped Proficient
+---------------------------
+[6/18/2025, 10:12:49 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+1d20 + 3 + 2 = 10 + 3 + 2 = 15
+---------------------------
+[6/18/2025, 10:14:22 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | 1st Level Spell Slots: 2/3 -> 1/3
+---------------------------
+[6/18/2025, 10:14:23 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+Guiding Bolt 1st Level • Evocation
+A flash of light streaks toward a creature of your choice within range. Make a ranged spell attack against the target. On a hit, the target takes 4d6 radiant damage, and the next attack roll made against this target before the end of your next turn has advantage, thanks to the mystical dim light glittering on the target until then.Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 1d6 for each slot level above 1st.
+Attack  Damage  Consume Resource  Refund Resource
+V, S Action 1 round 120 ft 1 creature
+---------------------------
+[6/18/2025, 10:14:25 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 12 + 4 + 2 = 18
+---------------------------
+[6/18/2025, 10:14:54 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+4d6 = 15 = 15
+---------------------------
+[6/18/2025, 10:14:56 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Kenku | HP : 14 → 0
+---------------------------
+[6/18/2025, 10:16:16 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | 1st Level Spell Slots: 1/3 -> 0/3
+---------------------------
+[6/18/2025, 10:16:18 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+Shield of Faith 1st Level • Abjuration
+A shimmering field appears and surrounds a creature of your choice within range, granting it a +2 bonus to AC for the duration.
+Consume Resource  Refund Resource
+Materials A small parchment with a bit of holy text written on it. Concentration V, S, M Bonus Action 10 minute 60 ft 1 creature
+---------------------------
+[6/18/2025, 10:16:59 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 3 + 4 + 2 = 9
+---------------------------
+[6/18/2025, 10:17:09 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+23
+1d20 + 3 = 20 + 3 = 23
+---------------------------
+[6/18/2025, 10:17:17 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Battleaxe Martial Melee
+Proficiency with a Battleaxe allows you to add your proficiency bonus to the attack roll for any attack you make with it.This weapon has the following mastery property. To use this property, you must have a feature that lets you use it.Topple. If you hit a creature with this weapon, you can force the creature to make a Constitution saving throw (DC 8 plus the ability modifier used to make the attack roll and your Proficiency Bonus). On a failed save, the creature has the Prone condition.
+Attack  Damage
+Action 5 ft reach 5 ft Equipped Proficient
+---------------------------
+[6/18/2025, 10:17:20 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 5 + 4 + 2 = 11
+---------------------------
+[6/18/2025, 10:19:03 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 4 = 3 + 4 + 4 = 11
+---------------------------
+[6/18/2025, 10:19:18 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+17
+1d20 + 3 = 14 + 3 = 17
+---------------------------
+[6/18/2025, 10:19:52 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+City Secrets Feature
+You know the secret patterns and flow to cities and can find passages through the urban sprawl that others would miss. When you are not in combat, you (and companions you lead) can travel between any two locations in the city twice as fast as your speed would normally allow.
+Urchin
+---------------------------
+[6/18/2025, 10:20:14 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+Dagger Simple Melee
+Mastery: Nick. When you make the extra attack of the Light property, you can make it as part of the Attack action instead of as a Bonus Action. You can make this extra attack only once per turn.
+Attack  Damage
+Action Instantaneous 20/60 ft reach 5 ft Equipped Proficient
+---------------------------
+[6/18/2025, 10:20:21 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 11 + 4 + 2 = 17
+---------------------------
+[6/18/2025, 10:20:32 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+Dagger Simple Melee
+Mastery: Nick. When you make the extra attack of the Light property, you can make it as part of the Attack action instead of as a Bonus Action. You can make this extra attack only once per turn.
+Attack  Damage
+Action Instantaneous 20/60 ft reach 5 ft Equipped Proficient
+---------------------------
+[6/18/2025, 10:20:39 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+1d4 + 4 = 4 + 4 = 8
+---------------------------
+[6/18/2025, 10:20:43 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Kenku | HP : 12 → 4
+---------------------------
+[6/18/2025, 10:21:04 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+Shortsword Martial Melee
+Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3 piercing) damage.
+Attack  Damage
+Action Instantaneous reach 5 ft Equipped Proficient
+---------------------------
+[6/18/2025, 10:21:05 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+1d20 + 3 + 2 = 11 + 3 + 2 = 16
+---------------------------
+[6/18/2025, 10:22:05 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+Shortbow Simple Ranged
+Ranged Weapon Attack: +5 to hit, range 80/320 ft., one target. Hit: 6 (1d6 + 3 piercing) damage.
+Attack  Damage
+Action Instantaneous 80/320 ft Equipped Proficient
+---------------------------
+[6/18/2025, 10:22:07 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+1d20 + 3 + 2 = 13 + 3 + 2 = 18
+---------------------------
+[6/18/2025, 10:22:22 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+1d6 + 3 = 1 + 3 = 4
+---------------------------
+[6/18/2025, 10:22:30 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | HP : 18 → 14
+---------------------------
+[6/18/2025, 10:23:23 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+24
+1d20 + 4 = 20 + 4 = 24
+---------------------------
+[6/18/2025, 10:23:46 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+Crossbow, Light Simple Ranged
+Proficiency with a Light Crossbow allows you to add your proficiency bonus to the attack roll for any attack you make with it.This weapon has the following mastery property. To use this property, you must have a feature that lets you use it.Slow. If you hit a creature with this weapon and deal damage to it, you can reduce its Speed by 10 feet until the start of your next turn. If the creature is hit more than once by weapons that have this property, the Speed reduction doesn’t exceed 10 feet.
+Attack  Damage
+Action Turn 80/320 ft Equipped Proficient
+---------------------------
+[6/18/2025, 10:23:49 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+Crossbow, Light Simple Ranged
+Proficiency with a Light Crossbow allows you to add your proficiency bonus to the attack roll for any attack you make with it.This weapon has the following mastery property. To use this property, you must have a feature that lets you use it.Slow. If you hit a creature with this weapon and deal damage to it, you can reduce its Speed by 10 feet until the start of your next turn. If the creature is hit more than once by weapons that have this property, the Speed reduction doesn’t exceed 10 feet.
+Attack  Damage
+Action Turn 80/320 ft Equipped Proficient
+---------------------------
+[6/18/2025, 10:23:51 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+1d20 + 3 + 2 = 1 + 3 + 2 = 6
+---------------------------
+[6/18/2025, 10:23:50 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | Crossbow Bolts: 39 → 38
+---------------------------
+[6/18/2025, 10:24:17 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+8
+1d8 + 4 = 4 + 4 = 8
+---------------------------
+[6/18/2025, 10:24:37 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Kenku | HP : 19 → 3
+---------------------------
+[6/18/2025, 10:24:59 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+
+---------------------------
+[6/18/2025, 10:25:23 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+Shortbow Simple Ranged
+Mastery: Vex. If you hit a creature with this weapon and deal damage to the creature, you have Advantage on your next attack roll against that creature before the end of your next turn.
+Attack  Damage
+Action Instantaneous 80/320 ft Equipped Proficient
+---------------------------
+[6/18/2025, 10:25:31 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+1d20 + 1d4 + 4 + 2 = 17 + 4 + 4 + 2 = 27
+---------------------------
+[6/18/2025, 10:25:31 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sudara | Arrow: 46 → 45
+---------------------------
+[6/18/2025, 10:25:38 PM] Sudara
+{Game Time: Che 19, 1492 06:00}
+1d6 + 4 = 4 + 4 = 8
+---------------------------
+[6/18/2025, 10:25:50 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Kenku | HP : 3 → 0
+---------------------------
+[6/18/2025, 10:26:07 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+Shortsword Martial Melee
+Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3 piercing) damage.
+Attack  Damage
+Action Instantaneous reach 5 ft Equipped Proficient
+---------------------------
+[6/18/2025, 10:26:08 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+1d20 + 3 + 2 = 7 + 3 + 2 = 12
+---------------------------
+[6/18/2025, 10:27:56 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+Guiding Bolt Evocation
+A flash of light streaks toward a creature of your choice within range. Make a ranged spell attack against the target. On a hit, the target takes 4d6 radiant damage, and the next attack roll made against this target before the end of your next turn has advantage, thanks to the mystical dim light glittering on the target until then.Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 1d6 for each slot level above 1st.
+Attack  Damage  Consume Resource  Refund Resource
+V, S Action 1 round 120 ft 1 creature
+---------------------------
+[6/18/2025, 10:27:58 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 8 + 4 + 2 = 14
+---------------------------
+[6/18/2025, 10:28:13 PM] Moriah Kiah
+{Game Time: Che 19, 1492 06:00}
+4d6 = 10 = 10
+---------------------------
+[6/18/2025, 10:28:33 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Kenku | HP : 4 → 0
+---------------------------
+[6/18/2025, 10:29:22 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+1d20 + 4 + 2 = 1 + 4 + 2 = 7
+---------------------------
+[6/18/2025, 10:29:34 PM] Kenku
+{Game Time: Che 19, 1492 06:00}
+4
+1d20 + 3 = 1 + 3 = 4
+---------------------------
+[6/18/2025, 10:29:52 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+Battleaxe Martial Melee
+Proficiency with a Battleaxe allows you to add your proficiency bonus to the attack roll for any attack you make with it.This weapon has the following mastery property. To use this property, you must have a feature that lets you use it.Topple. If you hit a creature with this weapon, you can force the creature to make a Constitution saving throw (DC 8 plus the ability modifier used to make the attack roll and your Proficiency Bonus). On a failed save, the creature has the Prone condition.
+Attack  Damage
+Action 5 ft reach 5 ft Equipped Proficient
+---------------------------
+[6/18/2025, 10:30:02 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+4
+1d4 = 4 = 4
+---------------------------
+[6/18/2025, 10:30:10 PM] Sir Kalen Solarath
+{Game Time: Che 19, 1492 06:00}
+2d20kh + 4 + 4 + 2 = 5 + 4 + 4 + 2 = 15
+---------------------------
+[6/18/2025, 10:30:37 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Kenku | HP : 3 → 0
+---------------------------
+[6/18/2025, 10:30:54 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+
+---------------------------
+[6/18/2025, 10:31:28 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+max(0,1d6 + 4) = 7 = 7
+---------------------------
+[6/18/2025, 10:31:28 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch | HP : 14 → 18
+---------------------------
+[6/18/2025, 10:31:29 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+Havik the Stitch takes a short rest spending 1 hit die to recover 4 hit points.
+---------------------------
+[6/18/2025, 10:34:13 PM] Havik the Stitch
+{Game Time: Che 19, 1492 06:00}
+1d20 + 1 = 17 + 1 = 18
+---------------------------
+[6/18/2025, 10:49:06 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sudara | Sheet Mode : Edit
+---------------------------
+[6/18/2025, 10:49:22 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Sudara | Sheet Mode : Play
+---------------------------
+[6/18/2025, 10:58:21 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Sheet Mode : Edit
+---------------------------
+[6/18/2025, 10:58:46 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | 39 gp -> 330 gp
+---------------------------
+[6/18/2025, 10:58:52 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Moriah Kiah | Sheet Mode : Play
+---------------------------
+[6/20/2025, 9:58:50 PM] Cade De la Cour
+{Game Time: Che 19, 1492 06:00}
+13
+1d8 + 5 = 8 + 5 = 13
+---------------------------
+[6/20/2025, 9:59:04 PM] Sevax
+{Game Time: Che 19, 1492 06:00}
+Cade De la Cour | Sheet Mode : Edit
