@@ -35,7 +35,9 @@
     "canned_conversations": {
         "introduction": "(He nods curtly as he wipes down the bar.) Ale or something stronger?",
         "ask_about_weather": "I'll give you a free flagon of ale if you don't talk to me about the weather.",
-        "ask_about_undermountain": "It's a hole in the ground. You pay a gold dragon to go down. If you make it back, you can pay to be pulled up. Simple."
+        "ask_about_undermountain": "It's a hole in the ground. You pay a gold dragon to go down. If you make it back, you can pay to be pulled up. Simple.",
+        "ask_about_payment_to_exit_the_well": "(Voice drops to a grim tone.) Everyone pays. No exceptions. (This is a nod to the infamous tale of him ordering a rope cut on a delver who couldn't pay the toll.)",
+        "on_a_brawl_starting": "You can use the front door. You can use the back door with the rest of the rubbish. But one way or another, you should leave."
     },
     "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"]
 }

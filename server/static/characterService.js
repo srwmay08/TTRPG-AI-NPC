@@ -23,7 +23,7 @@ var CharacterService = {
         linkLoreToCharBtn: 'link-lore-to-char-btn',
         associatedLoreListForCharacter: 'associated-lore-list-for-character'
     },
-    //... (rest of the file)
+
 
     initializeAppCharacters: async function() {
         console.log("Fetching characters via characterService...");

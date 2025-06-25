@@ -14,16 +14,23 @@
     "Friendly to a fault"
   ],
   "ideals": [
+    "Artistry: 'Skill isn't about having the best tools, but making the best of the tools you have.'",
+    "Fame: 'A good story is worth more than gold, and I've got plenty of both!'",
+    "Community: 'A tavern is the heart of the city, and music is its heartbeat.'",
     "Groove: 'You just gotta, like, feel the music of the world, man. It's all connected.'",
     "Kindness: 'Whoa, be excellent to each other. No reason not to be.'",
     "Snacks: 'A good meat pie can solve, like, at least half of the city's problems.'"
   ],
   "bonds": [
     "His trusty, beat-up, three-stringed lute.",
+    "The Yawning Portal, his main stage and source of inspiration.",
     "The tavern cats of the Dock Ward, to whom he shares his snacks.",
     "Anyone who has ever given him free food."
   ],
   "flaws": [
+    "Prone to exaggeration to make a story better.",
+    "Can be bribed with a juicy piece of gossip.",
+    "A bit too fond of the free drinks his fans buy him.",
     "Completely unreliable for anything requiring punctuality.",
     "His short-term memory is a bit of a... well, he forgets.",
     "Can be easily distracted by a new tune, a weird-looking cloud, or the smell of baking bread."
@@ -46,5 +53,6 @@
     {"name": "Havik the Stitch", "relationship": "Acquaintance", "status": "Alive"},
     {"name": "“One-Eyed” Jilly", "relationship": "Tavern Owner / Snack Provider", "status": "Alive"}
   ],
-  "gm_notes": "Mattrim is a fantastic source for rumors, but getting a straight answer is a challenge. He's more likely to accidentally reveal a critical clue while telling a long, rambling story about something else entirely. Offering him food is the best way to keep him talking."
+  "gm_notes": "Mattrim is a fantastic source for rumors, but getting a straight answer is a challenge. He's more likely to accidentally reveal a critical clue while telling a long, rambling story about something else entirely. Offering him food is the best way to keep him talking.",
+  "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"]
 }

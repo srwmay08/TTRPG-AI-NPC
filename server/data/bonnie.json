@@ -34,5 +34,5 @@
         "ask_about_adventurers": "Many adventurers pass through the Yawning Portal on their way to greatness. All of them try the ale.",
         "ask_about_the_portal": "The Well? Costs a gold piece to go down. The coming back up part is trickier. Best of luck to 'em."
     },
-    "linked_lore_by_name": ["The Yawning Portal"]
+    "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"]
 }
