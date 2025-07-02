@@ -36,7 +36,9 @@
     "canned_conversations": {
         "introduction": "'A pleasure to make your acquaintance! Apologies for the... uncivilized circumstances. It seems my father's reputation has a rather long shadow.'",
         "about_his_father": "'Dagult Neverember. A name that opens many doors and brings much trouble. He and I... do not see eye to eye. He is a man who values gold above all else. I value other things.'",
-        "about_the_stone_of_golorr": "'My father has squandered and hidden away so much wealth. It is said he embezzled a great deal of gold before he was exiled. The Stone of Golorr is supposedly the key to finding it. If he hid it, he did so without my knowledge.'"
+        "about_the_stone_of_golorr": "'My father has squandered and hidden away so much wealth. It is said he embezzled a great deal of gold before he was exiled. The Stone of Golorr is supposedly the key to finding it. If he hid it, he did so without my knowledge.'",
+        "reaction": "I understand the need to recover your strength. The Xanathar are not to be trifled with, and rushing in unprepared would be a fatal mistake. However, they are ruthless. The longer they have Floon, the more danger he is in. They mistook him for me, and they will not be pleased when they discover their error.",
+        "justice": "My father's legacy casts a long shadow, and his enemies are now mine. The ones who took us, the Zhentarim, were professionals. The ones who attacked the warehouse, the Xanathar Guild, are far more chaotic and brutal. I heard them mention following yellow signs in the sewers. That will be your path. Be wary; their territory will be trapped and guarded."
     },
     "linked_lore_by_name": ["Blood in the Streets (Fillet Lane)", "Candle Lane Warehouse", "The Harpers"]
 }

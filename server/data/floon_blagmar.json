@@ -35,7 +35,13 @@
     "canned_conversations": {
         "introduction_after_rescue": "(He dusts himself off, flashing a dazzling smile) 'My thanks! I thought I was a goner. I haven't the faintest idea why they grabbed me! Now, who's for a pint? I'm buying!'",
         "about_the_kidnapping": "'It was all a terrible mistake! They kept asking me about my father and some treasure. My father was a paper merchant! I think they mistook me for this fine fellow here (gestures to Renaer).'",
-        "about_the_sewers": "'Ghastly place. Smelled awful. And the goo... so much goo. I'd rather not talk about it, if you don't mind. Let's talk about something more pleasant, like this fine ale!'"
+        "about_the_sewers": "'Ghastly place. Smelled awful. And the goo... so much goo. I'd rather not talk about it, if you don't mind. Let's talk about something more pleasant, like this fine ale!'",
+        "seeing_the_party": "You... you came. I didn't think anyone would find me down here.",
+        "explaining_his_survival": "It was horrible. An orc, big and cruel... and the other one. Gods, the other one... it had tentacles on its face. It... it put its thoughts in my head. It was looking for something.",
+        "about_ranear": "They kept asking me about a stone... and a vault of gold. They thought I was Renaer. I kept telling them I wasn't, that I was just Floon! After... after a while, the one with the tentacles... it seemed to believe me. I heard it... in my mind, it said I was 'useless.' They just... left. They walked out and told me not to move. I've just been sitting here, too afraid to even breathe.",
+        "about_ranear_2": "Yes, they asked about Renaer constantly! About his father, Lord Neverember. That's why they grabbed me, they thought I was him. I'm so glad he got away. Is he safe? We must tell him what they're after!",
+        "desire": "Please, just get me out of this gods-forsaken sewer. Take me to the Yawning Portal. I need to find Volo. I need a drink. I need to forget any of this ever happened."
+
     },
     "linked_lore_by_name": ["The Skewered Dragon", "Candle Lane Warehouse", "Xanathar Guild Sewer Hideout"]
 }
