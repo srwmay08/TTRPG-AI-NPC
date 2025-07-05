@@ -481,22 +481,22 @@ var UIRenderers = {
     renderSuggestionsArea: function(aiResult, forNpcId) {
         const globalSuggestionsArea = Utils.getElem('ai-suggestions');
         if (!globalSuggestionsArea) return;
-
+    
         let hasContentToDisplay = false;
-
+    
         // Part 1: Render Canned Responses for the currently profiled character
         const cannedResponses = appState.cannedResponsesForProfiledChar || {};
         const cannedContainer = Utils.getElem('canned-responses-list');
         const cannedDisplay = Utils.getElem('canned-response-display');
-        const prevBtn = Utils.getElem('prev-canned-btn');
-        const nextBtn = Utils.getElem('next-canned-btn');
-        const sendBtn = Utils.getElem('send-canned-btn');
-        
-        if (cannedContainer && cannedDisplay && prevBtn && nextBtn && sendBtn) {
-            let keys = Object.keys(cannedResponses);
-
-            // Sort keys to prioritize 'introduction'
+        const cannedControls = Utils.getElem('canned-response-controls');
+    
+        if (cannedContainer && cannedDisplay && cannedControls) {
+            const keys = Object.keys(cannedResponses);
             if (keys.length > 0) {
+                hasContentToDisplay = true;
+                cannedContainer.style.display = 'flex';
+                cannedControls.style.display = 'none'; // Hide the old buttons
+    
                 keys.sort((a, b) => {
                     const aIsIntro = a.toLowerCase() === 'introduction';
                     const bIsIntro = b.toLowerCase() === 'introduction';
@@ -504,27 +504,16 @@ var UIRenderers = {
                     if (!aIsIntro && bIsIntro) return 1;
                     return a.localeCompare(b);
                 });
-            }
-            
-            if (keys.length > 0) {
-                hasContentToDisplay = true;
-                cannedContainer.style.display = 'flex';
-                
-                if(appState.currentCannedResponseIndex >= keys.length) {
-                    appState.currentCannedResponseIndex = 0;
-                }
-
-                const currentKey = keys[appState.currentCannedResponseIndex];
-                const currentResponse = cannedResponses[currentKey] || "Response not found.";
-                cannedDisplay.innerHTML = `<p><strong>${Utils.escapeHtml(currentKey)}:</strong> ${Utils.escapeHtml(currentResponse)}</p>`;
-                Utils.disableBtn('send-canned-btn', false);
-                Utils.disableBtn('prev-canned-btn', appState.currentCannedResponseIndex <= 0);
-                Utils.disableBtn('next-canned-btn', appState.currentCannedResponseIndex >= keys.length - 1);
+    
+                cannedDisplay.innerHTML = keys.map(key =>
+                    `<div class="clickable-suggestion" onclick="App.useSpecificCannedResponse('${Utils.escapeHtml(key).replace(/'/g, "\\'")}')">${Utils.escapeHtml(key)}</div>`
+                ).join('');
+    
             } else {
                 cannedContainer.style.display = 'none';
             }
         }
-
+    
         // Part 2: Render AI Suggestions
         const profiledCharId = appState.getCurrentProfileCharId();
         if (aiResult && forNpcId && forNpcId === profiledCharId) {
@@ -534,7 +523,7 @@ var UIRenderers = {
                 'npc-actions': { title: 'Suggested NPC Actions/Thoughts', data: aiResult.suggested_npc_actions, render: item => Utils.escapeHtml(item) },
                 'player-checks': { title: 'Suggested Player Checks', data: aiResult.suggested_player_checks, render: item => Utils.escapeHtml(item) }
             };
-
+    
             for (const [key, config] of Object.entries(suggestionTypes)) {
                 const listDiv = Utils.getElem(`suggested-${key}-list`);
                 if (listDiv) {
@@ -547,7 +536,7 @@ var UIRenderers = {
                     }
                 }
             }
-
+    
             const standingChangesDiv = Utils.getElem('suggested-faction-standing-changes');
             if (standingChangesDiv) {
                 if (aiResult.suggested_new_standing && aiResult.suggested_standing_pc_id) {
@@ -626,67 +615,67 @@ var UIRenderers = {
         });
     },
 
-renderCharacterProfileUI: function(character, elements) {
-    const characterProfileMainSection = Utils.getElem('character-profile-main-section');
-    const detailsCharNameElem = Utils.getElem(elements.detailsCharName);
+    renderCharacterProfileUI: function(character, elements) {
+        const characterProfileMainSection = Utils.getElem('character-profile-main-section');
+        const detailsCharNameElem = Utils.getElem(elements.detailsCharName);
 
-    if (!character) {
-        if(characterProfileMainSection) characterProfileMainSection.style.display = 'none';
-        if (detailsCharNameElem) Utils.updateText(elements.detailsCharName, 'None Selected');
-        return;
-    }
+        if (!character) {
+            if(characterProfileMainSection) characterProfileMainSection.style.display = 'none';
+            if (detailsCharNameElem) Utils.updateText(elements.detailsCharName, 'None Selected');
+            return;
+        }
 
-    if(characterProfileMainSection) characterProfileMainSection.style.display = 'block';
+        if(characterProfileMainSection) characterProfileMainSection.style.display = 'block';
 
-    const profileCharTypeElem = Utils.getElem(elements.profileCharType);
-    const profileDescriptionElem = Utils.getElem(elements.profileDescription);
-    const profilePersonalityElem = Utils.getElem(elements.profilePersonality);
-    const gmNotesTextareaElem = Utils.getElem(elements.gmNotesTextarea);
-    const saveGmNotesBtnElem = Utils.getElem(elements.saveGmNotesBtn);
-    const npcMemoriesSectionElem = Utils.getElem(elements.npcMemoriesSection);
-    const characterMemoriesListElem = Utils.getElem(elements.characterMemoriesList);
-    const addMemoryBtnElem = Utils.getElem(elements.addMemoryBtn);
-    const npcFactionStandingsSectionElem = Utils.getElem(elements.npcFactionStandingsSection);
-    const npcFactionStandingsContentElem = Utils.getElem(elements.npcFactionStandingsContent);
-    const characterHistorySectionElem = Utils.getElem(elements.characterHistorySection);
-    const associatedHistoryListElem = Utils.getElem(elements.associatedHistoryList);
-    const historyContentDisplayElem = Utils.getElem(elements.historyContentDisplay);
-    const characterLoreLinksSectionElem = Utils.getElem(elements.characterLoreLinksSection);
-    const linkLoreToCharBtnElem = Utils.getElem(elements.linkLoreToCharBtn);
+        const profileCharTypeElem = Utils.getElem(elements.profileCharType);
+        const profileDescriptionElem = Utils.getElem(elements.profileDescription);
+        const profilePersonalityElem = Utils.getElem(elements.profilePersonality);
+        const gmNotesTextareaElem = Utils.getElem(elements.gmNotesTextarea);
+        const saveGmNotesBtnElem = Utils.getElem(elements.saveGmNotesBtn);
+        const npcMemoriesSectionElem = Utils.getElem(elements.npcMemoriesSection);
+        const characterMemoriesListElem = Utils.getElem(elements.characterMemoriesList);
+        const addMemoryBtnElem = Utils.getElem(elements.addMemoryBtn);
+        const npcFactionStandingsSectionElem = Utils.getElem(elements.npcFactionStandingsSection);
+        const npcFactionStandingsContentElem = Utils.getElem(elements.npcFactionStandingsContent);
+        const characterHistorySectionElem = Utils.getElem(elements.characterHistorySection);
+        const associatedHistoryListElem = Utils.getElem(elements.associatedHistoryList);
+        const historyContentDisplayElem = Utils.getElem(elements.historyContentDisplay);
+        const characterLoreLinksSectionElem = Utils.getElem(elements.characterLoreLinksSection);
+        const linkLoreToCharBtnElem = Utils.getElem(elements.linkLoreToCharBtn);
 
-    character.personality_traits = character.personality_traits || [];
-    character.memories = character.memories || [];
-    character.associated_history_files = character.associated_history_files || [];
-    character.linked_lore_by_name = character.linked_lore_by_name || [];
-    character.pc_faction_standings = character.pc_faction_standings || {};
+        character.personality_traits = character.personality_traits || [];
+        character.memories = character.memories || [];
+        character.associated_history_files = character.associated_history_files || [];
+        character.linked_lore_by_name = character.linked_lore_by_name || [];
+        character.pc_faction_standings = character.pc_faction_standings || {};
 
-    if (detailsCharNameElem) Utils.updateText(elements.detailsCharName, character.name || "N/A");
-    if (profileCharTypeElem) Utils.updateText(elements.profileCharType, character.character_type || "N/A");
-    if (profileDescriptionElem) Utils.updateText(elements.profileDescription, character.description || "N/A");
-    if (profilePersonalityElem) Utils.updateText(elements.profilePersonality, character.personality_traits.join(', ') || "N/A");
-    if (gmNotesTextareaElem) gmNotesTextareaElem.value = character.gm_notes || '';
-    if (saveGmNotesBtnElem) Utils.disableBtn(elements.saveGmNotesBtn, false);
+        if (detailsCharNameElem) Utils.updateText(elements.detailsCharName, character.name || "N/A");
+        if (profileCharTypeElem) Utils.updateText(elements.profileCharType, character.character_type || "N/A");
+        if (profileDescriptionElem) Utils.updateText(elements.profileDescription, character.description || "N/A");
+        if (profilePersonalityElem) Utils.updateText(elements.profilePersonality, character.personality_traits.join(', ') || "N/A");
+        if (gmNotesTextareaElem) gmNotesTextareaElem.value = character.gm_notes || '';
+        if (saveGmNotesBtnElem) Utils.disableBtn(elements.saveGmNotesBtn, false);
 
-    const isNpc = character.character_type === 'NPC';
-    if (npcMemoriesSectionElem) npcMemoriesSectionElem.style.display = isNpc ? 'block' : 'none';
-    if (npcFactionStandingsSectionElem) npcFactionStandingsSectionElem.style.display = isNpc ? 'block' : 'none';
-    if (characterHistorySectionElem) characterHistorySectionElem.style.display = 'block';
-    if (characterLoreLinksSectionElem) characterLoreLinksSectionElem.style.display = 'block';
+        const isNpc = character.character_type === 'NPC';
+        if (npcMemoriesSectionElem) npcMemoriesSectionElem.style.display = isNpc ? 'block' : 'none';
+        if (npcFactionStandingsSectionElem) npcFactionStandingsSectionElem.style.display = isNpc ? 'block' : 'none';
+        if (characterHistorySectionElem) characterHistorySectionElem.style.display = 'block';
+        if (characterLoreLinksSectionElem) characterLoreLinksSectionElem.style.display = 'block';
 
-    if (isNpc) {
-        if (characterMemoriesListElem) this.renderMemoriesUI(character.memories, characterMemoriesListElem, CharacterService.handleDeleteMemory);
-        if (npcFactionStandingsContentElem) this.renderNpcFactionStandingsUI(character, appState.activePcIds, appState.getAllCharacters(), npcFactionStandingsContentElem, CharacterService.handleSaveFactionStanding);
-        if (addMemoryBtnElem) Utils.disableBtn(elements.addMemoryBtn, false);
-    } else {
-        if (characterMemoriesListElem) characterMemoriesListElem.innerHTML = '<p><em>Memories are for NPCs only.</em></p>';
-        if (addMemoryBtnElem) Utils.disableBtn(elements.addMemoryBtn, true);
-        if (npcFactionStandingsContentElem) npcFactionStandingsContentElem.innerHTML = '<p><em>Faction standings are for NPCs.</em></p>';
-    }
-    if (associatedHistoryListElem && historyContentDisplayElem) this.renderAssociatedHistoryFilesUI(character, associatedHistoryListElem, historyContentDisplayElem, CharacterService.handleDissociateHistoryFile);
-    this.renderAssociatedLoreForCharacterUI(character, CharacterService.handleUnlinkLoreFromCharacter);
-    this.populateLoreEntrySelectForCharacterLinkingUI(character.linked_lore_by_name);
-    if (linkLoreToCharBtnElem) Utils.disableBtn(elements.linkLoreToCharBtn, false);
-},
+        if (isNpc) {
+            if (characterMemoriesListElem) this.renderMemoriesUI(character.memories, characterMemoriesListElem, CharacterService.handleDeleteMemory);
+            if (npcFactionStandingsContentElem) this.renderNpcFactionStandingsUI(character, appState.activePcIds, appState.getAllCharacters(), npcFactionStandingsContentElem, CharacterService.handleSaveFactionStanding);
+            if (addMemoryBtnElem) Utils.disableBtn(elements.addMemoryBtn, false);
+        } else {
+            if (characterMemoriesListElem) characterMemoriesListElem.innerHTML = '<p><em>Memories are for NPCs only.</em></p>';
+            if (addMemoryBtnElem) Utils.disableBtn(elements.addMemoryBtn, true);
+            if (npcFactionStandingsContentElem) npcFactionStandingsContentElem.innerHTML = '<p><em>Faction standings are for NPCs.</em></p>';
+        }
+        if (associatedHistoryListElem && historyContentDisplayElem) this.renderAssociatedHistoryFilesUI(character, associatedHistoryListElem, historyContentDisplayElem, CharacterService.handleDissociateHistoryFile);
+        this.renderAssociatedLoreForCharacterUI(character, CharacterService.handleUnlinkLoreFromCharacter);
+        this.populateLoreEntrySelectForCharacterLinkingUI(character.linked_lore_by_name);
+        if (linkLoreToCharBtnElem) Utils.disableBtn(elements.linkLoreToCharBtn, false);
+    },
     renderMemoriesUI: function(memories, listElement, deleteCallback) {
         if (!listElement) return;
         listElement.innerHTML = '';
@@ -1023,6 +1012,68 @@ renderCharacterProfileUI: function(character, elements) {
             }
         }
         Utils.disableBtn('generate-dialogue-btn', activeNpcCount === 0);
+    },
+
+    generateNpcCardHTML: function(npc) {
+        if (!npc) return '';
+        let cardHTML = `<div class="npc-stat-card" data-npc-id="${String(npc._id)}">`;
+        cardHTML += `<h4>${npc.name}</h4>`;
+        cardHTML += `<p class="npc-card-description">${npc.description || 'No description.'}</p>`;
+        if (npc.personality_traits && npc.personality_traits.length > 0) {
+           cardHTML += `<p><strong>Personality:</strong> ${npc.personality_traits.join(', ')}</p>`;
+        }
+        cardHTML += `</div>`;
+        return cardHTML;
+    },
+
+    renderLocationDashboardUI: function(loreEntry, allCharacters, containerElement) {
+        if (!containerElement) {
+            console.error("UIRenderers.renderLocationDashboardUI: containerElement not found.");
+            return;
+        }
+        if (!loreEntry) {
+            containerElement.innerHTML = `<p class="pc-dashboard-no-selection">No location context selected.</p>`;
+            return;
+        }
+    
+        const linkedNpcs = allCharacters.filter(char =>
+            char.character_type === 'NPC' &&
+            char.linked_lore_by_name &&
+            char.linked_lore_by_name.includes(loreEntry.name)
+        );
+    
+        let contentHTML = `<div class="location-dashboard-content">`;
+        contentHTML += `<h2>${Utils.escapeHtml(loreEntry.name)}</h2>`;
+        contentHTML += `<p class="location-description"><em>(${Utils.escapeHtml(loreEntry.lore_type)})</em></p>`;
+        contentHTML += `<p class="location-description">${Utils.escapeHtml(loreEntry.description)}</p>`;
+        
+        if (loreEntry.key_facts && loreEntry.key_facts.length > 0) {
+            contentHTML += `<h4>Key Facts</h4><ul>`;
+            loreEntry.key_facts.forEach(fact => {
+                contentHTML += `<li>${Utils.escapeHtml(fact)}</li>`;
+            });
+            contentHTML += `</ul>`;
+        }
+    
+        contentHTML += `<hr>`;
+        contentHTML += `<h4>Known NPCs Present</h4>`;
+    
+        if (linkedNpcs.length > 0) {
+            contentHTML += `<div class="character-list">`;
+            linkedNpcs.forEach(npc => {
+                contentHTML += this.generateNpcCardHTML(npc);
+            });
+            contentHTML += `</div>`;
+        } else {
+            contentHTML += `<p><em>No NPCs are currently known to be associated with this location.</em></p>`;
+        }
+        
+        contentHTML += `<hr>`;
+        contentHTML += `<h4>Suggested NPCs</h4>`;
+        contentHTML += `<p><em>(This feature has not yet been implemented.)</em></p>`;
+    
+        contentHTML += `</div>`;
+        containerElement.innerHTML = contentHTML;
     }
 };
 

@@ -119,6 +119,7 @@ var App = {
                     CharacterService.handleSelectCharacterForDetails,
                     null 
                 );
+                this.updateMainView();
             });
         }
 
@@ -138,6 +139,7 @@ var App = {
                     CharacterService.handleSelectCharacterForDetails,
                     appState.getCurrentSceneContextFilter()
                 );
+                this.updateMainView();
             });
         }
         UIRenderers.renderNpcListForContextUI(
@@ -190,38 +192,42 @@ var App = {
         const dialogueInterfaceElem = Utils.getElem('dialogue-interface');
         const pcDashboardViewElem = Utils.getElem('pc-dashboard-view');
         const pcQuickViewInSceneElem = Utils.getElem('pc-quick-view-section-in-scene');
+        const locationDashboardViewElem = Utils.getElem('location-dashboard-view');
 
-        if (!dialogueInterfaceElem || !pcDashboardViewElem || !pcQuickViewInSceneElem) {
+        if (!dialogueInterfaceElem || !pcDashboardViewElem || !pcQuickViewInSceneElem || !locationDashboardViewElem) {
             console.error("App.js/updateMainView: Critical UI container element(s) missing."); return;
         }
 
         const activeNpcCount = appState.getActiveNpcCount();
+        const sceneContextFilter = appState.getCurrentSceneContextFilter();
         const dashboardContent = Utils.getElem('pc-dashboard-content');
         const isDetailedSheetVisible = dashboardContent && dashboardContent.querySelector('.detailed-pc-sheet');
 
+        // Hide all views by default
+        dialogueInterfaceElem.style.display = 'none';
+        pcDashboardViewElem.style.display = 'none';
+        locationDashboardViewElem.style.display = 'none';
+        pcQuickViewInSceneElem.style.display = 'none';
+
         if (activeNpcCount > 0 && !isDetailedSheetVisible) {
             dialogueInterfaceElem.style.display = 'block';
-            pcDashboardViewElem.style.display = 'none';
             const activePcsData = appState.getAllCharacters().filter(char => appState.hasActivePc(String(char._id)));
             UIRenderers.renderPcQuickViewInSceneUI(pcQuickViewInSceneElem, activePcsData);
-        } else if (isDetailedSheetVisible) {
-            dialogueInterfaceElem.style.display = 'none';
+        } else if (sceneContextFilter && sceneContextFilter.id) {
+            locationDashboardViewElem.style.display = 'block';
+            const loreEntry = appState.getLoreEntryById(sceneContextFilter.id);
+            UIRenderers.renderLocationDashboardUI(loreEntry, appState.getAllCharacters(), locationDashboardViewElem);
+        } else {
             pcDashboardViewElem.style.display = 'block';
-            pcQuickViewInSceneElem.style.display = 'none';
-            pcQuickViewInSceneElem.innerHTML = '';
-        }
-        else {
-            dialogueInterfaceElem.style.display = 'none';
-            pcDashboardViewElem.style.display = 'block';
-            pcQuickViewInSceneElem.style.display = 'none';
-            pcQuickViewInSceneElem.innerHTML = '';
-
-            if (appState.getActivePcCount() > 0) {
+            if (isDetailedSheetVisible) {
+                // Detailed PC sheet is already visible, do nothing to the content.
+            } else if (appState.getActivePcCount() > 0) {
                 UIRenderers.updatePcDashboardUI(dashboardContent, appState.getAllCharacters(), appState.activePcIds, appState.getExpandedAbility());
             } else {
-                if(dashboardContent) dashboardContent.innerHTML = `<p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>`;
+                if (dashboardContent) dashboardContent.innerHTML = `<p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>`;
             }
         }
+        
         Utils.disableBtn('generate-dialogue-btn', activeNpcCount === 0);
         console.log("App.js: App.updateMainView finished.");
     },
@@ -483,46 +489,33 @@ var App = {
         }
     },
 
-    cycleCannedResponse: function(direction) {
-        const keys = Object.keys(appState.cannedResponsesForProfiledChar);
-        if (keys.length === 0) return;
+    useSpecificCannedResponse: function(topic) {
+        const profiledCharId = appState.getCurrentProfileCharId();
+        if (!profiledCharId) return;
 
-        let newIndex = appState.currentCannedResponseIndex + direction;
+        if (!appState.hasActiveNpc(profiledCharId)) {
+            alert("The profiled NPC must be in the current scene to use a canned response.");
+            return;
+        }
 
-        if (newIndex < 0) newIndex = 0;
-        if (newIndex >= keys.length) newIndex = keys.length - 1;
+        const profiledChar = appState.getCharacterById(profiledCharId);
+        if (!profiledChar) return;
 
-        appState.currentCannedResponseIndex = newIndex;
-        UIRenderers.renderSuggestionsArea(appState.lastAiResultForProfiledChar, appState.getCurrentProfileCharId());
+        const cannedResponses = appState.cannedResponsesForProfiledChar || {};
+        const cannedResponseText = cannedResponses[topic];
+        if (!cannedResponseText) {
+            console.error(`Canned response for topic "${topic}" not found.`);
+            return;
+        }
+
+        const transcriptArea = Utils.getElem(`transcript-${profiledCharId}`);
+        if (transcriptArea) {
+            UIRenderers.appendMessageToTranscriptUI(transcriptArea, `${profiledChar.name}: ${cannedResponseText}`, 'dialogue-entry npc-response');
+            appState.addDialogueToHistory(profiledCharId, `${profiledChar.name}: ${cannedResponseText}`);
+        } else {
+            console.error("Could not find transcript area for active NPC:", profiledCharId);
+        }
     },
-
-    useCannedResponse: function() {
-    const profiledCharId = appState.getCurrentProfileCharId();
-    if (!profiledCharId) return;
-
-    if (!appState.hasActiveNpc(profiledCharId)) {
-        alert("The profiled NPC must be in the current scene to use a canned response.");
-        return;
-    }
-
-    const profiledChar = appState.getCharacterById(profiledCharId);
-    if (!profiledChar) return;
-
-    const keys = Object.keys(appState.cannedResponsesForProfiledChar);
-    if (keys.length === 0) return;
-
-    const currentKey = keys[appState.currentCannedResponseIndex];
-    const cannedResponseText = appState.cannedResponsesForProfiledChar[currentKey];
-    if (!cannedResponseText) return;
-
-    const transcriptArea = Utils.getElem(`transcript-${profiledCharId}`);
-    if (transcriptArea) {
-        UIRenderers.appendMessageToTranscriptUI(transcriptArea, `${profiledChar.name}: ${cannedResponseText}`, 'dialogue-entry npc-response');
-        appState.addDialogueToHistory(profiledCharId, `${profiledChar.name}: ${cannedResponseText}`);
-    } else {
-        console.error("Could not find transcript area for active NPC:", profiledCharId);
-    }
-},
     
     sendTopicToChat: function(topic) {
         const playerUtteranceElem = Utils.getElem('player-utterance');
@@ -557,6 +550,5 @@ window.handleBackToDashboardOverview = App.handleBackToDashboardOverview;
 window.toggleAbilityExpansion = App.toggleAbilityExpansion; 
 window.addSuggestedMemoryAsActual = App.addSuggestedMemoryAsActual; 
 window.acceptFactionStandingChange = App.acceptFactionStandingChange;
-window.cycleCannedResponse = App.cycleCannedResponse;
-window.useCannedResponse = App.useCannedResponse;
+window.useSpecificCannedResponse = App.useSpecificCannedResponse;
 window.sendTopicToChat = App.sendTopicToChat;
