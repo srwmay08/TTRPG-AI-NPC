@@ -96,7 +96,8 @@ var EventHandlers = {
                 if (pcIdToRender) {
                     const pcData = appState.getCharacterById(pcIdToRender);
                     if (pcData) {
-                         UIRenderers.renderDetailedPcSheetUI(pcData, Utils.getElem('pc-dashboard-content'));
+                         // Updated to use PCRenderers
+                         PCRenderers.renderDetailedPcSheetUI(pcData, Utils.getElem('pc-dashboard-content'));
                     }
                 } else {
                     console.error("EventHandlers: Clicked card in dashboard, but data-pc-id missing.");
@@ -119,6 +120,7 @@ var EventHandlers = {
         const createCharacterBtn = Utils.getElem('create-character-form')?.querySelector('button');
         if (createCharacterBtn) createCharacterBtn.onclick = CharacterService.handleCharacterCreation;
 
+        // App is assumed to be globally available
         const generateDialogueBtn = Utils.getElem('generate-dialogue-btn');
         if (generateDialogueBtn) generateDialogueBtn.onclick = App.handleGenerateDialogue;
 

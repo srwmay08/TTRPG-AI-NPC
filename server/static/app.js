@@ -70,11 +70,13 @@ var App = {
             CharacterService.handleSelectCharacterForDetails(currentProfileId);
         }
         if (tabName === 'tab-lore' && !appState.getCurrentLoreEntryId()) {
+            // Updated to use LoreRenderers
             if(typeof LoreRenderers.closeLoreDetailViewUI === 'function'){
                 LoreRenderers.closeLoreDetailViewUI();
             }
         }
         if (tabName === 'tab-scene') {
+            // Updated to use NPCRenderers
             NPCRenderers.renderNpcListForContextUI(
                 Utils.getElem('character-list-scene-tab'),
                 appState.getAllCharacters(),
@@ -108,9 +110,11 @@ var App = {
 
         if (typeSelector) {
             typeSelector.addEventListener('change', () => { 
+                // Updated to use LoreRenderers
                 LoreRenderers.populateSceneContextSelectorUI();
                 if (entrySelector) entrySelector.value = ""; 
                 appState.setCurrentSceneContextFilter(null); 
+                 // Updated to use NPCRenderers
                  NPCRenderers.renderNpcListForContextUI(
                     Utils.getElem('character-list-scene-tab'),
                     appState.getAllCharacters(),
@@ -131,6 +135,7 @@ var App = {
                 } else {
                     appState.setCurrentSceneContextFilter(null);
                 }
+                // Updated to use NPCRenderers
                 NPCRenderers.renderNpcListForContextUI(
                     Utils.getElem('character-list-scene-tab'),
                     appState.getAllCharacters(),
@@ -142,6 +147,7 @@ var App = {
                 this.updateMainView();
             });
         }
+        // Updated to use NPCRenderers
         NPCRenderers.renderNpcListForContextUI(
             Utils.getElem('character-list-scene-tab'),
             appState.getAllCharacters(),
@@ -168,6 +174,7 @@ var App = {
                             const pcQuickViewInSceneElem = Utils.getElem('pc-quick-view-section-in-scene');
                             if(pcQuickViewInSceneElem) pcQuickViewInSceneElem.style.display = 'none';
                         }
+                        // Updated to use PCRenderers
                         PCRenderers.renderDetailedPcSheetUI(pcData, Utils.getElem('pc-dashboard-content'));
                     }
                 }
@@ -189,6 +196,7 @@ var App = {
     
     updateMainView: function() {
         console.log("App.js: App.updateMainView called.");
+        // Calls MainView, which now handles the updates internally
         MainView.updateMainViewUI(
             Utils.getElem('dialogue-interface'),
             Utils.getElem('pc-dashboard-view'),
@@ -217,6 +225,7 @@ var App = {
                 return;
             }
     
+            // Updated to use NPCRenderers
             NPCRenderers.createNpcDialogueAreaUI(toggledNpc, multiNpcContainer);
             appState.initDialogueHistory(npcIdStr);
             
@@ -248,6 +257,7 @@ var App = {
             }
         } else {
             appState.removeActiveNpc(npcIdStr);
+            // Updated to use NPCRenderers
             NPCRenderers.removeNpcDialogueAreaUI(npcIdStr, multiNpcContainer);
             appState.deleteDialogueHistory(npcIdStr);
         }
@@ -259,6 +269,7 @@ var App = {
             multiNpcContainer.innerHTML = '<p class="scene-event">Select NPCs from the SCENE tab to add them to the interaction.</p>';
         }
     
+        // Updated to use NPCRenderers
         NPCRenderers.renderNpcListForContextUI(
             Utils.getElem('character-list-scene-tab'),
             appState.getAllCharacters(),
@@ -292,6 +303,7 @@ var App = {
             const result = await ApiService.generateNpcDialogue(npcIdStr, payload);
             if(thinkingMessageElement && thinkingMessageElement.parentNode) thinkingMessageElement.remove();
 
+            // Updated to use NPCRenderers
             NPCRenderers.appendMessageToTranscriptUI(transcriptArea, `${npcName}: ${result.npc_dialogue}`, 'dialogue-entry npc-response');
             appState.addDialogueToHistory(npcIdStr, `${npcName}: ${result.npc_dialogue}`);
             
@@ -302,10 +314,12 @@ var App = {
             }
             appState.lastAiResultForProfiledChar = result;
 
+            // Updated to use NPCRenderers
             NPCRenderers.renderSuggestionsArea(result, npcIdStr);
         } catch (error) {
             console.error(`Error generating dialogue for ${npcName}:`, error);
             if(thinkingMessageElement && thinkingMessageElement.parentNode) thinkingMessageElement.remove();
+            // Updated to use NPCRenderers
             NPCRenderers.appendMessageToTranscriptUI(transcriptArea, `${npcName}: (Error: ${error.message})`, 'dialogue-entry npc-response');
             appState.addDialogueToHistory(npcIdStr, `${npcName}: (Error generating dialogue)`);
         }
@@ -337,6 +351,7 @@ var App = {
             const transcriptArea = Utils.getElem(`transcript-${npcId}`);
             if (transcriptArea) {
                 const messageClass = (isSpeakerAnNpc && speakerId === npcId) ? 'dialogue-entry npc-response' : 'dialogue-entry player-utterance';
+                // Updated to use NPCRenderers
                 NPCRenderers.appendMessageToTranscriptUI(transcriptArea, `${speakerDisplayName}: ${playerUtterance}`, messageClass);
                 appState.addDialogueToHistory(npcId, `${speakerDisplayName}: ${playerUtterance}`);
             }
@@ -377,6 +392,7 @@ var App = {
 
     handleTogglePcSelection: function(pcIdStr) {
         appState.toggleActivePc(pcIdStr);
+        // Updated to use NPCRenderers
         NPCRenderers.renderPcListUI(
             Utils.getElem('active-pc-list'), 
             Utils.getElem('speaking-pc-select'), 
@@ -389,6 +405,7 @@ var App = {
 
         const currentProfileChar = appState.getCurrentProfileChar();
         if (currentProfileChar && currentProfileChar.character_type === 'NPC') {
+            // Updated to use NPCRenderers
             NPCRenderers.renderNpcFactionStandingsUI(currentProfileChar, appState.activePcIds, appState.getAllCharacters(), Utils.getElem('npc-faction-standings-content'), CharacterService.handleSaveFactionStanding);
         }
     },
@@ -406,6 +423,7 @@ var App = {
     toggleAbilityExpansion: function(ablKey) {
         const currentAbility = appState.getExpandedAbility();
         appState.setExpandedAbility(currentAbility === ablKey ? null : ablKey);
+        // Updated to use PCRenderers
         PCRenderers.updatePcDashboardUI(Utils.getElem('pc-dashboard-content'), appState.getAllCharacters(), appState.activePcIds, appState.getExpandedAbility());
     },
 
@@ -424,6 +442,7 @@ var App = {
                 charToUpdate.memories = response.updated_memories;
                 appState.updateCharacterInList(charToUpdate);
                 if (appState.getCurrentProfileCharId() === npcId) {
+                    // Updated to use NPCRenderers
                     NPCRenderers.renderMemoriesUI(charToUpdate.memories, Utils.getElem('character-memories-list'), CharacterService.handleDeleteMemory);
                 }
             }
@@ -472,6 +491,7 @@ var App = {
 
         const transcriptArea = Utils.getElem(`transcript-${profiledCharId}`);
         if (transcriptArea) {
+            // Updated to use NPCRenderers
             NPCRenderers.appendMessageToTranscriptUI(transcriptArea, `${profiledChar.name}: ${cannedResponseText}`, 'dialogue-entry npc-response');
             appState.addDialogueToHistory(profiledCharId, `${profiledChar.name}: ${cannedResponseText}`);
         } else {
@@ -505,6 +525,8 @@ var App = {
 document.addEventListener('DOMContentLoaded', App.initializeApp.bind(App));
 
 // Global assignments for inline HTML onclick handlers
+// These are necessary for functions called directly from HTML attributes (e.g., onclick="openTab(...)").
+// Ideally, consider moving these to event listeners in eventHandlers.js where possible.
 window.openTab = App.openTab;
 window.handleToggleNpcInScene = App.handleToggleNpcInScene;
 window.handleGenerateDialogue = App.handleGenerateDialogue; 
@@ -515,3 +537,5 @@ window.addSuggestedMemoryAsActual = App.addSuggestedMemoryAsActual;
 window.acceptFactionStandingChange = App.acceptFactionStandingChange;
 window.useSpecificCannedResponse = App.useSpecificCannedResponse;
 window.sendTopicToChat = App.sendTopicToChat;
+// Added for lore-specific functionality exposed to global scope
+window.closeLoreDetailViewUI = LoreRenderers.closeLoreDetailViewUI; // Ensure this points to the new LoreRenderers
