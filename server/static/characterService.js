@@ -24,7 +24,6 @@ const CharacterService = {
         associatedLoreListForCharacter: 'associated-lore-list-for-character'
     },
 
-
     initializeAppCharacters: async function() {
         console.log("Fetching characters via characterService...");
         try {
@@ -32,7 +31,11 @@ const CharacterService = {
             appState.setAllCharacters(charactersFromServer);
             console.log("Characters fetched and processed:", appState.getAllCharacters().length);
 
-            NPCRenderers.renderPcListUI(Utils.getElem('active-pc-list'), Utils.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, App.handleTogglePcSelection);
+            // Corrected: Use PCRenderers for the PC list
+            PCRenderers.renderPcListUI(Utils.getElem('active-pc-list'), appState.getAllCharacters(), appState.activePcIds, App.handleTogglePcSelection);
+            // Corrected: Use NPCRenderers for the speaker dropdown which contains both PCs and NPCs
+            NPCRenderers.populateSpeakerDropdownUI(Utils.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, appState.activeSceneNpcIds);
+
 
             NPCRenderers.renderNpcListForContextUI(
                 Utils.getElem('character-list-scene-tab'),
@@ -68,7 +71,7 @@ const CharacterService = {
             appState.clearCannedResponses();
             appState.lastAiResultForProfiledChar = null;
             NPCRenderers.renderCharacterProfileUI(null, CharacterService.profileElementIds);
-            NPCRenderers.renderSuggestionsArea(null); // Clear and hide suggestions
+            NPCRenderers.renderSuggestionsArea(null);
             if (characterProfileSection) {
                 characterProfileSection.classList.add('collapsed');
                 const content = characterProfileSection.querySelector('.collapsible-content');
@@ -86,7 +89,7 @@ const CharacterService = {
             appState.setCannedResponsesForProfiledChar(processedChar.canned_conversations || {});
             
             NPCRenderers.renderCharacterProfileUI(processedChar, CharacterService.profileElementIds);
-            NPCRenderers.renderSuggestionsArea(null, charIdStr); // Render suggestions area, showing canned responses if available
+            NPCRenderers.renderSuggestionsArea(null, charIdStr);
 
             if (characterProfileSection) {
                 characterProfileSection.classList.remove('collapsed');
@@ -125,7 +128,9 @@ const CharacterService = {
             appState.updateCharacterInList(result.character);
             NPCRenderers.renderNpcListForContextUI(Utils.getElem('character-list-scene-tab'), appState.getAllCharacters(), appState.activeSceneNpcIds, App.handleToggleNpcInScene, CharacterService.handleSelectCharacterForDetails, appState.currentSceneContextFilter);
             NPCRenderers.renderAllNpcListForManagementUI(Utils.getElem('all-character-list-management'), appState.getAllCharacters(), CharacterService.handleSelectCharacterForDetails);
-            NPCRenderers.renderPcListUI(Utils.getElem('active-pc-list'), Utils.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, App.handleTogglePcSelection);
+            PCRenderers.renderPcListUI(Utils.getElem('active-pc-list'), appState.getAllCharacters(), appState.activePcIds, App.handleTogglePcSelection);
+            NPCRenderers.populateSpeakerDropdownUI(Utils.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, appState.activeSceneNpcIds);
+
 
             Utils.getElem('new-char-name').value = '';
             Utils.getElem('new-char-description').value = '';
