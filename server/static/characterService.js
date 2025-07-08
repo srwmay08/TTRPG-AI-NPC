@@ -1,7 +1,7 @@
 // static/characterService.js
 // Responsibility: Logic related to fetching, processing, and managing character data.
 
-var CharacterService = {
+const CharacterService = {
     profileElementIds: {
         detailsCharName: 'details-char-name',
         profileCharType: 'profile-char-type',
@@ -32,9 +32,9 @@ var CharacterService = {
             appState.setAllCharacters(charactersFromServer);
             console.log("Characters fetched and processed:", appState.getAllCharacters().length);
 
-            UIRenderers.renderPcListUI(Utils.getElem('active-pc-list'), Utils.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, App.handleTogglePcSelection);
+            NPCRenderers.renderPcListUI(Utils.getElem('active-pc-list'), Utils.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, App.handleTogglePcSelection);
 
-            UIRenderers.renderNpcListForContextUI(
+            NPCRenderers.renderNpcListForContextUI(
                 Utils.getElem('character-list-scene-tab'),
                 appState.getAllCharacters(),
                 appState.activeSceneNpcIds,
@@ -42,14 +42,14 @@ var CharacterService = {
                 CharacterService.handleSelectCharacterForDetails,
                 null
             );
-            UIRenderers.renderAllNpcListForManagementUI(
+            NPCRenderers.renderAllNpcListForManagementUI(
                 Utils.getElem('all-character-list-management'),
                 appState.getAllCharacters(),
                 CharacterService.handleSelectCharacterForDetails
             );
 
             await this.fetchAllLoreEntriesAndUpdateState();
-            UIRenderers.populateLoreTypeDropdownUI();
+            LoreRenderers.populateLoreTypeDropdownUI();
 
             setTimeout(App.updateMainView, 0);
         } catch (error) {
@@ -67,8 +67,8 @@ var CharacterService = {
             appState.setCurrentProfileCharId(null);
             appState.clearCannedResponses();
             appState.lastAiResultForProfiledChar = null;
-            UIRenderers.renderCharacterProfileUI(null, CharacterService.profileElementIds);
-            UIRenderers.renderSuggestionsArea(null); // Clear and hide suggestions
+            NPCRenderers.renderCharacterProfileUI(null, CharacterService.profileElementIds);
+            NPCRenderers.renderSuggestionsArea(null); // Clear and hide suggestions
             if (characterProfileSection) {
                 characterProfileSection.classList.add('collapsed');
                 const content = characterProfileSection.querySelector('.collapsible-content');
@@ -85,8 +85,8 @@ var CharacterService = {
             
             appState.setCannedResponsesForProfiledChar(processedChar.canned_conversations || {});
             
-            UIRenderers.renderCharacterProfileUI(processedChar, CharacterService.profileElementIds);
-            UIRenderers.renderSuggestionsArea(null, charIdStr); // Render suggestions area, showing canned responses if available
+            NPCRenderers.renderCharacterProfileUI(processedChar, CharacterService.profileElementIds);
+            NPCRenderers.renderSuggestionsArea(null, charIdStr); // Render suggestions area, showing canned responses if available
 
             if (characterProfileSection) {
                 characterProfileSection.classList.remove('collapsed');
@@ -98,9 +98,9 @@ var CharacterService = {
         } catch (error) {
             console.error("Error in handleSelectCharacterForDetails:", error);
             Utils.updateText('details-char-name', 'Error loading details');
-            UIRenderers.renderCharacterProfileUI(null, CharacterService.profileElementIds);
+            NPCRenderers.renderCharacterProfileUI(null, CharacterService.profileElementIds);
             appState.clearCannedResponses();
-            UIRenderers.renderSuggestionsArea(null);
+            NPCRenderers.renderSuggestionsArea(null);
             if (characterProfileSection) {
                 characterProfileSection.classList.add('collapsed');
                 const content = characterProfileSection.querySelector('.collapsible-content');
@@ -123,9 +123,9 @@ var CharacterService = {
         try {
             const result = await ApiService.createCharacterOnServer(newCharData);
             appState.updateCharacterInList(result.character);
-            UIRenderers.renderNpcListForContextUI(Utils.getElem('character-list-scene-tab'), appState.getAllCharacters(), appState.activeSceneNpcIds, App.handleToggleNpcInScene, CharacterService.handleSelectCharacterForDetails, appState.currentSceneContextFilter);
-            UIRenderers.renderAllNpcListForManagementUI(Utils.getElem('all-character-list-management'), appState.getAllCharacters(), CharacterService.handleSelectCharacterForDetails);
-            UIRenderers.renderPcListUI(Utils.getElem('active-pc-list'), Utils.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, App.handleTogglePcSelection);
+            NPCRenderers.renderNpcListForContextUI(Utils.getElem('character-list-scene-tab'), appState.getAllCharacters(), appState.activeSceneNpcIds, App.handleToggleNpcInScene, CharacterService.handleSelectCharacterForDetails, appState.currentSceneContextFilter);
+            NPCRenderers.renderAllNpcListForManagementUI(Utils.getElem('all-character-list-management'), appState.getAllCharacters(), CharacterService.handleSelectCharacterForDetails);
+            NPCRenderers.renderPcListUI(Utils.getElem('active-pc-list'), Utils.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, App.handleTogglePcSelection);
 
             Utils.getElem('new-char-name').value = '';
             Utils.getElem('new-char-description').value = '';
@@ -174,7 +174,7 @@ var CharacterService = {
             const result = await ApiService.associateHistoryFileWithNpc(charId, selectedFile);
             if (result && result.character) {
                 const updatedChar = appState.updateCharacterInList(result.character);
-                UIRenderers.renderCharacterProfileUI(updatedChar, CharacterService.profileElementIds);
+                NPCRenderers.renderCharacterProfileUI(updatedChar, CharacterService.profileElementIds);
                 alert(result.message || "History file associated successfully.");
             } else {
                 alert("Failed to associate history file: No character data returned from server.");
@@ -193,7 +193,7 @@ var CharacterService = {
             const result = await ApiService.dissociateHistoryFileFromNpc(charId, filename);
             if (result && result.character) {
                 const updatedChar = appState.updateCharacterInList(result.character);
-                UIRenderers.renderCharacterProfileUI(updatedChar, CharacterService.profileElementIds);
+                NPCRenderers.renderCharacterProfileUI(updatedChar, CharacterService.profileElementIds);
                 alert(result.message || "History file dissociated successfully.");
             } else {
                 alert("Failed to dissociate history file: No character data returned from server.");
@@ -221,7 +221,7 @@ var CharacterService = {
                 const updatedCharState = appState.updateCharacterInList(response.character);
                 const currentProfileChar = appState.getCurrentProfileChar();
                 if (currentProfileChar && String(currentProfileChar._id) === String(npcId)) {
-                     UIRenderers.renderNpcFactionStandingsUI(
+                     NPCRenderers.renderNpcFactionStandingsUI(
                         updatedCharState,
                         appState.activePcIds,
                         appState.getAllCharacters(),
@@ -243,10 +243,10 @@ var CharacterService = {
         try {
             const loreEntries = await ApiService.fetchAllLoreEntries();
             appState.setAllLoreEntries(loreEntries);
-            UIRenderers.renderLoreEntryListUI(appState.getAllLoreEntries());
-            UIRenderers.populateLoreEntrySelectForCharacterLinkingUI();
-            UIRenderers.populateSceneContextSelectorUI();
-            UIRenderers.populateSceneContextTypeFilterUI();
+            LoreRenderers.renderLoreEntryListUI(appState.getAllLoreEntries());
+            LoreRenderers.populateLoreEntrySelectForCharacterLinkingUI();
+            LoreRenderers.populateSceneContextSelectorUI();
+            LoreRenderers.populateLoreTypeDropdownUI();
         } catch (error) {
             console.error("Error fetching all lore entries:", error);
         }
@@ -268,9 +268,9 @@ var CharacterService = {
         try {
             const result = await ApiService.createLoreEntryOnServer(loreData);
             appState.updateLoreEntryInList(result.lore_entry);
-            UIRenderers.renderLoreEntryListUI(appState.getAllLoreEntries());
-            UIRenderers.populateLoreEntrySelectForCharacterLinkingUI();
-            UIRenderers.populateSceneContextSelectorUI();
+            LoreRenderers.renderLoreEntryListUI(appState.getAllLoreEntries());
+            LoreRenderers.populateLoreEntrySelectForCharacterLinkingUI();
+            LoreRenderers.populateSceneContextSelectorUI();
 
             Utils.getElem('new-lore-name').value = '';
             Utils.getElem('new-lore-type').value = LORE_TYPES[0];
@@ -287,16 +287,16 @@ var CharacterService = {
 
     handleSelectLoreEntryForDetails: async function(loreIdStr) {
         if (!loreIdStr) {
-            UIRenderers.closeLoreDetailViewUI();
+            LoreRenderers.closeLoreDetailViewUI();
             return;
         }
         appState.setCurrentLoreEntryId(loreIdStr);
         try {
             const loreEntry = await ApiService.fetchLoreEntryDetails(loreIdStr);
-            UIRenderers.renderLoreEntryDetailUI(loreEntry);
+            LoreRenderers.renderLoreEntryDetailUI(loreEntry);
         } catch (error) {
             console.error("Error fetching lore entry details:", error);
-            UIRenderers.closeLoreDetailViewUI();
+            LoreRenderers.closeLoreDetailViewUI();
         }
     },
 
@@ -321,10 +321,10 @@ var CharacterService = {
         try {
             await ApiService.deleteLoreEntryFromServer(loreId);
             appState.removeLoreEntryFromList(loreId);
-            UIRenderers.renderLoreEntryListUI(appState.getAllLoreEntries());
-            UIRenderers.populateLoreEntrySelectForCharacterLinkingUI();
-            UIRenderers.populateSceneContextSelectorUI();
-            UIRenderers.closeLoreDetailViewUI();
+            LoreRenderers.renderLoreEntryListUI(appState.getAllLoreEntries());
+            LoreRenderers.populateLoreEntrySelectForCharacterLinkingUI();
+            LoreRenderers.populateSceneContextSelectorUI();
+            LoreRenderers.closeLoreDetailViewUI();
 
             const currentProfileCharId = appState.getCurrentProfileCharId();
             if(currentProfileCharId){
@@ -332,7 +332,7 @@ var CharacterService = {
                  if (charData && charData.linked_lore_ids) {
                     charData.linked_lore_ids = charData.linked_lore_ids.filter(id => id !== loreId);
                     appState.updateCharacterInList(charData);
-                    UIRenderers.renderCharacterProfileUI(charData, CharacterService.profileElementIds);
+                    NPCRenderers.renderCharacterProfileUI(charData, CharacterService.profileElementIds);
                  }
             }
             alert("Lore entry deleted.");
@@ -357,7 +357,7 @@ var CharacterService = {
         try {
             const result = await ApiService.linkLoreToCharacterOnServer(charId, loreId);
             const updatedChar = appState.updateCharacterInList(result.character);
-            UIRenderers.renderCharacterProfileUI(updatedChar, CharacterService.profileElementIds);
+            NPCRenderers.renderCharacterProfileUI(updatedChar, CharacterService.profileElementIds);
             alert("Lore linked to character.");
         } catch (error) {
             console.error("Error linking lore to character:", error);
@@ -377,7 +377,7 @@ var CharacterService = {
         try {
             const result = await ApiService.unlinkLoreFromCharacterOnServer(charId, loreIdToUnlink);
             const updatedChar = appState.updateCharacterInList(result.character);
-            UIRenderers.renderCharacterProfileUI(updatedChar, CharacterService.profileElementIds);
+            NPCRenderers.renderCharacterProfileUI(updatedChar, CharacterService.profileElementIds);
             alert("Lore unlinked from character.");
         } catch (error) {
             console.error("Error unlinking lore:", error);
@@ -424,7 +424,7 @@ var CharacterService = {
             if (charToUpdate && response.updated_memories) {
                 charToUpdate.memories = response.updated_memories;
                 appState.updateCharacterInList(charToUpdate);
-                UIRenderers.renderMemoriesUI(charToUpdate.memories, Utils.getElem('character-memories-list'), CharacterService.handleDeleteMemory);
+                NPCRenderers.renderMemoriesUI(charToUpdate.memories, Utils.getElem('character-memories-list'), CharacterService.handleDeleteMemory);
             }
             Utils.getElem('new-memory-content').value = '';
             Utils.getElem('new-memory-type').value = '';
@@ -445,7 +445,7 @@ var CharacterService = {
             if (charToUpdate && response.updated_memories) {
                 charToUpdate.memories = response.updated_memories;
                 appState.updateCharacterInList(charToUpdate);
-                UIRenderers.renderMemoriesUI(charToUpdate.memories, Utils.getElem('character-memories-list'), CharacterService.handleDeleteMemory);
+                NPCRenderers.renderMemoriesUI(charToUpdate.memories, Utils.getElem('character-memories-list'), CharacterService.handleDeleteMemory);
             }
         } catch (error) {
             console.error("Error deleting memory:", error);

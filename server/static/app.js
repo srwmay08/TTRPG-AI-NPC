@@ -9,7 +9,7 @@ var App = {
 
             EventHandlers.setupResizer();
             EventHandlers.setupCollapsibleSections(); 
-            EventHandlers.assignButtonEventHandlers(); // Assigns button handlers like the one for 'Send to NPCs'
+            EventHandlers.assignButtonEventHandlers(); 
             this.setupTabControls(); 
             this.setupSceneContextSelector();
             this.setupDashboardClickHandlers();
@@ -70,12 +70,12 @@ var App = {
             CharacterService.handleSelectCharacterForDetails(currentProfileId);
         }
         if (tabName === 'tab-lore' && !appState.getCurrentLoreEntryId()) {
-            if(typeof closeLoreDetailViewUI === 'function'){
-                closeLoreDetailViewUI();
+            if(typeof LoreRenderers.closeLoreDetailViewUI === 'function'){
+                LoreRenderers.closeLoreDetailViewUI();
             }
         }
         if (tabName === 'tab-scene') {
-            UIRenderers.renderNpcListForContextUI(
+            NPCRenderers.renderNpcListForContextUI(
                 Utils.getElem('character-list-scene-tab'),
                 appState.getAllCharacters(),
                 appState.activeSceneNpcIds,
@@ -108,10 +108,10 @@ var App = {
 
         if (typeSelector) {
             typeSelector.addEventListener('change', () => { 
-                UIRenderers.populateSceneContextSelectorUI();
+                LoreRenderers.populateSceneContextSelectorUI();
                 if (entrySelector) entrySelector.value = ""; 
                 appState.setCurrentSceneContextFilter(null); 
-                 UIRenderers.renderNpcListForContextUI(
+                 NPCRenderers.renderNpcListForContextUI(
                     Utils.getElem('character-list-scene-tab'),
                     appState.getAllCharacters(),
                     appState.activeSceneNpcIds,
@@ -131,7 +131,7 @@ var App = {
                 } else {
                     appState.setCurrentSceneContextFilter(null);
                 }
-                UIRenderers.renderNpcListForContextUI(
+                NPCRenderers.renderNpcListForContextUI(
                     Utils.getElem('character-list-scene-tab'),
                     appState.getAllCharacters(),
                     appState.activeSceneNpcIds,
@@ -142,7 +142,7 @@ var App = {
                 this.updateMainView();
             });
         }
-        UIRenderers.renderNpcListForContextUI(
+        NPCRenderers.renderNpcListForContextUI(
             Utils.getElem('character-list-scene-tab'),
             appState.getAllCharacters(),
             appState.activeSceneNpcIds,
@@ -168,7 +168,7 @@ var App = {
                             const pcQuickViewInSceneElem = Utils.getElem('pc-quick-view-section-in-scene');
                             if(pcQuickViewInSceneElem) pcQuickViewInSceneElem.style.display = 'none';
                         }
-                        UIRenderers.renderDetailedPcSheetUI(pcData, Utils.getElem('pc-dashboard-content'));
+                        PCRenderers.renderDetailedPcSheetUI(pcData, Utils.getElem('pc-dashboard-content'));
                     }
                 }
             }
@@ -189,46 +189,13 @@ var App = {
     
     updateMainView: function() {
         console.log("App.js: App.updateMainView called.");
-        const dialogueInterfaceElem = Utils.getElem('dialogue-interface');
-        const pcDashboardViewElem = Utils.getElem('pc-dashboard-view');
-        const pcQuickViewInSceneElem = Utils.getElem('pc-quick-view-section-in-scene');
-        const locationDashboardViewElem = Utils.getElem('location-dashboard-view');
-
-        if (!dialogueInterfaceElem || !pcDashboardViewElem || !pcQuickViewInSceneElem || !locationDashboardViewElem) {
-            console.error("App.js/updateMainView: Critical UI container element(s) missing."); return;
-        }
-
-        const activeNpcCount = appState.getActiveNpcCount();
-        const sceneContextFilter = appState.getCurrentSceneContextFilter();
-        const dashboardContent = Utils.getElem('pc-dashboard-content');
-        const isDetailedSheetVisible = dashboardContent && dashboardContent.querySelector('.detailed-pc-sheet');
-
-        // Hide all views by default
-        dialogueInterfaceElem.style.display = 'none';
-        pcDashboardViewElem.style.display = 'none';
-        locationDashboardViewElem.style.display = 'none';
-        pcQuickViewInSceneElem.style.display = 'none';
-
-        if (activeNpcCount > 0 && !isDetailedSheetVisible) {
-            dialogueInterfaceElem.style.display = 'block';
-            const activePcsData = appState.getAllCharacters().filter(char => appState.hasActivePc(String(char._id)));
-            UIRenderers.renderPcQuickViewInSceneUI(pcQuickViewInSceneElem, activePcsData);
-        } else if (sceneContextFilter && sceneContextFilter.id) {
-            locationDashboardViewElem.style.display = 'block';
-            const loreEntry = appState.getLoreEntryById(sceneContextFilter.id);
-            UIRenderers.renderLocationDashboardUI(loreEntry, appState.getAllCharacters(), locationDashboardViewElem);
-        } else {
-            pcDashboardViewElem.style.display = 'block';
-            if (isDetailedSheetVisible) {
-                // Detailed PC sheet is already visible, do nothing to the content.
-            } else if (appState.getActivePcCount() > 0) {
-                UIRenderers.updatePcDashboardUI(dashboardContent, appState.getAllCharacters(), appState.activePcIds, appState.getExpandedAbility());
-            } else {
-                if (dashboardContent) dashboardContent.innerHTML = `<p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>`;
-            }
-        }
-        
-        Utils.disableBtn('generate-dialogue-btn', activeNpcCount === 0);
+        MainView.updateMainViewUI(
+            Utils.getElem('dialogue-interface'),
+            Utils.getElem('pc-dashboard-view'),
+            Utils.getElem('pc-quick-view-section-in-scene'),
+            appState.getActiveNpcCount(),
+            appState.getActivePcCount() > 0
+        );
         console.log("App.js: App.updateMainView finished.");
     },
 
@@ -250,7 +217,7 @@ var App = {
                 return;
             }
     
-            UIRenderers.createNpcDialogueAreaUI(toggledNpc, multiNpcContainer);
+            NPCRenderers.createNpcDialogueAreaUI(toggledNpc, multiNpcContainer);
             appState.initDialogueHistory(npcIdStr);
             
             const intro = toggledNpc.canned_conversations?.introduction;
@@ -260,7 +227,6 @@ var App = {
             const currentSpeakingPcId = speakingPcSelect ? speakingPcSelect.value : null;
 
             if (intro) {
-                // Canned intro exists. Use it and ask AI for suggestions.
                 const payload = {
                     scene_context: sceneContext || `${activePcNames.join(', ')} are present.`,
                     player_utterance: `(System Directive: Canned Response Used) The response was: "${intro}"`,
@@ -268,11 +234,9 @@ var App = {
                     speaking_pc_id: currentSpeakingPcId,
                     recent_dialogue_history: []
                 };
-                // This call will get the canned text + suggestions from the backend
                 setTimeout(() => App.triggerNpcInteraction(npcIdStr, toggledNpc.name, payload, true, `thinking-${npcIdStr}-greeting`), 100);
 
             } else {
-                // No canned intro, so generate one
                 const greetingPayload = {
                     scene_context: sceneContext || `${activePcNames.join(', ')} ${activePcNames.length > 1 ? 'are' : 'is'} present.`,
                     player_utterance: `(System Directive: You are ${toggledNpc.name}. You have just become aware of ${activePcNames.join(', ')} in the scene. Greet them or offer an initial reaction in character.)`,
@@ -283,13 +247,11 @@ var App = {
                 setTimeout(() => App.triggerNpcInteraction(npcIdStr, toggledNpc.name, greetingPayload, true, `thinking-${npcIdStr}-greeting`), 100);
             }
         } else {
-            // Logic for removing an NPC from the scene
             appState.removeActiveNpc(npcIdStr);
-            UIRenderers.removeNpcDialogueAreaUI(npcIdStr, multiNpcContainer);
+            NPCRenderers.removeNpcDialogueAreaUI(npcIdStr, multiNpcContainer);
             appState.deleteDialogueHistory(npcIdStr);
         }
     
-        // Update UI elements
         const placeholderEvent = multiNpcContainer.querySelector('p.scene-event');
         if (appState.getActiveNpcCount() > 0 && placeholderEvent) {
             placeholderEvent.remove();
@@ -297,7 +259,7 @@ var App = {
             multiNpcContainer.innerHTML = '<p class="scene-event">Select NPCs from the SCENE tab to add them to the interaction.</p>';
         }
     
-        UIRenderers.renderNpcListForContextUI(
+        NPCRenderers.renderNpcListForContextUI(
             Utils.getElem('character-list-scene-tab'),
             appState.getAllCharacters(),
             appState.activeSceneNpcIds,
@@ -330,7 +292,7 @@ var App = {
             const result = await ApiService.generateNpcDialogue(npcIdStr, payload);
             if(thinkingMessageElement && thinkingMessageElement.parentNode) thinkingMessageElement.remove();
 
-            UIRenderers.appendMessageToTranscriptUI(transcriptArea, `${npcName}: ${result.npc_dialogue}`, 'dialogue-entry npc-response');
+            NPCRenderers.appendMessageToTranscriptUI(transcriptArea, `${npcName}: ${result.npc_dialogue}`, 'dialogue-entry npc-response');
             appState.addDialogueToHistory(npcIdStr, `${npcName}: ${result.npc_dialogue}`);
             
             appState.setCurrentProfileCharId(npcIdStr); 
@@ -340,82 +302,82 @@ var App = {
             }
             appState.lastAiResultForProfiledChar = result;
 
-            UIRenderers.renderSuggestionsArea(result, npcIdStr);
+            NPCRenderers.renderSuggestionsArea(result, npcIdStr);
         } catch (error) {
             console.error(`Error generating dialogue for ${npcName}:`, error);
             if(thinkingMessageElement && thinkingMessageElement.parentNode) thinkingMessageElement.remove();
-            UIRenderers.appendMessageToTranscriptUI(transcriptArea, `${npcName}: (Error: ${error.message})`, 'dialogue-entry npc-response');
+            NPCRenderers.appendMessageToTranscriptUI(transcriptArea, `${npcName}: (Error: ${error.message})`, 'dialogue-entry npc-response');
             appState.addDialogueToHistory(npcIdStr, `${npcName}: (Error generating dialogue)`);
         }
         transcriptArea.scrollTop = transcriptArea.scrollHeight;
     },
 
     handleGenerateDialogue: async function() {
-    const playerUtterance = Utils.getElem('player-utterance').value.trim();
-    const sceneContext = Utils.getElem('scene-context').value.trim();
-    const speakingPcSelect = Utils.getElem('speaking-pc-select');
-    const speakerId = speakingPcSelect ? speakingPcSelect.value : null;
+        const playerUtterance = Utils.getElem('player-utterance').value.trim();
+        const sceneContext = Utils.getElem('scene-context').value.trim();
+        const speakingPcSelect = Utils.getElem('speaking-pc-select');
+        const speakerId = speakingPcSelect ? speakingPcSelect.value : null;
 
-    if (!playerUtterance) {
-        alert("Please enter player dialogue to send to the NPCs.");
-        return;
-    }
-    Utils.disableBtn('generate-dialogue-btn', true);
-
-    const speaker = appState.getCharacterById(speakerId);
-    const speakerDisplayName = speaker ? speaker.name : "DM/Scene Event";
-    const isSpeakerAnNpc = speaker && speaker.character_type === 'NPC';
-
-    const activeNpcIds = appState.getActiveNpcIds();
-    const activePcsNames = appState.getActivePcIds().map(id => appState.getCharacterById(id)?.name).filter(name => name);
-
-    const listeningNpcIds = activeNpcIds.filter(id => id !== speakerId);
-
-    activeNpcIds.forEach(npcId => {
-        const transcriptArea = Utils.getElem(`transcript-${npcId}`);
-        if (transcriptArea) {
-            const messageClass = (isSpeakerAnNpc && speakerId === npcId) ? 'dialogue-entry npc-response' : 'dialogue-entry player-utterance';
-            UIRenderers.appendMessageToTranscriptUI(transcriptArea, `${speakerDisplayName}: ${playerUtterance}`, messageClass);
-            appState.addDialogueToHistory(npcId, `${speakerDisplayName}: ${playerUtterance}`);
+        if (!playerUtterance) {
+            alert("Please enter player dialogue to send to the NPCs.");
+            return;
         }
-    });
+        Utils.disableBtn('generate-dialogue-btn', true);
 
-    listeningNpcIds.forEach(npcId => {
-        const npc = appState.getCharacterById(npcId);
-        const transcriptArea = Utils.getElem(`transcript-${npcId}`);
-        if (transcriptArea && npc) {
-            const thinkingEntry = document.createElement('p');
-            thinkingEntry.className = 'scene-event';
-            thinkingEntry.id = `thinking-${npcId}-main`;
-            thinkingEntry.textContent = `${npc.name} is formulating a response...`;
-            transcriptArea.appendChild(thinkingEntry);
-            transcriptArea.scrollTop = transcriptArea.scrollHeight;
-        }
-    });
+        const speaker = appState.getCharacterById(speakerId);
+        const speakerDisplayName = speaker ? speaker.name : "DM/Scene Event";
+        const isSpeakerAnNpc = speaker && speaker.character_type === 'NPC';
 
-    const dialoguePromises = listeningNpcIds.map(npcId => {
-        const npc = appState.getCharacterById(npcId);
-        if (!npc) return Promise.resolve();
+        const activeNpcIds = appState.getActiveNpcIds();
+        const activePcsNames = appState.getActivePcIds().map(id => appState.getCharacterById(id)?.name).filter(name => name);
 
-        const payload = {
-            scene_context: sceneContext,
-            player_utterance: playerUtterance,
-            active_pcs: activePcsNames,
-            speaking_pc_id: speakerId,
-            recent_dialogue_history: appState.getRecentDialogueHistory(npcId, 10)
-        };
-        return App.triggerNpcInteraction(npcId, npc.name, payload, false, `thinking-${npcId}-main`);
-    });
+        const listeningNpcIds = activeNpcIds.filter(id => id !== speakerId);
 
-    await Promise.all(dialoguePromises);
+        activeNpcIds.forEach(npcId => {
+            const transcriptArea = Utils.getElem(`transcript-${npcId}`);
+            if (transcriptArea) {
+                const messageClass = (isSpeakerAnNpc && speakerId === npcId) ? 'dialogue-entry npc-response' : 'dialogue-entry player-utterance';
+                NPCRenderers.appendMessageToTranscriptUI(transcriptArea, `${speakerDisplayName}: ${playerUtterance}`, messageClass);
+                appState.addDialogueToHistory(npcId, `${speakerDisplayName}: ${playerUtterance}`);
+            }
+        });
 
-    if (playerUtterance) Utils.getElem('player-utterance').value = '';
-    Utils.disableBtn('generate-dialogue-btn', false);
-},
+        listeningNpcIds.forEach(npcId => {
+            const npc = appState.getCharacterById(npcId);
+            const transcriptArea = Utils.getElem(`transcript-${npcId}`);
+            if (transcriptArea && npc) {
+                const thinkingEntry = document.createElement('p');
+                thinkingEntry.className = 'scene-event';
+                thinkingEntry.id = `thinking-${npcId}-main`;
+                thinkingEntry.textContent = `${npc.name} is formulating a response...`;
+                transcriptArea.appendChild(thinkingEntry);
+                transcriptArea.scrollTop = transcriptArea.scrollHeight;
+            }
+        });
+
+        const dialoguePromises = listeningNpcIds.map(npcId => {
+            const npc = appState.getCharacterById(npcId);
+            if (!npc) return Promise.resolve();
+
+            const payload = {
+                scene_context: sceneContext,
+                player_utterance: playerUtterance,
+                active_pcs: activePcsNames,
+                speaking_pc_id: speakerId,
+                recent_dialogue_history: appState.getRecentDialogueHistory(npcId, 10)
+            };
+            return App.triggerNpcInteraction(npcId, npc.name, payload, false, `thinking-${npcId}-main`);
+        });
+
+        await Promise.all(dialoguePromises);
+
+        if (playerUtterance) Utils.getElem('player-utterance').value = '';
+        Utils.disableBtn('generate-dialogue-btn', false);
+    },
 
     handleTogglePcSelection: function(pcIdStr) {
         appState.toggleActivePc(pcIdStr);
-        UIRenderers.renderPcListUI(
+        NPCRenderers.renderPcListUI(
             Utils.getElem('active-pc-list'), 
             Utils.getElem('speaking-pc-select'), 
             appState.getAllCharacters(), 
@@ -427,7 +389,7 @@ var App = {
 
         const currentProfileChar = appState.getCurrentProfileChar();
         if (currentProfileChar && currentProfileChar.character_type === 'NPC') {
-            UIRenderers.renderNpcFactionStandingsUI(currentProfileChar, appState.activePcIds, appState.getAllCharacters(), Utils.getElem('npc-faction-standings-content'), CharacterService.handleSaveFactionStanding);
+            NPCRenderers.renderNpcFactionStandingsUI(currentProfileChar, appState.activePcIds, appState.getAllCharacters(), Utils.getElem('npc-faction-standings-content'), CharacterService.handleSaveFactionStanding);
         }
     },
 
@@ -444,7 +406,7 @@ var App = {
     toggleAbilityExpansion: function(ablKey) {
         const currentAbility = appState.getExpandedAbility();
         appState.setExpandedAbility(currentAbility === ablKey ? null : ablKey);
-        UIRenderers.updatePcDashboardUI(Utils.getElem('pc-dashboard-content'), appState.getAllCharacters(), appState.activePcIds, appState.getExpandedAbility());
+        PCRenderers.updatePcDashboardUI(Utils.getElem('pc-dashboard-content'), appState.getAllCharacters(), appState.activePcIds, appState.getExpandedAbility());
     },
 
     addSuggestedMemoryAsActual: async function(npcId, memoryContent) {
@@ -462,7 +424,7 @@ var App = {
                 charToUpdate.memories = response.updated_memories;
                 appState.updateCharacterInList(charToUpdate);
                 if (appState.getCurrentProfileCharId() === npcId) {
-                    UIRenderers.renderMemoriesUI(charToUpdate.memories, Utils.getElem('character-memories-list'), CharacterService.handleDeleteMemory);
+                    NPCRenderers.renderMemoriesUI(charToUpdate.memories, Utils.getElem('character-memories-list'), CharacterService.handleDeleteMemory);
                 }
             }
             alert(`Suggested memory added to ${character.name}.`);
@@ -510,7 +472,7 @@ var App = {
 
         const transcriptArea = Utils.getElem(`transcript-${profiledCharId}`);
         if (transcriptArea) {
-            UIRenderers.appendMessageToTranscriptUI(transcriptArea, `${profiledChar.name}: ${cannedResponseText}`, 'dialogue-entry npc-response');
+            NPCRenderers.appendMessageToTranscriptUI(transcriptArea, `${profiledChar.name}: ${cannedResponseText}`, 'dialogue-entry npc-response');
             appState.addDialogueToHistory(profiledCharId, `${profiledChar.name}: ${cannedResponseText}`);
         } else {
             console.error("Could not find transcript area for active NPC:", profiledCharId);
@@ -542,6 +504,7 @@ var App = {
 
 document.addEventListener('DOMContentLoaded', App.initializeApp.bind(App));
 
+// Global assignments for inline HTML onclick handlers
 window.openTab = App.openTab;
 window.handleToggleNpcInScene = App.handleToggleNpcInScene;
 window.handleGenerateDialogue = App.handleGenerateDialogue; 
