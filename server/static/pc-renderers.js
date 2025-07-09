@@ -76,6 +76,7 @@ var PCRenderers = {
         selectedPcs.forEach(pc => {
             const score = (pc.system?.abilities?.[abilityKey.toLowerCase()]?.value) || 10;
             const label = pc.name;
+            UIWidgets.generateBarChartRowHTML(label, score, maxScore, 20); // Should be appended to container.
             barChartContainer.innerHTML += UIWidgets.generateBarChartRowHTML(label, score, maxScore, 20);
         });
         
@@ -371,5 +372,70 @@ var PCRenderers = {
 
         sheetHTML += `</div>`;
         dashboardContentElement.innerHTML = sheetHTML;
+    },
+
+    renderPcListUI: function(pcListDiv, speakingPcSelect, allCharacters, activePcIds, onPcItemClickCallback, activeNpcIdsSet) {
+        // This function name is a bit misleading as it also populates the speakingPcSelect with NPCs
+        if (!pcListDiv) { console.error("PCRenderers.renderPcListUI: pcListDiv not found"); return;}
+        pcListDiv.innerHTML = '';
+        if (speakingPcSelect) {
+            const currentSpeaker = speakingPcSelect.value;
+            speakingPcSelect.innerHTML = '<option value="">-- DM/Scene Event --</option>';
+
+            // Add Player Characters
+            const pcs = allCharacters.filter(char => char.character_type === 'PC').sort((a, b) => a.name.localeCompare(b.name));
+            pcs.forEach(pc => {
+                const pcIdStr = String(pc._id);
+                const option = document.createElement('option');
+                option.value = pcIdStr;
+                option.textContent = `(PC) ${pc.name}`;
+                speakingPcSelect.appendChild(option);
+            });
+
+            // Add a separator
+            if (activeNpcIdsSet && activeNpcIdsSet.size > 0 && pcs.length > 0) {
+                const separator = document.createElement('option');
+                separator.disabled = true;
+                separator.textContent = '--- NPCs in Scene ---';
+                speakingPcSelect.appendChild(separator);
+            }
+
+            // Add Active NPCs
+            if (activeNpcIdsSet) {
+                const activeNpcs = allCharacters.filter(char => activeNpcIdsSet.has(String(char._id))).sort((a, b) => a.name.localeCompare(b.name));
+                activeNpcs.forEach(npc => {
+                    const npcIdStr = String(npc._id);
+                    const option = document.createElement('option');
+                    option.value = npcIdStr;
+                    option.textContent = `(NPC) ${npc.name}`;
+                    speakingPcSelect.appendChild(option);
+                });
+            }
+            // Try to restore previous selection
+            if (Array.from(speakingPcSelect.options).some(opt => opt.value === currentSpeaker)) {
+                speakingPcSelect.value = currentSpeaker;
+            }
+        }
+        
+        // This part remains the same, for rendering the PC list on the left
+        const pcsForList = allCharacters.filter(char => char.character_type === 'PC').sort((a, b) => a.name.localeCompare(b.name));
+        if (pcsForList.length === 0) {
+            pcListDiv.innerHTML = '<p><em>No Player Characters defined yet.</em></p>';
+            return;
+        }
+        const ul = document.createElement('ul');
+        pcsForList.forEach(pc => {
+            const pcIdStr = String(pc._id);
+            const li = document.createElement('li');
+            li.style.cursor = "pointer";
+            li.textContent = pc.name;
+            li.dataset.charId = pcIdStr;
+            li.onclick = () => onPcItemClickCallback(pcIdStr);
+            if (activePcIds.has(pcIdStr)) {
+                li.classList.add('selected');
+            }
+            ul.appendChild(li);
+        });
+        pcListDiv.appendChild(ul);
     }
 };

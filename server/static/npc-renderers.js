@@ -97,71 +97,6 @@ var NPCRenderers = {
         });
     },
 
-    renderPcListUI: function(pcListDiv, speakingPcSelect, allCharacters, activePcIds, onPcItemClickCallback, activeNpcIdsSet) {
-        // This function name is a bit misleading as it also populates the speakingPcSelect with NPCs
-        if (!pcListDiv) { console.error("NPCRenderers.renderPcListUI: pcListDiv not found"); return;}
-        pcListDiv.innerHTML = '';
-        if (speakingPcSelect) {
-            const currentSpeaker = speakingPcSelect.value;
-            speakingPcSelect.innerHTML = '<option value="">-- DM/Scene Event --</option>';
-
-            // Add Player Characters
-            const pcs = allCharacters.filter(char => char.character_type === 'PC').sort((a, b) => a.name.localeCompare(b.name));
-            pcs.forEach(pc => {
-                const pcIdStr = String(pc._id);
-                const option = document.createElement('option');
-                option.value = pcIdStr;
-                option.textContent = `(PC) ${pc.name}`;
-                speakingPcSelect.appendChild(option);
-            });
-
-            // Add a separator
-            if (activeNpcIdsSet && activeNpcIdsSet.size > 0 && pcs.length > 0) {
-                const separator = document.createElement('option');
-                separator.disabled = true;
-                separator.textContent = '--- NPCs in Scene ---';
-                speakingPcSelect.appendChild(separator);
-            }
-
-            // Add Active NPCs
-            if (activeNpcIdsSet) {
-                const activeNpcs = allCharacters.filter(char => activeNpcIdsSet.has(String(char._id))).sort((a, b) => a.name.localeCompare(b.name));
-                activeNpcs.forEach(npc => {
-                    const npcIdStr = String(npc._id);
-                    const option = document.createElement('option');
-                    option.value = npcIdStr;
-                    option.textContent = `(NPC) ${npc.name}`;
-                    speakingPcSelect.appendChild(option);
-                });
-            }
-            // Try to restore previous selection
-            if (Array.from(speakingPcSelect.options).some(opt => opt.value === currentSpeaker)) {
-                speakingPcSelect.value = currentSpeaker;
-            }
-        }
-        
-        // This part remains the same, for rendering the PC list on the left
-        const pcsForList = allCharacters.filter(char => char.character_type === 'PC').sort((a, b) => a.name.localeCompare(b.name));
-        if (pcsForList.length === 0) {
-            pcListDiv.innerHTML = '<p><em>No Player Characters defined yet.</em></p>';
-            return;
-        }
-        const ul = document.createElement('ul');
-        pcsForList.forEach(pc => {
-            const pcIdStr = String(pc._id);
-            const li = document.createElement('li');
-            li.style.cursor = "pointer";
-            li.textContent = pc.name;
-            li.dataset.charId = pcIdStr;
-            li.onclick = () => onPcItemClickCallback(pcIdStr);
-            if (activePcIds.has(pcIdStr)) {
-                li.classList.add('selected');
-            }
-            ul.appendChild(li);
-        });
-        pcListDiv.appendChild(ul);
-    },
-
     createNpcDialogueAreaUI: function(npcCharacter, containerElement) {
         if (!npcCharacter || !containerElement) return;
 
@@ -391,7 +326,8 @@ var NPCRenderers = {
         const npcFactionStandingsContentElem = Utils.getElem(elements.npcFactionStandingsContent);
         const characterHistorySectionElem = Utils.getElem(elements.characterHistorySection);
         const associatedHistoryListElem = Utils.getElem(elements.associatedHistoryList);
-        const historyContentDisplayElem = Utils.getElem(elements.historyContentDisplay);
+        // Corrected: Ensure historyContentDisplayElem is correctly retrieved from elements
+        const historyContentDisplayElem = Utils.getElem(elements.historyContentDisplay); 
         const characterLoreLinksSectionElem = Utils.getElem(elements.characterLoreLinksSection);
         const linkLoreToCharBtnElem = Utils.getElem(elements.linkLoreToCharBtn);
 
@@ -424,7 +360,8 @@ var NPCRenderers = {
             if (addMemoryBtnElem) Utils.disableBtn(elements.addMemoryBtn, true);
             if (npcFactionStandingsContentElem) npcFactionStandingsContentElem.innerHTML = '<p><em>Faction standings are for NPCs.</em></p>';
         }
-        if (associatedHistoryListElem && historyContentDisplayElem) this.renderAssociatedHistoryFilesUI(character, associatedHistoryListElem, historyContentDisplayElement, CharacterService.handleDissociateHistoryFile);
+        // Corrected: Pass historyContentDisplayElem
+        if (associatedHistoryListElem && historyContentDisplayElem) this.renderAssociatedHistoryFilesUI(character, associatedHistoryListElem, historyContentDisplayElem, CharacterService.handleDissociateHistoryFile);
         // LoreRenderers is assumed to be globally available
         LoreRenderers.renderAssociatedLoreForCharacterUI(character, CharacterService.handleUnlinkLoreFromCharacter);
         LoreRenderers.populateLoreEntrySelectForCharacterLinkingUI(character.linked_lore_by_name);
