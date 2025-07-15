@@ -98,7 +98,8 @@ var PCRenderers = {
                 skillsTableHTML += `<tr><td>${pc.name}</td>`;
                 associatedSkills.forEach(skillKey => {
                     const skillData = pc.system?.skills?.[skillKey];
-                    const abilityScore = pc.system?.abilities?.[abilityKey.toLowerCase()]?.value || 10;
+                    const abilityKeyForSkill = skillData?.ability || SKILL_NAME_MAP[skillKey].match(/\(([^)]+)\)/)[1].toLowerCase();
+                    const abilityScore = pc.system?.abilities?.[abilityKeyForSkill]?.value || 10;
                     const bonus = DNDCalculations.calculateSkillBonus(abilityScore, skillData?.value || 0, pc.calculatedProfBonus);
                     skillsTableHTML += `<td>${bonus >= 0 ? '+' : ''}${bonus}</td>`;
                 });
@@ -116,7 +117,8 @@ var PCRenderers = {
             return;
         }
 
-        const selectedPcs = allCharacters.filter(char => activePcIds.has(String(char._id)) && char.character_type === 'PC');
+        // Changed 'PC' to 'Player Character'
+        const selectedPcs = allCharacters.filter(char => activePcIds.has(String(char._id)) && char.character_type === 'Player Character');
 
         if (selectedPcs.length === 0) {
             dashboardContentElement.innerHTML = `<p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>`;
@@ -126,13 +128,13 @@ var PCRenderers = {
         let sortedSelectedPcs = [...selectedPcs];
         if (currentlyExpandedAbility) {
             const ablKey = currentlyExpandedAbility.toLowerCase();
-            sortedSelectedPcs.sort((a, b) => {
+            sortedSelectedP.sort((a, b) => {
                 const scoreA = (a.system?.abilities?.[ablKey]?.value) || 10;
                 const scoreB = (b.system?.abilities?.[ablKey]?.value) || 10;
                 return scoreB - scoreA;
             });
         } else {
-            sortedSelectedPcs.sort((a, b) => a.name.localeCompare(b.name));
+            sortedSelectedPpcs.sort((a, b) => a.name.localeCompare(b.name));
         }
     
         let finalHTML = '';
@@ -265,7 +267,7 @@ var PCRenderers = {
         let cardsHTML = '';
         activePcsData.sort((a, b) => a.name.localeCompare(b.name)).forEach(pc => {
             if (typeof pc.calculatedProfBonus === 'undefined') {
-                const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || pc.vtt_data?.details?.level || 1;
+                const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || 1;
                 // DNDCalculations is assumed to be globally available
                 pc.calculatedProfBonus = DNDCalculations.getProficiencyBonus(pcLevel);
              }
@@ -298,7 +300,7 @@ var PCRenderers = {
 },
 
     renderDetailedPcSheetUI: function(pcData, dashboardContentElement) {
-        if (!pcData || pcData.character_type !== 'PC' || !(pcData.system)) {
+        if (!pcData || pcData.character_type !== 'Player Character' || !(pcData.system)) { // Changed 'PC' to 'Player Character'
             console.error("PCRenderers.renderDetailedPcSheetUI: PC not found or invalid system data:", pcData);
             if (dashboardContentElement) dashboardContentElement.innerHTML = `<p>Error loading PC. <button onclick="handleBackToDashboardOverview()">Back to Dashboard Overview</button></p>`;
             return;
@@ -375,15 +377,21 @@ var PCRenderers = {
     },
 
     renderPcListUI: function(pcListDiv, speakingPcSelect, allCharacters, activePcIds, onPcItemClickCallback, activeNpcIdsSet) {
-        // This function name is a bit misleading as it also populates the speakingPcSelect with NPCs
+        console.log("PCRenderers.renderPcListUI called.");
+        console.log("  allCharacters received:", allCharacters);
+        // Changed 'PC' to 'Player Character'
+        const pcsForList = allCharacters.filter(char => char.character_type === 'Player Character').sort((a, b) => a.name.localeCompare(b.name));
+        console.log("  PCs identified for list:", pcsForList); 
+        console.log("  Number of PCs for list:", pcsForList.length); 
+
         if (!pcListDiv) { console.error("PCRenderers.renderPcListUI: pcListDiv not found"); return;}
         pcListDiv.innerHTML = '';
         if (speakingPcSelect) {
             const currentSpeaker = speakingPcSelect.value;
             speakingPcSelect.innerHTML = '<option value="">-- DM/Scene Event --</option>';
 
-            // Add Player Characters
-            const pcs = allCharacters.filter(char => char.character_type === 'PC').sort((a, b) => a.name.localeCompare(b.name));
+            // Add Player Characters for the dropdown - Changed 'PC' to 'Player Character'
+            const pcs = allCharacters.filter(char => char.character_type === 'Player Character').sort((a, b) => a.name.localeCompare(b.name));
             pcs.forEach(pc => {
                 const pcIdStr = String(pc._id);
                 const option = document.createElement('option');
@@ -417,9 +425,8 @@ var PCRenderers = {
             }
         }
         
-        // This part remains the same, for rendering the PC list on the left
-        const pcsForList = allCharacters.filter(char => char.character_type === 'PC').sort((a, b) => a.name.localeCompare(b.name));
-        if (pcsForList.length === 0) {
+        // This part is for rendering the PC list on the left, using the pcsForList declared earlier
+        if (pcsForList.length === 0) { // This `pcsForList` refers to the one declared at the top of the function
             pcListDiv.innerHTML = '<p><em>No Player Characters defined yet.</em></p>';
             return;
         }
