@@ -32,7 +32,8 @@ const CharacterService = {
             console.log("Characters fetched and processed:", appState.getAllCharacters().length);
 
             // Corrected: Use PCRenderers for the PC list
-            PCRenderers.renderPcListUI(Utils.getElem('active-pc-list'), appState.getAllCharacters(), appState.activePcIds, App.handleTogglePcSelection);
+            PCRenderers.renderPcListUI(Utils.getElem('active-pc-list'), Utils.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, App.handleTogglePcSelection, appState.activeSceneNpcIds);
+
             // Corrected: Use NPCRenderers for the speaker dropdown which contains both PCs and NPCs
             NPCRenderers.populateSpeakerDropdownUI(Utils.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, appState.activeSceneNpcIds);
 
