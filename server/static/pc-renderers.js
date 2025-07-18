@@ -128,13 +128,13 @@ var PCRenderers = {
         let sortedSelectedPcs = [...selectedPcs];
         if (currentlyExpandedAbility) {
             const ablKey = currentlyExpandedAbility.toLowerCase();
-            sortedSelectedP.sort((a, b) => {
+            sortedSelectedPcs.sort((a, b) => {
                 const scoreA = (a.system?.abilities?.[ablKey]?.value) || 10;
                 const scoreB = (b.system?.abilities?.[ablKey]?.value) || 10;
                 return scoreB - scoreA;
             });
         } else {
-            sortedSelectedPpcs.sort((a, b) => a.name.localeCompare(b.name));
+            sortedSelectedPcs.sort((a, b) => a.name.localeCompare(b.name));
         }
     
         let finalHTML = '';
@@ -366,7 +366,7 @@ var PCRenderers = {
         sheetHTML += `<p><strong>Languages:</strong> ${languages}</p>`;
 
         const armorProfs = pcData.system?.traits?.armorProf?.value?.join(', ') || 'None';
-        sheetHTML += `<p><strong>Armor Proficiencies:</strong> ${armorProfs}</p>`;
+        sheetHTML += `<p><strong>Armor Proficiencies:</b> ${armorProfs}</p>`;
         const weaponProfs = pcData.system?.traits?.weaponProf?.value?.join(', ') || 'None';
         sheetHTML += `<p><strong>Weapon Proficiencies:</strong> ${weaponProfs}</p>`;
         sheetHTML += `</div>`;
