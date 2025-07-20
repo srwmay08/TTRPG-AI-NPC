@@ -24,19 +24,26 @@ const CharacterService = {
         associatedLoreListForCharacter: 'associated-lore-list-for-character'
     },
 
+    _normalizeCharacterData(characters) {
+        return characters.map(char => {
+            // Normalize character type for PCs from VTT imports
+            if (char.type === 'character' && !char.character_type) {
+                char.character_type = 'PC';
+            }
+            return char;
+        });
+    },
+
     initializeAppCharacters: async function() {
         console.log("Fetching characters via characterService...");
         try {
-            const charactersFromServer = await ApiService.fetchCharactersFromServer();
+            let charactersFromServer = await ApiService.fetchCharactersFromServer();
+            charactersFromServer = this._normalizeCharacterData(charactersFromServer);
             appState.setAllCharacters(charactersFromServer);
             console.log("Characters fetched and processed:", appState.getAllCharacters().length);
 
-            // Corrected: Use PCRenderers for the PC list
+            // This single call now handles both the PC list and the speaker dropdown
             PCRenderers.renderPcListUI(Utils.getElem('active-pc-list'), Utils.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, App.handleTogglePcSelection, appState.activeSceneNpcIds);
-
-            // Corrected: Use NPCRenderers for the speaker dropdown which contains both PCs and NPCs
-            NPCRenderers.populateSpeakerDropdownUI(Utils.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, appState.activeSceneNpcIds);
-
 
             NPCRenderers.renderNpcListForContextUI(
                 Utils.getElem('character-list-scene-tab'),
@@ -113,7 +120,8 @@ const CharacterService = {
         }
     },
 
-    handleCharacterCreation: async function() {
+    handleCharacterCreation: async function(event) {
+        if (event) event.preventDefault(); // Prevent form from submitting
         const name = Utils.getElem('new-char-name').value.trim();
         const description = Utils.getElem('new-char-description').value.trim();
         const personality = Utils.getElem('new-char-personality').value.split(',').map(s => s.trim()).filter(s => s);
@@ -125,13 +133,12 @@ const CharacterService = {
         }
         const newCharData = { name, description, personality_traits: personality, character_type: type, linked_lore_ids: [] };
         try {
-            const result = await ApiService.createCharacterOnServer(newCharData);
-            appState.updateCharacterInList(result.character);
+            const newCharacter = await ApiService.createCharacterOnServer(newCharData);
+            const normalizedCharacter = this._normalizeCharacterData([newCharacter])[0];
+            appState.updateCharacterInList(normalizedCharacter);
             NPCRenderers.renderNpcListForContextUI(Utils.getElem('character-list-scene-tab'), appState.getAllCharacters(), appState.activeSceneNpcIds, App.handleToggleNpcInScene, CharacterService.handleSelectCharacterForDetails, appState.currentSceneContextFilter);
             NPCRenderers.renderAllNpcListForManagementUI(Utils.getElem('all-character-list-management'), appState.getAllCharacters(), CharacterService.handleSelectCharacterForDetails);
-            PCRenderers.renderPcListUI(Utils.getElem('active-pc-list'), appState.getAllCharacters(), appState.activePcIds, App.handleTogglePcSelection);
-            NPCRenderers.populateSpeakerDropdownUI(Utils.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, appState.activeSceneNpcIds);
-
+            PCRenderers.renderPcListUI(Utils.getElem('active-pc-list'), Utils.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, App.handleTogglePcSelection, appState.activeSceneNpcIds);
 
             Utils.getElem('new-char-name').value = '';
             Utils.getElem('new-char-description').value = '';
