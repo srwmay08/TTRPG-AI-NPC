@@ -36,22 +36,6 @@
                         <option value="">-- Select Lore Entry --</option>
                     </select>
                 </div>
-                <h4>Active Participants</h4>
-                <div id="active-participants-quick-view">
-                    <div id="pc-quick-view-section-in-scene"></div>
-                    <div id="multi-npc-dialogue-container">
-                        <p class="scene-event">Select NPCs from the SCENE tab to add them to the interaction.</p>
-                    </div>
-                </div>
-                <div id="dialogue-input-section">
-                    <hr>
-                    <h4>Player Input</h4>
-                    <select id="speaking-pc-select">
-                        <option value="">-- DM/Scene Event --</option>
-                    </select>
-                    <textarea id="player-utterance" placeholder="Player dialogue or scene description..."></textarea>
-                    <button id="generate-dialogue-btn">Generate Dialogue</button>
-                </div>
 
                 <div class="character-list-container">
                     <h4>NPCs in Scene: Select to add/remove</h4>
@@ -198,17 +182,30 @@
     </div>
 
     <div id="right-column" class="column">
-        <div id="dialogue-interface">
-            </div>
-        <div id="pc-dashboard-view">
-            <h2>Player Character Dashboard</h2>
-            <div id="pc-dashboard-content">
-                <p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>
-            </div>
+    <div id="dialogue-interface" style="display: none;">
         </div>
-        <div id="location-dashboard-view" style="display: none;">
-            </div>
-    </div>
+    <div id="pc-dashboard-view" style="display: block;">
+        </div>
+    <div id="location-dashboard-view" style="display: none;">
+        </div>
+
+                <div id="active-participants-quick-view">
+                    <div id="pc-quick-view-section-in-scene"></div>
+                    <div id="multi-npc-dialogue-container">
+                        <p class="scene-event">Select NPCs from the SCENE tab to add them to the interaction.</p>
+                    </div>
+                </div>
+                <div id="dialogue-input-section">
+                    <hr>
+                    <h4>Player Input</h4>
+                    <select id="speaking-pc-select">
+                        <option value="">-- DM/Scene Event --</option>
+                    </select>
+                    <textarea id="player-utterance" placeholder="Player dialogue or scene description..."></textarea>
+                    <button id="generate-dialogue-btn">Generate Dialogue</button>
+                </div>
+
+</div>
 
     <script src="{{ url_for('static', filename='utils.js') }}"></script>
     <script src="{{ url_for('static', filename='config.js') }}"></script>
