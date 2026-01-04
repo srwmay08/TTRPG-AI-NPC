@@ -405,8 +405,12 @@ var App = {
         
         // 2. Refresh PC Lists
         if (window.PCRenderers) {
-            // FIX: Check for both 'Player Character' AND 'PC' to match your database
-            const allPcs = AppState.getAllCharacters().filter(c => c.type === 'Player Character' || c.character_type === 'Player Character' || c.character_type === 'PC');
+            // Updated to be more permissive with filters
+            const allPcs = AppState.getAllCharacters().filter(c => 
+                c.character_type === 'Player Character' || 
+                c.character_type === 'PC' || 
+                c.type === 'Player Character'
+            );
             PCRenderers.renderPcListUI(allPcs);
         }
 
@@ -424,7 +428,7 @@ var App = {
                     select.appendChild(opt);
                 }
             });
-            // FIX: activePcIds is a Set, so use .has()
+            // FIX: Use .has() for Set check
             if (AppState.activePcIds.has(currentVal)) select.value = currentVal;
         }
 
@@ -536,7 +540,7 @@ var App = {
     onCharactersLoaded: function() {
         console.log("App.js: Characters loaded.");
         if (AppState.characters) {
-            // FIX: Robust check for 'PC' or 'Player Character'
+            // FIX: Permissive filter matching handleTogglePcSelection
             const pcs = AppState.characters.filter(c => 
                 c.character_type === 'Player Character' || 
                 c.character_type === 'PC' ||

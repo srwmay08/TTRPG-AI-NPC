@@ -112,7 +112,7 @@ var PCRenderers = {
             return;
         }
 
-        const selectedPcs = allCharacters.filter(char => activePcIds.has(String(char._id)) && (char.character_type === 'PC' || char.character_type === 'Player Character'));
+        const selectedPcs = allCharacters.filter(char => activePcIds.has(String(char._id)) && (char.character_type === 'PC' || char.character_type === 'Player Character' || char.type === 'Player Character'));
 
         if (selectedPcs.length === 0) {
             dashboardContentElement.innerHTML = `<p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>`;
