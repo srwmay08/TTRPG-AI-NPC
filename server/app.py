@@ -588,7 +588,7 @@ def parse_ai_suggestions(full_ai_output: str, speaking_pc_id: Optional[str]) -> 
 @app.route('/api/npcs/<npc_id_str>/dialogue', methods=['POST'])
 def generate_dialogue_for_npc_api(npc_id_str: str):
     if mongo_db is None: return jsonify({"error": "Database not available"}), 503
-    if ai_service_instance is None or ai_service_instance.model is None:
+    if ai_service_instance is None or ai_service_instance.client is None:
         return jsonify({"error": "AI Service not available"}), 503
     try: npc_id_obj = ObjectId(npc_id_str)
     except Exception: return jsonify({"error": "Invalid NPC ID"}), 400
@@ -905,7 +905,7 @@ if __name__ == '__main__':
     else:
         print("CRITICAL: MongoDB connection failed. Data sync skipped and app may not function correctly.")
 
-    if ai_service_instance is None or ai_service_instance.model is None:
+    if ai_service_instance is None or ai_service_instance.client is None:
         print("CRITICAL: AI Service not initialized. Dialogue generation will fail.")
 
     print("-" * 50)
