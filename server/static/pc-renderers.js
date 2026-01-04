@@ -349,7 +349,7 @@ var PCRenderers = {
         sheetHTML += `<p><strong>Languages:</strong> ${languages}</p>`;
 
         const armorProfs = pcData.system?.traits?.armorProf?.value?.join(', ') || 'None';
-        sheetHTML += `<p><strong>Armor Proficiencies:</b> ${armorProfs}</p>`;
+        sheetHTML += `<p><strong>Armor Proficiencies:</strong> ${armorProfs}</p>`;
         const weaponProfs = pcData.system?.traits?.weaponProf?.value?.join(', ') || 'None';
         sheetHTML += `<p><strong>Weapon Proficiencies:</strong> ${weaponProfs}</p>`;
         sheetHTML += `</div>`;

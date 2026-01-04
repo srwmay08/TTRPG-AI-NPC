@@ -401,7 +401,7 @@ var App = {
     handleTogglePcSelection: function(pcIdStr) {
         // 1. Update State
         AppState.toggleActivePc(pcIdStr);
-        AppState.currentView = 'pc'; // Force switch to PC view
+        AppState.currentView = 'pc'; 
         
         // 2. Refresh PC Lists
         if (window.PCRenderers) {
@@ -424,7 +424,7 @@ var App = {
                     select.appendChild(opt);
                 }
             });
-            // FIX: Use .has() because activePcIds is a Set
+            // FIX: activePcIds is a Set, so use .has()
             if (AppState.activePcIds.has(currentVal)) select.value = currentVal;
         }
 
