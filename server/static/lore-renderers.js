@@ -1,4 +1,4 @@
-// static/lore-renderers.js
+/* server/static/lore-renderers.js */
 // Responsibility: Rendering Lore related UI elements.
 
 var LoreRenderers = {
@@ -18,44 +18,79 @@ var LoreRenderers = {
         const listContainer = Utils.getElem('lore-entry-list');
         if (!listContainer) { console.warn("LoreRenderers.renderLoreEntryListUI: 'lore-entry-list' ul element not found."); return; }
         listContainer.innerHTML = '';
-        if (!loreEntries || loreEntries.length === 0) { listContainer.innerHTML = '<li><em>No lore entries. Create one.</em></li>'; return; }
+        
+        if (!loreEntries || loreEntries.length === 0) { 
+            listContainer.innerHTML = '<li><em>No lore entries. Create one.</em></li>'; 
+            return; 
+        }
+        
         const sortedLoreEntries = [...loreEntries].sort((a, b) => a.name.localeCompare(b.name));
         sortedLoreEntries.forEach(entry => {
             const li = document.createElement('li');
             const idToUse = entry.lore_id || entry._id;
             li.dataset.loreId = String(idToUse);
+            
+            // Re-use standard class for consistency with CSS
             const nameSpan = document.createElement('span');
             nameSpan.textContent = `${entry.name} (${entry.lore_type})`;
-            nameSpan.className = 'lore-entry-name-clickable';
-            // CharacterService is assumed to be globally available
-            nameSpan.onclick = () => CharacterService.handleSelectLoreEntryForDetails(String(idToUse));
+            nameSpan.className = 'lore-entry-name-clickable'; 
+            
+            nameSpan.onclick = (e) => {
+                e.stopPropagation();
+                if(window.CharacterService) CharacterService.handleSelectLoreEntryForDetails(String(idToUse));
+            };
+            
             li.appendChild(nameSpan);
             listContainer.appendChild(li);
         });
     },
 
     renderLoreEntryDetailUI: function(loreEntry) {
-        const detailSection = Utils.getElem('lore-entry-profile-section');
-        if (!detailSection || !loreEntry) { if(detailSection) detailSection.style.display = 'none'; console.warn("LoreRenderers.renderLoreEntryDetailUI: Detail section or loreEntry not found."); return; }
-        Utils.updateText('details-lore-name', loreEntry.name);
-        Utils.updateText('details-lore-type', loreEntry.lore_type);
-        Utils.updateText('details-lore-description', loreEntry.description);
-        const keyFactsList = Utils.getElem('details-lore-key-facts-list');
-        keyFactsList.innerHTML = '';
-        if (loreEntry.key_facts && loreEntry.key_facts.length > 0) { loreEntry.key_facts.forEach(fact => { const li = document.createElement('li'); li.textContent = fact; keyFactsList.appendChild(li); }); }
-        else { keyFactsList.innerHTML = '<li><em>No key facts listed.</em></li>'; }
-        Utils.updateText('details-lore-tags', (loreEntry.tags || []).join(', '));
-        Utils.getElem('details-lore-gm-notes').value = loreEntry.gm_notes || '';
-        detailSection.style.display = 'block';
-        Utils.disableBtn('save-lore-gm-notes-btn', false);
-        Utils.disableBtn('delete-lore-btn', false);
+        // UPDATED: Target the new collapsible section ID
+        const detailSection = document.getElementById('lore-detail-main-section'); 
+        
+        if (!detailSection || !loreEntry) { 
+            if(detailSection) detailSection.classList.add('collapsed'); 
+            return; 
+        }
+
+        // Update Headers
+        const nameHeader = document.getElementById('details-lore-name');
+        const typeSpan = document.getElementById('details-lore-type');
+        if (nameHeader) nameHeader.textContent = loreEntry.name;
+        if (typeSpan) typeSpan.textContent = loreEntry.lore_type;
+
+        // Update Notes
+        const notesArea = document.getElementById('details-lore-gm-notes');
+        if (notesArea) notesArea.value = loreEntry.gm_notes || '';
+
+        // Show the Section (using class for animation)
+        detailSection.classList.remove('collapsed');
+
+        // Setup Buttons (Cloning to remove old listeners)
+        const saveBtn = document.getElementById('save-lore-gm-notes-btn');
+        if (saveBtn) {
+            const newBtn = saveBtn.cloneNode(true);
+            saveBtn.parentNode.replaceChild(newBtn, saveBtn);
+            newBtn.onclick = () => {
+                 CharacterService.handleUpdateLoreEntryGmNotes(loreEntry.id || loreEntry._id, document.getElementById('details-lore-gm-notes').value);
+            };
+        }
+
+        const deleteBtn = document.getElementById('delete-lore-btn');
+        if (deleteBtn) {
+            const newDelBtn = deleteBtn.cloneNode(true);
+            deleteBtn.parentNode.replaceChild(newDelBtn, deleteBtn);
+            newDelBtn.onclick = () => CharacterService.handleDeleteLoreEntry(loreEntry.id || loreEntry._id);
+        }
     },
 
     closeLoreDetailViewUI: function() {
-        const detailSection = Utils.getElem('lore-entry-profile-section');
-        if (detailSection) { detailSection.style.display = 'none'; }
-        // appState is assumed to be globally available
-        appState.setCurrentLoreEntryId(null);
+        const detailSection = document.getElementById('lore-detail-main-section');
+        if (detailSection) { 
+            detailSection.classList.add('collapsed'); 
+        }
+        if (window.AppState) appState.setCurrentLoreEntryId(null);
     },
 
     populateLoreEntrySelectForCharacterLinkingUI: function(alreadyLinkedNames = []) {

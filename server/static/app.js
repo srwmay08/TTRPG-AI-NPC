@@ -1,90 +1,141 @@
-// static/app.js
+/* server/static/app.js */
 // Responsibility: Main application logic and event orchestration.
+
+// Compatibility helper: Ensure AppState/appState are interchangeable
+if (typeof AppState === 'undefined' && typeof appState !== 'undefined') {
+    window.AppState = appState;
+} else if (typeof appState === 'undefined' && typeof AppState !== 'undefined') {
+    window.appState = AppState;
+}
 
 var App = {
     initializeApp: async function() {
         console.log("App.js: DOMContentLoaded event fired. Initializing App...");
         try {
+            // Initialize State defaults if needed
+            if (!AppState.currentView) AppState.currentView = 'scene';
+
             await CharacterService.initializeAppCharacters();
 
-            EventHandlers.setupResizer();
-            EventHandlers.setupCollapsibleSections(); 
-            EventHandlers.assignButtonEventHandlers(); 
+            // Setup Layout & Global Handlers
+            this.setupResizer(); 
+            if (window.EventHandlers && EventHandlers.setupCollapsibleSections) {
+                EventHandlers.setupCollapsibleSections();
+            }
+            if (window.EventHandlers && EventHandlers.assignButtonEventHandlers) {
+                EventHandlers.assignButtonEventHandlers();
+            }
+
             this.setupTabControls(); 
             this.setupSceneContextSelector();
             this.setupDashboardClickHandlers();
 
-            const dashboardView = Utils.getElem('pc-dashboard-view');
+            const dashboardView = document.getElementById('pc-dashboard-view');
             if (dashboardView) {
                 dashboardView.addEventListener('change', (event) => {
                     if (event.target.classList.contains('attack-selector')) {
                         const pcId = event.target.dataset.pcId;
                         const attackName = event.target.dataset.attackName;
-                        appState.toggleAttackSelection(pcId, attackName);
+                        if (AppState.toggleAttackSelection) AppState.toggleAttackSelection(pcId, attackName);
                         this.updateMainView();
                     } else if (event.target.id === 'round-count-input') {
-                        appState.estimatedRounds = parseInt(event.target.value, 10) || 1;
+                        AppState.estimatedRounds = parseInt(event.target.value, 10) || 1;
                         this.updateMainView();
                     } else if (event.target.id === 'dpr-ac-input') {
                          const newAC = parseInt(event.target.value, 10);
                         if (!isNaN(newAC)) {
-                            appState.targetAC = newAC;
+                            AppState.targetAC = newAC;
                             this.updateMainView();
                         }
                     }
                 });
             }
 
+            // Initial View Update
             setTimeout(() => this.updateMainView(), 0); 
+
         } catch (e) {
             console.error("App.js: Error during initial app setup:", e);
-            const body = document.querySelector('body');
-            if (body) body.innerHTML = `<h1>Critical Error Initializing Application: ${e.message}. Please check console.</h1><pre>${e.stack}</pre>`;
         }
         console.log("App.js: DOMContentLoaded finished.");
     },
 
+    // --- Layout Helpers ---
+    setupResizer: function() {
+        const resizer = document.getElementById('resizer');
+        const leftCol = document.getElementById('left-column');
+        if (!resizer || !leftCol) return;
+
+        let isResizing = false;
+
+        resizer.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            document.body.style.cursor = 'col-resize';
+            resizer.classList.add('active');
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isResizing) return;
+            let newWidth = e.clientX;
+            if (newWidth < 200) newWidth = 200;
+            if (newWidth > window.innerWidth * 0.6) newWidth = window.innerWidth * 0.6;
+            leftCol.style.width = `${newWidth}px`;
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (isResizing) {
+                isResizing = false;
+                document.body.style.cursor = 'default';
+                resizer.classList.remove('active');
+            }
+        });
+    },
+
+    // --- Tab & View Logic ---
     openTab: function(event, tabName) { 
-        const tabLinks = document.querySelectorAll('#left-column-header .tabs .tab-link');
-        const tabContents = document.querySelectorAll('#left-column-content .tab-content');
-
-        tabContents.forEach(tab => tab.classList.remove('active-tab'));
-        tabLinks.forEach(link => link.classList.remove('active'));
-
-        const targetTab = document.getElementById(tabName);
-        if(targetTab) targetTab.classList.add('active-tab');
-
-        let clickedButton = event ? event.currentTarget : null;
-        if (!clickedButton) { 
-            tabLinks.forEach(link => { 
-                const onclickAttr = link.getAttribute('onclick');
-                if (onclickAttr && onclickAttr.includes(`openTab(event, '${tabName}')`)) {
-                    clickedButton = link;
-                }
+        if (window.openTab) {
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(tab => {
+                tab.style.display = 'none';
+                tab.classList.remove('active-tab');
             });
+            
+            const tabLinks = document.querySelectorAll('.tab-link');
+            tabLinks.forEach(link => link.classList.remove('active'));
+
+            const target = document.getElementById(tabName);
+            if (target) {
+                target.style.display = 'block';
+                target.classList.add('active-tab');
+            }
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
         }
-        if(clickedButton) clickedButton.classList.add('active');
 
         if (tabName === 'tab-npcs') {
-            const currentProfileId = appState.getCurrentProfileCharId();
+            const currentProfileId = AppState.getCurrentProfileCharId();
             CharacterService.handleSelectCharacterForDetails(currentProfileId);
         }
-        if (tabName === 'tab-lore' && !appState.getCurrentLoreEntryId()) {
-            // Updated to use LoreRenderers
-            if(typeof LoreRenderers.closeLoreDetailViewUI === 'function'){
+        if (tabName === 'tab-lore' && !AppState.getCurrentLoreEntryId()) {
+            if(window.LoreRenderers && typeof LoreRenderers.closeLoreDetailViewUI === 'function'){
                 LoreRenderers.closeLoreDetailViewUI();
             }
         }
         if (tabName === 'tab-scene') {
-            // Updated to use NPCRenderers
-            NPCRenderers.renderNpcListForContextUI(
-                Utils.getElem('character-list-scene-tab'),
-                appState.getAllCharacters(),
-                appState.activeSceneNpcIds,
-                this.handleToggleNpcInScene, 
-                CharacterService.handleSelectCharacterForDetails,
-                appState.getCurrentSceneContextFilter()
-            );
+            AppState.currentView = 'scene';
+            this.updateMainView();
+            
+            if (window.NPCRenderers) {
+                NPCRenderers.renderNpcListForContextUI(
+                    document.getElementById('character-list-scene-tab'),
+                    AppState.getAllCharacters(),
+                    AppState.activeSceneNpcIds,
+                    this.handleToggleNpcInScene, 
+                    CharacterService.handleSelectCharacterForDetails,
+                    AppState.getCurrentSceneContextFilter()
+                );
+            }
         }
     },
 
@@ -95,34 +146,31 @@ var App = {
                 const onclickAttr = link.getAttribute('onclick');
                 return onclickAttr && onclickAttr.includes("'tab-scene'");
             });
-            
-            if (sceneTabButton) {
-                sceneTabButton.click(); 
-            } else if (tabLinks[0]) {
-                tabLinks[0].click(); 
-            }
+            if (sceneTabButton) sceneTabButton.click(); 
+            else tabLinks[0].click(); 
         }
     },
 
     setupSceneContextSelector: function() {
-        const typeSelector = Utils.getElem('scene-context-type-filter');
-        const entrySelector = Utils.getElem('scene-context-selector');
+        const typeSelector = document.getElementById('scene-context-type-filter');
+        const entrySelector = document.getElementById('scene-context-selector');
 
         if (typeSelector) {
             typeSelector.addEventListener('change', () => { 
-                // Updated to use LoreRenderers
-                LoreRenderers.populateSceneContextSelectorUI();
+                if (window.LoreRenderers) LoreRenderers.populateSceneContextSelectorUI();
                 if (entrySelector) entrySelector.value = ""; 
-                appState.setCurrentSceneContextFilter(null); 
-                 // Updated to use NPCRenderers
-                 NPCRenderers.renderNpcListForContextUI(
-                    Utils.getElem('character-list-scene-tab'),
-                    appState.getAllCharacters(),
-                    appState.activeSceneNpcIds,
-                    App.handleToggleNpcInScene, 
-                    CharacterService.handleSelectCharacterForDetails,
-                    null 
-                );
+                AppState.setCurrentSceneContextFilter(null); 
+                
+                if (window.NPCRenderers) {
+                    NPCRenderers.renderNpcListForContextUI(
+                        document.getElementById('character-list-scene-tab'),
+                        AppState.getAllCharacters(),
+                        AppState.activeSceneNpcIds,
+                        App.handleToggleNpcInScene, 
+                        CharacterService.handleSelectCharacterForDetails,
+                        null 
+                    );
+                }
                 this.updateMainView();
             });
         }
@@ -131,108 +179,70 @@ var App = {
             entrySelector.addEventListener('change', (event) => { 
                 const selectedLoreId = event.target.value;
                 if (selectedLoreId) {
-                    appState.setCurrentSceneContextFilter({ type: 'lore', id: selectedLoreId });
+                    AppState.setCurrentSceneContextFilter({ type: 'lore', id: selectedLoreId });
                 } else {
-                    appState.setCurrentSceneContextFilter(null);
+                    AppState.setCurrentSceneContextFilter(null);
                 }
-                // Updated to use NPCRenderers
-                NPCRenderers.renderNpcListForContextUI(
-                    Utils.getElem('character-list-scene-tab'),
-                    appState.getAllCharacters(),
-                    appState.activeSceneNpcIds,
-                    App.handleToggleNpcInScene, 
-                    CharacterService.handleSelectCharacterForDetails,
-                    appState.getCurrentSceneContextFilter()
-                );
+                
+                if (window.NPCRenderers) {
+                    NPCRenderers.renderNpcListForContextUI(
+                        document.getElementById('character-list-scene-tab'),
+                        AppState.getAllCharacters(),
+                        AppState.activeSceneNpcIds,
+                        App.handleToggleNpcInScene, 
+                        CharacterService.handleSelectCharacterForDetails,
+                        AppState.getCurrentSceneContextFilter()
+                    );
+                }
                 this.updateMainView();
             });
         }
-        // Updated to use NPCRenderers
-        NPCRenderers.renderNpcListForContextUI(
-            Utils.getElem('character-list-scene-tab'),
-            appState.getAllCharacters(),
-            appState.activeSceneNpcIds,
-            App.handleToggleNpcInScene,
-            CharacterService.handleSelectCharacterForDetails,
-            null
-        );
     },
 
     setupDashboardClickHandlers: function() {
-        const handleCardClick = (event) => {
-            const clickedCard = event.target.closest('.clickable-pc-card');
-            if (clickedCard) {
-                const pcIdToRender = clickedCard.dataset.pcId;
-                if (pcIdToRender) {
-                    const pcData = appState.getCharacterById(pcIdToRender);
-                    if (pcData) {
-                        const pcDashboardView = Utils.getElem('pc-dashboard-view');
-                        const dialogueInterface = Utils.getElem('dialogue-interface');
-                        if (pcDashboardView.style.display === 'none') {
-                            if(dialogueInterface) dialogueInterface.style.display = 'none';
-                            pcDashboardView.style.display = 'block';
-                            const pcQuickViewInSceneElem = Utils.getElem('pc-quick-view-section-in-scene');
-                            if(pcQuickViewInSceneElem) pcQuickViewInSceneElem.style.display = 'none';
-                        }
-                        // Updated to use PCRenderers
-                        PCRenderers.renderDetailedPcSheetUI(pcData, Utils.getElem('pc-dashboard-content'));
-                    }
-                }
-            }
-        };
-
-        const pcDashboardContent = Utils.getElem('pc-dashboard-content');
-        if (pcDashboardContent) {
-            pcDashboardContent.removeEventListener('click', handleCardClick); 
-            pcDashboardContent.addEventListener('click', handleCardClick);
-        }
-
-        const pcQuickViewInScene = Utils.getElem('pc-quick-view-section-in-scene');
-        if (pcQuickViewInScene) {
-            pcQuickViewInScene.removeEventListener('click', handleCardClick);
-            pcQuickViewInScene.addEventListener('click', handleCardClick);
+        const dashboard = document.getElementById('pc-dashboard-view');
+        if (dashboard) {
+            dashboard.addEventListener('click', (e) => {
+                // Delegate clicks if needed
+            });
         }
     },
     
+    // --- CORE UPDATE FUNCTION ---
     updateMainView: function() {
         console.log("App.js: App.updateMainView called.");
-        // Calls MainView, which now handles the updates internally
-        MainView.updateMainViewUI(
-            Utils.getElem('dialogue-interface'),
-            Utils.getElem('pc-dashboard-view'),
-            Utils.getElem('pc-quick-view-section-in-scene'),
-            appState.getActiveNpcCount(),
-            appState.getActivePcCount() > 0
-        );
+        if (window.MainView && MainView.update) {
+            MainView.update(); 
+        } else {
+            console.error("MainView.update is missing!");
+        }
         console.log("App.js: App.updateMainView finished.");
     },
 
+    // --- Interaction Logic ---
+
     handleToggleNpcInScene: async function(npcIdStr, npcName) {
-        const multiNpcContainer = Utils.getElem('multi-npc-dialogue-container');
-        if (!multiNpcContainer) {
-            console.error("Multi-NPC dialogue container not found.");
-            return;
-        }
+        const multiNpcContainer = document.getElementById('multi-npc-dialogue-container');
+        if (!multiNpcContainer) return;
     
-        const isAdding = !appState.hasActiveNpc(npcIdStr);
+        const isAdding = !AppState.hasActiveNpc(npcIdStr);
     
         if (isAdding) {
-            appState.addActiveNpc(npcIdStr);
-            const toggledNpc = appState.getCharacterById(npcIdStr);
+            AppState.addActiveNpc(npcIdStr);
+            const toggledNpc = AppState.getCharacterById(npcIdStr);
             if (!toggledNpc) {
-                console.error(`Could not find character data for ID: ${npcIdStr}`);
-                appState.removeActiveNpc(npcIdStr); // Clean up
+                AppState.removeActiveNpc(npcIdStr);
                 return;
             }
     
-            // Updated to use NPCRenderers
-            NPCRenderers.createNpcDialogueAreaUI(toggledNpc, multiNpcContainer);
-            appState.initDialogueHistory(npcIdStr);
+            if (window.NPCRenderers) NPCRenderers.createNpcDialogueAreaUI(toggledNpc, multiNpcContainer);
+            AppState.initDialogueHistory(npcIdStr);
             
+            // Generate Greeting Logic
             const intro = toggledNpc.canned_conversations?.introduction;
-            const sceneContext = Utils.getElem('scene-context').value.trim();
-            const activePcNames = appState.getActivePcIds().map(pcId => appState.getCharacterById(pcId)?.name || "a PC");
-            const speakingPcSelect = Utils.getElem('speaking-pc-select');
+            const sceneContext = document.getElementById('scene-context') ? document.getElementById('scene-context').value.trim() : "";
+            const activePcNames = AppState.getActivePcIds().map(pcId => AppState.getCharacterById(pcId)?.name || "a PC");
+            const speakingPcSelect = document.getElementById('speaking-pc-select');
             const currentSpeakingPcId = speakingPcSelect ? speakingPcSelect.value : null;
 
             if (intro) {
@@ -256,38 +266,36 @@ var App = {
                 setTimeout(() => App.triggerNpcInteraction(npcIdStr, toggledNpc.name, greetingPayload, true, `thinking-${npcIdStr}-greeting`), 100);
             }
         } else {
-            appState.removeActiveNpc(npcIdStr);
-            // Updated to use NPCRenderers
-            NPCRenderers.removeNpcDialogueAreaUI(npcIdStr, multiNpcContainer);
-            appState.deleteDialogueHistory(npcIdStr);
+            AppState.removeActiveNpc(npcIdStr);
+            if (window.NPCRenderers) NPCRenderers.removeNpcDialogueAreaUI(npcIdStr, multiNpcContainer);
+            AppState.deleteDialogueHistory(npcIdStr);
         }
     
         const placeholderEvent = multiNpcContainer.querySelector('p.scene-event');
-        if (appState.getActiveNpcCount() > 0 && placeholderEvent) {
+        if (AppState.getActiveNpcCount() > 0 && placeholderEvent) {
             placeholderEvent.remove();
-        } else if (appState.getActiveNpcCount() === 0 && !placeholderEvent) {
+        } else if (AppState.getActiveNpcCount() === 0 && !placeholderEvent) {
             multiNpcContainer.innerHTML = '<p class="scene-event">Select NPCs from the SCENE tab to add them to the interaction.</p>';
         }
     
-        // Updated to use NPCRenderers
-        NPCRenderers.renderNpcListForContextUI(
-            Utils.getElem('character-list-scene-tab'),
-            appState.getAllCharacters(),
-            appState.activeSceneNpcIds,
-            App.handleToggleNpcInScene,
-            CharacterService.handleSelectCharacterForDetails,
-            appState.getCurrentSceneContextFilter()
-        );
+        if (window.NPCRenderers) {
+            NPCRenderers.renderNpcListForContextUI(
+                document.getElementById('character-list-scene-tab'),
+                AppState.getAllCharacters(),
+                AppState.activeSceneNpcIds,
+                App.handleToggleNpcInScene,
+                CharacterService.handleSelectCharacterForDetails,
+                AppState.getCurrentSceneContextFilter()
+            );
+        }
         App.updateMainView();
     },
 
     triggerNpcInteraction: async function(npcIdStr, npcName, payload, isGreeting = false, thinkingMessageId = null) {
-        const transcriptArea = Utils.getElem(`transcript-${npcIdStr}`);
-        if (!transcriptArea) {
-            console.error(`Transcript area for NPC ID ${npcIdStr} not found.`);
-            return;
-        }
-        let thinkingMessageElement = thinkingMessageId ? Utils.getElem(thinkingMessageId) : null;
+        const transcriptArea = document.getElementById(`transcript-${npcIdStr}`);
+        if (!transcriptArea) return;
+
+        let thinkingMessageElement = thinkingMessageId ? document.getElementById(thinkingMessageId) : null;
 
         if (!thinkingMessageElement && isGreeting) {
             const sceneEventP = document.createElement('p');
@@ -303,33 +311,34 @@ var App = {
             const result = await ApiService.generateNpcDialogue(npcIdStr, payload);
             if(thinkingMessageElement && thinkingMessageElement.parentNode) thinkingMessageElement.remove();
 
-            // Updated to use NPCRenderers
-            NPCRenderers.appendMessageToTranscriptUI(transcriptArea, `${npcName}: ${result.npc_dialogue}`, 'dialogue-entry npc-response');
-            appState.addDialogueToHistory(npcIdStr, `${npcName}: ${result.npc_dialogue}`);
-            
-            appState.setCurrentProfileCharId(npcIdStr); 
-            const interactingChar = appState.getCharacterById(npcIdStr);
-            if (interactingChar) {
-                appState.setCannedResponsesForProfiledChar(interactingChar.canned_conversations || {});
+            if (window.NPCRenderers) {
+                NPCRenderers.appendMessageToTranscriptUI(transcriptArea, `${npcName}: ${result.npc_dialogue}`, 'dialogue-entry npc-response');
+                NPCRenderers.renderSuggestionsArea(result, npcIdStr);
             }
-            appState.lastAiResultForProfiledChar = result;
+            AppState.addDialogueToHistory(npcIdStr, `${npcName}: ${result.npc_dialogue}`);
+            
+            AppState.setCurrentProfileCharId(npcIdStr); 
+            const interactingChar = AppState.getCharacterById(npcIdStr);
+            if (interactingChar) {
+                AppState.setCannedResponsesForProfiledChar(interactingChar.canned_conversations || {});
+            }
+            AppState.lastAiResultForProfiledChar = result;
 
-            // Updated to use NPCRenderers
-            NPCRenderers.renderSuggestionsArea(result, npcIdStr);
         } catch (error) {
             console.error(`Error generating dialogue for ${npcName}:`, error);
             if(thinkingMessageElement && thinkingMessageElement.parentNode) thinkingMessageElement.remove();
-            // Updated to use NPCRenderers
-            NPCRenderers.appendMessageToTranscriptUI(transcriptArea, `${npcName}: (Error: ${error.message})`, 'dialogue-entry npc-response');
-            appState.addDialogueToHistory(npcIdStr, `${npcName}: (Error generating dialogue)`);
+            if (window.NPCRenderers) {
+                NPCRenderers.appendMessageToTranscriptUI(transcriptArea, `${npcName}: (Error: ${error.message})`, 'dialogue-entry npc-response');
+            }
+            AppState.addDialogueToHistory(npcIdStr, `${npcName}: (Error generating dialogue)`);
         }
         transcriptArea.scrollTop = transcriptArea.scrollHeight;
     },
 
     handleGenerateDialogue: async function() {
-        const playerUtterance = Utils.getElem('player-utterance').value.trim();
-        const sceneContext = Utils.getElem('scene-context').value.trim();
-        const speakingPcSelect = Utils.getElem('speaking-pc-select');
+        const playerUtterance = document.getElementById('player-utterance').value.trim();
+        const sceneContext = document.getElementById('scene-context') ? document.getElementById('scene-context').value.trim() : "";
+        const speakingPcSelect = document.getElementById('speaking-pc-select');
         const speakerId = speakingPcSelect ? speakingPcSelect.value : null;
 
         if (!playerUtterance) {
@@ -338,28 +347,27 @@ var App = {
         }
         Utils.disableBtn('generate-dialogue-btn', true);
 
-        const speaker = appState.getCharacterById(speakerId);
+        const speaker = AppState.getCharacterById(speakerId);
         const speakerDisplayName = speaker ? speaker.name : "DM/Scene Event";
         const isSpeakerAnNpc = speaker && speaker.character_type === 'NPC';
 
-        const activeNpcIds = appState.getActiveNpcIds();
-        const activePcsNames = appState.getActivePcIds().map(id => appState.getCharacterById(id)?.name).filter(name => name);
+        const activeNpcIds = AppState.getActiveNpcIds();
+        const activePcsNames = AppState.getActivePcIds().map(id => AppState.getCharacterById(id)?.name).filter(name => name);
 
         const listeningNpcIds = activeNpcIds.filter(id => id !== speakerId);
 
         activeNpcIds.forEach(npcId => {
-            const transcriptArea = Utils.getElem(`transcript-${npcId}`);
-            if (transcriptArea) {
+            const transcriptArea = document.getElementById(`transcript-${npcId}`);
+            if (transcriptArea && window.NPCRenderers) {
                 const messageClass = (isSpeakerAnNpc && speakerId === npcId) ? 'dialogue-entry npc-response' : 'dialogue-entry player-utterance';
-                // Updated to use NPCRenderers
                 NPCRenderers.appendMessageToTranscriptUI(transcriptArea, `${speakerDisplayName}: ${playerUtterance}`, messageClass);
-                appState.addDialogueToHistory(npcId, `${speakerDisplayName}: ${playerUtterance}`);
+                AppState.addDialogueToHistory(npcId, `${speakerDisplayName}: ${playerUtterance}`);
             }
         });
 
         listeningNpcIds.forEach(npcId => {
-            const npc = appState.getCharacterById(npcId);
-            const transcriptArea = Utils.getElem(`transcript-${npcId}`);
+            const npc = AppState.getCharacterById(npcId);
+            const transcriptArea = document.getElementById(`transcript-${npcId}`);
             if (transcriptArea && npc) {
                 const thinkingEntry = document.createElement('p');
                 thinkingEntry.className = 'scene-event';
@@ -371,7 +379,7 @@ var App = {
         });
 
         const dialoguePromises = listeningNpcIds.map(npcId => {
-            const npc = appState.getCharacterById(npcId);
+            const npc = AppState.getCharacterById(npcId);
             if (!npc) return Promise.resolve();
 
             const payload = {
@@ -379,57 +387,78 @@ var App = {
                 player_utterance: playerUtterance,
                 active_pcs: activePcsNames,
                 speaking_pc_id: speakerId,
-                recent_dialogue_history: appState.getRecentDialogueHistory(npcId, 10)
+                recent_dialogue_history: AppState.getRecentDialogueHistory(npcId, 10)
             };
             return App.triggerNpcInteraction(npcId, npc.name, payload, false, `thinking-${npcId}-main`);
         });
 
         await Promise.all(dialoguePromises);
 
-        if (playerUtterance) Utils.getElem('player-utterance').value = '';
+        if (playerUtterance) document.getElementById('player-utterance').value = '';
         Utils.disableBtn('generate-dialogue-btn', false);
     },
 
     handleTogglePcSelection: function(pcIdStr) {
-        appState.toggleActivePc(pcIdStr);
-        // Corrected to use PCRenderers for the PC list and speaker dropdown
-        PCRenderers.renderPcListUI(
-            Utils.getElem('active-pc-list'), 
-            Utils.getElem('speaking-pc-select'), 
-            appState.getAllCharacters(), 
-            appState.activePcIds, 
-            App.handleTogglePcSelection,
-            appState.activeSceneNpcIds
-        );
+        // 1. Update State
+        AppState.toggleActivePc(pcIdStr);
+        AppState.currentView = 'pc'; // Force switch to PC view
+        
+        // 2. Refresh PC Lists
+        if (window.PCRenderers) {
+            // FIX: Check for both 'Player Character' AND 'PC' to match your database
+            const allPcs = AppState.getAllCharacters().filter(c => c.type === 'Player Character' || c.character_type === 'Player Character' || c.character_type === 'PC');
+            PCRenderers.renderPcListUI(allPcs);
+        }
+
+        // 3. Update Speaking Dropdown
+        const select = document.getElementById('speaking-pc-select');
+        if (select) {
+            const currentVal = select.value;
+            select.innerHTML = '<option value="">-- DM/Scene Event --</option>';
+            AppState.activePcIds.forEach(id => {
+                const pc = AppState.getCharacterById(id);
+                if (pc) {
+                    const opt = document.createElement('option');
+                    opt.value = pc.id;
+                    opt.textContent = pc.name;
+                    select.appendChild(opt);
+                }
+            });
+            // FIX: Use .has() because activePcIds is a Set
+            if (AppState.activePcIds.has(currentVal)) select.value = currentVal;
+        }
+
+        // 4. Update Main View
         App.updateMainView();
 
-        const currentProfileChar = appState.getCurrentProfileChar();
-        if (currentProfileChar && currentProfileChar.character_type === 'NPC') {
-            // Updated to use NPCRenderers
-            NPCRenderers.renderNpcFactionStandingsUI(currentProfileChar, appState.activePcIds, appState.getAllCharacters(), Utils.getElem('npc-faction-standings-content'), CharacterService.handleSaveFactionStanding);
+        // 5. Update Faction Standings
+        const currentProfileChar = AppState.getCurrentProfileChar();
+        if (currentProfileChar && currentProfileChar.character_type === 'NPC' && window.NPCRenderers) {
+            NPCRenderers.renderNpcFactionStandingsUI(currentProfileChar, AppState.activePcIds, AppState.getAllCharacters(), document.getElementById('npc-faction-standings-content'), CharacterService.handleSaveFactionStanding);
         }
     },
 
     handleBackToDashboardOverview: function() {
-        const dashboardContent = Utils.getElem('pc-dashboard-content');
+        const dashboardContent = document.getElementById('pc-dashboard-content');
         if (dashboardContent) {
             const detailedSheet = dashboardContent.querySelector('.detailed-pc-sheet');
             if (detailedSheet) detailedSheet.remove();
         }
-        appState.setExpandedAbility(null);
+        AppState.setExpandedAbility(null);
         App.updateMainView();
     },
 
     toggleAbilityExpansion: function(ablKey) {
-        const currentAbility = appState.getExpandedAbility();
-        appState.setExpandedAbility(currentAbility === ablKey ? null : ablKey);
-        // Updated to use PCRenderers
-        PCRenderers.updatePcDashboardUI(Utils.getElem('pc-dashboard-content'), appState.getAllCharacters(), appState.activePcIds, appState.getExpandedAbility());
+        const currentAbility = AppState.getExpandedAbility();
+        AppState.setExpandedAbility(currentAbility === ablKey ? null : ablKey);
+        if(window.PCRenderers) {
+            PCRenderers.updatePcDashboardUI(document.getElementById('pc-dashboard-content'), AppState.getAllCharacters(), AppState.activePcIds, AppState.getExpandedAbility());
+        }
     },
 
     addSuggestedMemoryAsActual: async function(npcId, memoryContent) {
         if (!npcId || !memoryContent) return;
-        const character = appState.getCharacterById(npcId);
+        const character = AppState.getCharacterById(npcId);
         if (!character || character.character_type !== 'NPC') {
             alert("Cannot add memory: Invalid NPC ID or character is not an NPC.");
             return;
@@ -437,13 +466,12 @@ var App = {
         try {
             const memoryData = { content: memoryContent, type: "AI_suggestion", source: "AI suggestion" };
             const response = await ApiService.addMemoryToNpc(npcId, memoryData);
-            const charToUpdate = appState.getCharacterById(npcId);
+            const charToUpdate = AppState.getCharacterById(npcId);
             if (charToUpdate && response.updated_memories) {
                 charToUpdate.memories = response.updated_memories;
-                appState.updateCharacterInList(charToUpdate);
-                if (appState.getCurrentProfileCharId() === npcId) {
-                    // Updated to use NPCRenderers
-                    NPCRenderers.renderMemoriesUI(charToUpdate.memories, Utils.getElem('character-memories-list'), CharacterService.handleDeleteMemory);
+                AppState.updateCharacterInList(charToUpdate);
+                if (AppState.getCurrentProfileCharId() === npcId && window.NPCRenderers) {
+                    NPCRenderers.renderMemoriesUI(charToUpdate.memories, document.getElementById('character-memories-list'), CharacterService.handleDeleteMemory);
                 }
             }
             alert(`Suggested memory added to ${character.name}.`);
@@ -458,8 +486,8 @@ var App = {
             alert("Missing information to update faction standing.");
             return;
         }
-        const npc = appState.getCharacterById(npcIdToUpdate);
-        const pc = appState.getCharacterById(pcTargetId);
+        const npc = AppState.getCharacterById(npcIdToUpdate);
+        const pc = AppState.getCharacterById(pcTargetId);
         if (!npc || !pc) {
             alert("NPC or PC not found for faction standing update.");
             return;
@@ -471,71 +499,84 @@ var App = {
     },
 
     useSpecificCannedResponse: function(topic) {
-        const profiledCharId = appState.getCurrentProfileCharId();
+        const profiledCharId = AppState.getCurrentProfileCharId();
         if (!profiledCharId) return;
 
-        if (!appState.hasActiveNpc(profiledCharId)) {
+        if (!AppState.hasActiveNpc(profiledCharId)) {
             alert("The profiled NPC must be in the current scene to use a canned response.");
             return;
         }
 
-        const profiledChar = appState.getCharacterById(profiledCharId);
+        const profiledChar = AppState.getCharacterById(profiledCharId);
         if (!profiledChar) return;
 
-        const cannedResponses = appState.cannedResponsesForProfiledChar || {};
+        const cannedResponses = AppState.cannedResponsesForProfiledChar || {};
         const cannedResponseText = cannedResponses[topic];
         if (!cannedResponseText) {
             console.error(`Canned response for topic "${topic}" not found.`);
             return;
         }
 
-        const transcriptArea = Utils.getElem(`transcript-${profiledCharId}`);
-        if (transcriptArea) {
-            // Updated to use NPCRenderers
+        const transcriptArea = document.getElementById(`transcript-${profiledCharId}`);
+        if (transcriptArea && window.NPCRenderers) {
             NPCRenderers.appendMessageToTranscriptUI(transcriptArea, `${profiledChar.name}: ${cannedResponseText}`, 'dialogue-entry npc-response');
-            appState.addDialogueToHistory(profiledCharId, `${profiledChar.name}: ${cannedResponseText}`);
-        } else {
-            console.error("Could not find transcript area for active NPC:", profiledCharId);
+            AppState.addDialogueToHistory(profiledCharId, `${profiledChar.name}: ${cannedResponseText}`);
         }
     },
     
     sendTopicToChat: function(topic) {
-        const playerUtteranceElem = Utils.getElem('player-utterance');
+        const playerUtteranceElem = document.getElementById('player-utterance');
         if (playerUtteranceElem) {
             playerUtteranceElem.value = topic;
             playerUtteranceElem.focus();
         }
     },
 
-    handleSaveGmNotes: CharacterService.handleSaveGmNotes,
-    handleAddMemory: CharacterService.handleAddMemory,
-    handleDeleteMemory: CharacterService.handleDeleteMemory,
-    handleSaveFactionStanding: CharacterService.handleSaveFactionStanding,
-    handleAssociateHistoryFile: CharacterService.handleAssociateHistoryFile,
-    handleDissociateHistoryFile: CharacterService.handleDissociateHistoryFile,
-    handleCharacterCreation: CharacterService.handleCharacterCreation,
-    handleCreateLoreEntry: CharacterService.handleCreateLoreEntry,
-    handleSelectLoreEntryForDetails: CharacterService.handleSelectLoreEntryForDetails,
-    handleUpdateLoreEntryGmNotes: CharacterService.handleUpdateLoreEntryGmNotes,
-    handleDeleteLoreEntry: CharacterService.handleDeleteLoreEntry,
-    handleLinkLoreToCharacter: CharacterService.handleLinkLoreToCharacter,
-    handleUnlinkLoreFromCharacter: CharacterService.handleUnlinkLoreFromCharacter
+    // Called when data is finished loading from CharacterService
+    onCharactersLoaded: function() {
+        console.log("App.js: Characters loaded.");
+        if (AppState.characters) {
+            // FIX: Robust check for 'PC' or 'Player Character'
+            const pcs = AppState.characters.filter(c => 
+                c.character_type === 'Player Character' || 
+                c.character_type === 'PC' ||
+                c.type === 'Player Character'
+            );
+            PCRenderers.renderPcListUI(pcs);
+        }
+    },
+
+    // Mappings to Service Functions
+    handleSaveGmNotes: function(a, b) { return CharacterService.handleSaveGmNotes(a, b); },
+    handleAddMemory: function(a, b, c) { return CharacterService.handleAddMemory(a, b, c); },
+    handleDeleteMemory: function(a, b) { return CharacterService.handleDeleteMemory(a, b); },
+    handleSaveFactionStanding: function(a, b, c) { return CharacterService.handleSaveFactionStanding(a, b, c); },
+    handleAssociateHistoryFile: function(a, b) { return CharacterService.handleAssociateHistoryFile(a, b); },
+    handleDissociateHistoryFile: function(a, b) { return CharacterService.handleDissociateHistoryFile(a, b); },
+    handleCharacterCreation: function(e) { return CharacterService.handleCharacterCreation(e); },
+    handleCreateLoreEntry: function(e) { return CharacterService.handleCreateLoreEntry(e); },
+    handleSelectLoreEntryForDetails: function(id) { return CharacterService.handleSelectLoreEntryForDetails(id); },
+    handleUpdateLoreEntryGmNotes: function(id, notes) { return CharacterService.handleUpdateLoreEntryGmNotes(id, notes); },
+    handleDeleteLoreEntry: function(id) { return CharacterService.handleDeleteLoreEntry(id); },
+    handleLinkLoreToCharacter: function(loreId, charId) { return CharacterService.handleLinkLoreToCharacter(loreId, charId); },
+    handleUnlinkLoreFromCharacter: function(loreId, charId) { return CharacterService.handleUnlinkLoreFromCharacter(loreId, charId); }
 };
 
+// Initialize
 document.addEventListener('DOMContentLoaded', App.initializeApp.bind(App));
 
-// Global assignments for inline HTML onclick handlers
-// These are necessary for functions called directly from HTML attributes (e.g., onclick="openTab(...)").
-// Ideally, consider moving these to event listeners in eventHandlers.js where possible.
-window.openTab = App.openTab;
-window.handleToggleNpcInScene = App.handleToggleNpcInScene;
-window.handleGenerateDialogue = App.handleGenerateDialogue; 
-window.handleTogglePcSelection = App.handleTogglePcSelection; 
-window.handleBackToDashboardOverview = App.handleBackToDashboardOverview; 
-window.toggleAbilityExpansion = App.toggleAbilityExpansion; 
-window.addSuggestedMemoryAsActual = App.addSuggestedMemoryAsActual; 
-window.acceptFactionStandingChange = App.acceptFactionStandingChange;
-window.useSpecificCannedResponse = App.useSpecificCannedResponse;
-window.sendTopicToChat = App.sendTopicToChat;
-// Added for lore-specific functionality exposed to global scope
-window.closeLoreDetailViewUI = LoreRenderers.closeLoreDetailViewUI; // Ensure this points to the new LoreRenderers
+// Global Exports
+window.App = App;
+window.openTab = App.openTab.bind(App);
+window.handleToggleNpcInScene = App.handleToggleNpcInScene.bind(App);
+window.handleGenerateDialogue = App.handleGenerateDialogue.bind(App);
+window.handleTogglePcSelection = App.handleTogglePcSelection.bind(App);
+window.handleBackToDashboardOverview = App.handleBackToDashboardOverview.bind(App);
+window.toggleAbilityExpansion = App.toggleAbilityExpansion.bind(App);
+window.addSuggestedMemoryAsActual = App.addSuggestedMemoryAsActual.bind(App);
+window.acceptFactionStandingChange = App.acceptFactionStandingChange.bind(App);
+window.useSpecificCannedResponse = App.useSpecificCannedResponse.bind(App);
+window.sendTopicToChat = App.sendTopicToChat.bind(App);
+if (window.LoreRenderers) {
+    window.closeLoreDetailViewUI = LoreRenderers.closeLoreDetailViewUI;
+}

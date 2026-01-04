@@ -1,4 +1,4 @@
-// static/pc-renderers.js
+/* server/static/pc-renderers.js */
 // Responsibility: Rendering Player Character (PC) related UI elements.
 
 const ABILITY_SCORE_INFO = {
@@ -7,13 +7,11 @@ const ABILITY_SCORE_INFO = {
     "CON": { "title": "Constitution", "description": "Constitution measures health, stamina, and vital force.", "checks_title": "Constitution Checks", "checks_description": "Constitution checks are uncommon, and no skills apply to Constitution checks, because the endurance this ability represents is largely passive. A Constitution check can model your attempt to push beyond normal limits.", "other_checks_title": "Other Constitution Checks", "other_checks": ["Hold your breath", "March or labor for hours without rest", "Go without sleep", "Survive without food or water", "Quaff an entire stein of ale in one go"], "hit_points_title": "Hit Points", "hit_points": "Your Constitution modifier contributes to your hit points. If your Constitution modifier changes, your hit point maximum changes as well, as though you had the new modifier from 1st level." },
     "INT": { "title": "Intelligence", "description": "Intelligence measures mental acuity, accuracy of recall, and the ability to reason.", "checks_title": "Intelligence Checks", "checks_description": "An Intelligence check comes into play when you need to draw on logic, education, memory, or deductive reasoning. The Arcana, History, Investigation, Nature, and Religion skills reflect aptitude in certain kinds of Intelligence checks.", "skills": { "Arcana": "Measures your ability to recall lore about spells, magic items, eldritch symbols, and magical traditions.", "History": "Measures your ability to recall lore about historical events, legendary people, ancient kingdoms, and lost civilizations.", "Investigation": "When you look around for clues and make deductions based on those clues, you make an Intelligence (Investigation) check.", "Nature": "Measures your ability to recall lore about terrain, plants and animals, the weather, and natural cycles.", "Religion": "Measures your ability to recall lore about deities, rites and prayers, religious hierarchies, and holy symbols." }, "spellcasting_ability_title": "Spellcasting Ability", "spellcasting_ability": "Wizards use Intelligence as their spellcasting ability, which helps determine the saving throw DCs of spells they cast." },
     "WIS": { "title": "Wisdom", "description": "Wisdom reflects how attuned you are to the world around you and represents perceptiveness and intuition.", "checks_title": "Wisdom Checks", "checks_description": "A Wisdom check might reflect an effort to read body language, understand someone’s feelings, notice things about the environment, or care for an injured person. The Animal Handling, Insight, Medicine, Perception, and Survival skills reflect aptitude in certain kinds of Wisdom checks.", "skills": { "Animal Handling": "When there is any question whether you can calm down a domesticated animal, keep a mount from getting spooked, or intuit an animal’s intentions, the GM might call for a Wisdom (Animal Handling) check.", "Insight": "Your Wisdom (Insight) check decides whether you can determine the true intentions of a creature, such as when searching out a lie or predicting someone’s next move.", "Medicine": "A Wisdom (Medicine) check lets you try to stabilize a dying companion or diagnose an illness.", "Perception": "Your Wisdom (Perception) check lets you spot, hear, or otherwise detect the presence of something. It measures your general awareness of your surroundings and the keenness of your senses.", "Survival": "The GM might ask you to make a Wisdom (Survival) check to follow tracks, hunt wild game, guide your group through frozen wastelands, or identify signs that owlbears live nearby." }, "spellcasting_ability_title": "Spellcasting Ability", "spellcasting_ability": "Clerics, druids, and rangers use Wisdom as their spellcasting ability." },
-    "CHA": { "title": "Charisma", "description": "Charisma measures your ability to interact effectively with others. It includes such factors as confidence and eloquence, and it can represent a charming or commanding personality.", "checks_title": "Charisma Checks", "checks_description": "A Charisma check might arise when you try to influence or entertain others, when you try to make an impression or tell a convincing lie, or when you are navigating a tricky social situation. The Deception, Intimidation, Performance, and Persuasion skills reflect aptitude in certain kinds of Charisma checks.", "skills": { "Deception": "Your Charisma (Deception) check determines whether you can convincingly hide the truth, either verbally or through your actions.", "Intimidation": "When you attempt to influence someone through overt threats, hostile actions, and physical violence, the GM might ask you to make a Charisma (Intimidation) check.", "Performance": "Your Charisma (Performance) check determines how well you can delight an audience with music, dance, acting, storytelling, or some other form of entertainment.", "Persuasion": "When you attempt to influence someone or a group of people with tact, social graces, or good nature, the GM might ask you to make a Charisma (Persuasion) check." }, "spellcasting_ability_title": "Spellcasting Ability", "spellcasting_ability": "Bards, paladins, sorcerers, and warlocks use Charisma as their spellcasting ability." }
+    "CHA": { "title": "Charisma", "description": "Charisma measures your ability to interact effectively with others. It includes such factors as confidence and eloquence, and it can represent a charming or commanding personality.", "checks_title": "Charisma Checks", "checks_description": "A Charisma check might arise when you try to influence or entertain others, when you try to make an impression or tell a convincing lie, or when you are navigating a tricky social situation. The Deception, Intimidation, Performance, and Persuasion skills reflect aptitude in certain kinds of Charisma checks.", "skills": { "Deception": "Your Charisma (Deception) check determines whether you can convincingly hide the truth, either verbally or through your actions.", "Intimidation": "When you attempt to influence someone through overt threats, hostile actions, and physical violence, the GM might call for a Charisma (Intimidation) check.", "Performance": "Your Charisma (Performance) check determines how well you can delight an audience with music, dance, acting, storytelling, or some other form of entertainment.", "Persuasion": "When you attempt to influence someone or a group of people with tact, social graces, or good nature, the GM might ask you to make a Charisma (Persuasion) check." }, "spellcasting_ability_title": "Spellcasting Ability", "spellcasting_ability": "Bards, paladins, sorcerers, and warlocks use Charisma as their spellcasting ability." }
 };
-
 
 var PCRenderers = {
     createPcQuickViewSectionHTML: function(isForDashboard) {
-        // PC_QUICK_VIEW_BASE_TITLE is assumed to be globally available or from config.js
         const titleText = typeof PC_QUICK_VIEW_BASE_TITLE !== 'undefined' ? PC_QUICK_VIEW_BASE_TITLE : 'Player Characters';
         const fullTitle = isForDashboard ? `${titleText} (Click card for details)` : titleText;
         return `<h4>${fullTitle}</h4>`;
@@ -62,7 +60,6 @@ var PCRenderers = {
 
     populateExpandedAbilityDetailsUI: function(abilityKey, expansionDiv, selectedPcs) {
         if (!expansionDiv) { return; }
-        // ABILITY_KEYS_ORDER is assumed to be globally available or from config.js
         const abilityLongName = ABILITY_KEYS_ORDER.find(k => k.startsWith(abilityKey.toLowerCase().substring(0,3))).toUpperCase();
         
         let contentHTML = `<h5>${abilityLongName} Scores</h5>`;
@@ -76,14 +73,12 @@ var PCRenderers = {
         selectedPcs.forEach(pc => {
             const score = (pc.system?.abilities?.[abilityKey.toLowerCase()]?.value) || 10;
             const label = pc.name;
-            UIWidgets.generateBarChartRowHTML(label, score, maxScore, 20); // Should be appended to container.
             barChartContainer.innerHTML += UIWidgets.generateBarChartRowHTML(label, score, maxScore, 20);
         });
         
         expansionDiv.innerHTML = contentHTML;
         expansionDiv.appendChild(barChartContainer);
 
-        // SKILL_NAME_MAP is assumed to be globally available or from config.js
         const associatedSkills = Object.keys(SKILL_NAME_MAP).filter(skill => SKILL_NAME_MAP[skill].includes(`(${abilityLongName.substring(0,3)})`));
 
         if (associatedSkills.length > 0) {
@@ -117,8 +112,7 @@ var PCRenderers = {
             return;
         }
 
-        // Filter for Player Characters using the 'PC' type from the database.
-        const selectedPcs = allCharacters.filter(char => activePcIds.has(String(char._id)) && char.character_type === 'PC');
+        const selectedPcs = allCharacters.filter(char => activePcIds.has(String(char._id)) && (char.character_type === 'PC' || char.character_type === 'Player Character'));
 
         if (selectedPcs.length === 0) {
             dashboardContentElement.innerHTML = `<p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>`;
@@ -146,7 +140,6 @@ var PCRenderers = {
         });
         finalHTML += `<div class="pc-dashboard-grid">${cardsHTML}</div>`;
         
-        // ABILITY_KEYS_ORDER is assumed to be globally available or from config.js
         const abilitiesForTable = ABILITY_KEYS_ORDER.map(k => k.toUpperCase());
         let mainStatsTableHTML = `<h4>Ability Scores & Skills Overview</h4><div class="table-wrapper"><table id="main-stats-table"><thead><tr><th>Character</th>`;
         abilitiesForTable.forEach(ablKey => {
@@ -170,7 +163,6 @@ var PCRenderers = {
         mainStatsTableHTML += `</tbody></table></div>`;
         finalHTML += mainStatsTableHTML;
         
-        // appState is assumed to be globally available
         const targetAC = appState.targetAC;
         let roundTotalDpr = 0;
         let estimatedHP = 0;
@@ -228,7 +220,6 @@ var PCRenderers = {
             if (validAttackItems.length > 0) {
                  validAttackItems.forEach((item, index) => {
                     const dprResults = DNDCalculations.calculateDPR(pc, item, targetAC);
-                    // appState is assumed to be globally available
                     const isChecked = appState.isAttackSelected(String(pc._id), item.name);
                     dprTableHTML += `<tr>`;
                     if (index === 0) {
@@ -268,7 +259,6 @@ var PCRenderers = {
         activePcsData.sort((a, b) => a.name.localeCompare(b.name)).forEach(pc => {
             if (typeof pc.calculatedProfBonus === 'undefined') {
                 const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || 1;
-                // DNDCalculations is assumed to be globally available
                 pc.calculatedProfBonus = DNDCalculations.getProficiencyBonus(pcLevel);
              }
             cardsHTML += this.generatePcQuickViewCardHTML(pc, true);
@@ -278,37 +268,33 @@ var PCRenderers = {
     },
 
     populateExpandedSkillDetailsUI: function(skillKey, expansionDiv, selectedPcs) {
-    if (!expansionDiv) { console.error("PCRenderers.populateExpandedSkillDetailsUI: expansionDiv is null for", skillKey); return; }
-    // SKILL_NAME_MAP is assumed to be globally available or from config.js
-    const skillFullName = SKILL_NAME_MAP[skillKey] || skillKey;
-    expansionDiv.innerHTML = `<h5>${skillFullName} Bonus Details & Comparisons</h5>`;
+        if (!expansionDiv) { console.error("PCRenderers.populateExpandedSkillDetailsUI: expansionDiv is null for", skillKey); return; }
+        const skillFullName = SKILL_NAME_MAP[skillKey] || skillKey;
+        expansionDiv.innerHTML = `<h5>${skillFullName} Bonus Details & Comparisons</h5>`;
 
-    const barChartContainer = document.createElement('div');
-    barChartContainer.className = 'skill-bar-chart-container';
-    expansionDiv.appendChild(barChartContainer);
+        const barChartContainer = document.createElement('div');
+        barChartContainer.className = 'skill-bar-chart-container';
+        expansionDiv.appendChild(barChartContainer);
 
-    selectedPcs.forEach(pc => {
-        const skillData = pc.system?.skills?.[skillKey];
-        const abilityKeyForSkill = skillData?.ability || SKILL_NAME_MAP[skillKey].match(/\(([^)]+)\)/)[1].toLowerCase();
-        const abilityScore = pc.system?.abilities?.[abilityKeyForSkill]?.value || 10;
-        // DNDCalculations is assumed to be globally available
-        const bonus = DNDCalculations.calculateSkillBonus(abilityScore, skillData?.value || 0, pc.calculatedProfBonus);
-        // UIWidgets is assumed to be globally available
-        barChartContainer.innerHTML += UIWidgets.generateBarChartRowHTML(pc.name, bonus, bonus, 15);
-    });
-     expansionDiv.innerHTML += `<p><em>Passive ${skillFullName}: Calculated as 10 + Skill Bonus.</em></p>`;
-},
+        selectedPcs.forEach(pc => {
+            const skillData = pc.system?.skills?.[skillKey];
+            const abilityKeyForSkill = skillData?.ability || SKILL_NAME_MAP[skillKey].match(/\(([^)]+)\)/)[1].toLowerCase();
+            const abilityScore = pc.system?.abilities?.[abilityKeyForSkill]?.value || 10;
+            const bonus = DNDCalculations.calculateSkillBonus(abilityScore, skillData?.value || 0, pc.calculatedProfBonus);
+            barChartContainer.innerHTML += UIWidgets.generateBarChartRowHTML(pc.name, bonus, bonus, 15);
+        });
+         expansionDiv.innerHTML += `<p><em>Passive ${skillFullName}: Calculated as 10 + Skill Bonus.</em></p>`;
+    },
 
     renderDetailedPcSheetUI: function(pcData, dashboardContentElement) {
-        if (!pcData || pcData.character_type !== 'PC' || !(pcData.system)) {
-            console.error("PCRenderers.renderDetailedPcSheetUI: PC not found or invalid system data (expected character_type 'PC'):", pcData);
+        if (!pcData || !(pcData.system)) {
+            console.error("PCRenderers.renderDetailedPcSheetUI: PC not found or invalid system data", pcData);
             if (dashboardContentElement) dashboardContentElement.innerHTML = `<p>Error loading PC. <button onclick="handleBackToDashboardOverview()">Back to Dashboard Overview</button></p>`;
             return;
         }
         dashboardContentElement.innerHTML = ''; 
 
         const pcLevel = pcData.system?.details?.level || 1;
-        // DNDCalculations is assumed to be globally available
         pcData.calculatedProfBonus = DNDCalculations.getProficiencyBonus(pcLevel);
 
         let sheetHTML = `<div class="detailed-pc-sheet">
@@ -316,7 +302,6 @@ var PCRenderers = {
             <h3>${pcData.name} - Level ${pcLevel} ${pcData.system?.details?.race || ''} ${DNDCalculations.getCharacterClassNames(pcData).join('/') || ''}</h3>`;
 
         sheetHTML += `<div class="pc-section"><h4>Ability Scores</h4><div class="table-wrapper"><table class="detailed-pc-ability-table"><thead><tr>`;
-        // ABILITY_KEYS_ORDER is assumed to be globally available or from config.js
         ABILITY_KEYS_ORDER.forEach(key => sheetHTML += `<th>${key.toUpperCase()}</th>`);
         sheetHTML += `</tr></thead><tbody><tr>`;
         ABILITY_KEYS_ORDER.forEach(key => {
@@ -347,7 +332,6 @@ var PCRenderers = {
         sheetHTML += `</table></div>`;
 
         sheetHTML += `<div class="pc-section"><h4>Skills</h4><div class="table-wrapper"><table class="detailed-pc-table"><thead><tr><th>Skill</th><th>Bonus</th><th>Passive</th></tr></thead><tbody>`;
-        // SKILL_NAME_MAP is assumed to be globally available or from config.js
         for (const skillKey in SKILL_NAME_MAP) {
             const skillData = pcData.system?.skills?.[skillKey];
             const abilityKey = skillData?.ability || SKILL_NAME_MAP[skillKey].match(/\(([^)]+)\)/)[1].toLowerCase();
@@ -357,7 +341,6 @@ var PCRenderers = {
             sheetHTML += `<tr><td>${SKILL_NAME_MAP[skillKey]}</td><td>${bonus >= 0 ? '+' : ''}${bonus}</td><td>${passive}</td></tr>`;
         }
         sheetHTML += `</tbody></table></div></div>`;
-
 
         sheetHTML += `<div class="pc-section"><h4>Other Details</h4>`;
         sheetHTML += `<p><strong>Alignment:</strong> ${pcData.system?.details?.alignment || 'N/A'}</p>`;
@@ -371,74 +354,116 @@ var PCRenderers = {
         sheetHTML += `<p><strong>Weapon Proficiencies:</strong> ${weaponProfs}</p>`;
         sheetHTML += `</div>`;
 
-
         sheetHTML += `</div>`;
         dashboardContentElement.innerHTML = sheetHTML;
     },
 
-    renderPcListUI: function(pcListDiv, speakingPcSelect, allCharacters, activePcIds, onPcItemClickCallback, activeNpcIdsSet) {
-        console.log("PCRenderers.renderPcListUI called.");
-        const pcsForList = allCharacters.filter(char => char.character_type === 'PC').sort((a, b) => a.name.localeCompare(b.name));
+    // --- ADAPTER: Bridge between MainView calls and the detailed logic above ---
+    renderPcDashboard: function(pcData) {
+        const dashboard = document.getElementById('pc-dashboard-content');
+        if (!dashboard) return;
 
-        if (!pcListDiv) { console.error("PCRenderers.renderPcListUI: pcListDiv not found"); return;}
-        pcListDiv.innerHTML = '';
+        if (pcData) {
+            this.renderDetailedPcSheetUI(pcData, dashboard);
+        } else {
+            // Default Overview
+            if (window.AppState) {
+               this.updatePcDashboardUI(dashboard, AppState.getAllCharacters(), AppState.activePcIds, AppState.getExpandedAbility());
+            }
+        }
+    },
+
+    // --- HYBRID LIST RENDERER: Handles sidebar lists AND fix for click targets ---
+    renderPcListUI: function(arg1, arg2, arg3, arg4, arg5, arg6) {
+        console.log("PCRenderers.renderPcListUI called.");
+        
+        let pcList = [];
+        let pcListDiv = document.getElementById('active-pc-list');
+        let speakingPcSelect = document.getElementById('speaking-pc-select');
+        let activePcIds = window.AppState ? window.AppState.activePcIds : new Set();
+        let onPcItemClickCallback = window.handlePcSelection;
+
+        // Argument Resolution: Supports new (pcList) and old (lots of args) signatures
+        if (Array.isArray(arg1)) {
+            pcList = arg1;
+        } else {
+            if (arg3) {
+                 // FIX: Filter for both "PC" and "Player Character" to cover all DB variations
+                 pcList = arg3.filter(char => char.character_type === 'PC' || char.character_type === 'Player Character' || char.type === 'Player Character').sort((a, b) => a.name.localeCompare(b.name));
+            }
+            if (arg1) pcListDiv = arg1;
+            if (arg2) speakingPcSelect = arg2;
+            if (arg4) activePcIds = arg4;
+            if (arg5) onPcItemClickCallback = arg5;
+        }
+
+        // Render Sidebar List
+        if (pcListDiv) {
+            pcListDiv.innerHTML = '';
+            if (!pcList || pcList.length === 0) {
+                pcListDiv.innerHTML = '<ul><li><em>No active PCs.</em></li></ul>';
+            } else {
+                const ul = document.createElement('ul');
+                pcList.forEach(pc => {
+                    const li = document.createElement('li');
+                    li.className = 'pc-entry'; 
+                    if (activePcIds.has(String(pc._id)) || (window.AppState && window.AppState.activePc && window.AppState.activePc.id === pc._id)) {
+                        li.classList.add('selected');
+                    }
+
+                    // CSS FIX: Create a clickable text span that fills the row
+                    const nameSpan = document.createElement('span');
+                    nameSpan.className = 'pc-name-clickable';
+                    nameSpan.textContent = pc.name;
+                    
+                    // Event Handler for Sidebar Click
+                    nameSpan.onclick = (e) => {
+                        e.stopPropagation();
+                        if (onPcItemClickCallback) onPcItemClickCallback(String(pc._id));
+                    };
+
+                    li.appendChild(nameSpan);
+                    ul.appendChild(li);
+                });
+                pcListDiv.appendChild(ul);
+            }
+        }
+
+        // Update Speaking Dropdown (if present)
         if (speakingPcSelect) {
             const currentSpeaker = speakingPcSelect.value;
             speakingPcSelect.innerHTML = '<option value="">-- DM/Scene Event --</option>';
 
-            // Add Player Characters for the dropdown
-            const pcs = allCharacters.filter(char => char.character_type === 'PC').sort((a, b) => a.name.localeCompare(b.name));
-            pcs.forEach(pc => {
-                const pcIdStr = String(pc._id);
+            // PCs
+            pcList.forEach(pc => {
                 const option = document.createElement('option');
-                option.value = pcIdStr;
+                option.value = String(pc._id);
                 option.textContent = `(PC) ${pc.name}`;
                 speakingPcSelect.appendChild(option);
             });
 
-            // Add a separator
-            if (activeNpcIdsSet && activeNpcIdsSet.size > 0 && pcs.length > 0) {
-                const separator = document.createElement('option');
-                separator.disabled = true;
-                separator.textContent = '--- NPCs in Scene ---';
-                speakingPcSelect.appendChild(separator);
+            // NPCs (Fetch from AppState since they aren't passed in simple signature)
+            if (window.AppState) {
+                const activeNpcs = window.AppState.getActiveNpcIds().map(id => window.AppState.getCharacterById(id)).filter(n => n);
+                if (activeNpcs.length > 0) {
+                    const separator = document.createElement('option');
+                    separator.disabled = true;
+                    separator.textContent = '--- NPCs in Scene ---';
+                    speakingPcSelect.appendChild(separator);
+                    
+                    activeNpcs.forEach(npc => {
+                        const option = document.createElement('option');
+                        option.value = String(npc._id);
+                        option.textContent = `(NPC) ${npc.name}`;
+                        speakingPcSelect.appendChild(option);
+                    });
+                }
             }
 
-            // Add Active NPCs
-            if (activeNpcIdsSet) {
-                const activeNpcs = allCharacters.filter(char => activeNpcIdsSet.has(String(char._id))).sort((a, b) => a.name.localeCompare(b.name));
-                activeNpcs.forEach(npc => {
-                    const npcIdStr = String(npc._id);
-                    const option = document.createElement('option');
-                    option.value = npcIdStr;
-                    option.textContent = `(NPC) ${npc.name}`;
-                    speakingPcSelect.appendChild(option);
-                });
-            }
-            // Try to restore previous selection
+            // Restore selection
             if (Array.from(speakingPcSelect.options).some(opt => opt.value === currentSpeaker)) {
                 speakingPcSelect.value = currentSpeaker;
             }
         }
-        
-        // This part is for rendering the PC list on the left, using the pcsForList declared earlier
-        if (pcsForList.length === 0) { // This `pcsForList` refers to the one declared at the top of the function
-            pcListDiv.innerHTML = '<p><em>No Player Characters defined yet.</em></p>';
-            return;
-        }
-        const ul = document.createElement('ul');
-        pcsForList.forEach(pc => {
-            const pcIdStr = String(pc._id);
-            const li = document.createElement('li');
-            li.style.cursor = "pointer";
-            li.textContent = pc.name;
-            li.dataset.charId = pcIdStr;
-            li.onclick = () => onPcItemClickCallback(pcIdStr);
-            if (activePcIds.has(pcIdStr)) {
-                li.classList.add('selected');
-            }
-            ul.appendChild(li);
-        });
-        pcListDiv.appendChild(ul);
     }
 };
