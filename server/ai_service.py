@@ -9,7 +9,7 @@ from models import NPCProfile, DialogueRequest, FactionStandingLevel
 
 # The new SDK handles model names robustly. 
 # "gemini-1.5-flash" is the recommended model for speed/cost.
-GENERATIVE_MODEL_NAME = "gemini-1.5-flash-001"
+GENERATIVE_MODEL_NAME = "gemini-2.5-flash"
 
 class AIService:
     def __init__(self, model_name: str = GENERATIVE_MODEL_NAME):
@@ -32,7 +32,7 @@ class AIService:
             temperature=0.75,
             top_p=0.95,
             top_k=40,
-            max_output_tokens=450,
+            max_output_tokens=1000,
             safety_settings=[
                 types.SafetySetting(
                     category="HARM_CATEGORY_HARASSMENT",
