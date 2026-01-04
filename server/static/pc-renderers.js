@@ -407,7 +407,8 @@ var PCRenderers = {
         let pcListDiv = document.getElementById('active-pc-list');
         let speakingPcSelect = document.getElementById('speaking-pc-select');
         let activePcIds = window.AppState ? window.AppState.activePcIds : new Set();
-        let onPcItemClickCallback = window.handlePcSelection;
+        // CRITICAL FIX: Ensure we use the correct callback if available globally, otherwise null
+        let onPcItemClickCallback = window.handleTogglePcSelection; 
 
         // Argument Resolution: Supports new (pcList) and old (lots of args) signatures
         if (Array.isArray(arg1)) {
@@ -446,7 +447,11 @@ var PCRenderers = {
                     nameSpan.onclick = (e) => {
                         e.stopPropagation();
                         console.log("[DEBUG] Clicked PC Name:", pc.name, pc._id);
-                        if (onPcItemClickCallback) onPcItemClickCallback(String(pc._id));
+                        if (onPcItemClickCallback) {
+                            onPcItemClickCallback(String(pc._id));
+                        } else {
+                            console.warn("No callback defined for PC selection");
+                        }
                     };
 
                     li.appendChild(nameSpan);

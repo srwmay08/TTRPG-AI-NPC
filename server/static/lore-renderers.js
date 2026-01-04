@@ -95,7 +95,9 @@ var LoreRenderers = {
 
     populateLoreEntrySelectForCharacterLinkingUI: function(alreadyLinkedNames = []) {
         const selectElement = Utils.getElem('lore-entry-select-for-character');
-        if (!selectElement) { console.warn("LoreRenderers.populateLoreEntrySelectForCharacterLinkingUI: Select element not found."); return; }
+        // SILENT RETURN if element not found to prevent console spam during initial renders or hidden states
+        if (!selectElement) { return; }
+        
         // appState is assumed to be globally available
         const currentCharacter = appState.getCurrentProfileChar();
         const linkButton = Utils.getElem('link-lore-to-char-btn');
@@ -119,7 +121,9 @@ var LoreRenderers = {
     renderAssociatedLoreForCharacterUI: function(character, unlinkCallback) {
         // CharacterService is assumed to be globally available
         const listElement = Utils.getElem(CharacterService.profileElementIds.associatedLoreListForCharacter);
-        if (!listElement) { console.warn("LoreRenderers.renderAssociatedLoreForCharacterUI: List element not found."); return; }
+        // SILENT RETURN
+        if (!listElement) { return; }
+        
         listElement.innerHTML = '';
         if (character && character.linked_lore_by_name && character.linked_lore_by_name.length > 0) {
             // appState is assumed to be globally available

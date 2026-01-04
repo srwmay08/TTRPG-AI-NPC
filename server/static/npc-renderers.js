@@ -44,26 +44,42 @@ var NPCRenderers = {
             const charIdStr = String(char._id);
             const li = document.createElement('li');
             li.dataset.charId = charIdStr;
-            li.style.cursor = "pointer";
-    
-            if (activeSceneNpcIds.has(charIdStr)) {
-                li.classList.add('active-in-scene');
-            }
-    
+            li.style.display = 'flex';
+            li.style.alignItems = 'center';
+            li.style.gap = '8px'; // Spacing between checkbox and name
+            
+            // 1. Checkbox for Toggling Scene Presence
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.checked = activeSceneNpcIds.has(charIdStr);
+            checkbox.style.cursor = 'pointer';
+            
+            checkbox.onclick = async (event) => {
+                event.stopPropagation(); // Stop click from triggering li/span events
+                console.log("[DEBUG] NPC Checkbox Toggled:", char.name);
+                await onToggleInSceneCallback(charIdStr, char.name);
+            };
+
+            // 2. Name Span for Viewing Details
             const nameSpan = document.createElement('span');
             nameSpan.textContent = char.name;
             nameSpan.className = 'npc-name-clickable';
+            nameSpan.style.cursor = 'pointer';
+            nameSpan.style.flex = '1'; // Take remaining width
+            nameSpan.title = "Click to view details (Profile)";
             
-            li.onclick = async (event) => {
-                if (event.target.classList.contains('npc-name-clickable')) {
-                    event.stopPropagation();
-                    console.log("[DEBUG] NPC Name Clicked (Scene Tab):", char.name);
-                    await onNameClickCallback(charIdStr);
-                } else {
-                    await onToggleInSceneCallback(charIdStr, char.name);
-                }
+            nameSpan.onclick = async (event) => {
+                event.stopPropagation();
+                console.log("[DEBUG] NPC Name Clicked (Details):", char.name);
+                await onNameClickCallback(charIdStr);
             };
     
+            if (activeSceneNpcIds.has(charIdStr)) {
+                li.classList.add('active-in-scene');
+                nameSpan.style.fontWeight = 'bold';
+            }
+    
+            li.appendChild(checkbox);
             li.appendChild(nameSpan);
             ul.appendChild(li);
         });

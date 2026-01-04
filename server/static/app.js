@@ -226,6 +226,9 @@ var App = {
     // --- Interaction Logic ---
 
     handleToggleNpcInScene: async function(npcIdStr, npcName) {
+        // FORCE VIEW SWITCH: Adding an NPC implies we want to see the scene
+        AppState.currentView = 'scene';
+
         const multiNpcContainer = document.getElementById('multi-npc-dialogue-container');
         if (!multiNpcContainer) return;
     

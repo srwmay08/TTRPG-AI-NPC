@@ -96,6 +96,13 @@ const CharacterService = {
             }
 
             await CharacterService.fetchAndRenderHistoryFiles();
+
+            // --- CRITICAL FIX: Switch view if it is an NPC ---
+            if (processedChar.character_type === 'NPC') {
+                appState.currentView = 'npc';
+                if (window.App && App.updateMainView) App.updateMainView();
+            }
+
         } catch (error) {
             console.error("Error in handleSelectCharacterForDetails:", error);
             Utils.updateText('details-char-name', 'Error loading details');
