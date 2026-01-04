@@ -8,18 +8,21 @@
 </head>
 <body>
 
-    <div id="left-column" class="column">
+<div class="app-container">
+    <aside id="left-column">
         <div id="left-column-header">
             <h2>GM Controls</h2>
-            <div id="pc-list-section-outer" class="collapsible-section"> <h3>Player Characters</h3>
+            
+            <div id="pc-list-section-outer" class="collapsible-section"> 
+                <h3 class="collapsible-header">Player Characters <span class="arrow-indicator">▼</span></h3>
                 <div class="collapsible-content character-list">
                     <div id="active-pc-list"><p><em>Loading PCs...</em></p></div>
                 </div>
             </div>
-            <hr class="tab-hr">
+            
             <div class="tabs">
                 <button class="tab-link active" onclick="openTab(event, 'tab-scene')">SCENE</button>
-                <button class="tab-link" onclick="openTab(event, 'tab-npcs')">NPCs</button>
+                <button class="tab-link" onclick="openTab(event, 'tab-npcs')">NPCS</button>
                 <button class="tab-link" onclick="openTab(event, 'tab-lore')">LORE</button>
             </div>
         </div>
@@ -28,6 +31,7 @@
             <div id="tab-scene" class="tab-content active-tab">
                 <h3>Scene Configuration</h3>
                 <div id="scene-context-filters-container">
+                    <label>Context Filter:</label>
                     <select id="scene-context-type-filter">
                         <option value="none">No Context Filter</option>
                         <option value="lore">Lore Entry</option>
@@ -38,17 +42,19 @@
                 </div>
 
                 <div class="character-list-container">
-                    <h4>NPCs in Scene: Select to add/remove</h4>
-                    <div id="character-list-scene-tab">
+                    <h4>NPCs in Scene</h4>
+                    <div id="character-list-scene-tab" class="character-list">
                         <ul><li><em>Loading NPCs...</em></li></ul>
                     </div>
                 </div>
             </div>
 
             <div id="tab-npcs" class="tab-content">
-                <h3>NPC Management</h3>
                 <div id="character-profile-main-section" class="collapsible-section collapsed">
-                    <h3 class="collapsible-header">NPC Details: <span id="details-char-name">No NPC Selected</span> <span class="arrow-indicator">►</span></h3>
+                    <h3 class="collapsible-header">
+                        <span id="details-char-name">No NPC Selected</span> 
+                        <span class="arrow-indicator">►</span>
+                    </h3>
                     <div class="collapsible-content">
                         <p><strong>Type:</strong> <span id="profile-char-type"></span></p>
                         <p><strong>Description:</strong> <span id="profile-description"></span></p>
@@ -57,8 +63,8 @@
                         <div class="collapsible-section">
                             <h4 class="collapsible-header">GM Notes <span class="arrow-indicator">►</span></h4>
                             <div class="collapsible-content">
-                                <textarea id="gm-notes" rows="5" placeholder="Private notes for the GM."></textarea>
-                                <button id="save-gm-notes-btn">Save GM Notes</button>
+                                <textarea id="gm-notes" rows="3" placeholder="Private notes for the GM."></textarea>
+                                <button id="save-gm-notes-btn">Save Notes</button>
                             </div>
                         </div>
 
@@ -67,7 +73,7 @@
                             <div class="collapsible-content">
                                 <ul id="character-memories-list"></ul>
                                 <input type="text" id="new-memory-content" placeholder="New memory content">
-                                <input type="text" id="new-memory-type" placeholder="Type (e.g., 'fact', 'event')">
+                                <input type="text" id="new-memory-type" placeholder="Type (e.g., 'fact')">
                                 <button id="add-memory-btn">Add Memory</button>
                             </div>
                         </div>
@@ -75,28 +81,22 @@
                         <div id="npc-faction-standings-section" class="collapsible-section">
                             <h4 class="collapsible-header">Faction Standings <span class="arrow-indicator">►</span></h4>
                             <div class="collapsible-content" id="npc-faction-standings-content">
-                                <p><em>No active PCs to show standings for.</em></p>
+                                <p><em>No active PCs.</em></p>
                             </div>
                         </div>
 
-                        <div id="character-history-collapsible-section" class="collapsible-section">
-                            <h4 class="collapsible-header">Associated History Files <span class="arrow-indicator">►</span></h4>
+                        <div class="collapsible-section">
+                            <h4 class="collapsible-header">History & Lore <span class="arrow-indicator">►</span></h4>
                             <div class="collapsible-content">
+                                <h5>History Files</h5>
                                 <ul id="associated-history-list"></ul>
                                 <select id="history-file-select"></select>
                                 <button id="associate-history-btn">Associate File</button>
-                                <hr>
-                                <h5>History Content Preview:</h5>
-                                <pre id="history-content-display"></pre>
-                            </div>
-                        </div>
-
-                        <div id="character-lore-links-section" class="collapsible-section">
-                            <h4 class="collapsible-header">Linked Lore Entries <span class="arrow-indicator">►</span></h4>
-                            <div class="collapsible-content">
+                                
+                                <h5>Lore Entries</h5>
                                 <ul id="associated-lore-list-for-character"></ul>
                                 <select id="lore-entry-select-for-character">
-                                    <option value="">-- Select Lore Entry --</option>
+                                    <option value="">-- Select Lore --</option>
                                 </select>
                                 <button id="link-lore-to-char-btn">Link Lore</button>
                             </div>
@@ -104,18 +104,19 @@
                     </div>
                 </div>
 
-                <h3>All Characters (NPCs & PCs)</h3>
+                <h3>All Characters</h3>
                 <div class="character-list-container">
-                    <div id="all-character-list-management">
-                        <ul><li><em>Loading all characters...</em></li></ul>
+                    <div id="all-character-list-management" class="character-list">
+                        <ul><li><em>Loading...</em></li></ul>
                     </div>
                 </div>
+
                 <hr>
                 <h3>Create New Character</h3>
                 <form id="create-character-form">
                     <input type="text" id="new-char-name" placeholder="Name" required>
                     <textarea id="new-char-description" placeholder="Description" rows="2" required></textarea>
-                    <input type="text" id="new-char-personality" placeholder="Personality traits (comma-separated)">
+                    <input type="text" id="new-char-personality" placeholder="Personality traits">
                     <select id="new-char-type">
                         <option value="NPC">NPC</option>
                         <option value="Player Character">Player Character</option>
@@ -125,102 +126,95 @@
             </div>
 
             <div id="tab-lore" class="tab-content">
-                <h3>Lore Management</h3>
                 <div id="lore-detail-main-section" class="collapsible-section collapsed">
-                    <h3 class="collapsible-header">Lore Details: <span id="details-lore-name">No Lore Selected</span> <span class="arrow-indicator">►</span></h3>
+                    <h3 class="collapsible-header">
+                        <span id="details-lore-name">No Lore Selected</span>
+                        <span class="arrow-indicator">►</span>
+                    </h3>
                     <div class="collapsible-content">
                         <p><strong>Type:</strong> <span id="details-lore-type"></span></p>
-                        <p><strong>Description:</strong> <span id="details-lore-description"></span></p>
-                        <div class="collapsible-section">
-                            <h4 class="collapsible-header">Key Facts <span class="arrow-indicator">►</span></h4>
-                            <div class="collapsible-content">
-                                <ul id="details-lore-key-facts"></ul>
-                            </div>
-                        </div>
-                        <div class="collapsible-section">
-                            <h4 class="collapsible-header">Tags <span class="arrow-indicator">►</span></h4>
-                            <div class="collapsible-content">
-                                <ul id="details-lore-tags"></ul>
-                            </div>
-                        </div>
                         <div class="collapsible-section">
                             <h4 class="collapsible-header">GM Notes <span class="arrow-indicator">►</span></h4>
                             <div class="collapsible-content">
-                                <textarea id="details-lore-gm-notes" rows="5" placeholder="Private notes for the GM."></textarea>
-                                <button id="save-lore-gm-notes-btn">Save GM Notes</button>
+                                <textarea id="details-lore-gm-notes" rows="3"></textarea>
+                                <button id="save-lore-gm-notes-btn">Save Notes</button>
                             </div>
                         </div>
-                        <div class="collapsible-section">
-                            <h4 class="collapsible-header">Associated Characters <span class="arrow-indicator">►</span></h4>
-                            <div class="collapsible-content">
-                                <div id="details-lore-associated-characters-list" class="character-list"></div>
-                            </div>
-                        </div>
-                        <button id="delete-lore-btn">Delete Lore Entry</button>
+                        <button id="delete-lore-btn" style="background-color: #dc3545;">Delete Entry</button>
                     </div>
                 </div>
+
                 <h3>All Lore Entries</h3>
                 <div class="lore-entry-list-container">
-                    <ul id="lore-entry-list">
-                        <li><em>Loading lore...</em></li>
-                    </ul>
+                    <ul id="lore-entry-list"><li><em>Loading lore...</em></li></ul>
                 </div>
+
                 <hr>
-                <h3>Create New Lore Entry</h3>
+                <h3>Create New Lore</h3>
                 <form id="create-lore-entry-form">
                     <input type="text" id="new-lore-name" placeholder="Name" required>
                     <select id="new-lore-type"></select>
-                    <textarea id="new-lore-description" placeholder="Description" rows="2" required></textarea>
-                    <textarea id="new-lore-key-facts" placeholder="Key facts (one per line)" rows="3"></textarea>
-                    <input type="text" id="new-lore-tags" placeholder="Tags (comma-separated)">
-                    <textarea id="new-lore-gm-notes" placeholder="GM Notes" rows="3"></textarea>
-                    <button type="submit">Create Lore Entry</button>
+                    <textarea id="new-lore-description" placeholder="Description" rows="2"></textarea>
+                    <textarea id="new-lore-key-facts" placeholder="Key facts (one per line)"></textarea>
+                    <button type="submit">Create Lore</button>
                 </form>
             </div>
         </div>
-        <div id="resizer"></div>
-    </div>
+    </aside>
 
-    <div id="right-column" class="column">
-    <div id="dialogue-interface" style="display: none;">
-        </div>
-    <div id="pc-dashboard-view" style="display: block;">
-        </div>
-    <div id="location-dashboard-view" style="display: none;">
-        </div>
+    <div id="resizer"></div>
 
-                <div id="active-participants-quick-view">
-                    <div id="pc-quick-view-section-in-scene"></div>
-                    <div id="multi-npc-dialogue-container">
-                        <p class="scene-event">Select NPCs from the SCENE tab to add them to the interaction.</p>
-                    </div>
+    <main id="right-column">
+        
+        <div id="dialogue-interface" style="display: none;">
+            <div id="active-participants-quick-view">
+                <div id="pc-quick-view-section-in-scene"></div>
+                <h2>Live Dialogue</h2>
+                <div id="multi-npc-dialogue-container">
+                    <p class="scene-event">Select NPCs from the SCENE tab to begin interaction.</p>
                 </div>
-                <div id="dialogue-input-section">
-                    <hr>
-                    <h4>Player Input</h4>
-                    <select id="speaking-pc-select">
+            </div>
+
+            <div id="dialogue-input-section">
+                <h4>Player Input</h4>
+                <div style="display: flex; gap: 10px;">
+                    <select id="speaking-pc-select" style="flex: 1;">
                         <option value="">-- DM/Scene Event --</option>
                     </select>
-                    <textarea id="player-utterance" placeholder="Player dialogue or scene description..."></textarea>
-                    <button id="generate-dialogue-btn">Generate Dialogue</button>
+                    <button id="generate-dialogue-btn" style="flex: 0 0 150px; margin-top:0;">Generate</button>
                 </div>
+                <textarea id="player-utterance" rows="3" placeholder="Player dialogue or scene description..."></textarea>
+                
+                <div id="ai-suggestions" style="display:none;"></div>
+            </div>
+        </div>
 
+        <div id="pc-dashboard-view" style="display: block;">
+            <h2>PC Dashboard</h2>
+            </div>
+
+        <div id="location-dashboard-view" style="display: none;">
+            <h2>Location Dashboard</h2>
+            </div>
+
+    </main>
 </div>
 
-    <script src="{{ url_for('static', filename='utils.js') }}"></script>
-    <script src="{{ url_for('static', filename='config.js') }}"></script>
-    <script src="{{ url_for('static', filename='dndCalculations.js') }}"></script>
-    <script src="{{ url_for('static', filename='appState.js') }}"></script>
-    <script src="{{ url_for('static', filename='apiService.js') }}"></script>
-    
-    <script src="{{ url_for('static', filename='ui-widgets.js') }}"></script>
-    <script src="{{ url_for('static', filename='pc-renderers.js') }}"></script>
-    <script src="{{ url_for('static', filename='npc-renderers.js') }}"></script>
-    <script src="{{ url_for('static', filename='lore-renderers.js') }}"></script>
+<script src="{{ url_for('static', filename='utils.js') }}"></script>
+<script src="{{ url_for('static', filename='config.js') }}"></script>
+<script src="{{ url_for('static', filename='dndCalculations.js') }}"></script>
+<script src="{{ url_for('static', filename='appState.js') }}"></script>
+<script src="{{ url_for('static', filename='apiService.js') }}"></script>
 
-    <script src="{{ url_for('static', filename='characterService.js') }}"></script>
-    <script src="{{ url_for('static', filename='main-view.js') }}"></script>
-    <script src="{{ url_for('static', filename='eventHandlers.js') }}"></script>
-    <script src="{{ url_for('static', filename='app.js') }}"></script>
+<script src="{{ url_for('static', filename='ui-widgets.js') }}"></script>
+<script src="{{ url_for('static', filename='pc-renderers.js') }}"></script>
+<script src="{{ url_for('static', filename='npc-renderers.js') }}"></script>
+<script src="{{ url_for('static', filename='lore-renderers.js') }}"></script>
+
+<script src="{{ url_for('static', filename='characterService.js') }}"></script>
+<script src="{{ url_for('static', filename='main-view.js') }}"></script>
+<script src="{{ url_for('static', filename='eventHandlers.js') }}"></script>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+
 </body>
 </html>
