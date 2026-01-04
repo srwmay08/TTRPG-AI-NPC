@@ -107,15 +107,21 @@ var PCRenderers = {
     },
     
     updatePcDashboardUI: function(dashboardContentElement, allCharacters, activePcIds, currentlyExpandedAbility) {
+        console.group("--- [DEBUG] PCRenderers.updatePcDashboardUI ---");
+        
         if (!dashboardContentElement) {
-            console.error("PCRenderers.updatePcDashboardUI: 'pc-dashboard-content' element not found.");
+            console.error("ERROR: 'dashboardContentElement' is null/undefined. The ID 'pc-dashboard-content' might be missing from index.html.");
+            console.groupEnd();
             return;
         }
+        console.log("Target Element found:", dashboardContentElement);
 
         const selectedPcs = allCharacters.filter(char => activePcIds.has(String(char._id)) && (char.character_type === 'PC' || char.character_type === 'Player Character' || char.type === 'Player Character'));
+        console.log(`Selected PCs count: ${selectedPcs.length}`);
 
         if (selectedPcs.length === 0) {
             dashboardContentElement.innerHTML = `<p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>`;
+            console.groupEnd();
             return;
         }
         
@@ -238,6 +244,8 @@ var PCRenderers = {
         finalHTML += dprTableHTML;
         
         dashboardContentElement.innerHTML = finalHTML;
+        console.log("Dashboard rendered.");
+        console.groupEnd();
         
         if (currentlyExpandedAbility) {
             const expansionDiv = Utils.getElem('expanded-ability-details');
@@ -287,11 +295,23 @@ var PCRenderers = {
     },
 
     renderDetailedPcSheetUI: function(pcData, dashboardContentElement) {
+        console.group("--- [DEBUG] PCRenderers.renderDetailedPcSheetUI ---");
+        
         if (!pcData || !(pcData.system)) {
-            console.error("PCRenderers.renderDetailedPcSheetUI: PC not found or invalid system data", pcData);
+            console.error("ERROR: PC data not found or invalid.", pcData);
             if (dashboardContentElement) dashboardContentElement.innerHTML = `<p>Error loading PC. <button onclick="handleBackToDashboardOverview()">Back to Dashboard Overview</button></p>`;
+            console.groupEnd();
             return;
         }
+
+        if (!dashboardContentElement) {
+            console.error("ERROR: dashboardContentElement is missing. Cannot render detailed sheet.");
+            console.groupEnd();
+            return;
+        }
+        console.log("Target Element:", dashboardContentElement);
+        console.log("Data:", pcData.name);
+
         dashboardContentElement.innerHTML = ''; 
 
         const pcLevel = pcData.system?.details?.level || 1;
@@ -356,12 +376,18 @@ var PCRenderers = {
 
         sheetHTML += `</div>`;
         dashboardContentElement.innerHTML = sheetHTML;
+        console.log("Detailed sheet rendered.");
+        console.groupEnd();
     },
 
     // --- ADAPTER: Bridge between MainView calls and the detailed logic above ---
     renderPcDashboard: function(pcData) {
+        console.log("[DEBUG] renderPcDashboard called.");
         const dashboard = document.getElementById('pc-dashboard-content');
-        if (!dashboard) return;
+        if (!dashboard) {
+            console.error("[DEBUG] CRITICAL: 'pc-dashboard-content' element not found in DOM!");
+            return;
+        }
 
         if (pcData) {
             this.renderDetailedPcSheetUI(pcData, dashboard);
@@ -419,6 +445,7 @@ var PCRenderers = {
                     // Event Handler for Sidebar Click
                     nameSpan.onclick = (e) => {
                         e.stopPropagation();
+                        console.log("[DEBUG] Clicked PC Name:", pc.name, pc._id);
                         if (onPcItemClickCallback) onPcItemClickCallback(String(pc._id));
                     };
 

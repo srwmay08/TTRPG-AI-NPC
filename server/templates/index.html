@@ -50,60 +50,6 @@
             </div>
 
             <div id="tab-npcs" class="tab-content">
-                <div id="character-profile-main-section" class="collapsible-section collapsed">
-                    <h3 class="collapsible-header">
-                        <span id="details-char-name">No NPC Selected</span> 
-                        <span class="arrow-indicator">►</span>
-                    </h3>
-                    <div class="collapsible-content">
-                        <p><strong>Type:</strong> <span id="profile-char-type"></span></p>
-                        <p><strong>Description:</strong> <span id="profile-description"></span></p>
-                        <p><strong>Personality:</strong> <span id="profile-personality"></span></p>
-                        
-                        <div class="collapsible-section">
-                            <h4 class="collapsible-header">GM Notes <span class="arrow-indicator">►</span></h4>
-                            <div class="collapsible-content">
-                                <textarea id="gm-notes" rows="3" placeholder="Private notes for the GM."></textarea>
-                                <button id="save-gm-notes-btn">Save Notes</button>
-                            </div>
-                        </div>
-
-                        <div id="npc-memories-collapsible-section" class="collapsible-section">
-                            <h4 class="collapsible-header">Memories <span class="arrow-indicator">►</span></h4>
-                            <div class="collapsible-content">
-                                <ul id="character-memories-list"></ul>
-                                <input type="text" id="new-memory-content" placeholder="New memory content">
-                                <input type="text" id="new-memory-type" placeholder="Type (e.g., 'fact')">
-                                <button id="add-memory-btn">Add Memory</button>
-                            </div>
-                        </div>
-
-                        <div id="npc-faction-standings-section" class="collapsible-section">
-                            <h4 class="collapsible-header">Faction Standings <span class="arrow-indicator">►</span></h4>
-                            <div class="collapsible-content" id="npc-faction-standings-content">
-                                <p><em>No active PCs.</em></p>
-                            </div>
-                        </div>
-
-                        <div class="collapsible-section">
-                            <h4 class="collapsible-header">History & Lore <span class="arrow-indicator">►</span></h4>
-                            <div class="collapsible-content">
-                                <h5>History Files</h5>
-                                <ul id="associated-history-list"></ul>
-                                <select id="history-file-select"></select>
-                                <button id="associate-history-btn">Associate File</button>
-                                
-                                <h5>Lore Entries</h5>
-                                <ul id="associated-lore-list-for-character"></ul>
-                                <select id="lore-entry-select-for-character">
-                                    <option value="">-- Select Lore --</option>
-                                </select>
-                                <button id="link-lore-to-char-btn">Link Lore</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <h3>All Characters</h3>
                 <div class="character-list-container">
                     <div id="all-character-list-management" class="character-list">
@@ -189,13 +135,17 @@
             </div>
         </div>
 
-        <div id="pc-dashboard-view" style="display: block;">
+        <div id="pc-dashboard-view" style="display: none;">
             <h2>PC Dashboard</h2>
+            <div id="pc-dashboard-content"></div> 
+        </div>
+
+        <div id="npc-profile-view" style="display: none;">
             </div>
 
         <div id="location-dashboard-view" style="display: none;">
             <h2>Location Dashboard</h2>
-            </div>
+        </div>
 
     </main>
 </div>

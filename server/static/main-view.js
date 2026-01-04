@@ -8,34 +8,45 @@ var MainView = {
         const dialogueInterfaceElem = document.getElementById('dialogue-interface');
         const pcDashboardViewElem = document.getElementById('pc-dashboard-view');
         const pcQuickViewInSceneElem = document.getElementById('pc-quick-view-section-in-scene');
-        const dashboardContent = document.getElementById('pc-dashboard-content');
+        const npcProfileViewElem = document.getElementById('npc-profile-view'); // NEW
         
-        if (!dialogueInterfaceElem || !pcDashboardViewElem || !pcQuickViewInSceneElem) return;
+        if (!dialogueInterfaceElem || !pcDashboardViewElem || !pcQuickViewInSceneElem || !npcProfileViewElem) return;
 
         // Use global state
         const activeNpcCount = window.AppState ? window.AppState.getActiveNpcCount() : 0;
         const currentView = window.AppState ? window.AppState.currentView : 'scene';
 
         // LOGIC:
-        // 1. If we are in "PC View" (clicked a PC in sidebar), show Dashboard.
-        // 2. If we are in "Scene View" (clicked Scene tab), show Dialogue Interface.
+        // 1. PC View
+        // 2. NPC View (NEW)
+        // 3. Scene View (Default)
         
         if (currentView === 'pc') {
             dialogueInterfaceElem.style.display = 'none';
             pcDashboardViewElem.style.display = 'block';
+            npcProfileViewElem.style.display = 'none';
             pcQuickViewInSceneElem.style.display = 'none';
             
             // Render the dashboard content
             if (window.PCRenderers && window.AppState) {
-                // If we have an active PC, render details, otherwise render overview
+                // Check if we have a specific single PC to show details for, or just the list
                 const activePc = window.AppState.activePc;
                 PCRenderers.renderPcDashboard(activePc);
             }
+            
+        } else if (currentView === 'npc') {
+            dialogueInterfaceElem.style.display = 'none';
+            pcDashboardViewElem.style.display = 'none';
+            npcProfileViewElem.style.display = 'block';
+            pcQuickViewInSceneElem.style.display = 'none';
+            
+            // Content is rendered by NPCRenderers.renderCharacterProfileUI when selected
             
         } else {
             // Default: Scene View
             dialogueInterfaceElem.style.display = 'flex'; // Flex for layout
             pcDashboardViewElem.style.display = 'none';
+            npcProfileViewElem.style.display = 'none';
             
             // Render the Quick View of PCs at the top of the scene
             if (window.PCRenderers && window.AppState) {

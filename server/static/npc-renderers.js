@@ -57,6 +57,7 @@ var NPCRenderers = {
             li.onclick = async (event) => {
                 if (event.target.classList.contains('npc-name-clickable')) {
                     event.stopPropagation();
+                    console.log("[DEBUG] NPC Name Clicked (Scene Tab):", char.name);
                     await onNameClickCallback(charIdStr);
                 } else {
                     await onToggleInSceneCallback(charIdStr, char.name);
@@ -90,7 +91,10 @@ var NPCRenderers = {
             const nameSpan = document.createElement('span');
             nameSpan.textContent = char.name;
             nameSpan.className = 'npc-name-clickable';
-            nameSpan.onclick = () => onNameClickCallback(charIdStr);
+            nameSpan.onclick = () => {
+                console.log("[DEBUG] NPC Name Clicked (Management Tab):", char.name);
+                onNameClickCallback(charIdStr);
+            };
 
             li.appendChild(nameSpan);
             ul.appendChild(li);
@@ -298,74 +302,156 @@ var NPCRenderers = {
         });
     },
 
+    // --- NEW: Fully Dynamic Renderer for Right Column ---
     renderCharacterProfileUI: function(character, elements) {
-        // This function renders parts of the profile for both PC and NPC, but the majority of
-        // its dependencies (memories, faction standings, history, lore links) are strongly
-        // associated with NPCs. We'll keep it here for now, but if PC profile rendering
-        // becomes more complex, a `character-renderers.js` might be warranted.
-        const characterProfileMainSection = Utils.getElem('character-profile-main-section');
-        const detailsCharNameElem = Utils.getElem(elements.detailsCharName);
+        console.group("--- [DEBUG] NPCRenderers.renderCharacterProfileUI ---");
+        
+        // This function now renders into the 'npc-profile-view' in the right column
+        const profileContainer = document.getElementById('npc-profile-view');
 
         if (!character) {
-            if(characterProfileMainSection) characterProfileMainSection.style.display = 'none';
-            if (detailsCharNameElem) Utils.updateText(elements.detailsCharName, 'None Selected');
+            console.warn("Character data is null. Hiding profile section.");
+            if(profileContainer) profileContainer.innerHTML = '<p>No Character Selected</p>';
+            console.groupEnd();
             return;
         }
 
-        if(characterProfileMainSection) characterProfileMainSection.style.display = 'block';
+        if (!profileContainer) {
+            console.error("ERROR: 'npc-profile-view' container not found in Right Column.");
+            console.groupEnd();
+            return;
+        }
 
-        const profileCharTypeElem = Utils.getElem(elements.profileCharType);
-        const profileDescriptionElem = Utils.getElem(elements.profileDescription);
-        const profilePersonalityElem = Utils.getElem(elements.profilePersonality);
-        const gmNotesTextareaElem = Utils.getElem(elements.gmNotesTextarea);
-        const saveGmNotesBtnElem = Utils.getElem(elements.saveGmNotesBtn);
-        const npcMemoriesSectionElem = Utils.getElem(elements.npcMemoriesSection);
-        const characterMemoriesListElem = Utils.getElem(elements.characterMemoriesList);
-        const addMemoryBtnElem = Utils.getElem(elements.addMemoryBtn);
-        const npcFactionStandingsSectionElem = Utils.getElem(elements.npcFactionStandingsSection);
-        const npcFactionStandingsContentElem = Utils.getElem(elements.npcFactionStandingsContent);
-        const characterHistorySectionElem = Utils.getElem(elements.characterHistorySection);
-        const associatedHistoryListElem = Utils.getElem(elements.associatedHistoryList);
-        // Corrected: Ensure historyContentDisplayElem is correctly retrieved from elements
-        const historyContentDisplayElem = Utils.getElem(elements.historyContentDisplay); 
-        const characterLoreLinksSectionElem = Utils.getElem(elements.characterLoreLinksSection);
-        const linkLoreToCharBtnElem = Utils.getElem(elements.linkLoreToCharBtn);
-
+        console.log("Rendering Character into Right Column:", character.name);
+        
+        // Ensure defaults
         character.personality_traits = character.personality_traits || [];
         character.memories = character.memories || [];
         character.associated_history_files = character.associated_history_files || [];
         character.linked_lore_by_name = character.linked_lore_by_name || [];
         character.pc_faction_standings = character.pc_faction_standings || {};
-
-        if (detailsCharNameElem) Utils.updateText(elements.detailsCharName, character.name || "N/A");
-        if (profileCharTypeElem) Utils.updateText(elements.profileCharType, character.character_type || "N/A");
-        if (profileDescriptionElem) Utils.updateText(elements.profileDescription, character.description || "N/A");
-        if (profilePersonalityElem) Utils.updateText(elements.profilePersonality, character.personality_traits.join(', ') || "N/A");
-        if (gmNotesTextareaElem) gmNotesTextareaElem.value = character.gm_notes || '';
-        if (saveGmNotesBtnElem) Utils.disableBtn(elements.saveGmNotesBtn, false);
-
         const isNpc = character.character_type === 'NPC';
-        if (npcMemoriesSectionElem) npcMemoriesSectionElem.style.display = isNpc ? 'block' : 'none';
-        if (npcFactionStandingsSectionElem) npcFactionStandingsSectionElem.style.display = isNpc ? 'block' : 'none';
-        if (characterHistorySectionElem) characterHistorySectionElem.style.display = 'block';
-        if (characterLoreLinksSectionElem) characterLoreLinksSectionElem.style.display = 'block';
+
+        // 1. Build HTML Structure (similar to the old sidebar but cleaner)
+        let html = `
+            <div class="npc-profile-sheet">
+                <div class="profile-header">
+                    <h2>${character.name}</h2>
+                    <span class="char-type-badge">${character.character_type || 'Unknown'}</span>
+                </div>
+                
+                <div class="profile-section">
+                    <h4>Description</h4>
+                    <p>${character.description || 'No description available.'}</p>
+                </div>
+
+                <div class="profile-section">
+                    <h4>Personality</h4>
+                    <p>${character.personality_traits.join(', ') || 'None listed.'}</p>
+                </div>
+
+                <div class="profile-section collapsible-section">
+                    <h4 class="collapsible-header" onclick="this.parentElement.classList.toggle('collapsed')">GM Notes <span class="arrow-indicator">▼</span></h4>
+                    <div class="collapsible-content">
+                        <textarea id="gm-notes" rows="4" class="full-width-textarea" placeholder="Private notes for the GM.">${character.gm_notes || ''}</textarea>
+                        <button id="save-gm-notes-btn">Save Notes</button>
+                    </div>
+                </div>`;
 
         if (isNpc) {
-            // CharacterService and appState are assumed to be globally available
-            if (characterMemoriesListElem) this.renderMemoriesUI(character.memories, characterMemoriesListElem, CharacterService.handleDeleteMemory);
-            if (npcFactionStandingsContentElem) this.renderNpcFactionStandingsUI(character, appState.activePcIds, appState.getAllCharacters(), npcFactionStandingsContentElem, CharacterService.handleSaveFactionStanding);
-            if (addMemoryBtnElem) Utils.disableBtn(elements.addMemoryBtn, false);
-        } else {
-            if (characterMemoriesListElem) characterMemoriesListElem.innerHTML = '<p><em>Memories are for NPCs only.</em></p>';
-            if (addMemoryBtnElem) Utils.disableBtn(elements.addMemoryBtn, true);
-            if (npcFactionStandingsContentElem) npcFactionStandingsContentElem.innerHTML = '<p><em>Faction standings are for NPCs.</em></p>';
+            html += `
+                <div class="profile-section collapsible-section">
+                    <h4 class="collapsible-header" onclick="this.parentElement.classList.toggle('collapsed')">Memories <span class="arrow-indicator">▼</span></h4>
+                    <div class="collapsible-content">
+                        <ul id="character-memories-list" class="memory-list"></ul>
+                        <div class="add-memory-controls">
+                            <input type="text" id="new-memory-content" placeholder="New memory content">
+                            <input type="text" id="new-memory-type" placeholder="Type (e.g., 'fact')">
+                            <button id="add-memory-btn">Add Memory</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-section collapsible-section">
+                    <h4 class="collapsible-header" onclick="this.parentElement.classList.toggle('collapsed')">Faction Standings <span class="arrow-indicator">▼</span></h4>
+                    <div class="collapsible-content" id="npc-faction-standings-content">
+                        </div>
+                </div>`;
         }
-        // Corrected: Pass historyContentDisplayElem
-        if (associatedHistoryListElem && historyContentDisplayElem) this.renderAssociatedHistoryFilesUI(character, associatedHistoryListElem, historyContentDisplayElem, CharacterService.handleDissociateHistoryFile);
-        // LoreRenderers is assumed to be globally available
-        LoreRenderers.renderAssociatedLoreForCharacterUI(character, CharacterService.handleUnlinkLoreFromCharacter);
-        LoreRenderers.populateLoreEntrySelectForCharacterLinkingUI(character.linked_lore_by_name);
-        if (linkLoreToCharBtnElem) Utils.disableBtn(elements.linkLoreToCharBtn, false);
+
+        html += `
+                <div class="profile-section collapsible-section">
+                    <h4 class="collapsible-header" onclick="this.parentElement.classList.toggle('collapsed')">History & Lore <span class="arrow-indicator">▼</span></h4>
+                    <div class="collapsible-content">
+                        <h5>History Files</h5>
+                        <ul id="associated-history-list"></ul>
+                        <div class="control-row">
+                            <select id="history-file-select"></select>
+                            <button id="associate-history-btn">Associate File</button>
+                        </div>
+                        <div id="history-content-display" class="scrollable-text-box"></div>
+                        
+                        <h5 style="margin-top: 15px;">Lore Entries</h5>
+                        <ul id="associated-lore-list-for-character"></ul>
+                        <div class="control-row">
+                            <select id="lore-entry-select-for-character">
+                                <option value="">-- Select Lore --</option>
+                            </select>
+                            <button id="link-lore-to-char-btn">Link Lore</button>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+
+        // 2. Inject HTML
+        profileContainer.innerHTML = html;
+
+        // 3. Attach Event Listeners & Dynamic Content logic
+        // We reuse the existing helper methods but pass the NEW DOM elements we just created.
+
+        const gmNotesBtn = document.getElementById('save-gm-notes-btn');
+        if (gmNotesBtn) gmNotesBtn.onclick = CharacterService.handleSaveGmNotes;
+
+        if (isNpc) {
+            const memoryList = document.getElementById('character-memories-list');
+            const addMemBtn = document.getElementById('add-memory-btn');
+            const standingContent = document.getElementById('npc-faction-standings-content');
+            
+            if (memoryList) this.renderMemoriesUI(character.memories, memoryList, CharacterService.handleDeleteMemory);
+            if (addMemBtn) addMemBtn.onclick = CharacterService.handleAddMemory;
+            
+            if (standingContent && appState) {
+                this.renderNpcFactionStandingsUI(character, appState.activePcIds, appState.getAllCharacters(), standingContent, CharacterService.handleSaveFactionStanding);
+            }
+        }
+
+        const histList = document.getElementById('associated-history-list');
+        const histDisplay = document.getElementById('history-content-display');
+        const histBtn = document.getElementById('associate-history-btn');
+
+        // Populate history select (Assuming API service has loaded files, or we re-fetch)
+        // Note: In the original code, population of the select box was handled by CharacterService or App. 
+        // We might need to trigger that population here or assume global state.
+        // For now, we wire up the renderers.
+        if (histList && histDisplay) {
+            this.renderAssociatedHistoryFilesUI(character, histList, histDisplay, CharacterService.handleDissociateHistoryFile);
+        }
+        if (histBtn) histBtn.onclick = CharacterService.handleAssociateHistoryFile;
+        
+        // Populate History Dropdown (Quick fix: trigger global population if available)
+        if (window.populateHistoryFileSelect) window.populateHistoryFileSelect(); 
+
+
+        const loreList = document.getElementById('associated-lore-list-for-character');
+        const loreBtn = document.getElementById('link-lore-to-char-btn');
+        
+        if (window.LoreRenderers) {
+            LoreRenderers.renderAssociatedLoreForCharacterUI(character, CharacterService.handleUnlinkLoreFromCharacter);
+            LoreRenderers.populateLoreEntrySelectForCharacterLinkingUI(character.linked_lore_by_name);
+        }
+        if (loreBtn) loreBtn.onclick = CharacterService.handleLinkLoreToCharacter;
+
+        console.groupEnd();
     },
 
     renderMemoriesUI: function(memories, listElement, deleteCallback) {

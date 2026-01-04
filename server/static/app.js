@@ -115,7 +115,11 @@ var App = {
 
         if (tabName === 'tab-npcs') {
             const currentProfileId = AppState.getCurrentProfileCharId();
-            CharacterService.handleSelectCharacterForDetails(currentProfileId);
+            // Ensure we handle the view switch if a char is already selected
+            if (currentProfileId) {
+                AppState.currentView = 'npc';
+                this.updateMainView();
+            }
         }
         if (tabName === 'tab-lore' && !AppState.getCurrentLoreEntryId()) {
             if(window.LoreRenderers && typeof LoreRenderers.closeLoreDetailViewUI === 'function'){
@@ -435,14 +439,25 @@ var App = {
         // 4. Update Main View
         App.updateMainView();
 
-        // 5. Update Faction Standings
+        // 5. Update Faction Standings if needed
         const currentProfileChar = AppState.getCurrentProfileChar();
         if (currentProfileChar && currentProfileChar.character_type === 'NPC' && window.NPCRenderers) {
-            NPCRenderers.renderNpcFactionStandingsUI(currentProfileChar, AppState.activePcIds, AppState.getAllCharacters(), document.getElementById('npc-faction-standings-content'), CharacterService.handleSaveFactionStanding);
+            // Re-render to update slider labels if PC names changed or selection changed
+            // NOTE: Using 'npc-profile-view' lookup inside renderNpcFactionStandingsUI or pass correct container
+            const standingsContainer = document.getElementById('npc-faction-standings-content');
+            if(standingsContainer) {
+                 NPCRenderers.renderNpcFactionStandingsUI(currentProfileChar, AppState.activePcIds, AppState.getAllCharacters(), standingsContainer, CharacterService.handleSaveFactionStanding);
+            }
         }
     },
 
     handleBackToDashboardOverview: function() {
+        // Clear specific selection to show the group table
+        if (AppState.activePc) {
+             AppState.activePc = null; 
+             // IMPORTANT: We do NOT clear activePcIds here, allowing the group to persist
+        }
+        
         const dashboardContent = document.getElementById('pc-dashboard-content');
         if (dashboardContent) {
             const detailedSheet = dashboardContent.querySelector('.detailed-pc-sheet');
