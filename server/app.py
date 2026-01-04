@@ -17,7 +17,8 @@ from models import NPCProfile, DialogueRequest, DialogueResponse, MemoryItem, NP
 from ai_service import ai_service_instance
 
 app = Flask(__name__)
-app.secret_key = app_config.FLASK_SECRET_KEY
+# CORRECTED: Uses SECRET_KEY instead of FLASK_SECRET_KEY
+app.secret_key = app_config.SECRET_KEY
 mongo_db = db_connector.get_db()
 
 # --- Directory Definitions ---
@@ -908,8 +909,9 @@ if __name__ == '__main__':
         print("CRITICAL: AI Service not initialized. Dialogue generation will fail.")
 
     print("-" * 50)
-    print(f"Flask Secret Key: {'Set' if app_config.FLASK_SECRET_KEY != 'a_default_secret_key' else 'Using Default (Unsafe for Production)'}")
-    print(f"Gemini API Key: {'Set' if app_config.GEMINI_API_KEY else 'NOT SET'}")
+    print(f"Flask Secret Key: {'Set' if app_config.SECRET_KEY != 'a_default_secret_key' else 'Using Default (Unsafe for Production)'}")
+    # CORRECTED: Uses GOOGLE_API_KEY for the print check
+    print(f"Gemini API Key: {'Set' if app_config.GOOGLE_API_KEY else 'NOT SET'}")
     print(f"Mongo URI: {app_config.MONGO_URI}")
     print("-" * 50)
     app.run(debug=True, host='0.0.0.0', port=5001)
