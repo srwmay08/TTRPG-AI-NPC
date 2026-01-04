@@ -392,8 +392,8 @@ var App = {
 
     handleTogglePcSelection: function(pcIdStr) {
         appState.toggleActivePc(pcIdStr);
-        // Updated to use NPCRenderers
-        NPCRenderers.renderPcListUI(
+        // Corrected to use PCRenderers for the PC list and speaker dropdown
+        PCRenderers.renderPcListUI(
             Utils.getElem('active-pc-list'), 
             Utils.getElem('speaking-pc-select'), 
             appState.getAllCharacters(), 

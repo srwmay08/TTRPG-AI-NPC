@@ -27,9 +27,6 @@ VTT_IMPORT_DIR = os.path.join(PRIMARY_DATA_DIR, 'vtt_imports')
 HISTORY_DATA_DIR = os.path.join(PRIMARY_DATA_DIR, 'history')
 LORE_DATA_DIR = os.path.join(PRIMARY_DATA_DIR, 'lore')
 
-npc_profile_for_ai: Optional[NPCProfile] = None
-
-
 def parse_json(data):
     return json.loads(json_util.dumps(data))
 
@@ -589,7 +586,6 @@ def parse_ai_suggestions(full_ai_output: str, speaking_pc_id: Optional[str]) -> 
 
 @app.route('/api/npcs/<npc_id_str>/dialogue', methods=['POST'])
 def generate_dialogue_for_npc_api(npc_id_str: str):
-    global npc_profile_for_ai 
     if mongo_db is None: return jsonify({"error": "Database not available"}), 503
     if ai_service_instance is None or ai_service_instance.model is None:
         return jsonify({"error": "AI Service not available"}), 503
@@ -601,7 +597,7 @@ def generate_dialogue_for_npc_api(npc_id_str: str):
         return jsonify({"error": "Dialogue for PCs not supported"}), 400
     npc_data_with_history = load_history_content_for_npc(npc_data_from_db)
     try:
-        npc_profile_for_ai = NPCProfile(**parse_json(npc_data_with_history)) 
+        npc_profile = NPCProfile(**parse_json(npc_data_with_history)) 
     except ValidationError as e:
         print(f"Pydantic validation error for NPC {npc_id_str} before AI call: {e.errors()}")
         return jsonify({"error": "NPC data from DB is invalid", "details": e.errors()}), 500
@@ -617,7 +613,7 @@ def generate_dialogue_for_npc_api(npc_id_str: str):
     speaking_pc_name_for_ai = "the player"
     actual_speaking_pc_id = dialogue_req_data.speaking_pc_id if dialogue_req_data.speaking_pc_id and dialogue_req_data.speaking_pc_id.strip() != "" else None
     if actual_speaking_pc_id:
-        current_pc_standing_val = npc_profile_for_ai.pc_faction_standings.get(actual_speaking_pc_id)
+        current_pc_standing_val = npc_profile.pc_faction_standings.get(actual_speaking_pc_id)
         try:
             pc_object_id_val = ObjectId(actual_speaking_pc_id)
             pc_object_found = mongo_db.npcs.find_one({"_id": pc_object_id_val, "character_type": "PC"})
@@ -625,13 +621,13 @@ def generate_dialogue_for_npc_api(npc_id_str: str):
             else: speaking_pc_name_for_ai = actual_speaking_pc_id
         except Exception:
             speaking_pc_name_for_ai = actual_speaking_pc_id
-            pc_by_name = mongo_db.npcs.find_one({"name": actual_speaking_pc_id, "character_type": "PC"}) 
-            if pc_by_name: current_pc_standing_val = npc_profile_for_ai.pc_faction_standings.get(str(pc_by_name['_id']))
+            pc_by_name = mongo_db.npcs.find_one({"name": actual_speaking_pc_id, "character_type": "PC"})
+            if pc_by_name: current_pc_standing_val = npc_profile.pc_faction_standings.get(str(pc_by_name['_id']))
     else:
         speaking_pc_name_for_ai = "DM/Scene Event"
     try:
         full_ai_output_str = ai_service_instance.generate_npc_dialogue(
-            npc=npc_profile_for_ai,
+            npc=npc_profile,
             dialogue_request=dialogue_req_data,
             current_pc_standing=current_pc_standing_val,
             speaking_pc_name=speaking_pc_name_for_ai,
@@ -641,7 +637,7 @@ def generate_dialogue_for_npc_api(npc_id_str: str):
 
         )
     except Exception as e:
-        print(f"Error calling AI service for {npc_profile_for_ai.name}: {e}")
+        print(f"Error calling AI service for {npc_profile.name}: {e}")
         traceback.print_exc()
         return jsonify({
             "npc_id": npc_id_str, "npc_dialogue": f"Error: AI service failed - {type(e).__name__}",
@@ -652,7 +648,7 @@ def generate_dialogue_for_npc_api(npc_id_str: str):
     parsed_suggestions = parse_ai_suggestions(full_ai_output_str, actual_speaking_pc_id)
     generated_text = parsed_suggestions["dialogue"]
     if "AI generation blocked" in generated_text or generated_text.startswith("Error:"):
-         print(f"AI Service returned an error/blocked message for {npc_profile_for_ai.name}: {generated_text}")
+         print(f"AI Service returned an error/blocked message for {npc_profile.name}: {generated_text}")
     memory_suggestions = []
     if dialogue_req_data.player_utterance and generated_text and not ("AI generation blocked" in generated_text or generated_text.startswith("Error:")):
         summarized_memory = ai_service_instance.summarize_interaction_for_memory(

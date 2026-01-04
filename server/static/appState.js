@@ -51,6 +51,11 @@ const appState = {
         if (char._id && typeof char._id === 'object' && char._id.$oid) {
             char._id = char._id.$oid;
         }
+        // Normalize character type for PCs from VTT imports. This is the centralized place for this logic.
+        if (char.type === 'character' && !char.character_type) {
+            char.character_type = 'PC';
+        }
+
         // Ensure vtt_data and its nested structures are properly initialized
         char.vtt_data = char.vtt_data || {};
         char.vtt_data.abilities = char.vtt_data.abilities || {};

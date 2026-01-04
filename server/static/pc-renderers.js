@@ -117,8 +117,8 @@ var PCRenderers = {
             return;
         }
 
-        // Changed 'PC' to 'Player Character'
-        const selectedPcs = allCharacters.filter(char => activePcIds.has(String(char._id)) && char.character_type === 'Player Character');
+        // Filter for Player Characters using the 'PC' type from the database.
+        const selectedPcs = allCharacters.filter(char => activePcIds.has(String(char._id)) && char.character_type === 'PC');
 
         if (selectedPcs.length === 0) {
             dashboardContentElement.innerHTML = `<p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>`;
@@ -300,8 +300,8 @@ var PCRenderers = {
 },
 
     renderDetailedPcSheetUI: function(pcData, dashboardContentElement) {
-        if (!pcData || pcData.character_type !== 'Player Character' || !(pcData.system)) { // Changed 'PC' to 'Player Character'
-            console.error("PCRenderers.renderDetailedPcSheetUI: PC not found or invalid system data:", pcData);
+        if (!pcData || pcData.character_type !== 'PC' || !(pcData.system)) {
+            console.error("PCRenderers.renderDetailedPcSheetUI: PC not found or invalid system data (expected character_type 'PC'):", pcData);
             if (dashboardContentElement) dashboardContentElement.innerHTML = `<p>Error loading PC. <button onclick="handleBackToDashboardOverview()">Back to Dashboard Overview</button></p>`;
             return;
         }
@@ -378,11 +378,7 @@ var PCRenderers = {
 
     renderPcListUI: function(pcListDiv, speakingPcSelect, allCharacters, activePcIds, onPcItemClickCallback, activeNpcIdsSet) {
         console.log("PCRenderers.renderPcListUI called.");
-        console.log("  allCharacters received:", allCharacters);
-        // Changed 'PC' to 'Player Character'
-        const pcsForList = allCharacters.filter(char => char.character_type === 'Player Character').sort((a, b) => a.name.localeCompare(b.name));
-        console.log("  PCs identified for list:", pcsForList); 
-        console.log("  Number of PCs for list:", pcsForList.length); 
+        const pcsForList = allCharacters.filter(char => char.character_type === 'PC').sort((a, b) => a.name.localeCompare(b.name));
 
         if (!pcListDiv) { console.error("PCRenderers.renderPcListUI: pcListDiv not found"); return;}
         pcListDiv.innerHTML = '';
@@ -390,8 +386,8 @@ var PCRenderers = {
             const currentSpeaker = speakingPcSelect.value;
             speakingPcSelect.innerHTML = '<option value="">-- DM/Scene Event --</option>';
 
-            // Add Player Characters for the dropdown - Changed 'PC' to 'Player Character'
-            const pcs = allCharacters.filter(char => char.character_type === 'Player Character').sort((a, b) => a.name.localeCompare(b.name));
+            // Add Player Characters for the dropdown
+            const pcs = allCharacters.filter(char => char.character_type === 'PC').sort((a, b) => a.name.localeCompare(b.name));
             pcs.forEach(pc => {
                 const pcIdStr = String(pc._id);
                 const option = document.createElement('option');
