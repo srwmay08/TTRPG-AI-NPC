@@ -280,8 +280,19 @@ var PCRenderers = {
 
         activePcsData.sort((a, b) => a.name.localeCompare(b.name));
         
-        // 1. Generate Full Cards View
-        let cardsHTML = `<div id="pc-scene-cards-view" class="pc-dashboard-grid">`;
+        // 1. Generate Full Cards View (Horizontal Fit)
+        // INJECT STYLE: Override card styling ONLY for this view to force shrinking
+        let cardsHTML = `<style>
+            #pc-scene-cards-view .pc-stat-card {
+                flex: 1 1 0;      /* Grow and shrink equally */
+                min-width: 0;     /* Allow shrinking below content size */
+                width: auto !important; /* Override any fixed widths */
+                margin: 0 4px;    /* Small gap */
+            }
+        </style>`;
+        
+        // CONTAINER: flex-flow: row nowrap ensure single line.
+        cardsHTML += `<div id="pc-scene-cards-view" style="display: flex; flex-flow: row nowrap; width: 100%; overflow-x: auto;">`;
         activePcsData.forEach(pc => {
              if (typeof pc.calculatedProfBonus === 'undefined') {
                 const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || 1;
@@ -291,11 +302,9 @@ var PCRenderers = {
         });
         cardsHTML += `</div>`;
 
-        // 2. Generate Compact Names View
-        // FIXED: Used flex-flow: row nowrap and overflow-x: auto to ensure single row with scrolling
+        // 2. Generate Compact Names View (Single Row Scroller)
         let compactHTML = `<div id="pc-scene-compact-view" style="display:none; flex-flow: row nowrap; overflow-x: auto; gap: 8px; align-items: center; padding-bottom: 4px; scrollbar-width: thin;">`;
         activePcsData.forEach(pc => {
-            // flex: 0 0 auto prevents shrinking, ensuring items are fully visible on scroll
             compactHTML += `<span class="pc-compact-badge" style="flex: 0 0 auto; background: #e2e6ea; padding: 4px 8px; border-radius: 4px; font-weight: bold; border: 1px solid #ccc; white-space: nowrap;">${pc.name}</span>`;
         });
         compactHTML += `</div>`;
@@ -317,7 +326,7 @@ var PCRenderers = {
                 arrow.textContent = '►';
             } else {
                 // Expand to Cards
-                cardsView.style.display = 'grid'; 
+                cardsView.style.display = 'flex'; // Restore flex
                 compactView.style.display = 'none';
                 arrow.textContent = '▼';
             }
