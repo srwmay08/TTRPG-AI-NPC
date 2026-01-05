@@ -44,43 +44,61 @@ var NPCRenderers = {
             const charIdStr = String(char._id);
             const li = document.createElement('li');
             li.dataset.charId = charIdStr;
+            
+            // --- STYLING & INTERACTION ---
             li.style.display = 'flex';
             li.style.alignItems = 'center';
-            li.style.gap = '8px'; // Spacing between checkbox and name
+            li.style.justifyContent = 'space-between';
+            li.style.cursor = 'pointer'; // Make whole row look clickable
             
-            // 1. Checkbox for Toggling Scene Presence
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.checked = activeSceneNpcIds.has(charIdStr);
-            checkbox.style.cursor = 'pointer';
-            
-            checkbox.onclick = async (event) => {
-                event.stopPropagation(); // Stop click from triggering li/span events
-                console.log("[DEBUG] NPC Checkbox Toggled:", char.name);
+            const isActive = activeSceneNpcIds.has(charIdStr);
+
+            // Visual feedback for "Active in Scene"
+            if (isActive) {
+                li.classList.add('active-in-scene');
+                li.style.backgroundColor = '#e2e6ea'; // Light highlight
+            }
+
+            // 1. CLICK HANDLER (Toggle Scene)
+            // Clicking the row toggles the scene presence
+            li.onclick = async (event) => {
+                console.log("[DEBUG] NPC Row Clicked (Toggle Scene):", char.name);
                 await onToggleInSceneCallback(charIdStr, char.name);
             };
 
-            // 2. Name Span for Viewing Details
+            // 2. NAME DISPLAY
             const nameSpan = document.createElement('span');
+            nameSpan.className = 'npc-name-clickable'; // Retain class for layout consistency
+            nameSpan.style.flex = '1';
+            nameSpan.style.padding = '8px'; // Add padding for easier clicking
             nameSpan.textContent = char.name;
-            nameSpan.className = 'npc-name-clickable';
-            nameSpan.style.cursor = 'pointer';
-            nameSpan.style.flex = '1'; // Take remaining width
-            nameSpan.title = "Click to view details (Profile)";
+
+            if (isActive) {
+                nameSpan.style.fontWeight = 'bold';
+                const checkMark = document.createElement('span');
+                checkMark.textContent = ' ✔';
+                checkMark.style.color = '#28a745';
+                checkMark.style.fontWeight = 'bold';
+                nameSpan.appendChild(checkMark);
+            }
             
-            nameSpan.onclick = async (event) => {
-                event.stopPropagation();
-                console.log("[DEBUG] NPC Name Clicked (Details):", char.name);
+            // 3. PROFILE BUTTON (View Details)
+            // Small button to view profile without toggling scene
+            const profileBtn = document.createElement('button');
+            profileBtn.textContent = 'Profile'; 
+            profileBtn.style.fontSize = '0.75rem';
+            profileBtn.style.padding = '2px 6px';
+            profileBtn.style.marginRight = '5px';
+            profileBtn.title = "View Character Profile";
+            
+            profileBtn.onclick = async (event) => {
+                event.stopPropagation(); // Stop the row click (scene toggle) from firing
+                console.log("[DEBUG] NPC Profile Clicked:", char.name);
                 await onNameClickCallback(charIdStr);
             };
     
-            if (activeSceneNpcIds.has(charIdStr)) {
-                li.classList.add('active-in-scene');
-                nameSpan.style.fontWeight = 'bold';
-            }
-    
-            li.appendChild(checkbox);
             li.appendChild(nameSpan);
+            li.appendChild(profileBtn);
             ul.appendChild(li);
         });
     },
