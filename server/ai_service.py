@@ -16,10 +16,10 @@ class AIService:
         self.client = None
         self.model_name = model_name
         
-        if config.GEMINI_API_KEY:
+        if config.GOOGLE_API_KEY:
             try:
                 # NEW SDK INITIALIZATION
-                self.client = genai.Client(api_key=config.GEMINI_API_KEY)
+                self.client = genai.Client(api_key=config.GOOGLE_API_KEY)
                 print(f"Google GenAI Client initialized for model '{model_name}'.")
             except Exception as e:
                 print(f"Error initializing Google GenAI Client: {e}")
