@@ -121,9 +121,11 @@ var App = {
                 this.updateMainView();
             }
         }
-        if (tabName === 'tab-lore' && !AppState.getCurrentLoreEntryId()) {
-            if(window.LoreRenderers && typeof LoreRenderers.closeLoreDetailViewUI === 'function'){
-                LoreRenderers.closeLoreDetailViewUI();
+        if (tabName === 'tab-lore') {
+            // When switching to Lore tab, if we have a selected lore entry, show it.
+            if (AppState.getCurrentLoreEntryId()) {
+                AppState.currentView = 'lore';
+                this.updateMainView();
             }
         }
         if (tabName === 'tab-scene') {
@@ -224,6 +226,20 @@ var App = {
     },
 
     // --- Interaction Logic ---
+
+    // NEW: Handle Lore Selection from List
+    handleSelectLoreEntry: function(loreIdStr) {
+        console.log("App.js: handleSelectLoreEntry", loreIdStr);
+        AppState.setCurrentLoreEntryId(loreIdStr);
+        AppState.currentView = 'lore';
+        
+        // Also refresh the list to show selection highlight
+        if (window.LoreRenderers) {
+            LoreRenderers.renderLoreEntryListUI(AppState.getAllLoreEntries());
+        }
+        
+        App.updateMainView();
+    },
 
     handleToggleNpcInScene: async function(npcIdStr, npcName) {
         // FORCE VIEW SWITCH: Adding an NPC implies we want to see the scene

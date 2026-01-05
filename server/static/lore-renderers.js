@@ -25,19 +25,37 @@ var LoreRenderers = {
         }
         
         const sortedLoreEntries = [...loreEntries].sort((a, b) => a.name.localeCompare(b.name));
+        
+        // Get currently selected ID to highlight
+        const currentId = window.AppState ? window.AppState.getCurrentLoreEntryId() : null;
+
         sortedLoreEntries.forEach(entry => {
             const li = document.createElement('li');
-            const idToUse = entry.lore_id || entry._id;
-            li.dataset.loreId = String(idToUse);
+            const idToUse = String(entry.lore_id || entry._id);
+            li.dataset.loreId = idToUse;
             
-            // Re-use standard class for consistency with CSS
+            // Style as clickable row
+            li.style.cursor = 'pointer';
+            li.style.display = 'flex';
+            li.style.alignItems = 'center';
+            li.style.padding = '8px 10px';
+
+            if (currentId === idToUse) {
+                li.classList.add('selected'); // Uses existing CSS for selection highlight
+            }
+            
+            // Content
             const nameSpan = document.createElement('span');
             nameSpan.textContent = `${entry.name} (${entry.lore_type})`;
             nameSpan.className = 'lore-entry-name-clickable'; 
+            nameSpan.style.flex = '1';
             
-            nameSpan.onclick = (e) => {
+            // Row Click Handler -> Calls App.handleSelectLoreEntry
+            li.onclick = (e) => {
                 e.stopPropagation();
-                if(window.CharacterService) CharacterService.handleSelectLoreEntryForDetails(String(idToUse));
+                if(window.App && App.handleSelectLoreEntry) {
+                    App.handleSelectLoreEntry(idToUse);
+                }
             };
             
             li.appendChild(nameSpan);
@@ -45,51 +63,91 @@ var LoreRenderers = {
         });
     },
 
-    renderLoreEntryDetailUI: function(loreEntry) {
-        // UPDATED: Target the new collapsible section ID
-        const detailSection = document.getElementById('lore-detail-main-section'); 
+    // --- NEW: Renders Lore into the Right Column (Profile View) ---
+    renderLoreProfileUI: function(loreEntry) {
+        console.group("--- [DEBUG] LoreRenderers.renderLoreProfileUI ---");
         
-        if (!detailSection || !loreEntry) { 
-            if(detailSection) detailSection.classList.add('collapsed'); 
-            return; 
+        // Reuse the NPC profile view container for Lore details
+        const profileContainer = document.getElementById('npc-profile-view');
+
+        if (!loreEntry) {
+            if(profileContainer) profileContainer.innerHTML = '<p>No Lore Entry Selected</p>';
+            console.groupEnd();
+            return;
         }
 
-        // Update Headers
-        const nameHeader = document.getElementById('details-lore-name');
-        const typeSpan = document.getElementById('details-lore-type');
-        if (nameHeader) nameHeader.textContent = loreEntry.name;
-        if (typeSpan) typeSpan.textContent = loreEntry.lore_type;
+        if (!profileContainer) {
+            console.error("ERROR: 'npc-profile-view' container not found (used for Lore display).");
+            console.groupEnd();
+            return;
+        }
 
-        // Update Notes
-        const notesArea = document.getElementById('details-lore-gm-notes');
-        if (notesArea) notesArea.value = loreEntry.gm_notes || '';
+        console.log("Rendering Lore:", loreEntry.name);
 
-        // Show the Section (using class for animation)
-        detailSection.classList.remove('collapsed');
+        // Build HTML
+        let html = `
+            <div class="npc-profile-sheet" style="border-top: 4px solid var(--accent-color);">
+                <div class="profile-header">
+                    <h2>${Utils.escapeHtml(loreEntry.name)}</h2>
+                    <span class="char-type-badge">${Utils.escapeHtml(loreEntry.lore_type)}</span>
+                </div>
+                
+                <div class="profile-section">
+                    <h4>Description</h4>
+                    <p>${Utils.escapeHtml(loreEntry.description || 'No description available.')}</p>
+                </div>`;
 
-        // Setup Buttons (Cloning to remove old listeners)
+        // Key Facts (if any)
+        if (loreEntry.key_facts && loreEntry.key_facts.length > 0) {
+            html += `
+                <div class="profile-section">
+                    <h4>Key Facts</h4>
+                    <ul>
+                        ${loreEntry.key_facts.map(fact => `<li>${Utils.escapeHtml(fact)}</li>`).join('')}
+                    </ul>
+                </div>`;
+        }
+
+        // GM Notes (Editable)
+        html += `
+                <div class="profile-section collapsible-section">
+                    <h4 class="collapsible-header" onclick="this.parentElement.classList.toggle('collapsed')">GM Notes <span class="arrow-indicator">▼</span></h4>
+                    <div class="collapsible-content">
+                        <textarea id="details-lore-gm-notes" rows="6" class="full-width-textarea" placeholder="Private notes for the GM.">${Utils.escapeHtml(loreEntry.gm_notes || '')}</textarea>
+                        <div class="control-row" style="margin-top: 10px;">
+                            <button id="save-lore-gm-notes-btn">Save Notes</button>
+                            <button id="delete-lore-btn" style="background-color: #dc3545; margin-left: auto;">Delete Entry</button>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+
+        profileContainer.innerHTML = html;
+
+        // Attach Event Listeners
         const saveBtn = document.getElementById('save-lore-gm-notes-btn');
         if (saveBtn) {
-            const newBtn = saveBtn.cloneNode(true);
-            saveBtn.parentNode.replaceChild(newBtn, saveBtn);
-            newBtn.onclick = () => {
-                 CharacterService.handleUpdateLoreEntryGmNotes(loreEntry.id || loreEntry._id, document.getElementById('details-lore-gm-notes').value);
+            saveBtn.onclick = () => {
+                 CharacterService.handleUpdateLoreEntryGmNotes(loreEntry.lore_id || loreEntry._id, document.getElementById('details-lore-gm-notes').value);
             };
         }
 
         const deleteBtn = document.getElementById('delete-lore-btn');
         if (deleteBtn) {
-            const newDelBtn = deleteBtn.cloneNode(true);
-            deleteBtn.parentNode.replaceChild(newDelBtn, deleteBtn);
-            newDelBtn.onclick = () => CharacterService.handleDeleteLoreEntry(loreEntry.id || loreEntry._id);
+            deleteBtn.onclick = () => CharacterService.handleDeleteLoreEntry(loreEntry.lore_id || loreEntry._id);
         }
+
+        console.groupEnd();
+    },
+
+    // Legacy sidebar renderer (kept empty or redirecting if needed, but 'renderLoreProfileUI' now takes precedence in the new view logic)
+    renderLoreEntryDetailUI: function(loreEntry) {
+       // This function is effectively replaced by renderLoreProfileUI in the new 'Lore View' layout.
+       // However, we can leave it or log that it's deprecated.
+       console.log("LoreRenderers.renderLoreEntryDetailUI: Legacy call. Use renderLoreProfileUI with MainView instead.");
     },
 
     closeLoreDetailViewUI: function() {
-        const detailSection = document.getElementById('lore-detail-main-section');
-        if (detailSection) { 
-            detailSection.classList.add('collapsed'); 
-        }
         if (window.AppState) appState.setCurrentLoreEntryId(null);
     },
 

@@ -8,7 +8,7 @@ var MainView = {
         const dialogueInterfaceElem = document.getElementById('dialogue-interface');
         const pcDashboardViewElem = document.getElementById('pc-dashboard-view');
         const pcQuickViewInSceneElem = document.getElementById('pc-quick-view-section-in-scene');
-        const npcProfileViewElem = document.getElementById('npc-profile-view'); // NEW
+        const npcProfileViewElem = document.getElementById('npc-profile-view'); // Reused for Lore as well
         
         if (!dialogueInterfaceElem || !pcDashboardViewElem || !pcQuickViewInSceneElem || !npcProfileViewElem) return;
 
@@ -18,8 +18,9 @@ var MainView = {
 
         // LOGIC:
         // 1. PC View
-        // 2. NPC View (NEW)
-        // 3. Scene View (Default)
+        // 2. NPC View
+        // 3. Lore View (NEW)
+        // 4. Scene View (Default)
         
         if (currentView === 'pc') {
             dialogueInterfaceElem.style.display = 'none';
@@ -29,7 +30,6 @@ var MainView = {
             
             // Render the dashboard content
             if (window.PCRenderers && window.AppState) {
-                // Check if we have a specific single PC to show details for, or just the list
                 const activePc = window.AppState.activePc;
                 PCRenderers.renderPcDashboard(activePc);
             }
@@ -42,6 +42,19 @@ var MainView = {
             
             // Content is rendered by NPCRenderers.renderCharacterProfileUI when selected
             
+        } else if (currentView === 'lore') {
+            // --- NEW: LORE VIEW ---
+            dialogueInterfaceElem.style.display = 'none';
+            pcDashboardViewElem.style.display = 'none';
+            npcProfileViewElem.style.display = 'block'; // Reuse the right-column container
+            pcQuickViewInSceneElem.style.display = 'none';
+
+            // Render Lore Content
+            if (window.LoreRenderers && window.AppState) {
+                 const loreEntry = window.AppState.getLoreEntryById(window.AppState.getCurrentLoreEntryId());
+                 LoreRenderers.renderLoreProfileUI(loreEntry);
+            }
+
         } else {
             // Default: Scene View
             dialogueInterfaceElem.style.display = 'flex'; // Flex for layout
