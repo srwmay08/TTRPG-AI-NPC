@@ -38,7 +38,13 @@ var PCRenderers = {
             cardClasses += ' clickable-pc-card';
         }
 
-        let cardHTML = `<div class="${cardClasses}" data-pc-id="${String(pc._id)}">`;
+        // --- INLINE STYLES FOR CARD ---
+        // We add inline styles here to force the behavior regardless of external CSS class rules
+        const cardStyle = isClickableForDetailedView ? 
+            'flex: 1 1 0; min-width: 0; width: auto; margin: 0 4px; overflow: hidden;' : 
+            '';
+
+        let cardHTML = `<div class="${cardClasses}" style="${cardStyle}" data-pc-id="${String(pc._id)}">`;
         cardHTML += `<h4>${pc.name}</h4>`;
 
         const hpCurrent = system.attributes.hp?.value ?? 'N/A';
@@ -142,7 +148,8 @@ var PCRenderers = {
         finalHTML += this.createPcQuickViewSectionHTML(true);
         let cardsHTML = '';
         sortedSelectedPcs.forEach(pc => {
-            cardsHTML += this.generatePcQuickViewCardHTML(pc, true);
+            // NOTE: false here because Dashboard view uses grid layout from CSS, not the forced flex row
+            cardsHTML += this.generatePcQuickViewCardHTML(pc, false);
         });
         finalHTML += `<div class="pc-dashboard-grid">${cardsHTML}</div>`;
         
@@ -280,29 +287,20 @@ var PCRenderers = {
 
         activePcsData.sort((a, b) => a.name.localeCompare(b.name));
         
-        // 1. Generate Full Cards View (Horizontal Fit)
-        // INJECT STYLE: Override card styling ONLY for this view to force shrinking
-        let cardsHTML = `<style>
-            #pc-scene-cards-view .pc-stat-card {
-                flex: 1 1 0;      /* Grow and shrink equally */
-                min-width: 0;     /* Allow shrinking below content size */
-                width: auto !important; /* Override any fixed widths */
-                margin: 0 4px;    /* Small gap */
-            }
-        </style>`;
-        
-        // CONTAINER: flex-flow: row nowrap ensure single line.
-        cardsHTML += `<div id="pc-scene-cards-view" style="display: flex; flex-flow: row nowrap; width: 100%; overflow-x: auto;">`;
+        // 1. Generate Full Cards View (Single Row, No Wrap)
+        // flex-wrap: nowrap is key. min-width: 0 on children (in generatePcQuickViewCardHTML) enables shrinking.
+        let cardsHTML = `<div id="pc-scene-cards-view" style="display: flex; flex-flow: row nowrap; width: 100%; gap: 10px; overflow-x: hidden;">`;
         activePcsData.forEach(pc => {
              if (typeof pc.calculatedProfBonus === 'undefined') {
                 const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || 1;
                 pc.calculatedProfBonus = DNDCalculations.getProficiencyBonus(pcLevel);
              }
+            // Passing true here triggers the inline styles for flex items
             cardsHTML += this.generatePcQuickViewCardHTML(pc, true);
         });
         cardsHTML += `</div>`;
 
-        // 2. Generate Compact Names View (Single Row Scroller)
+        // 2. Generate Compact Names View
         let compactHTML = `<div id="pc-scene-compact-view" style="display:none; flex-flow: row nowrap; overflow-x: auto; gap: 8px; align-items: center; padding-bottom: 4px; scrollbar-width: thin;">`;
         activePcsData.forEach(pc => {
             compactHTML += `<span class="pc-compact-badge" style="flex: 0 0 auto; background: #e2e6ea; padding: 4px 8px; border-radius: 4px; font-weight: bold; border: 1px solid #ccc; white-space: nowrap;">${pc.name}</span>`;
