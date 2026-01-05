@@ -1,3 +1,4 @@
 # .gitignore
-.env
+server/.env
+server/__pycache__/.pyc
 server/.env # If your .gitignore is in the root and .env is in server/
