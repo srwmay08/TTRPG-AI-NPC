@@ -292,9 +292,11 @@ var PCRenderers = {
         cardsHTML += `</div>`;
 
         // 2. Generate Compact Names View
-        let compactHTML = `<div id="pc-scene-compact-view" style="display:none; flex-wrap: wrap; gap: 8px;">`;
+        // FIXED: Used flex-flow: row nowrap and overflow-x: auto to ensure single row with scrolling
+        let compactHTML = `<div id="pc-scene-compact-view" style="display:none; flex-flow: row nowrap; overflow-x: auto; gap: 8px; align-items: center; padding-bottom: 4px; scrollbar-width: thin;">`;
         activePcsData.forEach(pc => {
-            compactHTML += `<span class="pc-compact-badge" style="background: #e2e6ea; padding: 4px 8px; border-radius: 4px; font-weight: bold; border: 1px solid #ccc;">${pc.name}</span>`;
+            // flex: 0 0 auto prevents shrinking, ensuring items are fully visible on scroll
+            compactHTML += `<span class="pc-compact-badge" style="flex: 0 0 auto; background: #e2e6ea; padding: 4px 8px; border-radius: 4px; font-weight: bold; border: 1px solid #ccc; white-space: nowrap;">${pc.name}</span>`;
         });
         compactHTML += `</div>`;
 
@@ -306,7 +308,6 @@ var PCRenderers = {
             const compactView = contentDiv.querySelector('#pc-scene-compact-view');
             const arrow = this.querySelector('.arrow-indicator');
 
-            // Logic: If cards are shown, switch to compact. If compact is shown, switch to cards.
             const isCurrentlyExpanded = cardsView.style.display !== 'none';
 
             if (isCurrentlyExpanded) {
@@ -314,10 +315,9 @@ var PCRenderers = {
                 cardsView.style.display = 'none';
                 compactView.style.display = 'flex';
                 arrow.textContent = '►';
-                // Note: We keep contentDiv displayed, just swap internal views
             } else {
                 // Expand to Cards
-                cardsView.style.display = 'grid'; // Restore grid
+                cardsView.style.display = 'grid'; 
                 compactView.style.display = 'none';
                 arrow.textContent = '▼';
             }
