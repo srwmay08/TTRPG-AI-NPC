@@ -362,24 +362,38 @@ def update_npc_api(npc_id_str: str):
                                               for pc_id, standing in attr_value.items()}
                 else:
                     final_set_payload[key] = attr_value
-        if not final_set_payload:
-             updated_npc_data_from_db = mongo_db.npcs.find_one({"_id": npc_id_obj})
-             if updated_npc_data_from_db:
-                updated_npc_data_from_db = load_history_content_for_npc(updated_npc_data_from_db)
-                return jsonify({"message": "No valid changes applied to the character.", "character": parse_json(updated_npc_data_from_db)}), 200
-             else:
-                return jsonify({"error": "Character disappeared after update attempt"}), 500
-    except ValidationError as e:
-        print(f"Validation Error during update for NPC {npc_id_str}: {e.errors()}")
-        return jsonify({"error": "Validation Error during update", "details": e.errors()}), 400
-    try:
+        
         result = mongo_db.npcs.update_one({"_id": npc_id_obj}, {"$set": final_set_payload})
+        
+        char_name = final_set_payload.get('name', existing_npc_data.get('name'))
+        if char_name:
+            updated_doc_full = mongo_db.npcs.find_one({"_id": npc_id_obj})
+            if updated_doc_full:
+                file_data = parse_json(updated_doc_full)
+                if '_id' in file_data: del file_data['_id']
+                if 'history_contents_loaded' in file_data: del file_data['history_contents_loaded']
+                if 'combined_history_content' in file_data: del file_data['combined_history_content']
+                
+                safe_filename = secure_filename(f"{char_name}.json")
+                target_path = os.path.join(PRIMARY_DATA_DIR, safe_filename)
+                
+                try:
+                    with open(target_path, 'w', encoding='utf-8') as f:
+                        json.dump(file_data, f, indent=4)
+                    print(f"[File Sync] Successfully saved updated character to {target_path}")
+                except Exception as e_file:
+                    print(f"[File Sync] Error writing to file {target_path}: {e_file}")
+        
         updated_npc_data_from_db = mongo_db.npcs.find_one({"_id": npc_id_obj})
         if updated_npc_data_from_db:
             updated_npc_data_from_db = load_history_content_for_npc(updated_npc_data_from_db)
-            return jsonify({"message": "Character updated", "character": parse_json(updated_npc_data_from_db)}), 200
+            return jsonify({"message": "Character updated and saved to file", "character": parse_json(updated_npc_data_from_db)}), 200
         else:
             return jsonify({"error": "Failed to retrieve updated character"}), 500
+
+    except ValidationError as e:
+        print(f"Validation Error during update for NPC {npc_id_str}: {e.errors()}")
+        return jsonify({"error": "Validation Error during update", "details": e.errors()}), 400
     except Exception as e:
         print(f"Error updating NPC {npc_id_str}: {e}")
         traceback.print_exc()

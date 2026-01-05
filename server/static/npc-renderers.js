@@ -1,4 +1,4 @@
-// static/npc-renderers.js
+/* server/static/npc-renderers.js */
 // Responsibility: Rendering Non-Player Character (NPC) related UI elements.
 
 var NPCRenderers = {
@@ -188,12 +188,45 @@ var NPCRenderers = {
         }
     },
 
-    appendMessageToTranscriptUI: function(transcriptArea, message, className) {
+    appendMessageToTranscriptUI: function(transcriptArea, message, className, npcId = null) {
         if (!transcriptArea) return;
+        
+        const entryContainer = document.createElement('div');
+        entryContainer.className = 'transcript-entry-container';
+        entryContainer.style.marginBottom = '8px';
+
         const entry = document.createElement('p');
         entry.className = className;
         entry.textContent = message;
-        transcriptArea.appendChild(entry);
+        entry.style.display = 'inline-block';
+        entry.style.margin = '0 5px 0 0';
+
+        entryContainer.appendChild(entry);
+
+        if (npcId && className.includes('npc-response')) {
+             const saveMemBtn = document.createElement('button');
+             saveMemBtn.innerHTML = '🧠'; 
+             saveMemBtn.title = "Instantly remember this line";
+             saveMemBtn.className = 'quick-memory-btn';
+             saveMemBtn.style.fontSize = '0.8rem';
+             saveMemBtn.style.padding = '0 4px';
+             saveMemBtn.style.cursor = 'pointer';
+             saveMemBtn.style.border = 'none';
+             saveMemBtn.style.background = 'transparent';
+
+             saveMemBtn.onclick = () => {
+                 if (typeof CharacterService !== 'undefined') {
+                     CharacterService.handleAddMemory(null, npcId, "Dialogue", message);
+                     saveMemBtn.innerHTML = '✅';
+                     saveMemBtn.disabled = true;
+                 } else {
+                     console.error("CharacterService not found");
+                 }
+             };
+             entryContainer.appendChild(saveMemBtn);
+        }
+
+        transcriptArea.appendChild(entryContainer);
         transcriptArea.scrollTop = transcriptArea.scrollHeight;
     },
 
@@ -336,63 +369,102 @@ var NPCRenderers = {
         });
     },
 
-    // --- NEW: Fully Dynamic Renderer for Right Column ---
+    // Helper functions for Form Editor
+    _generateFieldEditorHTML: function(value, label, fieldKey, isTextarea = false) {
+        let html = `<div class="form-group" style="margin-bottom: 10px;">`;
+        html += `<label style="display:block; font-weight:bold; font-size:0.8rem;">${label}</label>`;
+        if (isTextarea) {
+            html += `<textarea class="edit-field-input" data-field="${fieldKey}" rows="3" style="width:100%;">${Utils.escapeHtml(value || '')}</textarea>`;
+        } else {
+            html += `<input type="text" class="edit-field-input" data-field="${fieldKey}" value="${Utils.escapeHtml(value || '')}" style="width:100%;">`;
+        }
+        html += `</div>`;
+        return html;
+    },
+
+    _generateListEditorHTML: function(list, label, fieldKey) {
+        list = list || [];
+        let html = `<div class="form-group list-editor-group" data-field="${fieldKey}" style="margin-bottom: 15px; border:1px solid #ddd; padding:10px; border-radius:5px;">`;
+        html += `<label style="display:block; font-weight:bold; margin-bottom:5px;">${label}</label>`;
+        html += `<div class="list-items-container">`;
+        
+        list.forEach((item, index) => {
+            html += `<div class="list-item-row" style="display:flex; margin-bottom:5px;">
+                <input type="text" value="${Utils.escapeHtml(item)}" style="flex:1;">
+                <button type="button" onclick="this.parentElement.remove()" style="background:#dc3545; color:white; border:none; margin-left:5px;">&times;</button>
+            </div>`;
+        });
+        
+        html += `</div>`; // End items container
+        html += `<button type="button" class="add-list-item-btn" style="font-size:0.8rem; margin-top:5px;">+ Add Item</button>`;
+        html += `</div>`;
+        return html;
+    },
+
     renderCharacterProfileUI: function(character, elements) {
-        console.group("--- [DEBUG] NPCRenderers.renderCharacterProfileUI ---");
-        
-        // This function now renders into the 'npc-profile-view' in the right column
         const profileContainer = document.getElementById('npc-profile-view');
+        if (!character || !profileContainer) return;
 
-        if (!character) {
-            console.warn("Character data is null. Hiding profile section.");
-            if(profileContainer) profileContainer.innerHTML = '<p>No Character Selected</p>';
-            console.groupEnd();
-            return;
-        }
-
-        if (!profileContainer) {
-            console.error("ERROR: 'npc-profile-view' container not found in Right Column.");
-            console.groupEnd();
-            return;
-        }
-
-        console.log("Rendering Character into Right Column:", character.name);
-        
-        // Ensure defaults
-        character.personality_traits = character.personality_traits || [];
-        character.memories = character.memories || [];
-        character.associated_history_files = character.associated_history_files || [];
-        character.linked_lore_by_name = character.linked_lore_by_name || [];
-        character.pc_faction_standings = character.pc_faction_standings || {};
-        const isNpc = character.character_type === 'NPC';
-
-        // 1. Build HTML Structure (similar to the old sidebar but cleaner)
+        // 1. HEADER
         let html = `
             <div class="npc-profile-sheet">
                 <div class="profile-header">
                     <h2>${character.name}</h2>
                     <span class="char-type-badge">${character.character_type || 'Unknown'}</span>
-                </div>
-                
-                <div class="profile-section">
-                    <h4>Description</h4>
-                    <p>${character.description || 'No description available.'}</p>
-                </div>
-
-                <div class="profile-section">
-                    <h4>Personality</h4>
-                    <p>${character.personality_traits.join(', ') || 'None listed.'}</p>
-                </div>
-
-                <div class="profile-section collapsible-section">
-                    <h4 class="collapsible-header" onclick="this.parentElement.classList.toggle('collapsed')">GM Notes <span class="arrow-indicator">▼</span></h4>
-                    <div class="collapsible-content">
-                        <textarea id="gm-notes" rows="4" class="full-width-textarea" placeholder="Private notes for the GM.">${character.gm_notes || ''}</textarea>
-                        <button id="save-gm-notes-btn">Save Notes</button>
-                    </div>
+                    <button id="toggle-edit-mode-btn" style="margin-left:auto; font-size:0.8rem;">Edit Profile</button>
                 </div>`;
 
-        if (isNpc) {
+        // 2. EDIT FORM CONTAINER (Hidden by default)
+        html += `<div id="profile-edit-form-container" style="display:none; padding:10px; border:1px solid #ccc; background:#f9f9f9; margin-bottom:15px;">
+            <h4>Edit Character Details</h4>`;
+        
+        // Basic Info Fields
+        html += `<div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">`;
+        html += this._generateFieldEditorHTML(character.name, "Name", "name");
+        html += this._generateFieldEditorHTML(character.race, "Race", "race");
+        html += this._generateFieldEditorHTML(character.class_str, "Class/Role", "class_str");
+        html += this._generateFieldEditorHTML(character.age, "Age", "age");
+        html += this._generateFieldEditorHTML(character.alignment, "Alignment", "alignment");
+        html += `</div>`;
+
+        // Text Areas
+        html += this._generateFieldEditorHTML(character.description, "Description", "description", true);
+        html += this._generateFieldEditorHTML(character.background_story, "Background Story", "background_story", true);
+        html += this._generateFieldEditorHTML(character.speech_patterns, "Speech Patterns", "speech_patterns");
+        html += this._generateFieldEditorHTML(character.mannerisms, "Mannerisms", "mannerisms");
+
+        // Lists
+        html += this._generateListEditorHTML(character.personality_traits, "Personality Traits", "personality_traits");
+        html += this._generateListEditorHTML(character.motivations, "Motivations", "motivations");
+
+        // Action Buttons
+        html += `<div style="display:flex; justify-content:flex-end; gap:10px; margin-top:10px;">
+            <button id="cancel-edit-btn">Cancel</button>
+            <button id="save-edit-btn" style="background-color:#28a745; color:white;">Save Changes</button>
+        </div>`;
+        html += `</div>`; // End Edit Container
+
+        // 3. VISUAL DISPLAY CONTAINER (Visible by default)
+        html += `<div id="visual-profile-content">
+                    <div class="profile-section">
+                        <h4>Description</h4>
+                        <p>${character.description || 'No description available.'}</p>
+                    </div>
+
+                    <div class="profile-section">
+                        <h4>Personality</h4>
+                        <p>${(character.personality_traits || []).join(', ') || 'None listed.'}</p>
+                    </div>
+
+                    <div class="profile-section collapsible-section">
+                        <h4 class="collapsible-header" onclick="this.parentElement.classList.toggle('collapsed')">GM Notes <span class="arrow-indicator">▼</span></h4>
+                        <div class="collapsible-content">
+                            <textarea id="gm-notes" rows="4" class="full-width-textarea" placeholder="Private notes for the GM.">${character.gm_notes || ''}</textarea>
+                            <button id="save-gm-notes-btn">Save Notes</button>
+                        </div>
+                    </div>`;
+
+        if (character.character_type === 'NPC') {
             html += `
                 <div class="profile-section collapsible-section">
                     <h4 class="collapsible-header" onclick="this.parentElement.classList.toggle('collapsed')">Memories <span class="arrow-indicator">▼</span></h4>
@@ -435,18 +507,15 @@ var NPCRenderers = {
                         </div>
                     </div>
                 </div>
-            </div>`;
+            </div> </div> `;
 
-        // 2. Inject HTML
         profileContainer.innerHTML = html;
 
-        // 3. Attach Event Listeners & Dynamic Content logic
-        // We reuse the existing helper methods but pass the NEW DOM elements we just created.
-
+        // --- Event Listeners for Standard Actions ---
         const gmNotesBtn = document.getElementById('save-gm-notes-btn');
         if (gmNotesBtn) gmNotesBtn.onclick = CharacterService.handleSaveGmNotes;
 
-        if (isNpc) {
+        if (character.character_type === 'NPC') {
             const memoryList = document.getElementById('character-memories-list');
             const addMemBtn = document.getElementById('add-memory-btn');
             const standingContent = document.getElementById('npc-faction-standings-content');
@@ -463,18 +532,12 @@ var NPCRenderers = {
         const histDisplay = document.getElementById('history-content-display');
         const histBtn = document.getElementById('associate-history-btn');
 
-        // Populate history select (Assuming API service has loaded files, or we re-fetch)
-        // Note: In the original code, population of the select box was handled by CharacterService or App. 
-        // We might need to trigger that population here or assume global state.
-        // For now, we wire up the renderers.
         if (histList && histDisplay) {
             this.renderAssociatedHistoryFilesUI(character, histList, histDisplay, CharacterService.handleDissociateHistoryFile);
         }
         if (histBtn) histBtn.onclick = CharacterService.handleAssociateHistoryFile;
         
-        // Populate History Dropdown (Quick fix: trigger global population if available)
         if (window.populateHistoryFileSelect) window.populateHistoryFileSelect(); 
-
 
         const loreList = document.getElementById('associated-lore-list-for-character');
         const loreBtn = document.getElementById('link-lore-to-char-btn');
@@ -485,7 +548,78 @@ var NPCRenderers = {
         }
         if (loreBtn) loreBtn.onclick = CharacterService.handleLinkLoreToCharacter;
 
-        console.groupEnd();
+        // --- NEW: Event Listeners for FORM EDITOR ---
+        const toggleEditBtn = document.getElementById('toggle-edit-mode-btn');
+        const editContainer = document.getElementById('profile-edit-form-container');
+        const visualContent = document.getElementById('visual-profile-content');
+        const cancelBtn = document.getElementById('cancel-edit-btn');
+        const saveBtn = document.getElementById('save-edit-btn');
+
+        // 1. Toggle Edit Mode
+        if (toggleEditBtn) {
+            toggleEditBtn.onclick = () => {
+                visualContent.style.display = 'none';
+                editContainer.style.display = 'block';
+                toggleEditBtn.style.display = 'none';
+            };
+        }
+
+        // 2. Cancel
+        if (cancelBtn) {
+            cancelBtn.onclick = () => {
+                editContainer.style.display = 'none';
+                visualContent.style.display = 'block';
+                toggleEditBtn.style.display = 'block';
+            };
+        }
+
+        // 3. Dynamic "Add Item" buttons for lists
+        const addListBtns = editContainer.querySelectorAll('.add-list-item-btn');
+        addListBtns.forEach(btn => {
+            btn.onclick = () => {
+                const container = btn.parentElement.querySelector('.list-items-container');
+                const row = document.createElement('div');
+                row.className = 'list-item-row';
+                row.style.cssText = 'display:flex; margin-bottom:5px;';
+                row.innerHTML = `
+                    <input type="text" style="flex:1;">
+                    <button type="button" onclick="this.parentElement.remove()" style="background:#dc3545; color:white; border:none; margin-left:5px;">&times;</button>
+                `;
+                container.appendChild(row);
+            };
+        });
+
+        // 4. SAVE Logic
+        if (saveBtn) {
+            saveBtn.onclick = async () => {
+                const updatedData = { ...character };
+
+                // Collect Simple Fields
+                const textInputs = editContainer.querySelectorAll('.edit-field-input');
+                textInputs.forEach(input => {
+                    const field = input.dataset.field;
+                    if (field) updatedData[field] = input.value;
+                });
+
+                // Collect List Fields
+                const listGroups = editContainer.querySelectorAll('.list-editor-group');
+                listGroups.forEach(group => {
+                    const field = group.dataset.field;
+                    const items = [];
+                    const itemInputs = group.querySelectorAll('.list-item-row input');
+                    itemInputs.forEach(inp => {
+                        if (inp.value.trim()) items.push(inp.value.trim());
+                    });
+                    updatedData[field] = items;
+                });
+
+                // Send Update
+                if (typeof CharacterService !== 'undefined') {
+                    await CharacterService.updateCharacter(character._id, updatedData);
+                    // UI refresh handled by the service/main view re-render
+                }
+            };
+        }
     },
 
     renderMemoriesUI: function(memories, listElement, deleteCallback) {

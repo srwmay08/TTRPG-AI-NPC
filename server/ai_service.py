@@ -149,9 +149,14 @@ class AIService:
 
             prompt_parts.append(f"\n--- Your Current Disposition towards {speaking_pc_name} ---")
             if current_pc_standing:
-                prompt_parts.append(f"Your current standing towards {speaking_pc_name} is: {current_pc_standing.value}.")
-                prompt_parts.append("Standing Levels: Ally > Warmly > Kindly > Amiable > Indifferent > Apprehensive > Dubious > Threatening.")
-                prompt_parts.append(f"Let your {current_pc_standing.value} standing heavily influence your tone and willingness to help.")
+                prompt_parts.append(f"CRITICAL INSTRUCTION: Your standing towards {speaking_pc_name} is strictly: {current_pc_standing.value}.")
+                prompt_parts.append("Meaning of Standings:")
+                prompt_parts.append("- Ally/Warmly: Eager to help, friendly, open, trusting.")
+                prompt_parts.append("- Amiable/Kindly: Polite, willing to talk, generally positive.")
+                prompt_parts.append("- Indifferent: Neutral, business-like, transactional, disinterested.")
+                prompt_parts.append("- Apprehensive/Dubious: Suspicious, guarded, short answers, unwilling to help without reason.")
+                prompt_parts.append("- Threatening: Hostile, aggressive, actively unhelpful, might attack or threaten.")
+                prompt_parts.append(f"You MUST align your tone and willingness to cooperate with the '{current_pc_standing.value}' standing. Do not break character by being too helpful if you are hostile, or too cold if you are an ally.")
             else:
                 prompt_parts.append(f"You currently have no specific established standing towards {speaking_pc_name}. Assume a neutral or initial reaction based on the context.")
 

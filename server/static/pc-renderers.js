@@ -257,21 +257,75 @@ var PCRenderers = {
 
     renderPcQuickViewInSceneUI: function(wrapperElement, activePcsData) {
         if (!wrapperElement) { console.error("PCRenderers.renderPcQuickViewInSceneUI: wrapperElement not found"); return; }
+        
+        wrapperElement.innerHTML = '';
+        
         if (!activePcsData || activePcsData.length === 0) {
-            wrapperElement.innerHTML = '';
             wrapperElement.style.display = 'none';
             return;
         }
-        let titleHTML = this.createPcQuickViewSectionHTML(false);
-        let cardsHTML = '';
-        activePcsData.sort((a, b) => a.name.localeCompare(b.name)).forEach(pc => {
-            if (typeof pc.calculatedProfBonus === 'undefined') {
+
+        const container = document.createElement('div');
+        container.className = 'collapsible-section expanded';
+        
+        const header = document.createElement('h4');
+        header.className = 'collapsible-header';
+        header.style.cursor = 'pointer';
+        header.style.margin = '0 0 10px 0';
+        header.innerHTML = `Player Characters in Scene <span class="arrow-indicator">▼</span>`;
+        
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'collapsible-content';
+        contentDiv.style.display = 'block';
+
+        activePcsData.sort((a, b) => a.name.localeCompare(b.name));
+        
+        // 1. Generate Full Cards View
+        let cardsHTML = `<div id="pc-scene-cards-view" class="pc-dashboard-grid">`;
+        activePcsData.forEach(pc => {
+             if (typeof pc.calculatedProfBonus === 'undefined') {
                 const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || 1;
                 pc.calculatedProfBonus = DNDCalculations.getProficiencyBonus(pcLevel);
              }
             cardsHTML += this.generatePcQuickViewCardHTML(pc, true);
         });
-        wrapperElement.innerHTML = titleHTML + `<div class="pc-dashboard-grid">${cardsHTML}</div>`;
+        cardsHTML += `</div>`;
+
+        // 2. Generate Compact Names View
+        let compactHTML = `<div id="pc-scene-compact-view" style="display:none; flex-wrap: wrap; gap: 8px;">`;
+        activePcsData.forEach(pc => {
+            compactHTML += `<span class="pc-compact-badge" style="background: #e2e6ea; padding: 4px 8px; border-radius: 4px; font-weight: bold; border: 1px solid #ccc;">${pc.name}</span>`;
+        });
+        compactHTML += `</div>`;
+
+        contentDiv.innerHTML = cardsHTML + compactHTML;
+
+        // 3. Toggle Logic
+        header.onclick = function() {
+            const cardsView = contentDiv.querySelector('#pc-scene-cards-view');
+            const compactView = contentDiv.querySelector('#pc-scene-compact-view');
+            const arrow = this.querySelector('.arrow-indicator');
+
+            // Logic: If cards are shown, switch to compact. If compact is shown, switch to cards.
+            const isCurrentlyExpanded = cardsView.style.display !== 'none';
+
+            if (isCurrentlyExpanded) {
+                // Collapse to Compact
+                cardsView.style.display = 'none';
+                compactView.style.display = 'flex';
+                arrow.textContent = '►';
+                // Note: We keep contentDiv displayed, just swap internal views
+            } else {
+                // Expand to Cards
+                cardsView.style.display = 'grid'; // Restore grid
+                compactView.style.display = 'none';
+                arrow.textContent = '▼';
+            }
+        };
+
+        container.appendChild(header);
+        container.appendChild(contentDiv);
+        wrapperElement.appendChild(container);
         wrapperElement.style.display = 'block';
     },
 
