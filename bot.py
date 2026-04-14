@@ -2,6 +2,13 @@ import discord
 import re
 import csv
 import os
+from dotenv import load_dotenv # <-- NEW: Import the dotenv library
+
+# Load the variables from the .env file
+load_dotenv() 
+
+# Grab the token from the loaded environment variables
+TOKEN = os.getenv('DISCORD_TOKEN')
 
 # 1. Setup Intents (Critical for reading message content)
 intents = discord.Intents.default()
@@ -64,5 +71,7 @@ async def on_message(message):
             
         print(f"✅ Logged new entry from {message.author.name}")
 
-# Run the bot
-client.run('TOKEN')
+if TOKEN is None:
+    print("❌ Error: DISCORD_TOKEN not found. Check your .env file.")
+else:
+    client.run(TOKEN) # <-- NEW: Pass the variable instead of the hardcoded string
