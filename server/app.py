@@ -37,6 +37,20 @@ def slugify(text):
     text = re.sub(r'[^\w-]+', '', text)
     return text
 
+def parse_discord_transcript(raw_text):
+    """
+    Parses Discord transcripts from the 'Scriptly' bot format.
+    Extracts the user and the message content, removing Discord-specific formatting tags.
+    """
+    # Pattern: [Time] APP [Scriptly] username : Message
+    pattern = r"\[\d+:\d+\s?[AP]M\]\s+APP\s+\[Scriptly\]\s+([\w\.]+)\s*:\s*(.+)"
+    matches = re.findall(pattern, raw_text, re.MULTILINE)
+    formatted_lines = []
+    for user, message in matches:
+        clean_message = message.strip()
+        formatted_lines.append(f"{user}: {clean_message}")
+    return "\n".join(formatted_lines)
+
 def find_fvtt_file(character_name, vtt_import_dir_abs):
     slug_name = slugify(character_name)
     if not os.path.isdir(vtt_import_dir_abs):
@@ -65,6 +79,11 @@ def load_history_content_for_npc(npc_doc: Dict[str, Any]) -> Dict[str, Any]:
                 try:
                     with open(file_path, 'r', encoding='utf-8') as f:
                         content = f.read()
+                        
+                        # Process Discord transcripts if bot signature is detected
+                        if "[Scriptly]" in content:
+                            content = parse_discord_transcript(content)
+                        
                         history_contents_loaded[history_filename] = content
                         combined_content_parts.append(f"--- From History File: {history_filename} ---\n{content}\n")
                 except Exception as e:
