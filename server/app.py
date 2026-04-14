@@ -17,16 +17,22 @@ from models import NPCProfile, DialogueRequest, DialogueResponse, MemoryItem, NP
 from ai_service import ai_service_instance
 
 app = Flask(__name__)
-# CORRECTED: Uses SECRET_KEY instead of FLASK_SECRET_KEY
 app.secret_key = app_config.SECRET_KEY
 mongo_db = db_connector.get_db()
 
-# --- Directory Definitions ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PRIMARY_DATA_DIR = os.path.join(BASE_DIR, 'data')
 VTT_IMPORT_DIR = os.path.join(PRIMARY_DATA_DIR, 'vtt_imports')
 HISTORY_DATA_DIR = os.path.join(PRIMARY_DATA_DIR, 'history')
 LORE_DATA_DIR = os.path.join(PRIMARY_DATA_DIR, 'lore')
+
+# --- LIVE DISCORD CHAT VARIABLES ---
+PLAYER_CHARACTER_MAPPING = {
+    "srwm": "DM (SRWM)",
+    "brunes": "Belric",
+    "cagge": "Donte"
+}
+live_session_history = []
 
 def parse_json(data):
     return json.loads(json_util.dumps(data))
@@ -38,11 +44,6 @@ def slugify(text):
     return text
 
 def parse_discord_transcript(raw_text):
-    """
-    Parses Discord transcripts from the 'Scriptly' bot format.
-    Extracts the user and the message content, removing Discord-specific formatting tags.
-    """
-    # Pattern: [Time] APP [Scriptly] username : Message
     pattern = r"\[\d+:\d+\s?[AP]M\]\s+APP\s+\[Scriptly\]\s+([\w\.]+)\s*:\s*(.+)"
     matches = re.findall(pattern, raw_text, re.MULTILINE)
     formatted_lines = []
@@ -71,7 +72,6 @@ def load_history_content_for_npc(npc_doc: Dict[str, Any]) -> Dict[str, Any]:
     if 'associated_history_files' in npc_doc and npc_doc['associated_history_files']:
         for history_filename in npc_doc['associated_history_files']:
             if not history_filename or not isinstance(history_filename, str):
-                print(f"Warning: Invalid history filename found for NPC {npc_doc.get('name', 'Unknown')}: {history_filename}")
                 continue
             safe_history_filename = secure_filename(history_filename)
             file_path = os.path.join(abs_history_data_dir, safe_history_filename)
@@ -79,18 +79,14 @@ def load_history_content_for_npc(npc_doc: Dict[str, Any]) -> Dict[str, Any]:
                 try:
                     with open(file_path, 'r', encoding='utf-8') as f:
                         content = f.read()
-                        
-                        # Process Discord transcripts if bot signature is detected
                         if "[Scriptly]" in content:
                             content = parse_discord_transcript(content)
-                        
                         history_contents_loaded[history_filename] = content
                         combined_content_parts.append(f"--- From History File: {history_filename} ---\n{content}\n")
                 except Exception as e:
                     print(f"Error reading history file {safe_history_filename} for NPC {npc_doc.get('name', 'Unknown')}: {e}")
                     history_contents_loaded[history_filename] = f"[Error loading content for {safe_history_filename}]"
             else:
-                print(f"Warning: History file '{safe_history_filename}' not found at '{file_path}' for NPC {npc_doc.get('name', 'Unknown')}.")
                 history_contents_loaded[history_filename] = "[File not found]"
     npc_doc['history_contents_loaded'] = history_contents_loaded
     npc_doc['combined_history_content'] = "\n".join(combined_content_parts).strip() if combined_content_parts else "No history file content loaded."
@@ -117,104 +113,52 @@ def get_linked_lore_summary_for_npc(npc_doc: Dict[str, Any]) -> str:
 
 def sync_data_from_files():
     if mongo_db is None:
-        print("[Data Sync] Skipping: Database not available.")
         return
-
-    print("\n" + "-"*50)
-    print(f"[Data Sync] Starting data synchronization...")
-    print(f"  Characters from: '{PRIMARY_DATA_DIR}', VTT Imports from: '{VTT_IMPORT_DIR}', History from: '{HISTORY_DATA_DIR}'")
-    print(f"  Lore from: '{LORE_DATA_DIR}'")
-
-    # --- Lore Data Synchronization (FIRST PASS) ---
     lore_collection = mongo_db.lore_entries
-    if not os.path.isdir(LORE_DATA_DIR):
-        print(f"[Data Sync] Warning: Lore data directory '{LORE_DATA_DIR}' not found. Skipping lore sync.")
-    else:
-        lore_synced_count = 0
-        lore_updated_count = 0
-        lore_new_count = 0
-        print(f"[Data Sync] Syncing lore data...")
+    if os.path.isdir(LORE_DATA_DIR):
         for filename in os.listdir(LORE_DATA_DIR):
             if filename.endswith('.json'):
                 filepath = os.path.join(LORE_DATA_DIR, filename)
                 try:
                     with open(filepath, 'r', encoding='utf-8') as f:
                         data_from_file = json.load(f)
-                    
                     lore_items_in_file = [data_from_file] if isinstance(data_from_file, dict) else data_from_file
-                    if not isinstance(lore_items_in_file, list):
-                        print(f"[Data Sync] Skipping lore file {filename}: content is not a JSON object or list of objects.")
-                        continue
-
                     for lore_data_item in lore_items_in_file:
                         if not isinstance(lore_data_item, dict):
-                            print(f"[Data Sync] Skipping item in lore file {filename}: item is not a JSON object.")
                             continue
                         try:
                             temp_payload = lore_data_item.copy()
                             if 'lore_id' in temp_payload:
                                 del temp_payload['lore_id']
-
                             validated_lore = LoreEntry(**temp_payload)
                             mongo_doc_payload = validated_lore.model_dump(by_alias=True, exclude_none=True, exclude={'lore_id'})
-
                             existing_lore_in_db = lore_collection.find_one({"name": validated_lore.name})
-
                             if existing_lore_in_db:
                                 payload_for_update = mongo_doc_payload.copy()
                                 if '_id' in payload_for_update:
                                     del payload_for_update['_id']
                                 lore_collection.update_one({"_id": existing_lore_in_db['_id']}, {"$set": payload_for_update})
-                                lore_updated_count += 1
                             else:
                                 result = lore_collection.insert_one(mongo_doc_payload)
                                 lore_collection.update_one({"_id": result.inserted_id}, {"$set": {"lore_id": str(result.inserted_id)}})
-                                lore_new_count += 1
-                            lore_synced_count += 1
-                        except ValidationError as e_val:
-                            print(f"[Data Sync] Error: Lore validation failed for item in {filename}. Details: {e_val.errors()}")
-                        except Exception as e_item_sync:
-                            print(f"Error processing lore file {filename}: {e_item_sync}")
-                            traceback.print_exc()
-                except json.JSONDecodeError:
-                    print(f"[Data Sync] Error: Could not decode JSON from lore file {filename}. It may be empty or malformed.")
-                    continue
-                except Exception as e_file_sync:
-                    print(f"Error processing lore file {filename}: {e_file_sync}")
-                    traceback.print_exc()
-        print(f"[Data Sync] Lore sync finished. Processed: {lore_synced_count} | New: {lore_new_count} | Updated: {lore_updated_count}")
+                        except ValidationError:
+                            pass
+                except Exception:
+                    pass
 
-    # --- Character Data Synchronization (SECOND PASS) ---
-    if not os.path.isdir(PRIMARY_DATA_DIR):
-        print(f"[Data Sync] Warning: Primary character data directory '{PRIMARY_DATA_DIR}' not found. Skipping character sync.")
-    else:
+    if os.path.isdir(PRIMARY_DATA_DIR):
         characters_collection = mongo_db.npcs
-        char_synced_count = 0
-        char_updated_count = 0
-        char_new_count = 0
-        print(f"[Data Sync] Syncing character data...")
         for filename in os.listdir(PRIMARY_DATA_DIR):
             if filename.endswith('.json'):
                 primary_file_path = os.path.join(PRIMARY_DATA_DIR, filename)
                 try:
-                    # NEW DEBUG LINE - THIS IS THE KEY CHANGE
-                    print(f"[DEBUG] Attempting to process character file: {filename}")
                     with open(primary_file_path, 'r', encoding='utf-8') as f:
                         primary_char_data = json.load(f)
-                    
                     char_name_temp = primary_char_data.get("name")
                     if not char_name_temp:
-                        print(f"[Data Sync] Skipping character file {filename}: missing 'name' field.")
                         continue
-                    
-                    # More debugging to see what keys are loaded
-                    if 'linked_lore_by_name' in primary_char_data:
-                         print(f"    [DEBUG] SUCCESS: Found 'linked_lore_by_name' for {char_name_temp} in {filename}.")
-                    
                     combined_data = primary_char_data.copy()
-                    
                     combined_data.setdefault('linked_lore_by_name', [])
-                    
                     fvtt_file_path = find_fvtt_file(char_name_temp, VTT_IMPORT_DIR)
                     if fvtt_file_path:
                         with open(fvtt_file_path, 'r', encoding='utf-8') as f_vtt:
@@ -224,44 +168,63 @@ def sync_data_from_files():
                         if 'img' in fvtt_json_data and fvtt_json_data['img']: combined_data['img'] = fvtt_json_data['img']
                         if 'items' in fvtt_json_data: combined_data['items'] = fvtt_json_data['items']
                         if 'system' in fvtt_json_data: combined_data['system'] = fvtt_json_data['system']
-                    
                     combined_data.setdefault('associated_history_files', [])
                     potential_history_filename = f"{char_name_temp}.txt"
                     history_file_path_abs = os.path.join(HISTORY_DATA_DIR, secure_filename(potential_history_filename))
                     if os.path.exists(history_file_path_abs) and os.path.isfile(history_file_path_abs):
                         if potential_history_filename not in combined_data['associated_history_files']:
                             combined_data['associated_history_files'].append(potential_history_filename)
-                    
                     validated_profile = NPCProfile(**combined_data)
                     mongo_doc = validated_profile.model_dump(mode='json', by_alias=True, exclude_none=True)
-                    
                     existing_char_in_db = characters_collection.find_one({"name": char_name_temp})
                     if existing_char_in_db:
                         update_payload = {k: v for k, v in mongo_doc.items() if k != '_id'}
                         if 'pc_faction_standings' not in update_payload:
                             update_payload['pc_faction_standings'] = existing_char_in_db.get('pc_faction_standings', {})
                         characters_collection.update_one({"_id": existing_char_in_db['_id']}, {"$set": update_payload})
-                        char_updated_count += 1
                     else:
                         characters_collection.insert_one(mongo_doc)
-                        char_new_count += 1
-                    char_synced_count +=1
-                except json.JSONDecodeError:
-                    print(f"[Data Sync] Error: Could not decode JSON from character file {filename}. It may be empty or malformed.")
-                    continue
-                except ValidationError as e:
-                    print(f"[Data Sync] Error: Character validation failed for {filename}. Details: {e.errors()}")
-                except Exception as e:
-                    print(f"[Data Sync] Error: Unexpected error with character file {filename}: {e}")
-                    traceback.print_exc()
-        print(f"[Data Sync] Character sync finished. Processed: {char_synced_count} | New: {char_new_count} | Updated: {char_updated_count}")
-    
-    print("-" * 50 + "\n")
+                except Exception:
+                    pass
 
-# --- App Routes & Other Logic ---
+# --- APP ROUTES ---
 @app.route('/')
 def serve_index():
     return render_template('index.html')
+
+# --- LIVE DISCORD CHAT ENDPOINTS ---
+@app.route('/api/live_chat_ingest', methods=['POST'])
+def handle_live_chat_ingest():
+    print("\n---> [DEBUG - APP.PY INGEST] POST Request Received at /api/live_chat_ingest!")
+    data = request.get_json()
+    if not data:
+        print("---> [DEBUG - APP.PY INGEST] Payload was empty or invalid.")
+        return jsonify({"error": "No data"}), 400
+        
+    print(f"---> [DEBUG - APP.PY INGEST] Raw Data: {data}")
+    raw_author = data.get("author", "Unknown").lower()
+    content = data.get("content", "")
+    
+    character_name = PLAYER_CHARACTER_MAPPING.get(raw_author, data.get("author"))
+    formatted_message = f"{character_name}: {content}"
+    
+    live_session_history.append(formatted_message)
+    print(f"---> [DEBUG - APP.PY INGEST] Appended successfully! Total buffer size is now: {len(live_session_history)}")
+    
+    if len(live_session_history) > 50:
+        live_session_history.pop(0)
+        
+    return jsonify({"status": "success", "mapped_to": character_name})
+
+@app.route('/api/live_chat', methods=['GET'])
+def get_live_chat():
+    print(f"<- [DEBUG - APP.PY POLL] UI requested /api/live_chat. Serving {len(live_session_history)} messages.")
+    return jsonify(live_session_history)
+
+@app.route('/api/live_chat', methods=['DELETE'])
+def clear_live_chat():
+    live_session_history.clear()
+    return jsonify({"status": "cleared"})
 
 # --- CHARACTER (NPC/PC) ENDPOINTS ---
 @app.route('/api/npcs', methods=['POST'])
@@ -278,12 +241,10 @@ def create_npc_api():
         data.setdefault('system', {})
         data.setdefault('pc_faction_standings', {})
         character_profile_data = NPCProfile(**data)
-
         characters_collection = mongo_db.npcs
         character_dict = character_profile_data.model_dump(mode='json', by_alias=True, exclude_none=True)
         result = characters_collection.insert_one(character_dict)
         created_character_from_db = characters_collection.find_one({"_id": result.inserted_id})
-        
         if created_character_from_db:
             created_character_from_db = load_history_content_for_npc(created_character_from_db)
             return jsonify({"message": f"{created_character_from_db.get('character_type', 'Character')} created",
@@ -293,8 +254,6 @@ def create_npc_api():
     except ValidationError as e:
         return jsonify({"error": "Validation Error", "details": e.errors()}), 400
     except Exception as e:
-        print(f"Error in create_npc_api: {e}")
-        traceback.print_exc()
         return jsonify({"error": f"Could not create character: {str(e)}"}), 500
 
 @app.route('/api/npcs', methods=['GET'])
@@ -318,8 +277,6 @@ def get_all_npcs_api():
             characters_list.append(char_doc)
         return jsonify(characters_list), 200
     except Exception as e:
-        print(f"Error in get_all_npcs_api: {e}")
-        traceback.print_exc()
         return jsonify({"error": f"Could not retrieve characters: {str(e)}"}), 500
 
 @app.route('/api/npcs/<npc_id_str>', methods=['GET'])
@@ -392,16 +349,13 @@ def update_npc_api(npc_id_str: str):
                 if '_id' in file_data: del file_data['_id']
                 if 'history_contents_loaded' in file_data: del file_data['history_contents_loaded']
                 if 'combined_history_content' in file_data: del file_data['combined_history_content']
-                
                 safe_filename = secure_filename(f"{char_name}.json")
                 target_path = os.path.join(PRIMARY_DATA_DIR, safe_filename)
-                
                 try:
                     with open(target_path, 'w', encoding='utf-8') as f:
                         json.dump(file_data, f, indent=4)
-                    print(f"[File Sync] Successfully saved updated character to {target_path}")
                 except Exception as e_file:
-                    print(f"[File Sync] Error writing to file {target_path}: {e_file}")
+                    pass
         
         updated_npc_data_from_db = mongo_db.npcs.find_one({"_id": npc_id_obj})
         if updated_npc_data_from_db:
@@ -411,31 +365,23 @@ def update_npc_api(npc_id_str: str):
             return jsonify({"error": "Failed to retrieve updated character"}), 500
 
     except ValidationError as e:
-        print(f"Validation Error during update for NPC {npc_id_str}: {e.errors()}")
         return jsonify({"error": "Validation Error during update", "details": e.errors()}), 400
     except Exception as e:
-        print(f"Error updating NPC {npc_id_str}: {e}")
-        traceback.print_exc()
         return jsonify({"error": f"Could not update character: {str(e)}"}), 500
 
-# --- HISTORY FILE ENDPOINTS ---
 @app.route('/api/history_files', methods=['GET'])
 def list_history_files_api():
     abs_history_data_dir = os.path.abspath(HISTORY_DATA_DIR)
     if not os.path.isdir(abs_history_data_dir):
-        print(f"Warning: History directory not found at {abs_history_data_dir}. Creating it.")
         try:
             os.makedirs(abs_history_data_dir, exist_ok=True)
             return jsonify([]), 200
         except Exception as e:
-            print(f"Error creating history directory {abs_history_data_dir}: {e}")
             return jsonify({"error": f"Could not access or create history directory: {str(e)}"}), 500
     try:
         files = [f for f in os.listdir(abs_history_data_dir) if f.endswith('.txt') and os.path.isfile(os.path.join(abs_history_data_dir, f))]
         return jsonify(sorted(files)), 200
     except Exception as e:
-        print(f"Error listing history files: {e}")
-        traceback.print_exc()
         return jsonify({"error": f"Could not list history files: {str(e)}"}), 500
 
 @app.route('/api/character/<npc_id_str>/associate_history', methods=['POST'])
@@ -451,7 +397,6 @@ def associate_history_file_with_npc_api(npc_id_str: str):
     abs_history_data_dir = os.path.abspath(HISTORY_DATA_DIR)
     history_file_path = os.path.join(abs_history_data_dir, history_filename_secure)
     if not os.path.exists(history_file_path) or not os.path.isfile(history_file_path):
-        print(f"Attempted to associate non-existent history file: {history_file_path} (Original: {history_filename_from_req})")
         return jsonify({"error": f"History file '{history_filename_from_req}' not found on server."}), 404
     try:
         update_result = mongo_db.npcs.update_one(
@@ -469,8 +414,6 @@ def associate_history_file_with_npc_api(npc_id_str: str):
         else:
              return jsonify({"error": "Failed to retrieve updated character after history association"}), 500
     except Exception as e:
-        print(f"Error associating history for {npc_id_str}: {e}")
-        traceback.print_exc()
         return jsonify({"error": f"Could not associate history: {str(e)}"}), 500
 
 @app.route('/api/character/<npc_id_str>/dissociate_history', methods=['POST'])
@@ -501,11 +444,8 @@ def dissociate_history_file_from_npc_api(npc_id_str: str):
         else:
             return jsonify({"error": "Failed to retrieve updated character after history dissociation"}), 500
     except Exception as e:
-        print(f"Error dissociating history for {npc_id_str}: {e}")
-        traceback.print_exc()
         return jsonify({"error": f"Could not dissociate history: {str(e)}"}), 500
 
-# --- MEMORY ENDPOINTS ---
 @app.route('/api/npcs/<npc_id_str>/memory', methods=['POST'])
 def add_npc_memory_api(npc_id_str: str):
     if mongo_db is None: return jsonify({"error": "Database not available"}), 503
@@ -539,17 +479,13 @@ def delete_npc_memory_api(npc_id_str: str, memory_id_str_path: str):
     else:
         return jsonify({"error": "Failed to retrieve updated NPC after deleting memory"}), 500
 
-# --- DIALOGUE GENERATION ---
 def parse_ai_suggestions(full_ai_output: str, speaking_pc_id: Optional[str]) -> Dict[str, Any]:
     npc_name_fallback = "NPC"
     dialogue_parts = []
     suggestion_lines = []
-    
-    # Initialize lists for multi-value fields
     npc_actions_list = []
     player_checks_list = []
     generated_topics_list = []
-
     new_standing_str = "No change"
     justification_str = "Not specified"
     suggestion_pc_key_for_parsing = speaking_pc_id if speaking_pc_id and speaking_pc_id.strip() != "" else "PLAYER"
@@ -601,12 +537,8 @@ def parse_ai_suggestions(full_ai_output: str, speaking_pc_id: Optional[str]) -> 
             matched_level = next((level_enum for level_enum in FactionStandingLevel if level_enum.value.lower() == new_standing_str.lower()), None)
             if matched_level:
                 parsed_new_standing_enum = matched_level
-            else:
-                print(f"Warning: AI suggested an unrecognized standing level: '{new_standing_str}' for PC '{suggestion_pc_key_for_parsing}'")
-                justification_str += f" (AI suggested unrecognized standing: {new_standing_str})"
-        except Exception as e_standing:
-            print(f"Error converting AI standing '{new_standing_str}' to enum: {e_standing}")
-            justification_str += f" (Error processing AI standing: {new_standing_str})"
+        except Exception:
+            pass
             
     return {
         "dialogue": npc_dialogue_final if npc_dialogue_final else "(No dialogue response)",
@@ -633,13 +565,20 @@ def generate_dialogue_for_npc_api(npc_id_str: str):
     try:
         npc_profile = NPCProfile(**parse_json(npc_data_with_history)) 
     except ValidationError as e:
-        print(f"Pydantic validation error for NPC {npc_id_str} before AI call: {e.errors()}")
         return jsonify({"error": "NPC data from DB is invalid", "details": e.errors()}), 500
     try:
         dialogue_req_payload = request.get_json()
         dialogue_req_data = DialogueRequest(**dialogue_req_payload)
     except ValidationError as e:
         return jsonify({"error": "Dialogue request invalid", "details": e.errors()}), 400
+        
+    # NEW: Merge the Live Discord Session History with the Dialogue Request
+    recent_context = list(live_session_history[-15:]) 
+    if dialogue_req_data.recent_dialogue_history:
+        dialogue_req_data.recent_dialogue_history = recent_context + dialogue_req_data.recent_dialogue_history
+    else:
+        dialogue_req_data.recent_dialogue_history = recent_context
+
     detailed_history_for_ai = npc_data_with_history.get('combined_history_content', '')
     linked_lore_summary_for_ai = get_linked_lore_summary_for_npc(npc_data_with_history)
     canned_conversations_for_ai = npc_data_with_history.get('canned_conversations', {})
@@ -668,11 +607,8 @@ def generate_dialogue_for_npc_api(npc_id_str: str):
             world_lore_summary=linked_lore_summary_for_ai, 
             detailed_character_history=detailed_history_for_ai,
             canned_conversations=canned_conversations_for_ai
-
         )
     except Exception as e:
-        print(f"Error calling AI service for {npc_profile.name}: {e}")
-        traceback.print_exc()
         return jsonify({
             "npc_id": npc_id_str, "npc_dialogue": f"Error: AI service failed - {type(e).__name__}",
             "new_memory_suggestions": [], "generated_topics": [],
@@ -681,8 +617,6 @@ def generate_dialogue_for_npc_api(npc_id_str: str):
         }), 500
     parsed_suggestions = parse_ai_suggestions(full_ai_output_str, actual_speaking_pc_id)
     generated_text = parsed_suggestions["dialogue"]
-    if "AI generation blocked" in generated_text or generated_text.startswith("Error:"):
-         print(f"AI Service returned an error/blocked message for {npc_profile.name}: {generated_text}")
     memory_suggestions = []
     if dialogue_req_data.player_utterance and generated_text and not ("AI generation blocked" in generated_text or generated_text.startswith("Error:")):
         summarized_memory = ai_service_instance.summarize_interaction_for_memory(
@@ -700,7 +634,6 @@ def generate_dialogue_for_npc_api(npc_id_str: str):
     )
     return jsonify(response_data_model.model_dump(mode='json')), 200
 
-# --- LORE ENTRY ENDPOINTS ---
 @app.route('/api/lore_entries', methods=['GET']) 
 def get_all_lore_entries_api():
     if mongo_db is None: return jsonify({"error": "Database not available"}), 503
@@ -718,8 +651,6 @@ def get_all_lore_entries_api():
             client_ready_list.append(entry)
         return jsonify(client_ready_list), 200
     except Exception as e:
-        print(f"Error in get_all_lore_entries_api: {e}")
-        traceback.print_exc()
         return jsonify({"error": f"Could not retrieve lore entries: {str(e)}"}), 500
 
 @app.route('/api/lore_entries/<lore_id_str>', methods=['GET'])
@@ -746,42 +677,30 @@ def create_lore_entry_api():
     try:
         data = request.get_json()
         if not data: return jsonify({"error": "Invalid JSON payload"}), 400
-        
         if 'lore_id' in data: del data['lore_id']
         if '_id' in data: del data['_id']
-
         lore_entry_data = LoreEntry(**data)
         lore_entry_data.updated_at = datetime.utcnow()
-        
         lore_dict_for_db = lore_entry_data.model_dump(exclude_none=True, exclude={'lore_id'})
-        
         lore_collection = mongo_db.lore_entries
         result = lore_collection.insert_one(lore_dict_for_db)
-        
         new_id_str = str(result.inserted_id)
         lore_collection.update_one(
             {"_id": result.inserted_id},
             {"$set": {"lore_id": new_id_str}}
         )
-
         created_lore_entry_doc = lore_collection.find_one({"_id": result.inserted_id})
-        
         parsed_entry = json.loads(json_util.dumps(created_lore_entry_doc))
         if '_id' in parsed_entry and '$oid' in parsed_entry['_id']:
             parsed_entry['lore_id'] = parsed_entry['_id']['$oid']
             del parsed_entry['_id']
         if 'lore_type' in parsed_entry and isinstance(parsed_entry.get('lore_type'), Enum):
             parsed_entry['lore_type'] = parsed_entry['lore_type'].value
-            
         return jsonify({"message": "Lore entry created", "lore_entry": parsed_entry}), 201
-
     except ValidationError as e:
         return jsonify({"error": "Validation Error for LoreEntry", "details": e.errors()}), 400
     except Exception as e:
-        print(f"Error in create_lore_entry_api: {e}")
-        traceback.print_exc()
         return jsonify({"error": f"Could not create lore entry in DB: {str(e)}"}), 500
-
 
 @app.route('/api/lore_entries/<lore_id_str>', methods=['PUT'])
 def update_lore_entry_api(lore_id_str: str):
@@ -803,7 +722,7 @@ def update_lore_entry_api(lore_id_str: str):
         validated_lore.updated_at = datetime.utcnow()
         final_set_payload = {}
         for key, value in update_data_req.items():
-            if key in validated_lore.model_fields_set or key in validated_lore.model_extra: # Ensure model_fields_set is correct
+            if key in validated_lore.model_fields_set or key in validated_lore.model_extra:
                 attr_value = getattr(validated_lore, key, None)
                 if isinstance(attr_value, Enum):
                      final_set_payload[key] = attr_value.value
@@ -813,7 +732,6 @@ def update_lore_entry_api(lore_id_str: str):
     except ValidationError as e:
         return jsonify({"error": "Validation Error for LoreEntry update", "details": e.errors()}), 400
     except Exception as ex_val:
-        print(f"Error during lore update validation: {ex_val}")
         return jsonify({"error": f"Data validation error: {ex_val}"}), 400
     if not final_set_payload:
         return jsonify({"message": "No changes provided for lore entry."}), 200
@@ -828,7 +746,6 @@ def update_lore_entry_api(lore_id_str: str):
             parsed_entry['lore_type'] = parsed_entry['lore_type'].value
         return jsonify({"message": "Lore entry updated", "lore_entry": parsed_entry}), 200
     except Exception as e:
-        print(f"Error updating lore entry in DB: {e}")
         return jsonify({"error": f"Could not update lore entry in DB: {str(e)}"}), 500
 
 @app.route('/api/lore_entries/<lore_id_str>', methods=['DELETE'])
@@ -837,29 +754,24 @@ def delete_lore_entry_api(lore_id_str: str):
     try:
         lore_id_obj = ObjectId(lore_id_str)
     except Exception: return jsonify({"error": "Invalid Lore ID format"}), 400
-    
     lore_to_delete = mongo_db.lore_entries.find_one({"_id": lore_id_obj})
     if not lore_to_delete:
         return jsonify({"error": "Lore entry not found"}), 404
     lore_name = lore_to_delete.get("name")
-
     result = mongo_db.lore_entries.delete_one({"_id": lore_id_obj})
     if result.deleted_count == 0:
         return jsonify({"error": "Lore entry not found during deletion"}), 404
-    
     if lore_name:
         mongo_db.npcs.update_many(
             {"linked_lore_by_name": lore_name},
             {"$pull": {"linked_lore_by_name": lore_name}}
         )
-    
     mongo_db.lore_entries.update_many(
         {"linked_lore_entry_ids": lore_id_str},
         {"$pull": {"linked_lore_entry_ids": lore_id_str}}
     )
     return jsonify({"message": "Lore entry deleted and unlinked"}), 200
 
-# --- LINKING ENDPOINTS ---
 @app.route('/api/characters/<char_id_str>/link_lore', methods=['POST'])
 def link_lore_to_character_api(char_id_str: str):
     if mongo_db is None: return jsonify({"error": "Database not available"}), 503
@@ -867,20 +779,15 @@ def link_lore_to_character_api(char_id_str: str):
         char_id_obj = ObjectId(char_id_str)
     except Exception:
         return jsonify({"error": "Invalid ID format for character"}), 400
-
     data = request.get_json()
     lore_id = data.get('lore_id')
     if not lore_id:
         return jsonify({"error": "lore_id not provided in request"}), 400
-
     char_exists = mongo_db.npcs.count_documents({"_id": char_id_obj}) > 0
     lore_entry = mongo_db.lore_entries.find_one({"lore_id": lore_id})
-    
     if not char_exists: return jsonify({"error": "Character not found"}), 404
     if not lore_entry: return jsonify({"error": f"Lore entry with id '{lore_id}' not found"}), 404
-
     lore_name = lore_entry.get("name")
-    
     mongo_db.npcs.update_one(
         {"_id": char_id_obj},
         {"$addToSet": {"linked_lore_by_name": lore_name}}
@@ -899,51 +806,39 @@ def unlink_lore_from_character_api(char_id_str: str):
         char_id_obj = ObjectId(char_id_str)
     except Exception:
         return jsonify({"error": "Invalid Character ID format"}), 400
-    
     data = request.get_json()
     lore_id = data.get('lore_id')
     if not lore_id:
         return jsonify({"error": "lore_id not provided in request"}), 400
-
     lore_entry = mongo_db.lore_entries.find_one({"lore_id": lore_id})
     if not lore_entry:
         return jsonify({"error": "Lore entry not found, cannot determine name for unlinking."}), 404
     lore_name = lore_entry.get("name")
-
     mongo_db.npcs.update_one(
         {"_id": char_id_obj},
         {"$pull": {"linked_lore_by_name": lore_name}}
     )
-    
     mongo_db.lore_entries.update_one(
         {"_id": lore_entry['_id']},
         {"$pull": {"linked_character_ids": char_id_str}}
     )
-
     updated_char = mongo_db.npcs.find_one({"_id": char_id_obj})
     return jsonify({"message": "Lore unlinked from character", "character": parse_json(updated_char)}), 200
 
-
 if __name__ == '__main__':
-    # Ensure all necessary data directories exist
-    for dir_path in [PRIMARY_DATA_DIR, VTT_IMPORT_DIR, HISTORY_DATA_DIR, LORE_DATA_DIR]: # <-- Added LORE_DATA_DIR
+    for dir_path in [PRIMARY_DATA_DIR, VTT_IMPORT_DIR, HISTORY_DATA_DIR, LORE_DATA_DIR]:
         if not os.path.exists(dir_path):
             os.makedirs(dir_path, exist_ok=True)
             print(f"Created directory: {dir_path}")
-
     print(f"Data directories: Primary='{os.path.abspath(PRIMARY_DATA_DIR)}', VTT='{os.path.abspath(VTT_IMPORT_DIR)}', History='{os.path.abspath(HISTORY_DATA_DIR)}', Lore='{os.path.abspath(LORE_DATA_DIR)}'")
-
     if mongo_db is not None:
-        sync_data_from_files() # This will now sync both characters and lore
+        sync_data_from_files() 
     else:
         print("CRITICAL: MongoDB connection failed. Data sync skipped and app may not function correctly.")
-
     if ai_service_instance is None or ai_service_instance.client is None:
         print("CRITICAL: AI Service not initialized. Dialogue generation will fail.")
-
     print("-" * 50)
     print(f"Flask Secret Key: {'Set' if app_config.SECRET_KEY != 'a_default_secret_key' else 'Using Default (Unsafe for Production)'}")
-    # CORRECTED: Uses GOOGLE_API_KEY for the print check
     print(f"Gemini API Key: {'Set' if app_config.GOOGLE_API_KEY else 'NOT SET'}")
     print(f"Mongo URI: {app_config.MONGO_URI}")
     print("-" * 50)

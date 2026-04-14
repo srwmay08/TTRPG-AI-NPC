@@ -2,34 +2,24 @@ import discord
 import re
 import csv
 import os
-from dotenv import load_dotenv # <-- NEW: Import the dotenv library
+import aiohttp 
+from dotenv import load_dotenv
 
-# Load the variables from the .env file
 load_dotenv() 
-
-# Grab the token from the loaded environment variables
 TOKEN = os.getenv('DISCORD_TOKEN')
 
-# 1. Setup Intents (Critical for reading message content)
 intents = discord.Intents.default()
 intents.message_content = True
-
-# 2. Initialize the Client
 client = discord.Client(intents=intents)
 
-# 3. Configuration
-# RIGHT-CLICK YOUR TARGET CHANNEL AND COPY ID HERE
-TARGET_CHANNEL_ID = 123456789101112 
+TARGET_CHANNEL_ID = 1493584378192728145 
 
-# Example Regex: Let's say you want to capture log entries like "Action: Attack - Roll: 18"
-# Change this pattern to match the specific data you need from your campaigns or logs.
-REGEX_PATTERN = re.compile(r'Action:\s*(.*?)\s*-\s*Roll:\s*(\d+)')
+ROLL_REGEX = re.compile(r'Action:\s*(.*?)\s*-\s*Roll:\s*(\d+)')
+SCRIPTLY_REGEX = re.compile(r"\[\d+:\d+\s?[AP]M\]\s+APP\s+\[Scriptly\]\s+([\w\.]+)\s*:\s*(.+)")
 
-# 4. Create the CSV with headers if it doesn't exist yet
 if not os.path.exists('live_log.csv'):
     with open('live_log.csv', mode='w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
-        # Adjust these headers based on your regex groups
         writer.writerow(['Timestamp', 'User', 'Action_Taken', 'Dice_Roll', 'Full_Raw_Text'])
 
 @client.event
@@ -40,38 +30,56 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    # Ignore messages from the bot itself to prevent infinite loops
-    if message.author == client.user:
+    if message.author == client.user: 
+        return
+    if message.channel.id != TARGET_CHANNEL_ID: 
         return
 
-    # Ignore messages from any other channel
-    if message.channel.id != TARGET_CHANNEL_ID:
-        return
+    # 1. Determine Author and Content (Handling Scriptly overrides)
+    author_name = message.author.name
+    content = message.content
 
-    # 1. Apply your Regex to the incoming message
-    match = REGEX_PATTERN.search(message.content)
-    
-    # 2. Clean the raw text (strip newlines so it doesn't break CSV formatting)
-    clean_text = re.sub(r'\n+', ' ', message.content)
+    scriptly_match = SCRIPTLY_REGEX.search(content)
+    if scriptly_match:
+        author_name = scriptly_match.group(1).strip()
+        content = scriptly_match.group(2).strip()
 
-    # 3. If the regex finds a match, log it to the CSV
-    if match:
-        # Open the file in 'a' (append) mode to add to the bottom
+    # DEBUG: Did Discord Bot see it?
+    print(f"\n💬 [DEBUG - DISCORD BOT] Caught message from {author_name}: {content}")
+
+    # 2. Send to Flask App
+    async with aiohttp.ClientSession() as session:
+        payload = {
+            "author": author_name,
+            "content": content,
+            "timestamp": message.created_at.isoformat()
+        }
+        print(f"🚀 [DEBUG - DISCORD BOT] Sending POST payload to app.py: {payload}")
+        try:
+            async with session.post("http://127.0.0.1:5001/api/live_chat_ingest", json=payload) as resp:
+                print(f"✅ [DEBUG - DISCORD BOT] Flask Responded with Status: {resp.status}")
+                if resp.status != 200:
+                    err_text = await resp.text()
+                    print(f"⚠️ [DEBUG - DISCORD BOT] Error response body: {err_text}")
+        except Exception as e:
+            print(f"❌ [DEBUG - DISCORD BOT] Failed to forward message to Flask App. Is app.py running? Error: {e}")
+
+    # 3. CSV Logging
+    roll_match = ROLL_REGEX.search(content)
+    if roll_match:
+        clean_text = re.sub(r'\n+', ' ', content)
         with open('live_log.csv', mode='a', newline='', encoding='utf-8') as file:
             writer = csv.writer(file)
-            
-            # Write the new row
             writer.writerow([
                 message.created_at.strftime("%Y-%m-%d %H:%M:%S"),
-                message.author.name,
-                match.group(1), # The "Action" from our example regex
-                match.group(2), # The "Roll" from our example regex
+                author_name,
+                roll_match.group(1),
+                roll_match.group(2),
                 clean_text
             ])
-            
-        print(f"✅ Logged new entry from {message.author.name}")
+        print(f"✅ [DEBUG - DISCORD BOT] Logged roll to CSV from {author_name}")
 
 if TOKEN is None:
-    print("❌ Error: DISCORD_TOKEN not found. Check your .env file.")
+    print("❌ Error: DISCORD_TOKEN not found.")
 else:
-    client.run(TOKEN) # <-- NEW: Pass the variable instead of the hardcoded string
+    client.run(TOKEN)

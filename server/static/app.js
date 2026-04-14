@@ -13,7 +13,9 @@ var App = {
         console.log("App.js: DOMContentLoaded event fired. Initializing App...");
         try {
             // Initialize State defaults if needed
-            if (!AppState.currentView) AppState.currentView = 'scene';
+            if (!AppState.currentView) {
+                AppState.currentView = 'scene';
+            }
 
             await CharacterService.initializeAppCharacters();
 
@@ -36,13 +38,15 @@ var App = {
                     if (event.target.classList.contains('attack-selector')) {
                         const pcId = event.target.dataset.pcId;
                         const attackName = event.target.dataset.attackName;
-                        if (AppState.toggleAttackSelection) AppState.toggleAttackSelection(pcId, attackName);
+                        if (AppState.toggleAttackSelection) {
+                            AppState.toggleAttackSelection(pcId, attackName);
+                        }
                         this.updateMainView();
                     } else if (event.target.id === 'round-count-input') {
                         AppState.estimatedRounds = parseInt(event.target.value, 10) || 1;
                         this.updateMainView();
                     } else if (event.target.id === 'dpr-ac-input') {
-                         const newAC = parseInt(event.target.value, 10);
+                        const newAC = parseInt(event.target.value, 10);
                         if (!isNaN(newAC)) {
                             AppState.targetAC = newAC;
                             this.updateMainView();
@@ -50,6 +54,9 @@ var App = {
                     }
                 });
             }
+
+            // Start Live Discord Polling
+            this.startLiveChatPolling();
 
             // Initial View Update
             setTimeout(() => this.updateMainView(), 0); 
@@ -60,11 +67,129 @@ var App = {
         console.log("App.js: DOMContentLoaded finished.");
     },
 
+    // --- Live Discord Chat Logic ---
+    startLiveChatPolling: function() {
+        console.log("App.js: [DEBUG - UI] Starting Live Discord Chat polling interval...");
+        setInterval(() => this.pollLiveChat(), 3000);
+        this.pollLiveChat();
+    },
+
+    pollLiveChat: async function() {
+        // Suppressed the heavy polling log to keep console clean, but leaving error logs active
+        try {
+            const response = await fetch('/api/live_chat');
+            
+            if (!response.ok) {
+                console.error(`App.js: [DEBUG - UI] Fetch failed with status ${response.status}. Payload:`, await response.text());
+                return;
+            }
+            
+            const messages = await response.json();
+            
+            const container = document.getElementById('live-discord-messages');
+            if (!container) {
+                console.error("App.js: [DEBUG - UI] Could not find 'live-discord-messages' div in the DOM!");
+                return;
+            }
+
+            container.innerHTML = '';
+            
+            if (messages.length === 0) {
+                const emptyMsg = document.createElement('p');
+                emptyMsg.style.color = '#888';
+                emptyMsg.style.fontStyle = 'italic';
+                emptyMsg.textContent = 'Waiting for live session messages...';
+                container.appendChild(emptyMsg);
+                return;
+            }
+
+            messages.forEach(msg => {
+                const p = document.createElement('p');
+                p.className = 'discord-msg';
+                p.style.margin = '4px 0';
+                p.style.padding = '6px';
+                p.style.backgroundColor = '#333';
+                p.style.borderRadius = '4px';
+                p.style.cursor = 'pointer'; 
+                p.style.transition = 'background-color 0.2s ease';
+                
+                // Hover effects for clickability
+                p.onmouseover = () => {
+                    p.style.backgroundColor = '#444';
+                };
+                p.onmouseout = () => {
+                    p.style.backgroundColor = '#333';
+                };
+                
+                p.textContent = msg;
+                p.title = "Click to load into Player Input";
+                
+                // NEW: Click interaction logic
+                p.addEventListener('click', () => {
+                    // Match pattern: "Name: The message content"
+                    const match = msg.match(/^([^:]+):\s*(.*)$/);
+                    if (match) {
+                        const speakerName = match[1].trim();
+                        const utterance = match[2].trim();
+
+                        const select = document.getElementById('speaking-pc-select');
+                        if (select) {
+                            let matchedOption = false;
+                            
+                            // Check if it's the DM
+                            if (speakerName.includes("DM") || speakerName.includes("SRWM")) {
+                                select.value = "";
+                                matchedOption = true;
+                            } else {
+                                // Check if it's a PC by matching the option text
+                                for (let i = 0; i < select.options.length; i++) {
+                                    if (select.options[i].text === speakerName) {
+                                        select.value = select.options[i].value;
+                                        matchedOption = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            
+                            // Fallback to DM if name doesn't match an active PC
+                            if (!matchedOption) {
+                                select.value = "";
+                            }
+                        }
+
+                        // Populate the input field
+                        const utteranceArea = document.getElementById('player-utterance');
+                        if (utteranceArea) {
+                            utteranceArea.value = utterance;
+                            
+                            // Visual feedback flash
+                            const originalBg = utteranceArea.style.backgroundColor;
+                            utteranceArea.style.backgroundColor = '#2c4a2c'; // Soft green flash
+                            setTimeout(() => {
+                                utteranceArea.style.backgroundColor = originalBg;
+                            }, 300);
+                        }
+                    }
+                });
+                
+                container.appendChild(p);
+            });
+            
+            // Auto-scroll to bottom
+            container.scrollTop = container.scrollHeight;
+            
+        } catch (error) {
+            console.error("App.js: [DEBUG - UI] Error during fetch call to /api/live_chat:", error);
+        }
+    },
+
     // --- Layout Helpers ---
     setupResizer: function() {
         const resizer = document.getElementById('resizer');
         const leftCol = document.getElementById('left-column');
-        if (!resizer || !leftCol) return;
+        if (!resizer || !leftCol) {
+            return;
+        }
 
         let isResizing = false;
 
@@ -75,10 +200,16 @@ var App = {
         });
 
         document.addEventListener('mousemove', (e) => {
-            if (!isResizing) return;
+            if (!isResizing) {
+                return;
+            }
             let newWidth = e.clientX;
-            if (newWidth < 200) newWidth = 200;
-            if (newWidth > window.innerWidth * 0.6) newWidth = window.innerWidth * 0.6;
+            if (newWidth < 200) {
+                newWidth = 200;
+            }
+            if (newWidth > window.innerWidth * 0.6) {
+                newWidth = window.innerWidth * 0.6;
+            }
             leftCol.style.width = `${newWidth}px`;
         });
 
@@ -101,7 +232,9 @@ var App = {
             });
             
             const tabLinks = document.querySelectorAll('.tab-link');
-            tabLinks.forEach(link => link.classList.remove('active'));
+            tabLinks.forEach(link => {
+                link.classList.remove('active');
+            });
 
             const target = document.getElementById(tabName);
             if (target) {
@@ -115,14 +248,12 @@ var App = {
 
         if (tabName === 'tab-npcs') {
             const currentProfileId = AppState.getCurrentProfileCharId();
-            // Ensure we handle the view switch if a char is already selected
             if (currentProfileId) {
                 AppState.currentView = 'npc';
                 this.updateMainView();
             }
         }
         if (tabName === 'tab-lore') {
-            // When switching to Lore tab, if we have a selected lore entry, show it.
             if (AppState.getCurrentLoreEntryId()) {
                 AppState.currentView = 'lore';
                 this.updateMainView();
@@ -152,8 +283,11 @@ var App = {
                 const onclickAttr = link.getAttribute('onclick');
                 return onclickAttr && onclickAttr.includes("'tab-scene'");
             });
-            if (sceneTabButton) sceneTabButton.click(); 
-            else tabLinks[0].click(); 
+            if (sceneTabButton) {
+                sceneTabButton.click(); 
+            } else {
+                tabLinks[0].click(); 
+            }
         }
     },
 
@@ -163,8 +297,12 @@ var App = {
 
         if (typeSelector) {
             typeSelector.addEventListener('change', () => { 
-                if (window.LoreRenderers) LoreRenderers.populateSceneContextSelectorUI();
-                if (entrySelector) entrySelector.value = ""; 
+                if (window.LoreRenderers) {
+                    LoreRenderers.populateSceneContextSelectorUI();
+                }
+                if (entrySelector) {
+                    entrySelector.value = ""; 
+                }
                 AppState.setCurrentSceneContextFilter(null); 
                 
                 if (window.NPCRenderers) {
@@ -209,7 +347,6 @@ var App = {
         const dashboard = document.getElementById('pc-dashboard-view');
         if (dashboard) {
             dashboard.addEventListener('click', (e) => {
-                // Delegate clicks if needed
             });
         }
     },
@@ -226,14 +363,11 @@ var App = {
     },
 
     // --- Interaction Logic ---
-
-    // NEW: Handle Lore Selection from List
     handleSelectLoreEntry: function(loreIdStr) {
         console.log("App.js: handleSelectLoreEntry", loreIdStr);
         AppState.setCurrentLoreEntryId(loreIdStr);
         AppState.currentView = 'lore';
         
-        // Also refresh the list to show selection highlight
         if (window.LoreRenderers) {
             LoreRenderers.renderLoreEntryListUI(AppState.getAllLoreEntries());
         }
@@ -242,11 +376,12 @@ var App = {
     },
 
     handleToggleNpcInScene: async function(npcIdStr, npcName) {
-        // FORCE VIEW SWITCH: Adding an NPC implies we want to see the scene
         AppState.currentView = 'scene';
 
         const multiNpcContainer = document.getElementById('multi-npc-dialogue-container');
-        if (!multiNpcContainer) return;
+        if (!multiNpcContainer) {
+            return;
+        }
     
         const isAdding = !AppState.hasActiveNpc(npcIdStr);
     
@@ -258,10 +393,11 @@ var App = {
                 return;
             }
     
-            if (window.NPCRenderers) NPCRenderers.createNpcDialogueAreaUI(toggledNpc, multiNpcContainer);
+            if (window.NPCRenderers) {
+                NPCRenderers.createNpcDialogueAreaUI(toggledNpc, multiNpcContainer);
+            }
             AppState.initDialogueHistory(npcIdStr);
             
-            // Generate Greeting Logic
             const intro = toggledNpc.canned_conversations?.introduction;
             const sceneContext = document.getElementById('scene-context') ? document.getElementById('scene-context').value.trim() : "";
             const activePcNames = AppState.getActivePcIds().map(pcId => AppState.getCharacterById(pcId)?.name || "a PC");
@@ -290,7 +426,9 @@ var App = {
             }
         } else {
             AppState.removeActiveNpc(npcIdStr);
-            if (window.NPCRenderers) NPCRenderers.removeNpcDialogueAreaUI(npcIdStr, multiNpcContainer);
+            if (window.NPCRenderers) {
+                NPCRenderers.removeNpcDialogueAreaUI(npcIdStr, multiNpcContainer);
+            }
             AppState.deleteDialogueHistory(npcIdStr);
         }
     
@@ -316,7 +454,9 @@ var App = {
 
     triggerNpcInteraction: async function(npcIdStr, npcName, payload, isGreeting = false, thinkingMessageId = null) {
         const transcriptArea = document.getElementById(`transcript-${npcIdStr}`);
-        if (!transcriptArea) return;
+        if (!transcriptArea) {
+            return;
+        }
 
         let thinkingMessageElement = thinkingMessageId ? document.getElementById(thinkingMessageId) : null;
 
@@ -332,7 +472,9 @@ var App = {
 
         try {
             const result = await ApiService.generateNpcDialogue(npcIdStr, payload);
-            if(thinkingMessageElement && thinkingMessageElement.parentNode) thinkingMessageElement.remove();
+            if (thinkingMessageElement && thinkingMessageElement.parentNode) {
+                thinkingMessageElement.remove();
+            }
 
             if (window.NPCRenderers) {
                 NPCRenderers.appendMessageToTranscriptUI(transcriptArea, `${npcName}: ${result.npc_dialogue}`, 'dialogue-entry npc-response');
@@ -349,7 +491,9 @@ var App = {
 
         } catch (error) {
             console.error(`Error generating dialogue for ${npcName}:`, error);
-            if(thinkingMessageElement && thinkingMessageElement.parentNode) thinkingMessageElement.remove();
+            if (thinkingMessageElement && thinkingMessageElement.parentNode) {
+                thinkingMessageElement.remove();
+            }
             if (window.NPCRenderers) {
                 NPCRenderers.appendMessageToTranscriptUI(transcriptArea, `${npcName}: (Error: ${error.message})`, 'dialogue-entry npc-response');
             }
@@ -403,7 +547,9 @@ var App = {
 
         const dialoguePromises = listeningNpcIds.map(npcId => {
             const npc = AppState.getCharacterById(npcId);
-            if (!npc) return Promise.resolve();
+            if (!npc) {
+                return Promise.resolve();
+            }
 
             const payload = {
                 scene_context: sceneContext,
@@ -417,18 +563,17 @@ var App = {
 
         await Promise.all(dialoguePromises);
 
-        if (playerUtterance) document.getElementById('player-utterance').value = '';
+        if (playerUtterance) {
+            document.getElementById('player-utterance').value = '';
+        }
         Utils.disableBtn('generate-dialogue-btn', false);
     },
 
     handleTogglePcSelection: function(pcIdStr) {
-        // 1. Update State
         AppState.toggleActivePc(pcIdStr);
         AppState.currentView = 'pc'; 
         
-        // 2. Refresh PC Lists
         if (window.PCRenderers) {
-            // Updated to be more permissive with filters
             const allPcs = AppState.getAllCharacters().filter(c => 
                 c.character_type === 'Player Character' || 
                 c.character_type === 'PC' || 
@@ -437,7 +582,6 @@ var App = {
             PCRenderers.renderPcListUI(allPcs);
         }
 
-        // 3. Update Speaking Dropdown
         const select = document.getElementById('speaking-pc-select');
         if (select) {
             const currentVal = select.value;
@@ -451,36 +595,33 @@ var App = {
                     select.appendChild(opt);
                 }
             });
-            // FIX: Use .has() for Set check
-            if (AppState.activePcIds.has(currentVal)) select.value = currentVal;
+            if (AppState.activePcIds.has(currentVal)) {
+                select.value = currentVal;
+            }
         }
 
-        // 4. Update Main View
         App.updateMainView();
 
-        // 5. Update Faction Standings if needed
         const currentProfileChar = AppState.getCurrentProfileChar();
         if (currentProfileChar && currentProfileChar.character_type === 'NPC' && window.NPCRenderers) {
-            // Re-render to update slider labels if PC names changed or selection changed
-            // NOTE: Using 'npc-profile-view' lookup inside renderNpcFactionStandingsUI or pass correct container
             const standingsContainer = document.getElementById('npc-faction-standings-content');
-            if(standingsContainer) {
+            if (standingsContainer) {
                  NPCRenderers.renderNpcFactionStandingsUI(currentProfileChar, AppState.activePcIds, AppState.getAllCharacters(), standingsContainer, CharacterService.handleSaveFactionStanding);
             }
         }
     },
 
     handleBackToDashboardOverview: function() {
-        // Clear specific selection to show the group table
         if (AppState.activePc) {
              AppState.activePc = null; 
-             // IMPORTANT: We do NOT clear activePcIds here, allowing the group to persist
         }
         
         const dashboardContent = document.getElementById('pc-dashboard-content');
         if (dashboardContent) {
             const detailedSheet = dashboardContent.querySelector('.detailed-pc-sheet');
-            if (detailedSheet) detailedSheet.remove();
+            if (detailedSheet) {
+                detailedSheet.remove();
+            }
         }
         AppState.setExpandedAbility(null);
         App.updateMainView();
@@ -488,14 +629,20 @@ var App = {
 
     toggleAbilityExpansion: function(ablKey) {
         const currentAbility = AppState.getExpandedAbility();
-        AppState.setExpandedAbility(currentAbility === ablKey ? null : ablKey);
-        if(window.PCRenderers) {
+        if (currentAbility === ablKey) {
+            AppState.setExpandedAbility(null);
+        } else {
+            AppState.setExpandedAbility(ablKey);
+        }
+        if (window.PCRenderers) {
             PCRenderers.updatePcDashboardUI(document.getElementById('pc-dashboard-content'), AppState.getAllCharacters(), AppState.activePcIds, AppState.getExpandedAbility());
         }
     },
 
     addSuggestedMemoryAsActual: async function(npcId, memoryContent) {
-        if (!npcId || !memoryContent) return;
+        if (!npcId || !memoryContent) {
+            return;
+        }
         const character = AppState.getCharacterById(npcId);
         if (!character || character.character_type !== 'NPC') {
             alert("Cannot add memory: Invalid NPC ID or character is not an NPC.");
@@ -538,7 +685,9 @@ var App = {
 
     useSpecificCannedResponse: function(topic) {
         const profiledCharId = AppState.getCurrentProfileCharId();
-        if (!profiledCharId) return;
+        if (!profiledCharId) {
+            return;
+        }
 
         if (!AppState.hasActiveNpc(profiledCharId)) {
             alert("The profiled NPC must be in the current scene to use a canned response.");
@@ -546,7 +695,9 @@ var App = {
         }
 
         const profiledChar = AppState.getCharacterById(profiledCharId);
-        if (!profiledChar) return;
+        if (!profiledChar) {
+            return;
+        }
 
         const cannedResponses = AppState.cannedResponsesForProfiledChar || {};
         const cannedResponseText = cannedResponses[topic];
@@ -570,11 +721,9 @@ var App = {
         }
     },
 
-    // Called when data is finished loading from CharacterService
     onCharactersLoaded: function() {
         console.log("App.js: Characters loaded.");
         if (AppState.characters) {
-            // FIX: Permissive filter matching handleTogglePcSelection
             const pcs = AppState.characters.filter(c => 
                 c.character_type === 'Player Character' || 
                 c.character_type === 'PC' ||
@@ -585,25 +734,49 @@ var App = {
     },
 
     // Mappings to Service Functions
-    handleSaveGmNotes: function(a, b) { return CharacterService.handleSaveGmNotes(a, b); },
-    handleAddMemory: function(a, b, c) { return CharacterService.handleAddMemory(a, b, c); },
-    handleDeleteMemory: function(a, b) { return CharacterService.handleDeleteMemory(a, b); },
-    handleSaveFactionStanding: function(a, b, c) { return CharacterService.handleSaveFactionStanding(a, b, c); },
-    handleAssociateHistoryFile: function(a, b) { return CharacterService.handleAssociateHistoryFile(a, b); },
-    handleDissociateHistoryFile: function(a, b) { return CharacterService.handleDissociateHistoryFile(a, b); },
-    handleCharacterCreation: function(e) { return CharacterService.handleCharacterCreation(e); },
-    handleCreateLoreEntry: function(e) { return CharacterService.handleCreateLoreEntry(e); },
-    handleSelectLoreEntryForDetails: function(id) { return CharacterService.handleSelectLoreEntryForDetails(id); },
-    handleUpdateLoreEntryGmNotes: function(id, notes) { return CharacterService.handleUpdateLoreEntryGmNotes(id, notes); },
-    handleDeleteLoreEntry: function(id) { return CharacterService.handleDeleteLoreEntry(id); },
-    handleLinkLoreToCharacter: function(loreId, charId) { return CharacterService.handleLinkLoreToCharacter(loreId, charId); },
-    handleUnlinkLoreFromCharacter: function(loreId, charId) { return CharacterService.handleUnlinkLoreFromCharacter(loreId, charId); }
+    handleSaveGmNotes: function(a, b) {
+        return CharacterService.handleSaveGmNotes(a, b);
+    },
+    handleAddMemory: function(a, b, c) {
+        return CharacterService.handleAddMemory(a, b, c);
+    },
+    handleDeleteMemory: function(a, b) {
+        return CharacterService.handleDeleteMemory(a, b);
+    },
+    handleSaveFactionStanding: function(a, b, c) {
+        return CharacterService.handleSaveFactionStanding(a, b, c);
+    },
+    handleAssociateHistoryFile: function(a, b) {
+        return CharacterService.handleAssociateHistoryFile(a, b);
+    },
+    handleDissociateHistoryFile: function(a, b) {
+        return CharacterService.handleDissociateHistoryFile(a, b);
+    },
+    handleCharacterCreation: function(e) {
+        return CharacterService.handleCharacterCreation(e);
+    },
+    handleCreateLoreEntry: function(e) {
+        return CharacterService.handleCreateLoreEntry(e);
+    },
+    handleSelectLoreEntryForDetails: function(id) {
+        return CharacterService.handleSelectLoreEntryForDetails(id);
+    },
+    handleUpdateLoreEntryGmNotes: function(id, notes) {
+        return CharacterService.handleUpdateLoreEntryGmNotes(id, notes);
+    },
+    handleDeleteLoreEntry: function(id) {
+        return CharacterService.handleDeleteLoreEntry(id);
+    },
+    handleLinkLoreToCharacter: function(loreId, charId) {
+        return CharacterService.handleLinkLoreToCharacter(loreId, charId);
+    },
+    handleUnlinkLoreFromCharacter: function(loreId, charId) {
+        return CharacterService.handleUnlinkLoreFromCharacter(loreId, charId);
+    }
 };
 
-// Initialize
 document.addEventListener('DOMContentLoaded', App.initializeApp.bind(App));
 
-// Global Exports
 window.App = App;
 window.openTab = App.openTab.bind(App);
 window.handleToggleNpcInScene = App.handleToggleNpcInScene.bind(App);
