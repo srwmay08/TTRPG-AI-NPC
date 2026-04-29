@@ -23,6 +23,7 @@ mongo_db = db_connector.get_db()
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PRIMARY_DATA_DIR = os.path.join(BASE_DIR, 'data')
 VTT_IMPORT_DIR = os.path.join(PRIMARY_DATA_DIR, 'vtt_imports')
+PC_IMPORT_DIR = os.path.join(VTT_IMPORT_DIR, 'PCs')
 HISTORY_DATA_DIR = os.path.join(PRIMARY_DATA_DIR, 'history')
 LORE_DATA_DIR = os.path.join(PRIMARY_DATA_DIR, 'lore')
 
@@ -826,6 +827,8 @@ def unlink_lore_from_character_api(char_id_str: str):
     return jsonify({"message": "Lore unlinked from character", "character": parse_json(updated_char)}), 200
 
 if __name__ == '__main__':
+    if mongo_db is not None:
+        sync_data_from_files()
     for dir_path in [PRIMARY_DATA_DIR, VTT_IMPORT_DIR, HISTORY_DATA_DIR, LORE_DATA_DIR]:
         if not os.path.exists(dir_path):
             os.makedirs(dir_path, exist_ok=True)
@@ -842,4 +845,4 @@ if __name__ == '__main__':
     print(f"Gemini API Key: {'Set' if app_config.GOOGLE_API_KEY else 'NOT SET'}")
     print(f"Mongo URI: {app_config.MONGO_URI}")
     print("-" * 50)
-    app.run(debug=True, host='0.0.0.0', port=5001)
+    app.run(debug=app_config.DEBUG, host='0.0.0.0', port=5001)

@@ -1,6 +1,3 @@
-"""
-server/config.py
-"""
 import os
 from dotenv import load_dotenv
 
@@ -9,7 +6,6 @@ load_dotenv()
 
 class Config:
     """Base configuration."""
-    # Standard Flask config name is SECRET_KEY
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev_secret_key_change_in_production'
     
     # MongoDB Configuration
@@ -17,10 +13,7 @@ class Config:
     DB_NAME = 'ttrpg_ai_npc_db'
     
     # Google AI Configuration
-    # Checks for GOOGLE_API_KEY first, falls back to GEMINI_API_KEY for backward compatibility
     GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY') or os.environ.get('GEMINI_API_KEY')
-    
-    # Using the stable 'latest' alias or fallback to 'gemini-pro'
     GENERATIVE_AI_MODEL_NAME = os.environ.get('GENERATIVE_AI_MODEL_NAME') or 'gemini-flash-latest'
 
     # Application Settings
@@ -30,13 +23,16 @@ class Config:
     # Directories
     PRIMARY_DATA_DIR = os.path.join(UPLOAD_FOLDER)
     VTT_IMPORT_DIR = os.path.join(UPLOAD_FOLDER, 'vtt_imports')
+    PC_IMPORT_DIR = os.path.join(VTT_IMPORT_DIR, 'PCs')
     HISTORY_DATA_DIR = os.path.join(UPLOAD_FOLDER, 'history')
     LORE_DATA_DIR = os.path.join(UPLOAD_FOLDER, 'lore')
 
     # Ensure directories exist
-    for directory in [UPLOAD_FOLDER, VTT_IMPORT_DIR, HISTORY_DATA_DIR, LORE_DATA_DIR]:
-        if not os.path.exists(directory):
-            os.makedirs(directory)
+    @classmethod
+    def ensure_dirs(cls):
+        for directory in [cls.UPLOAD_FOLDER, cls.VTT_IMPORT_DIR, cls.PC_IMPORT_DIR, cls.HISTORY_DATA_DIR, cls.LORE_DATA_DIR]:
+            if not os.path.exists(directory):
+                os.makedirs(directory)
 
 class DevelopmentConfig(Config):
     """Development configuration."""
@@ -54,3 +50,6 @@ if env_name == 'production':
     config = ProductionConfig()
 else:
     config = DevelopmentConfig()
+
+# Initialize directories
+config.ensure_dirs()
