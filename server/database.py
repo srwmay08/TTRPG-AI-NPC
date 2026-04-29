@@ -89,7 +89,6 @@ def sync_data_from_files():
         "fvtt-Actor-moriah-kiah-9vGd8Fwm6cEFUaos.json"
     }
 
-    # Only scan these two to avoid the triples seen in your logs
     character_dirs = [
         os.path.abspath(app_config.PRIMARY_DATA_DIR), 
         os.path.abspath(app_config.PC_IMPORT_DIR)
@@ -103,12 +102,11 @@ def sync_data_from_files():
         for root, _, files in os.walk(directory):
             if os.path.abspath(app_config.LORE_DATA_DIR) in os.path.abspath(root): continue
             
-            is_pc_folder = os.path.abspath(app_config.PC_IMPORT_DIR) == os.path.abspath(root)
+            is_pc_folder = os.path.abspath(app_config.PC_IMPORT_DIR) in os.path.abspath(root)
             
             for file_name in files:
                 if not file_name.endswith('.json'): continue
                 
-                # Deduplication and PC filtering
                 file_path = os.path.join(root, file_name)
                 if file_path in processed_files: continue
                 if is_pc_folder and file_name not in active_pc_files: continue
@@ -119,20 +117,23 @@ def sync_data_from_files():
                     
                     if not isinstance(char_data, dict) or 'name' not in char_data: continue
 
-                    # FORCE CHARACTER TYPE
-                    if is_pc_folder or char_data.get('type') == 'character':
+                    # Normalization
+                    if char_data.get('type') == 'character' or is_pc_folder:
                         char_data['character_type'] = 'Player Character'
                         pc_count += 1
                     else:
                         char_data['character_type'] = 'NPC'
 
                     if not char_data.get('description'):
-                        char_data['description'] = "Active Party Member" if is_pc_folder else "Local NPC"
+                        char_data['description'] = "..."
 
-                    # Pydantic creation
+                    # Ensure ID is handled
+                    if '_id' in char_data and isinstance(char_data['_id'], dict):
+                        char_data['_id'] = char_data['_id'].get('$oid', str(ObjectId()))
+
                     validated_char = NPCProfile(**char_data)
                     
-                    # Update database - REMOVED exclude_unset=True to force character_type save
+                    # Update database by NAME to avoid attribute errors
                     char_dump = validated_char.model_dump(by_alias=True)
                     if '_id' in char_dump: del char_dump['_id']
 

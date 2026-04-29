@@ -12,7 +12,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 client = discord.Client(intents=intents)
 
-TARGET_CHANNEL_ID = 1493584378192728145 
+TARGET_CHANNEL_ID = 1499090637566382276 
 
 ROLL_REGEX = re.compile(r'Action:\s*(.*?)\s*-\s*Roll:\s*(\d+)')
 SCRIPTLY_REGEX = re.compile(r"\[\d+:\d+\s?[AP]M\]\s+APP\s+\[Scriptly\]\s+([\w\.]+)\s*:\s*(.+)")

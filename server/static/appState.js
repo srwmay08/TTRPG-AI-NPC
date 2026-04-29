@@ -51,10 +51,13 @@ const appState = {
         if (char._id && typeof char._id === 'object' && char._id.$oid) {
             char._id = char._id.$oid;
         }
-        // Normalize character type for PCs from VTT imports. This is the centralized place for this logic.
-        if (char.type === 'character' && !char.character_type) {
+        
+        // --- NORMALIZATION FIX START ---
+        // Force "Player Character" (from server) to "PC" (expected by frontend)
+        if (char.character_type === 'Player Character' || char.type === 'character') {
             char.character_type = 'PC';
         }
+        // --- NORMALIZATION FIX END ---
 
         // Ensure vtt_data and its nested structures are properly initialized
         char.vtt_data = char.vtt_data || {};
@@ -74,7 +77,7 @@ const appState = {
 
         char.vtt_flags = char.vtt_flags || {};
         char.items = char.items || [];
-        char.system = char.system || {}; // This holds the full FVTT system object
+        char.system = char.system || {}; 
         char.memories = char.memories || [];
         char.associated_history_files = char.associated_history_files || [];
         char.linked_lore_ids = char.linked_lore_ids || [];
@@ -86,17 +89,15 @@ const appState = {
         char.pc_faction_standings = char.pc_faction_standings || {};
         char.canned_conversations = char.canned_conversations || {};
 
-
         if (char.character_type === 'PC') {
             const pcLevel = char.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels ||
-                            char.system?.details?.level || // From FVTT 'system'
-                            char.vtt_data?.details?.level || // Fallback to 'vtt_data.details'
+                            char.system?.details?.level || 
+                            char.vtt_data?.details?.level || 
                             1;
             if (typeof DNDCalculations !== 'undefined' && DNDCalculations.getProficiencyBonus) {
                 char.calculatedProfBonus = DNDCalculations.getProficiencyBonus(pcLevel);
             } else {
-                console.error("DNDCalculations.getProficiencyBonus is not available. Check script load order.");
-                char.calculatedProfBonus = 2; // Fallback proficiency bonus
+                char.calculatedProfBonus = 2; 
             }
         }
         return char;
@@ -141,6 +142,7 @@ const appState = {
         this.dialogueHistories[idStr].push(message);
     },
     getDialogueHistory(npcId) { return this.dialogueHistories[String(npcId)] || []; },
+    recent_context(npcId) { return (this.dialogueHistories[String(npcId)] || []).slice(-5); },
     deleteDialogueHistory(npcId) { delete this.dialogueHistories[String(npcId)]; },
     getRecentDialogueHistory(npcId, count = 5) {
         return (this.dialogueHistories[String(npcId)] || []).slice(-count);
@@ -170,12 +172,11 @@ const appState = {
         this.allLoreEntries = loreEntries.map(entry => {
             if (entry.lore_id && typeof entry.lore_id === 'object' && entry.lore_id.$oid) {
                 entry.lore_id = entry.lore_id.$oid;
-            } else if (entry._id && typeof entry._id === 'object' && entry._id.$oid) { // Handle if _id is present
-                entry.lore_id = entry._id.$oid; // Use _id as lore_id if lore_id is missing
+            } else if (entry._id && typeof entry._id === 'object' && entry._id.$oid) { 
+                entry.lore_id = entry._id.$oid; 
             } else if (entry._id && typeof entry._id === 'string') {
-                 entry.lore_id = entry._id; // if _id is already a string
+                 entry.lore_id = entry._id; 
             }
-
 
             entry.key_facts = entry.key_facts || [];
             entry.tags = entry.tags || [];
