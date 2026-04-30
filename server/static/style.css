@@ -294,6 +294,16 @@ button:disabled { background-color: #ccc; cursor: not-allowed; }
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
+.pc-stat-card p {
+    margin: 0; /* Removes the default browser margin */
+    padding-bottom: 4px; /* Optional: gives just a tiny bit of breathing room between lines */
+}
+
+/* Optional: If you want to tighten up the gap under the character's name as well */
+.pc-stat-card h4 {
+    margin-bottom: 8px; 
+}
+
 .clickable-pc-card {
     cursor: pointer;
     transition: transform 0.1s, box-shadow 0.1s;
