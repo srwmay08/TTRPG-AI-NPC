@@ -129,28 +129,37 @@
                 </div>
             </div>
 
+            <div id="active-party-wrapper">
+                <h4 style="margin-top: 0; margin-bottom: 10px; color: var(--text-main);">Active Party Inbox</h4>
+                <div id="active-party-inputs-container" class="active-party-grid">
+                    <p id="active-party-placeholder" style="color: #888; font-style: italic; font-size: 0.9em; margin: 0; padding: 5px;">Waiting for PC dialogue from the live feed...</p>
+                </div>
+            </div>
+
             <div id="live-discord-chat-container" style="border: 1px solid #444; border-radius: 5px; margin-bottom: 15px; padding: 10px; background-color: #2b2b2b;">
                 <h4 style="margin-top: 0; margin-bottom: 10px; color: #ddd;">Live Discord Feed (Testing Mode)</h4>
                 
                 <div style="display: flex; gap: 10px; margin-bottom: 10px;">
                     <textarea id="discord-log-paste" rows="2" placeholder="Paste Discord log here..." style="flex: 1; font-size: 0.8em; background: #333; color: #fff; border: 1px solid #555;"></textarea>
-                    <button id="step-discord-log-btn" style="flex: 0 0 100px; font-size: 0.8em;">Load Next</button>
+                    <button id="step-discord-log-btn" style="flex: 0 0 100px; font-size: 0.8em; background: #555;">Load Next</button>
                 </div>
 
-                <div id="live-discord-messages" style="height: 120px; overflow-y: auto; font-family: monospace; color: #bbb; border-top: 1px dashed #555; padding-top: 10px;">
+                <div id="live-discord-messages" style="height: 100px; overflow-y: auto; font-family: monospace; color: #bbb; border-top: 1px dashed #555; padding-top: 10px;">
                     <p style="color: #888; font-style: italic;">Waiting for live session messages...</p>
                 </div>
             </div>
 
             <div id="dialogue-input-section">
-                <h4>Player Input</h4>
-                <div style="display: flex; gap: 10px;">
+                <h4>GM / Scene Input</h4>
+                <div style="display: flex; gap: 10px; margin-bottom: 8px;">
                     <select id="speaking-pc-select" style="flex: 1;">
-                        <option value="">-- DM/Scene Event --</option>
+                        <option value="">-- DM / Global Scene Event --</option>
                     </select>
-                    <button id="generate-dialogue-btn" style="flex: 0 0 150px; margin-top:0;">Generate</button>
+                    <button id="undo-dm-btn" style="flex: 0 0 60px; background-color: #ffc107; color: #212529; border:none; border-radius:4px; font-weight:600; font-size: 13px;">Undo</button>
+                    <button id="clear-dm-btn" style="flex: 0 0 60px; background-color: #6c757d; color: white; border:none; border-radius:4px; font-weight:600; font-size: 13px;">Clear</button>
+                    <button id="generate-dialogue-btn" style="flex: 0 0 150px; margin-top:0;">Generate Scene</button>
                 </div>
-                <textarea id="player-utterance" rows="3" placeholder="Player dialogue or scene description..."></textarea>
+                <textarea id="player-utterance" rows="4" placeholder="DM scene descriptions, untracked NPC dialogue, or global actions..."></textarea>
                 
                 <div id="ai-suggestions" style="display:none;"></div>
             </div>
