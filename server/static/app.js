@@ -55,6 +55,9 @@ var App = {
                 });
             }
 
+            // Initialize the new Dynamic Party Inbox Flex Row
+            this.renderPartyInboxUI();
+
             // Start Live Discord Polling
             this.startLiveChatPolling();
 
@@ -67,6 +70,94 @@ var App = {
         console.log("App.js: DOMContentLoaded finished.");
     },
 
+    // --- Dynamic Party Inbox Logic ---
+    renderPartyInboxUI: function() {
+        let container = document.getElementById('party-inbox-container');
+        
+
+        if (!container) {
+            const oldInput = document.getElementById('player-utterance');
+            if (oldInput && oldInput.parentElement) {
+                container = document.createElement('div');
+                container.id = 'party-inbox-container';
+                
+                // Style the container as a flex row
+                container.style.display = 'flex';
+                container.style.flexDirection = 'row';
+                container.style.flexWrap = 'wrap';
+                container.style.gap = '15px';
+                container.style.width = '100%';
+                container.style.alignItems = 'stretch';
+
+                oldInput.parentElement.insertBefore(container, oldInput);
+                
+                // Hide legacy elements to replace them smoothly without breaking layout dependencies
+                oldInput.style.display = 'none';
+                const oldSelect = document.getElementById('speaking-pc-select');
+                if (oldSelect) {
+                    oldSelect.style.display = 'none';
+                }
+                const oldBtn = document.getElementById('generate-dialogue-btn');
+                if (oldBtn) {
+                    oldBtn.style.display = 'none';
+                }
+            } else {
+                return; // DOM not ready or structured differently
+            }
+        } else {
+            // Apply flex row layout if container already exists
+            container.style.display = 'flex';
+            container.style.flexDirection = 'row';
+            container.style.flexWrap = 'wrap';
+            container.style.gap = '15px';
+            container.style.width = '100%';
+            container.style.alignItems = 'stretch';
+        }
+
+        container.innerHTML = ''; // Clear existing dynamic inputs
+        
+        const isNpcActive = window.AppState ? window.AppState.getActiveNpcCount() > 0 : false;
+        const btnDisabledAttr = isNpcActive ? '' : 'disabled="true"';
+        const btnOpacity = isNpcActive ? '1' : '0.5';
+        const btnCursor = isNpcActive ? 'pointer' : 'not-allowed';
+
+        // 1. GM / Scene Input (Placed first to anchor the row)
+        const gmDiv = document.createElement('div');
+        gmDiv.className = 'inbox-group gm-inbox';
+        gmDiv.style.cssText = 'flex: 1 1 0; min-width: 250px; display: flex; flex-direction: column; background: #2a2a2a; padding: 10px; border-radius: 6px; border: 1px solid #444;';
+        gmDiv.innerHTML = `
+            <label style="display:block; font-weight:bold; margin-bottom:5px; color: #e0e0e0;">GM / Scene Input</label>
+            <textarea id="gm-utterance" class="party-inbox-textarea full-width-textarea" placeholder="Describe the scene or GM actions..." style="flex-grow: 1; min-height: 80px; margin-bottom: 10px; background: #1a1a1a; color: #eee; border: 1px solid #555; padding: 8px; border-radius: 4px; resize: vertical;"></textarea>
+            <div style="display: flex; gap: 5px;">
+                <button onclick="document.getElementById('gm-utterance').value=''" style="padding: 8px 12px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Clear</button>
+                <button class="dynamic-generate-btn" onclick="App.handleGenerateDialogueForInput('gm-utterance', null)" ${btnDisabledAttr} style="padding: 8px 12px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: ${btnCursor}; opacity: ${btnOpacity}; font-weight: bold; flex-grow: 1;">Send GM Event</button>
+            </div>
+        `;
+        container.appendChild(gmDiv);
+
+        // 2. PC Inputs (Only for active PCs, they will flow alongside the GM box)
+        if (window.AppState) {
+            window.AppState.getActivePcIds().forEach(pcId => {
+                const pc = window.AppState.getCharacterById(pcId);
+                if (pc) {
+                    const safeName = window.Utils ? window.Utils.escapeHtml(pc.name) : pc.name;
+                    const pcDiv = document.createElement('div');
+                    pcDiv.className = 'inbox-group pc-inbox';
+                    pcDiv.style.cssText = 'flex: 1 1 0; min-width: 250px; display: flex; flex-direction: column; background: #222b36; padding: 10px; border-radius: 6px; border: 1px solid #2c3e50;';
+                    pcDiv.innerHTML = `
+                        <label style="display:block; font-weight:bold; margin-bottom:5px; color: #4aa0d5;">${safeName} Input</label>
+                        <textarea id="pc-utterance-${pcId}" class="party-inbox-textarea full-width-textarea" placeholder="What does ${safeName} say or do?" style="flex-grow: 1; min-height: 80px; margin-bottom: 10px; background: #1a1a1a; color: #eee; border: 1px solid #555; padding: 8px; border-radius: 4px; resize: vertical;"></textarea>
+                        <div style="display: flex; gap: 5px;">
+                            <button onclick="document.getElementById('pc-utterance-${pcId}').value=''" style="padding: 8px 12px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Clear</button>
+                            <button class="dynamic-generate-btn" onclick="App.handleGenerateDialogueForInput('pc-utterance-${pcId}', '${pcId}')" ${btnDisabledAttr} style="padding: 8px 12px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: ${btnCursor}; opacity: ${btnOpacity}; font-weight: bold; flex-grow: 1;">Send as ${safeName}</button>
+                        </div>
+                    `;
+                    container.appendChild(pcDiv);
+                }
+            });
+        }
+    },
+
     // --- Live Discord Chat Logic ---
     startLiveChatPolling: function() {
         console.log("App.js: [DEBUG - UI] Starting Live Discord Chat polling interval...");
@@ -75,7 +166,6 @@ var App = {
     },
 
     pollLiveChat: async function() {
-        // Suppressed the heavy polling log to keep console clean, but leaving error logs active
         try {
             const response = await fetch('/api/live_chat');
             
@@ -113,7 +203,6 @@ var App = {
                 p.style.cursor = 'pointer'; 
                 p.style.transition = 'background-color 0.2s ease';
                 
-                // Hover effects for clickability
                 p.onmouseover = () => {
                     p.style.backgroundColor = '#444';
                 };
@@ -124,50 +213,49 @@ var App = {
                 p.textContent = msg;
                 p.title = "Click to load into Player Input";
                 
-                // NEW: Click interaction logic
                 p.addEventListener('click', () => {
-                    // Match pattern: "Name: The message content"
                     const match = msg.match(/^([^:]+):\s*(.*)$/);
                     if (match) {
                         const speakerName = match[1].trim();
                         const utterance = match[2].trim();
 
-                        const select = document.getElementById('speaking-pc-select');
-                        if (select) {
-                            let matchedOption = false;
+                        let targetTextAreaId = 'gm-utterance'; 
+                        
+                        if (!speakerName.includes("DM") && !speakerName.includes("SRWM")) {
+                            const allChars = window.AppState ? window.AppState.getAllCharacters() : [];
+                            const pc = allChars.find(c => c.name === speakerName && (c.character_type === 'PC' || c.character_type === 'Player Character'));
                             
-                            // Check if it's the DM
-                            if (speakerName.includes("DM") || speakerName.includes("SRWM")) {
-                                select.value = "";
-                                matchedOption = true;
-                            } else {
-                                // Check if it's a PC by matching the option text
-                                for (let i = 0; i < select.options.length; i++) {
-                                    if (select.options[i].text === speakerName) {
-                                        select.value = select.options[i].value;
-                                        matchedOption = true;
-                                        break;
+                            if (pc) {
+                                if (window.AppState && !window.AppState.hasActivePc(pc._id)) {
+                                    window.AppState.addActivePc(pc._id);
+                                    if (window.PCRenderers) {
+                                        const activePcs = window.AppState.getAllCharacters().filter(c => c.character_type === 'PC');
+                                        PCRenderers.renderPcListUI(activePcs);
                                     }
+                                    App.renderPartyInboxUI(); 
                                 }
-                            }
-                            
-                            // Fallback to DM if name doesn't match an active PC
-                            if (!matchedOption) {
-                                select.value = "";
+                                targetTextAreaId = `pc-utterance-${pc._id}`;
                             }
                         }
 
-                        // Populate the input field
-                        const utteranceArea = document.getElementById('player-utterance');
-                        if (utteranceArea) {
-                            utteranceArea.value = utterance;
-                            
-                            // Visual feedback flash
-                            const originalBg = utteranceArea.style.backgroundColor;
-                            utteranceArea.style.backgroundColor = '#2c4a2c'; // Soft green flash
+                        const dynamicUtteranceArea = document.getElementById(targetTextAreaId);
+                        if (dynamicUtteranceArea) {
+                            dynamicUtteranceArea.value = utterance;
+                            const originalBg = dynamicUtteranceArea.style.backgroundColor;
+                            dynamicUtteranceArea.style.backgroundColor = '#2c4a2c'; 
                             setTimeout(() => {
-                                utteranceArea.style.backgroundColor = originalBg;
+                                dynamicUtteranceArea.style.backgroundColor = originalBg;
                             }, 300);
+                        } else {
+                            const oldUtteranceArea = document.getElementById('player-utterance');
+                            if (oldUtteranceArea) {
+                                oldUtteranceArea.value = utterance;
+                                const originalBg = oldUtteranceArea.style.backgroundColor;
+                                oldUtteranceArea.style.backgroundColor = '#2c4a2c';
+                                setTimeout(() => {
+                                    oldUtteranceArea.style.backgroundColor = originalBg;
+                                }, 300);
+                            }
                         }
                     }
                 });
@@ -175,7 +263,6 @@ var App = {
                 container.appendChild(p);
             });
             
-            // Auto-scroll to bottom
             container.scrollTop = container.scrollHeight;
             
         } catch (error) {
@@ -401,8 +488,10 @@ var App = {
             const intro = toggledNpc.canned_conversations?.introduction;
             const sceneContext = document.getElementById('scene-context') ? document.getElementById('scene-context').value.trim() : "";
             const activePcNames = AppState.getActivePcIds().map(pcId => AppState.getCharacterById(pcId)?.name || "a PC");
-            const speakingPcSelect = document.getElementById('speaking-pc-select');
-            const currentSpeakingPcId = speakingPcSelect ? speakingPcSelect.value : null;
+            
+            // Dynamic speaking PC ID detection based on the new inbox structure is handled contextually during generate, 
+            // for greeting we can default to null or the first PC.
+            const currentSpeakingPcId = null;
 
             if (intro) {
                 const payload = {
@@ -502,17 +591,35 @@ var App = {
         transcriptArea.scrollTop = transcriptArea.scrollHeight;
     },
 
+    // Legacy handler left for fallback safety
     handleGenerateDialogue: async function() {
-        const playerUtterance = document.getElementById('player-utterance').value.trim();
-        const sceneContext = document.getElementById('scene-context') ? document.getElementById('scene-context').value.trim() : "";
-        const speakingPcSelect = document.getElementById('speaking-pc-select');
-        const speakerId = speakingPcSelect ? speakingPcSelect.value : null;
+        const input = document.getElementById('player-utterance');
+        const select = document.getElementById('speaking-pc-select');
+        if (input && select) {
+            App.handleGenerateDialogueForInput('player-utterance', select.value);
+        }
+    },
+
+    // New specific handler designed for individual dynamic boxes
+    handleGenerateDialogueForInput: async function(textareaId, speakerId) {
+        const inputElem = document.getElementById(textareaId);
+        if (!inputElem) return;
+        
+        const playerUtterance = inputElem.value.trim();
+        const sceneContextElem = document.getElementById('scene-context');
+        const sceneContext = sceneContextElem ? sceneContextElem.value.trim() : "";
 
         if (!playerUtterance) {
-            alert("Please enter player dialogue to send to the NPCs.");
+            alert("Please enter dialogue or actions to send.");
             return;
         }
-        Utils.disableBtn('generate-dialogue-btn', true);
+
+        // Disable all dynamic buttons while generating
+        const buttons = document.querySelectorAll('.dynamic-generate-btn');
+        buttons.forEach(b => b.disabled = true);
+        if (window.Utils) {
+            Utils.disableBtn('generate-dialogue-btn', true);
+        }
 
         const speaker = AppState.getCharacterById(speakerId);
         const speakerDisplayName = speaker ? speaker.name : "DM/Scene Event";
@@ -547,9 +654,7 @@ var App = {
 
         const dialoguePromises = listeningNpcIds.map(npcId => {
             const npc = AppState.getCharacterById(npcId);
-            if (!npc) {
-                return Promise.resolve();
-            }
+            if (!npc) return Promise.resolve();
 
             const payload = {
                 scene_context: sceneContext,
@@ -563,10 +668,12 @@ var App = {
 
         await Promise.all(dialoguePromises);
 
-        if (playerUtterance) {
-            document.getElementById('player-utterance').value = '';
+        inputElem.value = ''; // Clear only the specific input box used
+        
+        buttons.forEach(b => b.disabled = false);
+        if (window.Utils) {
+            Utils.disableBtn('generate-dialogue-btn', false);
         }
-        Utils.disableBtn('generate-dialogue-btn', false);
     },
 
     handleTogglePcSelection: function(pcIdStr) {
@@ -581,6 +688,9 @@ var App = {
             );
             PCRenderers.renderPcListUI(allPcs);
         }
+
+        // Render our new party inbox flex row to reflect the toggled PC!
+        App.renderPartyInboxUI();
 
         const select = document.getElementById('speaking-pc-select');
         if (select) {
@@ -714,10 +824,16 @@ var App = {
     },
     
     sendTopicToChat: function(topic) {
-        const playerUtteranceElem = document.getElementById('player-utterance');
-        if (playerUtteranceElem) {
-            playerUtteranceElem.value = topic;
-            playerUtteranceElem.focus();
+        const gmUtteranceElem = document.getElementById('gm-utterance');
+        if (gmUtteranceElem) {
+            gmUtteranceElem.value = topic;
+            gmUtteranceElem.focus();
+        } else {
+            const playerUtteranceElem = document.getElementById('player-utterance');
+            if (playerUtteranceElem) {
+                playerUtteranceElem.value = topic;
+                playerUtteranceElem.focus();
+            }
         }
     },
 
@@ -781,6 +897,7 @@ window.App = App;
 window.openTab = App.openTab.bind(App);
 window.handleToggleNpcInScene = App.handleToggleNpcInScene.bind(App);
 window.handleGenerateDialogue = App.handleGenerateDialogue.bind(App);
+window.handleGenerateDialogueForInput = App.handleGenerateDialogueForInput.bind(App);
 window.handleTogglePcSelection = App.handleTogglePcSelection.bind(App);
 window.handleBackToDashboardOverview = App.handleBackToDashboardOverview.bind(App);
 window.toggleAbilityExpansion = App.toggleAbilityExpansion.bind(App);

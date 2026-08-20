@@ -68,10 +68,23 @@ var MainView = {
             }
         }
 
-        // Button state
+        // --- Disable button logic ---
         if (window.Utils) {
             Utils.disableBtn('generate-dialogue-btn', activeNpcCount === 0);
         }
+        
+        // NEW: Disable dynamic generate buttons when no NPCs are active
+        const dynamicBtns = document.querySelectorAll('.dynamic-generate-btn');
+        dynamicBtns.forEach(btn => {
+            btn.disabled = (activeNpcCount === 0);
+            if (activeNpcCount === 0) {
+                btn.style.opacity = '0.5';
+                btn.style.cursor = 'not-allowed';
+            } else {
+                btn.style.opacity = '1';
+                btn.style.cursor = 'pointer';
+            }
+        });
     },
 
     // Alias for backward compatibility if older code calls it

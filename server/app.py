@@ -38,10 +38,20 @@ HISTORY_DATA_DIR = app_config.HISTORY_DATA_DIR
 LORE_DATA_DIR = app_config.LORE_DATA_DIR
 
 # --- LIVE DISCORD CHAT VARIABLES ---
+# Consolidated and strictly lowercase to match raw_author cast
 PLAYER_CHARACTER_MAPPING = {
-    "srwm": "DM (SRWM)",
+    "srwm": "DM (Scene Input)",
     "brunes": "Belric",
-    "cagge": "Donte"
+    "cagge": "Donte",
+    "bluesman1971": "Garrett",
+    "seiper192": "Xander Vyltryn",
+    "drizzt": "Sel'zen Daer'maer the Shadow Bound",
+    "yeeyee4477": "Vilis, The Black Hand",
+    "silencedscreaming": "Vilis, The Black Hand",
+    "chaserxl": "Sudara",
+    "zenchaser": "Sudara",
+    "ortiz alehammer": "Moriah Kiah",
+    "ortizalehammer": "Moriah Kiah"
 }
 live_session_history = []
 
@@ -183,24 +193,11 @@ def parse_ai_suggestions(full_ai_output: str, speaking_pc_id: Optional[str]) -> 
         "justification": justification_str
     }
 
-    
-
 # --- APP ROUTES ---
 
 @app.route('/')
 def serve_index():
     return render_template('index.html')
-
-
-PLAYER_CHARACTER_MAPPING = {
-    "srwm": "DM (Scene Input)",
-    "bluesman1971": "Garrett",
-    "Seiper192": "Xander Vyltryn",
-    "Drizzt": "Sel'zen Daer'maer the Shadow Bound",
-    "YEEYEE4477": "Vilis, The Black Hand",
-    "ChaserXL": "Sudara",
-    "Ortiz Alehammer": "Moriah Kiah"
-}
 
 # --- LIVE DISCORD CHAT ENDPOINTS ---
 
@@ -213,7 +210,13 @@ def handle_live_chat_ingest():
     raw_author = data.get("author", "Unknown").lower()
     content = data.get("content", "")
     
-    character_name = PLAYER_CHARACTER_MAPPING.get(raw_author, data.get("author"))
+    # Use substring matching to catch compound discord names like "[ortizalehammer / Garrett]"
+    character_name = data.get("author")
+    for mapping_key, mapping_val in PLAYER_CHARACTER_MAPPING.items():
+        if mapping_key in raw_author:
+            character_name = mapping_val
+            break
+    
     formatted_message = f"{character_name}: {content}"
     
     live_session_history.append(formatted_message)
