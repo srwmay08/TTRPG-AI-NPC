@@ -1,7 +1,13 @@
-// static/characterService.js
-// Responsibility: Logic related to fetching, processing, and managing character data.
+/**
+ * static/characterService.js
+ * 
+ * Responsibility: Acts as a controller specifically governing logic related to 
+ * fetching, processing, modifying, and updating character and lore data states.
+ * Mediates between ApiService calls and UI Renderer updates.
+ */
 
 const CharacterService = {
+    // Dictionary tracking static HTML IDs to prevent magic strings and assist maintainability
     profileElementIds: {
         detailsCharName: 'details-char-name',
         profileCharType: 'profile-char-type',
@@ -24,17 +30,25 @@ const CharacterService = {
         associatedLoreListForCharacter: 'associated-lore-list-for-character'
     },
 
+    /**
+     * Entrypoint data fetcher. Hits the API to load all chars, splits PCs from NPCs, 
+     * and delegates lists to their respective renderers.
+     */
     initializeAppCharacters: async function() {
         console.log("Fetching characters via characterService...");
         try {
+            // Await complete document pull
             let charactersFromServer = await ApiService.fetchCharactersFromServer();
+            
+            // Push raw data into AppState normalization
             appState.setAllCharacters(charactersFromServer);
             console.log("Characters fetched and processed:", appState.getAllCharacters().length);
 
-            // This is the CORRECTED line
+            // Extract only the Player Characters and render their specific sidebars/dashboards
             const playerCharacters = appState.getAllCharacters().filter(char => char.character_type === 'PC');
             PCRenderers.renderPcListUI(Utils.getElem('active-pc-list'), Utils.getElem('speaking-pc-select'), playerCharacters, appState.activePcIds, App.handleTogglePcSelection, appState.activeSceneNpcIds);
 
+            // Push non-player characters to the specific context-filtered lists
             NPCRenderers.renderNpcListForContextUI(
                 Utils.getElem('character-list-scene-tab'),
                 appState.getAllCharacters(),
@@ -43,17 +57,22 @@ const CharacterService = {
                 CharacterService.handleSelectCharacterForDetails,
                 null
             );
+            
+            // Populate the unrestricted backend management list
             NPCRenderers.renderAllNpcListForManagementUI(
                 Utils.getElem('all-character-list-management'),
                 appState.getAllCharacters(),
                 CharacterService.handleSelectCharacterForDetails
             );
 
+            // Concurrently fetch the lore data as it interacts closely with NPCs
             await this.fetchAllLoreEntriesAndUpdateState();
             LoreRenderers.populateLoreTypeDropdownUI();
 
+            // Shift event to end of JS queue
             setTimeout(App.updateMainView, 0);
         } catch (error) {
+            // Handle critical boot errors safely to avoid crashing the rest of the JS execution
             console.error('Error in initializeAppCharacters:', error);
             Utils.getElem('character-list-scene-tab').innerHTML = '<ul><li><em>Error loading NPCs for scene.</em></li></ul>';
             Utils.getElem('all-character-list-management').innerHTML = '<ul><li><em>Error loading all NPCs.</em></li></ul>';
@@ -61,9 +80,15 @@ const CharacterService = {
         }
     },
 
+    /**
+     * Executes when an NPC name is clicked, swapping to the profile view
+     * and loading their deep context info.
+     * @param {string} charIdStr - The MongoDB ObjectId of the character.
+     */
     handleSelectCharacterForDetails: async function(charIdStr) {
         const characterProfileSection = Utils.getElem('character-profile-main-section');
         
+        // Null handler: Clears the pane if selection is wiped
         if (!charIdStr || charIdStr === "null") {
             appState.setCurrentProfileCharId(null);
             appState.clearCannedResponses();
@@ -78,17 +103,22 @@ const CharacterService = {
             return;
         }
 
+        // Save active tracked character
         appState.setCurrentProfileCharId(charIdStr);
         
         try {
+            // Make a detailed query to the DB to fetch large text blocks (histories)
             const selectedCharFromServer = await ApiService.fetchNpcDetails(charIdStr);
             const processedChar = appState.updateCharacterInList(selectedCharFromServer);
             
+            // Cache their specific predefined topic outputs
             appState.setCannedResponsesForProfiledChar(processedChar.canned_conversations || {});
             
+            // Delegate the building of their HTML sheet to the renderer
             NPCRenderers.renderCharacterProfileUI(processedChar, CharacterService.profileElementIds);
             NPCRenderers.renderSuggestionsArea(null, charIdStr);
 
+            // Expand the accordion window
             if (characterProfileSection) {
                 characterProfileSection.classList.remove('collapsed');
                 const content = characterProfileSection.querySelector('.collapsible-content');
@@ -97,7 +127,7 @@ const CharacterService = {
 
             await CharacterService.fetchAndRenderHistoryFiles();
 
-            // --- CRITICAL FIX: Switch view if it is an NPC ---
+            // Switch view if it is an NPC
             if (processedChar.character_type === 'NPC') {
                 appState.currentView = 'npc';
                 if (window.App && App.updateMainView) App.updateMainView();
@@ -117,25 +147,36 @@ const CharacterService = {
         }
     },
 
+    /** Validates inputs from the frontend submission form and pushes to the backend. */
     handleCharacterCreation: async function(event) {
-        if (event) event.preventDefault(); // Prevent form from submitting
+        if (event) event.preventDefault(); // Prevent standard HTTP form from overriding AJAX request
+        
+        // Grab and trim text data
         const name = Utils.getElem('new-char-name').value.trim();
         const description = Utils.getElem('new-char-description').value.trim();
         const personality = Utils.getElem('new-char-personality').value.split(',').map(s => s.trim()).filter(s => s);
         const type = Utils.getElem('new-char-type').value;
 
+        // Basic requirement gating
         if (!name || !description) {
             alert("Name and Description are required.");
             return;
         }
+        
+        // Structure payload
         const newCharData = { name, description, personality_traits: personality, character_type: type, linked_lore_ids: [] };
+        
         try {
+            // Push via API and append the resultant new document directly into state arrays
             const newCharacter = await ApiService.createCharacterOnServer(newCharData);
             appState.updateCharacterInList(newCharacter);
+            
+            // Trigger downstream UI cascades to reflect new state
             NPCRenderers.renderNpcListForContextUI(Utils.getElem('character-list-scene-tab'), appState.getAllCharacters(), appState.activeSceneNpcIds, App.handleToggleNpcInScene, CharacterService.handleSelectCharacterForDetails, appState.currentSceneContextFilter);
             NPCRenderers.renderAllNpcListForManagementUI(Utils.getElem('all-character-list-management'), appState.getAllCharacters(), CharacterService.handleSelectCharacterForDetails);
             PCRenderers.renderPcListUI(Utils.getElem('active-pc-list'), Utils.getElem('speaking-pc-select'), appState.getAllCharacters(), appState.activePcIds, App.handleTogglePcSelection, appState.activeSceneNpcIds);
 
+            // Reset inputs for next creation
             Utils.getElem('new-char-name').value = '';
             Utils.getElem('new-char-description').value = '';
             Utils.getElem('new-char-personality').value = '';
@@ -146,10 +187,12 @@ const CharacterService = {
         }
     },
 
+    /** Queries the backend for available `.txt` logs to bind to characters. */
     fetchAndRenderHistoryFiles: async function() {
         const selectElement = Utils.getElem('history-file-select');
         if (!selectElement) return;
-        const currentValue = selectElement.value;
+        const currentValue = selectElement.value; // Store state before wiping list
+        
         selectElement.innerHTML = '<option value="">-- Select a history file --</option>';
         try {
             const files = await ApiService.fetchHistoryFilesFromServer();
@@ -159,6 +202,7 @@ const CharacterService = {
                 option.textContent = file;
                 selectElement.appendChild(option);
             });
+            // Re-apply selection if possible
             if (files.includes(currentValue)) selectElement.value = currentValue;
         } catch (error) {
             console.error("Error fetching/rendering history files:", error);
@@ -166,6 +210,7 @@ const CharacterService = {
         }
     },
 
+    /** Instructs API to push a text file reference string to an NPC's array. */
     handleAssociateHistoryFile: async function() {
         const charId = appState.getCurrentProfileCharId();
         if (!charId) {
@@ -194,10 +239,14 @@ const CharacterService = {
         }
     },
 
+    /** Instructs API to pull a text file reference string from an NPC's array. */
     handleDissociateHistoryFile: async function(filename) {
         const charId = appState.getCurrentProfileCharId();
         if (!charId) { alert("No character selected."); return; }
+        
+        // Confirmation gate
         if (!confirm(`Remove "${filename}" from this character's history?`)) return;
+        
         try {
             const result = await ApiService.dissociateHistoryFileFromNpc(charId, filename);
             if (result && result.character) {
@@ -213,6 +262,7 @@ const CharacterService = {
         }
     },
 
+    /** Updates a specific Dictionary key within an NPC corresponding to a PC's reputation. */
     handleSaveFactionStanding: async function(npcId, pcId, newStandingValue) {
         if (!npcId || !pcId || !newStandingValue) {
             console.error("Missing IDs or new standing for faction update");
@@ -229,6 +279,8 @@ const CharacterService = {
             if (response && response.character) {
                 const updatedCharState = appState.updateCharacterInList(response.character);
                 const currentProfileChar = appState.getCurrentProfileChar();
+                
+                // If they are currently being viewed, immediately overwrite the visible slider
                 if (currentProfileChar && String(currentProfileChar._id) === String(npcId)) {
                      NPCRenderers.renderNpcFactionStandingsUI(
                         updatedCharState,
@@ -248,6 +300,7 @@ const CharacterService = {
         }
     },
 
+    /** Cascades Lore downloads into specific Context selector dropdowns. */
     fetchAllLoreEntriesAndUpdateState: async function() {
         try {
             const loreEntries = await ApiService.fetchAllLoreEntries();
@@ -261,6 +314,7 @@ const CharacterService = {
         }
     },
 
+    /** Structure and validate new generic Lore contexts. */
     handleCreateLoreEntry: async function() {
         const name = Utils.getElem('new-lore-name').value.trim();
         const lore_type = Utils.getElem('new-lore-type').value;
@@ -273,6 +327,7 @@ const CharacterService = {
             alert("Name, Type, and Description are required for a lore entry.");
             return;
         }
+        
         const loreData = { name, lore_type, description, key_facts, tags, gm_notes };
         try {
             const result = await ApiService.createLoreEntryOnServer(loreData);
@@ -281,8 +336,9 @@ const CharacterService = {
             LoreRenderers.populateLoreEntrySelectForCharacterLinkingUI();
             LoreRenderers.populateSceneContextSelectorUI();
 
+            // Clear inputs post-success
             Utils.getElem('new-lore-name').value = '';
-            Utils.getElem('new-lore-type').value = LORE_TYPES[0];
+            Utils.getElem('new-lore-type').value = LORE_TYPES[0]; // Restores to default constant
             Utils.getElem('new-lore-description').value = '';
             Utils.getElem('new-lore-key-facts').value = '';
             Utils.getElem('new-lore-tags').value = '';
@@ -294,6 +350,7 @@ const CharacterService = {
         }
     },
 
+    /** Fetches the specific lore entry object for display on the right pane. */
     handleSelectLoreEntryForDetails: async function(loreIdStr) {
         if (!loreIdStr) {
             LoreRenderers.closeLoreDetailViewUI();
@@ -309,6 +366,7 @@ const CharacterService = {
         }
     },
 
+    /** Persists GM private notes updates to a Lore object without modifying descriptors. */
     handleUpdateLoreEntryGmNotes: async function() {
         const loreId = appState.getCurrentLoreEntryId();
         if (!loreId) return;
@@ -323,18 +381,25 @@ const CharacterService = {
         }
     },
 
+    /** Initiates destructive deletion logic against the backend Mongo DB. */
     handleDeleteLoreEntry: async function() {
         const loreId = appState.getCurrentLoreEntryId();
         if (!loreId) return;
+        
+        // Hard-stop validation check
         if (!confirm("Are you sure you want to delete this lore entry? This will also unlink it from all characters.")) return;
+        
         try {
             await ApiService.deleteLoreEntryFromServer(loreId);
             appState.removeLoreEntryFromList(loreId);
+            
+            // Clean up related selector UI downstream
             LoreRenderers.renderLoreEntryListUI(appState.getAllLoreEntries());
             LoreRenderers.populateLoreEntrySelectForCharacterLinkingUI();
             LoreRenderers.populateSceneContextSelectorUI();
             LoreRenderers.closeLoreDetailViewUI();
 
+            // If a character currently active has this lore linked, locally drop it from their instance
             const currentProfileCharId = appState.getCurrentProfileCharId();
             if(currentProfileCharId){
                  const charData = appState.getCharacterById(currentProfileCharId);
@@ -351,6 +416,7 @@ const CharacterService = {
         }
     },
 
+    /** Directs backend to update the NPC's `linked_lore` array with a target ID. */
     handleLinkLoreToCharacter: async function() {
         const charId = appState.getCurrentProfileCharId();
         const loreSelect = Utils.getElem('lore-entry-select-for-character');
@@ -374,6 +440,7 @@ const CharacterService = {
         }
     },
 
+    /** Directs backend to `$pull` a target ID from the NPC's `linked_lore` array. */
     handleUnlinkLoreFromCharacter: async function(loreIdToUnlink) {
         const charId = appState.getCurrentProfileCharId();
         if (!charId || !loreIdToUnlink) return;
@@ -394,6 +461,7 @@ const CharacterService = {
         }
     },
 
+    /** Basic PUT mapping utility for specific GM text. */
     handleSaveGmNotes: async function() {
         const charId = appState.getCurrentProfileCharId();
         if (!charId) return;
@@ -413,6 +481,7 @@ const CharacterService = {
         }
     },
 
+    /** Sends manually crafted strings to become formatted Memory Objects in Mongo. */
     handleAddMemory: async function() {
         const charId = appState.getCurrentProfileCharId();
         const character = appState.getCharacterById(charId);
@@ -443,6 +512,7 @@ const CharacterService = {
         }
     },
 
+    /** Passes UUID target to API endpoint targeting Memory deletions. */
     handleDeleteMemory: async function(memoryId) {
         const charId = appState.getCurrentProfileCharId();
         if (!charId || !memoryId) return;

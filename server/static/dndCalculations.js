@@ -1,5 +1,12 @@
-// static/dndCalculations.js
+/**
+ * static/dndCalculations.js
+ * 
+ * Responsibility: Centralized utility for handling all Dungeons & Dragons 5e math,
+ * stat derivations, and Damage Per Round (DPR) estimations. Isolating this logic
+ * here prevents math errors from bleeding into the UI rendering components.
+ */
 
+// Baseline lookup table to quickly estimate expected Monster AC by Challenge Rating (CR)
 const MONSTER_STATS_BY_CR = {
     0: 13, 0.125: 13, 0.25: 13, 0.5: 13, 1: 13, 2: 13, 3: 13, 4: 14, 5: 15,
     6: 15, 7: 15, 8: 16, 9: 16, 10: 17, 11: 17, 12: 17, 13: 18, 14: 18,
@@ -7,10 +14,12 @@ const MONSTER_STATS_BY_CR = {
     24: 21, 25: 21, 26: 21, 27: 22, 28: 22, 29: 22, 30: 22
 };
 
+// Quick reference for calculating mean damage yields from standard polyhedral dice
 const DIE_AVERAGES = {
     'd4': 2.5, 'd6': 3.5, 'd8': 4.5, 'd10': 5.5, 'd12': 6.5, 'd20': 10.5
 };
 
+// Lookup table for Monk Martial Arts die progression by class level
 const MONK_MARTIAL_ARTS_DICE = {
     1: '1d4', 2: '1d4', 3: '1d4', 4: '1d4', 
     5: '1d6', 6: '1d6', 7: '1d6', 8: '1d6', 9: '1d6', 10: '1d6',
@@ -20,45 +29,66 @@ const MONK_MARTIAL_ARTS_DICE = {
 
 
 var DNDCalculations = {
+    /**
+     * Calculates the standard 5e ability modifier from a raw ability score.
+     * Formula: floor((Score - 10) / 2)
+     * @param {number} score - The raw ability score (e.g., 16).
+     * @returns {number} The calculated modifier (e.g., +3).
+     */
     getAbilityModifier: function(score) {
         return Math.floor(((score || 10) - 10) / 2);
     },
 
+    /** Calculates carrying capacity in pounds. */
     carryingCapacity: function(score) {
         return (score || 10) * 15;
     },
 
+    /** Calculates push/drag/lift capacity in pounds. */
     pushDragLift: function(score) {
         return (score || 10) * 30;
     },
 
+    /** Calculates max long jump distance in feet. Halved if standing. */
     longJump: function(score, running = true) {
         score = score || 10;
         return running ? score : Math.floor(score / 2);
     },
 
+    /** Calculates max high jump distance in feet. Halved if standing. */
     highJump: function(score, running = true) {
         score = score || 10;
         const mod = this.getAbilityModifier(score);
         return running ? (3 + mod) : Math.floor((3 + mod) / 2);
     },
 
+    /** Derives initiative bonus (Dexterity modifier plus external bonuses like Alert feat). */
     getInitiativeBonus: function(dexModifier, otherBonuses = 0) {
         return dexModifier + (otherBonuses || 0);
     },
 
+    /** Calculates how long a character can hold their breath in minutes. */
     holdBreath: function(conScore) {
         conScore = conScore || 10;
         const mod = this.getAbilityModifier(conScore);
-        const minutes = Math.max(1, 1 + mod);
+        const minutes = Math.max(1, 1 + mod); // Minimum 1 minute per 5e rules
         return `${minutes} minute${minutes === 1 ? '' : 's'}`;
     },
 
+    /** Calculates a saving throw bonus, checking for proficiency. */
     savingThrowBonus: function(abilityScore, proficientInSave = false, proficiencyBonus = 0) {
         const mod = this.getAbilityModifier(abilityScore || 10);
         return mod + (proficientInSave ? proficiencyBonus : 0);
     },
 
+    /**
+     * Calculates the total bonus for a specific skill check.
+     * Accounts for standard proficiency, expertise (double prof), and half-proficiency.
+     * @param {number} baseStatScore - The raw score of the governing ability.
+     * @param {number} skillProficiencyValue - 1 for Proficient, 2 for Expertise, 0.5 for Jack of All Trades.
+     * @param {number} proficiencyBonus - The character's global proficiency bonus.
+     * @returns {number} The final skill modifier.
+     */
     calculateSkillBonus: function(baseStatScore, skillProficiencyValue, proficiencyBonus) {
         const modifier = this.getAbilityModifier(baseStatScore || 10);
         let skillBonus = modifier;
@@ -66,17 +96,19 @@ var DNDCalculations = {
             skillBonus += proficiencyBonus;
         } else if (skillProficiencyValue === 2) { // Expertise
             skillBonus += (proficiencyBonus * 2);
-        } else if (skillProficiencyValue === 0.5) { // Half-Proficiency (e.g., Jack of All Trades)
+        } else if (skillProficiencyValue === 0.5) { // Half-Proficiency
             skillBonus += Math.floor(proficiencyBonus / 2);
         }
         return skillBonus;
     },
 
+    /** Calculates the passive score for a skill (10 + Total Skill Bonus). */
     calculatePassiveSkill: function(baseStatScore, skillProficiencyValue, proficiencyBonus) {
         const skillBonus = this.calculateSkillBonus(baseStatScore || 10, skillProficiencyValue, proficiencyBonus);
         return 10 + skillBonus;
     },
 
+    /** Returns standard proficiency bonus determined by total character level. */
     getProficiencyBonus: function(level) {
         level = level || 1;
         if (level < 1) return 2;
@@ -115,17 +147,26 @@ var DNDCalculations = {
         return dexModifier;
     },
 
+    // Lookup dict mapping base classes to their primary casting stat
     CLASS_SPELLCASTING_ABILITIES: {
         'bard': 'cha', 'paladin': 'cha', 'sorcerer': 'cha', 'warlock': 'cha',
         'cleric': 'wis', 'druid': 'wis', 'ranger': 'wis', 'monk': 'wis',
         'wizard': 'int', 'artificer': 'int'
     },
 
+    /**
+     * Parses the complex VTT JSON tree to build a flat list of classes a character possesses.
+     * Accounts for multi-classing by searching through the character's 'items' array.
+     * @param {Object} pcData - The raw character JSON from the VTT.
+     * @returns {Array<string>} List of class names (e.g., ['fighter', 'wizard']).
+     */
     getCharacterClassNames: function(pcData) {
         const classNames = new Set();
+        // Check base string first
         if (pcData && pcData.class_str) {
             classNames.add(pcData.class_str.toLowerCase().split('(')[0].trim());
         }
+        // Iterate over equipped/owned VTT items to find class objects
         if (pcData && pcData.items) {
             pcData.items.forEach(item => {
                 if (item.type === 'class' && item.name) {
@@ -133,6 +174,7 @@ var DNDCalculations = {
                 }
             });
         }
+        // Fallback lookups depending on VTT export schema (Foundry vs D&D Beyond)
         if (classNames.size === 0 && pcData && pcData.vtt_data?.details?.originalClass) {
             classNames.add(pcData.vtt_data.details.originalClass.toLowerCase());
         }
@@ -142,12 +184,17 @@ var DNDCalculations = {
         return Array.from(classNames);
     },
 
+    /** Determines the stat governing a PC's magic (Int, Wis, Cha). */
     getSpellcastingAbilityKeyForPC: function(pcData) {
         if (!pcData) return null;
+        
+        // Attempt direct explicit lookup from VTT payload
         let mainSpellcastingAttr = pcData.system?.attributes?.spellcasting || pcData.vtt_data?.attributes?.spellcasting;
         if (mainSpellcastingAttr && typeof mainSpellcastingAttr === 'string' && mainSpellcastingAttr.length === 3) {
             return mainSpellcastingAttr.toLowerCase();
         }
+        
+        // If undefined, attempt to extrapolate based on class names
         const classNames = this.getCharacterClassNames(pcData);
         if (classNames.length > 0) {
             for (const className of classNames) {
@@ -158,13 +205,16 @@ var DNDCalculations = {
                 }
             }
         }
+        
+        // Special Edge Case handling for 1/3rd casters like Arcane Trickster
         const rogueClass = pcData.items?.find(i => i.type === 'class' && i.name.toLowerCase() === 'rogue');
-        const arcaneTrickster = rogueClass?.system?.subclass === 'arcane-trickster'; // Example path
+        const arcaneTrickster = rogueClass?.system?.subclass === 'arcane-trickster';
         if (arcaneTrickster) return 'int';
 
         return null;
     },
 
+    /** Calculates Spell Save DC (8 + Mod + Prof) */
     spellSaveDC: function(pcData) {
         const abilities = pcData.system?.abilities || pcData.vtt_data?.abilities;
         if (!pcData || !abilities) return 'N/A';
@@ -178,6 +228,7 @@ var DNDCalculations = {
         return 8 + this.getAbilityModifier(abilityScore) + proficiencyBonus;
     },
 
+    /** Calculates Spell Attack Bonus (Mod + Prof) */
     spellAttackBonus: function(pcData) {
         const abilities = pcData.system?.abilities || pcData.vtt_data?.abilities;
         if (!pcData || !abilities) return 'N/A';
@@ -191,6 +242,7 @@ var DNDCalculations = {
         return this.getAbilityModifier(abilityScore) + proficiencyBonus;
     },
 
+    /** Safely extracts AC bonus from a shield if one is equipped in the inventory tree. */
     getShieldBonus: function(pcData) {
         if (pcData && pcData.items) {
             const equippedShield = pcData.items.find(item =>
@@ -205,12 +257,20 @@ var DNDCalculations = {
         return 0;
     },
     
+    /**
+     * Calculates the total final Armor Class for the UI.
+     * Evaluates armor items, applies dex cap limits for medium/heavy armor, 
+     * and accounts for Unarmored Defense features (Monk/Barbarian).
+     */
     calculateDisplayAC: function(pcData) {
         const system = pcData.system || pcData.vtt_data || {};
         if (!system.abilities) return 'N/A';
+        
+        // Search inventory for an actively equipped piece of armor
         const armor = pcData.items.find(i => i.system?.equipped && i.type === 'equipment' && i.system?.armor?.value);
         if (armor) {
             let ac = armor.system.armor.value;
+            // Handle Dexterity modifier caps (e.g., Medium Armor caps at +2)
             if (armor.system.armor.dex !== null && armor.system.armor.dex !== undefined) {
                 const dexMod = this.getAbilityModifier(system.abilities.dex.value);
                 ac += Math.min(dexMod, armor.system.armor.dex);
@@ -218,22 +278,33 @@ var DNDCalculations = {
             const shieldBonus = this.getShieldBonus(pcData);
             return ac + shieldBonus;
         }
+        
+        // No armor found, fallback to Unarmored Defense calculations
         const dexMod = this.getAbilityModifier(system.abilities.dex.value);
         let baseAc = 10 + dexMod;
         const classNames = this.getCharacterClassNames(pcData);
+        
         if (classNames.includes('monk')) {
             baseAc = 10 + dexMod + this.getAbilityModifier(system.abilities.wis.value);
         } else if (classNames.includes('barbarian')) {
             baseAc = 10 + dexMod + this.getAbilityModifier(system.abilities.con.value);
         }
+        
         const shieldBonus = this.getShieldBonus(pcData);
         return baseAc + shieldBonus;
     },
 
+    /**
+     * Parses a standard D&D dice notation string (e.g., "2d6 + 4") and computes the mathematical mean.
+     * Used exclusively to power the DPR calculations.
+     */
     getAverageDamage: function(diceString) {
         if (!diceString || typeof diceString !== 'string') return 0;
+        
+        // Split by '+' to handle flat modifiers alongside dice
         const parts = diceString.toLowerCase().split('+').map(part => part.trim());
         let totalAverage = 0;
+        
         parts.forEach(part => {
             if (part.includes('d')) {
                 const [numDice, dieType] = part.split('d');
@@ -248,6 +319,16 @@ var DNDCalculations = {
         return totalAverage;
     },
 
+    /**
+     * Core combat calculator: Estimates expected Damage Per Round against a target AC.
+     * Evaluates weapon properties (finesse, ranged), class features (Sneak Attack, Martial Arts), 
+     * and derives both Normal and Advantage hit probabilities.
+     * 
+     * @param {Object} pcData - The character data object.
+     * @param {Object} attackItem - The specific weapon/spell item object.
+     * @param {number} targetAC - The AC of the target monster to math against.
+     * @returns {Object} Dictionary containing the weapon name, normal DPR, and Adv DPR.
+     */
     calculateDPR: function(pcData, attackItem, targetAC) {
         if (!pcData || !attackItem || !pcData.system) return { name: attackItem.name, dpr: 'N/A', dprAdv: 'N/A' };
     
@@ -261,12 +342,14 @@ var DNDCalculations = {
         let bonusDamage = 0;
         let attackName = attackItem.name;
     
+        // Determine Monk state for Martial Arts die overriding
         const monkClass = pcData.items.find(i => i.type === 'class' && i.name.toLowerCase() === 'monk');
         const isMonk = !!monkClass;
         const monkLevel = isMonk ? monkClass.system.levels : 0;
     
         if (attackItem.name === 'Unarmed Strike') {
             let abilityKey = 'str';
+            // Monks can use Dex for unarmed strikes
             if (isMonk) {
                 abilityKey = abilities.dex.value > abilities.str.value ? 'dex' : 'str';
             }
@@ -277,16 +360,18 @@ var DNDCalculations = {
             if (isMonk) {
                 baseDamageDice.push(MONK_MARTIAL_ARTS_DICE[monkLevel] || '1d4');
             } else {
-                bonusDamage = 0;
+                bonusDamage = 0; // Standard unarmed strikes deal a flat 1 damage
                 baseDamageDice.push('1');
             }
         } else if (attackItem.type === 'weapon') {
             const weaponData = attackItem.system;
             const weaponType = (weaponData.type && typeof weaponData.type === 'object') ? weaponData.type : {};
+            
+            // Check if weapon qualifies for Monk damage die override
             const isMonkWeapon = isMonk && (weaponData.properties?.includes('fin') || weaponType.baseItem === 'shortsword' || weaponType.value === 'simpleM');
             
             let abilityKey = 'str';
-            if (weaponData.properties?.includes('fin') || weaponData.properties?.includes('rge')) { // Also check for ranged
+            if (weaponData.properties?.includes('fin') || weaponData.properties?.includes('rge')) { 
                 abilityKey = 'dex';
             }
             if (isMonkWeapon && abilities.dex.value > abilities.str.value) {
@@ -309,7 +394,7 @@ var DNDCalculations = {
 
             abilityMod = this.getAbilityModifier(abilities[spellcastingAbilityKey]?.value || 10);
             attackBonus = abilityMod + profBonus;
-            bonusDamage = 0; // Most cantrips don't add mod unless specified
+            bonusDamage = 0; // Most cantrips don't add mod to damage unless specifically stated
 
             const attackActivity = Object.values(spellData.activities || {}).find(act => act.type === 'attack' || act.type === 'damage');
             const damageParts = attackActivity?.damage?.parts || spellData.damage?.parts || [];
@@ -329,25 +414,30 @@ var DNDCalculations = {
              return { name: attackName, dpr: 'N/A', dprAdv: 'N/A' };
         }
         
+        // Sneak Attack Handling
         const rogueClass = pcData.items.find(i => i.type === 'class' && i.name.toLowerCase() === 'rogue');
         if (rogueClass && (attackItem.system?.properties?.includes('fin') || attackItem.system?.properties?.includes('rge'))) {
             const sneakAttackDice = Math.ceil(rogueClass.system.levels / 2);
             baseDamageDice.push(`${sneakAttackDice}d6`);
         }
     
+        // --- Core DPR Math Application ---
         const M = targetAC;
         const A = attackBonus;
-        const C = 0.05; // Crit chance
+        const C = 0.05; // Base 5% critical hit chance on a 1d20
         const D = baseDamageDice.reduce((total, dice) => total + this.getAverageDamage(dice), 0);
         const B = bonusDamage;
     
+        // Calculate hit probability. Clamped between 0.05 (nat 1) and 0.95 (nat 20)
         const baseHitChance = (21 - (M - A)) / 20;
         const H = Math.max(0.05, Math.min(0.95, baseHitChance));
         
+        // Probability derivations for rolling with Advantage
         const missChance = 1 - H;
-        const HA = 1 - (missChance * missChance); // Hit chance with advantage
-        const CA = 1 - Math.pow(1 - C, 2); // Crit chance with advantage
+        const HA = 1 - (missChance * missChance); // Adv Hit chance = 1 - (MissChance^2)
+        const CA = 1 - Math.pow(1 - C, 2); // Adv Crit chance
     
+        // Final expected damage outputs
         const dprNormal = (C * D) + (H * (D + B));
         const dprAdvantage = (CA * D) + (HA * (D + B));
     

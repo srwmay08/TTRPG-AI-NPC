@@ -1,30 +1,49 @@
-// static/eventHandlers.js
-// Responsibility: Set up event listeners.
+/**
+ * static/eventHandlers.js
+ * 
+ * Responsibility: Assigns global event listeners for static DOM elements upon initialization.
+ * Handles the logic for UI resizability and accordion-style collapsible menus.
+ */
 
 var EventHandlers = {
+    /**
+     * Binds mouse events to the 'resizer' div, allowing the user to drag 
+     * and alter the width of the left-hand navigation column dynamically.
+     */
     setupResizer: function() {
         const leftColumn = Utils.getElem('left-column');
         const resizer = Utils.getElem('resizer');
+        
         if (!leftColumn || !resizer) {
             console.warn("EventHandlers.setupResizer: Resizer or left column not found.");
             return;
         }
 
         let isResizing = false;
+        
+        // Start dragging
         resizer.addEventListener('mousedown', (e) => {
             e.preventDefault();
             isResizing = true;
             document.body.style.cursor = 'col-resize';
         });
+        
+        // Calculate width during drag
         document.addEventListener('mousemove', (e) => {
             if (!isResizing) return;
             let newLeftWidth = e.clientX;
+            
+            // Hard clamp boundaries to prevent breaking the flexbox layout
             const minColWidth = 300;
             const maxColWidth = window.innerWidth - 250;
+            
             if (newLeftWidth < minColWidth) newLeftWidth = minColWidth;
             if (newLeftWidth > maxColWidth) newLeftWidth = maxColWidth;
+            
             leftColumn.style.width = `${newLeftWidth}px`;
         });
+        
+        // Release lock
         document.addEventListener('mouseup', () => {
             if (isResizing) {
                 isResizing = false;
@@ -33,14 +52,19 @@ var EventHandlers = {
         });
     },
 
+    /**
+     * Scans the DOM for elements with the 'collapsible-section' class and injects
+     * the chevron click-logic to hide/show their child '.collapsible-content' container.
+     */
     setupCollapsibleSections: function() {
         document.querySelectorAll('#left-column .collapsible-section').forEach(section => {
-            // Do not make #scene-context-filters-direct collapsible
+            // Hardcoded exclusion: We want the direct context filters always visible
             if (section.id === 'scene-context-filters-direct') return;
 
             const header = section.querySelector('h3, h4');
             if (!header) return;
 
+            // Inject the rotating chevron span if it doesn't already exist in the HTML
             let arrow = header.querySelector('.arrow-indicator');
             if (!arrow) {
                 arrow = document.createElement('span');
@@ -48,7 +72,9 @@ var EventHandlers = {
                 header.appendChild(arrow);
             }
 
+            // Click delegator for the header bar
             header.addEventListener('click', (e) => {
+                // Prevent collapse if clicking an input field nested inside the header itself
                 if (e.target.closest('input, select, button, textarea')) return;
 
                 const content = section.querySelector(':scope > .collapsible-content');
@@ -59,6 +85,7 @@ var EventHandlers = {
                 }
             });
 
+            // Initial State Configuration: Open specific high-value sections by default
             const contentToToggle = section.querySelector(':scope > .collapsible-content');
             const initiallyOpenIds = ['pc-list-section-outer', 'npc-list-for-scene-section', 'all-npc-list-management-section', 'create-lore-entry-form-section'];
             const profileSubSectionOpenIds = ['gm-notes-collapsible-section']; 
@@ -68,15 +95,16 @@ var EventHandlers = {
 
             if (contentToToggle) {
                 let shouldBeOpen = initiallyOpenIds.includes(section.id) || (isProfileSection && !section.classList.contains('collapsed'));
+                
                 if (isSubSectionOfProfile) {
                     shouldBeOpen = profileSubSectionOpenIds.includes(section.id);
                 }
-                 // Explicitly keep 'npc-list-for-scene-section' open if it's in the scene tab
+                 // Explicitly keep the specific active Scene-List open to avoid UX frustration
                 if (section.id === 'npc-list-for-scene-section') {
                     shouldBeOpen = true;
                 }
 
-
+                // Apply initial class states
                 if (shouldBeOpen) {
                     section.classList.remove('collapsed');
                     if (arrow) arrow.textContent = ' ▼';
@@ -87,6 +115,7 @@ var EventHandlers = {
             }
         });
 
+        // Delegate clicks from the dashboard container to catch clicks on individual PC cards
         const pcDashboardContent = Utils.getElem('pc-dashboard-content');
         if (pcDashboardContent) {
             pcDashboardContent.addEventListener('click', function(event) {
@@ -97,7 +126,7 @@ var EventHandlers = {
                     if (pcIdToRender) {
                         const pcData = appState.getCharacterById(pcIdToRender);
                         if (pcData) {
-                             // Updated to use PCRenderers
+                             // Route the selected data to the detailed sheet renderer
                              PCRenderers.renderDetailedPcSheetUI(pcData, Utils.getElem('pc-dashboard-content'));
                         } else {
                             console.error("[DEBUG] PC Data not found in appState for ID:", pcIdToRender);
@@ -110,6 +139,10 @@ var EventHandlers = {
         }
     },
 
+    /**
+     * Binds HTML button elements to their respective business logic functions.
+     * Prevents reliance on inline `onclick=""` HTML attributes where possible.
+     */
     assignButtonEventHandlers: function() {
         const saveGmNotesBtn = Utils.getElem('save-gm-notes-btn');
         if (saveGmNotesBtn) saveGmNotesBtn.onclick = CharacterService.handleSaveGmNotes;
@@ -123,7 +156,7 @@ var EventHandlers = {
         const createCharacterBtn = Utils.getElem('create-character-form')?.querySelector('button');
         if (createCharacterBtn) createCharacterBtn.onclick = CharacterService.handleCharacterCreation;
 
-        // App is assumed to be globally available
+        // Note: App is assumed to be bound to the global window namespace before this runs
         const generateDialogueBtn = Utils.getElem('generate-dialogue-btn');
         if (generateDialogueBtn) generateDialogueBtn.onclick = App.handleGenerateDialogue;
 

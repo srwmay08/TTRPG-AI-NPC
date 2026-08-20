@@ -1,34 +1,51 @@
-// static/apiService.js
-// Responsibility: Handle all communications with the backend API.
+/**
+ * static/apiService.js
+ * 
+ * Responsibility: Handle all communications with the backend Flask API.
+ * Uses an Immediately Invoked Function Expression (IIFE) to create a singleton
+ * pattern, keeping the internal `_fetchData` helper private while exposing
+ * the structured API methods.
+ */
 
 var ApiService = (function() {
-    // This is an internal helper function, not exposed on the ApiService object itself.
+    
+    /**
+     * Internal generic fetch wrapper. 
+     * Automatically handles JSON parsing and standardizes HTTP error throwing.
+     * @param {string} url - The API endpoint to hit.
+     * @param {Object} options - Fetch options (method, headers, body).
+     * @returns {Promise<Object>} The parsed JSON response.
+     */
     async function _fetchData(url, options = {}) {
         try {
             const response = await fetch(url, options);
             if (!response.ok) {
+                // Attempt to parse backend error payload, fallback to status text if it fails
                 const errorData = await response.json().catch(() => ({ error: "Unknown error structure" }));
                 throw new Error(`HTTP error! status: ${response.status}, message: ${errorData.error || response.statusText}`);
             }
             return await response.json();
         } catch (error) {
             console.error(`ApiService: Error fetching data from ${url}:`, error);
-            throw error; // Re-throw to be handled by the caller
+            throw error; // Re-throw to be handled and displayed by the calling UI component
         }
     }
 
-    // Public API methods
+    // Publicly exposed API methods mapped directly to backend Flask routes
     return {
+        /** Retrieves all NPC and PC documents from MongoDB. */
         fetchCharactersFromServer: async function() {
             console.log("ApiService: Fetching characters...");
             return _fetchData(`${API_BASE_URL}/api/npcs`);
         },
 
+        /** Retrieves a specific character document by its MongoDB ObjectId. */
         fetchNpcDetails: async function(npcId) {
             console.log(`ApiService: Fetching details for char ID: ${npcId}`);
             return _fetchData(`${API_BASE_URL}/api/npcs/${npcId}`);
         },
 
+        /** Submits the current scene context and dialogue history to trigger the GenAI engine. */
         generateNpcDialogue: async function(npcId, payload) {
             return _fetchData(`${API_BASE_URL}/api/npcs/${npcId}/dialogue`, {
                 method: 'POST',
@@ -37,6 +54,7 @@ var ApiService = (function() {
             });
         },
 
+        /** Pushes partial updates (like GM notes or edited attributes) to a character document. */
         updateCharacterOnServer: async function(npcId, updatePayload) {
             return _fetchData(`${API_BASE_URL}/api/npcs/${npcId}`, {
                 method: 'PUT',
@@ -45,6 +63,7 @@ var ApiService = (function() {
             });
         },
 
+        /** Appends a new manual or AI-generated memory object to the character's memory array. */
         addMemoryToNpc: async function(npcId, memoryData) {
              return _fetchData(`${API_BASE_URL}/api/npcs/${npcId}/memory`, {
                 method: 'POST',
@@ -53,12 +72,14 @@ var ApiService = (function() {
             });
         },
 
+        /** Removes a specific memory object from a character using its unique UUID. */
         deleteNpcMemory: async function(npcId, memoryId) {
             return _fetchData(`${API_BASE_URL}/api/npcs/${npcId}/memory/${memoryId}`, {
                 method: 'DELETE'
             });
         },
 
+        /** Creates a brand new character document from the frontend form. */
         createCharacterOnServer: async function(characterData) {
             return _fetchData(`${API_BASE_URL}/api/npcs`, {
                 method: 'POST',
@@ -67,10 +88,12 @@ var ApiService = (function() {
             });
         },
 
+        /** Scans the backend history folder and returns a list of available .txt files. */
         fetchHistoryFilesFromServer: async function() {
             return _fetchData(`${API_BASE_URL}/api/history_files`);
         },
 
+        /** Binds a specific history .txt file to a character for deep context inclusion. */
         associateHistoryFileWithNpc: async function(npcId, fileName) {
             return _fetchData(`${API_BASE_URL}/api/character/${npcId}/associate_history`, {
                 method: 'POST',
@@ -79,6 +102,7 @@ var ApiService = (function() {
             });
         },
 
+        /** Unbinds a specific history .txt file from a character. */
         dissociateHistoryFileFromNpc: async function(npcId, fileName) {
              return _fetchData(`${API_BASE_URL}/api/character/${npcId}/dissociate_history`, {
                 method: 'POST',
@@ -87,20 +111,24 @@ var ApiService = (function() {
             });
         },
 
+        /** Updates the specific disposition value an NPC holds toward a targeted PC. */
         updateNpcFactionStanding: async function(npcId, pcId, standing) {
             const payload = { pc_faction_standings: { [pcId]: standing } };
-            // Calls its own namespaced method
+            // Routes internally to the general update method
             return this.updateCharacterOnServer(npcId, payload);
         },
 
+        /** Retrieves all structured LoreEntry documents from the database. */
         fetchAllLoreEntries: async function() {
             return _fetchData(`${API_BASE_URL}/api/lore_entries`);
         },
 
+        /** Retrieves a specific LoreEntry document by its MongoDB ObjectId. */
         fetchLoreEntryDetails: async function(loreId) {
             return _fetchData(`${API_BASE_URL}/api/lore_entries/${loreId}`);
         },
 
+        /** Creates a new LoreEntry document from the frontend form. */
         createLoreEntryOnServer: async function(loreData) {
             return _fetchData(`${API_BASE_URL}/api/lore_entries`, {
                 method: 'POST',
@@ -109,6 +137,7 @@ var ApiService = (function() {
             });
         },
 
+        /** Modifies an existing LoreEntry document (e.g., updating GM notes). */
         updateLoreEntryOnServer: async function(loreId, loreData) {
             return _fetchData(`${API_BASE_URL}/api/lore_entries/${loreId}`, {
                 method: 'PUT',
@@ -117,18 +146,21 @@ var ApiService = (function() {
             });
         },
 
+        /** Deletes a LoreEntry document from the database entirely. */
         deleteLoreEntryFromServer: async function(loreId) {
             return _fetchData(`${API_BASE_URL}/api/lore_entries/${loreId}`, {
                 method: 'DELETE'
             });
         },
 
+        /** Injects a lore reference ID into a character's context array. */
         linkLoreToCharacterOnServer: async function(charId, loreId) {
             return _fetchData(`${API_BASE_URL}/api/characters/${charId}/link_lore/${loreId}`, {
                 method: 'POST'
             });
         },
 
+        /** Removes a lore reference ID from a character's context array. */
         unlinkLoreFromCharacterOnServer: async function(charId, loreId) {
             return _fetchData(`${API_BASE_URL}/api/characters/${charId}/unlink_lore/${loreId}`, {
                 method: 'POST'
