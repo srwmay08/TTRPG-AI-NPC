@@ -1,6 +1,12 @@
-/* server/static/pc-renderers.js */
-// Responsibility: Rendering Player Character (PC) related UI elements.
+/**
+ * static/pc-renderers.js
+ * 
+ * Responsibility: Rendering Player Character (PC) related UI elements, quick view cards, 
+ * detailed character sheets, ability score breakdowns, and DPR performance tables.
+ */
 
+// Massive lookup table storing rich lore and structural details for each D&D 5e ability score.
+// Used to power descriptions and dropdown expansions on the PC Dashboard.
 const ABILITY_SCORE_INFO = {
     "STR": { "title": "Strength", "description": "Strength measures bodily power, athletic training, and the extent to which you can exert raw physical force.", "checks_title": "Strength Checks", "checks_description": "A Strength check can model any attempt to lift, push, pull, or break something, to force your body through a space, or to otherwise apply brute force to a situation. The Athletics skill reflects aptitude in certain kinds of Strength checks.", "skills": { "Athletics": "Your Strength (Athletics) check covers difficult situations you encounter while climbing, jumping, or swimming." }, "other_checks_title": "Other Strength Checks", "other_checks": ["Force open a stuck, locked, or barred door", "Break free of bonds", "Push through a tunnel that is too small", "Hang on to a wagon while being dragged behind it", "Tip over a statue", "Keep a boulder from rolling"], "attack_and_damage_title": "Attack Rolls and Damage", "attack_and_damage": "You add your Strength modifier to your attack roll and your damage roll when attacking with a melee weapon.", "lifting_and_carrying_title": "Lifting and Carrying", "lifting_and_carrying": "Your carrying capacity is your Strength score multiplied by 15. You can push, drag, or lift a weight in pounds up to twice your carrying capacity (or 30 times your Strength score)." },
     "DEX": { "title": "Dexterity", "description": "Dexterity measures agility, reflexes, and balance.", "checks_title": "Dexterity Checks", "checks_description": "A Dexterity check can model any attempt to move nimbly, quickly, or quietly, or to keep from falling on tricky footing. The Acrobatics, Sleight of Hand, and Stealth skills reflect aptitude in certain kinds of Dexterity checks.", "skills": { "Acrobatics": "Your Dexterity (Acrobatics) check covers your attempt to stay on your feet in a tricky situation, such as when you’re trying to run across a sheet of ice or balance on a tightrope.", "Sleight of Hand": "Whenever you attempt an act of legerdemain or manual trickery, such as planting something on someone else or concealing an object on your person, make a Dexterity (Sleight of Hand) check.", "Stealth": "Make a Dexterity (Stealth) check when you attempt to conceal yourself from enemies, slink past guards, or sneak up on someone without being seen or heard." }, "other_checks_title": "Other Dexterity Checks", "other_checks": ["Pick a lock", "Disable a trap", "Securely tie up a prisoner", "Wriggle free of bonds", "Play a stringed instrument"], "attack_and_damage_title": "Attack Rolls and Damage", "attack_and_damage": "You add your Dexterity modifier to your attack roll and your damage roll when attacking with a ranged weapon or a melee weapon that has the finesse property.", "armor_class_title": "Armor Class", "armor_class": "Depending on the armor you wear, you might add some or all of your Dexterity modifier to your Armor Class.", "initiative_title": "Initiative", "initiative": "At the beginning of every combat, you roll initiative by making a Dexterity check." },
@@ -11,12 +17,17 @@ const ABILITY_SCORE_INFO = {
 };
 
 var PCRenderers = {
+    /** Generates section title headers for quick view dashboards. */
     createPcQuickViewSectionHTML: function(isForDashboard) {
         const titleText = typeof PC_QUICK_VIEW_BASE_TITLE !== 'undefined' ? PC_QUICK_VIEW_BASE_TITLE : 'Player Characters';
         const fullTitle = isForDashboard ? `${titleText} (Click card for details)` : titleText;
         return `<h4>${fullTitle}</h4>`;
     },
 
+    /**
+     * Builds an HTML card displaying basic combat statistics for a single PC 
+     * (HP, AC, Initiative, Speed, Spell DC/Atk).
+     */
     generatePcQuickViewCardHTML: function(pc, isClickableForDetailedView = false) {
         if (!pc) return '';
         
@@ -38,8 +49,7 @@ var PCRenderers = {
             cardClasses += ' clickable-pc-card';
         }
 
-        // --- INLINE STYLES FOR CARD ---
-        // We add inline styles here to force the behavior regardless of external CSS class rules
+        // Inline styles used to enforce clean flex-row constraints when rendered in the scene view
         const cardStyle = isClickableForDetailedView ? 
             'flex: 1 1 0; min-width: 0; width: auto; margin: 0 4px; overflow: hidden;' : 
             '';
@@ -50,20 +60,26 @@ var PCRenderers = {
         const hpCurrent = system.attributes.hp?.value ?? 'N/A';
         const hpMax = system.attributes.hp?.max ?? 'N/A';
         cardHTML += `<p><strong>HP:</strong> ${hpCurrent} / ${hpMax}</p>`;
+        
         const acDisplayValue = DNDCalculations.calculateDisplayAC(pc);
         cardHTML += `<p><strong>AC:</strong> ${acDisplayValue}</p>`;
         cardHTML += `<p><strong>Prof. Bonus:</strong> +${pc.calculatedProfBonus}</p>`;
+        
         const initiativeBonus = DNDCalculations.getAbilityModifier(system.abilities?.dex?.value || 10);
         cardHTML += `<p><strong>Initiative:</strong> ${initiativeBonus >= 0 ? '+' : ''}${initiativeBonus}</p>`;
         cardHTML += `<p><strong>Speed:</strong> ${system.attributes.movement?.walk || 30} ft</p>`;
+        
         const spellDcText = DNDCalculations.spellSaveDC(pc);
         cardHTML += `<p><strong>Spell DC:</strong> ${spellDcText}</p>`;
+        
         const spellAtkBonusText = DNDCalculations.spellAttackBonus(pc);
         cardHTML += `<p><strong>Spell Atk:</strong> ${spellAtkBonusText || 'N/A'}</p>`;
         cardHTML += `</div>`;
+        
         return cardHTML;
     },
 
+    /** Populates expanded bar charts and skill breakdowns when an ability header is clicked. */
     populateExpandedAbilityDetailsUI: function(abilityKey, expansionDiv, selectedPcs) {
         if (!expansionDiv) { return; }
         const abilityLongName = ABILITY_KEYS_ORDER.find(k => k.startsWith(abilityKey.toLowerCase().substring(0,3))).toUpperCase();
@@ -76,6 +92,7 @@ var PCRenderers = {
         const scores = selectedPcs.map(pc => (pc.system?.abilities?.[abilityKey.toLowerCase()]?.value) || 10);
         const maxScore = Math.max(...scores, 10);
     
+        // Build visual comparative bars for each active PC
         selectedPcs.forEach(pc => {
             const score = (pc.system?.abilities?.[abilityKey.toLowerCase()]?.value) || 10;
             const label = pc.name;
@@ -85,6 +102,7 @@ var PCRenderers = {
         expansionDiv.innerHTML = contentHTML;
         expansionDiv.appendChild(barChartContainer);
 
+        // Find skills associated with this specific ability score
         const associatedSkills = Object.keys(SKILL_NAME_MAP).filter(skill => SKILL_NAME_MAP[skill].includes(`(${abilityLongName.substring(0,3)})`));
 
         if (associatedSkills.length > 0) {
@@ -112,18 +130,18 @@ var PCRenderers = {
         }
     },
     
+    /** Renders the main comparative analytics grid for all active player characters. */
     updatePcDashboardUI: function(dashboardContentElement, allCharacters, activePcIds, currentlyExpandedAbility) {
         console.group("--- [DEBUG] PCRenderers.updatePcDashboardUI ---");
         
         if (!dashboardContentElement) {
-            console.error("ERROR: 'dashboardContentElement' is null/undefined. The ID 'pc-dashboard-content' might be missing from index.html.");
+            console.error("ERROR: 'dashboardContentElement' is null/undefined.");
             console.groupEnd();
             return;
         }
-        console.log("Target Element found:", dashboardContentElement);
 
+        // Filter down to only active Player Characters
         const selectedPcs = allCharacters.filter(char => activePcIds.has(String(char._id)) && (char.character_type === 'PC' || char.character_type === 'Player Character' || char.type === 'Player Character'));
-        console.log(`Selected PCs count: ${selectedPcs.length}`);
 
         if (selectedPcs.length === 0) {
             dashboardContentElement.innerHTML = `<p class="pc-dashboard-no-selection">Select Player Characters from the left panel to view their details and comparisons.</p>`;
@@ -145,21 +163,24 @@ var PCRenderers = {
     
         let finalHTML = '';
     
+        // Render quick view cards grid
         finalHTML += this.createPcQuickViewSectionHTML(true);
         let cardsHTML = '';
         sortedSelectedPcs.forEach(pc => {
-            // NOTE: false here because Dashboard view uses grid layout from CSS, not the forced flex row
             cardsHTML += this.generatePcQuickViewCardHTML(pc, false);
         });
         finalHTML += `<div class="pc-dashboard-grid">${cardsHTML}</div>`;
         
+        // Render Ability Scores & Modifiers table matrix
         const abilitiesForTable = ABILITY_KEYS_ORDER.map(k => k.toUpperCase());
         let mainStatsTableHTML = `<h4>Ability Scores & Skills Overview</h4><div class="table-wrapper"><table id="main-stats-table"><thead><tr><th>Character</th>`;
+        
         abilitiesForTable.forEach(ablKey => {
             const isExpanded = currentlyExpandedAbility === ablKey;
             const arrow = isExpanded ? '▼' : '►';
             mainStatsTableHTML += `<th class="clickable-ability-header" data-ability="${ablKey}" onclick="App.toggleAbilityExpansion('${ablKey}')">${ablKey} <span class="arrow-indicator">${arrow}</span></th>`;
         });
+        
         mainStatsTableHTML += `</tr></thead><tbody>`;
         sortedSelectedPcs.forEach(pc => {
             mainStatsTableHTML += `<tr><td>${pc.name}</td>`;
@@ -170,12 +191,14 @@ var PCRenderers = {
             });
             mainStatsTableHTML += `</tr>`;
         });
+        
         if (currentlyExpandedAbility) {
             mainStatsTableHTML += `<tr><td colspan="${abilitiesForTable.length + 1}"><div id="expanded-ability-details" class="expanded-ability-content"></div></td></tr>`;
         }
         mainStatsTableHTML += `</tbody></table></div>`;
         finalHTML += mainStatsTableHTML;
         
+        // Calculate cumulative DPR metrics based on selected attacks
         const targetAC = appState.targetAC;
         let roundTotalDpr = 0;
         let estimatedHP = 0;
@@ -196,6 +219,7 @@ var PCRenderers = {
         });
         estimatedHP = Math.round(roundTotalDpr * appState.estimatedRounds);
 
+        // Render DPR input controllers and live summary widgets
         finalHTML += `
             <div class="dpr-controls-summary">
                 <div class="dpr-control-group">
@@ -212,6 +236,7 @@ var PCRenderers = {
                 </div>
             </div>`;
         
+        // Render detailed weapon/attack breakdown table
         let dprTableHTML = `<h4>Damage Per Round (DPR)</h4><div class="table-wrapper"><table id="dpr-overview-table">`;
         dprTableHTML += `<thead><tr><th>Character</th><th>Include</th><th>Attack</th><th>DPR (Normal)</th><th>DPR (Advantage)</th></tr></thead><tbody>`;
     
@@ -223,6 +248,7 @@ var PCRenderers = {
                 return false;
             });
             
+            // Default baseline unarmed strike
             attackItems.unshift({ name: "Unarmed Strike", type: "weapon", system: { damage: { base: { denomination: '4', number: 1}}, properties: ['fin']} });
 
             const validAttackItems = attackItems.filter(item => {
@@ -251,7 +277,6 @@ var PCRenderers = {
         finalHTML += dprTableHTML;
         
         dashboardContentElement.innerHTML = finalHTML;
-        console.log("Dashboard rendered.");
         console.groupEnd();
         
         if (currentlyExpandedAbility) {
@@ -262,6 +287,7 @@ var PCRenderers = {
         }
     },
 
+    /** Renders the compact summary banner of active PCs at the top of the Scene View. */
     renderPcQuickViewInSceneUI: function(wrapperElement, activePcsData) {
         if (!wrapperElement) { console.error("PCRenderers.renderPcQuickViewInSceneUI: wrapperElement not found"); return; }
         
@@ -287,20 +313,16 @@ var PCRenderers = {
 
         activePcsData.sort((a, b) => a.name.localeCompare(b.name));
         
-        // 1. Generate Full Cards View (Single Row, No Wrap)
-        // flex-wrap: nowrap is key. min-width: 0 on children (in generatePcQuickViewCardHTML) enables shrinking.
         let cardsHTML = `<div id="pc-scene-cards-view" style="display: flex; flex-flow: row nowrap; width: 100%; gap: 10px; overflow-x: hidden;">`;
         activePcsData.forEach(pc => {
              if (typeof pc.calculatedProfBonus === 'undefined') {
                 const pcLevel = pc.vtt_flags?.ddbimporter?.dndbeyond?.totalLevels || pc.system?.details?.level || 1;
                 pc.calculatedProfBonus = DNDCalculations.getProficiencyBonus(pcLevel);
              }
-            // Passing true here triggers the inline styles for flex items
             cardsHTML += this.generatePcQuickViewCardHTML(pc, true);
         });
         cardsHTML += `</div>`;
 
-        // 2. Generate Compact Names View
         let compactHTML = `<div id="pc-scene-compact-view" style="display:none; flex-flow: row nowrap; overflow-x: auto; gap: 8px; align-items: center; padding-bottom: 4px; scrollbar-width: thin;">`;
         activePcsData.forEach(pc => {
             compactHTML += `<span class="pc-compact-badge" style="flex: 0 0 auto; background: #e2e6ea; padding: 4px 8px; border-radius: 4px; font-weight: bold; border: 1px solid #ccc; white-space: nowrap;">${pc.name}</span>`;
@@ -309,7 +331,7 @@ var PCRenderers = {
 
         contentDiv.innerHTML = cardsHTML + compactHTML;
 
-        // 3. Toggle Logic
+        // Accordion toggle behavior between full cards and compact badges
         header.onclick = function() {
             const cardsView = contentDiv.querySelector('#pc-scene-cards-view');
             const compactView = contentDiv.querySelector('#pc-scene-compact-view');
@@ -318,13 +340,11 @@ var PCRenderers = {
             const isCurrentlyExpanded = cardsView.style.display !== 'none';
 
             if (isCurrentlyExpanded) {
-                // Collapse to Compact
                 cardsView.style.display = 'none';
                 compactView.style.display = 'flex';
                 arrow.textContent = '►';
             } else {
-                // Expand to Cards
-                cardsView.style.display = 'flex'; // Restore flex
+                cardsView.style.display = 'flex'; 
                 compactView.style.display = 'none';
                 arrow.textContent = '▼';
             }
@@ -336,25 +356,7 @@ var PCRenderers = {
         wrapperElement.style.display = 'block';
     },
 
-    populateExpandedSkillDetailsUI: function(skillKey, expansionDiv, selectedPcs) {
-        if (!expansionDiv) { console.error("PCRenderers.populateExpandedSkillDetailsUI: expansionDiv is null for", skillKey); return; }
-        const skillFullName = SKILL_NAME_MAP[skillKey] || skillKey;
-        expansionDiv.innerHTML = `<h5>${skillFullName} Bonus Details & Comparisons</h5>`;
-
-        const barChartContainer = document.createElement('div');
-        barChartContainer.className = 'skill-bar-chart-container';
-        expansionDiv.appendChild(barChartContainer);
-
-        selectedPcs.forEach(pc => {
-            const skillData = pc.system?.skills?.[skillKey];
-            const abilityKeyForSkill = skillData?.ability || SKILL_NAME_MAP[skillKey].match(/\(([^)]+)\)/)[1].toLowerCase();
-            const abilityScore = pc.system?.abilities?.[abilityKeyForSkill]?.value || 10;
-            const bonus = DNDCalculations.calculateSkillBonus(abilityScore, skillData?.value || 0, pc.calculatedProfBonus);
-            barChartContainer.innerHTML += UIWidgets.generateBarChartRowHTML(pc.name, bonus, bonus, 15);
-        });
-         expansionDiv.innerHTML += `<p><em>Passive ${skillFullName}: Calculated as 10 + Skill Bonus.</em></p>`;
-    },
-
+    /** Renders a full, exhaustive character sheet view when an individual PC card is clicked. */
     renderDetailedPcSheetUI: function(pcData, dashboardContentElement) {
         console.group("--- [DEBUG] PCRenderers.renderDetailedPcSheetUI ---");
         
@@ -366,12 +368,10 @@ var PCRenderers = {
         }
 
         if (!dashboardContentElement) {
-            console.error("ERROR: dashboardContentElement is missing. Cannot render detailed sheet.");
+            console.error("ERROR: dashboardContentElement is missing.");
             console.groupEnd();
             return;
         }
-        console.log("Target Element:", dashboardContentElement);
-        console.log("Data:", pcData.name);
 
         dashboardContentElement.innerHTML = ''; 
 
@@ -426,57 +426,51 @@ var PCRenderers = {
         sheetHTML += `<div class="pc-section"><h4>Other Details</h4>`;
         sheetHTML += `<p><strong>Alignment:</strong> ${pcData.system?.details?.alignment || 'N/A'}</p>`;
         sheetHTML += `<p><strong>Background:</strong> ${pcData.system?.details?.background || 'N/A'}</p>`;
+        
         const languages = pcData.system?.traits?.languages?.value?.map(lang => lang.charAt(0).toUpperCase() + lang.slice(1)).join(', ') || 'None';
         sheetHTML += `<p><strong>Languages:</strong> ${languages}</p>`;
 
         const armorProfs = pcData.system?.traits?.armorProf?.value?.join(', ') || 'None';
         sheetHTML += `<p><strong>Armor Proficiencies:</strong> ${armorProfs}</p>`;
+        
         const weaponProfs = pcData.system?.traits?.weaponProf?.value?.join(', ') || 'None';
         sheetHTML += `<p><strong>Weapon Proficiencies:</strong> ${weaponProfs}</p>`;
         sheetHTML += `</div>`;
 
         sheetHTML += `</div>`;
         dashboardContentElement.innerHTML = sheetHTML;
-        console.log("Detailed sheet rendered.");
         console.groupEnd();
     },
 
-    // --- ADAPTER: Bridge between MainView calls and the detailed logic above ---
+    /** Adapter routing between dashboard summary and detailed views. */
     renderPcDashboard: function(pcData) {
-        console.log("[DEBUG] renderPcDashboard called.");
         const dashboard = document.getElementById('pc-dashboard-content');
         if (!dashboard) {
-            console.error("[DEBUG] CRITICAL: 'pc-dashboard-content' element not found in DOM!");
+            console.error("CRITICAL: 'pc-dashboard-content' element not found in DOM!");
             return;
         }
 
         if (pcData) {
             this.renderDetailedPcSheetUI(pcData, dashboard);
         } else {
-            // Default Overview
             if (window.AppState) {
                this.updatePcDashboardUI(dashboard, AppState.getAllCharacters(), AppState.activePcIds, AppState.getExpandedAbility());
             }
         }
     },
 
-    // --- HYBRID LIST RENDERER: Handles sidebar lists AND fix for click targets ---
+    /** Renders the left sidebar list of available Player Characters and updates the speaker dropdown. */
     renderPcListUI: function(arg1, arg2, arg3, arg4, arg5, arg6) {
-        console.log("PCRenderers.renderPcListUI called.");
-        
         let pcList = [];
         let pcListDiv = document.getElementById('active-pc-list');
         let speakingPcSelect = document.getElementById('speaking-pc-select');
         let activePcIds = window.AppState ? window.AppState.activePcIds : new Set();
-        // CRITICAL FIX: Ensure we use the correct callback if available globally, otherwise null
         let onPcItemClickCallback = window.handleTogglePcSelection; 
 
-        // Argument Resolution: Supports new (pcList) and old (lots of args) signatures
         if (Array.isArray(arg1)) {
             pcList = arg1;
         } else {
             if (arg3) {
-                 // FIX: Filter for both "PC" and "Player Character" to cover all DB variations
                  pcList = arg3.filter(char => char.character_type === 'PC' || char.character_type === 'Player Character' || char.type === 'Player Character').sort((a, b) => a.name.localeCompare(b.name));
             }
             if (arg1) pcListDiv = arg1;
@@ -485,7 +479,6 @@ var PCRenderers = {
             if (arg5) onPcItemClickCallback = arg5;
         }
 
-        // Render Sidebar List
         if (pcListDiv) {
             pcListDiv.innerHTML = '';
             if (!pcList || pcList.length === 0) {
@@ -499,19 +492,14 @@ var PCRenderers = {
                         li.classList.add('selected');
                     }
 
-                    // CSS FIX: Create a clickable text span that fills the row
                     const nameSpan = document.createElement('span');
                     nameSpan.className = 'pc-name-clickable';
                     nameSpan.textContent = pc.name;
                     
-                    // Event Handler for Sidebar Click
                     nameSpan.onclick = (e) => {
                         e.stopPropagation();
-                        console.log("[DEBUG] Clicked PC Name:", pc.name, pc._id);
                         if (onPcItemClickCallback) {
                             onPcItemClickCallback(String(pc._id));
-                        } else {
-                            console.warn("No callback defined for PC selection");
                         }
                     };
 
@@ -522,12 +510,10 @@ var PCRenderers = {
             }
         }
 
-        // Update Speaking Dropdown (if present)
         if (speakingPcSelect) {
             const currentSpeaker = speakingPcSelect.value;
             speakingPcSelect.innerHTML = '<option value="">-- DM/Scene Event --</option>';
 
-            // PCs
             pcList.forEach(pc => {
                 const option = document.createElement('option');
                 option.value = String(pc._id);
@@ -535,7 +521,6 @@ var PCRenderers = {
                 speakingPcSelect.appendChild(option);
             });
 
-            // NPCs (Fetch from AppState since they aren't passed in simple signature)
             if (window.AppState) {
                 const activeNpcs = window.AppState.getActiveNpcIds().map(id => window.AppState.getCharacterById(id)).filter(n => n);
                 if (activeNpcs.length > 0) {
@@ -553,7 +538,6 @@ var PCRenderers = {
                 }
             }
 
-            // Restore selection
             if (Array.from(speakingPcSelect.options).some(opt => opt.value === currentSpeaker)) {
                 speakingPcSelect.value = currentSpeaker;
             }

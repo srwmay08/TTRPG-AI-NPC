@@ -4,15 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bugbear Banter GM Interface</title>
+    <!-- Links the master application stylesheet -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
+<!-- Master application wrapper utilizing a full-screen flex layout -->
 <div class="app-container">
+    
+    <!-- LEFT SIDEBAR: GM Controls, Navigation Tabs, and Character/Lore Management Lists -->
     <aside id="left-column">
         <div id="left-column-header">
             <h2>GM Controls</h2>
             
+            <!-- Collapsible section showing currently loaded Player Characters -->
             <div id="pc-list-section-outer" class="collapsible-section"> 
                 <h3 class="collapsible-header">Player Characters <span class="arrow-indicator">▼</span></h3>
                 <div class="collapsible-content character-list">
@@ -22,6 +27,7 @@
                 </div>
             </div>
             
+            <!-- Primary Application Navigation Tabs -->
             <div class="tabs">
                 <button class="tab-link active" onclick="openTab(event, 'tab-scene')">SCENE</button>
                 <button class="tab-link" onclick="openTab(event, 'tab-npcs')">NPCS</button>
@@ -30,6 +36,8 @@
         </div>
 
         <div id="left-column-content">
+            
+            <!-- TAB 1: SCENE CONFIGURATION & ACTIVE NPCS -->
             <div id="tab-scene" class="tab-content active-tab">
                 <h3>Scene Configuration</h3>
                 <div id="scene-context-filters-container">
@@ -53,6 +61,7 @@
                 </div>
             </div>
 
+            <!-- TAB 2: ALL CHARACTERS MANAGEMENT & CREATION -->
             <div id="tab-npcs" class="tab-content">
                 <h3>All Characters</h3>
                 <div class="character-list-container">
@@ -77,7 +86,9 @@
                 </form>
             </div>
 
+            <!-- TAB 3: LORE & WORLDBUILDING MANAGEMENT -->
             <div id="tab-lore" class="tab-content">
+                <!-- Collapsible detail view for selected lore entries -->
                 <div id="lore-detail-main-section" class="collapsible-section collapsed">
                     <h3 class="collapsible-header">
                         <span id="details-lore-name">No Lore Selected</span>
@@ -116,26 +127,32 @@
         </div>
     </aside>
 
+    <!-- DRAGGABLE RESIZER BAR: Separates sidebar and main content area -->
     <div id="resizer"></div>
 
+    <!-- RIGHT CONTENT AREA: Dynamic View Switching Main Container -->
     <main id="right-column">
         
+        <!-- VIEW 1: SCENE DIALOGUE INTERFACE (Default active view) -->
         <div id="dialogue-interface" style="display: none;">
             <div id="active-participants-quick-view">
                 <div id="pc-quick-view-section-in-scene"></div>
                 <h2>Live Dialogue</h2>
+                <!-- Container where individual active NPC conversation cards are injected -->
                 <div id="multi-npc-dialogue-container">
                     <p class="scene-event">Select NPCs from the SCENE tab to begin interaction.</p>
                 </div>
             </div>
 
-            <div id="active-party-wrapper">
+            <!-- Legacy container placeholder (reused/hijacked by dynamic flex inbox logic) -->
+            <div id="active-party-wrapper" style="display: none;">
                 <h4 style="margin-top: 0; margin-bottom: 10px; color: var(--text-main);">Active Party Inbox</h4>
                 <div id="active-party-inputs-container" class="active-party-grid">
                     <p id="active-party-placeholder" style="color: #888; font-style: italic; font-size: 0.9em; margin: 0; padding: 5px;">Waiting for PC dialogue from the live feed...</p>
                 </div>
             </div>
 
+            <!-- TESTING MODE: Live Discord Feed log reader panel -->
             <div id="live-discord-chat-container" style="border: 1px solid #444; border-radius: 5px; margin-bottom: 15px; padding: 10px; background-color: #2b2b2b;">
                 <h4 style="margin-top: 0; margin-bottom: 10px; color: #ddd;">Live Discord Feed (Testing Mode)</h4>
                 
@@ -149,30 +166,36 @@
                 </div>
             </div>
 
+            <!-- GM / SCENE INPUT SECTION: Anchors the dynamic input row -->
             <div id="dialogue-input-section">
                 <h4>GM / Scene Input</h4>
                 <div style="display: flex; gap: 10px; margin-bottom: 8px;">
-                    <select id="speaking-pc-select" style="flex: 1;">
+                    <select id="speaking-pc-select" style="flex: 1; display: none;">
                         <option value="">-- DM / Global Scene Event --</option>
                     </select>
-                    <button id="undo-dm-btn" style="flex: 0 0 60px; background-color: #ffc107; color: #212529; border:none; border-radius:4px; font-weight:600; font-size: 13px;">Undo</button>
-                    <button id="clear-dm-btn" style="flex: 0 0 60px; background-color: #6c757d; color: white; border:none; border-radius:4px; font-weight:600; font-size: 13px;">Clear</button>
-                    <button id="generate-dialogue-btn" style="flex: 0 0 150px; margin-top:0;">Generate Scene</button>
+                    <button id="undo-dm-btn" style="display: none; flex: 0 0 60px; background-color: #ffc107; color: #212529; border:none; border-radius:4px; font-weight:600; font-size: 13px;">Undo</button>
+                    <button id="clear-dm-btn" style="display: none; flex: 0 0 60px; background-color: #6c757d; color: white; border:none; border-radius:4px; font-weight:600; font-size: 13px;">Clear</button>
+                    <button id="generate-dialogue-btn" style="display: none; flex: 0 0 150px; margin-top:0;">Generate Scene</button>
                 </div>
-                <textarea id="player-utterance" rows="4" placeholder="DM scene descriptions, untracked NPC dialogue, or global actions..."></textarea>
+                <!-- Legacy textarea targeted by dynamic row builder -->
+                <textarea id="player-utterance" rows="4" placeholder="DM scene descriptions, untracked NPC dialogue, or global actions..." style="display: none;"></textarea>
                 
+                <!-- Container for AI metadata recommendations (Actions, Checks, Topics, Standings) -->
                 <div id="ai-suggestions" style="display:none;"></div>
             </div>
         </div>
 
+        <!-- VIEW 2: PC DASHBOARD & DPR CALCULATOR INTERFACE -->
         <div id="pc-dashboard-view" style="display: none;">
             <h2>PC Dashboard</h2>
             <div id="pc-dashboard-content"></div> 
         </div>
 
+        <!-- VIEW 3: DETAILED CHARACTER / LORE PROFILE SHEET (Right Column Pane) -->
         <div id="npc-profile-view" style="display: none;">
         </div>
 
+        <!-- VIEW 4: LOCATION / WORLDBUILDING DASHBOARD VIEW -->
         <div id="location-dashboard-view" style="display: none;">
             <h2>Location Dashboard</h2>
         </div>
@@ -180,6 +203,7 @@
     </main>
 </div>
 
+<!-- SCRIPTS LOAD ORDER: Config/Utils first, followed by state, services, renderers, and core app controllers -->
 <script src="{{ url_for('static', filename='utils.js') }}"></script>
 <script src="{{ url_for('static', filename='config.js') }}"></script>
 <script src="{{ url_for('static', filename='dndCalculations.js') }}"></script>
