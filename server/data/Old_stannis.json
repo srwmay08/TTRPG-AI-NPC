@@ -1,0 +1,55 @@
+{
+    "name": "Old Stannis the Ferryman",
+    "description": "Old Stannis is a weathered, grizzled waterman who operates a small wooden ferry across the city's canals and waterways. With a voice like grinding river stones and eyes clouded by cataracts yet unnervingly sharp to shifting currents, he knows every bridge pier, drainage outflow, and dark secret whispered over the water's surface.",
+    "character_type": "NPC",
+    "race": "Human",
+    "class": "Commoner / Ferryman",
+    "alignment": "True Neutral",
+    "age": "Elder",
+    "ideals": [
+        "Duty: 'The river keeps moving, and so do I. Pay your copper, keep your hands inside the boat, and we'll get across safe.'",
+        "Discretion: 'Water washes away blood, but a good ferryman remembers what sinks and what floats.'"
+    ],
+    "bonds": [
+        "His battered wooden skiff and the stretch of water he navigates daily.",
+        "The river docks, canal locks, and waterfront locals who rely on his crossings."
+    ],
+    "flaws": [
+        "Grumpy and cynical, rarely offering a free ride or extending sympathy without a coin upfront."
+    ],
+    "speech_patterns": "Raucous, gravelly, and sparse, speaking in short sentences punctuated by the rhythmic creak of wooden oars.",
+    "mannerisms": "Pulls steadily on long oars with calloused hands, spits into the murky water, and squints suspiciously at passengers carrying heavy or dripping cargo.",
+    "relationships": [
+        {
+            "name": "Waterfront Dock Workers",
+            "relationship": "Local Acquaintances",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Grisled and cynical",
+        "Observant",
+        "Reliable for a price",
+        "Quietly cautious"
+    ],
+    "motivations": [
+        "To earn enough coppers to buy his evening stout and keep his boat patched against the rot."
+    ],
+    "knowledge": [
+        "Intimate familiarity with local waterways, canal bridges, hidden drainage grates, and bodies or cargo that have 'accidentally' gone missing in the river."
+    ],
+    "memories": [],
+    "gm_notes": "Old Stannis serves as a flavorful transportation contact and source of river-level underworld gossip. He can ferry the party across canals, drop hints about clandestine midnight drops into the water, or act as a cautious witness to amphibious smuggling operations.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Waterfront_Transport_Log.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Waterfront Guilds / Locals": "Neutral / Professional"
+    }
+}

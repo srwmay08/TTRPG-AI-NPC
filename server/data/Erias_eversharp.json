@@ -1,0 +1,60 @@
+{
+    "name": "Erias Eversharp",
+    "description": "Erias Eversharp is an energetic and talkative half-elven apprentice working alongside Tally Fellbranch at The Bent Nail. Named for his knack for keeping hand saws, chisels, and carving blades razor-sharp, he is enthusiastic, quick with a joke, and always eager to try out bold new woodworking designs.",
+    "character_type": "NPC",
+    "race": "Half-Elf",
+    "class": "Commoner / Apprentice Artisan",
+    "alignment": "Chaotic Good",
+    "age": "Young Adult",
+    "ideals": [
+        "Innovation: 'Tradition is great, but a well-sharpened blade and a fresh idea can build something truly extraordinary.'",
+        "Energy: 'Keep the saws buzzing and the shop lively; work goes twice as fast when you're having fun.'"
+    ],
+    "bonds": [
+        "The Bent Nail workshop and his fellow apprentice, Elaim.",
+        "The community of Trollskull Alley and the local adventurers."
+    ],
+    "flaws": [
+        "Impulsive and easily distracted by experimental carving ideas, occasionally rushing through prep work."
+    ],
+    "speech_patterns": "Upbeat, chatty, and enthusiastic, often tossing in cheerful commentary while he works.",
+    "mannerisms": "Passes sharpening stones rhythmically across chisel edges, flashes bright grins at customers, and gestures animatedly when discussing custom designs.",
+    "relationships": [
+        {
+            "name": "Tally Fellbranch",
+            "relationship": "Master Woodworker / Mentor",
+            "status": "Alive"
+        },
+        {
+            "name": "Elaim",
+            "relationship": "Co-Apprentice",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Enthusiastic and cheerful",
+        "Talkative",
+        "Creative and eager",
+        "Friendly"
+    ],
+    "motivations": [
+        "To design his own line of custom wooden goods and prove his skills to Tally and the neighborhood."
+    ],
+    "knowledge": [
+        "Tool sharpening and maintenance, rough timber cutting, workshop banter, and local alley gossip."
+    ],
+    "memories": [],
+    "gm_notes": "Erias brings vibrant energy to The Bent Nail. He can be used to pass along neighborhood rumors, eagerly pitch custom wood projects to the party, or add a lively, welcoming atmosphere to the workshop.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "The_Bent_Nail_Inventory.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Trollskull Manor Crew": "Friendly"
+    }
+}

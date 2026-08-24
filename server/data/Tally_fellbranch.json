@@ -1,0 +1,56 @@
+{
+    "name": "Talisolvanar \"Tally\" Fellbranch",
+    "description": "Talisolvanar \"Tally\" Fellbranch is a talented half-elf carpenter and woodcarver who owns and operates The Bent Nail shop right on Trollskull Alley. Friendly, skilled, and deeply rooted in the neighborhood, he specializes in crafting fine furniture, wooden sculptures, and sturdy wooden weapons or shields. Always ready with a welcoming smile and a sawdust-dusted apron, he is a pillar of the local merchant community.",
+    "character_type": "NPC",
+    "race": "Half-Elf",
+    "class": "Commoner / Artisan",
+    "alignment": "Chaotic Good",
+    "age": "Middle-aged",
+    "ideals": [
+        "Craftsmanship: 'If you're going to build something, build it to last through the worst winters Waterdeep can throw at you.'",
+        "Community: 'Good neighbors make the best foundation for any neighborhood.'"
+    ],
+    "bonds": [
+        "The Bent Nail woodcarving shop and his livelihood on Trollskull Alley.",
+        "The local shopkeepers and residents of Trollskull Manor and the surrounding wards."
+    ],
+    "flaws": [
+        "Can be overly stubborn when defending his traditional woodworking methods against cheap mass-produced alternatives."
+    ],
+    "speech_patterns": "Warm, easygoing, and articulate, often speaking with an enthusiastic cadence when describing wood grains, joinery, or local gossip.",
+    "mannerisms": "Wipes sawdust from his hands onto a cloth apron, taps testingly on newly carved joints, and greets passersby with a cheerful wave.",
+    "relationships": [
+        {
+            "name": "Trollskull Manor Crew",
+            "relationship": "Neighbors / Allies",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Friendly and approachable",
+        "Creative and meticulous",
+        "Supportive neighbor",
+        "Hardworking"
+    ],
+    "motivations": [
+        "To keep The Bent Nail thriving as the premier woodcraft shop in the North Ward.",
+        "To help restore Trollskull Alley to a vibrant, bustling community."
+    ],
+    "knowledge": [
+        "Expertise in timber qualities, furniture construction, local architectural history, and neighborhood news along Trollskull Alley."
+    ],
+    "memories": [],
+    "gm_notes": "Tally Fellbranch serves as an immediate, friendly neighbor and a reliable resource for any carpentry work, furniture repairs, or custom wooden gear the party might need for Trollskull Manor.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "The_Bent_Nail_Inventory.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Trollskull Manor Crew": "Friendly / Ally"
+    }
+}

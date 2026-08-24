@@ -1,0 +1,55 @@
+{
+    "name": "Velos",
+    "description": "Velos is a sharp-witted and pragmatic mercenary scout who has spent years navigating the dangerous borderlands and urban alleyways of the Sword Coast. Tough, resourceful, and always keeping one hand close to his scabbard, he offers his tracking and tactical skills to those with deep enough pockets, operating with a strict code of professional survival rather than blind idealism.",
+    "character_type": "NPC",
+    "race": "Human / Half-Elf",
+    "class": "Scout / Fighter",
+    "alignment": "True Neutral",
+    "age": "Late 20s",
+    "ideals": [
+        "Survival: 'Out in the wild or down in the city streets, the only rule that matters is staying alive to collect your pay.'",
+        "Professionalism: 'A contract is a contract—you do the job you're hired for, and you don't ask unnecessary questions.'"
+    ],
+    "bonds": [
+        "His trusted hunting bow and well-worn leather armor.",
+        "A small network of freelance mercenaries and informants across the Sword Coast."
+    ],
+    "flaws": [
+        "Deeply cynical and untrusting of strangers, especially those offering charity or overly noble motives."
+    ],
+    "speech_patterns": "Direct, curt, and practical, cutting straight to the point without wasting breath on pleasantries.",
+    "mannerisms": "Scans doorways and shadows out of habit, tests the tension of his bowstring, and keeps his posture loose and ready for sudden trouble.",
+    "relationships": [
+        {
+            "name": "Freelance Mercenaries and Scouts",
+            "relationship": "Colleagues / Contacts",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Pragmatic and observant",
+        "Cautious and self-reliant",
+        "No-nonsense",
+        "Quietly dependable for a price"
+    ],
+    "motivations": [
+        "To secure enough coin to fund his next expedition and maintain his gear in top condition."
+    ],
+    "knowledge": [
+        "Wilderness tracking, scouting tactics, ambush avoidance, and the locations of safe campsites and hidden trails outside the city walls."
+    ],
+    "memories": [],
+    "gm_notes": "Velos serves as a reliable guide or mercenary tracker for parties heading out into the wilderness or navigating dangerous rural areas. He can provide reconnaissance, guide parties through hazardous terrain, or act as a neutral tactical asset.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Mercenary_Scout_Registry.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Freelance Guilds": "Neutral / Professional"
+    }
+}

@@ -1,0 +1,68 @@
+{
+    "name": "Jenks",
+    "description": "Jenks is one of the young tiefling/goblin-associated street urchins operating in Havik and the party's informal network in the alleys of Waterdeep. Often seen alongside his peers Squidly and Nat, he helps gather local intelligence, handles items like lutes and wands, and eagerly participates in the group's neighborhood activities.",
+    "character_type": "NPC",
+    "race": "Tiefling / Humanoid Child",
+    "class": "Commoner / Urchin",
+    "alignment": "Neutral Good",
+    "age": "Child",
+    "ideals": [
+        "Loyalty: 'We look out for each other and the friends who treat us right.'",
+        "Excitement: 'Helping with big adventures and magical finds is way better than begging.'"
+    ],
+    "bonds": [
+        "His fellow urchins, Squidly and Nat[cite: 1].",
+        "Havik and the Trollskull Manor crew[cite: 1].",
+        "His neighborhood turf in Trollskull Alley."
+    ],
+    "flaws": [
+        "Can be overly eager or easily flustered when dealing with dangerous magic or high-stakes threats[cite: 1].",
+        "Prone to getting caught up in street scuffles with rival neighborhood kids like the Appleton boys[cite: 1]."
+    ],
+    "speech_patterns": "Youthful, energetic, and expressive, often speaking in an excited, breathless rush when reporting news or discoveries[cite: 1].",
+    "mannerisms": "Juggles objects or apples to pass the time, trails alongside Nat and Squidly, and looks up to the party with wide-eyed enthusiasm[cite: 1].",
+    "relationships": [
+        {
+            "name": "Nat",
+            "relationship": "Urchin Peer / Crew Member",
+            "status": "Alive"
+        },
+        {
+            "name": "Squidly",
+            "relationship": "Urchin Peer / Crew Member",
+            "status": "Alive"
+        },
+        {
+            "name": "Havik",
+            "relationship": "Mentor / Contact",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Enthusiastic and eager to help",
+        "Resilient street kid",
+        "Loyal to his friends",
+        "Curious"
+    ],
+    "motivations": [
+        "To gather information, run errands, and earn a few silvers from the party[cite: 1].",
+        "To secure a better, safer life and education alongside his peers in the alley[cite: 1]."
+    ],
+    "knowledge": [
+        "Alley shortcuts, neighborhood hiding spots, and street-level gossip across the North Ward[cite: 1]."
+    ],
+    "memories": [],
+    "gm_notes": "Jenks serves as a charming and helpful street urchin NPC who can provide low-level scouting, drop neighborhood rumors, or act as a warm emotional anchor for the party's community-building efforts around Trollskull Manor[cite: 1].",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Urchin_Network_Log.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Trollskull Manor Crew": "Friendly"
+    }
+}

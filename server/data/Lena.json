@@ -1,0 +1,55 @@
+{
+    "name": "Lena",
+    "description": "Lena is a dedicated member of the staff who assists with daily operations and upkeep. Hardworking and reliable, she helps keep everything running smoothly behind the scenes, ensuring that all logistical and domestic duties are managed with care and efficiency.",
+    "character_type": "NPC",
+    "race": "Human",
+    "class": "Commoner / Staff",
+    "alignment": "Neutral Good",
+    "age": "Adult",
+    "ideals": [
+        "Diligence: 'A well-kept house and honest work make everything else possible.'",
+        "Reliability: 'You can always count on me to get the job done right.'"
+    ],
+    "bonds": [
+        "The establishment and its daily operations.",
+        "Her colleagues and the team she supports."
+    ],
+    "flaws": [
+        "Can become easily overwhelmed when unexpected crises disrupt routine operations."
+    ],
+    "speech_patterns": "Warm, practical, and straightforward, focusing on daily tasks and practical assistance.",
+    "mannerisms": "Keeps busy with organizing supplies, greets visitors with a friendly nod, and maintains a tidy workspace.",
+    "relationships": [
+        {
+            "name": "Trollskull Manor Crew",
+            "relationship": "Employers / Associates",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Hardworking",
+        "Friendly",
+        "Dependable",
+        "Observant"
+    ],
+    "motivations": [
+        "To maintain smooth day-to-day operations and support the team with steady, reliable work."
+    ],
+    "knowledge": [
+        "Familiarity with domestic routines, local supply management, and daily upkeep tasks."
+    ],
+    "memories": [],
+    "gm_notes": "Lena serves as a dependable background staff member who helps ground the setting in everyday realism, available to handle routine tasks or provide local observations.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Staff_Roster.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Trollskull Manor Crew": "Friendly"
+    }
+}

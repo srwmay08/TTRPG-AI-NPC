@@ -1,0 +1,60 @@
+{
+    "name": "Mertyn Bottlewick",
+    "description": "Mertyn Bottlewick is a representative and supplier affiliated with the Vintners' Guild who interacts with local tavern owners in Waterdeep. Well-versed in the politics of wine distribution and guild quotas, he coordinates shipments and supply arrangements, occasionally finding himself caught between honest proprietors and aggressive competitors like Emmek Frewn.",
+    "character_type": "NPC",
+    "race": "Halfling",
+    "class": "Expert / Guild Supplier",
+    "alignment": "True Neutral",
+    "age": "Middle-aged",
+    "ideals": [
+        "Business: 'Good wine flows where the coin is green and the guild stamps are in order.'",
+        "Neutrality: 'I supply the barrels; whose throats they go down is none of my concern.'"
+    ],
+    "bonds": [
+        "The Vintners' Guild and its distribution networks across the wards.",
+        "His commercial relationships with local tavern keepers and wine merchants."
+    ],
+    "flaws": [
+        "Easily swayed by lucrative exclusive contracts or pressured by aggressive local rivals."
+    ],
+    "speech_patterns": "Professional, transactional, and slightly evasive when questioned about competing business pressures.",
+    "mannerisms": "Checks delivery ledgers, taps sealing wax on wine crates, and casts cautious glances around when discussing rival establishments.",
+    "relationships": [
+        {
+            "name": "Emmek Frewn",
+            "relationship": "Local Tavern Rival / Business Contact",
+            "status": "Alive"
+        },
+        {
+            "name": "Trollskull Manor Crew",
+            "relationship": "Tavern Clients",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Pragmatic and business-focused",
+        "Cautious",
+        "Transactional",
+        "Accommodating"
+    ],
+    "motivations": [
+        "To secure profitable wine and alcohol supply contracts with the city's taverns while keeping the Vintners' Guild satisfied."
+    ],
+    "knowledge": [
+        "Waterdeep wine vintages, guild distribution quotas, and neighborhood tavern supply logistics."
+    ],
+    "memories": [],
+    "gm_notes": "Mertyn Bottlewick serves as a trade contact for tavern-running parties. He can be used to negotiate beverage supply contracts, introduce guild politics regarding alcohol distribution, or act as an unwitting pawn in Emmek Frewn's schemes to sabotage rival taverns.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Vintners_Guild_Records.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Vintners' Guild": "Neutral / Professional"
+    }
+}

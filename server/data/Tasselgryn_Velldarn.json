@@ -1,0 +1,60 @@
+{
+    "name": "Tasselgryn Velldarn",
+    "description": "Tasselgryn Velldarn is the elderly, sharp-eyed proprietress of the Smiling Jackal harness-maker's shop in the Trades Ward, but her true identity is that of a senior member and local overseer of the Harpers. Wise, deeply connected to the city's pulse, and possessing a vast network of informants, she uses her modest shopfront as a discreet meeting place for agents and adventurers who champion justice behind the scenes.",
+    "character_type": "NPC",
+    "race": "Human",
+    "class": "Expert / Harper Agent",
+    "alignment": "Neutral Good",
+    "age": "Elder",
+    "ideals": [
+        "Freedom: 'Tyranny and oppression wear many faces in this city; it is our duty to unmask them before they take root.'",
+        "Discretion: 'The loudest voices in the room rarely know the secrets that actually matter.'"
+    ],
+    "bonds": [
+        "The Harpers and their clandestine network across Faerûn.",
+        "The Smiling Jackal shop and her quiet life in the Trades Ward."
+    ],
+    "flaws": [
+        "Overly cautious at times, testing prospective allies rigorously before offering any real trust or classified information."
+    ],
+    "speech_patterns": "Calm, measured, and understated, speaking with the quiet authority of someone who has seen decades of political shifting without blinking.",
+    "mannerisms": "Stitches leather straps with steady, deliberate hands, peers over spectacles with a knowing gaze, and offers dry, subtle wit when evaluating visitors.",
+    "relationships": [
+        {
+            "name": "Harpers Network",
+            "relationship": "Faction Leadership / Operatives",
+            "status": "Alive"
+        },
+        {
+            "name": "Trollskull Manor Crew",
+            "relationship": "Allies / Prospective Harper Recruits",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Wise and perceptive",
+        "Deeply discreet",
+        "Pragmatic",
+        "Compassionate yet firm"
+    ],
+    "motivations": [
+        "To monitor covert threats against Waterdeep, disrupt villainous plots, and guide capable heroes toward protecting the innocent."
+    ],
+    "knowledge": [
+        "Comprehensive awareness of Harper operations, noble intrigues, local criminal elements, and secret passages or safe houses across Waterdeep."
+    ],
+    "memories": [],
+    "gm_notes": "Tasselgryn Velldarn serves as a key Harper contact for the party. She can be used to assign covert missions, provide intelligence on villains like the Zhentarim or Xanathar's Guild, or test the party's moral compass before welcoming them deeper into the faction.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Harpers_Waterdeep_Network.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "The Harpers": "Ally / Mentor"
+    }
+}

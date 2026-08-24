@@ -1,0 +1,57 @@
+{
+    "name": "Rolling Stone",
+    "description": "Rolling Stone is a lively and agile Tabaxi who seamlessly blends the rhythmic, poetic soul of a bard with the disciplined, lightning-fast kinetic strikes of a monk. With sleek, wind-swept fur and soft-padded paws that make virtually no sound on cobblestone or wooden floorboards, they travel from tavern to tavern playing hypnotic acoustic melodies on a lute while keeping their reflexes razor-sharp for any sudden trouble.",
+    "character_type": "NPC",
+    "race": "Tabaxi",
+    "class": "Bard / Monk",
+    "alignment": "Chaotic Good",
+    "age": "Young Adult",
+    "ideals": [
+        "Harmony: 'Life is like a complex rhythm; keep your steps light, your heart open, and never miss a beat.'",
+        "Freedom: 'A rolling stone gathers no moss, and a true wanderer never stays bound by walls or worry.'"
+    ],
+    "bonds": [
+        "The open road, musical camaraderie, and fellow adventurers who appreciate a good tune and a reliable ally.",
+        "The sacred martial arts traditions and traveling artistic troupes that shaped their upbringing."
+    ],
+    "flaws": [
+        "Restless and easily distracted by new rumors, distant horizons, or shiny musical novelties.",
+        "Occasional bouts of feline curiosity that pull them into unnecessary dangerous situations."
+    ],
+    "speech_patterns": "Melodic, playful, and casually philosophical, frequently slipping musical cadence or feline idioms into everyday conversation.",
+    "mannerisms": "Tapping rhythmic beats with long claws, casually stretching with feline grace, strumming absentminded melodies on their instrument, and darting away with astonishing speed when startled.",
+    "relationships": [
+        {
+            "name": "Trollskull Manor Crew",
+            "relationship": "Allies / Jamming Companions",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Free-spirited and charismatic",
+        "Deeply observant and agile",
+        "Playful yet fiercely protective",
+        "Inquisitive"
+    ],
+    "motivations": [
+        "To collect the finest songs, stories, and martial techniques from across the Sword Coast.",
+        "To protect friends and innocent bystanders with a sudden, devastating flurry of unarmed strikes hidden behind a charming smile."
+    ],
+    "knowledge": [
+        "Familiarity with regional tavern circuits, folk songs, gossip, open-hand combat maneuvers, and acrobatic navigation across urban rooftops."
+    ],
+    "memories": [],
+    "gm_notes": "Rolling Stone serves as a vibrant, dynamic character who brings incredible mobility, musical flair, and unexpected combat prowess to the table. They can easily liven up a tavern scene, provide performance utility, or scout rooftops with unmatched stealth.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Rolling_Stone_Character_Sheet.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Trollskull Manor Crew": "Ally"
+    }
+}

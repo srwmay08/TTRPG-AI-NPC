@@ -1,0 +1,55 @@
+{
+    "name": "Krunk",
+    "description": "Krunk is a burly, heavy-handed thug and bouncer whose name is often muttered in the rougher taverns and back alleys of the city. Known for breaking barstools and throwing out unruly patrons with casual ease, he lacks patience for fancy talk or drawn-out negotiations.",
+    "character_type": "NPC",
+    "race": "Half-Orc",
+    "class": "Fighter / Enforcer",
+    "alignment": "Chaotic Neutral",
+    "age": "Adult",
+    "ideals": [
+        "Strength: 'Might makes right, and a heavy fist solves most arguments.'",
+        "Simplicity: 'Keep drinking, keep fighting, and keep out of my way.'"
+    ],
+    "bonds": [
+        "The underground taverns and gambling dens where he finds work as muscle.",
+        "A deep loyalty to whoever pays him best or keeps him well-fed and watered."
+    ],
+    "flaws": [
+        "Short-tempered and easily provoked by insults or smart-alecks."
+    ],
+    "speech_patterns": "Gruff, blunt, and laconic, preferring grunts, short sentences, and direct threats over conversation.",
+    "mannerisms": "Crosses massive arms over a scarred chest, spits on the floor, and cracks his neck aggressively when annoyed.",
+    "relationships": [
+        {
+            "name": "Local Underworld Bosses",
+            "relationship": "Employers",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Brusque and aggressive",
+        "Simple-minded",
+        "Loyal to coin",
+        "Intimidating"
+    ],
+    "motivations": [
+        "To earn enough coin for his next heavy meal and mug of ale without having to think too hard about complex schemes."
+    ],
+    "knowledge": [
+        "Local tavern brawls, rough districts, and street-level muscle work across the wards."
+    ],
+    "memories": [],
+    "gm_notes": "Krunk can serve as a physical obstacle, a heavy-handed bouncer blocking access to a illicit establishment, or hired muscle that the party can either fight, bribe, or trick with a display of strength.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Underworld_Enforcers_Log.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Underworld Syndicates": "Neutral / Mercenary"
+    }
+}

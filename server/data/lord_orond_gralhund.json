@@ -1,0 +1,62 @@
+{
+    "name": "Lord Orond Gralhund",
+    "description": "Lord Orond Gralhund is the aristocratic husband of Lady Yalah Gralhund, residing with her in their heavily fortified villa in the North Ward. While outwardly a refined and courteous noble who plays his expected role in high society functions, he is fully complicit in his wife's ruthless ambitions and covert political maneuvering, assisting in the family's hazardous schemes to secure power and status in Waterdeep.",
+    "character_type": "NPC",
+    "race": "Human",
+    "class": "Noble",
+    "alignment": "Neutral Evil",
+    "age": "Late 30s to Early 40s",
+    "ideals": [
+        "Dynasty: 'The prestige and survival of House Gralhund override all moral considerations.'",
+        "Compliance: 'A united front is essential for our house to weather the political storms of the upper wards.'"
+    ],
+    "bonds": [
+        "House Gralhund and its standing among the noble families of Waterdeep.",
+        "His partnership and shared conspiratorial goals with his wife, Lady Yalah."
+    ],
+    "flaws": [
+        "Overly reliant on his wife's strategic direction, occasionally serving as an enabler for her most reckless gambits."
+    ],
+    "speech_patterns": "Polite, measured, and formal, adopting the smooth cadence of an experienced courtier while deflecting awkward inquiries.",
+    "mannerisms": "Adjusts his signet ring, offers practiced and charming smiles at social gatherings, and defers major tactical decisions to his wife behind closed doors.",
+    "relationships": [
+        {
+            "name": "Lady Yalah Gralhund",
+            "relationship": "Wife / Co-Conspirator",
+            "status": "Alive"
+        },
+        {
+            "name": "Hrabbaz",
+            "relationship": "Estate Bodyguard / Enforcer",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Refined and courteous",
+        "Ambitious",
+        "Subservient to family goals",
+        "Guarded"
+    ],
+    "motivations": [
+        "To elevate House Gralhund's wealth and political influence within Waterdeep's nobility.",
+        "To maintain the respectable public facade of the Gralhund estate while illegal operations unfold within."
+    ],
+    "knowledge": [
+        "Detailed familiarity with Waterdeep's noble houses, social calendars, and high-society etiquette.",
+        "Awareness of House Gralhund's secret alliances and the ongoing hunt for the Vault of Dragons."
+    ],
+    "memories": [],
+    "gm_notes": "Lord Orond Gralhund acts as the co-ruler of Gralhund Villa, providing a slightly more approachable social face than his cold wife. He can be used during noble social encounters, high-society galas, or as part of the chaotic defense and interrogation scenarios when the party infiltrates the Gralhund estate.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Gralhund_Villa_Records.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "House Gralhund": "Hostile / Opposed"
+    }
+}

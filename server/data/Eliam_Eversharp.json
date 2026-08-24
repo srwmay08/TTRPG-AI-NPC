@@ -1,0 +1,60 @@
+{
+    "name": "Elaim",
+    "description": "Elaim is a quiet, dedicated elf apprentice who assists Tally Fellbranch at The Bent Nail on Trollskull Alley. Possessing steady hands, infinite patience, and a deep appreciation for fine wood grain, he handles delicate joinery, wood polishing, and intricate inlay work under Tally's mentorship.",
+    "character_type": "NPC",
+    "race": "Elf",
+    "class": "Commoner / Apprentice Artisan",
+    "alignment": "Neutral Good",
+    "age": "Young Adult",
+    "ideals": [
+        "Precision: 'A well-fitted joint needs no iron nails to hold it together.'",
+        "Dedication: 'There is quiet honor in turning rough timber into something enduring and beautiful.'"
+    ],
+    "bonds": [
+        "The Bent Nail and his mentor, Tally Fellbranch.",
+        "The woodworking craft and the tools he maintains with meticulous care."
+    ],
+    "flaws": [
+        "Reserved and soft-spoken, often reluctant to speak up or interrupt when others are talking."
+    ],
+    "speech_patterns": "Soft, measured, and concise, choosing his words carefully and focusing heavily on technical details of craftsmanship.",
+    "mannerisms": "Carefully sweeps up wood shavings, tests the smoothness of a sanded surface with his fingertips, and listens intently with a gentle nod.",
+    "relationships": [
+        {
+            "name": "Tally Fellbranch",
+            "relationship": "Master Woodworker / Mentor",
+            "status": "Alive"
+        },
+        {
+            "name": "Erias Eversharp",
+            "relationship": "Co-Apprentice",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Patient and observant",
+        "Meticulous",
+        "Quiet and polite",
+        "Hardworking"
+    ],
+    "motivations": [
+        "To master the art of fine woodworking and become a master craftsman in his own right."
+    ],
+    "knowledge": [
+        "Wood types, fine joinery techniques, sanding and finishing processes, and daily workshop maintenance."
+    ],
+    "memories": [],
+    "gm_notes": "Elaim serves as a quiet, helpful fixture at The Bent Nail. He can assist the party with minor wood repairs, relay messages for Tally, or offer a grounded, calm perspective on neighborhood happenings along Trollskull Alley.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "The_Bent_Nail_Inventory.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Trollskull Manor Crew": "Friendly"
+    }
+}

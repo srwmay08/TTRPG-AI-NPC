@@ -1,0 +1,64 @@
+{
+    "name": "Wembly",
+    "description": "Wembly is a well-dressed half-orc who serves as the loyal doorman, bodyguard, and assistant at Havershamble's Jewelry and Fine Mechanicals right next door to Trollskull Manor[cite: 1]. Imposing yet dependable, he stands by the entrance to greet visitors and answer basic questions before bringing guests inside[cite: 1].",
+    "character_type": "NPC",
+    "race": "Half-Orc",
+    "class": "Commoner / Doorman",
+    "alignment": "Neutral",
+    "age": "Adult",
+    "ideals": [
+        "Loyalty: 'I will fight to the death to defend the Havershambles, the shop, and my home[cite: 1].'"
+    ],
+    "bonds": [
+        "The Havershamble rock gnome family and their fine mechanical shop.",
+        "His upstairs living quarters loft[cite: 1]."
+    ],
+    "flaws": [
+        "Completely oblivious to the romantic affections of Beluska, the half-orc proprietress of the nearby boarding house[cite: 1]."
+    ],
+    "speech_patterns": "Direct, polite, and straightforward when handling visitors at the shop entrance[cite: 1].",
+    "mannerisms": "Looms by the entrance looking slightly out of place while assisting customers, and stands ready to protect his employers at a moment's notice[cite: 1].",
+    "relationships": [
+        {
+            "name": "Socally Havershamble",
+            "relationship": "Employer / Shop Owner",
+            "status": "Alive"
+        },
+        {
+            "name": "Bumble Havershamble",
+            "relationship": "Employer / Jewelry Maker",
+            "status": "Alive"
+        },
+        {
+            "name": "Beluska",
+            "relationship": "Local Admirer (Unbeknownst to Wembly)",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Extremely loyal",
+        "Reliable",
+        "Protective",
+        "Oblivious to romance"
+    ],
+    "motivations": [
+        "To guard the Havershamble family and maintain security for their jewelry and mechanical establishment[cite: 1]."
+    ],
+    "knowledge": [
+        "Familiarity with Havershamble's shop operations, daily visitors, and immediate neighborhood happenings along Trollskull Alley."
+    ],
+    "memories": [],
+    "gm_notes": "Wembly serves as a familiar, friendly face right next door to Trollskull Manor. He can be used to direct players into the jewelry shop, flag down the party for help with problems like a rat infestation in the gnome-sized cellar (which he is too big to enter), or act as a steadfast defender during alley conflicts[cite: 1].",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Havershambles_Shop_Log.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Trollskull Manor Crew": "Friendly"
+    }
+}

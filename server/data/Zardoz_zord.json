@@ -1,0 +1,60 @@
+{
+    "name": "Zardoz Zord",
+    "description": "Zardoz Zord is the flamboyant, charismatic leader of the Sea Maidens Faire carnival and its three ships (*Heartbreaker*, *Hellraiser*, and *Pride of the Fleet*). A large-chested human swashbuckler of impossible grace, he dresses in extravagant red and purple silks, sports a wide-brimmed hat adorned with a rainbow of feathers, and wears a gem-studded eyepatch over one eye while riding atop a giant, rainbow-feathered diatryma.",
+    "character_type": "NPC",
+    "race": "Human (Disguised Drow)",
+    "class": "Swashbuckler / Master of Disguise",
+    "alignment": "Chaotic Neutral",
+    "age": "Adult",
+    "ideals": [
+        "Showmanship: 'The show must go on, and style is everything when capturing the hearts and gold of Waterdeep.'",
+        "Ambition: 'A clever captain always keeps several cards hidden up his embroidered sleeve.'"
+    ],
+    "bonds": [
+        "The Sea Maidens Faire carnival and his dedicated drow crew.",
+        "His covert operations and clandestine dealings across the Sword Coast."
+    ],
+    "flaws": [
+        "Prone to elaborate theatricality and dangerous overconfidence when playing multiple roles at once."
+    ],
+    "speech_patterns": "Theatrical, charming, and polished, delivering commands and pleasantries with an effortless swagger and a dazzling smile.",
+    "mannerisms": "Adjusts his feathered hat with dramatic flair, flashes dazzling smiles, and coordinates his carnival operations from the back of a giant diatryma.",
+    "relationships": [
+        {
+            "name": "Sea Maidens Faire Crew",
+            "relationship": "Subordinates / Drow Operatives",
+            "status": "Alive"
+        },
+        {
+            "name": "Trollskull Manor Crew",
+            "relationship": "Acquaintances / Potential Business Associates",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Extroverted and flamboyant",
+        "Extremely sharp and calculating",
+        "Charismatic",
+        "Secretive"
+    ],
+    "motivations": [
+        "To manage his public carnival front while executing clandestine political and economic maneuvers in Waterdeep."
+    ],
+    "knowledge": [
+        "Detailed awareness of city nobility, black-market contraband, carnival logistics, and rogue constructs like Nimblewrights."
+    ],
+    "memories": [],
+    "gm_notes": "Zardoz Zord serves as a colorful, enigmatic figure who bridges the gap between public entertainment and underworld intrigue. He can be used to supply quest hooks, sell exotic goods, or hint at deeper secrets beneath his flamboyant persona.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Sea_Maidens_Faire_Manifest.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Trollskull Manor Crew": "Neutral / Cautious Ally"
+    }
+}

@@ -1,0 +1,61 @@
+{
+    "name": "Jarlaxle Baenre",
+    "description": "Jarlaxle Baenre is a legendary, centuries-old drow mercenary lord and master manipulator who operates with absolute impunity across the surface world and the Underdark. Dressed impeccably in flamboyant, feathered hats, jeweled eyepatches, and magical cloaks, he possesses an endless supply of enchanted trinkets, unmatched charisma, and a network of secret agents that rivals any power in Faerûn.",
+    "character_type": "NPC",
+    "race": "Drow (Dark Elf)",
+    "class": "Fighter / Rogue / Mastermind",
+    "alignment": "Chaotic Neutral",
+    "age": "Centuries old (Ageless appearance)",
+    "ideals": [
+        "Influence: 'True power isn't about ruling from a throne; it's about being the invisible hand that moves every piece on the board.'",
+        "Style: 'If you're going to scheme your way to the top, you simply must do it with absolute flair.'"
+    ],
+    "bonds": [
+        "Bregan D'aerthe, his elite drow mercenary company.",
+        "His elaborate web of political schemes, secret identities, and hidden treasures across Waterdeep."
+    ],
+    "flaws": [
+        "Arrogant and fond of elaborate deceptions, occasionally underestimating the direct unpredictability of upstart adventurers."
+    ],
+    "speech_patterns": "Smooth, cultured, and relentlessly witty, speaking with disarming warmth that masks razor-sharp intellect.",
+    "mannerisms": "Tips his wide-brimmed feathered hat with theatrical grace, twirls magical wands or hidden blades between his fingers, and smiles knowingly while keeping his true motives deeply buried.",
+    "relationships": [
+        {
+            "name": "Bregan D'aerthe",
+            "relationship": "Mercenary Company Leadership",
+            "status": "Alive"
+        },
+        {
+            "name": "Zardoz Zord",
+            "relationship": "Primary Public Persona / Disguise",
+            "status": "Active"
+        }
+    ],
+    "personality_traits": [
+        "Supremely charismatic",
+        "Cunning and adaptable",
+        "Theatrical and stylish",
+        "Ruthlessly pragmatic"
+    ],
+    "motivations": [
+        "To secure legitimate political recognition for Menzoberranzan and House Baenre within the Open Lord's council of Waterdeep.",
+        "To acquire vast wealth, powerful artifacts like the Stone of Golorr, and ultimate leverage over the city's factions."
+    ],
+    "knowledge": [
+        "Comprehensive mastery of Underdark politics, surface diplomacy, magical items, underworld factions, and covert intelligence networks across the Sword Coast."
+    ],
+    "memories": [],
+    "gm_notes": "Jarlaxle Baenre (often masquerading as Zardoz Zord) serves as one of the primary masterminds and puppet masters of the campaign. He can act as a charming patron, a dangerous wildcard, or a sophisticated rival who manipulates the party toward his own grand political objectives.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Bregan_Daerthe_Intel.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Bregan D'aerthe / Zardoz Zord": "Complex / Conditional Ally"
+    }
+}

@@ -1,0 +1,55 @@
+{
+    "name": "Fel'rekt",
+    "description": "Fel'rekt is a Drow lieutenant of Bregan D'aerthe[cite: 1]. Possessing a sharp, angular beauty, his obsidian skin blends into the shadows while white hair catches the light[cite: 1]. He wears a high collar and regards intruders with the heavy-lidded boredom of an aristocrat watching a play[cite: 1].",
+    "character_type": "NPC",
+    "race": "Drow",
+    "class": "Rogue / Lieutenant",
+    "alignment": "True Neutral",
+    "age": "Middle-aged",
+    "ideals": [
+        "Pragmatism: 'Save your breath and your spells unless you're here for something useful[cite: 1].'",
+        "Survival: 'Know when to turn a place over, and know when to step back into the shadows[cite: 1].'"
+    ],
+    "bonds": [
+        "Bregan D'aerthe and its underground network[cite: 1].",
+        "His operational duties under his faction's leadership[cite: 1]."
+    ],
+    "flaws": [
+        "Can be overly dismissive of non-underground outsiders[cite: 1]."
+    ],
+    "speech_patterns": "Smooth, unbothered, and aristocratic, carrying an air of total nonchalance even in high-stress situations[cite: 1].",
+    "mannerisms": "Maintains an unbothered posture amidst chaos, ignores hostile threats with cool boredom, and offers cryptic praise to those who survive underground environments[cite: 1].",
+    "relationships": [
+        {
+            "name": "Sel'zen",
+            "relationship": "Underground Operative / Fellow Drow",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Cool and collected",
+        "Arrogantly calm",
+        "Observant",
+        "Pragmatic"
+    ],
+    "motivations": [
+        "To execute covert operations for Bregan D'aerthe, including hunting for the Stone of Golorr[cite: 1]."
+    ],
+    "knowledge": [
+        "Underground operations, drow stealth tactics, and faction maneuverings across Waterdeep[cite: 1]."
+    ],
+    "memories": [],
+    "gm_notes": "Fel'rekt acts as a smooth, composed representative of Bregan D'aerthe[cite: 1]. He can be used to cross paths with the party during faction heists, offering an air of dangerous intrigue without immediately resorting to violence[cite: 1].",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Bregan_Daerthe_Operations.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Bregan D'aerthe": "Neutral / Competitive"
+    }
+}

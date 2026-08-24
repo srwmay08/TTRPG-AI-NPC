@@ -1,0 +1,57 @@
+{
+    "name": "Sockley Havershamble",
+    "description": "Sockley Havershamble is an eccentric, delightfully peculiar gnome tinkerer and merchant who operates a cluttered curiosities and clockwork shop in the Trades Ward. Known for his shock of unruly white hair, soot-stained waistcoat, and a pair of brass magnifying goggles strapped perpetually to his forehead, he is obsessed with clockwork automatons, impossible mechanical gadgets, and finding unusual solutions to everyday problems.",
+    "character_type": "NPC",
+    "race": "Gnome",
+    "class": "Expert / Inventor",
+    "alignment": "Chaotic Good",
+    "age": "Middle-aged",
+    "ideals": [
+        "Innovation: 'If it doesn't tick, whir, or occasionally surprise you with a small explosion, is it truly art?'",
+        "Curiosity: 'Every broken gear is just an opportunity to invent something entirely better.'"
+    ],
+    "bonds": [
+        "His cluttered workshop filled with half-finished gears, ticking clocks, and whirring contraptions.",
+        "The guild of inventors and local adventurers who bring him rare components."
+    ],
+    "flaws": [
+        "Easily distracted by shiny new mechanical concepts, often abandoning current projects to pursue a sudden brainstorm.",
+        "Prone to building contraptions that are overly complicated for simple tasks."
+    ],
+    "speech_patterns": "Rapid-fire, enthusiastic, and punctuated by excited hand gestures and terminology heavy on gears, springs, and friction coefficients.",
+    "mannerisms": "Adjusts his brass goggles up and down obsessively, taps pocket watches against his ear to check their rhythm, and leaves trails of tiny brass screws wherever he goes.",
+    "relationships": [
+        {
+            "name": "Trollskull Manor Crew",
+            "relationship": "Customers / Inventors' Patrons",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Eccentric and energetic",
+        "Brilliant yet scatterbrained",
+        "Friendly and talkative",
+        "Imaginative"
+    ],
+    "motivations": [
+        "To invent the ultimate self-cleaning tavern table or an automatic mug-polishing automaton.",
+        "To acquire rare gears, magical springs, and components for his latest grand invention."
+    ],
+    "knowledge": [
+        "Extensive expertise in clockwork mechanisms, trap disarming devices, mechanical security locks, and arcane-mechanical tinkering."
+    ],
+    "memories": [],
+    "gm_notes": "Sockley Havershamble serves as a fun, eccentric inventor contact for the party. He can be used to sell or upgrade mechanical gadgets, supply quirky security devices for Trollskull Manor, or provide side quests involving runaway automatons and misfiring inventions.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Sockley_Workshop_Inventory.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Trollskull Manor Crew": "Friendly"
+    }
+}

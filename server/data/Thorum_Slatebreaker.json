@@ -1,0 +1,55 @@
+{
+    "name": "Thorum Slatebreaker",
+    "description": "Thorum Slatebreaker is a rugged, square-jawed dwarven stonemason and contractor whose boots are perpetually dusted with granite powder and mortar. Known for his booming voice and uncompromising standards, he specializes in heavy foundational repair, masonry work, and structural restoration across the wards of Waterdeep.",
+    "character_type": "NPC",
+    "race": "Dwarf",
+    "class": "Expert / Stonemason",
+    "alignment": "Lawful Neutral",
+    "age": "Middle-aged",
+    "ideals": [
+        "Durability: 'If it ain't built on solid stone and honest joints, it's just waiting to collapse on your head.'",
+        "Fair Trade: 'A fair price for honest labor, and no shortcuts on the mortar.'"
+    ],
+    "bonds": [
+        "The Stonemasons' Guild and the enduring structures of the city.",
+        "His crew of hardworking dwarven and human laborers."
+    ],
+    "flaws": [
+        "Stubborn and inflexible when clients ask to cut corners or rush structural work to save a few coppers."
+    ],
+    "speech_patterns": "Gravelly, direct, and pragmatic, often using construction metaphors and speaking with a sturdy dwarven brogue.",
+    "mannerisms": "Taps stone blocks with a heavy mallet to test their density, wipes sweat from his brow with a rough forearm, and strokes his braided beard when inspecting cracks in a foundation.",
+    "relationships": [
+        {
+            "name": "Trollskull Manor Crew",
+            "relationship": "Clients / Property Owners",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Hardworking and reliable",
+        "Blunt and no-nonsense",
+        "Proud of his craft",
+        "Practical"
+    ],
+    "motivations": [
+        "To restore and build structures that will stand the test of time, earning a solid reputation and coin in the process."
+    ],
+    "knowledge": [
+        "Extensive expertise in stonemasonry, foundation integrity, structural load-bearing, subterranean architecture, and local building codes."
+    ],
+    "memories": [],
+    "gm_notes": "Thorum Slatebreaker serves as a prime contractor and structural expert for the party. He can be hired to oversee the major renovations of Trollskull Manor, inspect suspicious basement walls for hidden cavities, or provide insight into old underground building networks.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Stonemasons_Guild_Registry.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Trollskull Manor Crew": "Friendly / Professional"
+    }
+}

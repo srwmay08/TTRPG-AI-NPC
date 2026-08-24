@@ -1,0 +1,63 @@
+{
+    "name": "Grembo Gribbles",
+    "description": "Grembo Gribbles is a small gnome plumber dressed in thick, waterproof overalls and equipped with a long, slender metal rod used for sounding floors and pipes[cite: 1]. He possesses a magnificent, twitching nose capable of sniffing out plumbing miasmas and neglect[cite: 1]. He services establishments like Trollskull Manor under guild contracts connected to the Cromers, uncovering hidden structural and sewer access issues[cite: 1].",
+    "character_type": "NPC",
+    "race": "Gnome",
+    "class": "Expert / Plumber",
+    "alignment": "Neutral Good",
+    "age": "Middle-aged",
+    "ideals": [
+        "Craftsmanship: 'Proper pipes and clean lines keep a building standing and sweet-smelling.'",
+        "Duty: 'When the plumbing fails, you trace the miasma to its true source[cite: 1].'"
+    ],
+    "bonds": [
+        "The plumbing and sanitation guilds of Waterdeep[cite: 1].",
+        "Patrons like the Cromers whose supply lines and properties he services[cite: 1]."
+    ],
+    "flaws": [
+        "Can be overly focused on pipe networks and smells, occasionally missing broader dangers until they are directly uncovered."
+    ],
+    "speech_patterns": "Chatty, energetic, and professional, often commenting on smells, sounds, and fluid dynamics with cheerful expertise[cite: 1].",
+    "mannerisms": "Twitches his large nose to test air quality, taps floors and walls with a long sounding rod (*tink, tink, tink... thunk*), and inspects dark cellar access points with cautious curiosity[cite: 1].",
+    "relationships": [
+        {
+            "name": "The Cromer Family",
+            "relationship": "Guild Patrons",
+            "status": "Alive"
+        },
+        {
+            "name": "Moriah Kiah",
+            "relationship": "Client / Property Proprietor",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Observant and sharp-nosed",
+        "Diligent",
+        "Cheerful despite grim working conditions",
+        "Professional"
+    ],
+    "motivations": [
+        "To clear blocked lines, install iron grates, and sanitize compromised cellars[cite: 1].",
+        "To earn an honest wage working guild contracts across the city[cite: 1]."
+    ],
+    "knowledge": [
+        "Expertise in plumbing, drainage networks, and sewer access points beneath Waterdeep[cite: 1].",
+        "Familiarity with guild pricing, repairs, and structural pipe layouts in old manors[cite: 1]."
+    ],
+    "memories": [],
+    "gm_notes": "Grembo Gribbles serves as a functional and quirky local tradesman who can introduce players to hidden basement access doors, sewer connections, and plumbing infrastructure issues beneath properties like Trollskull Manor[cite: 1].",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Waterdeep_Plumbing_Guild.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Plumbing Guild": "Friendly"
+    }
+}
+```[cite: 1]

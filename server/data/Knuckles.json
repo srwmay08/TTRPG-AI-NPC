@@ -1,0 +1,60 @@
+{
+    "name": "Knuckles",
+    "description": "Knuckles is a brutal and imposing enforcer operating out of the Terasse Estate, serving alongside Gorig and Kelyn Trigos to maintain security for the corrupt elite's underground portal to the Undermountain. Physically powerful and quick to resort to violence, he handles unruly visitors, breaks up unwanted disturbances, and ensures that troublemakers are dealt with swiftly before they can compromise the estate's operations.",
+    "character_type": "NPC",
+    "race": "Goliath / Half-Orc (or Brawny Humanoid)",
+    "class": "Fighter / Enforcer",
+    "alignment": "Neutral Evil",
+    "age": "Adult",
+    "ideals": [
+        "Brute Force: 'If the words don't convince 'em, a cracked rib usually does.'",
+        "Loyalty: 'Keep the masters happy and break anyone who asks too many questions.'"
+    ],
+    "bonds": [
+        "The Terasse Estate and its underground gambling and fighting syndicates.",
+        "His fellow bouncers and enforcers, Gorig and Kelyn Trigos."
+    ],
+    "flaws": [
+        "Quick-tempered and overly eager to solve diplomatic problems with physical violence."
+    ],
+    "speech_patterns": "Gruff, short, and threatening, preferring heavy silences punctuated by cracking knuckles over lengthy conversation.",
+    "mannerisms": "Cracks his knuckles audibly, blocks doorways with an immovable frame, and stares down prospective troublemakers with a menacing glare.",
+    "relationships": [
+        {
+            "name": "Gorig",
+            "relationship": "Estate Colleague / Enforcer",
+            "status": "Alive"
+        },
+        {
+            "name": "Kelyn Trigos",
+            "relationship": "Estate Colleague / Gatekeeper",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Aggressive and intimidating",
+        "Physically imposing",
+        "No-nonsense",
+        "Loyal to employers"
+    ],
+    "motivations": [
+        "To keep order within the Terasse Estate and physically remove any trespassers or uninvited guests."
+    ],
+    "knowledge": [
+        "Bouncer protocols, physical intimidation tactics, and the layout of the security checkpoints within the Terasse Estate."
+    ],
+    "memories": [],
+    "gm_notes": "Knuckles serves as the physical muscle for the Terasse Estate security team. He can be used to escalate tension when diplomatic infiltration fails, forcing the party into a brutal brawl or a tense stealth situation to bypass his post.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Terasse_Estate_Security.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Terasse Estate / Xanathar Associates": "Hostile / Deceived"
+    }
+}

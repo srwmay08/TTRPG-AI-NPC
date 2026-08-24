@@ -1,0 +1,55 @@
+{
+    "name": "High Priestess Orlaega",
+    "description": "High Priestess Orlaega is a high-ranking cleric who serves as a spiritual leader and advisor, offering practical counsel on matters of faith and craftsmanship. She advised Moriah to take a practical approach when crafting his hammer for his master's exam, guiding him toward creating a powerful shield dedicated to Moradin instead[cite: 1]. She also provided her backing when vouching for Moriah's spirit and skill before the Metal Masters' Hall[cite: 1].",
+    "character_type": "NPC",
+    "race": "Dwarf",
+    "class": "Cleric / High Priestess",
+    "alignment": "Lawful Good",
+    "age": "Elder",
+    "ideals": [
+        "Practicality: 'True devotion to the Forge-Father is found not just in grand visions, but in practical, steadfast creation[cite: 1].'",
+        "Faith: 'An artisan's work is a testament to the divine spark within[cite: 1].'"
+    ],
+    "bonds": [
+        "The church and spiritual institutions of Moradin[cite: 1].",
+        "Supporting and guiding dedicated dwarven craftspeople through their guild trials[cite: 1]."
+    ],
+    "flaws": [
+        "Can be firm and uncompromising in her spiritual and practical expectations[cite: 1]."
+    ],
+    "speech_patterns": "Calm, authoritative, and spiritually grounded, offering wise and practical guidance[cite: 1].",
+    "mannerisms": "Observes artisans with a discerning eye, offers warm approval for true craftsmanship, and speaks with the weight of clerical authority[cite: 1].",
+    "relationships": [
+        {
+            "name": "Moriah Kiah",
+            "relationship": "Protégé / Guild Examinee",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Wise and spiritually grounded",
+        "Practical",
+        "Supportive of dedicated craftspeople",
+        "Authoritative"
+    ],
+    "motivations": [
+        "To foster true devotion and master craftsmanship among followers of the Forge-Father[cite: 1]."
+    ],
+    "knowledge": [
+        "Theological doctrines of Moradin, sacred smithing traditions, and guidance for guild masterwork trials[cite: 1]."
+    ],
+    "memories": [],
+    "gm_notes": "High Priestess Orlaega serves as a divine mentor and spiritual authority for dwarven characters, particularly smiths undergoing guild trials[cite: 1]. She can be used to provide spiritual blessings, advice on masterwork crafting, or background lore regarding the church of Moradin[cite: 1].",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Church_of_Moradin_Records.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Church of Moradin": "Ally"
+    }
+}

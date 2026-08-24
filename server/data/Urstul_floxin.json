@@ -1,0 +1,61 @@
+{
+    "name": "Urstul Floxin",
+    "description": "Urstul Floxin is a ruthless and cold-blooded human assassin who serves as a high-ranking lieutenant for the Zhentarim (the Black Network). Scarred, calculating, and utterly devoid of mercy, he is Manshoon's primary operative in Waterdeep, tasked with hunting down the Stone of Golorr, eliminating rivals, and ruthlessly enforcing Zhentarim dominance across the city's shadows.",
+    "character_type": "NPC",
+    "race": "Human",
+    "class": "Assassin / Rogue",
+    "alignment": "Neutral Evil",
+    "age": "Late 30s",
+    "ideals": [
+        "Power: 'The Zhentarim will rule the underworld of Waterdeep, and anyone in our way is simply a corpse waiting to happen.'",
+        "Efficiency: 'No witnesses, no hesitation, and no loose ends.'"
+    ],
+    "bonds": [
+        "The Zhentarim Black Network and his direct allegiance to Manshoon.",
+        "His network of cutthroats, spies, and safe houses spread across the city."
+    ],
+    "flaws": [
+        "Arrogant and prone to underestimating upstart adventurers until it is too late.",
+        "Brutal and impulsive when crossed, sometimes leaving a bloody trail that attracts the City Watch."
+    ],
+    "speech_patterns": "Clipped, menacing, and quiet, delivering veiled death threats with chilling calm.",
+    "mannerisms": "Keeps his hand resting casually near a concealed poisoned blade, narrows his eyes in cold evaluation, and moves through crowds with silent, predatory stealth.",
+    "relationships": [
+        {
+            "name": "Manshoon",
+            "relationship": "Master / Faction Leader",
+            "status": "Alive"
+        },
+        {
+            "name": "Zhentarim Operatives",
+            "relationship": "Subordinates / Enforcers",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Ruthless and sadistic",
+        "Calculated and cunning",
+        "Unflinchingly loyal to Manshoon",
+        "Vindictive"
+    ],
+    "motivations": [
+        "To locate the Stone of Golorr, secure the Vault of Dragons for Manshoon, and violently crush competing factions like the Cassalanters and Xanathar's Guild."
+    ],
+    "knowledge": [
+        "Comprehensive awareness of Zhentarim safe houses, smuggling routes, assassination contracts, and underground faction movements in Waterdeep."
+    ],
+    "memories": [],
+    "gm_notes": "Urstul Floxin serves as a primary villainous antagonist and lethal threat during the mid-game chapters of the campaign. He can be used to ambush the party, orchestrate high-stakes tavern brawls or rooftop chases, or drive the urgency of the hunt for the Stone of Golorr.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Zhentarim_Leadership_Files.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Zhentarim (Manshoon's Faction)": "Hostile / Mortal Enemy"
+    }
+}

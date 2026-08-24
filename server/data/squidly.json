@@ -1,0 +1,68 @@
+{
+    "name": "Squidly",
+    "description": "Squidly is a bright-eyed, nimble young tiefling child with small horns and a tail, acting as a core member of the alley's urchin network alongside Nat and Jenks. Quick-witted, agile, and always ready with a cheeky grin, he helps scope out buildings, carries messages across the wards, and looks out for his friends with unwavering loyalty.",
+    "character_type": "NPC",
+    "race": "Tiefling / Humanoid Child",
+    "class": "Commoner / Urchin",
+    "alignment": "Neutral Good",
+    "age": "Child",
+    "ideals": [
+        "Teamwork: 'As long as the three of us stick together, no trouble is too big to slip out of.'",
+        "Adventure: 'Helping out the grown-ups with real quests beats scrounging for scraps any day.'"
+    ],
+    "bonds": [
+        "His fellow street urchins, Nat and Jenks.",
+        "Havik and the Trollskull Manor crew, who treat them with kindness and respect.",
+        "The hidden rooftops, nooks, and secret shortcuts of the North Ward."
+    ],
+    "flaws": [
+        "Prone to taking reckless risks or playing dangerous games of tag across high rooftops when bored.",
+        "Easily tempted by sweet treats or shiny baubles left unattended."
+    ],
+    "speech_patterns": "Brisk, playful, and colloquial, speaking with an enthusiastic cadence full of street slang and youthful energy.",
+    "mannerisms": "Swishes his tail nervously or excitedly when talking, climbs up drainpipes or lintels to get a better vantage point, and flashes wide, disarming grins.",
+    "relationships": [
+        {
+            "name": "Nat",
+            "relationship": "Urchin Peer / Crew Leader",
+            "status": "Alive"
+        },
+        {
+            "name": "Jenks",
+            "relationship": "Urchin Peer / Crew Member",
+            "status": "Alive"
+        },
+        {
+            "name": "Havik",
+            "relationship": "Mentor / Contact",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Agile and quick-witted",
+        "Cheerfully resilient",
+        "Loyal and protective",
+        "Inquisitive"
+    ],
+    "motivations": [
+        "To earn enough coin to help support his friends and secure warm meals for the group.",
+        "To explore every hidden corner of Waterdeep without getting caught by the City Watch."
+    ],
+    "knowledge": [
+        "Familiarity with rooftop pathways, sewer grates, neighborhood alleyways, and local gossip across the North and Trades Wards."
+    ],
+    "memories": [],
+    "gm_notes": "Squidly serves as an energetic and endearing street urchin NPC. He can be utilized for nimble rooftop scouting, delivering urgent messages across locked-down wards, or adding emotional depth to the party's community investments around Trollskull Manor.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Urchin_Network_Log.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Trollskull Manor Crew": "Friendly"
+    }
+}

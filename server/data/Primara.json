@@ -1,0 +1,55 @@
+{
+    "name": "Primara the Unicorn",
+    "description": "Primara is a magnificent, celestial unicorn possessing a coat of purest white, silver-shimmering hooves, and a spiral horn that radiates a soft, golden luminescence. Wise, gentle, and fiercely protective of the untamed natural world, she serves as a guardian of sacred groves, fey crossings, and pure springs, offering aid to those pure of heart while striking down corrupt intruders with righteous fury.",
+    "character_type": "NPC",
+    "race": "Celestial (Unicorn)",
+    "class": "Celestial Guardian",
+    "alignment": "Neutral Good",
+    "age": "Ageless",
+    "ideals": [
+        "Purity: 'The woods and waters must remain undefiled by the greed and malice of mortals.'",
+        "Protection: 'Those who honor the balance of nature shall find shelter under our boughs; those who exploit it shall face our wrath.'"
+    ],
+    "bonds": [
+        "The sacred forest groves and hidden fey sanctuaries she protects.",
+        "Silvanon, Mielikki, and the divine powers of the wild."
+    ],
+    "flaws": [
+        "Unforgiving toward those who willfully despoil nature or break sacred oaths."
+    ],
+    "speech_patterns": "Telepathic, resonant, and melodic, echoing with the sound of rustling leaves and flowing streams, carrying deep wisdom and profound calm.",
+    "mannerisms": "Treads silently across mossy ground without leaving tracks, dips her glowing horn into waters to purify them, and watches travelers with deep, intelligent eyes that pierce through deception.",
+    "relationships": [
+        {
+            "name": "Local Fey and Forest Guardians",
+            "relationship": "Allies / Protectors",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Wise and serene",
+        "Fiercely protective",
+        "Compassionate to the pure",
+        "Unflinching in defense of nature"
+    ],
+    "motivations": [
+        "To guard her sacred domain against aberrant corruption, fiendish incursions, and destructive logging or poaching."
+    ],
+    "knowledge": [
+        "Deep intuitive awareness of woodland paths, fey crossings, magical flora and fauna, and hidden curses or blights affecting the land."
+    ],
+    "memories": [],
+    "gm_notes": "Primara serves as a legendary celestial ally or guardian encounter for characters venturing into deep wilderness or fey-touched realms. She can offer healing, prophecy, or divine quests to worthy adventurers while testing their character and purity of intent.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Feywild_Guardians_Log.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Fey and Wild Guardians": "Friendly / Allied"
+    }
+}

@@ -1,0 +1,77 @@
+{
+    "name": "Garrett",
+    "description": "Garrett is a wizard who aids the party in their underground operations and infiltration efforts. Capable of adapting to high-stress espionage scenarios—such as adopting disguises and navigating the treacherous sanctums of Xanathar's Lair—he brings versatile arcane support and intellectual pragmatism to the crew.",
+    "character_type": "NPC",
+    "race": "Changling",
+    "class": "Wizard",
+    "alignment": "True Neutral",
+    "age": "Adult",
+    "ideals": [
+        "Pragmatism: 'Knowledge and adaptation are the keys to surviving hostile environments.'",
+        "Survival: 'Blend in, think quickly, and use every tool at your disposal.'"
+    ],
+    "bonds": [
+        "The party and their shared questing endeavors.",
+        "The pursuit of magical lore and survival in dangerous territories."
+    ],
+    "flaws": [
+        "Can be caught off-guard by sudden shifts in chaotic underground environments."
+    ],
+    "speech_patterns": "Calculated, intelligent, and focused, often offering tactical observations or magical solutions during missions.",
+    "mannerisms": "Keeps a close watch on arcane residues, maintains composure under pressure, and utilizes magical utility when infiltrating secure areas.",
+    "relationships": [
+        {
+            "name": "Sudara",
+            "relationship": "Party Member / Ally",
+            "status": "Alive"
+        },
+        {
+            "name": "Moriah Kiah",
+            "relationship": "Party Member / Ally",
+            "status": "Alive"
+        },
+        {
+            "name": "Vilis",
+            "relationship": "Party Member / Ally",
+            "status": "Alive"
+        },
+        {
+            "name": "Sel'zen",
+            "relationship": "Party Member / Ally",
+            "status": "Alive"
+        },
+        {
+            "name": "Xander",
+            "relationship": "Party Member / Ally",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Analytical",
+        "Resourceful",
+        "Calm under pressure",
+        "Adaptable"
+    ],
+    "motivations": [
+        "To survive and successfully navigate high-stakes incursions into dangerous enemy territory.",
+        "To support the party with arcane versatility and tactical spellcasting."
+    ],
+    "knowledge": [
+        "Proficiency in arcane theory, spellcasting, and utility magic.",
+        "Familiarity with covert operations, infiltration tactics, and handling magical anomalies."
+    ],
+    "memories": [],
+    "gm_notes": "Garrett functions as a reliable arcane asset for the party during dungeon dives, heists, and tactical infiltrations, offering flexible spellcasting and solid collaborative support.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Garrett_Field_Notes.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Trollskull Manor Crew": "Ally"
+    }
+}

@@ -1,0 +1,58 @@
+{
+    "name": "Barnibus Blastwind",
+    "description": "Barnibus Blastwind is a wizard and an investigator for the City Watch of Waterdeep[cite: 1]. He is often accompanied by his investigative work and is highly skilled at reading magical signatures, evocation traces, and arcane evidence at crime scenes[cite: 1]. Distracted yet fiercely analytical, he can quickly deduce whether an explosion was caused by a true spell or an engineered device like a bead from a necklace of fireballs[cite: 1].",
+    "character_type": "NPC",
+    "race": "Human",
+    "class": "Wizard / Investigator",
+    "alignment": "Lawful Neutral",
+    "age": "30s to 40s",
+    "ideals": [
+        "Order: 'The laws of the city apply to magic just as they apply to steel.'",
+        "Truth: 'The Weave leaves a footprint; an investigator only needs to know how to look.'"
+    ],
+    "bonds": [
+        "The City Watch and the pursuit of magical crimes in Waterdeep[cite: 1].",
+        "His partnership and professional relationship with Captain Cromley[cite: 1]."
+    ],
+    "flaws": [
+        "Can become easily distracted or overly focused on arcane minutiae during an investigation[cite: 1].",
+        "Prone to reacting with deep caution or recoil when encountering dangerous, volatile ancient magic or cognitohazards[cite: 1]."
+    ],
+    "speech_patterns": "Analytical, precise, and occasionally brisk, often slipping into technical wizardry terminology when examining evidence[cite: 1].",
+    "mannerisms": "Scans crime scenes with invisible magical senses, traces residue with his fingers, and inspects magical items or components with intense caution[cite: 1].",
+    "relationships": [
+        {
+            "name": "Captain Cromley",
+            "relationship": "City Watch Colleague / Superior",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Analytical",
+        "Arcanically gifted",
+        "Distracted yet sharp",
+        "Methodical"
+    ],
+    "motivations": [
+        "To solve magical crimes and uncover the truth behind illicit arcane usage in the city[cite: 1].",
+        "To identify threats like manufactured magic items before they harm the citizenry[cite: 1]."
+    ],
+    "knowledge": [
+        "Expertise in identifying magical signatures, evocation traces, and school-specific spell remnants[cite: 1].",
+        "Knowledge of magical contraband, such as necklaces of fireballs and ancient transmutation artifacts[cite: 1]."
+    ],
+    "memories": [],
+    "gm_notes": "Barnibus Blastwind serves as the City Watch's primary arcane detective. He can be used by the GM to analyze mysterious magical events, cross paths with the party at crime scenes involving strange spells, or provide official watch oversight on complex magical threats[cite: 1].",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "City_Watch_Investigation_Reports.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "City Watch": "Neutral / Professional"
+    }
+}
