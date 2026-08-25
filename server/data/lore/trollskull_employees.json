@@ -1,0 +1,107 @@
+[
+    {
+        "name": "Cade",
+        "lore_type": "NPC",
+        "description": "A telekinetic rogue and sorcerer who serves as the co-manager and 'white hat' security for Trollskull Manor[cite: 2, 3]. He is a young man in his early twenties, often hidden beneath a long brown poncho, with bruised knuckles, white-taped fingers, and a left eye that glows cyan blue amidst lightning-bolt scars[cite: 2].",
+        "key_facts": [
+            "He previously worked as a drug deliverer before Havik brought him into legitimate security work at the Golden Horn Gambling Hall[cite: 2].",
+            "He utilizes shadow daggers, psychic blades, and telekinesis in combat and stealth operations[cite: 2, 4].",
+            "He forged a moonlight familiar named Syldan from his own shadow to counter an icy, shadowy shard implanted in his chest by cultists during his childhood[cite: 2].",
+            "He oversees the taproom operations, coordinates security drills, and manages the heavy Yronwood drop-down shutters alongside Havik[cite: 3].",
+            "He acts as a professional and street-smart operator, negotiating deals to bring specialized security and equipment to the manor[cite: 2, 4]."
+        ],
+        "tags": [
+            "cade",
+            "security",
+            "rogue",
+            "sorcerer",
+            "trollskull manor",
+            "npc"
+        ],
+        "gm_notes": "Cade is a highly capable physical and magical security asset[cite: 2]. His traumatic backstory involving frost giants, cultists, and the dark shard in his chest provides deep narrative hooks regarding his new familiar, Syldan[cite: 2]."
+    },
+    {
+        "name": "Havik",
+        "lore_type": "NPC",
+        "description": "A goblin sorcerer who acts as the co-manager, security lead, and handler of the urchin intelligence network at Trollskull Manor[cite: 2, 3]. He wears a patched cloak of mismatched colors and views the world through gold-rimmed spectacles and gold-flecked eyes[cite: 2].",
+        "key_facts": [
+            "He brought Cade into legitimate security work to keep him out of the criminal underworld[cite: 2].",
+            "He strictly follows a set of 'Goblin Rules,' such as Rule #37 (take any deal involving a thousand gold per noble) and Rule #64 (take the loot immediately)[cite: 2].",
+            "He wields chaos magic, casting spells like Chaos Bolt, and utilizes physical illusions like smoke daggers[cite: 2, 4].",
+            "He coordinates daily intelligence debriefings with the urchins—Nat, Jenks, and Squidly—gathering street rumors about rival factions[cite: 3].",
+            "He collaborated with the ghost Lif to create a spectrally layered dark porter for the tavern's patrons[cite: 3]."
+        ],
+        "tags": [
+            "havik",
+            "goblin",
+            "sorcerer",
+            "security",
+            "trollskull manor",
+            "npc"
+        ],
+        "gm_notes": "Havik is highly pragmatic and opportunistic, but fiercely protective of his friends and the urchins[cite: 2, 4]. He provides excellent tactical oversight and magical defense for the tavern operations[cite: 3, 4]."
+    },
+    {
+        "name": "Garrett",
+        "lore_type": "NPC",
+        "description": "A changeling wizard and resident scholar who operates the Trollskull Manor library[cite: 3, 4]. Abandoned at a Sanctuary of Oghma as a featureless infant, he views a 'True Face' as a liability and prefers to navigate the world using 'Borrowed Faces'[cite: 4].",
+        "key_facts": [
+            "His primary persona is 'Elara Moonwhisper,' an elegant Moon Elf socialite and information broker who infiltrates high society to gather intelligence[cite: 4].",
+            "He also utilizes the persona of 'Scribe Jaxen Thann,' a spindly, ink-stained bureaucrat[cite: 4].",
+            "He curates the manor's collection of tomes, maps out faction ledgers, and provides the staff with vital intelligence briefings[cite: 3].",
+            "He supplies the manor with defensive, investigative, and utility spell scrolls, such as Alarm, Arcane Lock, and Detect Thoughts[cite: 3].",
+            "He maintains magical wards around the library to prevent scrying or magical eavesdropping from rival factions[cite: 3]."
+        ],
+        "tags": [
+            "garrett",
+            "changeling",
+            "wizard",
+            "elara moonwhisper",
+            "trollskull manor",
+            "npc"
+        ],
+        "gm_notes": "Garrett is the ultimate infiltrator and information broker[cite: 3, 4]. His ability to effortlessly shift personas allows him to gather secrets from the city's nobility and criminal syndicates while managing the party's arcane defenses[cite: 3, 4]."
+    },
+    {
+        "name": "Spider",
+        "lore_type": "NPC",
+        "description": "A specialized, four-armed Warforged construct designed with a non-binary, masculine-coded persona, who operates as the tireless bartender and primary bouncer for Trollskull Manor[cite: 3, 4].",
+        "key_facts": [
+            "He requires no biological sleep, maintaining a 24-hour taproom vigil while periodically entering a low-power diagnostic state[cite: 4].",
+            "He uses his four arms to effortlessly pour multiple drinks, organize glassware, and simultaneously grapple up to four unruly patrons without striking them[cite: 3, 4].",
+            "He can cast the Mage Hand cantrip to act as a fifth appendage for manipulating his environment[cite: 4].",
+            "He carries a copper flask of unsalted sunflower seeds to feed local pigeons and keep them out of the manor's chimneys[cite: 3, 4].",
+            "He carries a steel flask of 55% sweet brandy, which he administers to witnesses after a brawl to calm them down before the City Watch arrives[cite: 4]."
+        ],
+        "tags": [
+            "spider",
+            "warforged",
+            "bartender",
+            "bouncer",
+            "trollskull manor",
+            "npc"
+        ],
+        "gm_notes": "Spider's methodology is entirely non-lethal, allowing him to bypass the legal risks of the Code Legal while providing unparalleled crowd control[cite: 4]. His immunity to poison and exhaustion makes him a flawless, immovable point of defense[cite: 4]."
+    },
+    {
+        "name": "Lif",
+        "lore_type": "NPC",
+        "description": "The resident poltergeist of Trollskull Manor, the spirit of a former proprietor who died when he was crushed by an ale cask in the cellar[cite: 2, 4]. He was pacified by the party and now serves as an invisible, highly efficient member of the staff[cite: 3].",
+        "key_facts": [
+            "Every dawn, he metaphorically re-enacts the moment of his death in the cellar before drifting upstairs to begin his cleaning shift[cite: 3].",
+            "He communicates with the living by writing neat, phantom script in the dust, leaving messages like 'OPEN FOR BUSINESS' and 'LAST CALL'[cite: 2].",
+            "He assists the staff by magically washing dishes, polishing the Yronwood bar, sweeping the floors, and hanging up wet coats[cite: 2, 3].",
+            "He acts as a spectral guardian for the urchins and subtly assists contractors like Tally Fellbranch during renovations[cite: 3].",
+            "He worked with Havik to invent the 'Lif Special,' a spectrally layered dark porter that perfectly suspends ale atop a measure of high-proof liquor[cite: 3, 4]."
+        ],
+        "tags": [
+            "lif",
+            "poltergeist",
+            "ghost",
+            "bartender",
+            "trollskull manor",
+            "npc"
+        ],
+        "gm_notes": "Lif transforms the haunted nature of the tavern from a liability into a unique selling point and a logistical boon[cite: 3]. He is fiercely loyal to the new owners for restoring his beloved tavern and treats the establishment as his eternal charge[cite: 4]."
+    }
+]

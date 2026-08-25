@@ -5,7 +5,7 @@ Uses Pydantic for strict schema definition, typing, and validation.
 Ensures data consistency between the MongoDB backend, the Flask API, and the AI generation context.
 """
 from pydantic import BaseModel, Field, field_validator
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Dict, Any, Union
 from datetime import datetime
 import uuid
 from enum import Enum
@@ -116,7 +116,6 @@ class NPCProfile(BaseModel):
     canned_conversations: Optional[Dict[str, str]] = Field(default_factory=dict, description="A dictionary of specific topics and the exact dialogue the NPC should give for them.")
 
     # --- Virtual Tabletop (VTT) Data Storage ---
-    # Captures raw JSON dumps from external systems like Foundry VTT or D&D Beyond imports.
     vtt_data: Optional[Dict[str, Any]] = Field(default_factory=dict, description="Data imported from VTT character sheets (usually the 'system' object).")
     vtt_flags: Optional[Dict[str, Any]] = Field(default_factory=dict, description="Top-level 'flags' object imported from VTT character sheets.")
     img: Optional[str] = Field(default=None, description="Path to character image, potentially from VTT data.")
@@ -132,6 +131,10 @@ class NPCProfile(BaseModel):
         default_factory=dict,
         description="NPC's standing towards each PC. Key: PC ID (str), Value: Standing Level Enum."
     )
+
+    # --- Scene Tagging & Location Integration ---
+    scenes: List[str] = Field(default_factory=list, description="List of active scene tags or locations associated with this character.")
+    location: Optional[str] = Field(default=None, description="Primary location or setting identifier.")
     
     # Pre-validation hooks to guarantee None types are safely converted to empty iterables 
     # to avoid runtime crashes during list/dict comprehensions later in the code.
@@ -141,10 +144,12 @@ class NPCProfile(BaseModel):
             return {}
         return value
 
-    @field_validator('items', 'ideals', 'bonds', 'flaws', 'relationships', 'personality_traits', 'motivations', 'knowledge', 'memories', 'associated_history_files', 'linked_lore_by_name', mode='before')
+    @field_validator('items', 'ideals', 'bonds', 'flaws', 'relationships', 'personality_traits', 'motivations', 'knowledge', 'memories', 'associated_history_files', 'linked_lore_by_name', 'scenes', mode='before')
     def ensure_list(cls, value):
         if value is None:
             return []
+        if isinstance(value, str):
+            return [value]
         return value
 
     class Config:
@@ -155,7 +160,8 @@ class NPCProfile(BaseModel):
                 "character_type": "NPC",
                 "description": "A laid-back human bard from Waterdeep.",
                 "linked_lore_by_name": ["The Yawning Portal", "Undermountain"],
-                 "canned_conversations": {
+                "scenes": ["Trollskull Manor"],
+                "canned_conversations": {
                     "Floon": "Ah, Floon! A friend of mine. Last I saw him, he was headed to the Skewered Dragon. I'm dreadfully worried.",
                     "Zhentarim": "The Black Network? Shady business. Best to steer clear unless you've got a taste for trouble."
                 }

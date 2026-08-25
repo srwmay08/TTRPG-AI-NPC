@@ -1,0 +1,64 @@
+[
+    {
+        "name": "Tally Fellbranch's Manor Renovations",
+        "lore_type": "Event",
+        "description": "The comprehensive structural and aesthetic restoration of Trollskull Manor, executed by the local woodcarver Tally Fellbranch and his apprentices, rather than any member of the party.",
+        "key_facts": [
+            "Tally Fellbranch, the owner of The Bent Nail across the alley, secured the renovation contract for 1,200 gold dragons after the party convinced the Carpenters' Guild to reassign the job from a corrupt inspector named Kelso[cite: 2].",
+            "Tally and his apprentices, Elaim and Erias Eversharp, executed the renovations over a 14-day timeline[cite: 4].",
+            "The crew utilized rare materials, specifically reclaimed Waterdhavian Yronwood and fresh High Forest Yronwood, for the restoration[cite: 4].",
+            "Tally's apprentices used spells like Druidcraft and Shape Water to draw out the natural resins of the Yronwood, magically fusing the floorboards and smoothing the furniture without standard tools[cite: 4].",
+            "The physical labor of the renovations, including laying the floors and installing the heavy drop-down window shutters requested by Cade and Havik, was entirely handled by Tally's crew[cite: 2, 4]."
+        ],
+        "tags": [
+            "tally fellbranch",
+            "renovations",
+            "trollskull manor",
+            "the bent nail",
+            "yronwood",
+            "elaim and erias eversharp"
+        ],
+        "gm_notes": "This lore file explicitly establishes Tally and his apprentices as the sole craftsmen behind the physical carpentry and magical wood sealing. It ensures NPCs understand that party members (like Sudara) did not build the bar or lay the floors."
+    },
+    {
+        "name": "The Yronwood Restorations",
+        "lore_type": "Lore",
+        "description": "The specific magical woodworking techniques and materials applied to Trollskull Manor's interior by Tally Fellbranch to make it highly durable, secure, and beautiful.",
+        "key_facts": [
+            "The taproom floor and joists were constructed from reclaimed City Yronwood, which was magically fused into a single, creak-free surface that absorbs heavy impacts[cite: 4].",
+            "The L-shaped masterpiece bar was crafted from a live-edge slab of High Forest Yronwood, coaxed over three days to release ancient sap that cured into an impervious, glossy shell[cite: 4].",
+            "The wraparound hearth mantle was shaped directly around the stonework using Druidcraft, ensuring it will never scorch or warp[cite: 4].",
+            "The second-floor turret booth was paneled in vertically slatted Yronwood to naturally trap and muffle acoustics, creating a private 'Whispering Nook'[cite: 4].",
+            "To secure the upper floors, Tally installed a 'burglar's step' on the staircase that loudly cracks when stepped on, as well as two-inch-thick solid Yronwood doors[cite: 4]."
+        ],
+        "tags": [
+            "yronwood",
+            "carpentry",
+            "magic",
+            "trollskull manor",
+            "bar"
+        ],
+        "gm_notes": "Use this file to give NPCs specific, sensory details to reference when talking about the tavern's new look. They should marvel at the seamless wood, the glowing bar top, and the quiet furniture, attributing it to master elven/magical craftsmanship."
+    },
+    {
+        "name": "Trollskull Manor Security Upgrades",
+        "lore_type": "Lore",
+        "description": "The specific mechanical, magical, and personnel defenses installed at Trollskull Manor to protect it from rival factions like the Zhentarim and Xanathar Guild.",
+        "key_facts": [
+            "Havik and Cade managed the security layout, appending heavy, roll-down Yronwood exterior shutters to Tally's work order to prevent aerial ambushes[cite: 2, 4].",
+            "The urchins (Squidly, Jenks, and Nat) funded and rigged a mechanical rope-and-chime alarm system from their attic bedroom window to warn the taproom of intruders[cite: 2, 4].",
+            "The cellar houses a reinforced moderate vault secured by a DC 23 lock and deadly setback traps, such as poisoned needles and falling blocks[cite: 4].",
+            "Magical enhancements designed by the team include a Magic Mouth sentinel that shouts a warning if an unauthorized creature enters the kitchen, alongside Animated Armor patrols[cite: 4].",
+            "Spider, a four-armed Warforged, was hired to serve as a tireless bartender and bouncer, providing 24-hour non-lethal crowd control[cite: 4]."
+        ],
+        "tags": [
+            "security",
+            "trollskull manor",
+            "havik",
+            "cade",
+            "spider",
+            "urchins"
+        ],
+        "gm_notes": "This details the exact defense mechanisms the party put in place. It establishes Cade and Havik as the masterminds of the security protocols, while relying on external contractors like Tally for the physical installation of the heavy shutters and vault doors."
+    }
+]

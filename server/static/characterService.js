@@ -65,6 +65,11 @@ const CharacterService = {
                 CharacterService.handleSelectCharacterForDetails
             );
 
+            // --- POPULATE JSON SCENE DROPDOWN AFTER CHARACTERS LOADED ---
+            if (typeof EventHandlers !== 'undefined' && EventHandlers.setupSceneDropdownSelector) {
+                EventHandlers.setupSceneDropdownSelector();
+            }
+
             // Concurrently fetch the lore data as it interacts closely with NPCs
             await this.fetchAllLoreEntriesAndUpdateState();
             LoreRenderers.populateLoreTypeDropdownUI();

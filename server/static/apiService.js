@@ -11,10 +11,10 @@ var ApiService = (function() {
     
     /**
      * Internal generic fetch wrapper. 
-     * Automatically handles JSON parsing and standardizes HTTP error throwing.
+     * Automatically handles JSON parsing, unwraps standard server responses, and standardizes HTTP error throwing.
      * @param {string} url - The API endpoint to hit.
      * @param {Object} options - Fetch options (method, headers, body).
-     * @returns {Promise<Object>} The parsed JSON response.
+     * @returns {Promise<Object>} The parsed data response.
      */
     async function _fetchData(url, options = {}) {
         try {
@@ -24,7 +24,15 @@ var ApiService = (function() {
                 const errorData = await response.json().catch(() => ({ error: "Unknown error structure" }));
                 throw new Error(`HTTP error! status: ${response.status}, message: ${errorData.error || response.statusText}`);
             }
-            return await response.json();
+            const json = await response.json();
+            
+            // --- UNWRAP STANDARD RESPONSE WRAPPER ---
+            // If the backend wraps payloads as { success: true, data: ... }, extract .data automatically 
+            // unless it's a raw array (like list endpoints).
+            if (json && typeof json === 'object' && 'success' in json && 'data' in json) {
+                return json.data;
+            }
+            return json;
         } catch (error) {
             console.error(`ApiService: Error fetching data from ${url}:`, error);
             throw error; // Re-throw to be handled and displayed by the calling UI component
@@ -114,7 +122,6 @@ var ApiService = (function() {
         /** Updates the specific disposition value an NPC holds toward a targeted PC. */
         updateNpcFactionStanding: async function(npcId, pcId, standing) {
             const payload = { pc_faction_standings: { [pcId]: standing } };
-            // Routes internally to the general update method
             return this.updateCharacterOnServer(npcId, payload);
         },
 

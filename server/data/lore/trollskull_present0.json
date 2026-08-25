@@ -1,0 +1,25 @@
+[
+    {
+        "name": "Trollskull Manor (1492 DR - Present)",
+        "lore_type": "Location",
+        "description": "The heavily fortified headquarters and tavern owned by the party. Transformed from a dilapidated ruin into a bustling North Ward establishment, it features high-end Yronwood craftsmanship, intense magical security, and a pacified resident poltergeist.",
+        "key_facts": [
+            "The deed was gifted to the party by Volothamp Geddarm as payment for rescuing Floon Blagmar, with Renaer Neverember covering the 125 gp estate transfer tax[cite: 2].",
+            "The ghost of Lif was pacified and integrated into the tavern's operations; he communicates by writing in the dust and assists the staff with chores like washing dishes[cite: 2].",
+            "The party extensively renovated the manor using a 1,500 gold piece line of credit from the Crommer family[cite: 2].",
+            "Tally Fellbranch structurally reinforced the tavern using reclaimed Waterdhavian Yronwood for the floors and installed impenetrable drop-down Yronwood window shutters[cite: 3].",
+            "The manor became the epicenter of the Grand Game when a rogue Nimblewright detonated a fireball in the alley outside, killing the gnome Dalakhar and delivering the Stone of Golorr to the party[cite: 2].",
+            "The manor survived a direct siege by Urstul Floxin and the Zhentarim 'Black Cranes,' who utilized flying snakes to violently breach the upper-floor windows[cite: 2].",
+            "Security is maintained by a 4-armed Warforged named Spider, while three local urchins (Nat, Jenks, and Squidly) run a mechanical chime alarm system from the attic[cite: 2, 3, 4]."
+        ],
+        "tags": [
+            "trollskull manor", 
+            "player base", 
+            "tavern", 
+            "siege", 
+            "stone of golorr", 
+            "zhentarim"
+        ],
+        "gm_notes": "Trollskull Manor acts as the central hub for the party's operations. The presence of the Stone of Golorr turns the building into a massive target for factions like the Xanathar Guild and the Zhentarim. The party's investments in vault security, magical alarms, and staff like Spider are critical to surviving the escalating faction war."
+    }
+]

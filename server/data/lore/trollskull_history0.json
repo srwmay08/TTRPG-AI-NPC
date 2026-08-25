@@ -1,0 +1,25 @@
+[
+    {
+        "name": "Trollskull Manor (Pre-1492 DR)",
+        "lore_type": "Location",
+        "description": "A four-story historic property in the North Ward of Waterdeep, characterized by sagging rooftops, crumbling balconies, and a faded sign of a grinning skull with spectral blue trolls[cite: 2]. It holds a dark, checkered past and sat abandoned as a decrepit money pit before its recent acquisition.",
+        "key_facts": [
+            "The building originally served as an orphanage run by a hag, which was eventually destroyed by the City Watch[cite: 2].",
+            "The city auctioned the property to a man named Lif in 1437 DR, who transformed it into a tavern[cite: 2].",
+            "Lif died tragically in the cellar when he was crushed by an ale cask, and his spirit remained tethered to the tavern as a poltergeist[cite: 2].",
+            "The building suffered a catastrophic interior collapse in 1452 DR, which caused lasting fractures in the western load-bearing wall[cite: 4].",
+            "Lif's estate transferred the deed in 1452 DR to the Morley family[cite: 2].",
+            "A wizard named Alecto's family acquired partial ownership 50 years prior, but the claim was lost in a bureaucratic paperwork error[cite: 2].",
+            "The property sat empty for years—save for a group of halflings who lived there briefly—until Volothamp Geddarm purchased it to research its hauntings[cite: 2]."
+        ],
+        "tags": [
+            "trollskull manor", 
+            "waterdeep", 
+            "north ward", 
+            "lif", 
+            "hag", 
+            "history"
+        ],
+        "gm_notes": "The haunted and dilapidated nature of the tavern serves as both a massive financial sink and a supernatural mystery for the party. The hidden fey portal and hag's lair in the basement are lingering threats from its days as an orphanage."
+    }
+]

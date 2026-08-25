@@ -1,3 +1,5 @@
+import os
+import json
 from google import genai
 from google.genai import types
 from config import config
@@ -6,9 +8,11 @@ import traceback
 
 from models import NPCProfile, DialogueRequest, FactionStandingLevel
 
-# The new SDK handles model names robustly. 
-# "gemini-1.5-flash" is the recommended model for speed/cost.
 GENERATIVE_MODEL_NAME = "gemini-2.5-flash"
+
+# Dynamically get the absolute path to the 'server' directory
+SERVER_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(SERVER_DIR, "data")
 
 class AIService:
     def __init__(self, model_name: str = GENERATIVE_MODEL_NAME):
@@ -17,7 +21,6 @@ class AIService:
         
         if config.GOOGLE_API_KEY:
             try:
-                # NEW SDK INITIALIZATION
                 self.client = genai.Client(api_key=config.GOOGLE_API_KEY)
                 print(f"Google GenAI Client initialized for model '{model_name}'.")
             except Exception as e:
@@ -26,7 +29,6 @@ class AIService:
         else:
             print("Warning: GEMINI_API_KEY not found in config. AI features will be disabled.")
 
-        # Configuration for generation (temperature, safety settings, etc.)
         self.generation_config = types.GenerateContentConfig(
             temperature=0.75,
             top_p=0.95,
@@ -68,7 +70,6 @@ class AIService:
                 "Concise memory (third person perspective for the NPC, e.g., 'He learned that...' or 'She felt...'):"
             )
             
-            # NEW GENERATION CALL
             response = self.client.models.generate_content(
                 model=self.model_name,
                 contents=prompt,
@@ -78,7 +79,6 @@ class AIService:
             if response.text:
                 return response.text.strip()
             else:
-                print(f"Warning: AI response empty. Reason: {response.candidates[0].finish_reason if response.candidates else 'Unknown'}")
                 return f"Interaction regarding '{player_utterance}' occurred."
 
         except Exception as e:
@@ -95,7 +95,6 @@ class AIService:
                               detailed_character_history: Optional[str] = None,
                               canned_conversations: Optional[Dict[str, str]] = None) -> str:
         if not self.client:
-            print("AI Service Error: Client not initialized.")
             return "Error: AI model not available. Please check configuration and GEMINI_API_KEY."
 
         try:
@@ -122,10 +121,48 @@ class AIService:
                 prompt_parts.append("\n--- Your Detailed History (Draw upon this deeply) ---")
                 prompt_parts.append(detailed_character_history.strip())
 
+            # --- DYNAMIC LORE & RELATIONSHIP INJECTION (Absolute Pathing) ---
+            raw_npc_data = {}
+            try:
+                npc_file_path = os.path.join(DATA_DIR, f"{npc.name}.json")
+                if os.path.exists(npc_file_path):
+                    with open(npc_file_path, "r", encoding="utf-8") as f:
+                        raw_npc_data = json.load(f)
+                else:
+                    print(f"[DEBUG] NPC file not found at: {npc_file_path}")
+            except Exception as e:
+                print(f"[DEBUG] Could not load raw JSON for {npc.name}: {e}")
+
+            relationship = raw_npc_data.get('relationship_to_party') or getattr(npc, 'relationship_to_party', None)
+            if relationship:
+                prompt_parts.append("\n--- Your Relationship to the Players ---")
+                prompt_parts.append(relationship)
+
+            linked_lore = raw_npc_data.get('linked_lore') or getattr(npc, 'linked_lore', [])
+            if linked_lore:
+                prompt_parts.append("\n--- Relevant Lore & Context ---")
+                for lore_filename in linked_lore:
+                    lore_path = os.path.join(DATA_DIR, *lore_filename.split("/"))
+                    try:
+                        with open(lore_path, "r", encoding="utf-8") as f:
+                            lore_content = json.load(f)
+                            print(f"[LORE SUCCESS] Loaded: {lore_filename} for {npc.name}")
+                            for entry in lore_content:
+                                prompt_parts.append(f"Location/Event: {entry.get('name', 'Unknown')}")
+                                prompt_parts.append(f"Description: {entry.get('description', '')}")
+                                prompt_parts.append("Key Facts:")
+                                for fact in entry.get('key_facts', []):
+                                    prompt_parts.append(f"- {fact}")
+                                prompt_parts.append("")
+                    except FileNotFoundError:
+                        print(f"[LORE ERROR] File not found: {lore_path}")
+                    except json.JSONDecodeError:
+                        print(f"[LORE ERROR] Invalid JSON in: {lore_path}")
+
             if world_lore_summary and world_lore_summary.strip() and "no specific linked lore" not in world_lore_summary.lower():
                 prompt_parts.append("\n--- Relevant World Lore & Context (Refer to this) ---")
                 prompt_parts.append(world_lore_summary.strip())
-            else:
+            elif not linked_lore:
                  prompt_parts.append(f"\n(No specific detailed history or linked world lore beyond your general background is provided for this interaction.)")
 
             if canned_conversations:
@@ -145,19 +182,18 @@ class AIService:
                     prompt_parts.append("\n--- Your Recent Memories (Most recent first) ---")
                     prompt_parts.append(memory_summary)
 
-
-            prompt_parts.append(f"\n--- Your Current Disposition towards {speaking_pc_name} ---")
+            prompt_parts.append(f"\n--- Your Current Disposition ---")
             if current_pc_standing:
-                prompt_parts.append(f"CRITICAL INSTRUCTION: Your standing towards {speaking_pc_name} is strictly: {current_pc_standing.value}.")
+                prompt_parts.append(f"CRITICAL INSTRUCTION: Your standing towards the speaker is strictly: {current_pc_standing.value}.")
                 prompt_parts.append("Meaning of Standings:")
                 prompt_parts.append("- Ally/Warmly: Eager to help, friendly, open, trusting.")
                 prompt_parts.append("- Amiable/Kindly: Polite, willing to talk, generally positive.")
                 prompt_parts.append("- Indifferent: Neutral, business-like, transactional, disinterested.")
                 prompt_parts.append("- Apprehensive/Dubious: Suspicious, guarded, short answers, unwilling to help without reason.")
                 prompt_parts.append("- Threatening: Hostile, aggressive, actively unhelpful, might attack or threaten.")
-                prompt_parts.append(f"You MUST align your tone and willingness to cooperate with the '{current_pc_standing.value}' standing. Do not break character by being too helpful if you are hostile, or too cold if you are an ally.")
+                prompt_parts.append(f"You MUST align your tone and willingness to cooperate with the '{current_pc_standing.value}' standing.")
             else:
-                prompt_parts.append(f"You currently have no specific established standing towards {speaking_pc_name}. Assume a neutral or initial reaction based on the context.")
+                prompt_parts.append("You have no specific numerical standing provided. You MUST rely on your 'Relationship to the Players' to determine your tone. If they are your employers or allies, treat them with deep familiarity and respect. NEVER greet them as 'stranger'.")
 
             prompt_parts.append(f"\n--- Current Situation ---")
             prompt_parts.append(f"Scene: {dialogue_request.scene_context if dialogue_request.scene_context.strip() else 'A general setting.'}")
@@ -184,12 +220,15 @@ class AIService:
                     prompt_parts.append(f"System Directive: \"{dialogue_request.player_utterance.strip()}\"")
                     main_instruction = f"Respond IN CHARACTER as {npc.name}. Only speak dialogue or brief reaction descriptions."
                 else:
-                    prompt_parts.append(f"{speaking_pc_name} says: \"{dialogue_request.player_utterance.strip()}\"")
+                    prompt_parts.append(f"One of the Player Characters (your employers/allies) says: \"{dialogue_request.player_utterance.strip()}\"")
                     main_instruction = f"Respond IN CHARACTER as {npc.name}. Only speak dialogue. Do not narrate actions unless minor parentheticals."
             else:
                 main_instruction = f"Describe what you, {npc.name}, say or do. Be concise and in character."
             
             prompt_parts.append(main_instruction)
+
+            prompt_parts.append("CRITICAL INSTRUCTION: You MUST prioritize the specific facts, names (e.g., Tally Fellbranch), and materials from your 'Relevant Lore & Context' section when answering questions. Do NOT invent generic names.")
+            prompt_parts.append("CRITICAL FORMATTING RULE: Your entire spoken dialogue MUST be on a single continuous line. Do not use line breaks (\\n) inside your dialogue text. The first line break should only appear right before 'NPC_ACTION:'.")
 
             prompt_parts.append("\n--- Additional Suggestions (Required Output) ---")
             prompt_parts.append(f"After your dialogue, you MUST provide the following suggestions in the exact format below.")
@@ -201,10 +240,6 @@ class AIService:
 
             prompt = "\n".join(prompt_parts)
 
-            print(f"\n----- AI PROMPT for {npc.name} -----")
-            print(prompt)  # ENABLED for debugging prompt composition
-            print("----- END PROMPT -----\n")
-
             # GENERATION CALL
             response = self.client.models.generate_content(
                 model=self.model_name,
@@ -215,6 +250,22 @@ class AIService:
             if response.text:
                 full_ai_output = response.text.strip()
                 
+                # --- NEW FIX: TEXT SANITIZATION ---
+                # This explicitly squashes any rogue line breaks generated by the AI
+                # in the dialogue section, forcing it into the single line your frontend expects.
+                if "NPC_ACTION:" in full_ai_output:
+                    parts = full_ai_output.split("NPC_ACTION:", 1)
+                    # Strip out new lines and carriage returns from the dialogue block
+                    dialogue_part = parts[0].replace("\n", " ").replace("\r", " ").strip()
+                    
+                    # Clean up any weird double-spacing created by the squashing
+                    while "  " in dialogue_part:
+                        dialogue_part = dialogue_part.replace("  ", " ")
+                        
+                    rest_of_output = "NPC_ACTION:" + parts[1]
+                    full_ai_output = f"{dialogue_part}\n{rest_of_output}"
+                # -----------------------------------
+                
                 if is_canned_response_directive:
                     try:
                         canned_response_text = dialogue_request.player_utterance.split('The response was: "')[1].rsplit('"', 1)[0]
@@ -224,11 +275,7 @@ class AIService:
                 else:
                     return full_ai_output
             else:
-                error_msg = "AI output blocked or empty."
-                if response.candidates and response.candidates[0].finish_reason:
-                     error_msg += f" Reason: {response.candidates[0].finish_reason}"
-                print(f"Warning: {error_msg}")
-                return f"({npc.name} seems lost in thought.)\nNPC_ACTION: None\nPLAYER_CHECK: None\nGENERATED_TOPICS: None\nSTANDING_CHANGE_SUGGESTION_FOR_PLAYER: No change\nJUSTIFICATION: {error_msg}"
+                return f"({npc.name} seems lost in thought.)\nNPC_ACTION: None\nPLAYER_CHECK: None\nGENERATED_TOPICS: None\nSTANDING_CHANGE_SUGGESTION_FOR_PLAYER: No change\nJUSTIFICATION: AI output blocked or empty."
 
         except Exception as e:
             error_details = f"Error during AI dialogue generation for {npc.name}: {e}"

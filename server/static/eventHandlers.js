@@ -140,14 +140,14 @@ var EventHandlers = {
     },
 
     /**
-     * Populates the Scene Configuration dropdown menu dynamically by reading 
-     * unique scene/location metadata from loaded character profiles.
+     * Dynamically populates the JSON scene picker dropdown under Scene Configuration
+     * by parsing the "scenes" array tag from loaded character JSON profiles.
      */
-    setupSceneSelectorDropdown: function() {
-        const contextFilterSelect = document.getElementById('context-filter') || document.querySelector("select[name='context_filter']");
-        if (!contextFilterSelect) return;
+    setupSceneDropdownSelector: function() {
+        const sceneDropdown = document.getElementById('json-scene-dropdown');
+        if (!sceneDropdown) return;
 
-        // Gather unique scenes and locations from loaded characters in appState
+        // Gather unique scene strings from the character "scenes" arrays
         const uniqueScenes = new Set();
         if (typeof appState !== 'undefined' && appState.getAllCharacters) {
             appState.getAllCharacters().forEach(char => {
@@ -158,66 +158,85 @@ var EventHandlers = {
                         uniqueScenes.add(char.scenes.trim());
                     }
                 }
-                if (char.location && typeof char.location === 'string') {
-                    uniqueScenes.add(char.location.trim());
-                }
             });
         }
 
-        // Retain original first placeholder option if it exists
-        const firstOption = contextFilterSelect.options[0];
-        contextFilterSelect.innerHTML = '';
-        if (firstOption) {
-            contextFilterSelect.appendChild(firstOption);
-        } else {
-            const defaultOpt = document.createElement('option');
-            defaultOpt.value = "";
-            defaultOpt.textContent = "-- Select Scene / Location --";
-            contextFilterSelect.appendChild(defaultOpt);
-        }
-
-        // Append sorted scene options
+        // Rebuild dropdown options cleanly
+        sceneDropdown.innerHTML = '<option value="">-- Select Scene Tag --</option>';
         Array.from(uniqueScenes).sort().forEach(sceneName => {
-            const option = document.createElement('option');
-            option.value = sceneName;
-            option.textContent = sceneName;
-            contextFilterSelect.appendChild(option);
+            const opt = document.createElement('option');
+            opt.value = sceneName;
+            opt.textContent = sceneName;
+            sceneDropdown.appendChild(opt);
         });
 
-        // Bind change event to auto-populate the scene with matching NPCs and trigger roleplay
-        contextFilterSelect.onchange = function(e) {
-            const selectedScene = e.target.value;
-            if (!selectedScene) return;
+        // Bind change handler to load all NPCs matching the selected scene tag instantly
+        sceneDropdown.onchange = function(e) {
+            const selectedSceneTag = e.target.value;
+            if (!selectedSceneTag) return;
 
-            console.log(`[Scene Selector] Loading scene: ${selectedScene}`);
-            
-            // Clear current active scene characters
+            console.log(`[JSON Scene Picker] Loading and rendering all characters tagged with scene: ${selectedSceneTag}`);
+
+            const multiNpcContainer = document.getElementById('multi-npc-dialogue-container');
+            if (multiNpcContainer) {
+                multiNpcContainer.innerHTML = ''; // Clear existing dialogue cards
+            }
+
             if (typeof appState !== 'undefined' && appState.activeSceneNpcIds) {
+                // Clear existing active scene list
                 appState.activeSceneNpcIds.clear();
 
-                // Find and activate NPCs matching this scene or location
+                // Select, activate, and render all NPCs matching this scene tag
                 appState.getAllCharacters().forEach(char => {
-                    const charScenes = Array.isArray(char.scenes) ? char.scenes : [char.scenes, char.location];
-                    const matches = charScenes.some(s => s && s.toLowerCase() === selectedScene.toLowerCase());
-                    
+                    const charScenes = Array.isArray(char.scenes) ? char.scenes : [];
+                    const matches = charScenes.some(s => s && s.trim().toLowerCase() === selectedSceneTag.toLowerCase());
+
                     if (matches && char.character_type !== 'PC') {
                         appState.addActiveNpc(char._id);
+                        AppState.initDialogueHistory(char._id);
+
+                        // Render their conversation UI card on the right
+                        if (multiNpcContainer && window.NPCRenderers) {
+                            NPCRenderers.createNpcDialogueAreaUI(char, multiNpcContainer);
+                        }
+
+                        // Trigger initial entrance / greeting prompt automatically
+                        const activePcNames = appState.getActivePcIds().map(pcId => appState.getCharacterById(pcId)?.name || "a PC");
+                        const greetingPayload = {
+                            scene_context: `${selectedSceneTag}. Active PCs present: ${activePcNames.join(', ')}`,
+                            player_utterance: `(System Directive: You are ${char.name}. You are currently at ${selectedSceneTag}. You have just become aware of ${activePcNames.join(', ')} in the scene. Greet them or offer an initial reaction in character.)`,
+                            active_pcs: activePcNames,
+                            speaking_pc_id: null,
+                            recent_dialogue_history: []
+                        };
+                        
+                        setTimeout(() => {
+                            if (typeof App !== 'undefined' && App.triggerNpcInteraction) {
+                                App.triggerNpcInteraction(char._id, char.name, greetingPayload, true, `thinking-${char._id}-greeting`);
+                            }
+                        }, 200);
                     }
                 });
             }
 
-            // Refresh UI components and scene renderers
+            // Refresh UI components and layout rendering
             if (typeof MainView !== 'undefined' && MainView.update) {
                 MainView.update();
             }
-            if (typeof App !== 'undefined' && App.renderActiveSceneNpcs) {
-                App.renderActiveSceneNpcs();
+            if (typeof App !== 'undefined' && App.renderPartyInboxUI) {
+                App.renderPartyInboxUI();
             }
 
-            // Automatically trigger dialogue generation / AI roleplay initiation for active scene NPCs if App exposes it
-            if (typeof App !== 'undefined' && typeof App.handleGenerateDialogue === 'function' && appState.getActiveNpcCount() > 0) {
-                console.log("[Scene Selector] Automatically starting AI roleplay for newly populated scene...");
-                App.handleGenerateDialogue();
+            // Refresh sidebar list checkmarks
+            if (window.NPCRenderers && AppState) {
+                NPCRenderers.renderNpcListForContextUI(
+                    document.getElementById('character-list-scene-tab'),
+                    AppState.getAllCharacters(),
+                    AppState.activeSceneNpcIds,
+                    App.handleToggleNpcInScene,
+                    CharacterService.handleSelectCharacterForDetails,
+                    AppState.getCurrentSceneContextFilter()
+                );
             }
         };
     },
@@ -255,7 +274,7 @@ var EventHandlers = {
         const linkLoreToCharBtn = Utils.getElem('link-lore-to-char-btn');
         if (linkLoreToCharBtn) linkLoreToCharBtn.onclick = CharacterService.handleLinkLoreToCharacter;
 
-        // Initialize dynamic scene dropdown population after button bindings
-        this.setupSceneSelectorDropdown();
+        // Initialize the dedicated JSON scene dropdown picker
+        this.setupSceneDropdownSelector();
     }
 };

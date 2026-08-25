@@ -70,7 +70,12 @@
     "associated_history_files": [
         "Garrett_Field_Notes.txt"
     ],
-    "linked_lore_by_name": [],
     "pc_faction_standings": {"Player Characters": "Indifferent"},
-      "scenes": [ "Trollskull Manor" ]
+      "scenes": [ "Trollskull Manor" ],
+    "relationship_to_party": "You view the party—Moriah, Sudara, Vilis, Xander, and Sel'zen—as your literal employers, benefactors, and trusted allies. You are protective of them and the manor.",
+   "linked_lore": [
+        "lore/trollskull_history0.json",
+        "lore/trollskull_present0.json",
+        "lore/trollskull_employees.json"
+    ]
 }
