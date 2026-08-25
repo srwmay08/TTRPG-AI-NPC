@@ -37,5 +37,6 @@
         "ask_about_work": "I fight for coin. Got a job? State your terms. Don't waste my time.",
         "lose_an_arm_wrestle": "Hah! Not bad. You're stronger than you look. I'll give you that."
     },
-    "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"]
+    "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"],
+    "pc_faction_standings": "Indifferent"
 }

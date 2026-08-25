@@ -54,5 +54,6 @@
     {"name": "“One-Eyed” Jilly", "relationship": "Tavern Owner / Snack Provider", "status": "Alive"}
   ],
   "gm_notes": "Mattrim is a fantastic source for rumors, but getting a straight answer is a challenge. He's more likely to accidentally reveal a critical clue while telling a long, rambling story about something else entirely. Offering him food is the best way to keep him talking.",
-  "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"]
+  "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"],
+"pc_faction_standings": "Indifferent"
 }

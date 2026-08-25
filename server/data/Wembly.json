@@ -58,7 +58,5 @@
         "Havershambles_Shop_Log.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "Trollskull Manor Crew": "Friendly"
-    }
+   "pc_faction_standings": "Indifferent"
 }

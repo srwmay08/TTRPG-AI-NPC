@@ -45,5 +45,6 @@
     {"name": "Brigit Crommer", "relationship": "Mother", "status": "Alive"},
     {"name": "Borin Stonehammer", "relationship": "Mentor and Guardian", "status": "Alive"}
   ],
-  "gm_notes": "Might sneak into trouble the players must help with, or surprise them with insight overheard from adults."
+  "gm_notes": "Might sneak into trouble the players must help with, or surprise them with insight overheard from adults.",
+  "pc_faction_standings": "Indifferent"
 }

@@ -48,5 +48,6 @@
     "gm_notes": "Adrem is a central figure in Cade's backstory. His return could be a major campaign event, or finding clues about his fate could be a primary quest driver. He might not be the same man Cade remembers.",
     "associated_history_files": [
       "The_Harpers.txt", "Mission_Report_A37.txt", "Cade_De_la_Cour.txt"
-    ]
+    ],
+    "pc_faction_standings": "Indifferent"
   }

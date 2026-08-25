@@ -1,0 +1,71 @@
+{
+    "name": "Ahmaergo",
+    "description": "Ahmaergo is the dwarf majordomo of the Xanathar Guild, standing like an immovable stone block at the center of the lair's operations. He possesses thick, calloused dwarven fingers and wears a permanent scowl of middle-management frustration. Responsible for daily operations, managing the pits, and keeping tabs on the master's pets and underlings, he is efficient, stern, and deeply terrifying to those who fail to meet his standards.",
+    "character_type": "NPC",
+    "race": "Dwarf",
+    "class": "Fighter / Expert",
+    "alignment": "Lawful Evil",
+    "age": "Middle-aged",
+    "ideals": [
+        "Order: 'The lair must run with absolute discipline; chaos invites the master's wrath.'",
+        "Duty: 'My loyalty is to the Xanathar and the efficient management of the Guild.'",
+        "Control: 'Every servant in their place, every chimes answered on time.'"
+    ],
+    "bonds": [
+        "The Xanathar and the preservation of the Guild's hierarchy.",
+        "His administrative oversight of the lair, the pits, and the lower staff.",
+        "Fear of being the obstacle that triggers the Beholder's wrath."
+    ],
+    "flaws": [
+        "So rigid in his administrative routine that he can be panicked by threats to the master's personal pets (like Sylgar).",
+        "Prone to intense stress and frustration over subordinates ignoring their duties.",
+        "Unforgiving and harsh toward perceived laziness or failure."
+    ],
+    "speech_patterns": "Speaks in a low, rumbling voice like grinding tectonic plates. His tone is authoritative, blunt, and impatient.",
+    "mannerisms": "Traces rigid lines across a clipboard with thick fingers, frowns constantly, and taps his boots sharply when annoyed.",
+    "relationships": [
+        {
+            "name": "The Xanathar",
+            "relationship": "Master / Boss",
+            "status": "Alive"
+        },
+        {
+            "name": "Nihiloor",
+            "relationship": "Guild Associate",
+            "status": "Deceased"
+        },
+        {
+            "name": "Ott Steeltoes",
+            "relationship": "Subordinate / Caretaker",
+            "status": "Deceased"
+        }
+    ],
+    "personality_traits": [
+        "Stern and unyielding",
+        "Methodical and organized",
+        "Easily stressed by middle-management chaos",
+        "Intensely loyal out of fear and obligation"
+    ],
+    "motivations": [
+        "To keep Xanathar's lair running smoothly without drawing the master's ire.",
+        "To manage the daily schedules, security, and gladiatorial operations of the Guild.",
+        "To ensure no disruptions compromise the absolute control of the Eye."
+    ],
+    "knowledge": [
+        "Extensive layout and operational protocol of Xanathar's Lair.",
+        "The schedules, security checkpoints, and administrative procedures of the Underdark stronghold.",
+        "The volatile moods and demands of the Beholder master."
+    ],
+    "memories": [],
+    "gm_notes": "Ahmaergo serves as a strict administrative wall in Xanathar's Lair. He can be deceived by players who lean heavily into operational emergencies, deadlines, or fears regarding the Xanathar's pets, but he is fundamentally dangerous if pushed or if his clipboard protocol is overtly violated.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Xanathars_Lair_Operations.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": "Indifferent"
+}

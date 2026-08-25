@@ -48,5 +48,6 @@
     "gm_notes": "Ghentilara is a major NPC who acts as a quest-giver, patron, and source of high-level information and aid. She operates on a grand scale, concerned with prophecies and threats to the entire realm. Her quests will be of great importance.",
     "associated_history_files": [
       "The_Spires_of_the_Morning.txt", "Prophecy_of_Celestial_Breath.txt", "Kalen_Thevren_Bio.txt"
-    ]
-  }
+    ],
+    "pc_faction_standings": "Indifferent"
+}

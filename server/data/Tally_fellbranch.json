@@ -50,7 +50,5 @@
         "The_Bent_Nail_Inventory.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "Trollskull Manor Crew": "Friendly / Ally"
-    }
+  "pc_faction_standings": "Indifferent"
 }

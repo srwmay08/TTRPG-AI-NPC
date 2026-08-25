@@ -1,0 +1,53 @@
+{
+    "name": "Murgo Bumblestout",
+    "description": "Murgo Bumblestout is a stout, cheerful merchant with an impressive, expertly waxed handlebar mustache and a boisterous laugh that echoes across the market stalls. Known for dealing in specialty goods, exotic teas, and imported spices, he is a familiar and welcome face to local tavern keepers and shop owners looking to stock their pantries with high-quality ingredients.",
+    "character_type": "NPC",
+    "race": "Dwarf",
+    "class": "Commoner / Merchant",
+    "alignment": "Neutral Good",
+    "age": "Middle-aged",
+    "ideals": [
+        "Quality: 'Good food and fine drink start in the pantry with honest ingredients.'",
+        "Community: 'A happy customer is a customer who comes back every market day.'"
+    ],
+    "bonds": [
+        "The local merchant syndicates and open-air markets of Waterdeep.",
+        "His regular clientele among the tavern and shop owners of the North and Trades Wards."
+    ],
+    "flaws": [
+        "Prone to engaging in lengthy, friendly gossip that can hold up his queue of customers."
+    ],
+    "speech_patterns": "Boisterous, warm, and conversational, often punctuated by hearty chuckles and expressive hand gestures.",
+    "mannerisms": "Twirls the ends of his handlebar mustache, weighs dried herbs and spices with practiced precision, and greets regulars with a booming welcome.",
+    "relationships": [
+        {
+            "name": "Trollskull Manor Crew",
+            "relationship": "Clients / Regular Patrons",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Cheerful and friendly",
+        "Generous with advice",
+        "Business-savvy",
+        "Welcoming"
+    ],
+    "motivations": [
+        "To run a thriving mercantile stall and supply the best imported goods to the city's finest establishments."
+    ],
+    "knowledge": [
+        "Market prices, exotic spice origins, culinary trends, and local neighborhood gossip across the wards."
+    ],
+    "memories": [],
+    "gm_notes": "Murgo Bumblestout serves as a friendly and reliable mercantile contact for players looking to purchase rare provisions, cooking ingredients, or specialty goods for their tavern or household.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Market_Vendor_Directory.txt"
+    ],
+    "linked_lore_by_name": [],
+   "pc_faction_standings": "Indifferent"
+}

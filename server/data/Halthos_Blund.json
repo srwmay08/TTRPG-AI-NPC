@@ -53,7 +53,5 @@
         "Carpenters_Guild_Records.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "Carpenters', Roofers', and Plaisterers' Guild": "Neutral / Professional"
-    }
+   "pc_faction_standings": "Indifferent"
 }

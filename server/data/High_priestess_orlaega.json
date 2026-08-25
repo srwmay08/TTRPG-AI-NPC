@@ -49,7 +49,5 @@
         "Church_of_Moradin_Records.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "Church of Moradin": "Ally"
-    }
+   "pc_faction_standings": "Indifferent"
 }

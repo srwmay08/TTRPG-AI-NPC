@@ -73,7 +73,6 @@
         "Faith_of_Amaunator.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "695a7e5a430d2f39219d66e0": "Ally"
-    }
+    "pc_faction_standings": "Indifferent"
+
 }

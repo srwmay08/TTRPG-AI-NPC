@@ -37,5 +37,6 @@
         "ask_about_her_goddess": "Waukeen blesses the fair deal and the bold merchant. To turn a profit is to offer her praise!",
         "ask_about_her_journey": "I've come all this way from Port Nyanzaru. The trade opportunities here are endless! Do you have anything to sell, by any chance?"
     },
-    "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"]
+    "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"],
+    "pc_faction_standings": "Indifferent"
 }

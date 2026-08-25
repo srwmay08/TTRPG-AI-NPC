@@ -38,5 +38,6 @@
     "To prove he is ruthless and competent by killing any witnesses to his mistake."
   ],
   "gm_notes": "Grum'shar is an Apprentice Wizard with these changes: He is Chaotic Evil. He has Relentless Endurance (when reduced to 0 hp, he drops to 1 hp instead; once per long rest). He has darkvision out to 60 ft. He speaks Common and Orc. He will fight fiercely to cover Nihiloor's escape and kill the party to erase his shame.",
-    "linked_lore_by_name": ["Xanathar Guild Sewer Hideout"]
+    "linked_lore_by_name": ["Xanathar Guild Sewer Hideout"],
+    "pc_faction_standings": "Indifferent"
 }

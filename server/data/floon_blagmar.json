@@ -43,5 +43,6 @@
         "desire": "Please, just get me out of this gods-forsaken sewer. Take me to the Yawning Portal. I need to find Volo. I need a drink. I need to forget any of this ever happened."
 
     },
-    "linked_lore_by_name": ["The Skewered Dragon", "Candle Lane Warehouse", "Xanathar Guild Sewer Hideout"]
+    "linked_lore_by_name": ["The Skewered Dragon", "Candle Lane Warehouse", "Xanathar Guild Sewer Hideout"],
+    "pc_faction_standings": "Indifferent"
 }

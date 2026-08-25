@@ -47,5 +47,6 @@
     "gm_notes": "Ilathenra is a mystery. Is her belief true? Will Selûne ever speak to her? She can be a source of quests related to the moon, lycanthropes, or the goddess Selûne. Communicating with her could be a fun roleplaying challenge for the party.",
     "associated_history_files": [
       "The_Monastery_of_the_Eternal_Sun.txt", "The_Church_of_Selune.txt"
-    ]
-  }
+    ],
+    "pc_faction_standings": "Indifferent"
+}

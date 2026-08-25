@@ -53,7 +53,5 @@
         "Murkledorns_Academy_Staff.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "Murkledorn's Academy": "Staff / Ally"
-    }
+   "pc_faction_standings": "Indifferent"
 }

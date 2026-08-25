@@ -47,5 +47,7 @@
     "gm_notes": "Dunkart is a classic Lawful 'tank' NPC. He can serve as a foil to more chaotic party members or as a steadfast ally in a fight. He could create conflict by insisting on following the law even when it's inconvenient or morally ambiguous for the party.",
     "associated_history_files": [
       "Order_of_the_Aster.txt", "Templar_Codex.txt"
-    ]
+    ],
+    "pc_faction_standings": "Indifferent"
+}
   }

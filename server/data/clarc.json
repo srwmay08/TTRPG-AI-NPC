@@ -46,5 +46,6 @@
     "gm_notes": "Clarc can be a scout or a guide for the party around the monastery. He might ask the party for help with a task he's afraid to ask his master about. His innocence can provide a good contrast to the more jaded members of the monastery, and protecting him might be a way to get on Dumak's good side.",
     "associated_history_files": [
       "The_Monastery_of_the_Eternal_Sun.txt", "Dumak_the_Blademonk.txt"
-    ]
+    ],
+    "pc_faction_standings": "Indifferent"
 }

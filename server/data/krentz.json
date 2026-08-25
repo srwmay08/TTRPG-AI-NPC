@@ -40,5 +40,6 @@
     "To avoid being killed by adventurers or rival gang members."
   ],
   "gm_notes": "Krentz is the characters' first introduction to the Xanathar Guild. How they deal with him in the initial Yawning Portal brawl should be remembered, as it can affect his reaction to them later. If he survives, he can be found in a Xanathar Guild sewer hideout (Area Q5). Despite being Xanathar Guild, the module states he reports to the Zhentarim wizard Grum'shar in that hideout, a strange alliance the players might question.",
-  "linked_lore_by_name": ["The Yawning Portal", "Xanathar Guild Sewer Hideout"]
+  "linked_lore_by_name": ["The Yawning Portal", "Xanathar Guild Sewer Hideout"],
+  "pc_faction_standings": "Indifferent"
 }

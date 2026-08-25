@@ -33,5 +33,6 @@
         "interrogation_response_2": "*It perfectly mimics the nasally voice: 'Tie up the pretty boy!', then immediately makes the sound of a foghorn from the docks.*",
         "combat_cry": "*A series of panicked, loud squawks and the mimicked sound of shattering glass.*"
     },
-    "linked_lore_by_name": ["Candle Lane Warehouse"]
+    "linked_lore_by_name": ["Candle Lane Warehouse"],
+    "pc_faction_standings": "Indifferent"
 }

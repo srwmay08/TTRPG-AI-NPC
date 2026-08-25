@@ -55,7 +55,5 @@
         "Bregan_Daerthe_Intel.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "Bregan D'aerthe / Zardoz Zord": "Complex / Conditional Ally"
-    }
+    "pc_faction_standings": "Indifferent"
 }

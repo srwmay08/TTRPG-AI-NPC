@@ -37,5 +37,6 @@
         "ask_about_his_adventures": "Just back from the Rat Hills, cleared out a whole nest of wererats! Nasty business, but the ale tastes all the better for it!",
         "ask_about_force_grey": "The finest fighting force in the city! When the Watch can't handle it, they call us. It's an honor to serve."
     },
-    "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"]
+    "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"],
+    "pc_faction_standings": "Indifferent"
 }

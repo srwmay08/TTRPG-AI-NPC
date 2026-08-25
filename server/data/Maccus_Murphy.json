@@ -1,0 +1,52 @@
+{
+    "name": "Maccus Murphy",
+    "description": "Maccus Murphy is a giant of a man with fair skin, long red hair, and a full beard who operates Mezro alongside his Chultan wife, Aaliyah. A north-born adventurer, he tends the bar and minds the front of the house, frequently sharing tales of his adventures in Chult.",
+    "character_type": "NPC",
+    "race": "Human",
+    "class": "Commoner / Bartender",
+    "alignment": "Neutral Good",
+    "age": "Adult",
+    "ideals": [
+        "Companionship: Believing his true treasure in life was finding Aaliyah."
+    ],
+    "bonds": [
+        "Mezro restaurant and his wife, Aaliyah.",
+        "His past adventuring days in Chult."
+    ],
+    "flaws": [
+        "Completely unsuspecting of his wife's secret activities and dual nature."
+    ],
+    "speech_patterns": "Boisterous, welcoming, and storytelling, often regaling patrons with grand tales of the jungle and ruins of Chult.",
+    "mannerisms": "Wipes down the bar with a massive frame, laughs heartily, and proudly talks about his adventures and his wife.",
+    "relationships": [
+        {
+            "name": "Aaliyah",
+            "relationship": "Wife / Co-proprietor of Mezro",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Jovial and friendly",
+        "Enthusiastic storyteller",
+        "Hardworking bartender",
+        "Devoted husband"
+    ],
+    "motivations": [
+        "To run a successful, popular restaurant in the North Ward and share the exotic tastes and tales of Chult with Waterdeep."
+    ],
+    "knowledge": [
+        "Chultan lore, local tavern management, adventure stories from the jungles of Chult, and neighborhood news."
+    ],
+    "memories": [],
+    "gm_notes": "Maccus Murphy serves as the friendly, towering face of Mezro. He can be used to provide local color, share maps or lore related to Chult and the Lost City of Mezro, or act as an unwitting, tragic contrast to his wife Aaliyah's secret plots.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Mezro_Operations_Log.txt"
+    ],
+    "linked_lore_by_name": [],
+   "pc_faction_standings": "Indifferent"
+}

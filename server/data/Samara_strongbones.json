@@ -1,0 +1,55 @@
+{
+    "name": "Samara Strongbones",
+    "description": "Samara Strongbones is a spirited and resilient halfling who possesses a remarkably sturdy constitution and an unyielding, adventurous soul. Undeterred by the physical demands of long journeys or perilous dungeon crawls, she is known for her sturdy walking staff, practical traveling gear, and a warm, infectious laugh that brings comfort to her companions around any campfire.",
+    "character_type": "NPC",
+    "race": "Halfling",
+    "class": "Adventurer / Fighter",
+    "alignment": "Neutral Good",
+    "age": "Adult",
+    "ideals": [
+        "Resilience: 'No matter how small you are, you can stand tall against the worst the world throws at you.'",
+        "Camaraderie: 'A good meal, a warm hearth, and loyal friends are worth more than all the gold in Waterdeep.'"
+    ],
+    "bonds": [
+        "The Trollskull Manor crew and her trusted traveling companions.",
+        "Halfling communities and culinary traditions from her homeland."
+    ],
+    "flaws": [
+        "Stubbornly determined to push through injuries or exhaustion rather than slow down her friends.",
+        "Curiosity about hidden places and buried lore that occasionally leads her into tight spots."
+    ],
+    "speech_patterns": "Cheerful, grounded, and hearty, speaking with a comforting folk wisdom and an encouraging tone that lifts morale.",
+    "mannerisms": "Leans confidently on her sturdy walking staff, adjusts her travel pack with practiced ease, and shares hearty snacks with anyone feeling down.",
+    "relationships": [
+        {
+            "name": "Trollskull Manor Crew",
+            "relationship": "Allies / Companions",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Brave and resilient",
+        "Warm and hospitable",
+        "Unflappable under pressure",
+        "Loyal"
+    ],
+    "motivations": [
+        "To explore the world, protect her friends from harm, and build a safe, welcoming life in the city.",
+        "To master her physical endurance and prove that stout hearts come in small packages."
+    ],
+    "knowledge": [
+        "Familiarity with wilderness survival, local flora and fauna, halfling folklore, and enduring long marches across tough terrain."
+    ],
+    "memories": [],
+    "gm_notes": "Samara Strongbones serves as a steadfast, courageous party member who anchors the group with her unshakeable resilience and warm personality, making her an ideal companion for both gritty dungeon delves and cozy tavern gatherings.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Samara_Strongbones_Character_Sheet.txt"
+    ],
+    "linked_lore_by_name": [],
+  "pc_faction_standings": "Indifferent"
+}

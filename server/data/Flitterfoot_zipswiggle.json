@@ -50,7 +50,5 @@
         "Xanathars_Lair_Encounters.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "Xanathar Guild": "Hostile"
-    }
+   "pc_faction_standings": "Indifferent"
 }

@@ -45,5 +45,6 @@
     {"name": "Kaideu Crommer", "relationship": "Son", "status": "Alive"},
     {"name": "Borin Stonehammer", "relationship": "Respected Elder", "status": "Alive"}
   ],
-  "gm_notes": "An intimidating but fair matriarch. She might call upon the party for a ceremonial task or protect a relic from theft or corruption."
+  "gm_notes": "An intimidating but fair matriarch. She might call upon the party for a ceremonial task or protect a relic from theft or corruption.",
+  "pc_faction_standings": "Indifferent"
 }

@@ -49,7 +49,5 @@
         "Underworld_Enforcers_Log.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "Underworld Syndicates": "Neutral / Mercenary"
-    }
+    "pc_faction_standings": "Indifferent"
 }

@@ -42,5 +42,6 @@
         "after_the_rescue": "'(He clasps your shoulder, his grip like iron, his face a mask of profound relief). You did it. You actually did it. You brought my people back. The Lords have their own reasons for paying you, but for this... you have my thanks. Now, I need your official statements for the report.'"
     
     },
-    "linked_lore_by_name": ["Castle Waterdeep Ballroom", "Blood in the Streets (Fillet Lane)"]
+    "linked_lore_by_name": ["Castle Waterdeep Ballroom", "Blood in the Streets (Fillet Lane)"],
+    "pc_faction_standings": "Indifferent"
 }

@@ -54,8 +54,5 @@
         "Cassalanter_Bank_Ledger.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "Cassalanter Bank / Cult": "Manager / Member",
-        "Trollskull Manor Crew": "Creditor / Antagonist"
-    }
+    "pc_faction_standings": "Indifferent"
 }

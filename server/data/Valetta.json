@@ -54,7 +54,5 @@
         "House_of_Inspired_Hands_Records.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "House of Inspired Hands / Church of Gond": "Friendly / Allied"
-    }
+  "pc_faction_standings": "Indifferent"
 }

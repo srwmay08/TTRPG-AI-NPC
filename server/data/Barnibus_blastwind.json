@@ -52,7 +52,5 @@
         "City_Watch_Investigation_Reports.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "City Watch": "Indifferent"
-    }
+    "pc_faction_standings": "Indifferent"
 }

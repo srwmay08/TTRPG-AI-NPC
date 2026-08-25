@@ -63,7 +63,5 @@
         "Havik_Background_Notes.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "Trollskull Manor Crew": "Ally"
-    }
+   "pc_faction_standings": "Indifferent"
 }

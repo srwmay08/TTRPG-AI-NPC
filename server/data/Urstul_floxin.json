@@ -55,7 +55,5 @@
         "Zhentarim_Leadership_Files.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "Zhentarim (Manshoon's Faction)": "Hostile / Mortal Enemy"
-    }
+   "pc_faction_standings": "Indifferent"
 }

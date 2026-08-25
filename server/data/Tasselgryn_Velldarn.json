@@ -54,7 +54,5 @@
         "Harpers_Waterdeep_Network.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "The Harpers": "Ally / Mentor"
-    }
+   "pc_faction_standings": "Indifferent"
 }

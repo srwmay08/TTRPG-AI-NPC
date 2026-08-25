@@ -41,5 +41,6 @@
         "persuasion": "Well... I suppose a weary rescuer is of little use. Very well! But you must promise me you will be ready at the crack of dawn. Volothamp Geddarm's friends do not languish in dungeons for long! This will be a tale for the ages, and its heroes must be properly prepared!"
     },
     "associated_history_files": ["Volo_and_Floon.txt"],
-    "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"]
+    "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"],
+ "pc_faction_standings": "Indifferent"
 }

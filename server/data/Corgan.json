@@ -54,7 +54,5 @@
         "Metal_Masters_Hall_Records.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "The Most Careful Order of Skilled Smiths and Metalforgers": "Neutral / Professional"
-    }
+   "pc_faction_standings": "Indifferent"
 }

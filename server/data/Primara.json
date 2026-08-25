@@ -49,7 +49,5 @@
         "Feywild_Guardians_Log.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "Fey and Wild Guardians": "Friendly / Allied"
-    }
+   "pc_faction_standings": "Indifferent"
 }

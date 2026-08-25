@@ -1,0 +1,65 @@
+{
+    "name": "Bumble Havershamble",
+    "description": "Bumble Havershamble is a master metalsmith and the wife of Sockley Havershamble, the gnome proprietor of the neighboring jewelry and mechanics shop in Trollskull Alley. Her expert craftsmanship in metalsmithing creates an immediate professional and creative bond with fellow smiths like Moriah.",
+    "character_type": "NPC",
+    "race": "Gnome",
+    "class": "Expert / Master Metalsmith",
+    "alignment": "Neutral Good",
+    "age": "Middle-aged",
+    "ideals": [
+        "Craftsmanship: 'True quality lies in the hammer strike and the precision of the metal work.'",
+        "Community: 'Good neighbors support each other's trades and workshops.'"
+    ],
+    "bonds": [
+        "Her husband, Sockley Havershamble, and their shared shop in Trollskull Alley.",
+        "The metalsmithing trade and her reputation for master-level work."
+    ],
+    "flaws": [
+        "Can be intensely absorbed in her forge work, occasionally losing track of outside events."
+    ],
+    "speech_patterns": "Enthusiastic, precise, and practical, often speaking with the proud expertise of a seasoned artisan.",
+    "mannerisms": "Hands often stained with metal polish or soot, frequently inspecting fine jewelry or metal components with a jeweler's loupe.",
+    "relationships": [
+        {
+            "name": "Sockley Havershamble",
+            "relationship": "Husband / Business Partner",
+            "status": "Alive"
+        },
+        {
+            "name": "Wembley",
+            "relationship": "Family Bodyguard / Associate",
+            "status": "Alive"
+        },
+        {
+            "name": "Moriah Kiah",
+            "relationship": "Fellow Smith / Neighbor",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Artistic and precise",
+        "Warm and neighborly",
+        "Proud of her craft",
+        "Collaborative"
+    ],
+    "motivations": [
+        "To craft exceptional metalwork and jewelry in Trollskull Alley.",
+        "To build a prosperous and supportive relationship with neighboring business owners like the crew at Trollskull Manor."
+    ],
+    "knowledge": [
+        "Expertise in metallurgy, precious metals, and master-level smithing techniques.",
+        "Local alley commerce and neighborly relations in Trollskull Alley."
+    ],
+    "memories": [],
+    "gm_notes": "Bumble Havershamble serves as a fantastic local resource for the party when they need custom metalwork, jewelry appraisal, or specialized smithing components, providing a great connection to the artisan community right next door.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Trollskull_Alley_Artisans.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": "Indifferent"
+}

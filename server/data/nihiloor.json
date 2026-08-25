@@ -38,5 +38,6 @@
     "To use its psionic powers to eliminate any direct obstacle to its escape."
   ],
   "gm_notes": "Nihiloor's primary goal is to escape. It will not fight to the death. It expects Grum'shar and its intellect devourer to cover its retreat. If its path is blocked, it will use Dominate Monster on a PC to create a powerful diversion. It carries a stone eye, which is the key for the portal in area Q11. Full stats are in Appendix B.",
-    "linked_lore_by_name": ["Xanathar Guild Sewer Hideout"]
+    "linked_lore_by_name": ["Xanathar Guild Sewer Hideout"],
+    "pc_faction_standings": "Indifferent"
 }

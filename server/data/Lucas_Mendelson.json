@@ -1,0 +1,57 @@
+{
+    "name": "Lucas Mendelson",
+    "description": "Lucas Mendelson is the newest member of the senior staff at Murkledorn's Academy, serving as the instructor for business and economics. He is famously and wildly frustrated by his ongoing, largely unsuccessful attempts to teach even basic business and economic concepts to the privileged Waterdavian youths attending the school.",
+    "character_type": "NPC",
+    "race": "Human",
+    "class": "Instructor / Academic",
+    "alignment": "True Neutral",
+    "age": "Adult",
+    "ideals": [
+        "Education: Instilling a practical understanding of trade, finance, and economics into the next generation, regardless of how stubborn they might be."
+    ],
+    "bonds": [
+        "Murkledorn's Academy and its faculty.",
+        "His frustrating classrooms full of elite Waterdavian students."
+    ],
+    "flaws": [
+        "Easily exasperated and prone to dramatic outbursts of frustration when students fail to grasp fundamental economic principles."
+    ],
+    "speech_patterns": "Exasperated, articulate, and academic, often dropping terms of finance, ledgers, and market forces while sighing heavily.",
+    "mannerisms": "Rubs his temples in exhaustion, paces back and forth in front of chalkboards covered in supply-and-demand curves, and stares blankly at unresponsive classrooms.",
+    "relationships": [
+        {
+            "name": "Salazar Murkledorn",
+            "relationship": "Headmaster / Employer",
+            "status": "Alive"
+        },
+        {
+            "name": "Murkledorn's Academy Students",
+            "relationship": "Students / Source of Frustration",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Intellectual and structured",
+        "Easily frustrated",
+        "Passionate about his subject",
+        "Exhausted by privilege"
+    ],
+    "motivations": [
+        "To successfully teach a single class of young nobles who actually understand how a basic business budget works."
+    ],
+    "knowledge": [
+        "Expertise in economics, trade market analysis, business management, accounting, and local mercantile regulations."
+    ],
+    "memories": [],
+    "gm_notes": "Lucas Mendelson serves as a humorous, relatable academic contact in Trollskull Alley. He can be used by the party to discuss business strategies for running Trollskull Tavern, help manage trade contacts, or provide background color on the economic realities of running a shop in Waterdeep.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Murkledorns_Academy_Staff.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": "Indifferent"
+}

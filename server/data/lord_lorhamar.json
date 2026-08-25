@@ -43,5 +43,6 @@
         "authorizing_payment": "'14,000 dragons is a small price to pay to prevent a dozen small wars. Consider it the city's most prudent investment this year.'",
         "on_future_service": "'You have proven yourselves to be... uniquely capable. Waterdeep has need of such individuals. Do not be surprised if we call upon you again.'"
     },
-    "linked_lore_by_name": ["Castle Waterdeep Ballroom"]
+    "linked_lore_by_name": ["Castle Waterdeep Ballroom"],
+    "pc_faction_standings": "Indifferent"
 }

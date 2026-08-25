@@ -1,0 +1,57 @@
+{
+    "name": "Salazar Murkledorn",
+    "description": "Salazar Murkledorn is a seasoned former adventurer who founded Murkledorn's Academy of Fine Educatorial Pursuits in the North Ward after retiring from adventuring. Having adopted the child of his fallen companion, he established the private school to provide elite education and now serves as headmaster, teaching etiquette and self-defense.",
+    "character_type": "NPC",
+    "race": "Human",
+    "class": "Veteran Adventurer / Headmaster",
+    "alignment": "Lawful Good",
+    "age": "Middle-aged to Elder",
+    "ideals": [
+        "Legacy: 'Every child deserves protection, purpose, and the finest education to prepare them for the trials of the world.'"
+    ],
+    "bonds": [
+        "Murkledorn's Academy and its students and staff.",
+        "Romero Multari, his adopted former companion's child whom he raised."
+    ],
+    "flaws": [
+        "Overly protective of the students and his school, sometimes viewing outside adventurers with deep suspicion."
+    ],
+    "speech_patterns": "Authoritative, dignified, and direct, carrying the commanding presence of an experienced veteran and educator.",
+    "mannerisms": "Stands with an upright, disciplined posture, watches rooms with tactical awareness, and adjusts his academic robes with practiced ease.",
+    "relationships": [
+        {
+            "name": "Romero Multari",
+            "relationship": "Adopted Son / Faculty Member",
+            "status": "Alive"
+        },
+        {
+            "name": "Murkledorn's Academy Faculty",
+            "relationship": "Staff",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Disciplined and honorable",
+        "Protective and caring",
+        "Pragmatic",
+        "Firm yet fair"
+    ],
+    "motivations": [
+        "To run the premier private school in the North Ward, protect his students, and honor the memory of his fallen comrades."
+    ],
+    "knowledge": [
+        "Expertise in elite academy administration, historical combat tactics, self-defense (swords, daggers, crossbows), and North Ward elite society."
+    ],
+    "memories": [],
+    "gm_notes": "Salazar Murkledorn serves as a prestigious and powerful pillar of Trollskull Alley East. He can be used to issue school-related quests, provide high-level protection or tactical training, or act as an influential ally for the party in the North Ward.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Murkledorns_Academy_Records.txt"
+    ],
+    "linked_lore_by_name": [],
+   "pc_faction_standings": "Indifferent"
+}

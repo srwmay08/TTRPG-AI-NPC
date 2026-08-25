@@ -46,7 +46,5 @@
         "Fellowship_of_Innkeepers_Manifest.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "Fellowship of Innkeepers": "Indifferent"
-    }
+   "pc_faction_standings": "Indifferent"
 }

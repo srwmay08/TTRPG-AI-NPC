@@ -1,0 +1,56 @@
+{
+    "name": "Lif",
+    "description": "Lif is a spectral barkeep—the poltergeist of the former owner of Trollskull Manor, who died during the Second Sundering. Bound to the tavern he loved in life, he haunts the building as a translucent, melancholy phantom. Though initially hostile to squatters and intruders by hurling glassware or slamming doors, he is fiercely dedicated to the establishment and can become an invaluable, quiet helper once respected, taking pride in keeping the floors spotless and the hearth warm.",
+    "character_type": "NPC",
+    "race": "Ghost (Undead Human)",
+    "class": "Innkeeper / Spirit",
+    "alignment": "Neutral Good",
+    "age": "Deceased (Lifelong resident)",
+    "ideals": [
+        "Dedication: 'This tavern was my life, and it remains my watch in death.'",
+        "Hospitality: 'A proper house must be kept clean, quiet, and welcoming to honest patrons.'"
+    ],
+    "bonds": [
+        "Trollskull Manor and its physical premises.",
+        "The current proprietors, provided they treat the building with respect and care."
+    ],
+    "flaws": [
+        "Easily agitated by rough treatment, messes, or disrespect shown to the tavern.",
+        "Unable to speak normally, communicating instead through eerie atmospheric shifts, chills, and moving objects."
+    ],
+    "speech_patterns": "Silent, communicating through spectral cold spots, soft ghostly sighs, slamming doors, or writing brief, ghostly messages in condensation.",
+    "mannerisms": "Wipes down counters with a phantom rag, polishes glasses that leave no physical trace, and glares with sad, hollow eyes at anyone who tracks mud across the floorboards.",
+    "relationships": [
+        {
+            "name": "Trollskull Manor Crew",
+            "relationship": "Current Owners / Proteges",
+            "status": "Alive / Allied"
+        }
+    ],
+    "personality_traits": [
+        "Melancholy yet proud",
+        "Protective of the tavern",
+        "Meticulous cleaner",
+        "Quietly observant"
+    ],
+    "motivations": [
+        "To see Trollskull Manor restored to its former glory as a thriving, joyful gathering place.",
+        "To protect the building from destructive tenants, rivals, or malicious spirits."
+    ],
+    "knowledge": [
+        "Deep historical awareness of Trollskull Alley, former local residents, and hidden architectural quirks of the manor.",
+        "Intimate familiarity with every beam, pipe, and board of the tavern."
+    ],
+    "memories": [],
+    "gm_notes": "Lif serves as the signature resident ghost of Trollskull Manor. He can start as a haunting encounter or minor hazard that needs appeasing, eventually transitioning into a loyal, spectral bartender and custodian who adds immense charm and atmospheric flavor to the party's home base.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Trollskull_Manor_Ghosts.txt"
+    ],
+    "linked_lore_by_name": [],
+   "pc_faction_standings": "Indifferent"
+}

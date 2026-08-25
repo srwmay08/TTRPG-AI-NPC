@@ -47,5 +47,7 @@
     "gm_notes": "Lessemas is a social NPC who can be used for lighter, more roleplay-focused encounters. He might be the target of an admirer's unwanted affections, or he might have inadvertently learned something important because someone was distracted and spoke too freely around him. He is fundamentally good and will help the party if he can.",
     "associated_history_files": [
       "The_Monastery_of_the_Sun.txt", "The_Spires_of_the_Morning.txt"
-    ]
+    ],
+    "pc_faction_standings": "Indifferent"
+}
   }

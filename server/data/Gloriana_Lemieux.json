@@ -49,7 +49,5 @@
         "Salon_Lemieux_Records.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "Trollskull Manor Crew": "Neutral / Neighbor"
-    }
+   "pc_faction_standings": "Indifferent"
 }

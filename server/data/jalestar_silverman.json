@@ -37,5 +37,6 @@
         "start_conversation": "Wanna know what's going on in our fine city? Grab a stool. Stay a while.",
         "ask_what_he_does": "Me? I'm just a man enjoying an ale. Nothing more to it."
     },
-    "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"]
+    "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"],
+    "pc_faction_standings": "Indifferent"
 }

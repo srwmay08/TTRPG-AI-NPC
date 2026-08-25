@@ -49,5 +49,6 @@
     "gm_notes": "Burgo is a great 'low-level' information source. He's friendly, approachable, and knows what's going on within the Crommer estate and the local artisan community. He might offer quests related to finding rare ingredients or protecting a food shipment.",
     "associated_history_files": [
       "The_Crommer_Clan.txt", "Burgo's_Recipes.txt"
-    ]
-  }
+    ],
+    "pc_faction_standings": "Indifferent"
+}

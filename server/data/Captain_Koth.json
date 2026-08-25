@@ -50,7 +50,5 @@
         "House_Rosnar_Security_Protocols.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "House Rosnar": "Neutral / Hostile (if trespassing)"
-    }
+    "pc_faction_standings": "Indifferent"
 }

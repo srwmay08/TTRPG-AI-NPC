@@ -49,5 +49,6 @@
     "associated_history_files": [
       "The_Monastery_of_the_Eternal_Sun.txt", "Gith_History.txt", "Clarc.txt"
     ],
-    "linked_lore_ids": ["60d5ecb3a0f3e8a2d6f3b9ba", "60d5ecb3a0f3e8a2d6f3b9b9", "60d5ecb3a0f3e8a2d6f3b9d2", "60d5ecb3a0f3e8a2d6f3b9b8", "60d5ecb3a0f3e8a2d6f3b9b7", "60d5ecb3a0f3e8a2d6f3b9b6", "60d5ecb3a0f3e8a2d6f3b9b5", "60d5ecb3a0f3e8a2d6f3b9b4", "60d5ecb3a0f3e8a2d6f3b9d2"]
+    "linked_lore_ids": ["60d5ecb3a0f3e8a2d6f3b9ba", "60d5ecb3a0f3e8a2d6f3b9b9", "60d5ecb3a0f3e8a2d6f3b9d2", "60d5ecb3a0f3e8a2d6f3b9b8", "60d5ecb3a0f3e8a2d6f3b9b7", "60d5ecb3a0f3e8a2d6f3b9b6", "60d5ecb3a0f3e8a2d6f3b9b5", "60d5ecb3a0f3e8a2d6f3b9b4", "60d5ecb3a0f3e8a2d6f3b9d2"],
+    "pc_faction_standings": "Indifferent"
   }

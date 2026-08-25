@@ -1,0 +1,71 @@
+{
+    "name": "Artis Appleton",
+    "description": "Artis Appleton is a large, jovial, and hardworking grocer operating Appleton’s Fine Comestibles in Trollskull Alley. He walks with a noticeable limp and is fiercely protective of his family and neighborhood roots. While warm and welcoming to neighbors when approached peacefully, he can become defensive when he feels outsiders are looking down on his family or ignoring local ties.",
+    "character_type": "NPC",
+    "race": "Human",
+    "class": "Commoner / Merchant",
+    "alignment": "Neutral Good",
+    "age": "40s",
+    "ideals": [
+        "Community: 'The alley takes care of its own; we were here before the manor was empty, and we'll be here after.'",
+        "Family: 'My boys work hard and deserve a place to build a future.'",
+        "Fairness: 'Honor local ties, and you'll find an ally in us.'"
+    ],
+    "bonds": [
+        "His five sons who help run and protect the neighborhood turf.",
+        "Appleton’s Fine Comestibles and his grocery business in Trollskull Alley.",
+        "A local stake in the neighborhood's survival against rival merchants like Emmek Frewn."
+    ],
+    "flaws": [
+        "Can be overly defensive of his sons when they act out or step out of line.",
+        "Guarded against wealthy or arrogant newcomers looking down on working-class locals.",
+        "Can be swayed by practical alliances that benefit his family's standing."
+    ],
+    "speech_patterns": "Warm, hearty, and conversational, dropping into a firmer, commanding tone when addressing his children or defending his business.",
+    "mannerisms": "Often found fresh out of the kitchen baking pies (such as Fleetswake pies), wiping his hands on an apron, or whistling sharply to summon his boys.",
+    "relationships": [
+        {
+            "name": "The Appleton Boys",
+            "relationship": "Sons / Employees",
+            "status": "Alive"
+        },
+        {
+            "name": "Emmek Frewn",
+            "relationship": "Rival Neighbor / Business Rival",
+            "status": "Alive"
+        },
+        {
+            "name": "Nat, Jenks, and Squidly",
+            "relationship": "Local Urchins (Friction turned to neighborhood peers)",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Jovial and hospitable to friends",
+        "Protective father",
+        "Pragmatic ally",
+        "Proud of his local roots"
+    ],
+    "motivations": [
+        "To secure stable work and futures for his five sons in Trollskull Alley.",
+        "To protect his grocery trade against aggressive local rivals like Frewn.",
+        "To maintain peace and respect between long-term alley residents and the newly arrived manor owners."
+    ],
+    "knowledge": [
+        "Comprehensive local gossip and neighborhood history regarding Trollskull Alley.",
+        "The ins and outs of local grocery supply lines and baking trades.",
+        "The private local grievances and rumors spread by Emmek Frewn."
+    ],
+    "memories": [],
+    "gm_notes": "Artis Appleton acts as a key anchor for the neighborhood dynamic in Trollskull Alley. He can serve as an ally, information source on local sentiment, or quest-giver regarding neighborhood turf disputes if the party respects local working-class pride.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Trollskull_Alley_Merchants.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": "Indifferent"
+}

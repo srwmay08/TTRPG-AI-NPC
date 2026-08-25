@@ -1,0 +1,58 @@
+{
+    "name": "Ott Steeltoes",
+    "description": "Ott Steeltoes is a brawny, no-nonsense shield dwarf who serves as one of the key enforcers and bodyguards for Xanathar's criminal syndicate in Waterdeep. Often seen clad in sturdy ring mail with heavy, steel-capped boots that give him his moniker, he is brutal, fiercely loyal to his beholder master, and thoroughly accustomed to breaking heads in the subterranean reaches of Skullport and the sewers above.",
+    "character_type": "NPC",
+    "race": "Dwarf",
+    "class": "Fighter / Enforcer",
+    "alignment": "Neutral Evil",
+    "age": "Adult",
+    "ideals": [
+        "Loyalty: 'The Great Eye sees everything, and loyalty to the boss is the only thing keeping your skull attached to your neck.'",
+        "Brutality: 'Talk less, smash more.'"
+    ],
+    "bonds": [
+        "Xanathar's Thieves' Guild and his fellow enforcers.",
+        "The subterranean territory of Skullport and the dungeon domains beneath the city."
+    ],
+    "flaws": [
+        "Prone to violent outbursts and completely dismissive of diplomacy or mercy when carrying out orders."
+    ],
+    "speech_patterns": "Gruff, heavy, and threatening, with a gruff dwarven brogue that turns easily into sharp, vicious commands.",
+    "mannerisms": "Stomps heavily with his steel-toed boots to intimidate targets, crosses thick arms over his chest, and eyes strangers with deep suspicion.",
+    "relationships": [
+        {
+            "name": "Xanathar",
+            "relationship": "Guild Master / Overlord",
+            "status": "Alive"
+        },
+        {
+            "name": "Ahmaergo",
+            "relationship": "Supervisor / Fellow Enforcer",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Aggressive and intimidating",
+        "Unwaveringly loyal to the syndicate",
+        "Pragmatically brutal",
+        "Suspicious"
+    ],
+    "motivations": [
+        "To enforce Xanathar's will, eliminate rivals or nosy adventurers, and maintain criminal control over assigned territories."
+    ],
+    "knowledge": [
+        "Underworld safe houses, Xanathar guild hierarchies, sewer layouts, and smuggling routes connecting the city to Skullport."
+    ],
+    "memories": [],
+    "gm_notes": "Ott Steeltoes serves as a formidable physical threat and direct representative of the Xanathar's Guild. He can be deployed as an aggressive boss encounter, an ambush predator in the sewers, or an intimidating roadblock during investigations into the city's criminal underbelly.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Xanathar_Guild_Enforcers.txt"
+    ],
+    "linked_lore_by_name": [],
+   "pc_faction_standings": "Indifferent"
+}

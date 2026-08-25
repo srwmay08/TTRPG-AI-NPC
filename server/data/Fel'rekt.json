@@ -49,7 +49,5 @@
         "Bregan_Daerthe_Operations.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "Bregan D'aerthe": "Neutral / Competitive"
-    }
+   "pc_faction_standings": "Indifferent"
 }

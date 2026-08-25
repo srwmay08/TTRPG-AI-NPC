@@ -49,7 +49,5 @@
         "Waterfront_Transport_Log.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "Waterfront Guilds / Locals": "Neutral / Professional"
-    }
+   "pc_faction_standings": "Indifferent"
 }

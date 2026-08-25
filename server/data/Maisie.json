@@ -1,0 +1,53 @@
+{
+    "name": "Maisie",
+    "description": "Maisie is a warm and welcoming local tavern worker or proprietor who knows how to keep a room comfortable and well-stocked. Known for her friendly demeanor and steady hand behind the counter, she offers a sympathetic ear to regulars and travelers alike while keeping the establishment running smoothly.",
+    "character_type": "NPC",
+    "race": "Human",
+    "class": "Commoner / Innkeeper",
+    "alignment": "Neutral Good",
+    "age": "Adult",
+    "ideals": [
+        "Hospitality: 'A warm meal and a clean cup can turn anyone's day around.'",
+        "Community: 'Good neighbors and honest patrons are what keep a place alive.'"
+    ],
+    "bonds": [
+        "Her establishment and the local community.",
+        "The patrons and regulars she serves daily."
+    ],
+    "flaws": [
+        "Can be a bit too trusting of down-on-their-luck travelers looking for a free meal."
+    ],
+    "speech_patterns": "Warm, chatty, and down-to-earth, often greeting visitors with a cheerful smile and comforting advice.",
+    "mannerisms": "Wipes down tables with a cloth, keeps a pot of tea or ale ready, and listens attentively with a sympathetic nod.",
+    "relationships": [
+        {
+            "name": "Trollskull Manor Crew",
+            "relationship": "Local Allies / Neighbors",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Friendly and hospitable",
+        "Empathetic",
+        "Hardworking",
+        "Approachable"
+    ],
+    "motivations": [
+        "To provide a safe, cozy gathering place for locals and travelers alike."
+    ],
+    "knowledge": [
+        "Local neighborhood gossip, friendly tavern operations, and comfort food recipes."
+    ],
+    "memories": [],
+    "gm_notes": "Maisie serves as a friendly, comforting face in the local community who can offer the party casual neighborhood gossip, emotional support, or a warm meal after a hard day of adventuring.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Local_Tavern_Staff.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": "Indifferent"
+}

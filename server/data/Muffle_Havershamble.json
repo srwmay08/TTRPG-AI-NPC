@@ -1,0 +1,67 @@
+{
+    "name": "Muffle Havershamble",
+    "description": "Muffle Havershamble is an 8-year-old rock gnome child living in the family quarters in the cellar beneath Havershamble's Jewelry and Fine Mechanicals[cite: 1]. Described as lovely and rambunctious, she attends Murkledorn's Academy alongside her older brother Nifflin[cite: 1].",
+    "character_type": "NPC",
+    "race": "Rock Gnome",
+    "class": "Commoner / Student",
+    "alignment": "Chaotic Good",
+    "age": "Child (8)",
+    "ideals": [
+        "Curiosity: Exploring every nook and cranny of Trollskull Alley and finding fun wherever possible."
+    ],
+    "bonds": [
+        "Her family, including her parents Socally and Bumble, and her brother Nifflin[cite: 1].",
+        "Murkledorn's Academy and her fellow student peers[cite: 1]."
+    ],
+    "flaws": [
+        "Impulsive and prone to wandering off or getting swept up in mischievous childhood adventures."
+    ],
+    "speech_patterns": "High-pitched, energetic, and rapid, full of endless questions and youthful excitement.",
+    "mannerisms": "Dashes in and out of the shop, tugs on her parents' sleeves, and giggles conspiratorially with her brother.",
+    "relationships": [
+        {
+            "name": "Socally Havershamble",
+            "relationship": "Father / Shop Owner[cite: 1]",
+            "status": "Alive"
+        },
+        {
+            "name": "Bumble Havershamble",
+            "relationship": "Mother / Jewelry Maker[cite: 1]",
+            "status": "Alive"
+        },
+        {
+            "name": "Nifflin Havershamble",
+            "relationship": "Older Brother[cite: 1]",
+            "status": "Alive"
+        },
+        {
+            "name": "Wembly",
+            "relationship": "Family Doorman / Protector[cite: 1]",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Rambunctious and energetic[cite: 1]",
+        "Inquisitive",
+        "Cheerful",
+        "Mischievous"
+    ],
+    "motivations": [
+        "To have fun, play with other children in the alley, and explore the wonders of Waterdeep."
+    ],
+    "knowledge": [
+        "Schoolyard gossip, secret hiding spots around Trollskull Alley, and basic student life at Murkledorn's."
+    ],
+    "memories": [],
+    "gm_notes": "Muffle serves as a vibrant, youthful neighborhood resident. She and her brother can be used to pull the party into lighthearted neighborhood quests, get lost in the cellars or Undermountain, or alert the adventurers to trouble at the school or shop[cite: 1].",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Havershambles_Shop_Log.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": "Indifferent"
+}

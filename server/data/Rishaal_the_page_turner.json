@@ -1,0 +1,53 @@
+{
+    "name": "Rishaal the Page-Turner",
+    "description": "Rishaal the Page-Turner is a scholarly and eccentric dragonborn wizard who operates a quaint book and scroll shop, Tome Against Time, located in the Trades Ward of Waterdeep. Sporting shimmering bronze scales and spectacles perched precariously on his snout, he is deeply passionate about rare literature, arcane manuscripts, and historical trivia, often getting lost in the pages of whatever tome has most recently caught his attention.",
+    "character_type": "NPC",
+    "race": "Dragonborn",
+    "class": "Wizard / Shopkeeper",
+    "alignment": "Neutral Good",
+    "age": "Middle-aged",
+    "ideals": [
+        "Knowledge: 'Every book holds a universe; to burn or neglect one is a tragedy of the highest order.'",
+        "Curiosity: 'The past is never truly dead—it's simply waiting on a dusty shelf for someone curious enough to turn the page.'"
+    ],
+    "bonds": [
+        "His bookshop, Tome Against Time, and its vast collection of fragile texts.",
+        "The local scholarly community and spellcasters seeking rare formulas or historical records."
+    ],
+    "flaws": [
+        "Easily distracted by fascinating historical trivia or rare manuscripts, sometimes losing track of time or customers."
+    ],
+    "speech_patterns": "Articulate, thoughtful, and slightly professorial, often pausing mid-sentence to quote a passage or search his memory for a specific reference.",
+    "mannerisms": "Adjusts his spectacles constantly, lovingly traces the spines of old books, and absentmindedly breathes small, harmless wisps of smoke when deep in thought.",
+    "relationships": [
+        {
+            "name": "Trollskull Manor Crew",
+            "relationship": "Customers / Associates",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Intellectual and inquisitive",
+        "Gentle and polite",
+        "Absent-minded professor",
+        "Passionate about history"
+    ],
+    "motivations": [
+        "To preserve ancient knowledge, acquire rare historical texts, and run a peaceful shop dedicated to the written word."
+    ],
+    "knowledge": [
+        "Extensive expertise in ancient history, arcane theory, rare manuscripts, local Waterdhavian lore, and book preservation."
+    ],
+    "memories": [],
+    "gm_notes": "Rishaal the Page-Turner serves as an intellectual resource and friendly shopkeeper for the party. He can be used to help identify magical scrolls, decipher ancient languages, provide lore on Waterdeep's history, or offer side quests involving the recovery of lost books.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Tome_Against_Time_Inventory.txt"
+    ],
+    "linked_lore_by_name": [],
+   "pc_faction_standings": "Indifferent"
+}

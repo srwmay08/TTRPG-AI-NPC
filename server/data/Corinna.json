@@ -54,8 +54,5 @@
         "Spires_of_the_Morning_Guards.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "Order of the Aster": "Ally"
-    }
+    "pc_faction_standings": "Indifferent"
 }
-```

@@ -63,7 +63,5 @@
         "Force_Grey_Mandates.txt"
     ],
     "linked_lore_by_name": [],
-    "pc_faction_standings": {
-        "Force Grey": "Ally"
-    }
+    "pc_faction_standings": "Indifferent"
 }
