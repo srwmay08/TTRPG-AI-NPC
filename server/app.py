@@ -38,7 +38,6 @@ HISTORY_DATA_DIR = app_config.HISTORY_DATA_DIR
 LORE_DATA_DIR = app_config.LORE_DATA_DIR
 
 # --- LIVE DISCORD CHAT VARIABLES ---
-# Consolidated and strictly lowercase to match raw_author cast
 PLAYER_CHARACTER_MAPPING = {
     "srwm": "DM (Scene Input)",
     "brunes": "Belric",
@@ -53,23 +52,20 @@ PLAYER_CHARACTER_MAPPING = {
     "ortiz alehammer": "Moriah Kiah",
     "ortizalehammer": "Moriah Kiah"
 }
-live_session_history: List[str] = []
+live_session_history: List[Dict[str, Any]] = []
 
 # --- UTILITY FUNCTIONS ---
 
 def parse_json(data: Any) -> Any:
-    # Safely parse MongoDB BSON documents using json_util to handle ObjectIds and datetimes properly
     return json.loads(json_util.dumps(data))
 
 def slugify(text: Any) -> str:
-    # Convert arbitrary text strings into clean URL-friendly or filesystem-friendly slug strings
     text = str(text).lower()
     text = re.sub(r'\s+', '-', text)
     text = re.sub(r'[^\w-]+', '', text)
     return text
 
 def parse_discord_transcript(raw_text: str) -> str:
-    # Parse and re-format raw Discord bot logs and script exports into clean conversational text streams
     pattern = r"\[\d+:\d+\s?[AP]M\]\s+APP\s+\[Scriptly\]\s+([\w\.]+)\s*:\s*(.+)"
     matches = re.findall(pattern, raw_text, re.MULTILINE)
     formatted_lines: List[str] = []
@@ -79,7 +75,6 @@ def parse_discord_transcript(raw_text: str) -> str:
     return "\n".join(formatted_lines)
 
 def load_history_content_for_npc(npc_doc: Dict[str, Any]) -> Dict[str, Any]:
-    # Load associated text history documents linked to a specific NPC from the history storage folder safely
     npc_doc.setdefault('pc_faction_standings', {})
     npc_doc.setdefault('linked_lore_by_name', []) 
     history_contents_loaded: Dict[str, str] = {}
@@ -92,7 +87,6 @@ def load_history_content_for_npc(npc_doc: Dict[str, Any]) -> Dict[str, Any]:
                 continue
             safe_history_filename = secure_filename(history_filename)
             file_path = os.path.join(abs_history_data_dir, safe_history_filename)
-            # Use safe context manager for file reading to avoid handle leaks
             if os.path.exists(file_path) and os.path.isfile(file_path):
                 try:
                     with open(file_path, 'r', encoding='utf-8') as f:
@@ -111,7 +105,6 @@ def load_history_content_for_npc(npc_doc: Dict[str, Any]) -> Dict[str, Any]:
     return npc_doc
 
 def get_linked_lore_summary_for_npc(npc_doc: Dict[str, Any]) -> str:
-    # Query MongoDB collection to compile summaries of lore entries explicitly linked by name to an NPC
     if mongo_db is None or 'linked_lore_by_name' not in npc_doc or not npc_doc['linked_lore_by_name']:
         return "No specific linked lore."
     lore_summaries: List[str] = []
@@ -127,8 +120,6 @@ def get_linked_lore_summary_for_npc(npc_doc: Dict[str, Any]) -> str:
     return "\n".join(lore_summaries)
 
 def parse_ai_suggestions(full_ai_output: str, speaking_pc_id: Optional[str]) -> Dict[str, Any]:
-    # Parse unstructured multi-line LLM output text blocks into structured dictionaries containing dialogue and game metadata
-    npc_name_fallback = "NPC"
     dialogue_parts: List[str] = []
     suggestion_lines: List[str] = []
     npc_actions_list: List[str] = []
@@ -204,7 +195,6 @@ def parse_ai_suggestions(full_ai_output: str, speaking_pc_id: Optional[str]) -> 
     }
 
 def create_standard_response(success: bool, data: Optional[Any] = None, error: Optional[str] = None) -> Dict[str, Any]:
-    # Enforce standard structured response payloads for all API endpoints to guarantee consistent frontend consumption
     response_payload: Dict[str, Any] = {
         "success": success,
         "data": data,
@@ -216,14 +206,12 @@ def create_standard_response(success: bool, data: Optional[Any] = None, error: O
 
 @app.route('/')
 def serve_index() -> Any:
-    # Serve the main single-page application dashboard frontend template
     return render_template('index.html')
 
 # --- LIVE DISCORD CHAT ENDPOINTS ---
 
 @app.route('/api/live_chat_ingest', methods=['POST'])
 def handle_live_chat_ingest() -> Any:
-    # Ingest live chat telemetry or webhook messages from external discord channels or bots
     data = request.get_json()
     if not data:
         return jsonify(create_standard_response(success=False, error="No data")), 400
@@ -231,14 +219,13 @@ def handle_live_chat_ingest() -> Any:
     raw_author = data.get("author", "Unknown").lower()
     content = data.get("content", "")
     
-    # Use substring matching to catch compound discord names like "[ortizalehammer / Garrett]"
     character_name = data.get("author")
     for mapping_key, mapping_val in PLAYER_CHARACTER_MAPPING.items():
         if mapping_key in raw_author:
             character_name = mapping_val
             break
     
-    formatted_message = f"{character_name}: {content}"
+    formatted_message = {"sender": character_name, "message": content}
     
     live_session_history.append(formatted_message)
     
@@ -249,12 +236,11 @@ def handle_live_chat_ingest() -> Any:
 
 @app.route('/api/live_chat', methods=['GET'])
 def get_live_chat() -> Any:
-    # Retrieve the active queue of live session chat lines stored in memory
-    return jsonify(create_standard_response(success=True, data=live_session_history)), 200
+    # FIX: Return direct array of message dictionaries to satisfy frontend forEach loops
+    return jsonify(live_session_history), 200
 
 @app.route('/api/live_chat', methods=['DELETE'])
 def clear_live_chat() -> Any:
-    # Clear out the active live session history buffer completely
     live_session_history.clear()
     return jsonify(create_standard_response(success=True, data={"status": "cleared"})), 200
 
@@ -262,7 +248,6 @@ def clear_live_chat() -> Any:
 
 @app.route('/api/npcs', methods=['POST'])
 def create_npc_api() -> Any:
-    # Create a brand new character profile document and insert it into the database collection
     if mongo_db is None: 
         return jsonify(create_standard_response(success=False, error="Database not available")), 503
     try:
@@ -301,7 +286,6 @@ def create_npc_api() -> Any:
 
 @app.route('/api/npcs', methods=['GET'])
 def get_all_npcs_api() -> Any:
-    # Retrieve a full list of all characters currently stored inside the database
     if mongo_db is None: 
         return jsonify(create_standard_response(success=False, error="Database not available")), 503
     try:
@@ -314,13 +298,26 @@ def get_all_npcs_api() -> Any:
             char_doc.setdefault('combined_history_content', '')
             char_doc.setdefault('pc_faction_standings', {})
             characters_list.append(char_doc)
-        return jsonify(create_standard_response(success=True, data=characters_list)), 200
+        return jsonify(characters_list), 200
     except Exception as e:
         return jsonify(create_standard_response(success=False, error=f"Could not retrieve characters: {str(e)}")), 500
 
+@app.route('/api/pcs', methods=['GET'])
+def get_all_pcs_api() -> Any:
+    if mongo_db is None: 
+        return jsonify(create_standard_response(success=False, error="Database not available")), 503
+    try:
+        pcs_cursor = mongo_db.npcs.find({"character_type": {"$regex": "pc", "$options": "i"}})
+        pcs_list: List[Dict[str, Any]] = []
+        for pc_doc in pcs_cursor:
+            pc_doc['_id'] = str(pc_doc['_id'])
+            pcs_list.append(pc_doc)
+        return jsonify(pcs_list), 200
+    except Exception as e:
+        return jsonify(create_standard_response(success=False, error=f"Could not retrieve PCs: {str(e)}")), 500
+
 @app.route('/api/npcs/<npc_id_str>', methods=['GET'])
 def get_npc_api(npc_id_str: str) -> Any:
-    # Retrieve a single character profile document by its unique object string ID, including loaded history files
     if mongo_db is None: 
         return jsonify(create_standard_response(success=False, error="Database not available")), 503
     try:
@@ -337,7 +334,6 @@ def get_npc_api(npc_id_str: str) -> Any:
 
 @app.route('/api/npcs/<npc_id_str>', methods=['PUT'])
 def update_npc_api(npc_id_str: str) -> Any:
-    # Update an existing character profile record and synchronize changes back to local JSON files
     if mongo_db is None: 
         return jsonify(create_standard_response(success=False, error="Database not available")), 503
     try:
@@ -384,7 +380,6 @@ def update_npc_api(npc_id_str: str) -> Any:
                 safe_filename = secure_filename(f"{char_name}.json")
                 target_path = os.path.join(PRIMARY_DATA_DIR, safe_filename)
                 try:
-                    # Safely open file using context manager
                     with open(target_path, 'w', encoding='utf-8') as f:
                         json.dump(file_data, f, indent=4)
                 except Exception as e_file:
@@ -404,7 +399,6 @@ def update_npc_api(npc_id_str: str) -> Any:
 
 @app.route('/api/npcs/<npc_id_str>', methods=['DELETE'])
 def delete_npc_api(npc_id_str: str) -> Any:
-    # Delete an individual character document from the database collection by ID
     if mongo_db is None: 
         return jsonify(create_standard_response(success=False, error="Database not available")), 503
     try:
@@ -422,7 +416,6 @@ def delete_npc_api(npc_id_str: str) -> Any:
 
 @app.route('/api/history_files', methods=['GET'])
 def list_history_files_api() -> Any:
-    # List all available text history logs stored inside the history folder path
     abs_history_data_dir = os.path.abspath(HISTORY_DATA_DIR)
     if not os.path.isdir(abs_history_data_dir):
         os.makedirs(abs_history_data_dir, exist_ok=True)
@@ -435,7 +428,6 @@ def list_history_files_api() -> Any:
 
 @app.route('/api/character/<npc_id_str>/associate_history', methods=['POST'])
 def associate_history_file_with_npc_api(npc_id_str: str) -> Any:
-    # Link a specific text history log file to an NPC profile record
     if mongo_db is None: 
         return jsonify(create_standard_response(success=False, error="Database not available")), 503
     try:
@@ -466,7 +458,6 @@ def associate_history_file_with_npc_api(npc_id_str: str) -> Any:
 
 @app.route('/api/character/<npc_id_str>/dissociate_history', methods=['POST'])
 def dissociate_history_file_from_npc_api(npc_id_str: str) -> Any:
-    # Unlink or remove an associated history log file from an NPC profile record
     if mongo_db is None: 
         return jsonify(create_standard_response(success=False, error="Database not available")), 503
     try:
@@ -497,7 +488,6 @@ def dissociate_history_file_from_npc_api(npc_id_str: str) -> Any:
 
 @app.route('/api/npcs/<npc_id_str>/memory', methods=['POST'])
 def add_npc_memory_api(npc_id_str: str) -> Any:
-    # Add a new memory item or historical bullet point to an NPC's memory list
     if mongo_db is None: 
         return jsonify(create_standard_response(success=False, error="Database not available")), 503
     try: 
@@ -526,7 +516,6 @@ def add_npc_memory_api(npc_id_str: str) -> Any:
 
 @app.route('/api/npcs/<npc_id_str>/memory/<memory_id_str_path>', methods=['DELETE'])
 def delete_npc_memory_api(npc_id_str: str, memory_id_str_path: str) -> Any:
-    # Delete an individual memory item from an NPC record using its specific string identifier
     if mongo_db is None: 
         return jsonify(create_standard_response(success=False, error="Database not available")), 503
     try: 
@@ -551,7 +540,6 @@ def delete_npc_memory_api(npc_id_str: str, memory_id_str_path: str) -> Any:
 
 @app.route('/api/npcs/<npc_id_str>/dialogue', methods=['POST'])
 def generate_dialogue_for_npc_api(npc_id_str: str) -> Any:
-    # Trigger AI dialogue generation and behavior suggestions for an NPC given a player input utterance
     if mongo_db is None: 
         return jsonify(create_standard_response(success=False, error="Database not available")), 503
     if ai_service_instance is None or ai_service_instance.client is None:
@@ -577,10 +565,17 @@ def generate_dialogue_for_npc_api(npc_id_str: str) -> Any:
     except ValidationError as e:
         return jsonify(create_standard_response(success=False, error=str(e))), 400
         
-    # Inject live session history into context
-    recent_context = list(live_session_history[-15:]) 
+    clean_history_strings = []
+    for item in live_session_history:
+        if isinstance(item, dict):
+            clean_history_strings.append(f"{item.get('sender', 'Unknown')}: {item.get('message', '')}")
+        else:
+            clean_history_strings.append(str(item))
+
+    recent_context = list(clean_history_strings[-15:]) 
     if dialogue_req_data.recent_dialogue_history:
-        dialogue_req_data.recent_dialogue_history = recent_context + dialogue_req_data.recent_dialogue_history
+        req_hist = [f"{h.get('sender', '')}: {h.get('message', '')}" if isinstance(h, dict) else str(h) for h in dialogue_req_data.recent_dialogue_history]
+        dialogue_req_data.recent_dialogue_history = recent_context + req_hist
     else:
         dialogue_req_data.recent_dialogue_history = recent_context
 
@@ -627,7 +622,6 @@ def generate_dialogue_for_npc_api(npc_id_str: str) -> Any:
 
 @app.route('/api/lore_entries', methods=['GET']) 
 def get_all_lore_entries_api() -> Any:
-    # Retrieve all campaign lore entries stored in the database collection
     if mongo_db is None: 
         return jsonify(create_standard_response(success=False, error="Database not available")), 503
     try:
@@ -643,7 +637,6 @@ def get_all_lore_entries_api() -> Any:
 
 @app.route('/api/lore_entries', methods=['POST'])
 def create_lore_entry_api() -> Any:
-    # Create a new campaign lore entry document in the database
     if mongo_db is None: 
         return jsonify(create_standard_response(success=False, error="Database not available")), 503
     try:
@@ -666,7 +659,6 @@ def create_lore_entry_api() -> Any:
 
 @app.route('/api/lore_entries/<lore_id_str>', methods=['PUT'])
 def update_lore_entry_api(lore_id_str: str) -> Any:
-    # Update an existing lore entry record in the database by its lore ID string
     if mongo_db is None: 
         return jsonify(create_standard_response(success=False, error="Database not available")), 503
     try:
@@ -681,7 +673,6 @@ def update_lore_entry_api(lore_id_str: str) -> Any:
 
 @app.route('/api/lore_entries/<lore_id_str>', methods=['DELETE'])
 def delete_lore_entry_api(lore_id_str: str) -> Any:
-    # Delete a lore entry from the database collection completely
     if mongo_db is None: 
         return jsonify(create_standard_response(success=False, error="Database not available")), 503
     result = mongo_db.lore_entries.delete_one({"lore_id": lore_id_str})
@@ -693,7 +684,6 @@ def delete_lore_entry_api(lore_id_str: str) -> Any:
 
 @app.route('/api/characters/<char_id_str>/link_lore', methods=['POST'])
 def link_lore_to_character_api(char_id_str: str) -> Any:
-    # Associate a lore entry by name to a specific character's linked lore array
     if mongo_db is None: 
         return jsonify(create_standard_response(success=False, error="Database not available")), 503
     try:
@@ -714,7 +704,6 @@ def link_lore_to_character_api(char_id_str: str) -> Any:
 # --- MAIN EXECUTION ---
 
 if __name__ == '__main__':
-    # Ensure application directory structure and data paths exist prior to booting
     for dir_path in [PRIMARY_DATA_DIR, VTT_IMPORT_DIR, PC_IMPORT_DIR, HISTORY_DATA_DIR, LORE_DATA_DIR]:
         if not os.path.exists(dir_path):
             os.makedirs(dir_path, exist_ok=True)
@@ -724,7 +713,6 @@ if __name__ == '__main__':
     print(f"Primary Data: {os.path.abspath(PRIMARY_DATA_DIR)}")
     print(f"PC Import Path: {os.path.abspath(PC_IMPORT_DIR)}")
 
-    # Sync local JSON and text files into the MongoDB database store on startup
     if mongo_db is not None:
         print("[System] Synchronizing characters and lore from local files...")
         sync_data_from_files()

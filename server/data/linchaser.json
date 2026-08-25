@@ -52,5 +52,6 @@
     "associated_history_files": [
       "The_Golden_Horn.txt", "Faiths_of_Tymora.txt"
     ],
-        "linked_lore_by_name": ["The Golden Horn Gambling Hall"]
-    }
+        "linked_lore_by_name": ["The Golden Horn Gambling Hall"],
+        "pc_faction_standings": {"Player Characters": "Indifferent"}
+}

@@ -47,5 +47,5 @@
     "associated_history_files": [
       "Niktogauss_Ledger.txt", "City_Gangs.txt"
     ],
-    "pc_faction_standings": "Indifferent"
+    "pc_faction_standings": {"Player Characters": "Indifferent"}
 }

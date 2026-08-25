@@ -49,5 +49,5 @@
     "associated_history_files": [
       "The_Spires_of_the_Morning.txt", "Prophecy_of_Celestial_Breath.txt", "Kalen_Thevren_Bio.txt"
     ],
-    "pc_faction_standings": "Indifferent"
+    "pc_faction_standings": {"Player Characters": "Indifferent"}
 }

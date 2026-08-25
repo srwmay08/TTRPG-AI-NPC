@@ -42,5 +42,6 @@
     },
     "associated_history_files": ["Volo_and_Floon.txt"],
     "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"],
- "pc_faction_standings": "Indifferent"
+ "pc_faction_standings": {"Player Characters": "Indifferent"},
+   "scenes": [ "Trollskull Manor" ]
 }

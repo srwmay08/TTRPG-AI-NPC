@@ -1,4 +1,3 @@
-# server/ai_service.py
 from google import genai
 from google.genai import types
 from config import config
@@ -100,7 +99,7 @@ class AIService:
             return "Error: AI model not available. Please check configuration and GEMINI_API_KEY."
 
         try:
-            # --- PROMPT CONSTRUCTION (Same as before) ---
+            # --- PROMPT CONSTRUCTION ---
             prompt_parts = [
                 f"You are embodying the character of {npc.name} in a tabletop roleplaying game.",
                 "--- Your Core Identity ---",
@@ -174,13 +173,11 @@ class AIService:
             is_canned_response_directive = dialogue_request.player_utterance and dialogue_request.player_utterance.strip().startswith("(System Directive: Canned Response Used)")
 
             if is_canned_response_directive:
-                # Logic for handling system directive for canned response
                 try:
                     canned_response_text = dialogue_request.player_utterance.split('The response was: "')[1].rsplit('"', 1)[0]
                     prompt_parts.append(f"A system event has occurred. You have already spoken: \"{canned_response_text}\"")
                     main_instruction = f"Based on what you just said, generate the suggestions (Action, Check, Topics, Standing) ONLY. Do NOT generate dialogue."
                 except IndexError:
-                     # Fallback if parsing fails
                      main_instruction = "Generate actions and suggestions based on the previous canned response."
             elif dialogue_request.player_utterance and dialogue_request.player_utterance.strip():
                 if dialogue_request.player_utterance.strip().startswith("(System Directive:"):
@@ -205,17 +202,16 @@ class AIService:
             prompt = "\n".join(prompt_parts)
 
             print(f"\n----- AI PROMPT for {npc.name} -----")
-            # print(prompt) # Uncomment to debug full prompt
+            print(prompt)  # ENABLED for debugging prompt composition
             print("----- END PROMPT -----\n")
 
-            # NEW GENERATION CALL
+            # GENERATION CALL
             response = self.client.models.generate_content(
                 model=self.model_name,
                 contents=prompt,
                 config=self.generation_config
             )
 
-            # Accessing text in the new SDK
             if response.text:
                 full_ai_output = response.text.strip()
                 
@@ -223,12 +219,11 @@ class AIService:
                     try:
                         canned_response_text = dialogue_request.player_utterance.split('The response was: "')[1].rsplit('"', 1)[0]
                         return f"{canned_response_text}\n{full_ai_output}"
-                    except:
+                    except Exception:
                         return full_ai_output
                 else:
                     return full_ai_output
             else:
-                # Handle blocked or empty responses
                 error_msg = "AI output blocked or empty."
                 if response.candidates and response.candidates[0].finish_reason:
                      error_msg += f" Reason: {response.candidates[0].finish_reason}"

@@ -44,5 +44,6 @@
 
     },
     "linked_lore_by_name": ["The Skewered Dragon", "Candle Lane Warehouse", "Xanathar Guild Sewer Hideout"],
-    "pc_faction_standings": "Indifferent"
+    "pc_faction_standings": {"Player Characters": "Indifferent"},
+      "scenes": [ "Trollskull Manor" ]
 }

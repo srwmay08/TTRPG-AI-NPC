@@ -38,5 +38,5 @@
   ],
   "gm_notes": "Zemk is a member of the Xanathar Guild, yet he reports to Grum'shar, a Zhentarim wizard. This is highly unusual and could be a plot hook for the players to investigate. Zemk is relentlessly hostile and will fight to the death without any consideration for surrender or retreat.",
   "linked_lore_by_name": ["Xanathar Guild Sewer Hideout"],
-  "pc_faction_standings": "Indifferent"
+  "pc_faction_standings": {"Player Characters": "Indifferent"}
 }

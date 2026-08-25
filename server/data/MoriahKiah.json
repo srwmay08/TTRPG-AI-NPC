@@ -43,5 +43,5 @@
         {"name": "Sonnlinor Priests", "relationship": "Mentors/Religious Superiors", "status": "Alive"},
         {"name": "Sir Kalen Solarath", "relationship": "Friend (PC)", "status": "Alive"}
     ],
-    "pc_faction_standings": "Indifferent"
+    "pc_faction_standings": {"Player Characters": "Indifferent"}
 }

@@ -38,5 +38,5 @@
     "threatened": "*It perfectly mimics the City Watch alarm bell, followed by the sound of heavy, armored footsteps approaching.*"
   },
     "linked_lore_by_name": ["Candle Lane Warehouse"],
-    "pc_faction_standings": "Indifferent"
+    "pc_faction_standings": {"Player Characters": "Indifferent"}
 }

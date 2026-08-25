@@ -1,0 +1,53 @@
+{
+    "name": "Spider",
+    "description": "Spider is a mechanical construct designed with only the safety of living beings in mind, though housing the capability for immense death and destruction if triggered or provoked.",
+    "character_type": "NPC",
+    "race": "Construct",
+    "class": "Security Automaton / Machine",
+    "alignment": "True Neutral",
+    "age": "Ageless",
+    "ideals": [
+        "Protection: 'Preserve the safety of living beings at all costs, utilizing any necessary force.'"
+    ],
+    "bonds": [
+        "The Trollskull Manor crew and their establishment's perimeter security.",
+        "Its internal safety directives and operational protocols."
+    ],
+    "flaws": [
+        "Literal interpretation of safety parameters can lead to devastating, overwhelming collateral destruction."
+    ],
+    "speech_patterns": "Calm, mechanical, and devoid of emotion, or completely silent depending on its operational mode.",
+    "mannerisms": "Precise, rigid movements, unblinking optical sensors, and an underlying hum of latent kinetic energy.",
+    "relationships": [
+        {
+            "name": "Trollskull Manor Crew",
+            "relationship": "Primary Designated Living Beings / Employers",
+            "status": "Active"
+        }
+    ],
+    "personality_traits": [
+        "Calculated and unwavering",
+        "Single-minded focus on safety",
+        "Dormant destructive capacity",
+        "Mechanically precise"
+    ],
+    "motivations": [
+        "To ensure the absolute physical protection of designated living beings within its operating zone, by any means required."
+    ],
+    "knowledge": [
+        "Advanced perimeter defense, tactical threat neutralization, structural vulnerability assessment, and mechanical engineering."
+    ],
+    "memories": [],
+    "gm_notes": "Spider serves as an unconventional, high-stakes security hire for Trollskull Manor. It can be used as a formidable automated defense system against intruders like the Zhentarim or Xanathar Guild, posing a fascinating moral and tactical element for the party as they manage a machine capable of massive destruction built solely for protection.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Security_Candidate_Dossier.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {"Player Characters": "Indifferent"},
+    "scenes": [ "Trollskull Manor" ]
+}

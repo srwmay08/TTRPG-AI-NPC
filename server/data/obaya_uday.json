@@ -38,5 +38,5 @@
         "ask_about_her_journey": "I've come all this way from Port Nyanzaru. The trade opportunities here are endless! Do you have anything to sell, by any chance?"
     },
     "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"],
-    "pc_faction_standings": "Indifferent"
+    "pc_faction_standings": {"Player Characters": "Indifferent"}
 }

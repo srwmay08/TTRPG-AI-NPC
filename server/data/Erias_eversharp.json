@@ -54,5 +54,6 @@
         "The_Bent_Nail_Inventory.txt"
     ],
     "linked_lore_by_name": [],
-   "pc_faction_standings": "Indifferent"
+   "pc_faction_standings": {"Player Characters": "Indifferent"},
+     "scenes": [ "Trollskull Manor" ]
 }

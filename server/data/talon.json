@@ -34,5 +34,5 @@
         "combat_cry": "*The piercing cry of a hunting hawk diving for a kill.*"
     },
     "linked_lore_by_name": ["Candle Lane Warehouse"],
-    "pc_faction_standings": "Indifferent"
+    "pc_faction_standings": {"Player Characters": "Indifferent"}
 }

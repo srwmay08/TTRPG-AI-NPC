@@ -38,5 +38,5 @@
         "ask_what_he_does": "Me? I'm just a man enjoying an ale. Nothing more to it."
     },
     "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"],
-    "pc_faction_standings": "Indifferent"
+    "pc_faction_standings": {"Player Characters": "Indifferent"}
 }

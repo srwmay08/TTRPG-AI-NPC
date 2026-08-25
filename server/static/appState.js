@@ -41,7 +41,10 @@ const appState = {
 
     /** Bulk populates the character store, passing each through the normalization process. */
     setAllCharacters(characters) {
-        this.allCharacters = characters.map(char => this.processCharacterData(char));
+        // --- SAFE GUARD FIX ---
+        // Handles both raw arrays and standard backend response wrappers (e.g. {success: true, data: [...]})
+        const rawArray = Array.isArray(characters) ? characters : (characters && Array.isArray(characters.data) ? characters.data : []);
+        this.allCharacters = rawArray.map(char => this.processCharacterData(char));
     },
 
     /** Returns the full array of character documents. */
@@ -203,7 +206,8 @@ const appState = {
 
     // --- Lore State Management ---
     setAllLoreEntries(loreEntries) {
-        this.allLoreEntries = loreEntries.map(entry => {
+        const rawArray = Array.isArray(loreEntries) ? loreEntries : (loreEntries && Array.isArray(loreEntries.data) ? loreEntries.data : []);
+        this.allLoreEntries = rawArray.map(entry => {
             // Flatten BSON dict structures natively
             if (entry.lore_id && typeof entry.lore_id === 'object' && entry.lore_id.$oid) {
                 entry.lore_id = entry.lore_id.$oid;

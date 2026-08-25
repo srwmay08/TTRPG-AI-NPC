@@ -50,5 +50,5 @@
     "associated_history_files": [
       "The_Crommer_Clan.txt", "Burgo's_Recipes.txt"
     ],
-    "pc_faction_standings": "Indifferent"
+    "pc_faction_standings": {"Player Characters": "Indifferent"}
 }

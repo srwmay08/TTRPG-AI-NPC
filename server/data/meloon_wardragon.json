@@ -38,5 +38,5 @@
         "ask_about_force_grey": "The finest fighting force in the city! When the Watch can't handle it, they call us. It's an honor to serve."
     },
     "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"],
-    "pc_faction_standings": "Indifferent"
+    "pc_faction_standings": {"Player Characters": "Indifferent"}
 }

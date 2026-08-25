@@ -44,5 +44,5 @@
         "on_future_service": "'You have proven yourselves to be... uniquely capable. Waterdeep has need of such individuals. Do not be surprised if we call upon you again.'"
     },
     "linked_lore_by_name": ["Castle Waterdeep Ballroom"],
-    "pc_faction_standings": "Indifferent"
+    "pc_faction_standings": {"Player Characters": "Indifferent"}
 }

@@ -34,5 +34,5 @@
         "combat_cry": "*Not a cry, but the swift, deadly 'shiiing' of a blade clearing its scabbard.*"
     },
     "linked_lore_by_name": ["Candle Lane Warehouse"],
-    "pc_faction_standings": "Indifferent"
+    "pc_faction_standings": {"Player Characters": "Indifferent"}
 }

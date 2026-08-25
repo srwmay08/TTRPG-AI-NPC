@@ -39,5 +39,5 @@
   ],
   "gm_notes": "Zhentarim Thugs are typically found in small groups. They fight with basic tactics, trying to swarm a single target. If their leader is defeated or they become outnumbered, they are likely to break and flee.",
     "linked_lore_by_name": ["The Yawning Portal"],
-    "pc_faction_standings": "Indifferent"
+    "pc_faction_standings": {"Player Characters": "Indifferent"}
 }

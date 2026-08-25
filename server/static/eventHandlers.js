@@ -2,7 +2,7 @@
  * static/eventHandlers.js
  * 
  * Responsibility: Assigns global event listeners for static DOM elements upon initialization.
- * Handles the logic for UI resizability and accordion-style collapsible menus.
+ * Handles the logic for UI resizability, accordion-style collapsible menus, and dynamic scene configuration.
  */
 
 var EventHandlers = {
@@ -140,6 +140,89 @@ var EventHandlers = {
     },
 
     /**
+     * Populates the Scene Configuration dropdown menu dynamically by reading 
+     * unique scene/location metadata from loaded character profiles.
+     */
+    setupSceneSelectorDropdown: function() {
+        const contextFilterSelect = document.getElementById('context-filter') || document.querySelector("select[name='context_filter']");
+        if (!contextFilterSelect) return;
+
+        // Gather unique scenes and locations from loaded characters in appState
+        const uniqueScenes = new Set();
+        if (typeof appState !== 'undefined' && appState.getAllCharacters) {
+            appState.getAllCharacters().forEach(char => {
+                if (char.scenes) {
+                    if (Array.isArray(char.scenes)) {
+                        char.scenes.forEach(s => { if (s) uniqueScenes.add(s.trim()); });
+                    } else if (typeof char.scenes === 'string') {
+                        uniqueScenes.add(char.scenes.trim());
+                    }
+                }
+                if (char.location && typeof char.location === 'string') {
+                    uniqueScenes.add(char.location.trim());
+                }
+            });
+        }
+
+        // Retain original first placeholder option if it exists
+        const firstOption = contextFilterSelect.options[0];
+        contextFilterSelect.innerHTML = '';
+        if (firstOption) {
+            contextFilterSelect.appendChild(firstOption);
+        } else {
+            const defaultOpt = document.createElement('option');
+            defaultOpt.value = "";
+            defaultOpt.textContent = "-- Select Scene / Location --";
+            contextFilterSelect.appendChild(defaultOpt);
+        }
+
+        // Append sorted scene options
+        Array.from(uniqueScenes).sort().forEach(sceneName => {
+            const option = document.createElement('option');
+            option.value = sceneName;
+            option.textContent = sceneName;
+            contextFilterSelect.appendChild(option);
+        });
+
+        // Bind change event to auto-populate the scene with matching NPCs and trigger roleplay
+        contextFilterSelect.onchange = function(e) {
+            const selectedScene = e.target.value;
+            if (!selectedScene) return;
+
+            console.log(`[Scene Selector] Loading scene: ${selectedScene}`);
+            
+            // Clear current active scene characters
+            if (typeof appState !== 'undefined' && appState.activeSceneNpcIds) {
+                appState.activeSceneNpcIds.clear();
+
+                // Find and activate NPCs matching this scene or location
+                appState.getAllCharacters().forEach(char => {
+                    const charScenes = Array.isArray(char.scenes) ? char.scenes : [char.scenes, char.location];
+                    const matches = charScenes.some(s => s && s.toLowerCase() === selectedScene.toLowerCase());
+                    
+                    if (matches && char.character_type !== 'PC') {
+                        appState.addActiveNpc(char._id);
+                    }
+                });
+            }
+
+            // Refresh UI components and scene renderers
+            if (typeof MainView !== 'undefined' && MainView.update) {
+                MainView.update();
+            }
+            if (typeof App !== 'undefined' && App.renderActiveSceneNpcs) {
+                App.renderActiveSceneNpcs();
+            }
+
+            // Automatically trigger dialogue generation / AI roleplay initiation for active scene NPCs if App exposes it
+            if (typeof App !== 'undefined' && typeof App.handleGenerateDialogue === 'function' && appState.getActiveNpcCount() > 0) {
+                console.log("[Scene Selector] Automatically starting AI roleplay for newly populated scene...");
+                App.handleGenerateDialogue();
+            }
+        };
+    },
+
+    /**
      * Binds HTML button elements to their respective business logic functions.
      * Prevents reliance on inline `onclick=""` HTML attributes where possible.
      */
@@ -171,5 +254,8 @@ var EventHandlers = {
 
         const linkLoreToCharBtn = Utils.getElem('link-lore-to-char-btn');
         if (linkLoreToCharBtn) linkLoreToCharBtn.onclick = CharacterService.handleLinkLoreToCharacter;
+
+        // Initialize dynamic scene dropdown population after button bindings
+        this.setupSceneSelectorDropdown();
     }
 };

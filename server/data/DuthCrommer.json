@@ -46,6 +46,5 @@
     {"name": "Borin Stonehammer", "relationship": "Bodyguard and Advisor", "status": "Alive"}
   ],
   "gm_notes": "He is a power broker among merchant dwarves and may request players retrieve rare materials or deal with threats to the family's interests.",
-  "pc_faction_standings": "Indifferent"
-
+  "pc_faction_standings": {"Player Characters": "Indifferent"}
 }

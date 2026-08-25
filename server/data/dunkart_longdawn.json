@@ -48,6 +48,5 @@
     "associated_history_files": [
       "Order_of_the_Aster.txt", "Templar_Codex.txt"
     ],
-    "pc_faction_standings": "Indifferent"
+    "pc_faction_standings": {"Player Characters": "Indifferent"}
 }
-  }

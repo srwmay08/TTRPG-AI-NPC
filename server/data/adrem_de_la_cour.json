@@ -49,5 +49,5 @@
     "associated_history_files": [
       "The_Harpers.txt", "Mission_Report_A37.txt", "Cade_De_la_Cour.txt"
     ],
-    "pc_faction_standings": "Indifferent"
-  }
+    "pc_faction_standings": {"Player Characters": "Indifferent"}
+}

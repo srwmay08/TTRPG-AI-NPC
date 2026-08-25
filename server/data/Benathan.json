@@ -25,5 +25,5 @@
             "To do his job and keep trouble out of the Golden Horn."
         ],
         "linked_lore_by_name": ["The Golden Horn Gambling Hall"],
-        "pc_faction_standings": "Indifferent"
+        "pc_faction_standings": {"Player Characters": "Indifferent"}
 }

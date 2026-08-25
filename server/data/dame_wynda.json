@@ -53,5 +53,5 @@
       "The_Golden_Horn.txt", "Church_of_Waukeen.txt"
     ],
         "linked_lore_by_name": ["The Golden Horn Gambling Hall"],
-        "pc_faction_standings": "Indifferent"
+        "pc_faction_standings": {"Player Characters": "Indifferent"}
 }

@@ -43,5 +43,5 @@
     
     },
     "linked_lore_by_name": ["Castle Waterdeep Ballroom", "Blood in the Streets (Fillet Lane)"],
-    "pc_faction_standings": "Indifferent"
+    "pc_faction_standings": {"Player Characters": "Indifferent"}
 }

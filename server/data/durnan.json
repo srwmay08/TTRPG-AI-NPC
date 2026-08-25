@@ -40,6 +40,5 @@
         "on_a_brawl_starting": "You can use the front door. You can use the back door with the rest of the rubbish. But one way or another, you should leave."
     },
     "linked_lore_by_name": ["The Founding of the Yawning Portal", "The Yawning Portal"],
-    "pc_faction_standings": "Indifferent"
-
+    "pc_faction_standings": {"Player Characters": "Indifferent"}
 }

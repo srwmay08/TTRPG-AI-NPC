@@ -47,5 +47,5 @@
     "associated_history_files": [
       "The_Monastery_of_the_Eternal_Sun.txt", "Dumak_the_Blademonk.txt"
     ],
-    "pc_faction_standings": "Indifferent"
+    "pc_faction_standings": {"Player Characters": "Indifferent"}
 }
