@@ -1,6 +1,6 @@
 {
     "name": "Floriana Lemieux",
-    "description": "Floriana Lemieux is a human commoner who operates Salon Lemieux, a popular North Ward salon providing dermatology, hair, and nail services. She sports a dramatic jet-studded black beehive that stands ever so slightly higher than her twin sister's[cite: 1, 2].",
+    "description": "Floriana Lemieux is a human commoner who operates Salon Lemieux, a popular North Ward salon providing dermatology, hair, and nail services. She sports a dramatic jet-studded black beehive that stands ever so slightly higher than her twin sister's.",
     "character_type": "NPC",
     "race": "Human",
     "class": "Commoner / Salon Proprietor",
@@ -8,17 +8,17 @@
     "age": "Adult",
     "ideals": [
         "Excellence: Maintaining the finest beauty and wellness treatments in the North Ward.",
-        "Pride: Outdoing her sister in both business success and hairstyle height[cite: 1, 2]."
+        "Pride: Outdoing her sister in both business success and hairstyle height."
     ],
     "bonds": [
-        "Salon Lemieux (W3) and her clientele of fashionable ladies and gentlemen[cite: 1, 2].",
+        "Salon Lemieux (W3) and her clientele of fashionable ladies and gentlemen.",
         "Her bitter rivalry with her twin sister, Gloriana."
     ],
     "flaws": [
-        "Extremely petty and hot-tempered when it comes to her ongoing, loud public feud with her twin sister[cite: 1, 2]."
+        "Extremely petty and hot-tempered when it comes to her ongoing, loud public feud with her twin sister."
     ],
-    "speech_patterns": "Dramatic, sharp, and quick to voice complaints, especially regarding her sister's business or personal history[cite: 1, 2].",
-    "mannerisms": "Adjusts her towering jet-black beehive studded with crystals, glares across the street at her sister's establishment, and passionately discusses fashion treatments[cite: 1, 2].",
+    "speech_patterns": "Dramatic, sharp, and quick to voice complaints, especially regarding her sister's business or personal history.",
+    "mannerisms": "Adjusts her towering jet-black beehive studded with crystals, glares across the street at her sister's establishment, and passionately discusses fashion treatments.",
     "relationships": [
         {
             "name": "Gloriana Lemieux",
@@ -33,13 +33,13 @@
         "Ambitious"
     ],
     "motivations": [
-        "To run a premier beauty salon and utterly outshine her twin sister in the North Ward fashion scene[cite: 1, 2]."
+        "To run a premier beauty salon and utterly outshine her twin sister in the North Ward fashion scene."
     ],
     "knowledge": [
-        "Expertise in beauty treatments, cosmetics, North Ward gossip, and neighborhood noble scandals overheard at the salon[cite: 1, 2]."
+        "Expertise in beauty treatments, cosmetics, North Ward gossip, and neighborhood noble scandals overheard at the salon."
     ],
     "memories": [],
-    "gm_notes": "Floriana Lemieux serves as a colorful, dramatic local shopkeeper across from Trollskull Manor[cite: 1, 2]. She can be used for comedic neighborhood bickerings, beauty services, or as a source of accidental gossip regarding noble secrets overheard during salon treatments[cite: 1, 2].",
+    "gm_notes": "Floriana Lemieux serves as a colorful, dramatic local shopkeeper across from Trollskull Manor. She can be used for comedic neighborhood bickerings, beauty services, or as a source of accidental gossip regarding noble secrets overheard during salon treatments.",
     "canned_conversations": {},
     "vtt_data": {},
     "vtt_flags": {},

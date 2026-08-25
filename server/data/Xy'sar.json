@@ -1,24 +1,24 @@
 {
     "name": "Xy'sar",
-    "description": "Xy'sar is a tall, sinewy lizardfolk armorer and crafter whose scales are the color of mud and stone. Possessing unblinking yellow eyes, an earthy, swamp-and-leather scent, and a quiet, deliberate stillness, they specialize in harvesting remains from deep-wet places and dangerous beasts to shape tough hides, bones, and teeth into unique, resilient armor and gear[cite: 2].",
+    "description": "Xy'sar is a tall, sinewy lizardfolk armorer and crafter whose scales are the color of mud and stone. Possessing unblinking yellow eyes, an earthy, swamp-and-leather scent, and a quiet, deliberate stillness, they specialize in harvesting remains from deep-wet places and dangerous beasts to shape tough hides, bones, and teeth into unique, resilient armor and gear.",
     "character_type": "NPC",
     "race": "Lizardfolk",
     "class": "Armorer / Crafter",
     "alignment": "True Neutral",
     "age": "Adult",
     "ideals": [
-        "Pragmatism: 'I shape what dies. Make it useful again. Skin. Bone. Teeth. The deep-wet places have useful things[cite: 2].'",
-        "Utility: 'Flesh is flesh, and strength is measured by what survives[cite: 2].'"
+        "Pragmatism: 'I shape what dies. Make it useful again. Skin. Bone. Teeth. The deep-wet places have useful things.'",
+        "Utility: 'Flesh is flesh, and strength is measured by what survives.'"
     ],
     "bonds": [
         "Their workshop, tools, and the raw materials harvested from monsters and beasts.",
         "Hunters and adventurers who venture into the dark and wet places to bring back rare hides."
     ],
     "flaws": [
-        "Blunt, completely literal, and entirely devoid of conventional sentimentality regarding death or creature remains[cite: 2]."
+        "Blunt, completely literal, and entirely devoid of conventional sentimentality regarding death or creature remains."
     ],
-    "speech_patterns": "Low, dry, and rasping, like stones scraping together, choosing every word carefully as if forming it is a deliberate physical effort[cite: 2].",
-    "mannerisms": "Moves with a silent, reptilian grace, tilts their head in slow observation, and flicks a forked tongue out to taste the air when evaluating visitors or materials[cite: 2].",
+    "speech_patterns": "Low, dry, and rasping, like stones scraping together, choosing every word carefully as if forming it is a deliberate physical effort.",
+    "mannerisms": "Moves with a silent, reptilian grace, tilts their head in slow observation, and flicks a forked tongue out to taste the air when evaluating visitors or materials.",
     "relationships": [
         {
             "name": "Trollskull Manor Crew",
@@ -39,7 +39,7 @@
         "Expertise in anatomy, harvesting monster parts, tailoring heavy or exotic hides, and evaluating the structural integrity of bone and scale armor."
     ],
     "memories": [],
-    "gm_notes": "Xy'sar serves as an exotic, unconventional armorer and material trader for the party. They can be used to buy monster loot harvested from dungeon delves, craft custom armor from rare beast hides (like displacer beast skin or scaled armor), or add eerie, reptilian flavor to shopping excursions[cite: 2].",
+    "gm_notes": "Xy'sar serves as an exotic, unconventional armorer and material trader for the party. They can be used to buy monster loot harvested from dungeon delves, craft custom armor from rare beast hides (like displacer beast skin or scaled armor), or add eerie, reptilian flavor to shopping excursions.",
     "canned_conversations": {},
     "vtt_data": {},
     "vtt_flags": {},

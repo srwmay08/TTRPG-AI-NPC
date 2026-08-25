@@ -1,13 +1,13 @@
 [
     {
         "name": "The Stone of Golorr (Internal Mechanics)",
-        "lore_type": "Artifact",
-        "description": "An ancient Aboleth transformed into a sentient memory stone, currently psychically tethered to the monk Sudara[cite: 3, 4]. It is an alien, arrogant intelligence that remembers the cosmos before the gods[cite: 3].",
+        "lore_type": "Key Item/Artifact",
+        "description": "An ancient Aboleth transformed into a sentient memory stone, currently psychically tethered to the monk Sudara. It is an alien, arrogant intelligence that remembers the cosmos before the gods.",
         "key_facts": [
-            "When an eye is socketed into the Stone, it attempts a violent 'Neural Overwrite' on the wielder, flooding their brain with cold, pressurized water and ancient Abolethic memories[cite: 2, 4].",
-            "Sudara successfully repelled the overwrite through monastic discipline, but the connection left a permanent 'psychic scar' that acts as a heat map for secrets[cite: 2, 4].",
-            "This psychic resonance acts as a beacon, putting the wielder on the radar of high-CR psionic predators in Waterdeep, including the Skum Lord, Mnemonicus-Vrax, and Slyth-vyrr[cite: 4].",
-            "The Stone actively seeks to be 'made whole' and manipulates its wielder into recovering its missing eyes, offering cosmic secrets and immense power in exchange[cite: 4]."
+            "When an eye is socketed into the Stone, it attempts a violent 'Neural Overwrite' on the wielder, flooding their brain with cold, pressurized water and ancient Abolethic memories.",
+            "Sudara successfully repelled the overwrite through monastic discipline, but the connection left a permanent 'psychic scar' that acts as a heat map for secrets.",
+            "This psychic resonance acts as a beacon, putting the wielder on the radar of high-CR psionic predators in Waterdeep, including the Skum Lord, Mnemonicus-Vrax, and Slyth-vyrr.",
+            "The Stone actively seeks to be 'made whole' and manipulates its wielder into recovering its missing eyes, offering cosmic secrets and immense power in exchange."
         ],
         "tags": [
             "aboleth",

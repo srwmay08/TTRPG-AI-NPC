@@ -1,14 +1,14 @@
 [
     {
         "name": "Nat",
-        "lore_type": "NPC",
-        "description": "The fierce, mute Illuskan leader of the street urchins residing at Trollskull Manor[cite: 2, 3]. Known as the 'General of the Streets,' she commands the domestic intelligence network for the party[cite: 2].",
+        "lore_type": "Miscellaneous",
+        "description": "The fierce, mute Illuskan leader of the street urchins residing at Trollskull Manor. Known as the 'General of the Streets,' she commands the domestic intelligence network for the party.",
         "key_facts": [
-            "She is mute and communicates rapidly using hand signals, which are often translated by Jenks[cite: 2].",
-            "She acts as the leader of the urchins, operating alongside Havik since their days at the Golden Horn Gambling Hall[cite: 2].",
-            "She was critically burned in the Trollskull Alley fireball blast and her skin sloughed off from the heat, but she survived thanks to Vilis's stabilization and Moriah's medical skins[cite: 2].",
-            "Despite her severe injuries, she maintains a gladiatorial spirit, considering her burn scars to be 'armor' and practicing her combat forms on the balcony with her wooden toy sword[cite: 3, 4].",
-            "She brokered a neighborhood truce and employment alliance with the rival Appleton boys after they bullied her crew and temporarily stole her wooden sword[cite: 2]."
+            "She is mute and communicates rapidly using hand signals, which are often translated by Jenks.",
+            "She acts as the leader of the urchins, operating alongside Havik since their days at the Golden Horn Gambling Hall.",
+            "She was critically burned in the Trollskull Alley fireball blast and her skin sloughed off from the heat, but she survived thanks to Vilis's stabilization and Moriah's medical skins.",
+            "Despite her severe injuries, she maintains a gladiatorial spirit, considering her burn scars to be 'armor' and practicing her combat forms on the balcony with her wooden toy sword.",
+            "She brokered a neighborhood truce and employment alliance with the rival Appleton boys after they bullied her crew and temporarily stole her wooden sword."
         ],
         "tags": [
             "nat", 
@@ -17,18 +17,18 @@
             "trollskull manor", 
             "npc"
         ],
-        "gm_notes": "Nat's near-death experience in the fireball attack is a massive emotional anchor for the party[cite: 2]. The Zhentarim specifically targeted her and the other urchins using flying snakes as an asymmetric hostage tactic during the siege of Trollskull Manor due to their physical vulnerability[cite: 4]."
+        "gm_notes": "Nat's near-death experience in the fireball attack is a massive emotional anchor for the party. The Zhentarim specifically targeted her and the other urchins using flying snakes as an asymmetric hostage tactic during the siege of Trollskull Manor due to their physical vulnerability."
     },
     {
         "name": "Jenks",
-        "lore_type": "NPC",
-        "description": "A young human boy and aspiring magic-user who lives in the southwest bedroom of Trollskull Manor with his fellow urchins[cite: 3, 4]. He acts as the vocal translator for Nat's sign language[cite: 2].",
+        "lore_type": "Miscellaneous",
+        "description": "A young human boy and aspiring magic-user who lives in the southwest bedroom of Trollskull Manor with his fellow urchins. He acts as the vocal translator for Nat's sign language.",
         "key_facts": [
-            "He dreams of being a powerful mage, though his magical abilities are currently limited to failing at casting the Prestidigitation cantrip[cite: 4].",
-            "He was deeply frustrated and angered when his toy wand was charred in the Trollskull Alley fireball, blaming the 'Puppet Man' for his inability to stop the destruction[cite: 2].",
-            "He found the critical clue linking the fireball to Lord Dagult Neverember by scooping up a dropped gold coin bearing the former Open Lord's profile just before the blast[cite: 2, 4].",
-            "He helps maintain and test the mechanical chime-and-rope alarm system rigged from the manor's attic to the front alley to warn the party of intruders[cite: 3, 4].",
-            "He offered his personal savings of silver chips to help pay for the manor's security, which prompted the party to sponsor his tuition at Murkledorn's Academy instead[cite: 4]."
+            "He dreams of being a powerful mage, though his magical abilities are currently limited to failing at casting the Prestidigitation cantrip.",
+            "He was deeply frustrated and angered when his toy wand was charred in the Trollskull Alley fireball, blaming the 'Puppet Man' for his inability to stop the destruction.",
+            "He found the critical clue linking the fireball to Lord Dagult Neverember by scooping up a dropped gold coin bearing the former Open Lord's profile just before the blast.",
+            "He helps maintain and test the mechanical chime-and-rope alarm system rigged from the manor's attic to the front alley to warn the party of intruders.",
+            "He offered his personal savings of silver chips to help pay for the manor's security, which prompted the party to sponsor his tuition at Murkledorn's Academy instead."
         ],
         "tags": [
             "jenks", 
@@ -37,16 +37,16 @@
             "trollskull manor", 
             "npc"
         ],
-        "gm_notes": "Jenks is the primary vocal communicator for the children[cite: 2]. His enrollment at Murkledorn's Academy, alongside the Appleton boys, represents the party's long-term investment in the neighborhood's future[cite: 4]."
+        "gm_notes": "Jenks is the primary vocal communicator for the children. His enrollment at Murkledorn's Academy, alongside the Appleton boys, represents the party's long-term investment in the neighborhood's future."
     },
     {
         "name": "Squidly",
-        "lore_type": "NPC",
-        "description": "A young tiefling boy who wears an eye patch, completing the trio of urchin informants living at Trollskull Manor[cite: 2]. He is an eager, fiercely protective runner for the party's intelligence network[cite: 3].",
+        "lore_type": "Miscellaneous",
+        "description": "A young tiefling boy who wears an eye patch, completing the trio of urchin informants living at Trollskull Manor. He is an eager, fiercely protective runner for the party's intelligence network.",
         "key_facts": [
-            "He ran the party's earliest intelligence-gathering errands, using silver provided by Sudara to research the ghost 'Lif' at the Font of Knowledge[cite: 2].",
-            "He was roughed up by the rival Appleton boys, who stole his shoes during a turf dispute[cite: 2].",
-            "In the terrifying aftermath of the alley fireball, he armed himself with a jagged shard of glass to protect the manor until Sudara replaced it with a proper small dagger[cite: 2]."
+            "He ran the party's earliest intelligence-gathering errands, using silver provided by Sudara to research the ghost 'Lif' at the Font of Knowledge.",
+            "He was roughed up by the rival Appleton boys, who stole his shoes during a turf dispute.",
+            "In the terrifying aftermath of the alley fireball, he armed himself with a jagged shard of glass to protect the manor until Sudara replaced it with a proper small dagger."
         ],
         "tags": [
             "squidly", 
@@ -56,6 +56,6 @@
             "trollskull manor", 
             "npc"
         ],
-        "gm_notes": "Squidly is highly protective of Nat and the manor[cite: 4]. Like Jenks and Nat, his safety was leveraged against the party during Urstul Floxin's siege, forcing the group to account for his vulnerability in combat[cite: 4]."
+        "gm_notes": "Squidly is highly protective of Nat and the manor. Like Jenks and Nat, his safety was leveraged against the party during Urstul Floxin's siege, forcing the group to account for his vulnerability in combat."
     }
 ]

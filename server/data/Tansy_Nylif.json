@@ -1,6 +1,6 @@
 {
     "name": "Tansy Nylif",
-    "description": "Tansy Nylif is a master candy maker and partner to Tina Toffel, operating the delightful shop Stickee and Sweet in Trollskull Alley[cite: 1]. Beneath her grandmotherly and cheerful demeanor, she is a retired paladin whose candy holds protective properties against fiends[cite: 1].",
+    "description": "Tansy Nylif is a master candy maker and partner to Tina Toffel, operating the delightful shop Stickee and Sweet in Trollskull Alley. Beneath her grandmotherly and cheerful demeanor, she is a retired paladin whose candy holds protective properties against fiends.",
     "character_type": "NPC",
     "race": "Human",
     "class": "Paladin / Candy Maker",
@@ -10,40 +10,40 @@
         "Protection: Using her skills and confectionery craft to bring joy and subtle protection to the community."
     ],
     "bonds": [
-        "Stickee and Sweet candy shop and her long-term partner, Tina Toffel[cite: 1].",
-        "Her brother, Sir Baric Nylif[cite: 1]."
+        "Stickee and Sweet candy shop and her long-term partner, Tina Toffel.",
+        "Her brother, Sir Baric Nylif."
     ],
     "flaws": [
-        "Worry-prone regarding the safety and well-being of family members serving far away in dangerous regions[cite: 1]."
+        "Worry-prone regarding the safety and well-being of family members serving far away in dangerous regions."
     ],
     "speech_patterns": "Warm, grandmotherly, and cheerful, always offering kind words alongside sweets.",
     "mannerisms": "Passes out candies to neighborhood children, treats visitors like family, and maintains an air of quiet sanctuary.",
     "relationships": [
         {
             "name": "Tina Toffel",
-            "relationship": "Partner / Co-proprietor of Stickee and Sweet[cite: 1]",
+            "relationship": "Partner / Co-proprietor of Stickee and Sweet",
             "status": "Alive"
         },
         {
             "name": "Sir Baric Nylif",
-            "relationship": "Brother[cite: 1]",
+            "relationship": "Brother",
             "status": "Alive"
         }
     ],
     "personality_traits": [
-        "Cheerful and grandmotherly[cite: 1]",
+        "Cheerful and grandmotherly",
         "Kind-hearted",
         "Protective",
         "Welcoming"
     ],
     "motivations": [
-        "To run a peaceful sanctuary of sweets in Trollskull Alley and ensure the safety of her loved ones[cite: 1]."
+        "To run a peaceful sanctuary of sweets in Trollskull Alley and ensure the safety of her loved ones."
     ],
     "knowledge": [
-        "Mastery of confectionery crafting, secret protective recipes, Order of the Gauntlet missions, and regional news from the North Ward[cite: 1]."
+        "Mastery of confectionery crafting, secret protective recipes, Order of the Gauntlet missions, and regional news from the North Ward."
     ],
     "memories": [],
-    "gm_notes": "Tansy Nylif serves as a beloved community member and potential faction contact for the Order of the Gauntlet[cite: 1]. She can provide magical protective sweets, act as a safe haven for the party, or kick off adventures involving her brother in Bryn Shander[cite: 1].",
+    "gm_notes": "Tansy Nylif serves as a beloved community member and potential faction contact for the Order of the Gauntlet. She can provide magical protective sweets, act as a safe haven for the party, or kick off adventures involving her brother in Bryn Shander.",
     "canned_conversations": {},
     "vtt_data": {},
     "vtt_flags": {},

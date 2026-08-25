@@ -9,7 +9,7 @@
  */
 
 // Notice logging to inform developers in the browser console that logic has migrated
-console.log("uiRenderers.js: Refactoring COMPLETE. This file is now deprecated for most rendering logic[cite: 52].");
+console.log("uiRenderers.js: Refactoring COMPLETE. This file is now deprecated for most rendering logic.");
 
 /* 
  * NOTE: The large ABILITY_SCORE_INFO constant and UIRenderers namespace 

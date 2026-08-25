@@ -1,11 +1,11 @@
 [
     {
         "name": "Carpenters', Roofers', and Plaisterers' Guild",
-        "lore_type": "Faction",
-        "description": "The municipal guild responsible for woodwork, roofing, and the structural integrity of buildings within Waterdeep[cite: 4]. They operate primarily out of a headquarters known as the Stone House[cite: 4].",
+        "lore_type": "Organization/Faction",
+        "description": "The municipal guild responsible for woodwork, roofing, and the structural integrity of buildings within Waterdeep. They operate primarily out of a headquarters known as the Stone House.",
         "key_facts": [
-            "Kelso, a heavy-handed guild inspector, attempted to extort the party for 2,000 gold dragons to clear a structural menace violation at the manor[cite: 4].",
-            "The party bypassed Kelso by visiting Halthos 'The Hammer' Blund at the Stone House, officially transferring the renovation contract to their neighbor, Tally Fellbranch[cite: 4]."
+            "Kelso, a heavy-handed guild inspector, attempted to extort the party for 2,000 gold dragons to clear a structural menace violation at the manor.",
+            "The party bypassed Kelso by visiting Halthos 'The Hammer' Blund at the Stone House, officially transferring the renovation contract to their neighbor, Tally Fellbranch."
         ],
         "tags": [
             "guild",
@@ -19,13 +19,13 @@
     },
     {
         "name": "Guild of Stonecutters, Masons, Potters, and Tile-makers",
-        "lore_type": "Faction",
-        "description": "The strict regulatory body governing stonecraft, foundations, and masonry, operating out of the Builder's Hall in the Southern Ward[cite: 4].",
+        "lore_type": "Organization/Faction",
+        "description": "The strict regulatory body governing stonecraft, foundations, and masonry, operating out of the Builder's Hall in the Southern Ward.",
         "key_facts": [
-            "Senior Inspector Thorum Slatebreaker issued a fraudulent Notice of Condemnation against Trollskull Manor after accepting a bribe from Emmek Frewn[cite: 4].",
-            "The party intimidated Thorum and marched him to the Builder's Hall, exposing his corruption to the honorable Guildmaster Skordar[cite: 4].",
-            "Guildmaster Skordar tore up the fraudulent notice, disciplined Thorum, and promised a proper, fee-free inspection[cite: 4].",
-            "Master mason Orin Sterling is affiliated with this guild and is capable of performing deep foundation shoring and hydrostatic relief[cite: 4]."
+            "Senior Inspector Thorum Slatebreaker issued a fraudulent Notice of Condemnation against Trollskull Manor after accepting a bribe from Emmek Frewn.",
+            "The party intimidated Thorum and marched him to the Builder's Hall, exposing his corruption to the honorable Guildmaster Skordar.",
+            "Guildmaster Skordar tore up the fraudulent notice, disciplined Thorum, and promised a proper, fee-free inspection.",
+            "Master mason Orin Sterling is affiliated with this guild and is capable of performing deep foundation shoring and hydrostatic relief."
         ],
         "tags": [
             "guild",
@@ -38,13 +38,13 @@
     },
     {
         "name": "Vintners', Distillers', and Brewers' Guild",
-        "lore_type": "Faction",
-        "description": "The powerful syndicate that maintains absolute control over the legal sale, distribution, and importation of alcohol in Waterdeep[cite: 4].",
+        "lore_type": "Organization/Faction",
+        "description": "The powerful syndicate that maintains absolute control over the legal sale, distribution, and importation of alcohol in Waterdeep.",
         "key_facts": [
-            "Mertyn Bottlewick is the guild representative who handles the supply contracts for Trollskull Alley[cite: 4].",
-            "To spite their rival Emmek Frewn, the party paid Mertyn a 500 gold piece deposit to become premier partners[cite: 4].",
-            "This premium contract grants the manor total exclusivity on rare imports, such as Cormyrean 'Azun's Lament' artwine and 'Iron Heart's Abyss' dwarven cask bourbon from the Spine of the World[cite: 4].",
-            "The guild is overseen by Guildmaster Hammond Kraddoc, whose favor is highly sought after by local taverns[cite: 4]."
+            "Mertyn Bottlewick is the guild representative who handles the supply contracts for Trollskull Alley.",
+            "To spite their rival Emmek Frewn, the party paid Mertyn a 500 gold piece deposit to become premier partners.",
+            "This premium contract grants the manor total exclusivity on rare imports, such as Cormyrean 'Azun's Lament' artwine and 'Iron Heart's Abyss' dwarven cask bourbon from the Spine of the World.",
+            "The guild is overseen by Guildmaster Hammond Kraddoc, whose favor is highly sought after by local taverns."
         ],
         "tags": [
             "guild",
@@ -57,11 +57,11 @@
     },
     {
         "name": "Dungsweepers', Cellarers', and Plumbers' Guilds",
-        "lore_type": "Faction",
-        "description": "The combined municipal forces responsible for sanitation, waste disposal, and subterranean plumbing infrastructure throughout the city's wards[cite: 4].",
+        "lore_type": "Organization/Faction",
+        "description": "The combined municipal forces responsible for sanitation, waste disposal, and subterranean plumbing infrastructure throughout the city's wards.",
         "key_facts": [
-            "Grubach, a half-orc Dungsweepers' Guild representative, leveraged the threat of 'anonymous health hazard tips' to extort a 20 gold piece per week priority service contract from the party[cite: 4].",
-            "Grembo Gribbles, a gnome from the Plumbers' Guild, charged the party 125 gold pieces to permanently seal and sanitize a dangerous, forgotten sewer access point located in the manor's cellar[cite: 4]."
+            "Grubach, a half-orc Dungsweepers' Guild representative, leveraged the threat of 'anonymous health hazard tips' to extort a 20 gold piece per week priority service contract from the party.",
+            "Grembo Gribbles, a gnome from the Plumbers' Guild, charged the party 125 gold pieces to permanently seal and sanitize a dangerous, forgotten sewer access point located in the manor's cellar."
         ],
         "tags": [
             "guild",
@@ -75,12 +75,12 @@
     },
     {
         "name": "Watchful Order of Magists and Protectors",
-        "lore_type": "Faction",
-        "description": "The predominant magical guild and auxiliary law enforcement agency for arcane matters in Waterdeep, closely tied to the Blackstaff and Force Grey[cite: 4].",
+        "lore_type": "Organization/Faction",
+        "description": "The predominant magical guild and auxiliary law enforcement agency for arcane matters in Waterdeep, closely tied to the Blackstaff and Force Grey.",
         "key_facts": [
-            "Proctor Hex, an agent of the Order, offered the party a 300 gold piece Premier Ward Package to secure Trollskull Manor with permanent Alarm spells and an anti-scrying field[cite: 4].",
-            "The Order conducts strict, unannounced arcane audits on commercial properties to ensure licensed spellcasters (like Havik and Cade) are operating safely[cite: 4].",
-            "Key figures operating under or alongside the Order include Captain Barnibus Blastwind and Junior Arcanist Velos[cite: 4]."
+            "Proctor Hex, an agent of the Order, offered the party a 300 gold piece Premier Ward Package to secure Trollskull Manor with permanent Alarm spells and an anti-scrying field.",
+            "The Order conducts strict, unannounced arcane audits on commercial properties to ensure licensed spellcasters (like Havik and Cade) are operating safely.",
+            "Key figures operating under or alongside the Order include Captain Barnibus Blastwind and Junior Arcanist Velos."
         ],
         "tags": [
             "guild",
@@ -94,12 +94,12 @@
     },
     {
         "name": "Fellowship of Innkeepers",
-        "lore_type": "Faction",
-        "description": "The fellowship that regulates pricing, quality standards, and zoning for all taverns, inns, and boarding houses in Waterdeep[cite: 4].",
+        "lore_type": "Organization/Faction",
+        "description": "The fellowship that regulates pricing, quality standards, and zoning for all taverns, inns, and boarding houses in Waterdeep.",
         "key_facts": [
-            "The guild is represented locally by the charismatic halfling Broxley Fairkettle[cite: 4].",
-            "Broxley pushed for a 2,500 gold piece full membership to guarantee guild protection, warning that a 500 gold provisional license would leave the manor vulnerable to price wars and 'random' inspections[cite: 4].",
-            "The party negotiated a 'premium independent' exemption to bypass some of the guild's strict standardized pricing structures[cite: 4]."
+            "The guild is represented locally by the charismatic halfling Broxley Fairkettle.",
+            "Broxley pushed for a 2,500 gold piece full membership to guarantee guild protection, warning that a 500 gold provisional license would leave the manor vulnerable to price wars and 'random' inspections.",
+            "The party negotiated a 'premium independent' exemption to bypass some of the guild's strict standardized pricing structures."
         ],
         "tags": [
             "guild",
@@ -112,14 +112,14 @@
     },
     {
         "name": "Trollskull Manor Service and Artisan Guilds",
-        "lore_type": "Faction",
-        "description": "The myriad of specialized trade guilds that outfitted and certified Trollskull Manor prior to its grand opening[cite: 4].",
+        "lore_type": "Organization/Faction",
+        "description": "The myriad of specialized trade guilds that outfitted and certified Trollskull Manor prior to its grand opening.",
         "key_facts": [
-            "Silas Keen (Glassblowers) installed high-clarity window panes, while Kael Ironhand (Locksmiths) installed dwarf-forged tumbler locks to secure the premises[cite: 4].",
-            "Elara Vellum (Scriveners) provided professional branding, calligraphy menus, and municipal filing, while Borb (Coopers) supplied iron-banded oak casks[cite: 4].",
-            "Jessa Forgehand (Skilled Smiths) fully outfitted the commercial kitchen with copper-bottomed pots and steel cutlery[cite: 4].",
-            "Fendrel Allegro (Musicians) secured a Guild Residency for entertainers, pointedly warning the party that Threestrings was illegally advertising unlicensed performances[cite: 4].",
-            "Other essential contractors included Master Willem (Apothecaries) for health certifications, Brenda O'Toole (Carters) for prime delivery routes, Pip & Poppy (Launderers) for linens, Master Foddle (Surveyors) for boundary variances, Tilly Rosebaker (Bakers) for daily bread, and Lena (Lamplighters) for exterior lighting[cite: 4]."
+            "Silas Keen (Glassblowers) installed high-clarity window panes, while Kael Ironhand (Locksmiths) installed dwarf-forged tumbler locks to secure the premises.",
+            "Elara Vellum (Scriveners) provided professional branding, calligraphy menus, and municipal filing, while Borb (Coopers) supplied iron-banded oak casks.",
+            "Jessa Forgehand (Skilled Smiths) fully outfitted the commercial kitchen with copper-bottomed pots and steel cutlery.",
+            "Fendrel Allegro (Musicians) secured a Guild Residency for entertainers, pointedly warning the party that Threestrings was illegally advertising unlicensed performances.",
+            "Other essential contractors included Master Willem (Apothecaries) for health certifications, Brenda O'Toole (Carters) for prime delivery routes, Pip & Poppy (Launderers) for linens, Master Foddle (Surveyors) for boundary variances, Tilly Rosebaker (Bakers) for daily bread, and Lena (Lamplighters) for exterior lighting."
         ],
         "tags": [
             "guilds",

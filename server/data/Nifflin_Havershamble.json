@@ -1,6 +1,6 @@
 {
     "name": "Nifflin Havershamble",
-    "description": "Nifflin Havershamble is a 14-year-old rock gnome adolescent living with his family in the cellar quarters beneath Havershamble's Jewelry and Fine Mechanicals[cite: 1]. Energetic and bright, he attends Murkledorn's Academy alongside his younger sister Muffle[cite: 1].",
+    "description": "Nifflin Havershamble is a 14-year-old rock gnome adolescent living with his family in the cellar quarters beneath Havershamble's Jewelry and Fine Mechanicals. Energetic and bright, he attends Murkledorn's Academy alongside his younger sister Muffle.",
     "character_type": "NPC",
     "race": "Rock Gnome",
     "class": "Commoner / Student",
@@ -10,8 +10,8 @@
         "Discovery: Learning how things work and proving he is mature enough to help out in the family business."
     ],
     "bonds": [
-        "His parents, Socally and Bumble, and his younger sister Muffle[cite: 1].",
-        "Murkledorn's Academy and the community of Trollskull Alley[cite: 1]."
+        "His parents, Socally and Bumble, and his younger sister Muffle.",
+        "Murkledorn's Academy and the community of Trollskull Alley."
     ],
     "flaws": [
         "Overconfident in his teenage abilities, sometimes leading him to sneak into restricted or dangerous areas."
@@ -21,22 +21,22 @@
     "relationships": [
         {
             "name": "Socally Havershamble",
-            "relationship": "Father / Shop Owner[cite: 1]",
+            "relationship": "Father / Shop Owner",
             "status": "Alive"
         },
         {
             "name": "Bumble Havershamble",
-            "relationship": "Mother / Jewelry Maker[cite: 1]",
+            "relationship": "Mother / Jewelry Maker",
             "status": "Alive"
         },
         {
             "name": "Muffle Havershamble",
-            "relationship": "Younger Sister[cite: 1]",
+            "relationship": "Younger Sister",
             "status": "Alive"
         },
         {
             "name": "Wembly",
-            "relationship": "Family Doorman / Protector[cite: 1]",
+            "relationship": "Family Doorman / Protector",
             "status": "Alive"
         }
     ],
@@ -50,10 +50,10 @@
         "To master mechanical concepts, impress his parents, and have thrilling adventures around the city."
     ],
     "knowledge": [
-        "Basic mechanics, school lessons from Murkledorn's Academy, and neighborhood happenings[cite: 1]."
+        "Basic mechanics, school lessons from Murkledorn's Academy, and neighborhood happenings."
     ],
     "memories": [],
-    "gm_notes": "Nifflin can act as an informative local youth who knows the ins and outs of Trollskull Alley. He can get mixed up in risky escapades, wander into areas he shouldn't, or serve as a messenger for the party[cite: 1].",
+    "gm_notes": "Nifflin can act as an informative local youth who knows the ins and outs of Trollskull Alley. He can get mixed up in risky escapades, wander into areas he shouldn't, or serve as a messenger for the party.",
     "canned_conversations": {},
     "vtt_data": {},
     "vtt_flags": {},

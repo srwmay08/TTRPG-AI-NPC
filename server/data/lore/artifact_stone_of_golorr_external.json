@@ -1,14 +1,14 @@
 [
     {
         "name": "The Stone of Golorr (External Knowledge)",
-        "lore_type": "Artifact",
-        "description": "A highly coveted artifact at the center of the 'Grand Game' in Waterdeep, relentlessly hunted by the city's major criminal and political factions[cite: 3, 4].",
+        "lore_type": "Key Item/Artifact",
+        "description": "A highly coveted artifact at the center of the 'Grand Game' in Waterdeep, relentlessly hunted by the city's major criminal and political factions.",
         "key_facts": [
-            "Former Open Lord Dagult Neverember embezzled half a million gold dragons, hid them in the Vault of Dragons, and used the Stone to erase and store the memory of the vault's location[cite: 3].",
-            "Neverember blinded the Stone by gouging out its three eyes and scattering them across the city to secure his secret[cite: 3].",
-            "The gnome Dalakhar stole the blinded Stone from the Xanathar Guild but was killed in Trollskull Alley by a Nimblewright dispatched by Lady Yalah Gralhund[cite: 3, 4].",
-            "The Blackstaff, Vajra Safahr, and her agents classify the Stone as a 'Class-Alpha Cognitohazard' and a biological containment unit, ordering it to be kept in a lead-lined box[cite: 2, 4].",
-            "The three missing eyes are currently held by the Xanathar Guild, the Cassalanter noble family, and the Manshoon-led Zhentarim[cite: 3]."
+            "Former Open Lord Dagult Neverember embezzled half a million gold dragons, hid them in the Vault of Dragons, and used the Stone to erase and store the memory of the vault's location.",
+            "Neverember blinded the Stone by gouging out its three eyes and scattering them across the city to secure his secret.",
+            "The gnome Dalakhar stole the blinded Stone from the Xanathar Guild but was killed in Trollskull Alley by a Nimblewright dispatched by Lady Yalah Gralhund.",
+            "The Blackstaff, Vajra Safahr, and her agents classify the Stone as a 'Class-Alpha Cognitohazard' and a biological containment unit, ordering it to be kept in a lead-lined box.",
+            "The three missing eyes are currently held by the Xanathar Guild, the Cassalanter noble family, and the Manshoon-led Zhentarim."
         ],
         "tags": [
             "stone of golorr",

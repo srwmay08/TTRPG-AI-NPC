@@ -1,6 +1,6 @@
 {
     "name": "Muffle Havershamble",
-    "description": "Muffle Havershamble is an 8-year-old rock gnome child living in the family quarters in the cellar beneath Havershamble's Jewelry and Fine Mechanicals[cite: 1]. Described as lovely and rambunctious, she attends Murkledorn's Academy alongside her older brother Nifflin[cite: 1].",
+    "description": "Muffle Havershamble is an 8-year-old rock gnome child living in the family quarters in the cellar beneath Havershamble's Jewelry and Fine Mechanicals. Described as lovely and rambunctious, she attends Murkledorn's Academy alongside her older brother Nifflin.",
     "character_type": "NPC",
     "race": "Rock Gnome",
     "class": "Commoner / Student",
@@ -10,8 +10,8 @@
         "Curiosity: Exploring every nook and cranny of Trollskull Alley and finding fun wherever possible."
     ],
     "bonds": [
-        "Her family, including her parents Socally and Bumble, and her brother Nifflin[cite: 1].",
-        "Murkledorn's Academy and her fellow student peers[cite: 1]."
+        "Her family, including her parents Socally and Bumble, and her brother Nifflin.",
+        "Murkledorn's Academy and her fellow student peers."
     ],
     "flaws": [
         "Impulsive and prone to wandering off or getting swept up in mischievous childhood adventures."
@@ -21,27 +21,27 @@
     "relationships": [
         {
             "name": "Socally Havershamble",
-            "relationship": "Father / Shop Owner[cite: 1]",
+            "relationship": "Father / Shop Owner",
             "status": "Alive"
         },
         {
             "name": "Bumble Havershamble",
-            "relationship": "Mother / Jewelry Maker[cite: 1]",
+            "relationship": "Mother / Jewelry Maker",
             "status": "Alive"
         },
         {
             "name": "Nifflin Havershamble",
-            "relationship": "Older Brother[cite: 1]",
+            "relationship": "Older Brother",
             "status": "Alive"
         },
         {
             "name": "Wembly",
-            "relationship": "Family Doorman / Protector[cite: 1]",
+            "relationship": "Family Doorman / Protector",
             "status": "Alive"
         }
     ],
     "personality_traits": [
-        "Rambunctious and energetic[cite: 1]",
+        "Rambunctious and energetic",
         "Inquisitive",
         "Cheerful",
         "Mischievous"
@@ -53,7 +53,7 @@
         "Schoolyard gossip, secret hiding spots around Trollskull Alley, and basic student life at Murkledorn's."
     ],
     "memories": [],
-    "gm_notes": "Muffle serves as a vibrant, youthful neighborhood resident. She and her brother can be used to pull the party into lighthearted neighborhood quests, get lost in the cellars or Undermountain, or alert the adventurers to trouble at the school or shop[cite: 1].",
+    "gm_notes": "Muffle serves as a vibrant, youthful neighborhood resident. She and her brother can be used to pull the party into lighthearted neighborhood quests, get lost in the cellars or Undermountain, or alert the adventurers to trouble at the school or shop.",
     "canned_conversations": {},
     "vtt_data": {},
     "vtt_flags": {},
