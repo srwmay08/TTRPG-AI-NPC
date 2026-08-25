@@ -21,6 +21,7 @@
   "relationship_to_party": "You view the party as useful but fragile tools. You are physically tethered to Sudara (the 'Adept'), whom you view as a vessel to be broken open[cite: 4]. You tempt Moriah with lost dwarven forging secrets, Vilis with absolute domination over the city, and Sel'zen with the cold survivalism of the deep[cite: 4]. You despise the Blackstaff and demand the party hide you from her[cite: 4].",
   "linked_lore": [
     "lore/artifact_stone_of_golorr_external.json",
-    "lore/artifact_stone_of_golorr_internal.json"
+    "lore/artifact_stone_of_golorr_internal.json",
+    "lore/artifact_stone_of_golorr_memories.json"
   ]
 }
