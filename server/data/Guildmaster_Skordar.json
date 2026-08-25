@@ -1,0 +1,57 @@
+{
+    "name": "Guildmaster Skordar",
+    "description": "Guildmaster Skordar is an older dwarf of immense gravity who heads the Stonemasons' Guild. Dressed in stiff, ceremonial robes threaded with gold wire that clink softly as he moves, he looks less like a bureaucrat and more like a king of rock and mortar. He maintains strict discipline and integrity within his guild, severely punishing corrupt inspectors who accept bribes.",
+    "character_type": "NPC",
+    "race": "Dwarf",
+    "class": "Expert / Guildmaster",
+    "alignment": "Lawful Neutral",
+    "age": "Elderly",
+    "ideals": [
+        "Integrity: 'The guild seal stands for truth and quality in stone; corruption under my watch will not be tolerated.'",
+        "Order: 'Inspections and notices must follow strict guild protocol, not personal greed.'"
+    ],
+    "bonds": [
+        "The Stonemasons' Guild and its governing influence over masonry across Waterdeep.",
+        "The absolute authority of the 'Book of Truth' ledger."
+    ],
+    "flaws": [
+        "Can be rigid and uncompromising when dealing with internal guild misconduct."
+    ],
+    "speech_patterns": "Deep, rumbling, and authoritative, carrying the weight of stone and traditional dwarven law.",
+    "mannerisms": "Clinks softly in gold-threaded ceremonial robes, flips through the guild's massive ledger of truth with deliberate slowness, and glares sternly at corrupt subordinates.",
+    "relationships": [
+        {
+            "name": "Thorum Slatebreaker",
+            "relationship": "Guild Inspector / Subordinate",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Imposing and grave",
+        "Deeply honest regarding guild standards",
+        "Authoritative",
+        "Unforgiving of corruption"
+    ],
+    "motivations": [
+        "To uphold the honor, reputation, and strict standards of the Stonemasons' Guild.",
+        "To root out fraudulent inspectors and racketeering within his organization."
+    ],
+    "knowledge": [
+        "Comprehensive knowledge of masonry standards, guild records, and structural inspection protocols in Waterdeep.",
+        "Familiarity with official filing ledgers like the Book of Truth."
+    ],
+    "memories": [],
+    "gm_notes": "Guildmaster Skordar acts as a powerful municipal ally when players are dealing with corrupt local trade inspectors or fraudulent property condemnations, provided they bring legitimate proof of bribery to the Builder's Hall.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Stonemasons_Guild_Records.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Stonemasons' Guild": "Neutral / Respected"
+    }
+}

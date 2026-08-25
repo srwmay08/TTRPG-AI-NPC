@@ -1,25 +1,25 @@
 {
     "name": "Captain Cromley",
-    "description": "Captain Cromley is a weary officer of the City Watch of Waterdeep[cite: 1]. Tasked with investigating violent incidents, explosions, and high-profile disturbances across the wards—such as the devastating fireball in Trollskull Alley—he often finds himself dealing with the complex fallout involving adventurers, nobles, and criminal factions[cite: 1]. Though professional and bound by duty, he displays a palpable sense of exhaustion and resignation when dealing with the city's chaotic elite and magical anomalies[cite: 1].",
+    "description": "Captain Cromley is a weary officer of the City Watch of Waterdeep. Tasked with investigating violent incidents, explosions, and high-profile disturbances across the wards—such as the devastating fireball in Trollskull Alley—he often finds himself dealing with the complex fallout involving adventurers, nobles, and criminal factions. Though professional and bound by duty, he displays a palpable sense of exhaustion and resignation when dealing with the city's chaotic elite and magical anomalies.",
     "character_type": "NPC",
     "race": "Human",
     "class": "Officer / Guard Captain",
     "alignment": "Lawful Neutral",
     "age": "40s to 50s",
     "ideals": [
-        "Duty: 'The law must be upheld, even when the perpetrators possess badges, titles, or divine backing[cite: 1].'",
-        "Order: 'Chaos in the streets threatens the safety of every citizen, high and low[cite: 1].'"
+        "Duty: 'The law must be upheld, even when the perpetrators possess badges, titles, or divine backing.'",
+        "Order: 'Chaos in the streets threatens the safety of every citizen, high and low.'"
     ],
     "bonds": [
-        "The City Watch and the enforcement of law and order in Waterdeep[cite: 1].",
-        "His professional working relationships with arcane investigators like Barnibus Blastwind[cite: 1]."
+        "The City Watch and the enforcement of law and order in Waterdeep.",
+        "His professional working relationships with arcane investigators like Barnibus Blastwind."
     ],
     "flaws": [
-        "Can become world-weary and cynical regarding the endless cycle of noble political scheming and adventurer-fueled violence[cite: 1].",
-        "Struggles under the crushing administrative and security burden placed upon the Watch[cite: 1]."
+        "Can become world-weary and cynical regarding the endless cycle of noble political scheming and adventurer-fueled violence.",
+        "Struggles under the crushing administrative and security burden placed upon the Watch."
     ],
-    "speech_patterns": "Weary, dry, and no-nonsense, often cutting through grand explanations with blunt questions or frustrated sighs[cite: 1].",
-    "mannerisms": "Clenches a pipe between his teeth, scrutinizes crime scenes with a practiced and skeptical eye, and reacts with weary resignation when discovering elite or magical interference[cite: 1].",
+    "speech_patterns": "Weary, dry, and no-nonsense, often cutting through grand explanations with blunt questions or frustrated sighs.",
+    "mannerisms": "Clenches a pipe between his teeth, scrutinizes crime scenes with a practiced and skeptical eye, and reacts with weary resignation when discovering elite or magical interference.",
     "relationships": [
         {
             "name": "Barnibus Blastwind",
@@ -39,15 +39,15 @@
         "Direct"
     ],
     "motivations": [
-        "To keep the peace and maintain law and order within the wards of Waterdeep[cite: 1].",
-        "To manage dangerous security threats, criminal syndicates, and magical crime scenes without igniting open war[cite: 1]."
+        "To keep the peace and maintain law and order within the wards of Waterdeep.",
+        "To manage dangerous security threats, criminal syndicates, and magical crime scenes without igniting open war."
     ],
     "knowledge": [
-        "Comprehensive awareness of municipal law, Watch protocols, and ward security across Waterdeep[cite: 1].",
-        "Familiarity with the city's prominent criminal elements, including the Zhentarim and Xanathar Guild[cite: 1]."
+        "Comprehensive awareness of municipal law, Watch protocols, and ward security across Waterdeep.",
+        "Familiarity with the city's prominent criminal elements, including the Zhentarim and Xanathar Guild."
     ],
     "memories": [],
-    "gm_notes": "Captain Cromley serves as the primary face of law enforcement and municipal pressure for the party. He can be used to question the players after major incidents, enforce city regulations, or express the growing strain the City Watch faces as the Grand Game escalates[cite: 1].",
+    "gm_notes": "Captain Cromley serves as the primary face of law enforcement and municipal pressure for the party. He can be used to question the players after major incidents, enforce city regulations, or express the growing strain the City Watch faces as the Grand Game escalates.",
     "canned_conversations": {},
     "vtt_data": {},
     "vtt_flags": {},

@@ -1,0 +1,60 @@
+{
+    "name": "Esvele Rosnar",
+    "description": "Esvele Rosnar is a member of House Rosnar who requested a specialized, reinforced-chassis mannequin from the Sea Maidens Faire. While moving in noble circles and preparing for the social season, she possesses deeper ties and secrets connected to the city's underbelly.",
+    "character_type": "NPC",
+    "race": "Human",
+    "class": "Noble / Rogue",
+    "alignment": "True Neutral",
+    "age": "20s",
+    "ideals": [
+        "Independence: 'A noble name shouldn't dictate every step of one's life.'",
+        "Discretion: 'Secrets are best kept behind reinforced gates and quiet facades.'"
+    ],
+    "bonds": [
+        "House Rosnar and her family's estate in the Sea Ward.",
+        "Private dealings involving specialized constructs and underbelly acquisitions."
+    ],
+    "flaws": [
+        "Prone to keeping dangerous secrets that can attract the unwanted attention of adventurers and investigators."
+    ],
+    "speech_patterns": "Polite, guarded, and refined when maintaining her noble standing.",
+    "mannerisms": "Maintains a strict public facade of being 'indisposed' while managing covert operations behind closed gates.",
+    "relationships": [
+        {
+            "name": "Captain Koth",
+            "relationship": "Estate Guard Captain",
+            "status": "Alive"
+        },
+        {
+            "name": "Zardoz Zord",
+            "relationship": "Supplier / Sea Maidens Faire Contact",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Guarded",
+        "Resourceful",
+        "Calculated",
+        "Private"
+    ],
+    "motivations": [
+        "To maintain her privacy and manage her private affairs without the interference of house guards or nosy adventurers."
+    ],
+    "knowledge": [
+        "Familiarity with high society, noble estate layouts in the Sea Ward, and covert underbelly transactions."
+    ],
+    "memories": [],
+    "gm_notes": "Esvele Rosnar can be utilized as a mysterious noble contact with hidden depths, bridging high society and the criminal elements of Waterdeep. Her acquisition of a reinforced Nimblewright chassis makes her a fascinating person of interest for parties tracking rogue constructs.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "House_Rosnar_Records.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "House Rosnar": "Neutral"
+    }
+}

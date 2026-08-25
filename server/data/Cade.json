@@ -1,26 +1,26 @@
 {
     "name": "Cade",
-    "description": "Cade is a young man in his early twenties, standing around 5'10\" with a weariness beyond his years[cite: 1]. He is often hidden beneath a long, brown poncho, and his hands feature white-wrapped fingers and bruised knuckles[cite: 1]. His disheveled mop-top hair frames a striking face: one eye is a normal hazel-green while the left glows a constant, bright cyan blue, the source of cracked, lightning-bolt scars that snake down the left side of his face and neck[cite: 1]. A former drug deliverer turned 'white hat' security for the Golden Horn Gambling Hall alongside his partner Havik, Cade possesses sharp telekinetic and psychic abilities, though he carries a dark, soul-grafted shadow shard near his heart",
+    "description": "Cade is a young man in his early twenties, standing around 5'10\" with a weariness beyond his years. He is often hidden beneath a long, brown poncho, and his hands feature white-wrapped fingers and bruised knuckles. His disheveled mop-top hair frames a striking face: one eye is a normal hazel-green while the left glows a constant, bright cyan blue, the source of cracked, lightning-bolt scars that snake down the left side of his face and neck. A former drug deliverer turned 'white hat' security for the Golden Horn Gambling Hall alongside his partner Havik, Cade possesses sharp telekinetic and psychic abilities, though he carries a dark, soul-grafted shadow shard near his heart",
     "character_type": "NPC",
     "race": "Human",
     "class": "Rogue / Telekinetic Operative",
     "alignment": "Chaotic Good",
     "age": "Early 20s",
     "ideals": [
-        "Survival: 'You take any deal that involves a thousand gold for every noble[cite: 1].'",
-        "Pragmatism: 'Keep a low profile and maintain a legitimate source of income, but never miss a real opportunity[cite: 1].'"
+        "Survival: 'You take any deal that involves a thousand gold for every noble.'",
+        "Pragmatism: 'Keep a low profile and maintain a legitimate source of income, but never miss a real opportunity.'"
     ],
     "bonds": [
-        "His partner and fellow security worker, Havik[cite: 1].",
-        "The Trollskull Manor crew and their shared adventures[cite: 1].",
-        "His past ties to the Harpers and hidden connections to a shadowy past[cite: 1]."
+        "His partner and fellow security worker, Havik.",
+        "The Trollskull Manor crew and their shared adventures.",
+        "His past ties to the Harpers and hidden connections to a shadowy past."
     ],
     "flaws": [
-        "Carries the psychological and physical scars of a dark, forgotten past and a soul-searing shard[cite: 1].",
-        "Prone to weariness and cynicism beyond his years[cite: 1]."
+        "Carries the psychological and physical scars of a dark, forgotten past and a soul-searing shard.",
+        "Prone to weariness and cynicism beyond his years."
     ],
-    "speech_patterns": "Direct, dry, and street-smart, often cutting through grand schemes with grounded realism or deadpan humor[cite: 1].",
-    "mannerisms": "Often keeps himself concealed beneath a long poncho, watches environments with a cautious and calculating gaze, and uses subtle telekinetic or psychic power when testing objects or spaces[cite: 1].",
+    "speech_patterns": "Direct, dry, and street-smart, often cutting through grand schemes with grounded realism or deadpan humor.",
+    "mannerisms": "Often keeps himself concealed beneath a long poncho, watches environments with a cautious and calculating gaze, and uses subtle telekinetic or psychic power when testing objects or spaces.",
     "relationships": [
         {
             "name": "Havik",
@@ -45,17 +45,17 @@
         "Possesses a hidden depths of magical and telekinetic power"
     ],
     "motivations": [
-        "To earn enough legitimate and illegitimate coin to secure a stable future[cite: 1].",
-        "To uncover the truth behind the dark, shadow-grafted shard carried within his soul[cite: 1].",
-        "To protect his crew and his standing at Trollskull Manor[cite: 1]."
+        "To earn enough legitimate and illegitimate coin to secure a stable future.",
+        "To uncover the truth behind the dark, shadow-grafted shard carried within his soul.",
+        "To protect his crew and his standing at Trollskull Manor."
     ],
     "knowledge": [
-        "Street-level navigation and underworld familiarity within Waterdeep[cite: 1].",
-        "Telekinetic manipulation, psychic blade combat, and shadow magic[cite: 1].",
-        "Thieves' cant and navigation of faction networks like the Harpers[cite: 1]."
+        "Street-level navigation and underworld familiarity within Waterdeep.",
+        "Telekinetic manipulation, psychic blade combat, and shadow magic.",
+        "Thieves' cant and navigation of faction networks like the Harpers."
     ],
     "memories": [],
-    "gm_notes": "Cade serves as a core party member with deep underworld roots, a mysterious past tied to dark cults or magical sharding, and sharp investigative instincts. He balances his criminal street background with a growing role as a co-owner of Trollskull Manor[cite: 1].",
+    "gm_notes": "Cade serves as a core party member with deep underworld roots, a mysterious past tied to dark cults or magical sharding, and sharp investigative instincts. He balances his criminal street background with a growing role as a co-owner of Trollskull Manor.",
     "canned_conversations": {},
     "vtt_data": {},
     "vtt_flags": {},

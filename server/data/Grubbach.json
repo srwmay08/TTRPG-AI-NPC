@@ -1,0 +1,57 @@
+{
+    "name": "Grubach",
+    "description": "Grubach is a stout half-orc representing the Dungsweepers' Guild, clad in stained blue workman's overalls. He possesses a gruff, no-nonsense air and smells strongly and unapologetically of his trade. He handles waste disposal routes and contracts for new establishments in the neighborhood, utilizing veiled threats and health code leverage to secure lucrative priority service agreements.",
+    "character_type": "NPC",
+    "race": "Half-Orc",
+    "class": "Expert / Guild Representative",
+    "alignment": "True Neutral",
+    "age": "Middle-aged",
+    "ideals": [
+        "Business: 'More coin means more city, means more feasts... means more slop for me to haul.'",
+        "Pragmatism: 'A small price to keep your alley clean... and your reputation cleaner.'"
+    ],
+    "bonds": [
+        "The Dungsweepers' Guild and its citywide waste disposal routes.",
+        "The collection fees and priority service contracts for local businesses."
+    ],
+    "flaws": [
+        "Prone to engaging in thin extortion and leveraging anonymous health hazard tips against rivals."
+    ],
+    "speech_patterns": "Gruff, blunt, and direct, speaking with an unapologetic swagger characteristic of someone comfortable in the filth of their trade.",
+    "mannerisms": "Knocks heavily with a single large knuckle, sniffs out waste management needs, and drops into low, conspiratorial grins when making veiled threats.",
+    "relationships": [
+        {
+            "name": "Trollskull Manor Crew",
+            "relationship": "Clients / Contract Payers",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Gruff and pragmatic",
+        "Business-minded",
+        "Subtly extortionate",
+        "Direct"
+    ],
+    "motivations": [
+        "To secure lucrative weekly waste disposal contracts from new establishments.",
+        "To manage city sanitation routes and haul trash efficiently."
+    ],
+    "knowledge": [
+        "Municipal waste routes, sanitation guild regulations, and neighborhood hygiene issues in Waterdeep.",
+        "Underworld gossip regarding health hazards, city watch tip-offs, and local business rivals."
+    ],
+    "memories": [],
+    "gm_notes": "Grubach represents the gritty, municipal side of running a business in Waterdeep. He can be used to introduce recurring overhead costs (like weekly waste collection fees) or add flavor and mild extortion to the daily logistics of managing a tavern.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Dungsweepers_Guild_Manifest.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Dungsweepers' Guild": "Neutral / Professional"
+    }
+}

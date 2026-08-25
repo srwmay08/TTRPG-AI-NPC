@@ -1,24 +1,24 @@
 {
     "name": "Karga",
-    "description": "Karga is a powerful half-orc woman with a sturdy build and a warm smile, operating the Cleaver's Block butcher shop[cite: 1]. She dresses in practical hunting leathers and a clean butcher's apron bearing the faint, honest stains of her trade[cite: 1]. Well-connected in the underworld through her informants, she trades in exotic meats like giant rat carcasses for the Dock Ward and offers monster-hunting contracts and neighborhood discounts to helpful adventurers[cite: 1].",
+    "description": "Karga is a powerful half-orc woman with a sturdy build and a warm smile, operating the Cleaver's Block butcher shop. She dresses in practical hunting leathers and a clean butcher's apron bearing the faint, honest stains of her trade. Well-connected in the underworld through her informants, she trades in exotic meats like giant rat carcasses for the Dock Ward and offers monster-hunting contracts and neighborhood discounts to helpful adventurers.",
     "character_type": "NPC",
     "race": "Half-Orc",
     "class": "Commoner / Merchant",
     "alignment": "Neutral Good",
     "age": "Adult",
     "ideals": [
-        "Commerce: 'Rat meat sells for a pretty penny in the Dock Ward, and business keeps the block running[cite: 1].'",
-        "Pragmatism: 'Pests like carrion crawlers disrupt the supply chain, so we deal with them directly[cite: 1].'"
+        "Commerce: 'Rat meat sells for a pretty penny in the Dock Ward, and business keeps the block running.'",
+        "Pragmatism: 'Pests like carrion crawlers disrupt the supply chain, so we deal with them directly.'"
     ],
     "bonds": [
-        "The Cleaver's Block butcher shop and her underworld trade contacts[cite: 1].",
-        "Her hunters and suppliers who forage the city's darker corners[cite: 1]."
+        "The Cleaver's Block butcher shop and her underworld trade contacts.",
+        "Her hunters and suppliers who forage the city's darker corners."
     ],
     "flaws": [
-        "Willing to buy and process questionable or monstrous meats for profit[cite: 1]."
+        "Willing to buy and process questionable or monstrous meats for profit."
     ],
-    "speech_patterns": "Friendly, grounded, and conversational, speaking with the reassuring rumble of a seasoned merchant[cite: 1].",
-    "mannerisms": "Wears a clean butcher's apron over practical hunting leathers, runs a calloused hand over claw marks to assess their age, and flashes a warm, welcoming smile[cite: 1].",
+    "speech_patterns": "Friendly, grounded, and conversational, speaking with the reassuring rumble of a seasoned merchant.",
+    "mannerisms": "Wears a clean butcher's apron over practical hunting leathers, runs a calloused hand over claw marks to assess their age, and flashes a warm, welcoming smile.",
     "relationships": [
         {
             "name": "Trollskull Manor Crew",
@@ -33,15 +33,15 @@
         "Observant"
     ],
     "motivations": [
-        "To secure a steady supply of meat for her butcher shop by clearing out hazardous pests like carrion crawlers from the sewers[cite: 1].",
-        "To build mutually beneficial relationships with local adventurers[cite: 1]."
+        "To secure a steady supply of meat for her butcher shop by clearing out hazardous pests like carrion crawlers from the sewers.",
+        "To build mutually beneficial relationships with local adventurers."
     ],
     "knowledge": [
-        "Underworld informants, sewer monster layouts, and the market for monster parts in the Dock Ward[cite: 1].",
-        "The history of ancient claw marks and subterranean hazards beneath the city[cite: 1]."
+        "Underworld informants, sewer monster layouts, and the market for monster parts in the Dock Ward.",
+        "The history of ancient claw marks and subterranean hazards beneath the city."
     ],
     "memories": [],
-    "gm_notes": "Karga serves as a practical, street-smart merchant contact who can provide sewer maps, monster-hunting bounties, and neighborly discounts on provisions or meat cuts for the party[cite: 1].",
+    "gm_notes": "Karga serves as a practical, street-smart merchant contact who can provide sewer maps, monster-hunting bounties, and neighborly discounts on provisions or meat cuts for the party.",
     "canned_conversations": {},
     "vtt_data": {},
     "vtt_flags": {},

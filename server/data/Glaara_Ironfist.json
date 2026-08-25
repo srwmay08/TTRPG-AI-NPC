@@ -1,0 +1,59 @@
+{
+    "name": "Glaara Ironfist",
+    "description": "Glaara Ironfist is the cook and building maintenance manager at Murkledorn's Academy of Fine Educatorial Pursuits. Despite her sometimes-gruff exterior, she is beloved by the children for her creativity in the kitchen.",
+    "character_type": "NPC",
+    "race": "Dwarf",
+    "class": "Commoner / Cook & Maintenance",
+    "alignment": "Neutral Good",
+    "age": "Adult",
+    "ideals": [
+        "Nurturing: Keeping the school running smoothly and feeding the students well with creative, hearty meals."
+    ],
+    "bonds": [
+        "Murkledorn's Academy and its students and staff.",
+        "Her quarters in the Murkledorn's Annex."
+    ],
+    "flaws": [
+        "Gruff exterior that can occasionally startle strangers or easily overwhelmed visitors."
+    ],
+    "speech_patterns": "Direct, gruff, and practical, softening only slightly when speaking about her kitchen or the students.",
+    "mannerisms": "Wipes flour-dusted hands on an apron, mutters about building maintenance, and cheerfully serves creative meals to the children.",
+    "relationships": [
+        {
+            "name": "Salazar Murkledorn",
+            "relationship": "Headmaster / Employer",
+            "status": "Alive"
+        },
+        {
+            "name": "Murkledorn's Students",
+            "relationship": "School Patrons / Adoring Fans",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Gruff exterior with a warm heart",
+        "Hardworking",
+        "Creative in the kitchen",
+        "Reliable"
+    ],
+    "motivations": [
+        "To keep the academy's kitchen running, maintain the building, and ensure the students are well-fed and cared for."
+    ],
+    "knowledge": [
+        "Culinary arts, institutional cooking, building maintenance for large school structures, and student gossip."
+    ],
+    "memories": [],
+    "gm_notes": "Glaara Ironfist serves as a grounded, dependable anchor at Murkledorn's Academy. She can be used as a friendly neighborhood contact, a source of school gossip, or an instructor for characters looking to learn the use of cook's utensils.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Murkledorns_Academy_Staff.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Murkledorn's Academy": "Staff / Ally"
+    }
+}

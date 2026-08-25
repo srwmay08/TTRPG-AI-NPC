@@ -1,0 +1,60 @@
+{
+    "name": "Manshoon",
+    "description": "Manshoon is the legendary, ruthless archmage and founder of the Zhentarim (the Black Network), operating from a hidden stronghold within Waterdeep. Having survived through multiple clones and arcane schemes, he is brilliant, dangerously powerful, and orchestrating a shadow war to seize absolute control over the city's underworld.",
+    "character_type": "NPC",
+    "race": "Human",
+    "class": "Archmage / Wizard",
+    "alignment": "Neutral Evil",
+    "age": "Centuries old (Cloned body)",
+    "ideals": [
+        "Supremacy: 'The Zhentarim will rule the shadows of Waterdeep, and every rival faction will either bend the knee or burn to ash.'",
+        "Control: 'Knowledge is power, but absolute obedience is the only currency that truly matters.'"
+    ],
+    "bonds": [
+        "The Zhentarim Black Network and his loyal enforcers like Urstul Floxin.",
+        "His hidden sanctum and his vast network of arcane vaults, clones, and magical research."
+    ],
+    "flaws": [
+        "Paranoid and ruthlessly unforgiving of failure, viewing even his most trusted lieutenants as expendable pawns."
+    ],
+    "speech_patterns": "Cold, calculating, and commanding, carrying the absolute authority of a master spellcaster who expects every word to be obeyed.",
+    "mannerisms": "Keeps his metallic gauntlet resting on arcane focuses, projects an aura of icy composure, and surveys subordinates with chilling, evaluative stares.",
+    "relationships": [
+        {
+            "name": "Urstul Floxin",
+            "relationship": "Primary Lieutenant / Enforcer",
+            "status": "Alive"
+        },
+        {
+            "name": "Zhentarim Operatives",
+            "relationship": "Subordinates / Black Network",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Genius intellect",
+        "Ruthless and calculating",
+        "Paranoid and cautious",
+        "Megalomaniacal"
+    ],
+    "motivations": [
+        "To secure the Stone of Golorr, unlock the Vault of Dragons, and consolidate total mastery over Waterdeep's criminal and political underground."
+    ],
+    "knowledge": [
+        "Mastery of high-level arcane magic, extensive knowledge of Faerûn's history, Zhentarim safe houses, and deep network intelligence across the Sword Coast."
+    ],
+    "memories": [],
+    "gm_notes": "Manshoon serves as the ultimate shadowy mastermind behind the Zhentarim faction in the campaign. He can be used as an overarching villainous presence, a terrifying invisible threat pulling the strings behind Urstul Floxin, or a monumental adversary if the party directly uncovers his hidden sanctum.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Zhentarim_Leadership_Files.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Zhentarim (Manshoon's Faction)": "Leader / Mortal Enemy"
+    }
+}

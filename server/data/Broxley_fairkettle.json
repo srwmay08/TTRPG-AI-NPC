@@ -1,0 +1,52 @@
+{
+    "name": "Broxley Fairkettle",
+    "description": "Broxley Fairkettle is the charismatic halfling leader of the Fellowship of Innkeepers. He is active in recruiting new and emerging establishments into his guild, making proactive visits to newly opened businesses like Trollskull Manor to attempt to sign them up.",
+    "character_type": "NPC",
+    "race": "Halfling",
+    "class": "Expert / Guild Representative",
+    "alignment": "Lawful Neutral",
+    "age": "Middle-aged",
+    "ideals": [
+        "Guild Unity: 'Every tavern in Waterdeep belongs under the banner and protection of the Fellowship of Innkeepers.'",
+        "Business: 'A proper establishment starts with proper guild registration.'"
+    ],
+    "bonds": [
+        "The Fellowship of Innkeepers and its governing influence over the city's tavern trade.",
+        "The economic prosperity and regulation of local inns and pubs."
+    ],
+    "flaws": [
+        "Can be overly persistent when trying to recruit newly opened or unconventional establishments.",
+        "Strictly bound by guild politics and bureaucracy."
+    ],
+    "speech_patterns": "Charismatic, persuasive, and upbeat, typical of a practiced guild recruiter pitching business partnerships.",
+    "mannerisms": "Brisk and confident walk, flashes a welcoming smile, and eagerly waves guild sign-up paperwork or introductory pamphlets.",
+    "relationships": [],
+    "personality_traits": [
+        "Charismatic",
+        "Persuasive",
+        "Eager",
+        "Business-minded"
+    ],
+    "motivations": [
+        "To bring every new tavern, taproom, and inn into the fold of the Fellowship of Innkeepers.",
+        "To expand the guild's reach and ensure all local drinking establishments adhere to guild standards."
+    ],
+    "knowledge": [
+        "Comprehensive knowledge of Waterdeep's tavern trade, guild regulations, and local licensing.",
+        "Familiarity with competing neighborhood venues and tavern owners across the wards."
+    ],
+    "memories": [],
+    "gm_notes": "Broxley Fairkettle represents the bureaucratic and economic side of running a tavern in Waterdeep. He can be used to introduce guild fees, regulations, inspections, or networking opportunities with other local tavern owners as the players build up Trollskull Manor.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Fellowship_of_Innkeepers_Manifest.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Fellowship of Innkeepers": "Neutral / Professional"
+    }
+}

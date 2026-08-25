@@ -1,0 +1,60 @@
+{
+    "name": "Corgan",
+    "description": "Corgan is a grim master smith and guild judge who sits among the masters during guild examinations at the Metal Masters' Hall. Known for his stern demeanor and rare nods of approval, he watches over trials with a critical eye, evaluating the precision and skill of journeymen attempting to achieve Mastery.",
+    "character_type": "NPC",
+    "race": "Dwarf",
+    "class": "Expert / Master Smith",
+    "alignment": "Lawful Neutral",
+    "age": "Elderly / Veteran",
+    "ideals": [
+        "Craftsmanship: 'The hammer does not lie, and neither does the metal.'",
+        "Tradition: 'Mastery is earned through absolute precision under the watchful eye of guild-kin.'"
+    ],
+    "bonds": [
+        "The Most Careful Order of Skilled Smiths and Metalforgers.",
+        "The integrity of guild trials and masterwork standards."
+    ],
+    "flaws": [
+        "Stern and uncompromising, making him difficult to impress."
+    ],
+    "speech_patterns": "Sparse, gruff, and authoritative, offering rare but meaningful praise when true craftsmanship is displayed.",
+    "mannerisms": "Crosses his arms with a grim expression, watches guild trials with unblinking scrutiny, and gives rare nods of professional respect.",
+    "relationships": [
+        {
+            "name": "Master Valerick 'Ironvoice' Grumblin",
+            "relationship": "Guild Master Colleague",
+            "status": "Alive"
+        },
+        {
+            "name": "Moriah Kiah",
+            "relationship": "Journeyman / Examinee",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Grim and serious",
+        "Deeply professional",
+        "Uncompromising",
+        "Observant"
+    ],
+    "motivations": [
+        "To uphold the strict standards of the Metal Masters' Hall and ensure only worthy smiths achieve Mastery."
+    ],
+    "knowledge": [
+        "Expertise in dwarven smithing, metal fabrication, and guild trial standards."
+    ],
+    "memories": [],
+    "gm_notes": "Corgan serves as an authoritative figure within the dwarf smithing guild. He can be used to add gravity to crafting trials, professional evaluations, or guild-related political interactions for smith characters.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Metal_Masters_Hall_Records.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "The Most Careful Order of Skilled Smiths and Metalforgers": "Neutral / Professional"
+    }
+}

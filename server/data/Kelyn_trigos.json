@@ -1,22 +1,22 @@
 {
     "name": "Kelyn Trigos",
-    "description": "Kelyn Trigos is a tall, red-skinned Tiefling who serves as a receptionist, enforcer, and gatekeeper at the Terasse Estate, acting as a front for the city's corrupt elite and guarding the secret portal to the Undermountain[cite: 1]. He possesses a sneering, feline attitude and watches visitors with sharp, evaluating eyes[cite: 1].",
+    "description": "Kelyn Trigos is a tall, red-skinned Tiefling who serves as a receptionist, enforcer, and gatekeeper at the Terasse Estate, acting as a front for the city's corrupt elite and guarding the secret portal to the Undermountain. He possesses a sneering, feline attitude and watches visitors with sharp, evaluating eyes.",
     "character_type": "NPC",
     "race": "Tiefling",
     "class": "Fighter / Enforcer",
     "alignment": "Neutral Evil",
     "age": "Adult",
     "ideals": [
-        "Secrecy: 'The House of Healing is closed to the public unless the humors truly demand it[cite: 1].'"
+        "Secrecy: 'The House of Healing is closed to the public unless the humors truly demand it.'"
     ],
     "bonds": [
-        "The Terasse Estate and its covert underground gambling and bloodsport operations[cite: 1]."
+        "The Terasse Estate and its covert underground gambling and bloodsport operations."
     ],
     "flaws": [
-        "Arrogant and prone to mocking visitors whom he deems unrefined or suspicious[cite: 1]."
+        "Arrogant and prone to mocking visitors whom he deems unrefined or suspicious."
     ],
-    "speech_patterns": "Purring, smooth, and mocking, dropping into feline recognition when encountering old acquaintances or archivists[cite: 1].",
-    "mannerisms": "Leans against doorframes, aggressively rubs visitor's sleeve fabric to inspect its quality, and watches guests with a sharp, feline gaze[cite: 1].",
+    "speech_patterns": "Purring, smooth, and mocking, dropping into feline recognition when encountering old acquaintances or archivists.",
+    "mannerisms": "Leans against doorframes, aggressively rubs visitor's sleeve fabric to inspect its quality, and watches guests with a sharp, feline gaze.",
     "relationships": [
         {
             "name": "Gorig",
@@ -36,13 +36,13 @@
         "Vigilant"
     ],
     "motivations": [
-        "To vet visitors and maintain the absolute security and secrecy of the Terasse Estate's portal[cite: 1]."
+        "To vet visitors and maintain the absolute security and secrecy of the Terasse Estate's portal."
     ],
     "knowledge": [
-        "Code words, visitor vetting procedures, and front operations for the Terasse Estate portal[cite: 1]."
+        "Code words, visitor vetting procedures, and front operations for the Terasse Estate portal."
     ],
     "memories": [],
-    "gm_notes": "Kelyn Trigos serves as an initial social filter for characters attempting to infiltrate the Xanathar's games via the Terasse Estate front[cite: 1]. He can test players through clothing inspections, attitude checks, and code-phrase verifications[cite: 1].",
+    "gm_notes": "Kelyn Trigos serves as an initial social filter for characters attempting to infiltrate the Xanathar's games via the Terasse Estate front. He can test players through clothing inspections, attitude checks, and code-phrase verifications.",
     "canned_conversations": {},
     "vtt_data": {},
     "vtt_flags": {},
@@ -56,4 +56,3 @@
         "Terasse Estate / Xanathar Associates": "Hostile / Deceived"
     }
 }
-```[cite: 1]

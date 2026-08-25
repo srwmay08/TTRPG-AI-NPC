@@ -1,0 +1,53 @@
+{
+    "name": "Aaliyah",
+    "description": "Aaliyah is a Yuan-Ti pureblood who runs Mezro with her unsuspecting husband Maccus, determined to wield influence in Waterdeep by poisoning as many nobles as possible.",
+    "character_type": "NPC",
+    "race": "Yuan-Ti Pureblood",
+    "class": "Yuan-Ti",
+    "alignment": "Neutral Evil",
+    "age": "Adult",
+    "ideals": [
+        "Influence: To gain power and influence in Waterdeep through calculated and secret means."
+    ],
+    "bonds": [
+        "Mezro restaurant and her unknowing husband, Maccus."
+    ],
+    "flaws": [
+        "Overly ambitious in her poisoning scheme, risking exposure if victims notice patterns."
+    ],
+    "speech_patterns": "Calm, polite, and charming, masking a sinister and manipulative intent.",
+    "mannerisms": "Exotic beauty with dark hair and dark skin, maintaining a welcoming and hospitable front for patrons.",
+    "relationships": [
+        {
+            "name": "Maccus Murphy",
+            "relationship": "Husband / Co-proprietor of Mezro",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Manipulative",
+        "Patient",
+        "Cunning",
+        "Deceptive"
+    ],
+    "motivations": [
+        "To poison nobles who frequent her establishment to slowly gain political leverage and control over them."
+    ],
+    "knowledge": [
+        "Expertise in subtle poisons, Chultan recipes, and navigating high-society noble circles in the North Ward."
+    ],
+    "memories": [],
+    "gm_notes": "Aaliyah serves as a dangerous, hidden threat in the North Ward. She can be used in investigation arcs where patrons fall mysteriously ill after dining at Mezro, or as a sinister encounter for characters investigating noble corruption.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Mezro_Operations_Log.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Trollskull Manor Crew": "Neutral / Unsuspecting"
+    }
+}

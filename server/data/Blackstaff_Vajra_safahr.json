@@ -1,0 +1,69 @@
+{
+    "name": "Vajra Safahr",
+    "description": "Vajra Safahr is the Blackstaff of Waterdeep, the master of Blackstaff Tower, and a powerful archmage who commands immense political and magical authority in the city. She appears younger than her legendary status suggests, clad in practical leathers beneath a robe of midnight blue, and wields the formidable staff that commands immediate respect and fear. Pragmatic, sharp, and decisive, she operates behind the scenes to maintain order in the Grand Game and protect the city from deep-seated threats.",
+    "character_type": "NPC",
+    "race": "Human",
+    "class": "Wizard",
+    "alignment": "Neutral Good",
+    "age": "30s",
+    "ideals": [
+        "Order: 'Waterdeep must remain stable, even if we must enforce order from the shadows.'",
+        "Duty: 'The mantle of the Blackstaff requires absolute sacrifice to protect the city.'",
+        "Pragmatism: 'When facing cosmic threats, hard choices must be made swiftly.'"
+    ],
+    "bonds": [
+        "Blackstaff Tower and the succession of power it represents.",
+        "The safety and stability of the City of Splendors.",
+        "Her network of agents, operatives, and deputized specialists (like Force Grey)."
+    ],
+    "flaws": [
+        "Can be overly demanding and abrupt with those she drafts into service.",
+        "Carries the crushing, isolating burden of her office with little patience for failure.",
+        "Prone to making unilateral, high-stakes decisions without consulting other city factions."
+    ],
+    "speech_patterns": "Speaks with absolute authority, wasting no time with pleasantries. Her voice cuts sharply through tension and commands immediate attention.",
+    "mannerisms": "Materializes unannounced through silence fields, wields her staff with commanding presence, and studies people with an unnerving, evaluative gaze.",
+    "relationships": [
+        {
+            "name": "Sudara",
+            "relationship": "Deputized Force Grey Operative",
+            "status": "Alive"
+        },
+        {
+            "name": "Captain Cromley",
+            "relationship": "City Watch Associate",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Unflinchingly pragmatic",
+        "Commanding and authoritative",
+        "Sharply observant",
+        "Decisive under pressure"
+    ],
+    "motivations": [
+        "To protect Waterdeep from hidden subterranean threats, aberrant artifacts, and warring criminal factions.",
+        "To keep powerful magical hazards, like the Stone of Golorr, out of the wrong hands.",
+        "To mobilize elite operatives when the City Watch is stretched too thin."
+    ],
+    "knowledge": [
+        "Deep arcane mastery and intimate awareness of the city's magical wards.",
+        "Intelligence regarding Underdark threats, Skullport, and the operations of factions like the Zhentarim and Xanathar Guild.",
+        "Knowledge of cognitohazards, ancient artifacts, and the historical power structures of Waterdeep."
+    ],
+    "memories": [],
+    "gm_notes": "Vajra Safahr acts as the ultimate authority figure and quest-giver for elite, high-level operations in Waterdeep. She can abruptly intervene to draft characters into Force Grey, assign dangerous containment mandates, or hold the party accountable when their actions disrupt the city's balance.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Blackstaff_Tower_Records.txt",
+        "Force_Grey_Mandates.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Force Grey": "Ally / Superior"
+    }
+}

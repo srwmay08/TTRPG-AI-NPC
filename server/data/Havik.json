@@ -1,26 +1,26 @@
 {
     "name": "Havik",
-    "description": "Havik is a goblin who borders between the size of a child and a young teenager[cite: 1]. His most dominant feature is a weathered, well-loved cloak of mismatched, patched colors, and he has a habit of nervously picking at its pockets[cite: 1]. His large, unassuming eyes are flecked with gold and hidden behind gold-rimmed spectacles, giving him a nervous energy that belies a sharp, confident gaze[cite: 1]. Operating as 'white hat' security for the Golden Horn Gambling Hall alongside his partner Cade, Havik is opportunistic, clever, and guided by an infallible set of goblin rules[cite: 1].",
+    "description": "Havik is a goblin who borders between the size of a child and a young teenager. His most dominant feature is a weathered, well-loved cloak of mismatched, patched colors, and he has a habit of nervously picking at its pockets. His large, unassuming eyes are flecked with gold and hidden behind gold-rimmed spectacles, giving him a nervous energy that belies a sharp, confident gaze. Operating as 'white hat' security for the Golden Horn Gambling Hall alongside his partner Cade, Havik is opportunistic, clever, and guided by an infallible set of goblin rules.",
     "character_type": "NPC",
     "race": "Goblin",
     "class": "Sorcerer / Security Operative",
     "alignment": "Chaotic Good",
     "age": "Young / Teen equivalent",
     "ideals": [
-        "Opportunity: 'You take any deal that involves a thousand gold for every noble (Rule #37)[cite: 1].'",
-        "Adaptability: 'Don't quit your job, just become a part-time employee (Rule #38)[cite: 1].'"
+        "Opportunity: 'You take any deal that involves a thousand gold for every noble (Rule #37).'",
+        "Adaptability: 'Don't quit your job, just become a part-time employee (Rule #38).'"
     ],
     "bonds": [
-        "His partner and fellow security worker, Cade[cite: 1].",
-        "The local urchin network (Squidly, Jenks, and Nat), whom he coordinates with[cite: 1].",
-        "The Trollskull Manor crew and their shared escapades[cite: 1]."
+        "His partner and fellow security worker, Cade.",
+        "The local urchin network (Squidly, Jenks, and Nat), whom he coordinates with.",
+        "The Trollskull Manor crew and their shared escapades."
     ],
     "flaws": [
-        "Prone to opportunistic greed and occasionally soaking his shoes in unexplained substances like gravy[cite: 1].",
-        "Anxious energy that occasionally flares up when dealing with strict management or dangerous underground factions[cite: 1]."
+        "Prone to opportunistic greed and occasionally soaking his shoes in unexplained substances like gravy.",
+        "Anxious energy that occasionally flares up when dealing with strict management or dangerous underground factions."
     ],
-    "speech_patterns": "Smooth, opportunistic, and informal, frequently citing personal 'goblin rules' to justify wild plans or sudden career changes[cite: 1].",
-    "mannerisms": "Nervously picks at the pockets of his patched cloak, adjusts his gold-rimmed spectacles, and flashes slow, confident grins when a scheme pays off[cite: 1].",
+    "speech_patterns": "Smooth, opportunistic, and informal, frequently citing personal 'goblin rules' to justify wild plans or sudden career changes.",
+    "mannerisms": "Nervously picks at the pockets of his patched cloak, adjusts his gold-rimmed spectacles, and flashes slow, confident grins when a scheme pays off.",
     "relationships": [
         {
             "name": "Cade",
@@ -45,15 +45,15 @@
         "Loyal to his partner and crew"
     ],
     "motivations": [
-        "To accumulate enough wealth and gold to leave standard security work behind for bigger ventures[cite: 1].",
-        "To protect his partner Cade and maintain their legitimate standing in Waterdeep[cite: 1]."
+        "To accumulate enough wealth and gold to leave standard security work behind for bigger ventures.",
+        "To protect his partner Cade and maintain their legitimate standing in Waterdeep."
     ],
     "knowledge": [
-        "Underworld connections, street-level urchin communication networks, and goblin rule jurisprudence[cite: 1].",
-        "Sorcerous magic, chaos bolts, and practical sleight of hand[cite: 1]."
+        "Underworld connections, street-level urchin communication networks, and goblin rule jurisprudence.",
+        "Sorcerous magic, chaos bolts, and practical sleight of hand."
     ],
     "memories": [],
-    "gm_notes": "Havik serves as a vibrant, unconventional party member who blends street cunning with sorcerous utility, offering great roleplay opportunities through his network of urchin informants and strict adherence to 'goblin rules'[cite: 1].",
+    "gm_notes": "Havik serves as a vibrant, unconventional party member who blends street cunning with sorcerous utility, offering great roleplay opportunities through his network of urchin informants and strict adherence to 'goblin rules'.",
     "canned_conversations": {},
     "vtt_data": {},
     "vtt_flags": {},

@@ -1,0 +1,63 @@
+{
+    "name": "Emmek Frewn",
+    "description": "Emmek Frewn is a hulking, salty northerner who operates Frewn's Brews, a dim and sour-smelling rival tavern located in Trollskull Alley. He harbors deep resentment and bitterness toward the party for receiving Trollskull Manor as a gift, viewing the establishment as a direct threat to his local monopoly. Aggressive and fiercely competitive, Frewn actively attempts to sabotage the party's business venture, even resorting to hiring corrupt guild representatives to condemn their property.",
+    "character_type": "NPC",
+    "race": "Human",
+    "class": "Commoner / Tavern Owner",
+    "alignment": "Neutral Evil",
+    "age": "40s",
+    "ideals": [
+        "Control: 'Every copper piece spent in this alley comes down to me.'",
+        "Ambition: 'I will see that rival establishments are boarded up or bought out on my terms.'"
+    ],
+    "bonds": [
+        "Frewn's Brews and his dominance over the local tavern trade in Trollskull Alley.",
+        "Commercial ties with guild suppliers like the Vintners' Guild."
+    ],
+    "flaws": [
+        "Consumed by bitter envy and resentment toward successful rivals.",
+        "Prone to hostile, uncooperative behavior and resorting to dirty tricks like bribery."
+    ],
+    "speech_patterns": "Grumpy, sneering, and hostile, often dripping with venom when discussing his business rivals.",
+    "mannerisms": "Wipes down counters with a filthy rag, hawks and spits behind the bar when angered, and aggressively dismisses or pushes unwanted visitors toward the door.",
+    "relationships": [
+        {
+            "name": "Mertyn Bottlewick",
+            "relationship": "Vintners' Guild Supplier / Business Contact",
+            "status": "Alive"
+        },
+        {
+            "name": "Thorum Slatebreaker",
+            "relationship": "Corrupt Guild Inspector / Bribed Asset",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Bitter and resentful",
+        "Aggressive and territorial",
+        "Unfriendly",
+        "Relentlessly competitive"
+    ],
+    "motivations": [
+        "To force the party to sell Trollskull Manor to him at a pittance or have it shut down.",
+        "To maintain absolute control over all custom and commerce within Trollskull Alley."
+    ],
+    "knowledge": [
+        "Local neighborhood business operations, guild supply priorities, and alley politics.",
+        "Methods for exploiting municipal regulations and corrupting local guild inspectors."
+    ],
+    "memories": [],
+    "gm_notes": "Emmek Frewn serves as the primary local economic antagonist and business rival for the party's tavern. He can be used to instigate local sabotage, corrupt inspectors, or create ongoing neighborhood friction in Trollskull Alley.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Trollskull_Alley_Rivals.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Trollskull Manor Crew": "Hostile"
+    }
+}

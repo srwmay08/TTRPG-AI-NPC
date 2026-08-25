@@ -1,24 +1,24 @@
 {
     "name": "Captain Koth",
-    "description": "Captain Koth is a stern guard in the deep blue and silver livery of the Rosnar family, tasked with securing the imposing gates of House Rosnar in the Sea Ward[cite: 1]. Unimpressed by self-proclaimed deputies or invocations of Force Grey authority, he stands as a firm and bureaucratic wall, maintaining strict privacy for the noble estate[cite: 1].",
+    "description": "Captain Koth is a stern guard in the deep blue and silver livery of the Rosnar family, tasked with securing the imposing gates of House Rosnar in the Sea Ward. Unimpressed by self-proclaimed deputies or invocations of Force Grey authority, he stands as a firm and bureaucratic wall, maintaining strict privacy for the noble estate.",
     "character_type": "NPC",
     "race": "Human",
     "class": "Guard / Security Captain",
     "alignment": "Lawful Neutral",
     "age": "40s",
     "ideals": [
-        "Duty: 'The privacy and security of House Rosnar are absolute; no one enters without proper authorization[cite: 1].'",
-        "Order: 'Titles, badges, and threats mean nothing without a warrant from the Blackstaff[cite: 1].'"
+        "Duty: 'The privacy and security of House Rosnar are absolute; no one enters without proper authorization.'",
+        "Order: 'Titles, badges, and threats mean nothing without a warrant from the Blackstaff.'"
     ],
     "bonds": [
-        "House Rosnar and the enforcement of security across their Sea Ward estate[cite: 1].",
+        "House Rosnar and the enforcement of security across their Sea Ward estate.",
         "The chain of command governing noble house defense in Waterdeep."
     ],
     "flaws": [
-        "Strictly bound by protocol, making him unyielding and difficult to sway through charm or intimidation[cite: 1]."
+        "Strictly bound by protocol, making him unyielding and difficult to sway through charm or intimidation."
     ],
-    "speech_patterns": "Cool, formal, and authoritative, delivering dismissals with polite finality[cite: 1].",
-    "mannerisms": "Stands rigidly at post, blocks unauthorized entryways, and assesses visitors with a skeptical and evaluating eye[cite: 1].",
+    "speech_patterns": "Cool, formal, and authoritative, delivering dismissals with polite finality.",
+    "mannerisms": "Stands rigidly at post, blocks unauthorized entryways, and assesses visitors with a skeptical and evaluating eye.",
     "relationships": [
         {
             "name": "Esvele Rosnar",
@@ -33,14 +33,14 @@
         "Undaunted by titles"
     ],
     "motivations": [
-        "To enforce the security and privacy of House Rosnar against unverified outsiders, mercenaries, and nosy adventurers[cite: 1]."
+        "To enforce the security and privacy of House Rosnar against unverified outsiders, mercenaries, and nosy adventurers."
     ],
     "knowledge": [
-        "Estate defense protocols and security arrangements for House Rosnar[cite: 1].",
-        "Familiarity with municipal authorities, noble household laws, and warrant requirements in the Sea Ward[cite: 1]."
+        "Estate defense protocols and security arrangements for House Rosnar.",
+        "Familiarity with municipal authorities, noble household laws, and warrant requirements in the Sea Ward."
     ],
     "memories": [],
-    "gm_notes": "Captain Koth functions as a physical and social barrier guarding House Rosnar[cite: 1]. He can be used to block the party from casually trespassing on noble estates, forcing them to find alternative, stealthier infiltration methods (like scaling walls) or secure official legal warrants[cite: 1].",
+    "gm_notes": "Captain Koth functions as a physical and social barrier guarding House Rosnar. He can be used to block the party from casually trespassing on noble estates, forcing them to find alternative, stealthier infiltration methods (like scaling walls) or secure official legal warrants.",
     "canned_conversations": {},
     "vtt_data": {},
     "vtt_flags": {},

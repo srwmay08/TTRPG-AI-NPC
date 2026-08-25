@@ -1,0 +1,59 @@
+{
+    "name": "Xanathar",
+    "description": "Xanathar is a paranoid, megalomaniacal beholder crime lord who rules the criminal underworld of Skullport and the subterranean dungeons beneath Waterdeep. Obsessed with his pet fish Sylgar, rare treasures, and complete control over the city's shadows, he commands an army of cultists, goblins, duergar, and aberrations.",
+    "character_type": "NPC",
+    "race": "Beholder",
+    "class": "Crime Lord / Aberration",
+    "alignment": "Lawful Evil",
+    "age": "Ancient",
+    "ideals": [
+        "Paranoia & Control: 'Everyone is plotting against me, so I must see everything, control everything, and destroy anyone who steps out of line.'"
+    ],
+    "bonds": [
+        "His pet fish, Sylgar, which he cherishes above all living things.",
+        "The Xanathar Guild and his stronghold hidden deep beneath the city."
+    ],
+    "flaws": [
+        "Extreme paranoia, erratic mood swings, and a tendency to execute subordinates on a whim for minor slights."
+    ],
+    "speech_patterns": "Arrogant, booming, and theatrical, vibrating with cosmic superiority and absolute authority.",
+    "mannerisms": "Hovers weightlessly, twitches multiple eyestalks independently, and fixates obsessively on the safety of his pet fish.",
+    "relationships": [
+        {
+            "name": "Ahmaergo",
+            "relationship": "Majordomo / Enforcer",
+            "status": "Alive"
+        },
+        {
+            "name": "Nihiloor",
+            "relationship": "Mind Flayer Lieutenant",
+            "status": "Deceased"
+        }
+    ],
+    "personality_traits": [
+        "Paranoid and volatile",
+        "Cruel and merciless",
+        "Egocentric",
+        "Possessive"
+    ],
+    "motivations": [
+        "To secure the Stone of Golorr, crush rival factions like the Zhentarim, and maintain absolute dominance over the underworld of Waterdeep and Skullport."
+    ],
+    "knowledge": [
+        "Extensive intelligence on Waterdeep's criminal networks, Undermountain geography, secret cults, and illicit trade routes."
+    ],
+    "memories": [],
+    "gm_notes": "Xanathar serves as one of the primary faction antagonists of the campaign. He can be used to orchestrate subterranean ambushes, run gladiator games in the Ring of Blood, or act as a terrifying overarching threat when the party hunts for the Stone of Golorr.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Xanathar_Guild_Manifest.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Xanathar Guild": "Leader / Mortal Enemy"
+    }
+}

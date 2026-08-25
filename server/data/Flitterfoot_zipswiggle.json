@@ -1,0 +1,56 @@
+{
+    "name": "Flutterfoot Zipswiggle",
+    "description": "Flutterfoot Zipswiggle is a deep gnome jester who serves the Xanathar Guild. Dressed in garish purple and orange motley with bells on his cap that chime rhythmically, he combines manic energy with an unsettling, observant madness. He guards secrets and paths within the lair, collecting donations for the guild's 'Cultural Fund' and mocking visitors with gleeful chaos.",
+    "character_type": "NPC",
+    "race": "Svirfneblin (Deep Gnome)",
+    "class": "Bard / Jester",
+    "alignment": "Chaotic Evil",
+    "age": "Unknown",
+    "ideals": [
+        "Chaos: 'A little madness makes the Master's court so much more entertaining.'",
+        "Greed: 'A donation of gold for a path through stone.'"
+    ],
+    "bonds": [
+        "The Xanathar and the entertainment of the Underdark lair.",
+        "His collection plate and the Guild's 'Cultural Fund'."
+    ],
+    "flaws": [
+        "Manic and erratic behavior can make him deeply unpredictable."
+    ],
+    "speech_patterns": "Chirping, rhythmic, and frantic, often speaking in rhyme or upbeat, unhinged prose.",
+    "mannerisms": "Cartwheels across stone floors, lets his hat bells chime constantly, and watches targets with a manic, unblinking intensity.",
+    "relationships": [
+        {
+            "name": "The Xanathar",
+            "relationship": "Master / Employer",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Manic and theatrical",
+        "Unsettlingly observant",
+        "Greedy",
+        "Chaotic"
+    ],
+    "motivations": [
+        "To collect gold for the Xanathar's causes.",
+        "To entertain himself with the terror and confusion of intruders."
+    ],
+    "knowledge": [
+        "Secret paths, hidden doors, and layout quirks within Xanathar's Lair."
+    ],
+    "memories": [],
+    "gm_notes": "Flutterfoot Zipswiggle can be used as a bizarre, unsettling guide or obstacle within Xanathar's Lair, testing the party's patience and nerves with riddles, baps of his collection plate, and erratic antics.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Xanathars_Lair_Encounters.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Xanathar Guild": "Hostile"
+    }
+}

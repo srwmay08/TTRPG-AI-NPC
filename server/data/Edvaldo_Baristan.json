@@ -1,0 +1,61 @@
+{
+    "name": "Edvaldo Baristan",
+    "description": "Edvaldo Baristan is an aggressive banker who manages the North Ward branch of the Cassalanter Bank. Alongside his wife Christina, he is a secret member of the Cassalanter's cult and utilizes his ceremonial golden dagger as a letter opener.",
+    "character_type": "NPC",
+    "race": "Human",
+    "class": "Bank Manager / Cultist",
+    "alignment": "Neutral Evil",
+    "age": "Adult",
+    "ideals": [
+        "Ambition: Advancing the wealth and influence of the Cassalanter banking empire while serving their secret dark faith."
+    ],
+    "bonds": [
+        "The Cassalanter Bank North Ward branch.",
+        "The Cassalanter cult.",
+        "His wife Christina Baristan and their three children."
+    ],
+    "flaws": [
+        "Ruthless and aggressive in financial dealings and secretive cover-ups to protect the cult's dark activities."
+    ],
+    "speech_patterns": "Professional, calculating, and authoritative, with a veneer of financial respectability masking a cold, calculating nature.",
+    "mannerisms": "Uses his ceremonial golden dagger as a casual letter opener on his desk and maintains an air of wealthy composure while managing loans and debt collections.",
+    "relationships": [
+        {
+            "name": "Christina Baristan",
+            "relationship": "Wife / City Watch Administrator / Cult Co-conspirator",
+            "status": "Alive"
+        },
+        {
+            "name": "Cassalanter Family / Cult",
+            "relationship": "Bank Patrons / Cult Superiors",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Aggressive and ambitious",
+        "Calculated and deceitful",
+        "Financially shrewd",
+        "Devoted to the cult"
+    ],
+    "motivations": [
+        "To manage financial assets for the Cassalanters, entrap debtors or secure leverage for the bank, and advance the cult's goals."
+    ],
+    "knowledge": [
+        "Expertise in financial banking operations, loan contracts, debt collection, and local noble financial networks in the North Ward."
+    ],
+    "memories": [],
+    "gm_notes": "Edvaldo Baristan serves as a key financial and cult antagonist for the party. He can be used when adventurers seek loans for Trollskull Manor—offering dangerous contracts that involve high-risk default clauses or indentured servitude—or as a target in investigations uncovering the Cassalanter cult's dark financial web.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Cassalanter_Bank_Ledger.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "Cassalanter Bank / Cult": "Manager / Member",
+        "Trollskull Manor Crew": "Creditor / Antagonist"
+    }
+}

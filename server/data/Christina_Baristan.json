@@ -1,0 +1,61 @@
+{
+    "name": "Christina Baristan",
+    "description": "Christina Baristan is an administrator with the City Watch and a resident of Trollskull Alley who lives in luxury alongside her husband Edvaldo and their three young children. Behind her professional facade, she is an active member of the Cassalanter cult.",
+    "character_type": "NPC",
+    "race": "Human",
+    "class": "Administrator / Cultist",
+    "alignment": "Neutral Evil",
+    "age": "Adult",
+    "ideals": [
+        "Devotion: Serving the secret dark powers of her cult while maintaining a respectable, high-status life in the North Ward."
+    ],
+    "bonds": [
+        "The Cassalanter cult and her fellow cultists.",
+        "Her husband Edvaldo Baristan and their three young children.",
+        "Teatro ZanZinni and the traveling performers she regularly hosts."
+    ],
+    "flaws": [
+        "Ruthless and secretive, willing to go to extreme lengths—including murder and deception—to protect her family's involvement in the cult."
+    ],
+    "speech_patterns": "Polite, controlled, and professional, carrying the practiced authority of a City Watch administrator.",
+    "mannerisms": "Maintains an impeccably kept, luxurious home filled with flower boxes, welcoming theater actors with warm hospitality while concealing dark secrets.",
+    "relationships": [
+        {
+            "name": "Edvaldo Baristan",
+            "relationship": "Husband / Bank Manager / Cult Co-conspirator",
+            "status": "Alive"
+        },
+        {
+            "name": "Teatro ZanZinni Performers",
+            "relationship": "Frequent Guests / Houseguests",
+            "status": "Alive"
+        }
+    ],
+    "personality_traits": [
+        "Pragmatic and organized",
+        "Deeply deceptive",
+        "Devoted to her family and cult",
+        "Welcoming host"
+    ],
+    "motivations": [
+        "To advance the goals of the Cassalanter cult, protect her family's high social standing, and keep her illicit activities completely hidden from the law."
+    ],
+    "knowledge": [
+        "Familiarity with City Watch administrative procedures, local noble networks, theatrical circles, and Cassalanter cult operations."
+    ],
+    "memories": [],
+    "gm_notes": "Christina Baristan serves as a compelling bridge between legitimate municipal authority and hidden cult intrigue. She can be used in mystery plots where actors or investigators stumble upon her cult involvement, forcing the party to navigate her deceptive influence and connections to the City Watch.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Baristan_Household_Log.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "City Watch": "Neutral / Professional",
+        "Cassalanter Cult": "Member"
+    }
+}

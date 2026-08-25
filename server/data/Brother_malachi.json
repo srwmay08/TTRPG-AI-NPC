@@ -1,22 +1,22 @@
 {
     "name": "Brother Malachi",
-    "description": "Brother Malachi is described as a stooped, older man who wears the simple brown robes of a lesser cleric and serves in the archives of the Spires of the Morning[cite: 1]. He approaches others with a soft, soothing voice and offers warm herbal tea, urging them to let go of their exhaustion[cite: 1]. However, his gentle demeanor can be a mask; he was once impersonated by a dangerous doppelganger infiltrator attempting to bypass the temple's security[cite: 1].",
+    "description": "Brother Malachi is described as a stooped, older man who wears the simple brown robes of a lesser cleric and serves in the archives of the Spires of the Morning. He approaches others with a soft, soothing voice and offers warm herbal tea, urging them to let go of their exhaustion. However, his gentle demeanor can be a mask; he was once impersonated by a dangerous doppelganger infiltrator attempting to bypass the temple's security.",
     "character_type": "NPC",
     "race": "Human",
     "class": "Cleric / Archivist",
     "alignment": "Neutral (or Neutral Evil when impersonated)",
     "age": "Elderly",
     "ideals": [
-        "Rest: 'Every sacrifice must have an end, and weariness should be laid down[cite: 1].'"
+        "Rest: 'Every sacrifice must have an end, and weariness should be laid down.'"
     ],
     "bonds": [
-        "The archives and sacred duties of the Spires of the Morning[cite: 1]."
+        "The archives and sacred duties of the Spires of the Morning."
     ],
     "flaws": [
-        "Can appear overly sympathetic or intrusive regarding the physical exhaustion and emotional state of others[cite: 1]."
+        "Can appear overly sympathetic or intrusive regarding the physical exhaustion and emotional state of others."
     ],
-    "speech_patterns": "Speaks in a soothing, soft, and sympathetic tone designed to put guards or watchers at ease[cite: 1].",
-    "mannerisms": "Stooped posture, carries hot beverages to weary guards, and maintains a respectful distance from holy altars—though an imposter version betrayed an aversion to looking directly at sacred spaces[cite: 1].",
+    "speech_patterns": "Speaks in a soothing, soft, and sympathetic tone designed to put guards or watchers at ease.",
+    "mannerisms": "Stooped posture, carries hot beverages to weary guards, and maintains a respectful distance from holy altars—though an imposter version betrayed an aversion to looking directly at sacred spaces.",
     "relationships": [
         {
             "name": "Sir Kalen Solarrath",
@@ -30,13 +30,13 @@
         "Quiet and unassuming"
     ],
     "motivations": [
-        "To perform archivist duties within the temple, or alternatively, to infiltrate secure locations under false pretenses[cite: 1]."
+        "To perform archivist duties within the temple, or alternatively, to infiltrate secure locations under false pretenses."
     ],
     "knowledge": [
-        "Familiarity with the layout and archives of the Spires of the Morning[cite: 1]."
+        "Familiarity with the layout and archives of the Spires of the Morning."
     ],
     "memories": [],
-    "gm_notes": "Brother Malachi can be used as a classic atmospheric NPC in temple settings, or as a plot device when his identity is co-opted by shapechangers or spies attempting to infiltrate high-security sanctums like the altar room guarding the celestite unicorn[cite: 1].",
+    "gm_notes": "Brother Malachi can be used as a classic atmospheric NPC in temple settings, or as a plot device when his identity is co-opted by shapechangers or spies attempting to infiltrate high-security sanctums like the altar room guarding the celestite unicorn.",
     "canned_conversations": {},
     "vtt_data": {},
     "vtt_flags": {},

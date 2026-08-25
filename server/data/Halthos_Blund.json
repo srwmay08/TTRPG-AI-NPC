@@ -1,23 +1,23 @@
 {
     "name": "Halthos \"The Hammer\" Blund",
-    "description": "Halthos 'The Hammer' Blund is a senior clerk at the Stone House, the headquarters of the Carpenters', Roofers', and Plaisterers' Guild[cite: 1]. He is described as a man who looks like he was carved from a stump—wide, squat, and unmoving[cite: 1]. Operating behind his desk amidst shouting foremen and scratching quills, he manages contract assignments and changes with cautious skepticism[cite: 1].",
+    "description": "Halthos 'The Hammer' Blund is a senior clerk at the Stone House, the headquarters of the Carpenters', Roofers', and Plaisterers' Guild. He is described as a man who looks like he was carved from a stump—wide, squat, and unmoving. Operating behind his desk amidst shouting foremen and scratching quills, he manages contract assignments and changes with cautious skepticism.",
     "character_type": "NPC",
     "race": "Human",
     "class": "Expert / Guild Clerk",
     "alignment": "Lawful Neutral",
     "age": "Middle-aged to Elder",
     "ideals": [
-        "Protocol: 'Contract changes must be logged and reviewed; structure is no game[cite: 1].'",
-        "Accountability: 'If a woodcarver handles a structural truss and fails, his license is on the pyre, not mine[cite: 1].'"
+        "Protocol: 'Contract changes must be logged and reviewed; structure is no game.'",
+        "Accountability: 'If a woodcarver handles a structural truss and fails, his license is on the pyre, not mine.'"
     ],
     "bonds": [
-        "The Carpenters', Roofers', and Plaisterers' Guild and its administrative assignment records[cite: 1]."
+        "The Carpenters', Roofers', and Plaisterers' Guild and its administrative assignment records."
     ],
     "flaws": [
-        "Skeptical of unconventional contractors taking on structural load-bearing projects[cite: 1]."
+        "Skeptical of unconventional contractors taking on structural load-bearing projects."
     ],
-    "speech_patterns": "Gruff, practical, and direct, often grunting or chewing on his quill while reviewing guild ledgers[cite: 1].",
-    "mannerisms": "Sits unmoving like a tree stump behind his desk, chews on the end of his quill, and flips through heavy ledgers to verify guild dues and licenses[cite: 1].",
+    "speech_patterns": "Gruff, practical, and direct, often grunting or chewing on his quill while reviewing guild ledgers.",
+    "mannerisms": "Sits unmoving like a tree stump behind his desk, chews on the end of his quill, and flips through heavy ledgers to verify guild dues and licenses.",
     "relationships": [
         {
             "name": "Tally Fellbranch",
@@ -37,13 +37,13 @@
         "Cautious"
     ],
     "motivations": [
-        "To process contract notifications, maintain guild standards, and ensure contractors remain accountable for their work[cite: 1]."
+        "To process contract notifications, maintain guild standards, and ensure contractors remain accountable for their work."
     ],
     "knowledge": [
-        "Familiarity with guild contractor licenses, woodcarver capabilities, structural renovation protocols, and filing procedures at the Stone House[cite: 1]."
+        "Familiarity with guild contractor licenses, woodcarver capabilities, structural renovation protocols, and filing procedures at the Stone House."
     ],
     "memories": [],
-    "gm_notes": "Halthos Blund serves as the administrative gatekeeper for carpentry and roofing contracts in Waterdeep[cite: 1]. He can be used by the GM to manage the paperwork, legalities, and guild approval process when players attempt to switch contractors or secure building permits for properties like Trollskull Manor[cite: 1].",
+    "gm_notes": "Halthos Blund serves as the administrative gatekeeper for carpentry and roofing contracts in Waterdeep. He can be used by the GM to manage the paperwork, legalities, and guild approval process when players attempt to switch contractors or secure building permits for properties like Trollskull Manor.",
     "canned_conversations": {},
     "vtt_data": {},
     "vtt_flags": {},

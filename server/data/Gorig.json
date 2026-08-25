@@ -1,24 +1,24 @@
 {
     "name": "Gorig",
-    "description": "Gorig is a tall, red-skinned Tiefling who acts as a receptionist, enforcer, and gatekeeper at the Terasse Estate, a front for the city's corrupt elite that houses a secret portal to the Undermountain[cite: 1]. Armed with a sneering, feline attitude and a sharp eye for physical details, he inspects VIP guests, checks their hands for callouses or signs of labor, and ensures that only those with the proper code words and attire are allowed down into Skull Cove[cite: 1].",
+    "description": "Gorig is a tall, red-skinned Tiefling who acts as a receptionist, enforcer, and gatekeeper at the Terasse Estate, a front for the city's corrupt elite that houses a secret portal to the Undermountain. Armed with a sneering, feline attitude and a sharp eye for physical details, he inspects VIP guests, checks their hands for callouses or signs of labor, and ensures that only those with the proper code words and attire are allowed down into Skull Cove.",
     "character_type": "NPC",
     "race": "Tiefling",
     "class": "Fighter / Enforcer",
     "alignment": "Neutral Evil",
     "age": "Adult",
     "ideals": [
-        "Discretion: 'We value your patronage, but we value our secrecy more[cite: 1].'",
-        "Order: 'Nobody sees the path, nobody learns the path[cite: 1].'"
+        "Discretion: 'We value your patronage, but we value our secrecy more.'",
+        "Order: 'Nobody sees the path, nobody learns the path.'"
     ],
     "bonds": [
-        "The Terasse Estate and its covert underground gambling and fighting operations[cite: 1].",
-        "The security protocols required to protect the portal to the River Sargauth[cite: 1]."
+        "The Terasse Estate and its covert underground gambling and fighting operations.",
+        "The security protocols required to protect the portal to the River Sargauth."
     ],
     "flaws": [
-        "Arrogant and prone to looking down on visitors whom he suspects of being common laborers or unrefined[cite: 1]."
+        "Arrogant and prone to looking down on visitors whom he suspects of being common laborers or unrefined."
     ],
-    "speech_patterns": "Purring, smooth, and mocking, often dropping into sharp, authoritative commands when enforcing security rules[cite: 1].",
-    "mannerisms": "Leans against doorframes with feline recognition, aggressively rubs visitor's sleeves to inspect fabric quality, and demands physical inspections like showing palms[cite: 1].",
+    "speech_patterns": "Purring, smooth, and mocking, often dropping into sharp, authoritative commands when enforcing security rules.",
+    "mannerisms": "Leans against doorframes with feline recognition, aggressively rubs visitor's sleeves to inspect fabric quality, and demands physical inspections like showing palms.",
     "relationships": [
         {
             "name": "Kelyn Trigos",
@@ -38,14 +38,14 @@
         "Confident"
     ],
     "motivations": [
-        "To vet high-roller guests and ensure the absolute secrecy of the Undermountain portal at the Terasse Estate[cite: 1]."
+        "To vet high-roller guests and ensure the absolute secrecy of the Undermountain portal at the Terasse Estate."
     ],
     "knowledge": [
-        "Security protocols, code phrases, and transit procedures for high-rollers accessing Skull Cove[cite: 1].",
-        "Methods for vetting disguised visitors and detecting concealed weapons or manual labor callouses[cite: 1]."
+        "Security protocols, code phrases, and transit procedures for high-rollers accessing Skull Cove.",
+        "Methods for vetting disguised visitors and detecting concealed weapons or manual labor callouses."
     ],
     "memories": [],
-    "gm_notes": "Gorig serves as a social and physical gatekeeper for parties attempting to infiltrate the Xanathar's games via the Terasse Estate[cite: 1]. He can test players through physical inspections, clothing checks, and code-word verifications before granting safe passage into the Underdark[cite: 1].",
+    "gm_notes": "Gorig serves as a social and physical gatekeeper for parties attempting to infiltrate the Xanathar's games via the Terasse Estate. He can test players through physical inspections, clothing checks, and code-word verifications before granting safe passage into the Underdark.",
     "canned_conversations": {},
     "vtt_data": {},
     "vtt_flags": {},

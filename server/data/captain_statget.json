@@ -1,0 +1,63 @@
+{
+    "name": "Captain Hyustus Staget",
+    "description": "Captain Hyustus Staget is a very large man with a tight-cropped mohawk and a neat goatee, clad in the fine armor of the City Watch. Operating out of a post in the Dock Ward, his voice is gravelly with exhaustion, reflecting the heavy burden of losing his people to the mysterious djinni's bottle incident. Despite his weary and cynical exterior, he is deeply devoted to his guards and staff, fighting not just for noble bounties, but to rescue the ordinary workers caught in the line of duty.",
+    "character_type": "NPC",
+    "race": "Human",
+    "class": "Officer / Watch Captain",
+    "alignment": "Lawful Good",
+    "age": "40s",
+    "ideals": [
+        "Duty: 'What matters is if you can succeed where everyone else has failed.'",
+        "Comradeship: 'These are not just names... these are my people.'"
+    ],
+    "bonds": [
+        "The City Watch and his subordinates stationed across the wards.",
+        "The defense and security of Waterdeep, particularly the Dock Ward."
+    ],
+    "flaws": [
+        "Can be cynical and weary regarding the lack of high-level support or specialized mages.",
+        "Deeply emotionally affected by the loss of his guards and everyday citizens under his command."
+    ],
+    "speech_patterns": "Gravelly, exhausted, and blunt, carrying the weight of a commander who has lost too many subordinates.",
+    "mannerisms": "Looks people over with a cynical and calculating eye, rubs his face with fatigue, and drops his voice to a near-whisper when speaking of his lost people.",
+    "relationships": [
+        {
+            "name": "Sergeant Mila Bruce",
+            "relationship": "City Watch Subordinate (Missing/Lost Responder)",
+            "status": "Deceased / Rescued"
+        },
+        {
+            "name": "Corporal Finn",
+            "relationship": "City Watch Subordinate (Missing/Lost Responder)",
+            "status": "Deceased / Rescued"
+        }
+    ],
+    "personality_traits": [
+        "Weary and exhausted",
+        "Deeply protective of his people",
+        "Cynical yet honorable",
+        "Direct"
+    ],
+    "motivations": [
+        "To recover his missing Watch members and innocent citizens trapped by magical anomalies.",
+        "To maintain order and secure support when the city's primary guard forces are stretched thin."
+    ],
+    "knowledge": [
+        "Comprehensive operational details regarding Watch protocols and missing responders in Waterdeep.",
+        "Awareness of supernatural and magical threats affecting the city's wards."
+    ],
+    "memories": [],
+    "gm_notes": "Captain Staget serves as a sympathetic law enforcement contact for the party, bridging the gap between street-level Watch duties and extraordinary specialized missions. He can be used to issue distress calls, grant official oversight, or reward the players for saving commoners rather than just high-status nobles.",
+    "canned_conversations": {},
+    "vtt_data": {},
+    "vtt_flags": {},
+    "items": [],
+    "system": {},
+    "associated_history_files": [
+        "Dock_Ward_Watch_Records.txt"
+    ],
+    "linked_lore_by_name": [],
+    "pc_faction_standings": {
+        "City Watch": "Ally"
+    }
+}

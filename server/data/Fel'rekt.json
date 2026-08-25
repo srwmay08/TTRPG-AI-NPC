@@ -1,24 +1,24 @@
 {
     "name": "Fel'rekt",
-    "description": "Fel'rekt is a Drow lieutenant of Bregan D'aerthe[cite: 1]. Possessing a sharp, angular beauty, his obsidian skin blends into the shadows while white hair catches the light[cite: 1]. He wears a high collar and regards intruders with the heavy-lidded boredom of an aristocrat watching a play[cite: 1].",
+    "description": "Fel'rekt is a Drow lieutenant of Bregan D'aerthe. Possessing a sharp, angular beauty, his obsidian skin blends into the shadows while white hair catches the light. He wears a high collar and regards intruders with the heavy-lidded boredom of an aristocrat watching a play.",
     "character_type": "NPC",
     "race": "Drow",
     "class": "Rogue / Lieutenant",
     "alignment": "True Neutral",
     "age": "Middle-aged",
     "ideals": [
-        "Pragmatism: 'Save your breath and your spells unless you're here for something useful[cite: 1].'",
-        "Survival: 'Know when to turn a place over, and know when to step back into the shadows[cite: 1].'"
+        "Pragmatism: 'Save your breath and your spells unless you're here for something useful.'",
+        "Survival: 'Know when to turn a place over, and know when to step back into the shadows.'"
     ],
     "bonds": [
-        "Bregan D'aerthe and its underground network[cite: 1].",
-        "His operational duties under his faction's leadership[cite: 1]."
+        "Bregan D'aerthe and its underground network.",
+        "His operational duties under his faction's leadership."
     ],
     "flaws": [
-        "Can be overly dismissive of non-underground outsiders[cite: 1]."
+        "Can be overly dismissive of non-underground outsiders."
     ],
-    "speech_patterns": "Smooth, unbothered, and aristocratic, carrying an air of total nonchalance even in high-stress situations[cite: 1].",
-    "mannerisms": "Maintains an unbothered posture amidst chaos, ignores hostile threats with cool boredom, and offers cryptic praise to those who survive underground environments[cite: 1].",
+    "speech_patterns": "Smooth, unbothered, and aristocratic, carrying an air of total nonchalance even in high-stress situations.",
+    "mannerisms": "Maintains an unbothered posture amidst chaos, ignores hostile threats with cool boredom, and offers cryptic praise to those who survive underground environments.",
     "relationships": [
         {
             "name": "Sel'zen",
@@ -33,13 +33,13 @@
         "Pragmatic"
     ],
     "motivations": [
-        "To execute covert operations for Bregan D'aerthe, including hunting for the Stone of Golorr[cite: 1]."
+        "To execute covert operations for Bregan D'aerthe, including hunting for the Stone of Golorr."
     ],
     "knowledge": [
-        "Underground operations, drow stealth tactics, and faction maneuverings across Waterdeep[cite: 1]."
+        "Underground operations, drow stealth tactics, and faction maneuverings across Waterdeep."
     ],
     "memories": [],
-    "gm_notes": "Fel'rekt acts as a smooth, composed representative of Bregan D'aerthe[cite: 1]. He can be used to cross paths with the party during faction heists, offering an air of dangerous intrigue without immediately resorting to violence[cite: 1].",
+    "gm_notes": "Fel'rekt acts as a smooth, composed representative of Bregan D'aerthe. He can be used to cross paths with the party during faction heists, offering an air of dangerous intrigue without immediately resorting to violence.",
     "canned_conversations": {},
     "vtt_data": {},
     "vtt_flags": {},
