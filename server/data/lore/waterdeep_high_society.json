@@ -1,0 +1,110 @@
+[
+  {
+    "name": "Waterdhavian High Society & The Game of Houses",
+    "lore_type": "Miscellaneous",
+    "description": "Comprehensive understanding of the unspoken social codes, sartorial conventions, aristocratic rivalries, and luxury economies defining the patrician class of the Sea and North Wards.",
+    "key_facts": [
+      "True status in the Sea and North Wards is exercised through sartorial restraint; patricians restrict coats-of-arms to discreet signet rings or subtle jewelry rather than overt public crests.",
+      "Noble houses utilize domestic servants and personal guards as walking heraldic billboards, outfitting them in fully emblazoned, high-visibility livery to broadcast prestige.",
+      "High fashion among patrician ladies is dictated by luxury avenues like Velatha's Delights and Halazar's Fine Gems for rare furs, seasonal silks, and gems.",
+      "Wealth alone does not confer authority; houses continuously vie for social capital through grand galas, guild board appointments, and maneuvering for Masked Lord seats.",
+      "House Cassalanter operates out of the Sea Ward as preeminent banking and moneylending patrons, running interest-bearing deposit vaults and the Cassalanter Mission.",
+      "House Gralhund operates from the North Ward in arms trade and mercenary contracting, viewed as ambitious upstarts seeking rapid political elevation.",
+      "House Wands maintains high Sea Ward standing through traditionalist arcane academia, judicial sway, and vigilant monitoring of rival magical acquisitions.",
+      "House Adarbrent anchors Sea Ward maritime power through vast naval fleets and conservative policies, actively combating harbor smuggling to protect trade monopolies.",
+      "House Melshimber dictates high-society culinary and viticultural trends, dominating patrician catering through fine imports and exclusive vineyards.",
+      "Public feasting during civic holidays functions as performative benevolence, pacifying urban unrest and securing lucrative guild tax exemptions while masking backroom maneuvers."
+    ],
+    "tags": [
+      "waterdeep",
+      "high society",
+      "nobility",
+      "sea ward",
+      "north ward",
+      "game of houses",
+      "etiquette"
+    ],
+    "gm_notes": "Use this entry for noble NPCs, high-class retainers, socialite courtiers, and investigators operating within the upper echelons of Waterdhavian politics."
+  },
+  {
+    "name": "Patrician Gastronomy & Founders' Day Feasting",
+    "lore_type": "Miscellaneous",
+    "description": "The epicurean infrastructure, provenance of elite delicacies, and structural social segregation governing Founders' Day feasts and noble banquets in Waterdeep.",
+    "key_facts": [
+      "Founders' Day is a premier midsummer festival celebrating the founding of Waterdeep, historically structured with a strict spatial divide between interior private banquets and public garden feasts.",
+      "Interior manor dining rooms serve multi-course epicurean dishes to patricians and foreign dignitaries, while outer garden pavilions provide mass-catered staples to commoners and refugees.",
+      "Smoked salmon imported from the Island of Gundarlun serves as a high-status opening course, proving transatlantic supply routes.",
+      "Fried Shield Moss drizzled with southern pomegranate nectar is served as an adventurous, acquired-taste delicacy among trendsetting hosts.",
+      "Blackbread sweetened with Amnian molasses and elvish seedcake represents elite international trade connections with southern and elven bakers.",
+      "Horseshoe Gold honey wine from House Amcathra Vineyards is a staple golden vintage favored to complement gold-themed heraldic aesthetics.",
+      "Ardeep Emerald Wine (Maergrav) from House Ammakyl and the Ardeep Forest is a rare, aromatic green vintage used as a premier conversation piece.",
+      "House Melshimber's Manycherries Bold and Harbor White are the ubiquitous benchmark vintages expected across all reputable patrician gatherings.",
+      "Midnight's Tears is an extraordinarily rare, completely odorless and tasteless poison that activates simultaneously at midnight, causing 9d6 lethal internal poison damage to its victims.",
+      "Mass garden catering provides the ideal vector for undetectable, synchronized poisonings due to large-scale shared vats and the social isolation of destitute diners."
+    ],
+    "tags": [
+      "culinary",
+      "gastronomy",
+      "founders day",
+      "waterdeep holidays",
+      "fine wine",
+      "poisons",
+      "melshimber"
+    ],
+    "gm_notes": "Invaluable for guild caterers, cooks, sommeliers, social event planners, or characters investigating banquet preparations and poisoned feasts."
+  },
+  {
+    "name": "House Cassalanter: The Infernal Pact & Villa Mechanics",
+    "lore_type": "Miscellaneous",
+    "description": "The operational architecture, secret personnel, security wards, and infernal bargain driving Lord Victoro and Lady Ammalia Cassalanter's Founders' Day plot.",
+    "key_facts": [
+      "Lord Victoro and Lady Ammalia Cassalanter entered a Faustian contract with Asmodeus, trading the souls of their children for financial empire and swift social elevation.",
+      "To redeem the souls of their twins, Terenzio and Elzerina, before their thirteenth birthdays, the Cassalanters must sacrifice 99 mortal souls at once and provide 999,999 gold dragons.",
+      "Their eldest son, Osvaldo Cassalanter, was transformed into a chain devil under the terms of the pact and remains locked within the secret attic and garret (C22/C23).",
+      "The Cassalanter Vault was the first financial house in Waterdeep to introduce interest on deposits across structured term agreements, masking their drive to gather the tribute.",
+      "The philanthropic Cassalanter Mission targeting the Field and Dock Wards served to assemble 99 disenfranchised commoners for slaughter via Midnight's Tears.",
+      "Chief butler Willifort Crowelle is a doppelganger and Asmodeus cult fanatic who shapesifts to manage security, divert suspicion, and impersonate Watch captains.",
+      "Lady Ammalia's attendant, Tissina Khyret, conceals Asmodean ceremonial vestments within master linen presses for rapid midnight wardrobe transitions.",
+      "Head chef Jandar Chergoba leads six cultist cooks, storing infernal robes in kitchen pantries and personally lacing commoner feast vats with poison.",
+      "Estate groundskeeper Hurv Taldred and his two mastiffs transform into living shadows at sunset through necromantic rituals to hunt intruders across the gardens (G1).",
+      "Blueprints filed with the Cellarers omit subterranean levels C28 and C29, which house the unlisted Temple of Asmodeus where the souls of the 99 are channeled at midnight.",
+      "The family's twin-vector strategy leverages the cult to retrieve the 500,000 gold hoard from Dagult Neverember's Vault of Dragons while liquidating estates to make up the remaining balance.",
+      "Nana Rosse, the twins' tutor, remains entirely ignorant of the infernal cult, bewildered by sudden security lockouts around the cellars and upper garret."
+    ],
+    "tags": [
+      "cassalanter",
+      "cult of asmodeus",
+      "villa blueprint",
+      "infernal pact",
+      "victoro cassalanter",
+      "ammalia cassalanter",
+      "willifort crowelle"
+    ],
+    "gm_notes": "Essential dossier for cult infiltrators, private investigators, Harpers, City Watch commanders, and high-level social encounters in the Sea Ward."
+  },
+  {
+    "name": "Waterdeep High Society: Stakeholder Intelligence & Counter-Espionage",
+    "lore_type": "Miscellaneous",
+    "description": "Cross-faction observations, counter-intelligence files, and blind spots regarding noble maneuvers and the Cassalanter conspiracy.",
+    "key_facts": [
+      "Noble peers like Lady Yalah Gralhund dismiss Cassalanter charity as cheap populist posturing, remaining blind to the infernal stakes due to elite vanity and economic rivalry.",
+      "Renaer Neverember flagged that the Cassalanters have been quietly liquidating solid assets while probing for the location of his father Dagult's hidden hoard.",
+      "Jarlaxle Baenre (operating as Captain Zardoz Zord and JB Nevercott) tracks Cassalanter acquisitions of rare magical artifacts and their ties to Asmodean cell leaders.",
+      "Blackstaff Vajra Safahr monitors fluctuating infernal magic signatures across the Sea Ward, constrained from direct raids by the Cassalanters' immense legal protections.",
+      "Non-cult household staff dismiss clandestine cellar meetings as routine bribery of guildmasters and politicians rather than infernal devil worship.",
+      "Disenfranchised laborers and refugees invited to patrician galas view noble invitations as life-changing charity, making them exceptionally vulnerable to targeted exploitation.",
+      "The Cassalanters explicitly selected marginalized commoners so their synchronized midnight deaths could be falsely blamed on plague, tainted rotgut, or the Zhentarim-Xanathar gang war.",
+      "Waterdeep's judicial framework possesses a profound systemic blind spot: patricians maintaining philanthropic performativity and civic investment operate with near-total legal immunity."
+    ],
+    "tags": [
+      "counter-intelligence",
+      "surveillance",
+      "harpers",
+      "force grey",
+      "laeral silverhand",
+      "jarlaxle baenre",
+      "vajra safahr"
+    ],
+    "gm_notes": "Use this knowledge set when NPCs are pressed for rumors, espionage leaks, Harper briefings, or socialite gossip in high-end taverns and private salons."
+  }
+]
