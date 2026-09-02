@@ -43,7 +43,7 @@
         "desire": "Please, just get me out of this gods-forsaken sewer. Take me to the Yawning Portal. I need to find Volo. I need a drink. I need to forget any of this ever happened."
 
     },
-    "pc_faction_standings": {"Player Characters": "Friendly"},
+    "pc_faction_standings": {"Player Characters": "Warmly"},
       "scenes": [ "Trollskull Manor" ],
       "linked_lore": [
         "waterdeep_high_society.json"
