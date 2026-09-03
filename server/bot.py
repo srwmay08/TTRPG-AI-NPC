@@ -21,7 +21,7 @@ intents.message_content = True
 client = discord.Client(intents=intents)
 
 # The specific Discord channel ID the bot will monitor. It ignores all other channels.
-TARGET_CHANNEL_ID = 1544839134760140800 
+TARGET_CHANNEL_ID = 1539446437857730650 
 
 # Regex to detect and extract Avrae or custom dice roll formats (e.g., "Action: Attack - Roll: 18").
 ROLL_REGEX = re.compile(r'Action:\s*(.*?)\s*-\s*Roll:\s*(\d+)')
